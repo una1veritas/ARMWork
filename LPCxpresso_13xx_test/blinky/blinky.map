@@ -1,0 +1,332 @@
+Archive member included because of file (symbol)
+
+/Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+                              ./src/blinky_main.o (SystemCoreClock)
+
+Discarded input sections
+
+ .text          0x0000000000000000        0x0 ./src/blinky_main.o
+ .data          0x0000000000000000        0x0 ./src/blinky_main.o
+ .bss           0x0000000000000000        0x0 ./src/blinky_main.o
+ .text          0x0000000000000000        0x0 ./src/clkconfig.o
+ .data          0x0000000000000000        0x0 ./src/clkconfig.o
+ .bss           0x0000000000000000        0x0 ./src/clkconfig.o
+ .text.WDT_CLK_Setup
+                0x0000000000000000       0xa0 ./src/clkconfig.o
+ .text.CLKOUT_Setup
+                0x0000000000000000       0x78 ./src/clkconfig.o
+ .text          0x0000000000000000        0x0 ./src/cr_startup_lpc13.o
+ .data          0x0000000000000000        0x0 ./src/cr_startup_lpc13.o
+ .bss           0x0000000000000000        0x0 ./src/cr_startup_lpc13.o
+ .text          0x0000000000000000        0x0 ./src/gpio.o
+ .data          0x0000000000000000        0x0 ./src/gpio.o
+ .bss           0x0000000000000000        0x0 ./src/gpio.o
+ .rodata        0x0000000000000000       0x10 ./src/gpio.o
+ .text.GPIOSetInterrupt
+                0x0000000000000000      0x550 ./src/gpio.o
+ .text.GPIOIntEnable
+                0x0000000000000000       0xfc ./src/gpio.o
+ .text.GPIOIntDisable
+                0x0000000000000000      0x10c ./src/gpio.o
+ .text.GPIOIntStatus
+                0x0000000000000000       0xf8 ./src/gpio.o
+ .text.GPIOIntClear
+                0x0000000000000000       0xfc ./src/gpio.o
+ .text          0x0000000000000000        0x0 ./src/timer32.o
+ .data          0x0000000000000000        0x0 ./src/timer32.o
+ .text.delay32Ms
+                0x0000000000000000      0x14c ./src/timer32.o
+ .text.disable_timer32
+                0x0000000000000000       0x38 ./src/timer32.o
+ .text.reset_timer32
+                0x0000000000000000       0x5c ./src/timer32.o
+ .text          0x0000000000000000        0x0 /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+ .bss           0x0000000000000000        0x0 /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+ .text.SystemCoreClockUpdate
+                0x0000000000000000      0x35c /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+MFlash32         0x0000000000000000 0x0000000000008000 xr
+RamLoc8          0x0000000010000000 0x0000000000002000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD ./src/blinky_main.o
+LOAD ./src/clkconfig.o
+LOAD ./src/cr_startup_lpc13.o
+LOAD ./src/gpio.o
+LOAD ./src/timer32.o
+LOAD /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a
+START GROUP
+LOAD /Applications/lpcxpresso_4.2.4_267/lpcxpresso/Tools/bin/../lib/gcc/arm-none-eabi/4.6.2/../../../../arm-none-eabi/lib/armv7-m/libcr_c.a
+LOAD /Applications/lpcxpresso_4.2.4_267/lpcxpresso/Tools/bin/../lib/gcc/arm-none-eabi/4.6.2/armv7-m/libcr_eabihelpers.a
+END GROUP
+                0x0000000000008000                __top_MFlash32 = 0x8000
+                0x0000000010002000                __top_RamLoc8 = 0x10002000
+
+.text           0x0000000000000000      0x8c4
+ FILL mask 0xff
+ *(.isr_vector)
+ .isr_vector    0x0000000000000000      0x124 ./src/cr_startup_lpc13.o
+                0x0000000000000000                g_pfnVectors
+                0x0000000000000124                . = ALIGN (0x4)
+                0x0000000000000124                __section_table_start = .
+                0x0000000000000124                __data_section_table = .
+                0x0000000000000124        0x4 LONG 0x8c4 LOADADDR (.data)
+                0x0000000000000128        0x4 LONG 0x10000000 ADDR (.data)
+                0x000000000000012c        0x4 LONG 0x4 SIZEOF (.data)
+                0x0000000000000130                __data_section_table_end = .
+                0x0000000000000130                __bss_section_table = .
+                0x0000000000000130        0x4 LONG 0x10000004 ADDR (.bss)
+                0x0000000000000134        0x4 LONG 0x8 SIZEOF (.bss)
+                0x0000000000000138                __bss_section_table_end = .
+                0x0000000000000138                __section_table_end = .
+ *(.after_vectors*)
+ *(.text*)
+ .text.__WFI    0x0000000000000138        0xc ./src/blinky_main.o
+ .text.GPIOSetValue
+                0x0000000000000144       0x3c ./src/blinky_main.o
+ .text.GPIOSetDir
+                0x0000000000000180       0x90 ./src/blinky_main.o
+ .text.main     0x0000000000000210       0xa8 ./src/blinky_main.o
+                0x0000000000000210                main
+ .text.Reset_Handler
+                0x00000000000002b8       0x88 ./src/cr_startup_lpc13.o
+                0x00000000000002b8                Reset_Handler
+                0x00000000000002b8                ResetISR
+ .text.NMI_Handler
+                0x0000000000000340        0x8 ./src/cr_startup_lpc13.o
+                0x0000000000000340                NMI_Handler
+ .text.HardFault_Handler
+                0x0000000000000348        0x8 ./src/cr_startup_lpc13.o
+                0x0000000000000348                HardFault_Handler
+ .text.MemManage_Handler
+                0x0000000000000350        0x8 ./src/cr_startup_lpc13.o
+                0x0000000000000350                MemManage_Handler
+ .text.BusFault_Handler
+                0x0000000000000358        0x8 ./src/cr_startup_lpc13.o
+                0x0000000000000358                BusFault_Handler
+ .text.UsageFault_Handler
+                0x0000000000000360        0x8 ./src/cr_startup_lpc13.o
+                0x0000000000000360                UsageFault_Handler
+ .text.SVCall_Handler
+                0x0000000000000368        0x8 ./src/cr_startup_lpc13.o
+                0x0000000000000368                SVCall_Handler
+ .text.DebugMon_Handler
+                0x0000000000000370        0x8 ./src/cr_startup_lpc13.o
+                0x0000000000000370                DebugMon_Handler
+ .text.PendSV_Handler
+                0x0000000000000378        0x8 ./src/cr_startup_lpc13.o
+                0x0000000000000378                PendSV_Handler
+ .text.SysTick_Handler
+                0x0000000000000380        0x8 ./src/cr_startup_lpc13.o
+                0x0000000000000380                SysTick_Handler
+ .text.IntDefaultHandler
+                0x0000000000000388        0x8 ./src/cr_startup_lpc13.o
+                0x0000000000000388                FMC_IRQHandler
+                0x0000000000000388                UART_IRQHandler
+                0x0000000000000388                PIOINT1_IRQHandler
+                0x0000000000000388                SSP_IRQHandler
+                0x0000000000000388                TIMER16_1_IRQHandler
+                0x0000000000000388                USB_FIQHandler
+                0x0000000000000388                ADC_IRQHandler
+                0x0000000000000388                PIOINT2_IRQHandler
+                0x0000000000000388                USB_IRQHandler
+                0x0000000000000388                BOD_IRQHandler
+                0x0000000000000388                WAKEUP_IRQHandler
+                0x0000000000000388                PIOINT0_IRQHandler
+                0x0000000000000388                I2C_IRQHandler
+                0x0000000000000388                WDT_IRQHandler
+                0x0000000000000388                PIOINT3_IRQHandler
+                0x0000000000000388                TIMER16_0_IRQHandler
+ .text.NVIC_EnableIRQ
+                0x0000000000000390       0x38 ./src/gpio.o
+ .text.GPIOInit
+                0x00000000000003c8       0x44 ./src/gpio.o
+                0x00000000000003c8                GPIOInit
+ .text.NVIC_EnableIRQ
+                0x000000000000040c       0x38 ./src/timer32.o
+ .text.TIMER32_0_IRQHandler
+                0x0000000000000444       0x30 ./src/timer32.o
+                0x0000000000000444                TIMER32_0_IRQHandler
+ .text.TIMER32_1_IRQHandler
+                0x0000000000000474       0x30 ./src/timer32.o
+                0x0000000000000474                TIMER32_1_IRQHandler
+ .text.enable_timer32
+                0x00000000000004a4       0x38 ./src/timer32.o
+                0x00000000000004a4                enable_timer32
+ .text.init_timer32
+                0x00000000000004dc      0x1cc ./src/timer32.o
+                0x00000000000004dc                init_timer32
+ .text.__NOP    0x00000000000006a8        0xc /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+ .text.SystemInit
+                0x00000000000006b4      0x200 /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+                0x00000000000006b4                SystemInit
+ *(.rodata .rodata.*)
+ .rodata        0x00000000000008b4       0x10 ./src/blinky_main.o
+                0x00000000000008c4                . = ALIGN (0x4)
+
+.glue_7         0x00000000000008c4        0x0
+ .glue_7        0x0000000000000000        0x0 linker stubs
+
+.glue_7t        0x00000000000008c4        0x0
+ .glue_7t       0x0000000000000000        0x0 linker stubs
+
+.vfp11_veneer   0x00000000000008c4        0x0
+ .vfp11_veneer  0x0000000000000000        0x0 linker stubs
+
+.v4_bx          0x00000000000008c4        0x0
+ .v4_bx         0x0000000000000000        0x0 linker stubs
+
+.ARM.extab
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+                0x00000000000008c4                __exidx_start = .
+
+.ARM.exidx
+ *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+                0x00000000000008c4                __exidx_end = .
+                0x00000000000008c4                _etext = .
+
+.uninit_RESERVED
+ *(.bss.$RESERVED*)
+
+.data           0x0000000010000000        0x4 load address 0x00000000000008c4
+ FILL mask 0xff
+                0x0000000010000000                _data = .
+ *(vtable)
+ *(.data*)
+ .data          0x0000000010000000        0x4 /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+                0x0000000010000000                SystemCoreClock
+                0x0000000010000004                . = ALIGN (0x4)
+                0x0000000010000004                _edata = .
+
+.bss            0x0000000010000004        0x8 load address 0x00000000000008c8
+                0x0000000010000004                _bss = .
+ *(.bss*)
+ .bss           0x0000000010000004        0x8 ./src/timer32.o
+                0x0000000010000004                timer32_0_counter
+                0x0000000010000008                timer32_1_counter
+ *(COMMON)
+                0x000000001000000c                . = ALIGN (0x4)
+                0x000000001000000c                _ebss = .
+                0x000000001000000c                PROVIDE (end, .)
+                0x000000001000000c                PROVIDE (_pvHeapStart, .)
+                0x0000000010002000                PROVIDE (_vStackTop, (__top_RamLoc8 - 0x0))
+OUTPUT(blinky.axf elf32-littlearm)
+
+.debug_info     0x0000000000000000     0x2d89
+ .debug_info    0x0000000000000000      0x747 ./src/blinky_main.o
+ .debug_info    0x0000000000000747      0x562 ./src/clkconfig.o
+ .debug_info    0x0000000000000ca9      0x221 ./src/cr_startup_lpc13.o
+ .debug_info    0x0000000000000eca      0xadb ./src/gpio.o
+ .debug_info    0x00000000000019a5      0xe4c ./src/timer32.o
+ .debug_info    0x00000000000027f1      0x598 /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+
+.debug_abbrev   0x0000000000000000      0x7ff
+ .debug_abbrev  0x0000000000000000      0x191 ./src/blinky_main.o
+ .debug_abbrev  0x0000000000000191       0xd1 ./src/clkconfig.o
+ .debug_abbrev  0x0000000000000262       0xd6 ./src/cr_startup_lpc13.o
+ .debug_abbrev  0x0000000000000338      0x1ea ./src/gpio.o
+ .debug_abbrev  0x0000000000000522      0x1ca ./src/timer32.o
+ .debug_abbrev  0x00000000000006ec      0x113 /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+
+.debug_loc      0x0000000000000000      0x6e8
+ .debug_loc     0x0000000000000000       0xc8 ./src/blinky_main.o
+ .debug_loc     0x00000000000000c8       0x70 ./src/clkconfig.o
+ .debug_loc     0x0000000000000138      0x1f0 ./src/cr_startup_lpc13.o
+ .debug_loc     0x0000000000000328      0x17c ./src/gpio.o
+ .debug_loc     0x00000000000004a4      0x1a8 ./src/timer32.o
+ .debug_loc     0x000000000000064c       0x9c /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+
+.debug_aranges  0x0000000000000000      0x1a8
+ .debug_aranges
+                0x0000000000000000       0x38 ./src/blinky_main.o
+ .debug_aranges
+                0x0000000000000038       0x28 ./src/clkconfig.o
+ .debug_aranges
+                0x0000000000000060       0x70 ./src/cr_startup_lpc13.o
+ .debug_aranges
+                0x00000000000000d0       0x50 ./src/gpio.o
+ .debug_aranges
+                0x0000000000000120       0x58 ./src/timer32.o
+ .debug_aranges
+                0x0000000000000178       0x30 /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+
+.debug_ranges   0x0000000000000000      0x148
+ .debug_ranges  0x0000000000000000       0x28 ./src/blinky_main.o
+ .debug_ranges  0x0000000000000028       0x18 ./src/clkconfig.o
+ .debug_ranges  0x0000000000000040       0x60 ./src/cr_startup_lpc13.o
+ .debug_ranges  0x00000000000000a0       0x40 ./src/gpio.o
+ .debug_ranges  0x00000000000000e0       0x48 ./src/timer32.o
+ .debug_ranges  0x0000000000000128       0x20 /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+
+.debug_line     0x0000000000000000     0x19d7
+ .debug_line    0x0000000000000000      0x418 ./src/blinky_main.o
+ .debug_line    0x0000000000000418      0x3d7 ./src/clkconfig.o
+ .debug_line    0x00000000000007ef      0x472 ./src/cr_startup_lpc13.o
+ .debug_line    0x0000000000000c61      0x4a4 ./src/gpio.o
+ .debug_line    0x0000000000001105      0x478 ./src/timer32.o
+ .debug_line    0x000000000000157d      0x45a /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+
+.debug_macinfo  0x0000000000000000    0x293c0
+ .debug_macinfo
+                0x0000000000000000     0x7844 ./src/blinky_main.o
+ .debug_macinfo
+                0x0000000000007844     0x770b ./src/clkconfig.o
+ .debug_macinfo
+                0x000000000000ef4f     0x3d30 ./src/cr_startup_lpc13.o
+ .debug_macinfo
+                0x0000000000012c7f     0x767f ./src/gpio.o
+ .debug_macinfo
+                0x000000000001a2fe     0x76fd ./src/timer32.o
+ .debug_macinfo
+                0x00000000000219fb     0x79c5 /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+
+.debug_str      0x0000000000000000      0xd25
+ .debug_str     0x0000000000000000      0x473 ./src/blinky_main.o
+                                        0x495 (size before relaxing)
+ .debug_str     0x0000000000000473       0x35 ./src/clkconfig.o
+                                        0x42c (size before relaxing)
+ .debug_str     0x00000000000004a8      0x108 ./src/cr_startup_lpc13.o
+                                        0x224 (size before relaxing)
+ .debug_str     0x00000000000005b0      0x448 ./src/gpio.o
+                                        0x881 (size before relaxing)
+ .debug_str     0x00000000000009f8      0x2a3 ./src/timer32.o
+                                        0xaa3 (size before relaxing)
+ .debug_str     0x0000000000000c9b       0x8a /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+                                        0x449 (size before relaxing)
+
+.comment        0x0000000000000000       0x70
+ .comment       0x0000000000000000       0x70 ./src/blinky_main.o
+                                         0x71 (size before relaxing)
+ .comment       0x0000000000000000       0x71 ./src/clkconfig.o
+ .comment       0x0000000000000000       0x71 ./src/cr_startup_lpc13.o
+ .comment       0x0000000000000000       0x71 ./src/gpio.o
+ .comment       0x0000000000000000       0x71 ./src/timer32.o
+ .comment       0x0000000000000000       0x71 /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+
+.ARM.attributes
+                0x0000000000000000       0x33
+ .ARM.attributes
+                0x0000000000000000       0x33 ./src/blinky_main.o
+ .ARM.attributes
+                0x0000000000000033       0x33 ./src/clkconfig.o
+ .ARM.attributes
+                0x0000000000000066       0x33 ./src/cr_startup_lpc13.o
+ .ARM.attributes
+                0x0000000000000099       0x33 ./src/gpio.o
+ .ARM.attributes
+                0x00000000000000cc       0x33 ./src/timer32.o
+ .ARM.attributes
+                0x00000000000000ff       0x33 /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)
+
+.debug_frame    0x0000000000000000      0x408
+ .debug_frame   0x0000000000000000       0x7c ./src/blinky_main.o
+ .debug_frame   0x000000000000007c       0x48 ./src/clkconfig.o
+ .debug_frame   0x00000000000000c4      0x120 ./src/cr_startup_lpc13.o
+ .debug_frame   0x00000000000001e4       0xd4 ./src/gpio.o
+ .debug_frame   0x00000000000002b8       0xec ./src/timer32.o
+ .debug_frame   0x00000000000003a4       0x64 /Users/sin/Documents/LPCxpresso/workspace/CMSISv1p30_LPC13xx/Debug/libCMSISv1p30_LPC13xx.a(system_LPC13xx.o)

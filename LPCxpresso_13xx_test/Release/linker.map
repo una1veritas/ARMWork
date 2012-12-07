@@ -1,0 +1,260 @@
+Archive member included because of file (symbol)
+
+/Users/sin/Documents/Eclipse/Workspace/LPC1xxx_library/LPC13xx/libLPC13xx.a(system_LPC17xx.o)
+                              ./blinky/src/blinky_main.o (SystemCoreClock)
+
+Discarded input sections
+
+ .text          0x0000000000000000        0x0 ./blinky/src/blinky_main.o
+ .data          0x0000000000000000        0x0 ./blinky/src/blinky_main.o
+ .bss           0x0000000000000000        0x0 ./blinky/src/blinky_main.o
+ .text          0x0000000000000000       0x80 ./blinky/src/clkconfig.o
+ .data          0x0000000000000000        0x0 ./blinky/src/clkconfig.o
+ .bss           0x0000000000000000        0x0 ./blinky/src/clkconfig.o
+ .comment       0x0000000000000000       0x12 ./blinky/src/clkconfig.o
+ .ARM.attributes
+                0x0000000000000000       0x33 ./blinky/src/clkconfig.o
+ .data          0x0000000000000000        0x0 ./blinky/src/cr_startup_lpc13.o
+ .bss           0x0000000000000000        0x0 ./blinky/src/cr_startup_lpc13.o
+ .data          0x0000000000000000        0x0 ./blinky/src/gpio.o
+ .bss           0x0000000000000000        0x0 ./blinky/src/gpio.o
+ .data          0x0000000000000000        0x0 ./blinky/src/timer32.o
+ .text          0x0000000000000000      0x1f8 /Users/sin/Documents/Eclipse/Workspace/LPC1xxx_library/LPC13xx/libLPC13xx.a(system_LPC17xx.o)
+ .bss           0x0000000000000000        0x0 /Users/sin/Documents/Eclipse/Workspace/LPC1xxx_library/LPC13xx/libLPC13xx.a(system_LPC17xx.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+MFlash32         0x0000000000000000 0x0000000000008000 xr
+RamLoc8          0x0000000010000000 0x0000000000002000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD ./blinky/src/blinky_main.o
+LOAD ./blinky/src/clkconfig.o
+LOAD ./blinky/src/cr_startup_lpc13.o
+LOAD ./blinky/src/gpio.o
+LOAD ./blinky/src/timer32.o
+LOAD /Users/sin/Documents/Eclipse/Workspace/LPC1xxx_library/LPC13xx/libLPC13xx.a
+START GROUP
+LOAD /Users/sin/Documents/Eclipse/Workspace/LPC1xxx_library/LPC13xx/libLPC13xx.a
+END GROUP
+                0x0000000000008000                __top_MFlash32 = 0x8000
+                0x0000000010002000                __top_RamLoc8 = 0x10002000
+
+.text           0x0000000000000000      0x7f8
+ FILL mask 0xff
+ *(.isr_vector)
+ .isr_vector    0x0000000000000000      0x124 ./blinky/src/cr_startup_lpc13.o
+                0x0000000000000000                g_pfnVectors
+                0x0000000000000124                . = ALIGN (0x4)
+                0x0000000000000124                __section_table_start = .
+                0x0000000000000124                __data_section_table = .
+                0x0000000000000124        0x4 LONG 0x7f8 LOADADDR (.data)
+                0x0000000000000128        0x4 LONG 0x10000000 ADDR (.data)
+                0x000000000000012c        0x4 LONG 0x4 SIZEOF (.data)
+                0x0000000000000130                __data_section_table_end = .
+                0x0000000000000130                __bss_section_table = .
+                0x0000000000000130        0x4 LONG 0x10000004 ADDR (.bss)
+                0x0000000000000134        0x4 LONG 0x8 SIZEOF (.bss)
+                0x0000000000000138                __bss_section_table_end = .
+                0x0000000000000138                __section_table_end = .
+ *(.after_vectors*)
+ *(.text*)
+ .text.startup  0x0000000000000138       0x74 ./blinky/src/blinky_main.o
+                0x0000000000000138                main
+ .text          0x00000000000001ac       0x94 ./blinky/src/cr_startup_lpc13.o
+                0x00000000000001ac                NMI_Handler
+                0x00000000000001b0                HardFault_Handler
+                0x00000000000001b4                MemManage_Handler
+                0x00000000000001b8                BusFault_Handler
+                0x00000000000001bc                UsageFault_Handler
+                0x00000000000001c0                SVCall_Handler
+                0x00000000000001c4                DebugMon_Handler
+                0x00000000000001c8                PendSV_Handler
+                0x00000000000001cc                SysTick_Handler
+                0x00000000000001d0                BOD_IRQHandler
+                0x00000000000001d0                WAKEUP_IRQHandler
+                0x00000000000001d0                PIOINT0_IRQHandler
+                0x00000000000001d0                I2C_IRQHandler
+                0x00000000000001d0                WDT_IRQHandler
+                0x00000000000001d0                FMC_IRQHandler
+                0x00000000000001d0                UART_IRQHandler
+                0x00000000000001d0                PIOINT1_IRQHandler
+                0x00000000000001d0                SSP_IRQHandler
+                0x00000000000001d0                TIMER16_1_IRQHandler
+                0x00000000000001d0                USB_FIQHandler
+                0x00000000000001d0                ADC_IRQHandler
+                0x00000000000001d0                PIOINT2_IRQHandler
+                0x00000000000001d0                USB_IRQHandler
+                0x00000000000001d0                PIOINT3_IRQHandler
+                0x00000000000001d0                TIMER16_0_IRQHandler
+                0x00000000000001d4                ResetISR
+                0x00000000000001d4                Reset_Handler
+ .text          0x0000000000000240      0x378 ./blinky/src/gpio.o
+                0x0000000000000240                GPIOInit
+                0x0000000000000278                GPIOSetInterrupt
+                0x000000000000040c                GPIOIntEnable
+                0x0000000000000470                GPIOIntDisable
+                0x00000000000004dc                GPIOIntStatus
+                0x0000000000000554                GPIOIntClear
+ .text          0x00000000000005b8      0x240 ./blinky/src/timer32.o
+                0x00000000000005b8                delay32Ms
+                0x000000000000065c                TIMER32_0_IRQHandler
+                0x0000000000000678                TIMER32_1_IRQHandler
+                0x0000000000000694                enable_timer32
+                0x00000000000006b4                disable_timer32
+                0x00000000000006d0                reset_timer32
+                0x00000000000006f8                init_timer32
+ *(.rodata .rodata.*)
+                0x00000000000007f8                . = ALIGN (0x4)
+
+.glue_7         0x00000000000007f8        0x0
+ .glue_7        0x0000000000000000        0x0 linker stubs
+
+.glue_7t        0x00000000000007f8        0x0
+ .glue_7t       0x0000000000000000        0x0 linker stubs
+
+.vfp11_veneer   0x00000000000007f8        0x0
+ .vfp11_veneer  0x0000000000000000        0x0 linker stubs
+
+.v4_bx          0x00000000000007f8        0x0
+ .v4_bx         0x0000000000000000        0x0 linker stubs
+
+.iplt           0x00000000000007f8        0x0
+ .iplt          0x0000000000000000        0x0 ./blinky/src/blinky_main.o
+
+.rel.dyn        0x00000000000007f8        0x0
+ .rel.iplt      0x0000000000000000        0x0 ./blinky/src/blinky_main.o
+
+.ARM.extab
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+                0x00000000000007f8                __exidx_start = .
+
+.ARM.exidx
+ *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+                0x00000000000007f8                __exidx_end = .
+                0x00000000000007f8                _etext = .
+
+.uninit_RESERVED
+ *(.bss.$RESERVED*)
+
+.data           0x0000000010000000        0x4 load address 0x00000000000007f8
+ FILL mask 0xff
+                0x0000000010000000                _data = .
+ *(vtable)
+ *(.data*)
+ .data          0x0000000010000000        0x4 /Users/sin/Documents/Eclipse/Workspace/LPC1xxx_library/LPC13xx/libLPC13xx.a(system_LPC17xx.o)
+                0x0000000010000000                SystemCoreClock
+                0x0000000010000004                . = ALIGN (0x4)
+                0x0000000010000004                _edata = .
+
+.igot.plt       0x0000000010000004        0x0 load address 0x00000000000007fc
+ .igot.plt      0x0000000000000000        0x0 ./blinky/src/blinky_main.o
+
+.bss            0x0000000010000004        0x8 load address 0x00000000000007fc
+                0x0000000010000004                _bss = .
+ *(.bss*)
+ .bss           0x0000000010000004        0x8 ./blinky/src/timer32.o
+                0x0000000010000004                timer32_0_counter
+                0x0000000010000008                timer32_1_counter
+ *(COMMON)
+                0x000000001000000c                . = ALIGN (0x4)
+                0x000000001000000c                _ebss = .
+                0x000000001000000c                PROVIDE (end, .)
+                0x000000001000000c                PROVIDE (_pvHeapStart, .)
+                0x0000000010002000                PROVIDE (_vStackTop, (__top_RamLoc8 - 0x0))
+OUTPUT(LPCxpresso_13xx_test.elf elf32-littlearm)
+
+.comment        0x0000000000000000       0x11
+ .comment       0x0000000000000000       0x11 ./blinky/src/blinky_main.o
+                                         0x12 (size before relaxing)
+ .comment       0x0000000000000000       0x12 ./blinky/src/cr_startup_lpc13.o
+ .comment       0x0000000000000000       0x12 ./blinky/src/gpio.o
+ .comment       0x0000000000000000       0x12 ./blinky/src/timer32.o
+ .comment       0x0000000000000000       0x12 /Users/sin/Documents/Eclipse/Workspace/LPC1xxx_library/LPC13xx/libLPC13xx.a(system_LPC17xx.o)
+
+.ARM.attributes
+                0x0000000000000000       0x33
+ .ARM.attributes
+                0x0000000000000000       0x33 ./blinky/src/blinky_main.o
+ .ARM.attributes
+                0x0000000000000033       0x33 ./blinky/src/cr_startup_lpc13.o
+ .ARM.attributes
+                0x0000000000000066       0x33 ./blinky/src/gpio.o
+ .ARM.attributes
+                0x0000000000000099       0x33 ./blinky/src/timer32.o
+ .ARM.attributes
+                0x00000000000000cc       0x33 /Users/sin/Documents/Eclipse/Workspace/LPC1xxx_library/LPC13xx/libLPC13xx.a(system_LPC17xx.o)
+
+Cross Reference Table
+
+Symbol                                            File
+ADC_IRQHandler                                    ./blinky/src/cr_startup_lpc13.o
+BOD_IRQHandler                                    ./blinky/src/cr_startup_lpc13.o
+BusFault_Handler                                  ./blinky/src/cr_startup_lpc13.o
+CLKOUT_Setup                                      ./blinky/src/clkconfig.o
+DebugMon_Handler                                  ./blinky/src/cr_startup_lpc13.o
+FMC_IRQHandler                                    ./blinky/src/cr_startup_lpc13.o
+GPIOInit                                          ./blinky/src/gpio.o
+                                                  ./blinky/src/blinky_main.o
+GPIOIntClear                                      ./blinky/src/gpio.o
+GPIOIntDisable                                    ./blinky/src/gpio.o
+GPIOIntEnable                                     ./blinky/src/gpio.o
+GPIOIntStatus                                     ./blinky/src/gpio.o
+GPIOSetInterrupt                                  ./blinky/src/gpio.o
+HardFault_Handler                                 ./blinky/src/cr_startup_lpc13.o
+I2C_IRQHandler                                    ./blinky/src/cr_startup_lpc13.o
+MemManage_Handler                                 ./blinky/src/cr_startup_lpc13.o
+NMI_Handler                                       ./blinky/src/cr_startup_lpc13.o
+PIOINT0_IRQHandler                                ./blinky/src/cr_startup_lpc13.o
+PIOINT1_IRQHandler                                ./blinky/src/cr_startup_lpc13.o
+PIOINT2_IRQHandler                                ./blinky/src/cr_startup_lpc13.o
+PIOINT3_IRQHandler                                ./blinky/src/cr_startup_lpc13.o
+PendSV_Handler                                    ./blinky/src/cr_startup_lpc13.o
+ResetISR                                          ./blinky/src/cr_startup_lpc13.o
+Reset_Handler                                     ./blinky/src/cr_startup_lpc13.o
+SSP_IRQHandler                                    ./blinky/src/cr_startup_lpc13.o
+SVCall_Handler                                    ./blinky/src/cr_startup_lpc13.o
+SysTick_Handler                                   ./blinky/src/cr_startup_lpc13.o
+SystemCoreClock                                   /Users/sin/Documents/Eclipse/Workspace/LPC1xxx_library/LPC13xx/libLPC13xx.a(system_LPC17xx.o)
+                                                  ./blinky/src/timer32.o
+                                                  ./blinky/src/blinky_main.o
+SystemCoreClockUpdate                             /Users/sin/Documents/Eclipse/Workspace/LPC1xxx_library/LPC13xx/libLPC13xx.a(system_LPC17xx.o)
+SystemInit                                        /Users/sin/Documents/Eclipse/Workspace/LPC1xxx_library/LPC13xx/libLPC13xx.a(system_LPC17xx.o)
+TIMER16_0_IRQHandler                              ./blinky/src/cr_startup_lpc13.o
+TIMER16_1_IRQHandler                              ./blinky/src/cr_startup_lpc13.o
+TIMER32_0_IRQHandler                              ./blinky/src/timer32.o
+                                                  ./blinky/src/cr_startup_lpc13.o
+TIMER32_1_IRQHandler                              ./blinky/src/timer32.o
+                                                  ./blinky/src/cr_startup_lpc13.o
+UART_IRQHandler                                   ./blinky/src/cr_startup_lpc13.o
+USB_FIQHandler                                    ./blinky/src/cr_startup_lpc13.o
+USB_IRQHandler                                    ./blinky/src/cr_startup_lpc13.o
+UsageFault_Handler                                ./blinky/src/cr_startup_lpc13.o
+WAKEUP_IRQHandler                                 ./blinky/src/cr_startup_lpc13.o
+WDT_CLK_Setup                                     ./blinky/src/clkconfig.o
+WDT_IRQHandler                                    ./blinky/src/cr_startup_lpc13.o
+__aeabi_uldivmod                                  /Users/sin/Documents/Eclipse/Workspace/LPC1xxx_library/LPC13xx/libLPC13xx.a(system_LPC17xx.o)
+__libc_init_array                                 ./blinky/src/cr_startup_lpc13.o
+__main                                            ./blinky/src/cr_startup_lpc13.o
+_bss                                              ./blinky/src/cr_startup_lpc13.o
+_data                                             ./blinky/src/cr_startup_lpc13.o
+_ebss                                             ./blinky/src/cr_startup_lpc13.o
+_edata                                            ./blinky/src/cr_startup_lpc13.o
+_etext                                            ./blinky/src/cr_startup_lpc13.o
+_vStackTop                                        ./blinky/src/cr_startup_lpc13.o
+delay32Ms                                         ./blinky/src/timer32.o
+disable_timer32                                   ./blinky/src/timer32.o
+enable_timer32                                    ./blinky/src/timer32.o
+                                                  ./blinky/src/blinky_main.o
+g_pfnVectors                                      ./blinky/src/cr_startup_lpc13.o
+init_timer32                                      ./blinky/src/timer32.o
+                                                  ./blinky/src/blinky_main.o
+main                                              ./blinky/src/blinky_main.o
+                                                  ./blinky/src/cr_startup_lpc13.o
+reset_timer32                                     ./blinky/src/timer32.o
+timer32_0_counter                                 ./blinky/src/timer32.o
+                                                  ./blinky/src/blinky_main.o
+timer32_1_counter                                 ./blinky/src/timer32.o

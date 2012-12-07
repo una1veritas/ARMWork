@@ -1,0 +1,29 @@
+eclipse.preferences.version=1
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/FPOPT/delimiter=\:
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/FPOPT/operation=replace
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/FPOPT/value=${FP_SOFT}
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/FP_HARD/delimiter=\:
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/FP_HARD/operation=replace
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/FP_HARD/value=-mfloat-abi\=hard -mfpu\=fpv4-sp-d16 -fsingle-precision-constant
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/FP_SOFT/delimiter=\:
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/FP_SOFT/operation=append
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/FP_SOFT/value=-mfloat-abi\=soft
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/PATH/delimiter=;
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/PATH/operation=append
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/PATH/value=${Path}
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/append=true
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/appendContributed=true
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/FPOPT/delimiter=\:
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/FPOPT/operation=replace
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/FPOPT/value=${FP_SOFT}
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/FP_HARD/delimiter=\:
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/FP_HARD/operation=replace
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/FP_HARD/value=-mfloat-abi\=hard -mfpu\=fpv4-sp-d16 -fsingle-precision-constant
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/FP_SOFT/delimiter=\:
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/FP_SOFT/operation=append
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/FP_SOFT/value=-mfloat-abi\=soft
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/PATH/delimiter=;
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/PATH/operation=replace
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/PATH/value=C\:\\MinGW\\msys\\1.0\\home\\Sin\\arm-none-eabi\\bin;C\:\\Program Files\\eclipse;C\:\\MinGW\\msys\\1.0\\bin\\;C\:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v5.0\\bin\\;C\:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v5.0\\libnvvp\\;C\:\\Windows\\system32;C\:\\Windows;C\:\\Windows\\System32\\Wbem;C\:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C\:\\Program Files (x86)\\QuickTime\\QTSystem\\;${Path}
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/append=true
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/appendContributed=true
