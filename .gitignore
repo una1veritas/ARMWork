@@ -1,0 +1,4 @@
+*.mk
+*.o
+*.elf
+.metadata
