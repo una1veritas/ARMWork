@@ -10,10 +10,15 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 
 #define HEX 16
 #define DEC 10
 #define BIN 2
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #ifdef abs
 #undef abs
@@ -27,13 +32,8 @@ typedef uint16_t word;
 typedef uint32_t uint32;
 typedef uint64_t uint64;
 
-//typedef uint16_t size_t;
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef uint8_t boolean;
+
 #define true 0xff
 #define false 0x00
 

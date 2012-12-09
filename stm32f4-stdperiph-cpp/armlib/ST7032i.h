@@ -2,7 +2,9 @@
 #ifndef ST7032i_h
 #define ST7032i_h
 
-#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /*
 #if ARDUINO >= 100
@@ -15,12 +17,15 @@
 */
 #include "armcore.h"
 #include "gpio.h"
+
 #include "CharacterLCD.h"
 
-static const byte DEFAULT_I2C_ADDRESS = 0b0111110;
+
 
 class ST7032i {
-	  uint8_t _displayfunction;
+	static const byte DEFAULT_I2C_ADDRESS = 0b0111110;
+
+	uint8_t _displayfunction;
 	  uint8_t _displaycontrol;
 	  uint8_t _displaymode;
 	  uint8_t _initialized;
@@ -32,16 +37,23 @@ class ST7032i {
 	byte i2c_address;
 	GPIOPin pin_bklight;
 
-
 	void command(byte value);
-	size_t write(byte value);
 
 public:
 
 	void init(I2CBus * wirex);
 	void begin();
-	
-	size_t print(const char * str);
+
+    uint16_t write(const uint8_t);
+    uint16_t write(uint8_t * a, uint16_t n);
+
+    uint16_t print(const char c) { return write((uint8_t)c); }
+    uint16_t print(const char * str) {
+		uint16_t i;
+		for (i = 0; str[i]; i++)
+			write((uint8_t)str[i]);
+		return i; // assume success
+	}
 
 	//#if ARDUINO >= 100
 //  virtual size_t println(void) { wrap(); return 1; }
@@ -55,12 +67,24 @@ public:
 	void home();
 	void clear();
 	void setCursor(uint8_t c, uint8_t r);
-	void display();
 	void noDisplay();
 	void setContrast(byte c);
-//	void ST7032i_backlightOn(ST7032i * lcd); // { digitalWrite(pin_bklight, LOW); }
-//	void ST7032i_backlightOff(ST7032i * lcd); // { digitalWrite(pin_bklight, HIGH); }
 
+	void display();
+	void noBlink();
+	void blink();
+	void noCursor();
+	void showCursor();
+	void scrollDisplayLeft();
+	void scrollDisplayRight();
+	void leftToRight();
+	void rightToLeft();
+	void autoscroll();
+	void noAutoscroll();
+	void createChar(uint8_t location, uint8_t charmap[]);
+
+	//	void ST7032i_backlightOn(ST7032i * lcd); // { digitalWrite(pin_bklight, LOW); }
+	//	void ST7032i_backlightOff(ST7032i * lcd); // { digitalWrite(pin_bklight, HIGH); }
 };
 
 #endif

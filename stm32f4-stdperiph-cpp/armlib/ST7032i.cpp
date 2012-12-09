@@ -10,6 +10,9 @@
 
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+
 /*
  #if ARDUINO >= 100
  #include <Arduino.h>
@@ -17,6 +20,7 @@
  #include <WProgram.h>
  #endif
  */
+#include "armcore.h"
 #include "delay.h"
 #include "i2c.h"
 #include "ST7032i.h"
@@ -79,18 +83,25 @@ void ST7032i::command(uint8_t value) {
 	uint8_t buf[2];
 	buf[0] = (byte) 0x00;
 	buf[1] = value;
-	i2c_transmit(wirex, i2c_address, buf, 2);
+	i2c_transmit(wirex, i2c_address, buf, (uint16_t)2);
 	delay_us(CMDDELAY);
 }
 
 //
-size_t ST7032i::write(uint8_t value) {
+uint16_t ST7032i::write(uint8_t value) {
 	uint8_t buf[2];
 	buf[0] = 0b01000000;
 	buf[1] = value & 0xff;
-	i2c_transmit(wirex,i2c_address, buf, 2);
+	i2c_transmit(wirex,i2c_address, buf, (uint16_t)2);
 	delay_us(CMDDELAY);
 	return 1; // assume success
+}
+
+uint16_t ST7032i::write(uint8_t * a, uint16_t n) {
+	for(uint16_t i = 0; i < n; i++) {
+		write((unsigned char) a[n]);
+	}
+	return n;
 }
 
 void ST7032i::begin() {
@@ -133,12 +144,6 @@ void ST7032i::begin() {
 	command(LCD_ENTRYMODESET | _displaymode);
 }
 
-size_t ST7032i::print(const char * str) {
-	uint16_t i;
-	for (i = 0; str[i]; i++)
-		write((uint8_t)str[i]);
-	return i; // assume success
-}
 
 void ST7032i::setContrast(byte val) {
 	contrast = 0x7f & val;
@@ -183,7 +188,7 @@ void ST7032i::display() {
 	_displaycontrol |= LCD_DISPLAYON;
 	command(LCD_DISPLAYCONTROL | _displaycontrol);
 }
-/*
+
 void ST7032i::noBlink() {
 	_displaycontrol &= ~LCD_BLINKON;
 	command(LCD_DISPLAYCONTROL | _displaycontrol);
@@ -196,7 +201,7 @@ void ST7032i::blink() {
 
 void ST7032i::noCursor() {
 	_displaycontrol &= ~LCD_CURSORON;
-	command(LD_DISPLAYCONTROL | this->_displaycontrol);
+	command(LCD_DISPLAYCONTROL | _displaycontrol);
 }
 
 void ST7032i::showCursor() {
@@ -240,4 +245,5 @@ void ST7032i::createChar(uint8_t location, uint8_t charmap[]) {
 		write(charmap[i]);
 	}
 }
-*/
+
+
