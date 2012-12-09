@@ -6,14 +6,13 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdint.h>
-#include <math.h>
 
 #include <stm32f4xx.h>
 
 #include "stm32f4xx_it.h"
 
+#include "armcore.h"
 #include "gpio.h"
 #include "delay.h"
 #include "usart.h"
@@ -63,7 +62,7 @@ int main(void) {
 	lcd.init(&Wire1);
 	lcd.begin();
 	lcd.setContrast(46);
-	lcd.print("Hi there!");       // Classic Hello World!
+	lcd.print("Hello there!");       // Classic Hello World!
 
 	bits = GPIO_ReadOutputData(GPIOD );
 	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
@@ -108,7 +107,7 @@ int main(void) {
 		usart_print(&Serial3, "\n");
 
 		lcd.setCursor(0, 1);
-		lcd.print(tmp);
+		lcd.print((const char *)tmp);
 
 		digitalWrite(PB12, LOW);
 		spi_transfer(SPI2, (uint8_t *) tmp, 8);
