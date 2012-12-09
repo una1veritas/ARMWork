@@ -18,7 +18,7 @@
 					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.release.1729894382." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.1987248311" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base">
 							<option id="cdt.managedbuild.option.gnu.cross.prefix.77040219" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix" value="arm-none-eabi-" valueType="string"/>
-							<option id="cdt.managedbuild.option.gnu.cross.path.1319109573" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" value="C:\Program Files (x86)\LinaroGCC\4.6-2012q2\bin;C:\msys\1.0\bin" valueType="string"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.1319109573" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" value="C:\Program Files (x86)\Linaro\4.6-2012q2\bin" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.1240216370" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
 							<builder buildPath="${workspace_loc:/stm32f4-stdperiph/build_flash}" id="cdt.managedbuild.builder.gnu.cross.109233926" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.88086512" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
@@ -107,7 +107,7 @@
 							<option id="cdt.managedbuild.option.gnu.cross.prefix.146123997" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix" value="arm-none-eabi-" valueType="string"/>
 							<option id="cdt.managedbuild.option.gnu.cross.path.1519088839" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" value="" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.1355842479" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
-							<builder buildPath="${workspace_loc:/stm32f4-stdperiph/build_win}" id="org.eclipse.cdt.build.core.internal.builder.699469979" superClass="org.eclipse.cdt.build.core.internal.builder"/>
+							<builder buildPath="${workspace_loc:/stm32f4-stdperiph/build_win}" id="org.eclipse.cdt.build.core.internal.builder.699469979" keepEnvironmentInBuildfile="false" name="CDT Internal Builder" superClass="org.eclipse.cdt.build.core.internal.builder"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1429253200" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
 								<option id="gnu.c.compiler.option.include.paths.2005049030" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-stdperiph}&quot;"/>
@@ -223,9 +223,6 @@
 				</scannerInfoProvider>
 			</profile>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.release.1729894382;cdt.managedbuild.config.gnu.cross.exe.release.1729894382.;cdt.managedbuild.tool.gnu.c.compiler.mingw.base.1887362911;cdt.managedbuild.tool.gnu.c.compiler.input.525362444">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
-		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.release.1729894382;cdt.managedbuild.config.gnu.cross.exe.release.1729894382.;cdt.managedbuild.tool.gnu.cross.c.compiler.498022732;cdt.managedbuild.tool.gnu.c.compiler.input.679403152">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 			<profile id="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC">
@@ -239,10 +236,13 @@
 				</scannerInfoProvider>
 			</profile>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.release.1729894382;cdt.managedbuild.config.gnu.cross.exe.release.1729894382.;cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.2129574503;cdt.managedbuild.tool.gnu.cpp.compiler.input.1227394000">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.release.1729894382;cdt.managedbuild.config.gnu.cross.exe.release.1729894382.;cdt.managedbuild.tool.gnu.c.compiler.mingw.base.1887362911;cdt.managedbuild.tool.gnu.c.compiler.input.525362444">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973;cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973.;cdt.managedbuild.tool.gnu.cross.cpp.compiler.1221591878;cdt.managedbuild.tool.gnu.cpp.compiler.input.78559047">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.release.1729894382;cdt.managedbuild.config.gnu.cross.exe.release.1729894382.;cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.2129574503;cdt.managedbuild.tool.gnu.cpp.compiler.input.1227394000">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973;cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973.;cdt.managedbuild.tool.gnu.cross.c.compiler.1429253200;cdt.managedbuild.tool.gnu.c.compiler.input.702201575">
