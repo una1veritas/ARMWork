@@ -3,4 +3,5 @@
 *.elf
 *.d
 *.mk
+*.lst
 .metadata
