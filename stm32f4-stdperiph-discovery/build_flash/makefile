@@ -40,24 +40,24 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: stm32f4-stdperiph.elf
+all: stm32f4-stdperiph-discovery.elf
 
 # Tool invocations
-stm32f4-stdperiph.elf: $(OBJS) $(USER_OBJS)
+stm32f4-stdperiph-discovery.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross G++ Linker'
-	arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mlittle-endian -mfloat-abi=soft -nostartfiles -Wl,-T,/Users/sin/Documents/Eclipse/ARMWork/stm32f4-stdperiph/stm32f4xx_flash.ld -o "stm32f4-stdperiph.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mlittle-endian -mfloat-abi=soft -nostartfiles -Wl,-T,/Users/sin/Documents/Eclipse/ARMWork/stm32f4-stdperiph-discovery/stm32f4xx_flash.ld -o "stm32f4-stdperiph-discovery.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
 
 # Other Targets
 clean:
-	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(CC_DEPS)$(CPP_DEPS)$(EXECUTABLES)$(CXX_DEPS)$(C_UPPER_DEPS) stm32f4-stdperiph.elf
+	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(CC_DEPS)$(CPP_DEPS)$(EXECUTABLES)$(CXX_DEPS)$(C_UPPER_DEPS) stm32f4-stdperiph-discovery.elf
 	-@echo ' '
 
 post-build:
-	-arm-none-eabi-objcopy -Obinary stm32f4-stdperiph.elf flash.bin; arm-none-eabi-objdump -S stm32f4-stdperiph.elf > stm32f4-stdperiph.lst
+	-arm-none-eabi-objcopy -Obinary stm32f4-stdperiph-discovery.elf flash.bin; arm-none-eabi-objdump -S stm32f4-stdperiph-discovery.elf > stm32f4-stdperiph-discovery.lst
 	-@echo ' '
 
 .PHONY: all clean dependents
