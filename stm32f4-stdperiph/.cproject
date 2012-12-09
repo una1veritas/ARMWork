@@ -25,10 +25,10 @@
 								<option id="gnu.c.compiler.option.include.paths.2005248793" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-stdperiph/armcore}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-stdperiph}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/CMSIS/Include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/CMSIS/STM32F4xx}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/armlib}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/STM32F4xx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/armlib}&quot;"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1797705740" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER=1"/>
@@ -43,10 +43,10 @@
 								<option id="gnu.cpp.compiler.option.include.paths.291116477" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-stdperiph/armcore}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-stdperiph}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/CMSIS/Include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/CMSIS/STM32F4xx}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/armlib}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/STM32F4xx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/armlib}&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.301946256" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER=1"/>
@@ -71,10 +71,10 @@
 								<option id="gnu.both.asm.option.include.paths.1961570575" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-stdperiph/armcore}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-stdperiph}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/CMSIS/Include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/CMSIS/STM32F4xx}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/armlib}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/STM32F4xx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/armlib}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1767375848" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
@@ -112,15 +112,15 @@
 								<option id="gnu.c.compiler.option.include.paths.2005049030" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-stdperiph}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-stdperiph/armcore}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/CMSIS/Include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/CMSIS/STM32F4xx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/STM32F4xx}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-stdperiph/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/STM32F4xx}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/armlib}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/armlib}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/armlib}&quot;"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.305670085" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER=1"/>
@@ -135,15 +135,15 @@
 								<option id="gnu.cpp.compiler.option.include.paths.245466030" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-stdperiph}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-stdperiph/armcore}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/CMSIS/Include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/CMSIS/STM32F4xx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/STM32F4xx}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-stdperiph/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/STM32F4xx}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/armlib}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/armlib}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/armlib}&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.215102988" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER=1"/>
@@ -168,15 +168,15 @@
 								<option id="gnu.both.asm.option.include.paths.1842051412" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-stdperiph}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-stdperiph/armcore}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/CMSIS/Include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/CMSIS/STM32F4xx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/Include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/STM32F4xx}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-stdperiph/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/STM32F4xx}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/armlib}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32library/armlib}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/armlib}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.654862068" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
