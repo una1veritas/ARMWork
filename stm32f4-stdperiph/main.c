@@ -4,10 +4,12 @@
  *  Created on: 2012/10/08
  *      Author: sin
  */
-#include <stdint.h>
-#include <math.h>
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
+#include <math.h>
+
 #include <stm32f4xx.h>
 
 #include "stm32f4xx_it.h"

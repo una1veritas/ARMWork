@@ -45,7 +45,7 @@ all: stm32f4-i2c_lcd.elf
 stm32f4-i2c_lcd.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross G++ Linker'
-	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mlittle-endian  -mfloat-abi=soft -nostartfiles -Wl,-T,/Users/sin/Documents/Eclipse/Workspace/stm32f4-i2c_lcd/stm32f4xx_flash.ld -o "stm32f4-i2c_lcd.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mlittle-endian  -mfloat-abi=soft -nostartfiles -Wl,-T,C:/Users/Sin/Documents/Eclipse/ARMWork/stm32f4-i2c_lcd/stm32f4xx_flash.ld -o "stm32f4-i2c_lcd.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build

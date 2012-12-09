@@ -9,7 +9,7 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include armcore/subdir.mk
--include STM32F4xx_StdPeriph_Driver/src/subdir.mk
+-include StdPeriph_Driver/subdir.mk
 -include subdir.mk
 -include objects.mk
 
@@ -39,24 +39,24 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: stm32f4-usart.elf
+all: stm32f4-i2c_rtc.elf
 
 # Tool invocations
-stm32f4-usart.elf: $(OBJS) $(USER_OBJS)
+stm32f4-i2c_rtc.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross G++ Linker'
-	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mlittle-endian  -mfloat-abi=soft -nostartfiles -Wl,-T,C:/Users/Sin/Documents/Eclipse/ARMWork/stm32f4-usart/stm32f4xx_flash.ld -o "stm32f4-usart.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mlittle-endian  -mfloat-abi=soft -nostartfiles -Wl,-T,C:/Users/Sin/Documents/Eclipse/ARMWork/stm32f4-i2c_rtc/stm32f4xx_flash.ld -o "stm32f4-i2c_rtc.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
 
 # Other Targets
 clean:
-	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(CC_DEPS)$(CPP_DEPS)$(EXECUTABLES)$(CXX_DEPS)$(C_UPPER_DEPS) stm32f4-usart.elf
+	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(CC_DEPS)$(CPP_DEPS)$(EXECUTABLES)$(CXX_DEPS)$(C_UPPER_DEPS) stm32f4-i2c_rtc.elf
 	-@echo ' '
 
 post-build:
-	-arm-none-eabi-objcopy -Obinary stm32f4-usart.elf flash.bin; arm-none-eabi-objdump -S stm32f4-usart.elf > stm32f4-usart.lst
+	-arm-none-eabi-objcopy -Obinary stm32f4-i2c_rtc.elf flash.bin; arm-none-eabi-objdump -S stm32f4-i2c_rtc.elf > stm32f4-i2c_rtc.lst
 	-@echo ' '
 
 .PHONY: all clean dependents
