@@ -4,14 +4,10 @@
  *  Created on: 2012/10/08
  *      Author: sin
  */
-
-#include <stdio.h>
-#include <stdlib.h>
-<<<<<<< HEAD
 #include <stdint.h>
 #include <math.h>
-=======
->>>>>>> origin/@home
+#include <stdio.h>
+#include <stdlib.h>
 
 #include <stm32f4xx.h>
 
@@ -42,12 +38,19 @@ int main(void) {
 	usart_print(&Serial3, "How many eyes does Mississipi river have?\n");
 	usart_print(&Serial3, "Quick brown fox jumped over the lazy dog!\n");
 	usart_flush(&Serial3);
-/*
+
 	RCC_ClocksTypeDef RCC_Clocks;
 	RCC_GetClocksFreq(&RCC_Clocks);
 
+	usart_print(&Serial3, "RCC_Clocks called.\n");
+	usart_flush(&Serial3);
+
+	usart_print(&Serial3, "sprintf ");
+	usart_flush(&Serial3);
 	sprintf(tmp, "SYSCLK = %ld, ", RCC_Clocks.SYSCLK_Frequency);
-	usart_print(&Serial3, tmp);
+	usart_print(&Serial3, " passed.\n");
+	usart_flush(&Serial3);
+/*	usart_print(&Serial3, tmp);
 	sprintf(tmp, "HCLK = %ld, ", RCC_Clocks.HCLK_Frequency);
 	usart_print(&Serial3, tmp);
 	sprintf(tmp, "PCLK1 = %ld, ", RCC_Clocks.PCLK1_Frequency);
@@ -56,13 +59,13 @@ int main(void) {
 	usart_print(&Serial3, tmp);
 	usart_flush(&Serial3);
 */
-
 	GPIOMode(PinPort(PD12),
 			(PinBit(PD12) | PinBit(PD13) | PinBit(PD14) | PinBit(PD15)), OUTPUT,
 			FASTSPEED, PUSHPULL, NOPULL);
-	spi_begin(SPI2, PB13, PB14, PB15, PB12);
-	digitalWrite(PB12, HIGH);
+//	spi_begin(SPI2, PB13, PB14, PB15, PB12);
+//	digitalWrite(PB12, HIGH);
 
+	/*
 	usart_print(&Serial3, "Begin I2C1.\n");
 	usart_flush(&Serial3);
 	i2c_begin(&Wire1, 100000);
@@ -74,7 +77,7 @@ int main(void) {
 	usart_flush(&Serial3);
 	ST7032i_setContrast(&lcd, 40);
 	ST7032i_print(&lcd, "Hi there!");       // Classic Hello World!
-
+*/
 	bits = GPIO_ReadOutputData(GPIOD );
 	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
 	delay_ms(intval);
@@ -112,18 +115,20 @@ int main(void) {
 
 		while (tnow == millis() / 1000);
 		tnow = millis() / 1000;
-
+/*
 		sprintf(tmp, "%04ld", millis());
 		usart_print(&Serial3, tmp);
 		usart_print(&Serial3, "\n");
-
+*/
+		usart_print(&Serial3, ".");
+		/*
 		ST7032i_setCursor(&lcd, 0, 1);
 		ST7032i_print(&lcd, tmp);
 
 		digitalWrite(PB12, LOW);
 		spi_transfer(SPI2, (uint8_t *) tmp, 8);
 		digitalWrite(PB12, HIGH);
-
+*/
 		/*
 		 dval = (uint32) (100.0f + 64*sinf( (count % (uint32)(3.14159 * 2 * 32))/32.0f));
 		 usart3.println(dval);
