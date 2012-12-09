@@ -2,6 +2,8 @@
 #ifndef ST7032i_h
 #define ST7032i_h
 
+#include <stdint.h>
+
 /*
 #if ARDUINO >= 100
 #include <stdio.h>
@@ -17,7 +19,7 @@
 
 static const byte DEFAULT_I2C_ADDRESS = 0b0111110;
 
-typedef struct _ST7032i {
+class ST7032i {
 	  uint8_t _displayfunction;
 	  uint8_t _displaycontrol;
 	  uint8_t _displaymode;
@@ -29,12 +31,17 @@ typedef struct _ST7032i {
 	byte contrast;
 	byte i2c_address;
 	GPIOPin pin_bklight;
-} ST7032i;
 
-	void ST7032i::init(ST7032i * lcd, I2CBus * wirex);
-	void ST7032i_begin(ST7032i * lcd);
+
+	void command(byte value);
+	size_t write(byte value);
+
+public:
+
+	void init(I2CBus * wirex);
+	void begin();
 	
-	size_t ST7032i_print(ST7032i * lcd, const char * str);
+	size_t print(const char * str);
 
 	//#if ARDUINO >= 100
 //  virtual size_t println(void) { wrap(); return 1; }
@@ -45,15 +52,15 @@ typedef struct _ST7032i {
 //	void wrap();
 //	void ST7032i_clearLine(ST7032i * lcd);
 
-	void ST7032i_home(ST7032i * lcd);
-	void ST7032i_clear(ST7032i * lcd);
-	void ST7032i_setCursor(ST7032i * lcd, uint8_t c, uint8_t r);
-	void ST7032i_display(ST7032i * lcd);
-	void ST7032i_noDisplay(ST7032i * lcd);
-	void ST7032i_setContrast(ST7032i * lcd, byte c);
+	void home();
+	void clear();
+	void setCursor(uint8_t c, uint8_t r);
+	void display();
+	void noDisplay();
+	void setContrast(byte c);
 //	void ST7032i_backlightOn(ST7032i * lcd); // { digitalWrite(pin_bklight, LOW); }
 //	void ST7032i_backlightOff(ST7032i * lcd); // { digitalWrite(pin_bklight, HIGH); }
 
-//};
+};
 
 #endif

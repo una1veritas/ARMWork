@@ -56,7 +56,7 @@ void ST7032i_command(ST7032i * lcd, byte value);
 size_t ST7032i_write(ST7032i * lcd, byte value);
 
 //
-void ST7032i_init(ST7032i * lcd, I2CBus * wx) {
+void ST7032i::init(ST7032i * lcd, I2CBus * wx) {
 	lcd->_numlines = 2;
 	lcd->_numcolumns = 16;
 	lcd->_position = 0;
