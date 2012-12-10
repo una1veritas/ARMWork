@@ -144,6 +144,16 @@ void ST7032i::begin() {
 	command(LCD_ENTRYMODESET | _displaymode);
 }
 
+<<<<<<< HEAD:stm32library/armlib/ST7032i.cpp
+=======
+
+uint16_t ST7032i::print(const char * str) {
+	uint16_t i;
+	for (i = 0; str[i]; i++)
+		write((uint8_t)str[i]);
+	return i; // assume success
+}
+>>>>>>> origin/@win:stm32library/armlib/ST7032i.cpp
 
 void ST7032i::setContrast(byte val) {
 	contrast = 0x7f & val;

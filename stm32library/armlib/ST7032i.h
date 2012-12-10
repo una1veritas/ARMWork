@@ -20,8 +20,6 @@
 
 #include "CharacterLCD.h"
 
-
-
 class ST7032i {
 	static const byte DEFAULT_I2C_ADDRESS = 0b0111110;
 
@@ -48,12 +46,7 @@ public:
     uint16_t write(uint8_t * a, uint16_t n);
 
     uint16_t print(const char c) { return write((uint8_t)c); }
-    uint16_t print(const char * str) {
-		uint16_t i;
-		for (i = 0; str[i]; i++)
-			write((uint8_t)str[i]);
-		return i; // assume success
-	}
+    uint16_t print(const char * str);
 
 	//#if ARDUINO >= 100
 //  virtual size_t println(void) { wrap(); return 1; }
