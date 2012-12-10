@@ -1,0 +1,22 @@
+/*
+ * util.c
+ *
+ *  Created on: 2012/11/04
+ *      Author: sin
+ */
+
+#include "armcore.h"
+#include "systick.h"
+
+/*
+size_t strlen(const char s[]) {
+	uint16_t n = 0;
+	while (s[n++]);
+	return n;
+}
+*/
+uint32_t millis(void) {
+	return SysTick_count();
+}
+
+
