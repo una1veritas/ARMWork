@@ -2,6 +2,10 @@
 #ifndef ST7032i_h
 #define ST7032i_h
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 /*
 #if ARDUINO >= 100
 #include <stdio.h>
@@ -13,12 +17,15 @@
 */
 #include "armcore.h"
 #include "gpio.h"
+
 #include "CharacterLCD.h"
 
-static const byte DEFAULT_I2C_ADDRESS = 0b0111110;
 
-typedef struct _ST7032i {
-	  uint8_t _displayfunction;
+
+class ST7032i {
+	static const byte DEFAULT_I2C_ADDRESS = 0b0111110;
+
+	uint8_t _displayfunction;
 	  uint8_t _displaycontrol;
 	  uint8_t _displaymode;
 	  uint8_t _initialized;
@@ -29,12 +36,24 @@ typedef struct _ST7032i {
 	byte contrast;
 	byte i2c_address;
 	GPIOPin pin_bklight;
-} ST7032i;
 
-	void ST7032i::init(ST7032i * lcd, I2CBus * wirex);
-	void ST7032i_begin(ST7032i * lcd);
-	
-	size_t ST7032i_print(ST7032i * lcd, const char * str);
+	void command(byte value);
+
+public:
+
+	void init(I2CBus * wirex);
+	void begin();
+
+    uint16_t write(const uint8_t);
+    uint16_t write(uint8_t * a, uint16_t n);
+
+    uint16_t print(const char c) { return write((uint8_t)c); }
+    uint16_t print(const char * str) {
+		uint16_t i;
+		for (i = 0; str[i]; i++)
+			write((uint8_t)str[i]);
+		return i; // assume success
+	}
 
 	//#if ARDUINO >= 100
 //  virtual size_t println(void) { wrap(); return 1; }
@@ -45,15 +64,27 @@ typedef struct _ST7032i {
 //	void wrap();
 //	void ST7032i_clearLine(ST7032i * lcd);
 
-	void ST7032i_home(ST7032i * lcd);
-	void ST7032i_clear(ST7032i * lcd);
-	void ST7032i_setCursor(ST7032i * lcd, uint8_t c, uint8_t r);
-	void ST7032i_display(ST7032i * lcd);
-	void ST7032i_noDisplay(ST7032i * lcd);
-	void ST7032i_setContrast(ST7032i * lcd, byte c);
-//	void ST7032i_backlightOn(ST7032i * lcd); // { digitalWrite(pin_bklight, LOW); }
-//	void ST7032i_backlightOff(ST7032i * lcd); // { digitalWrite(pin_bklight, HIGH); }
+	void home();
+	void clear();
+	void setCursor(uint8_t c, uint8_t r);
+	void noDisplay();
+	void setContrast(byte c);
 
-//};
+	void display();
+	void noBlink();
+	void blink();
+	void noCursor();
+	void showCursor();
+	void scrollDisplayLeft();
+	void scrollDisplayRight();
+	void leftToRight();
+	void rightToLeft();
+	void autoscroll();
+	void noAutoscroll();
+	void createChar(uint8_t location, uint8_t charmap[]);
+
+	//	void ST7032i_backlightOn(ST7032i * lcd); // { digitalWrite(pin_bklight, LOW); }
+	//	void ST7032i_backlightOff(ST7032i * lcd); // { digitalWrite(pin_bklight, HIGH); }
+};
 
 #endif
