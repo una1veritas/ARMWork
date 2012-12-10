@@ -26,6 +26,16 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>armcore</name>
+			<type>2</type>
+			<location>C:/Users/Sin/Documents/Eclipse/ARMWork/stm32library/armcore</location>
+		</link>
+		<link>
+			<name>armlib</name>
+			<type>2</type>
+			<location>C:/Users/Sin/Documents/Eclipse/ARMWork/stm32library/armlib</location>
+		</link>
+		<link>
 			<name>stdperiph_driver_src</name>
 			<type>2</type>
 			<location>C:/Users/Sin/Documents/Eclipse/ARMWork/STM32library/STM32F4xx_StdPeriph_Driver/src</location>
