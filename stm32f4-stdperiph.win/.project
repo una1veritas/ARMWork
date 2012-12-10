@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>stm32f4-i2c_lcd</name>
+	<name>stm32f4-stdperiph.win</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -26,14 +26,29 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>StdPeriph_Driver</name>
-			<type>2</type>
-			<location>C:/Users/Sin/Documents/Eclipse/Workspace/STM32library/STM32F4xx_StdPeriph_Driver/src</location>
-		</link>
-		<link>
 			<name>armcore</name>
 			<type>2</type>
-			<location>C:/Users/Sin/Documents/Eclipse/Workspace/STM32library/armcore</location>
+			<location>C:/Users/Sin/Documents/Eclipse/ARMWork/stm32library/armcore</location>
+		</link>
+		<link>
+			<name>armlib</name>
+			<type>2</type>
+			<location>C:/Users/Sin/Documents/Eclipse/ARMWork/stm32library/armlib</location>
+		</link>
+		<link>
+			<name>stdperiph_driver_src</name>
+			<type>2</type>
+			<location>C:/Users/Sin/Documents/Eclipse/ARMWork/stm32library/STM32F4xx_StdPeriph_Driver/src</location>
 		</link>
 	</linkedResources>
+	<variableList>
+		<variable>
+			<name>copy_PARENT</name>
+			<value>$%7BPARENT-2-PROJECT_LOC%7D/ARM/STM32F4-Discovery_FW_V1.1.0</value>
+		</variable>
+		<variable>
+			<name>copy_PARENT1</name>
+			<value>$%7Bcopy_PARENT%7D/Project/Peripheral_Examples/TIM_ComplementarySignals</value>
+		</variable>
+	</variableList>
 </projectDescription>

@@ -55,7 +55,7 @@ typedef struct _I2CBus {
 
 extern I2CBus Wire1, Wire2, Wire3;
 
-boolean i2c_begin(I2CBus * wirex, uint32_t clkspeed); //I2C_TypeDef * I2Cx, uint32_t clk);
+boolean i2c_begin(I2CBus * wirex, GPIOPin sda, GPIOPin scl, uint32_t clkspeed); //I2C_TypeDef * I2Cx, uint32_t clk);
 boolean i2c_start(I2CBus * wirex, uint8_t addr);
 boolean i2c_transmit(I2CBus * wirex, uint8_t addr, uint8_t * data, uint16_t length);
 //void i2c_receive(uint8_t addr, uint8_t * data, uint16_t nlimit);

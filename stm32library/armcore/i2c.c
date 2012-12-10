@@ -20,16 +20,27 @@ typedef enum __CommDirection {
 //I2C_Status i2c1_status;
 //CommDirection i2c1_direction;
 
-boolean i2c_begin(I2CBus * wirex, uint32_t clkspeed) {
+boolean i2c_begin(I2CBus * wirex, GPIOPin sda, GPIOPin scl, uint32_t clkspeed) {
 //	GPIO_InitTypeDef GPIO_InitStructure;
 	I2C_InitTypeDef I2C_InitStructure;
+	uint8_t af;
 
-	wirex->I2Cx = I2C1;
-	wirex->sda = PB9;
-	wirex->scl = PB8;
+	if ( wirex == &Wire2 ) {
+		wirex->I2Cx = I2C2;
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C2, ENABLE);
+		af = GPIO_AF_USART2;
+	} else if ( wirex == &Wire3 ) {
+		wirex->I2Cx = I2C3;
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C3, ENABLE);
+		af = GPIO_AF_USART3;
+	} else {
+		wirex->I2Cx = I2C1;
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1, ENABLE);
+		af = GPIO_AF_USART1;
+	}
+	wirex->sda = sda;
+	wirex->scl = scl;
 
-	/* I2C Periph clock enable */
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1, ENABLE); //  RCC_APB1PeriphClockCmd(I2C1_RCC, ENABLE);
 	/* GPIO Periph clock enable */
 	//RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE); // PB5 (SMBA), PB6 (SCL), PB9 (SDA)  // RCC_APB2PeriphClockCmd(I2C1_GPIO_RCC, ENABLE);
 	GPIOMode(PinPort(wirex->scl), PinBit(wirex->scl), GPIO_Mode_AF, GPIO_Speed_50MHz,
@@ -38,8 +49,8 @@ boolean i2c_begin(I2CBus * wirex, uint32_t clkspeed) {
 			GPIO_OType_OD, GPIO_PuPd_UP);
 
 	/* Configure I2C pins: SCL and SDA */
-	GPIO_PinAFConfig(PinPort(wirex->scl), PinSource(wirex->scl), GPIO_AF_I2C1 );
-	GPIO_PinAFConfig(PinPort(wirex->sda), PinSource(wirex->sda), GPIO_AF_I2C1 );
+	GPIO_PinAFConfig(PinPort(wirex->scl), PinSource(wirex->scl), af );
+	GPIO_PinAFConfig(PinPort(wirex->sda), PinSource(wirex->sda), af );
 
 	//#if defined (REMAP_I2C1)
 //Remap_I2C1_Configuration();

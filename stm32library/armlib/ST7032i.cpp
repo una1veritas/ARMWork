@@ -145,6 +145,13 @@ void ST7032i::begin() {
 }
 
 
+uint16_t ST7032i::print(const char * str) {
+	uint16_t i;
+	for (i = 0; str[i]; i++)
+		write((uint8_t)str[i]);
+	return i; // assume success
+}
+
 void ST7032i::setContrast(byte val) {
 	contrast = 0x7f & val;
 	command( 0b00111000); //function set
