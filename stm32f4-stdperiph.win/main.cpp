@@ -57,7 +57,7 @@ int main(void) {
 	spi_begin(SPI2, PB13, PB14, PB15, PB12);
 	digitalWrite(PB12, HIGH);
 
-	i2c_begin(&Wire1, PB9, PB8, 400000);
+	i2c_begin(&Wire1, PB9, PB8, 100000);
 	lcd.init(&Wire1);
 	lcd.begin();
 	lcd.setContrast(46);
