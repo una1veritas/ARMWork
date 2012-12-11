@@ -35,7 +35,7 @@ int main(void) {
 			"Happy are those who know they are spiritually poor; \n");
 	usart_print(&Serial3, "The kingdom of heaven belongs to them!\n");
 	usart_print(&Serial3, "How many eyes does Mississipi river have?\n");
-	usart_print(&Serial3, "Quick brown fox jumped over the lazy dog!\n");
+	usart_print(&Serial3, "If thou beest he; But O how fall'n!\n");
 	usart_flush(&Serial3);
 
 	RCC_ClocksTypeDef RCC_Clocks;
@@ -63,7 +63,7 @@ int main(void) {
 	lcd.setContrast(46);
 	lcd.print("Hello there!");       // Classic Hello World!
 	lcd.setCursor(0,1);
-	lcd.print("It's nice to see you.");
+	lcd.print("See you.");
 	delay_ms(1000);
 	lcd.clear();
 

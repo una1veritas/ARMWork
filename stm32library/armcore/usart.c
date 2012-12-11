@@ -15,7 +15,21 @@
 #include "delay.h"
 #include "usart.h"
 
-Serial Serial1, Serial2, Serial3, Serial4, Serial5, Serial6;
+enum {
+	USART1Serial = 0,
+	USART2Serial,
+	USART3Serial,
+	UART4Serial,
+	UART5Serial,
+	USART6Serial
+};
+
+Serial Serial1 = { USART1, 0, 0 },
+		Serial2 = { USART2, 0, 0 },
+		Serial3 = { USART3, 0, 0 },
+		Serial4 = { UART4, 0, 0 },
+		Serial5 = { UART5, 0, 0 },
+		Serial6 = { USART6, 0, 0 };
 USARTRing rxring[6], txring[6];
 
 void buffer_clear(USARTRing * r) {
@@ -67,52 +81,46 @@ void usart_begin(Serial * usx, GPIOPin rx, GPIOPin tx, uint32_t baud) {
 	uint8_t af = GPIO_AF_USART1;
 	IRQn_Type irq = USART1_IRQn;
 
-	if (usx == &Serial1) {
+	if (usx->USARTx == USART1 ) {
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
 		af = GPIO_AF_USART1;
 		irq = USART1_IRQn;
-		usx->usid = USART1Serial;
-		usx->USARTx = USART1;
+//		usx->USARTx = USART1;
 		usx->rxring = &rxring[USART1Serial];
 		usx->txring = &txring[USART1Serial];
-	} else if (usx == &Serial2) {
+	} else if (usx->USARTx == USART2 ) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
 		af = GPIO_AF_USART2;
 		irq = USART2_IRQn;
-		usx->usid = USART2Serial;
-		usx->USARTx = USART2;
+//		usx->USARTx = USART2;
 		usx->rxring = &rxring[USART2Serial];
 		usx->txring = &txring[USART2Serial];
-	} else if (usx == &Serial3) {
+	} else if (usx->USARTx == USART3 ) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
 		af = GPIO_AF_USART3;
 		irq = USART3_IRQn;
-		usx->usid = USART3Serial;
-		usx->USARTx = USART3;
+//		usx->USARTx = USART3;
 		usx->rxring = &rxring[USART3Serial];
 		usx->txring = &txring[USART3Serial];
-	} else if (usx == &Serial4) {
+	} else if (usx->USARTx == UART4 ) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);
 		af = GPIO_AF_UART4;
 		irq = UART4_IRQn;
-		usx->usid = UART4Serial;
-		usx->USARTx = UART4;
+//		usx->USARTx = UART4;
 		usx->rxring = &rxring[UART4Serial];
 		usx->txring = &txring[UART4Serial];
-	} else if (usx == &Serial5) {
+	} else if (usx->USARTx == UART5 ) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART5, ENABLE);
 		af = GPIO_AF_UART5;
 		irq = UART5_IRQn;
-		usx->usid = UART5Serial;
-		usx->USARTx = UART5;
+//		usx->USARTx = UART5;
 		usx->rxring = &rxring[UART5Serial];
 		usx->txring = &txring[UART5Serial];
 	} else { // Serial6
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART6, ENABLE);
 		af = GPIO_AF_USART6;
 		irq = USART6_IRQn;
-		usx->usid = USART6Serial;
-		usx->USARTx = USART6;
+//		usx->USARTx = USART6;
 		usx->rxring = &rxring[USART6Serial];
 		usx->txring = &txring[USART6Serial];
 	}
@@ -159,7 +167,7 @@ void usart_bare_write(Serial * usx, const uint16_t w) {
 
 void usart_write(Serial * usx, const uint16_t w) {
 	uint16_t waitcount = 3;
-	while (buffer_is_full(usx->txring) && (waitcount > 0) ) {
+	while (buffer_is_full(usx->txring) && (waitcount > 0)) {
 		delay_us(667);
 		waitcount--;
 	}
@@ -222,19 +230,20 @@ uint16_t usart_available(Serial * usx) {
 
 void USART1_IRQHandler(void) {
 	if (USART_GetITStatus(USART1, USART_IT_RXNE )) {
-		buffer_enque(Serial1.rxring,
-		//&rxring[USART1Serial],
+		buffer_enque(//Serial1.rxring,
+		&rxring[USART1Serial],
 				USART_ReceiveData(USART1 ));
 	}
 
 	if (USART_GetITStatus(USART1, USART_IT_TXE )) {
-		if (Serial1.rxring->count
-		//txring[USART1Serial].count
+		if (//Serial1.rxring->count
+		txring[USART1Serial].count
 				== 0) {
 			USART_ITConfig(USART1, USART_IT_TXE, (FunctionalState) DISABLE);
 			USART_ClearITPendingBit(USART1, USART_IT_TXE );
 		} else {
-			USART_SendData(USART1, buffer_deque(Serial1.txring)); // &txring[USART1Serial]) );
+			USART_SendData(USART1, buffer_deque(//Serial1.txring));
+					&txring[USART1Serial]) );
 		}
 	}
 }
