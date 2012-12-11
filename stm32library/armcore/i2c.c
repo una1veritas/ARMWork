@@ -11,7 +11,8 @@
 #include "delay.h"
 #include "i2c.h"
 
-I2CBus Wire1, Wire2, Wire3;
+I2CBus Wire1 = { I2C1, 0, 0, 0, 0, 0 }, Wire2 = { I2C2, 0, 0, 0, 0, 0 }, Wire3 =
+		{ I2C3, 0, 0, 0, 0, 0 };
 
 typedef enum __CommDirection {
 	NOT_DEFINED = 0, TRANSMITTER, RECEIVER,
@@ -23,23 +24,34 @@ typedef enum __CommDirection {
 boolean i2c_begin(I2CBus * wirex, GPIOPin sda, GPIOPin scl, uint32_t clkspeed) {
 //	GPIO_InitTypeDef GPIO_InitStructure;
 	I2C_InitTypeDef I2C_InitStructure;
+	uint8_t gpio_af = GPIO_AF_I2C1;
+	uint32_t periph_i2c = RCC_APB1Periph_I2C1;
 
-	wirex->I2Cx = I2C1;
-	wirex->sda = PB9;
-	wirex->scl = PB8;
+	wirex->sda = sda; //PB9;
+	wirex->scl = scl; //PB8;
+	if (wirex->I2Cx == I2C2 ) {
+		gpio_af = GPIO_AF_I2C2;
+		periph_i2c = RCC_APB1Periph_I2C2;
+	} else if (wirex->I2Cx == I2C3 ) {
+		gpio_af = GPIO_AF_I2C3;
+		periph_i2c = RCC_APB1Periph_I2C3;
+	} /* else if (wirex->I2Cx == I2C1 ) {
+		gpio_af = GPIO_AF_I2C1;
+		periph_i2c = RCC_APB1Periph_I2C1;
+	} */
 
 	/* I2C Periph clock enable */
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1, ENABLE); //  RCC_APB1PeriphClockCmd(I2C1_RCC, ENABLE);
+	RCC_APB1PeriphClockCmd(periph_i2c, ENABLE); //  RCC_APB1PeriphClockCmd(I2C1_RCC, ENABLE);
 	/* GPIO Periph clock enable */
 	//RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE); // PB5 (SMBA), PB6 (SCL), PB9 (SDA)  // RCC_APB2PeriphClockCmd(I2C1_GPIO_RCC, ENABLE);
-	GPIOMode(PinPort(wirex->scl), PinBit(wirex->scl), GPIO_Mode_AF, GPIO_Speed_50MHz,
-			GPIO_OType_OD, GPIO_PuPd_UP);
-	GPIOMode(PinPort(wirex->sda), PinBit(wirex->sda), GPIO_Mode_AF, GPIO_Speed_50MHz,
-			GPIO_OType_OD, GPIO_PuPd_UP);
+	GPIOMode(PinPort(wirex->scl), PinBit(wirex->scl), GPIO_Mode_AF,
+			GPIO_Speed_50MHz, GPIO_OType_OD, GPIO_PuPd_UP);
+	GPIOMode(PinPort(wirex->sda), PinBit(wirex->sda), GPIO_Mode_AF,
+			GPIO_Speed_50MHz, GPIO_OType_OD, GPIO_PuPd_UP);
 
 	/* Configure I2C pins: SCL and SDA */
-	GPIO_PinAFConfig(PinPort(wirex->scl), PinSource(wirex->scl), GPIO_AF_I2C1 );
-	GPIO_PinAFConfig(PinPort(wirex->sda), PinSource(wirex->sda), GPIO_AF_I2C1 );
+	GPIO_PinAFConfig(PinPort(wirex->scl), PinSource(wirex->scl), gpio_af); //GPIO_AF_I2C1 );
+	GPIO_PinAFConfig(PinPort(wirex->sda), PinSource(wirex->sda), gpio_af); //GPIO_AF_I2C1 );
 
 //#if defined (REMAP_I2C1)
 //Remap_I2C1_Configuration();
@@ -70,20 +82,23 @@ boolean i2c_begin(I2CBus * wirex, GPIOPin sda, GPIOPin scl, uint32_t clkspeed) {
 	return true;
 }
 
-boolean i2c_transmit(I2CBus * wirex, uint8_t addr, uint8_t * data, uint16_t length) {
+boolean i2c_transmit(I2CBus * wirex, uint8_t addr, uint8_t * data,
+		uint16_t length) {
 	uint16_t i;
 	uint16_t wc;
 
 	wirex->mode = I2C_MODE_MASTERTRANSMITTER;
 	//
-	if ( !i2c_start(wirex, addr) )
+	if (!i2c_start(wirex, addr))
 		return false;
 
-	for (i=0; i<length; i++ ) {
+	for (i = 0; i < length; i++) {
 		I2C_SendData(wirex->I2Cx, data[i]);
 		wirex->status = BYTE_TRANSMITTING;
 		// Test on EV8 and clear it
-		for(wc = 5; !I2C_CheckEvent(wirex->I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED); wc--) {
+		for (wc = 5;
+				!I2C_CheckEvent(wirex->I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED );
+				wc--) {
 			if (wc == 0)
 				return false;
 			delay_us(667);
@@ -101,13 +116,14 @@ boolean i2c_transmit(I2CBus * wirex, uint8_t addr, uint8_t * data, uint16_t leng
 	return true;
 }
 
-boolean i2c_receive(I2CBus * wirex, uint8_t addr, uint8_t req, uint8_t * recv, uint16_t lim) {
+boolean i2c_receive(I2CBus * wirex, uint8_t addr, uint8_t req, uint8_t * recv,
+		uint16_t lim) {
 	uint16_t i;
 	uint16_t wc;
 
 	wirex->mode = I2C_MODE_MASTERRECEIVER;
 	//
-	if ( !i2c_start(wirex, addr) )
+	if (!i2c_start(wirex, addr))
 		return false;
 
 	/* Send the EEPROM's internal address to read from: MSB of the address first */
@@ -115,7 +131,9 @@ boolean i2c_receive(I2CBus * wirex, uint8_t addr, uint8_t req, uint8_t * recv, u
 	wirex->status = BYTE_TRANSMITTING;
 	/* Test on EV8 and clear it */
 
-	for (wc = 5; !I2C_CheckEvent(wirex->I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED ); wc--) {
+	for (wc = 5;
+			!I2C_CheckEvent(wirex->I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED );
+			wc--) {
 		if (wc == 0)
 			return false;
 		delay_us(667);
@@ -125,7 +143,8 @@ boolean i2c_receive(I2CBus * wirex, uint8_t addr, uint8_t req, uint8_t * recv, u
 	/* Send STRAT condition a second time */
 	I2C_GenerateSTART(wirex->I2Cx, ENABLE);
 	/* Test on EV5 and clear it */
-	for (wc = 5; !I2C_CheckEvent(wirex->I2Cx, I2C_EVENT_MASTER_MODE_SELECT ); wc--) {
+	for (wc = 5; !I2C_CheckEvent(wirex->I2Cx, I2C_EVENT_MASTER_MODE_SELECT );
+			wc--) {
 		if (wc == 0)
 			return false;
 		delay_us(667);
@@ -135,7 +154,9 @@ boolean i2c_receive(I2CBus * wirex, uint8_t addr, uint8_t req, uint8_t * recv, u
 	/* Send EEPROM address for read */
 	I2C_Send7bitAddress(wirex->I2Cx, addr << 1, I2C_Direction_Receiver );
 	/* Test on EV6 and clear it */
-	for (wc = 5; !I2C_CheckEvent(wirex->I2Cx, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED ); wc--) {
+	for (wc = 5;
+			!I2C_CheckEvent(wirex->I2Cx,
+					I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED ); wc--) {
 		if (wc == 0)
 			return false;
 		delay_us(667);
@@ -143,14 +164,16 @@ boolean i2c_receive(I2CBus * wirex, uint8_t addr, uint8_t req, uint8_t * recv, u
 	wirex->status = SRC_ADDRESS_SENT;
 	for (i = 1; i < lim; i++) {
 		wirex->status = RECEIVE_BYTE_READY;
-		for(wc = 5; !I2C_CheckEvent(wirex->I2Cx, I2C_EVENT_MASTER_BYTE_RECEIVED ); wc--) {
+		for (wc = 5;
+				!I2C_CheckEvent(wirex->I2Cx, I2C_EVENT_MASTER_BYTE_RECEIVED );
+				wc--) {
 			if (wc == 0)
 				return false;
 			delay_us(667);
 
 		}
 		/* Read a byte from the EEPROM */
-		*recv++ = I2C_ReceiveData(wirex->I2Cx );
+		*recv++ = I2C_ReceiveData(wirex->I2Cx);
 		wirex->status = BYTE_RECEIVED;
 	}
 	wirex->status = BEFORELAST_BYTE_RECEIVED;
@@ -161,13 +184,14 @@ boolean i2c_receive(I2CBus * wirex, uint8_t addr, uint8_t req, uint8_t * recv, u
 	I2C_GenerateSTOP(wirex->I2Cx, ENABLE);
 	wirex->status = LAST_BYTE_READY;
 
-	for(wc = 5; !I2C_CheckEvent(wirex->I2Cx, I2C_EVENT_MASTER_BYTE_RECEIVED ); wc--) {
+	for (wc = 5; !I2C_CheckEvent(wirex->I2Cx, I2C_EVENT_MASTER_BYTE_RECEIVED );
+			wc--) {
 		if (wc == 0)
 			return false;
 		delay_us(667);
 	}
 	/* Read a byte from the EEPROM */
-	*recv = I2C_ReceiveData(wirex->I2Cx );
+	*recv = I2C_ReceiveData(wirex->I2Cx);
 	wirex->status = RECEIVE_BYTE_COMPLETED;
 
 	/* Enable Acknowledgement to be ready for another reception */
@@ -182,7 +206,7 @@ boolean i2c_start(I2CBus * wirex, uint8_t addr) {
 	uint16_t wc;
 	//
 	wirex->status = NOT_READY;
-	for(wc = 5; I2C_GetFlagStatus(wirex->I2Cx, I2C_FLAG_BUSY ); wc--) {
+	for (wc = 5; I2C_GetFlagStatus(wirex->I2Cx, I2C_FLAG_BUSY ); wc--) {
 		if (wc == 0)
 			return false;
 		delay_us(667);
@@ -192,7 +216,8 @@ boolean i2c_start(I2CBus * wirex, uint8_t addr) {
 	/* Send STRAT condition */
 	I2C_GenerateSTART(wirex->I2Cx, ENABLE);
 	/* Test on EV5 and clear it */
-	for (wc = 5; !I2C_CheckEvent(wirex->I2Cx, I2C_EVENT_MASTER_MODE_SELECT ); wc--) {
+	for (wc = 5; !I2C_CheckEvent(wirex->I2Cx, I2C_EVENT_MASTER_MODE_SELECT );
+			wc--) {
 		if (wc == 0)
 			return false;
 		delay_us(667);
@@ -200,9 +225,11 @@ boolean i2c_start(I2CBus * wirex, uint8_t addr) {
 	wirex->status = START_ISSUED;
 
 	/* Send address for write */
-	I2C_Send7bitAddress(wirex->I2Cx, addr << 1, I2C_Direction_Transmitter);
+	I2C_Send7bitAddress(wirex->I2Cx, addr << 1, I2C_Direction_Transmitter );
 	/* Test on EV6 and clear it */
-	for (wc = 5; !I2C_CheckEvent(wirex->I2Cx, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ); wc--) {
+	for (wc = 5;
+			!I2C_CheckEvent(wirex->I2Cx,
+					I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ); wc--) {
 		if (wc == 0)
 			return false;
 		delay_us(667);
