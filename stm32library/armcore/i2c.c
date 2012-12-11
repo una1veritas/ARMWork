@@ -22,13 +22,14 @@ typedef enum __CommDirection {
 //CommDirection i2c1_direction;
 
 boolean i2c_begin(I2CBus * wirex, GPIOPin sda, GPIOPin scl, uint32_t clkspeed) {
-//	GPIO_InitTypeDef GPIO_InitStructure;
 	I2C_InitTypeDef I2C_InitStructure;
+	// set default to I2C1
 	uint8_t gpio_af = GPIO_AF_I2C1;
 	uint32_t periph_i2c = RCC_APB1Periph_I2C1;
 
 	wirex->sda = sda; //PB9;
 	wirex->scl = scl; //PB8;
+
 	if (wirex->I2Cx == I2C2 ) {
 		gpio_af = GPIO_AF_I2C2;
 		periph_i2c = RCC_APB1Periph_I2C2;

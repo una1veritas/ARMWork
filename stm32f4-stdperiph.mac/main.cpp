@@ -20,7 +20,6 @@
 #include "i2c.h"
 #include "ST7032i.h"
 
-
 ST7032i lcd;
 
 int main(void) {
@@ -58,11 +57,15 @@ int main(void) {
 	spi_begin(SPI2, PB13, PB14, PB15, PB12);
 	digitalWrite(PB12, HIGH);
 
-	i2c_begin(&Wire1, 100000);
+	i2c_begin(&Wire1, PB9, PB8, 100000);
 	lcd.init(&Wire1);
 	lcd.begin();
 	lcd.setContrast(46);
 	lcd.print("Hello there!");       // Classic Hello World!
+	lcd.setCursor(0,1);
+	lcd.print("It's nice to see you.");
+	delay_ms(1000);
+	lcd.clear();
 
 	bits = GPIO_ReadOutputData(GPIOD );
 	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
