@@ -9,7 +9,7 @@
 #define USART_H_
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdint.h>
 
 #include <stm32f4xx_usart.h>
 
@@ -19,12 +19,6 @@ extern "C" {
 
 #include "gpio.h"
 
-#define USART_BUFFER_SIZE 128
-typedef struct {
-	uint16_t buf[USART_BUFFER_SIZE];
-	int16_t head, tail;
-	uint16_t count;
-} USARTRing;
 
 typedef struct _Serial {
 //	USARTSerial usid;
