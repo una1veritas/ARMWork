@@ -186,72 +186,68 @@ uint16_t usart_available(Serial * usx) {
 	//return buffer_count(&rxring[usx->usid]);
 }
 
-// this is the interrupt request handler (IRQ) for ALL USART3 interrupts
+// this is the interrupt request handler (IRQ) for ALL USARTx interrupts
 
 void USART1_IRQHandler(void) {
 	if (USART_GetITStatus(USART1, USART_IT_RXNE )) {
-		buffer_enque(//Serial1.rxring,
-		&rxring[USART1Serial],
+		buffer_enque(&rxring[USART1Serial],
 				USART_ReceiveData(USART1 ));
 	}
 
 	if (USART_GetITStatus(USART1, USART_IT_TXE )) {
-		if (//Serial1.rxring->count
-		txring[USART1Serial].count
+		if (txring[USART1Serial].count
 				== 0) {
 			USART_ITConfig(USART1, USART_IT_TXE, (FunctionalState) DISABLE);
 			USART_ClearITPendingBit(USART1, USART_IT_TXE );
 		} else {
-			USART_SendData(USART1, buffer_deque(//Serial1.txring));
-					&txring[USART1Serial]) );
+			USART_SendData(USART1, buffer_deque(&txring[USART1Serial]) );
 		}
 	}
 }
 
 void USART2_IRQHandler(void) {
 	if (USART_GetITStatus(USART2, USART_IT_RXNE )) {
-		buffer_enque(Serial2.rxring //&rxring[USART2Serial]/
-				, USART_ReceiveData(USART2 ));
+		buffer_enque(&rxring[USART2Serial], USART_ReceiveData(USART2 ));
 	}
 	if (USART_GetITStatus(USART2, USART_IT_TXE )) {
-		if (Serial2.txring->count //txring[USART2Serial].count
+		if (txring[USART2Serial].count
 		== 0) {
 			USART_ITConfig(USART2, USART_IT_TXE, (FunctionalState) DISABLE);
 			USART_ClearITPendingBit(USART2, USART_IT_TXE );
 		} else {
-			USART_SendData(USART2, buffer_deque(Serial2.txring)); //&txring[USART2Serial]));
+			USART_SendData(USART2, buffer_deque(&txring[USART2Serial]));
 		}
 	}
 }
 
 void USART3_IRQHandler(void) {
 	if (USART_GetITStatus(USART3, USART_IT_RXNE )) {
-		buffer_enque(Serial3.rxring /*&rxring[USART3Serial]*/,
+		buffer_enque(&rxring[USART3Serial],
 				USART_ReceiveData(USART3 ));
 	}
 
 	if (USART_GetITStatus(USART3, USART_IT_TXE )) {
-		if (Serial3.txring->count == 0) {
+		if (rxring[USART3Serial].count == 0) {
 			USART_ITConfig(USART3, USART_IT_TXE, (FunctionalState) DISABLE);
 			USART_ClearITPendingBit(USART3, USART_IT_TXE );
 		} else {
 			USART_SendData(USART3,
-					buffer_deque(Serial3.txring /*&txring[USART3Serial]*/));
+					buffer_deque(&txring[USART3Serial]));
 		}
 	}
 }
 
 void UART4_IRQHandler(void) {
 	if (USART_GetITStatus(UART4, USART_IT_RXNE )) {
-		buffer_enque(Serial4.rxring, USART_ReceiveData(UART4 ));
+		buffer_enque(&rxring[UART4Serial], USART_ReceiveData(UART4 ));
 	}
 
 	if (USART_GetITStatus(UART4, USART_IT_TXE )) {
-		if (Serial4.txring->count == 0) {
+		if (rxring[UART4Serial].count == 0) {
 			USART_ITConfig(UART4, USART_IT_TXE, (FunctionalState) DISABLE);
 			USART_ClearITPendingBit(UART4, USART_IT_TXE );
 		} else {
-			USART_SendData(UART4, buffer_deque(Serial4.txring));
+			USART_SendData(UART4, buffer_deque(&rxring[UART4Serial]));
 		}
 	}
 }

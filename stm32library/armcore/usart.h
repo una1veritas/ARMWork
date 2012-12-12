@@ -17,6 +17,7 @@
 extern "C" {
 #endif
 
+#include "usartring.h"
 #include "gpio.h"
 
 
