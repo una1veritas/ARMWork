@@ -8,6 +8,9 @@ environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398
 environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/FP_SOFT/delimiter=\:
 environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/FP_SOFT/operation=append
 environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/FP_SOFT/value=-mfloat-abi\=soft
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/PATH/delimiter=;
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/PATH/operation=replace
+environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/PATH/value=C\:\\WinAVR-20100110\\bin;C\:\\WinAVR-20100110\\utils\\bin;C\:\\msys\\1.0\\bin\\;C\:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v5.0\\bin\\;C\:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v5.0\\libnvvp\\;C\:\\Windows\\system32;C\:\\Windows;C\:\\Windows\\System32\\Wbem;C\:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C\:\\Program Files (x86)\\QuickTime\\QTSystem\\;C\:\\Program Files (x86)\\GCCLinaro\\4.6-2012q2\\bin
 environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/append=true
 environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382.398252973/appendContributed=true
 environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/FPOPT/delimiter=\:

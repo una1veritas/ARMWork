@@ -30,7 +30,7 @@ int main(void) {
 
 	TIM2_timer_start();
 
-	usart_begin(&Serial3, PB11, PB10, 19200);
+	usart_begin(&Serial3, PC11, PC10, 19200);
 	usart_print(&Serial3,
 			"Happy are those who know they are spiritually poor; \n");
 	usart_print(&Serial3, "The kingdom of heaven belongs to them!\n");
@@ -61,7 +61,7 @@ int main(void) {
 	lcd.init(&Wire1);
 	lcd.begin();
 	lcd.setContrast(46);
-	lcd.print("Hello there!");       // Classic Hello World!
+	lcd.print("Hello?!");       // Classic Hello World!
 
 	bits = GPIO_ReadOutputData(GPIOD );
 	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
