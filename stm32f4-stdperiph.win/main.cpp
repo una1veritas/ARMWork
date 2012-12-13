@@ -35,7 +35,7 @@ int main(void) {
 			"Happy are those who know they are spiritually poor; \n");
 	usart_print(&Serial3, "The kingdom of heaven belongs to them!\n");
 	usart_print(&Serial3, "How many eyes does Mississipi river have?\n");
-	usart_print(&Serial3, "Quick brown fox jumped over the lazy dog!\n");
+	usart_print(&Serial3, "Question you have?\n");
 	usart_flush(&Serial3);
 
 	RCC_ClocksTypeDef RCC_Clocks;
@@ -61,7 +61,7 @@ int main(void) {
 	lcd.init(&Wire1);
 	lcd.begin();
 	lcd.setContrast(46);
-	lcd.print("Hello?!");       // Classic Hello World!
+	lcd.print("Hello er?!");       // Classic Hello World!
 
 	bits = GPIO_ReadOutputData(GPIOD );
 	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
