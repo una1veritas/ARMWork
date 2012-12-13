@@ -43,7 +43,7 @@
 		<link>
 			<name>stdperiph_driver_src</name>
 			<type>2</type>
-			<location>/Applications/eclipse/Eclipse.app/Contents/MacOS/C::/Users/Sin/Documents/Eclipse/ARMWork/stm32library/STM32F4xx_StdPeriph_Driver/src</location>
+			<location>/Applications/Eclipse/Eclipse.app/Contents/MacOS/C::/Users/Sin/Documents/Eclipse/ARMWork/stm32library/STM32F4xx_StdPeriph_Driver/src</location>
 		</link>
 	</linkedResources>
 	<variableList>
