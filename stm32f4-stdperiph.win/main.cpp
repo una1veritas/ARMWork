@@ -22,6 +22,8 @@
 
 ST7032i lcd;
 
+Serial Serial3;
+
 int main(void) {
 	uint16_t bits;
 	uint32_t intval = 40;
@@ -30,12 +32,12 @@ int main(void) {
 
 	TIM2_timer_start();
 
-	usart_begin(&Serial3, PC11, PC10, 19200);
+	usart_begin(USART3, &Serial3, PC11, PC10, 19200);
 	usart_print(&Serial3,
 			"Happy are those who know they are spiritually poor; \n");
 	usart_print(&Serial3, "The kingdom of heaven belongs to them!\n");
 	usart_print(&Serial3, "How many eyes does Mississipi river have?\n");
-	usart_print(&Serial3, "Question you have?\n");
+	usart_print(&Serial3, "This throne of king, this sceptre'd isle?\n");
 	usart_flush(&Serial3);
 
 	RCC_ClocksTypeDef RCC_Clocks;

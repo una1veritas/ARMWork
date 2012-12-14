@@ -19,15 +19,6 @@ extern "C" {
 
 #include "gpio.h"
 
-enum {
-	USART1Serial = 0,
-	USART2Serial,
-	USART3Serial,
-	UART4Serial,
-	UART5Serial,
-	USART6Serial
-};
-
 #define USART_BUFFER_SIZE 128
 typedef struct {
 	uint16_t buf[USART_BUFFER_SIZE];
@@ -41,7 +32,6 @@ typedef struct _Serial {
 	USARTRing * rxring, * txring;
 } Serial;
 
-extern Serial Serial1, Serial3, Serial3, Serial4, Serial5, Serial6;
 
 /*
 PB6 			USART1_TX
@@ -68,7 +58,7 @@ PC6 			USART6_TX
 PC7 			USART6_RX
 */
 
-void usart_begin(Serial * usx, GPIOPin rx, GPIOPin tx, const uint32_t baud);
+void usart_begin(USART_TypeDef * usartx, Serial * usx, GPIOPin rx, GPIOPin tx, const uint32_t baud);
 void usart_write(Serial * usx, const uint16_t w);
 void usart_print(Serial * usx, const char * s);
 uint16_t usart_read(Serial * usx);
