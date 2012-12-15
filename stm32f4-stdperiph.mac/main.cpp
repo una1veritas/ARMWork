@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #include <stm32f4xx.h>
+#include <stm32f4xx_usart.h>
 
 #include "stm32f4xx_it.h"
 
@@ -18,9 +19,12 @@
 #include "usart.h"
 #include "spi.h"
 #include "i2c.h"
+
 #include "ST7032i.h"
+#include "USARTSerial.h"
 
 ST7032i lcd;
+USARTSerial Serial3;
 
 int main(void) {
 	uint16_t bits;
@@ -30,26 +34,31 @@ int main(void) {
 
 	TIM2_timer_start();
 
-	usart_begin(&Serial3, PB11, PB10, 19200);
-	usart_print(&Serial3,
-			"Happy are those who know they are spiritually poor; \n");
-	usart_print(&Serial3, "The kingdom of heaven belongs to them!\n");
-	usart_print(&Serial3, "How many eyes does Mississipi river have?\n");
-	usart_print(&Serial3, "If thou beest he; But O how fall'n!\n");
-	usart_flush(&Serial3);
-
+	Serial3.begin(USART3, PC11, PC10, 19200);
+	Serial3.print("This royal throne of kings, this sceptred isle,\n"); /*
+"This earth of majesty, this seat of Mars,\n"
+"This other Eden, demi-paradise;\n"
+"This fortress, built by nature for herself,\n"
+"Against infection, and the hand of war;\n"
+"This happy breed of men, this little world;\n"
+"This precious stone set in the silver sea,\n"
+"Which serves it in the office of a wall,\n"
+"Or as a moat defensive to a house,\n"
+"Against the envy of less happier lands;\n"); */
+	Serial3.flush();
 	RCC_ClocksTypeDef RCC_Clocks;
 	RCC_GetClocksFreq(&RCC_Clocks);
 
-	sprintf(tmp, "SYSCLK = %ld, ", RCC_Clocks.SYSCLK_Frequency);
-	usart_print(&Serial3, tmp);
-	sprintf(tmp, "HCLK = %ld, ", RCC_Clocks.HCLK_Frequency);
-	usart_print(&Serial3, tmp);
-	sprintf(tmp, "PCLK1 = %ld, ", RCC_Clocks.PCLK1_Frequency);
-	usart_print(&Serial3, tmp);
-	sprintf(tmp, "PCLK2 = %ld\r\n", RCC_Clocks.PCLK2_Frequency);
-	usart_print(&Serial3, tmp);
-//	usart_flush(USART2Serial);
+	Serial3.print( "SYSCLK = ");
+	Serial3.print(RCC_Clocks.SYSCLK_Frequency);
+	Serial3.print( ", HCLK = ");
+	Serial3.print( RCC_Clocks.HCLK_Frequency);
+	Serial3.print( ", PCLK1 = ");
+	Serial3.print( RCC_Clocks.PCLK1_Frequency);
+	Serial3.print( ", PCLK2 = ");
+	Serial3.print(RCC_Clocks.PCLK2_Frequency);
+	Serial3.print(".\n");
+	Serial3.flush();
 
 	GPIOMode(PinPort(PD12),
 			(PinBit(PD12) | PinBit(PD13) | PinBit(PD14) | PinBit(PD15)), OUTPUT,
@@ -61,11 +70,7 @@ int main(void) {
 	lcd.init(&Wire1);
 	lcd.begin();
 	lcd.setContrast(46);
-	lcd.print("Hello there!");       // Classic Hello World!
-	lcd.setCursor(0,1);
-	lcd.print("See you.");
-	delay_ms(1000);
-	lcd.clear();
+	lcd.print("Dyre arm.");       // Classic Hello World!
 
 	bits = GPIO_ReadOutputData(GPIOD );
 	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
@@ -105,10 +110,11 @@ int main(void) {
 		while (tnow == millis() / 1000);
 		tnow = millis() / 1000;
 
-		sprintf(tmp, "%04ld", millis());
-		usart_print(&Serial3, tmp);
-		usart_print(&Serial3, "\n");
+		//Serial3.print(tmp);
+		Serial3.print(millis());
+		Serial3.print("\n");
 
+		sprintf(tmp, "%04ld.", millis());
 		lcd.setCursor(0, 1);
 		lcd.print((const char *)tmp);
 
@@ -116,20 +122,17 @@ int main(void) {
 		spi_transfer(SPI2, (uint8_t *) tmp, 8);
 		digitalWrite(PB12, HIGH);
 
-		/*
-		 dval = (uint32) (100.0f + 64*sinf( (count % (uint32)(3.14159 * 2 * 32))/32.0f));
-		 usart3.println(dval);
-		 */
 		uint16_t i = 0;
-		if (usart_available(&Serial3) > 0) {
-			while (usart_available(&Serial3) > 0 && i < 92) {
-				tmp[i++] = (char) usart_read(&Serial3);
+		if ( Serial3.available() > 0) {
+			while ( Serial3.available() > 0 && i < 92) {
+				tmp[i++] = (char) Serial3.read();
 			}
 			tmp[i] = 0;
-			usart_print(&Serial3, "> ");
-			usart_print(&Serial3, tmp);
-			usart_print(&Serial3, "\n");
+			Serial3.print("> ");
+			Serial3.print(tmp);
+			Serial3.print("\n");
 		}
+
 	}
 	return 0;
 }

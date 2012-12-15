@@ -8,9 +8,9 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include stdperiph_driver_src/subdir.mk
 -include armlib/subdir.mk
 -include armcore/subdir.mk
--include STM32F4xx_StdPeriph_Driver/src/subdir.mk
 -include subdir.mk
 -include objects.mk
 
@@ -46,7 +46,7 @@ all: stm32f4-stdperiph.mac.elf
 stm32f4-stdperiph.mac.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross G++ Linker'
-	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mlittle-endian -mfloat-abi=soft -nostartfiles -Wl,-T,/Users/sin/Documents/Eclipse/ARMWork/stm32f4-stdperiph.mac/stm32f4xx_flash.ld -o "stm32f4-stdperiph.mac.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -mlittle-endian -mfloat-abi=soft -nostartfiles -Wl,-T,/Users/sin/Documents/Eclipse/ARMWork/stm32f4-stdperiph.mac/stm32f4xx_flash.ld -o "stm32f4-stdperiph.mac.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
