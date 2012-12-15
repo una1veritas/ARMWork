@@ -26,11 +26,11 @@ typedef struct {
 	uint16_t count;
 } USARTRing;
 
-typedef struct _Serial {
+typedef struct _USART {
 	uint8_t usid;
 	USART_TypeDef * USARTx;
 	USARTRing * rxring, * txring;
-} Serial;
+} USART;
 
 
 /*
@@ -58,13 +58,13 @@ PC6 			USART6_TX
 PC7 			USART6_RX
 */
 
-void usart_begin(USART_TypeDef * usartx, Serial * usx, GPIOPin rx, GPIOPin tx, const uint32_t baud);
-void usart_write(Serial * usx, const uint16_t w);
-void usart_print(Serial * usx, const char * s);
-uint16_t usart_read(Serial * usx);
-uint16_t usart_available(Serial * usx);
-void usart_flush(Serial * usx);
-uint16_t usart_peek(Serial * usx);
+void usart_begin(USART_TypeDef * usartx, USART * usx, GPIOPin rx, GPIOPin tx, const uint32_t baud);
+size_t usart_write(USART * usx, const uint16_t w);
+//size_t usart_print(USART * usx, const char * s);
+uint16_t usart_read(USART * usx);
+uint16_t usart_available(USART * usx);
+void usart_flush(USART * usx);
+uint16_t usart_peek(USART * usx);
 
 void USART1_IRQHandler(void);
 void USART2_IRQHandler(void);
