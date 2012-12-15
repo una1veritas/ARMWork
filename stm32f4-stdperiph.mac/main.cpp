@@ -9,11 +9,6 @@
 #include <stdint.h>
 
 #include <stm32f4xx.h>
-<<<<<<< HEAD
-#include <stm32f4xx_usart.h>
-=======
-//#include <stm32f4xx_usart.h>
->>>>>>> origin/win@home
 
 #include "stm32f4xx_it.h"
 
@@ -39,7 +34,6 @@ int main(void) {
 	TIM2_timer_start();
 
 	Serial3.begin(USART3, PC11, PC10, 19200);
-<<<<<<< HEAD
 	Serial3.print("This royal throne of kings, this sceptred isle,\n"); /*
 "This earth of majesty, this seat of Mars,\n"
 "This other Eden, demi-paradise;\n"
@@ -50,14 +44,6 @@ int main(void) {
 "Which serves it in the office of a wall,\n"
 "Or as a moat defensive to a house,\n"
 "Against the envy of less happier lands;\n"); */
-=======
-
-	Serial3.print(
-			"Happy are those who know they are spiritually poor; \n");
-	Serial3.print( "The kingdom of heaven belongs to them!\n");
-	Serial3.print( "If thou beest he! But O how fall'n!\n");
-	Serial3.print( "How chang'd from him!\n");
->>>>>>> origin/win@home
 	Serial3.flush();
 	RCC_ClocksTypeDef RCC_Clocks;
 	RCC_GetClocksFreq(&RCC_Clocks);
@@ -70,11 +56,7 @@ int main(void) {
 	Serial3.print( RCC_Clocks.PCLK1_Frequency);
 	Serial3.print( ", PCLK2 = ");
 	Serial3.print(RCC_Clocks.PCLK2_Frequency);
-<<<<<<< HEAD
 	Serial3.print(".\n");
-=======
-	Serial3.print("\n");
->>>>>>> origin/win@home
 	Serial3.flush();
 
 	GPIOMode(PinPort(PD12),
@@ -87,11 +69,7 @@ int main(void) {
 	lcd.init(&Wire1);
 	lcd.begin();
 	lcd.setContrast(46);
-<<<<<<< HEAD
 	lcd.print("Dyre arm.");       // Classic Hello World!
-=======
-	lcd.print("Yappee!");       // Classic Hello World!
->>>>>>> origin/win@home
 
 	bits = GPIO_ReadOutputData(GPIOD );
 	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
@@ -135,11 +113,7 @@ int main(void) {
 		Serial3.print(millis());
 		Serial3.print("\n");
 
-<<<<<<< HEAD
 		sprintf(tmp, "%04ld.", millis());
-=======
-		sprintf(tmp, "%04ld", millis());
->>>>>>> origin/win@home
 		lcd.setCursor(0, 1);
 		lcd.print((const char *)tmp);
 
