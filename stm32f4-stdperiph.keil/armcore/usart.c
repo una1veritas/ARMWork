@@ -68,26 +68,26 @@ uint16_t ring_peek(USARTRing * r) {
 	return r->buf[r->tail];
 }
 
-void usart_begin(USART_TypeDef * usartx, USART * usx, GPIOPin rx, GPIOPin tx, uint32_t baud) {
+void usart_begin(USART * usx, GPIOPin rx, GPIOPin tx, uint32_t baud) {
 	USART_InitTypeDef USART_InitStruct; // this is for the USART1 initilization
 	NVIC_InitTypeDef NVIC_InitStructure; // this is used to configure the NVIC (nested vector interrupt controller)
 	//
 	uint8_t af = GPIO_AF_USART1;
 	IRQn_Type irq = USART1_IRQn;
-	usx->USARTx = usartx;
+	//usx->USARTx = usartx;
 
-	if (usartx == USART1) {
+	if (usx->USARTx == USART1) {
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
 		af = GPIO_AF_USART1;
 		irq = USART1_IRQn;
-		usx->usid = USART1Serial;
+//		usx->usid = USART1Serial;
 		usx->rxring = &rxring[USART1Serial];
 		usx->txring = &txring[USART1Serial];
 	} else if (usx->USARTx == USART2) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
 		af = GPIO_AF_USART2;
 		irq = USART2_IRQn;
-		usx->usid = USART2Serial;
+//		usx->usid = USART2Serial;
 //		usx->USARTx = USART2;
 		usx->rxring = &rxring[USART2Serial];
 		usx->txring = &txring[USART2Serial];
@@ -95,7 +95,7 @@ void usart_begin(USART_TypeDef * usartx, USART * usx, GPIOPin rx, GPIOPin tx, ui
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
 		af = GPIO_AF_USART3;
 		irq = USART3_IRQn;
-		usx->usid = USART3Serial;
+//		usx->usid = USART3Serial;
 //		usx->USARTx = USART3;
 		usx->rxring = &rxring[USART3Serial];
 		usx->txring = &txring[USART3Serial];
@@ -103,7 +103,7 @@ void usart_begin(USART_TypeDef * usartx, USART * usx, GPIOPin rx, GPIOPin tx, ui
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);
 		af = GPIO_AF_UART4;
 		irq = UART4_IRQn;
-		usx->usid = UART4Serial;
+//		usx->usid = UART4Serial;
 //		usx->USARTx = UART4;
 		usx->rxring = &rxring[UART4Serial];
 		usx->txring = &txring[UART4Serial];
@@ -111,7 +111,7 @@ void usart_begin(USART_TypeDef * usartx, USART * usx, GPIOPin rx, GPIOPin tx, ui
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART5, ENABLE);
 		af = GPIO_AF_UART5;
 		irq = UART5_IRQn;
-		usx->usid = UART5Serial;
+//		usx->usid = UART5Serial;
 //		usx->USARTx = UART5;
 		usx->rxring = &rxring[UART5Serial];
 		usx->txring = &txring[UART5Serial];
@@ -119,7 +119,7 @@ void usart_begin(USART_TypeDef * usartx, USART * usx, GPIOPin rx, GPIOPin tx, ui
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART6, ENABLE);
 		af = GPIO_AF_USART6;
 		irq = USART6_IRQn;
-		usx->usid = USART6Serial;
+//		usx->usid = USART6Serial;
 //		usx->USARTx = USART6;
 		usx->rxring = &rxring[USART6Serial];
 		usx->txring = &txring[USART6Serial];

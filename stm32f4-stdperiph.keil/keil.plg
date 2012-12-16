@@ -494,3 +494,582 @@ Erase Done.
 Programming Done.
 Verify OK.
 Application running ...
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(114): error:  #20: identifier "tmp" is undefined
+mainsrc\main.cpp(128): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(125): error:  #304: no instance of overloaded function "USARTSerial::println" matches the argument list
+mainsrc\main.cpp(129): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(129): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=19436 RO-data=492 RW-data=200 ZI-data=4824  
+"keil.axf" - 0 Error(s), 1 Warning(s).
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(129): warning:  #111-D: statement is unreachable
+compiling stm32f4xx_it.c...
+compiling system_stm32f4xx.c...
+compiling delay.c...
+compiling gpio.c...
+compiling i2c.c...
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+compiling Print.cpp...
+compiling spi.c...
+compiling ST7032i.cpp...
+compiling systick.c...
+compiling usart.c...
+compiling USARTSerial.cpp...
+compiling misc.c...
+compiling stm32f4xx_gpio.c...
+compiling stm32f4xx_rcc.c...
+compiling stm32f4xx_i2c.c...
+compiling stm32f4xx_tim.c...
+compiling stm32f4xx_usart.c...
+compiling stm32f4xx_spi.c...
+linking...
+Program Size: Code=16136 RO-data=492 RW-data=140 ZI-data=4828  
+FromELF: creating hex file...
+"keil.axf" - 0 Error(s), 13 Warning(s).
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(129): warning:  #111-D: statement is unreachable
+compiling stm32f4xx_it.c...
+compiling system_stm32f4xx.c...
+compiling delay.c...
+compiling gpio.c...
+compiling i2c.c...
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+compiling Print.cpp...
+compiling spi.c...
+compiling ST7032i.cpp...
+compiling systick.c...
+compiling usart.c...
+compiling USARTSerial.cpp...
+compiling misc.c...
+compiling stm32f4xx_gpio.c...
+compiling stm32f4xx_rcc.c...
+compiling stm32f4xx_i2c.c...
+compiling stm32f4xx_tim.c...
+compiling stm32f4xx_usart.c...
+compiling stm32f4xx_spi.c...
+linking...
+Program Size: Code=16160 RO-data=492 RW-data=140 ZI-data=4828  
+FromELF: creating hex file...
+"keil.axf" - 0 Error(s), 13 Warning(s).
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(129): warning:  #111-D: statement is unreachable
+compiling stm32f4xx_it.c...
+compiling system_stm32f4xx.c...
+compiling delay.c...
+compiling gpio.c...
+compiling i2c.c...
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+compiling Print.cpp...
+compiling spi.c...
+compiling ST7032i.cpp...
+compiling systick.c...
+compiling usart.c...
+armcore\usart.c(83): error:  #136: struct "_USART" has no field "usid"
+armcore\usart.c(90): error:  #136: struct "_USART" has no field "usid"
+armcore\usart.c(98): error:  #136: struct "_USART" has no field "usid"
+armcore\usart.c(106): error:  #136: struct "_USART" has no field "usid"
+armcore\usart.c(114): error:  #136: struct "_USART" has no field "usid"
+armcore\usart.c(122): error:  #136: struct "_USART" has no field "usid"
+compiling USARTSerial.cpp...
+compiling misc.c...
+compiling stm32f4xx_gpio.c...
+compiling stm32f4xx_rcc.c...
+compiling stm32f4xx_i2c.c...
+compiling stm32f4xx_tim.c...
+compiling stm32f4xx_usart.c...
+compiling stm32f4xx_spi.c...
+Target not created
+Build target 'stdperiph test'
+compiling usart.c...
+linking...
+Program Size: Code=16112 RO-data=492 RW-data=140 ZI-data=4820  
+FromELF: creating hex file...
+"keil.axf" - 0 Error(s), 0 Warning(s).
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(27): error:  #291: no default constructor exists for class "USARTSerial"
+mainsrc\main.cpp(129): warning:  #111-D: statement is unreachable
+compiling usart.c...
+compiling USARTSerial.cpp...
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(129): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=16116 RO-data=492 RW-data=140 ZI-data=4820  
+FromELF: creating hex file...
+"keil.axf" - 0 Error(s), 1 Warning(s).
+Build target 'stdperiph test'
+linking...
+Program Size: Code=16116 RO-data=492 RW-data=140 ZI-data=4820  
+FromELF: creating hex file...
+"keil.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\Eclipse\\ARMWork\\stm32f4-stdperiph.keil\\keil.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(129): warning:  #111-D: statement is unreachable
+compiling usart.c...
+compiling USARTSerial.cpp...
+armcore\USARTSerial.cpp(13): error:  #167: argument of type "USART_TypeDef *" is incompatible with parameter of type "USART *"
+armcore\USARTSerial.cpp(13): error:  #167: argument of type "USART *" is incompatible with parameter of type "GPIOPin"
+armcore\USARTSerial.cpp(13): error:  #140: too many arguments in function call
+Target not created
+Build target 'stdperiph test'
+compiling USARTSerial.cpp...
+linking...
+Program Size: Code=16096 RO-data=492 RW-data=140 ZI-data=4820  
+FromELF: creating hex file...
+"keil.axf" - 0 Error(s), 0 Warning(s).
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(128): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=16088 RO-data=492 RW-data=140 ZI-data=4820  
+FromELF: creating hex file...
+"keil.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\Eclipse\\ARMWork\\stm32f4-stdperiph.keil\\keil.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'stdperiph test'
+linking...
+Program Size: Code=16088 RO-data=492 RW-data=140 ZI-data=4820  
+FromELF: creating hex file...
+"keil.axf" - 0 Error(s), 0 Warning(s).
+Build target 'stdperiph test'
+linking...
+Program Size: Code=16088 RO-data=492 RW-data=140 ZI-data=4820  
+FromELF: creating hex file...
+"keil.axf" - 0 Error(s), 0 Warning(s).
+Build target 'stdperiph test'
+compiling main.cpp...
+.\armcore\ST7032i.h(24): error:  #262: not a class or struct name
+.\armcore\ST7032i.h(47): error:  #264: invalid base class
+.\armcore\USARTSerial.h(21): error:  #262: not a class or struct name
+.\armcore\USARTSerial.h(32): error:  #264: invalid base class
+mainsrc\main.cpp(39): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(40): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(41): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(42): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(47): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(48): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(49): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(50): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(51): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(52): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(53): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(54): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(55): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(68): error:  #135: class "ST7032i" has no member "print"
+mainsrc\main.cpp(108): error:  #135: class "USARTSerial" has no member "println"
+mainsrc\main.cpp(111): error:  #135: class "ST7032i" has no member "print"
+mainsrc\main.cpp(123): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(124): error:  #135: class "USARTSerial" has no member "println"
+mainsrc\main.cpp(128): warning:  #111-D: statement is unreachable
+compiling ST7032i.cpp...
+armcore\ST7032i.h(24): error:  #262: not a class or struct name
+armcore\ST7032i.h(47): error:  #264: invalid base class
+compiling USARTSerial.cpp...
+armcore\USARTSerial.h(21): error:  #262: not a class or struct name
+armcore\USARTSerial.h(32): error:  #264: invalid base class
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+.\armcore\Stream.h(85): error:  #20: identifier "String" is undefined
+.\armcore\Stream.h(86): error:  #20: identifier "String" is undefined
+.\armcore\USARTSerial.h(34): error:  #317: return type is not identical to nor covariant with return type "int" of overridden virtual function "Stream::read"
+.\armcore\USARTSerial.h(35): error:  #317: return type is not identical to nor covariant with return type "int" of overridden virtual function "Stream::available"
+.\armcore\USARTSerial.h(36): error:  #317: return type is not identical to nor covariant with return type "int" of overridden virtual function "Stream::peek"
+.\armcore\USARTSerial.h(37): warning:  #1300-D: flush inherits implicit virtual
+mainsrc\main.cpp(26): error:  #322: object of abstract class type "ST7032i" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+            pure virtual function "Stream::read" has no overrider
+            pure virtual function "Stream::peek" has no overrider
+            pure virtual function "Stream::flush" has no overrider
+  ST7032i lcd;
+          ^
+mainsrc\main.cpp(27): error:  #322: object of abstract class type "USARTSerial" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+            pure virtual function "Stream::read" has no overrider
+            pure virtual function "Stream::peek" has no overrider
+  USARTSerial Serial3(USART3);
+              ^
+mainsrc\main.cpp(128): warning:  #111-D: statement is unreachable
+compiling ST7032i.cpp...
+armcore\Stream.h(85): error:  #20: identifier "String" is undefined
+armcore\Stream.h(86): error:  #20: identifier "String" is undefined
+compiling USARTSerial.cpp...
+armcore\Stream.h(85): error:  #20: identifier "String" is undefined
+armcore\Stream.h(86): error:  #20: identifier "String" is undefined
+armcore\USARTSerial.h(34): error:  #317: return type is not identical to nor covariant with return type "int" of overridden virtual function "Stream::read"
+armcore\USARTSerial.h(35): error:  #317: return type is not identical to nor covariant with return type "int" of overridden virtual function "Stream::available"
+armcore\USARTSerial.h(36): error:  #317: return type is not identical to nor covariant with return type "int" of overridden virtual function "Stream::peek"
+armcore\USARTSerial.h(37): warning:  #1300-D: flush inherits implicit virtual
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+.\armcore\USARTSerial.h(34): error:  #317: return type is not identical to nor covariant with return type "int" of overridden virtual function "Stream::read"
+.\armcore\USARTSerial.h(35): error:  #317: return type is not identical to nor covariant with return type "int" of overridden virtual function "Stream::available"
+.\armcore\USARTSerial.h(36): error:  #317: return type is not identical to nor covariant with return type "int" of overridden virtual function "Stream::peek"
+.\armcore\USARTSerial.h(37): warning:  #1300-D: flush inherits implicit virtual
+mainsrc\main.cpp(26): error:  #322: object of abstract class type "ST7032i" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+            pure virtual function "Stream::read" has no overrider
+            pure virtual function "Stream::peek" has no overrider
+            pure virtual function "Stream::flush" has no overrider
+  ST7032i lcd;
+          ^
+mainsrc\main.cpp(27): error:  #322: object of abstract class type "USARTSerial" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+            pure virtual function "Stream::read" has no overrider
+            pure virtual function "Stream::peek" has no overrider
+  USARTSerial Serial3(USART3);
+              ^
+mainsrc\main.cpp(128): warning:  #111-D: statement is unreachable
+compiling ST7032i.cpp...
+compiling USARTSerial.cpp...
+armcore\USARTSerial.h(34): error:  #317: return type is not identical to nor covariant with return type "int" of overridden virtual function "Stream::read"
+armcore\USARTSerial.h(35): error:  #317: return type is not identical to nor covariant with return type "int" of overridden virtual function "Stream::available"
+armcore\USARTSerial.h(36): error:  #317: return type is not identical to nor covariant with return type "int" of overridden virtual function "Stream::peek"
+armcore\USARTSerial.h(37): warning:  #1300-D: flush inherits implicit virtual
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+.\armcore\USARTSerial.h(34): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::read"
+.\armcore\USARTSerial.h(35): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::available"
+.\armcore\USARTSerial.h(36): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::peek"
+.\armcore\USARTSerial.h(37): warning:  #1300-D: flush inherits implicit virtual
+mainsrc\main.cpp(26): error:  #322: object of abstract class type "ST7032i" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+            pure virtual function "Stream::read" has no overrider
+            pure virtual function "Stream::peek" has no overrider
+            pure virtual function "Stream::flush" has no overrider
+  ST7032i lcd;
+          ^
+mainsrc\main.cpp(27): error:  #322: object of abstract class type "USARTSerial" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+            pure virtual function "Stream::read" has no overrider
+            pure virtual function "Stream::peek" has no overrider
+  USARTSerial Serial3(USART3);
+              ^
+mainsrc\main.cpp(128): warning:  #111-D: statement is unreachable
+compiling ST7032i.cpp...
+compiling USARTSerial.cpp...
+armcore\USARTSerial.h(34): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::read"
+armcore\USARTSerial.h(35): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::available"
+armcore\USARTSerial.h(36): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::peek"
+armcore\USARTSerial.h(37): warning:  #1300-D: flush inherits implicit virtual
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+.\armcore\USARTSerial.h(34): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::read"
+.\armcore\USARTSerial.h(35): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::available"
+.\armcore\USARTSerial.h(36): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::peek"
+mainsrc\main.cpp(26): error:  #322: object of abstract class type "ST7032i" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+            pure virtual function "Stream::read" has no overrider
+            pure virtual function "Stream::peek" has no overrider
+            pure virtual function "Stream::flush" has no overrider
+  ST7032i lcd;
+          ^
+mainsrc\main.cpp(27): error:  #322: object of abstract class type "USARTSerial" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+            pure virtual function "Stream::read" has no overrider
+            pure virtual function "Stream::peek" has no overrider
+  USARTSerial Serial3(USART3);
+              ^
+mainsrc\main.cpp(128): warning:  #111-D: statement is unreachable
+compiling USARTSerial.cpp...
+armcore\USARTSerial.h(34): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::read"
+armcore\USARTSerial.h(35): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::available"
+armcore\USARTSerial.h(36): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::peek"
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+.\armcore\USARTSerial.h(34): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::read"
+.\armcore\USARTSerial.h(35): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::available"
+.\armcore\USARTSerial.h(36): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::peek"
+mainsrc\main.cpp(26): error:  #322: object of abstract class type "ST7032i" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+            pure virtual function "Stream::read" has no overrider
+            pure virtual function "Stream::peek" has no overrider
+            pure virtual function "Stream::flush" has no overrider
+  ST7032i lcd;
+          ^
+mainsrc\main.cpp(27): error:  #322: object of abstract class type "USARTSerial" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+            pure virtual function "Stream::read" has no overrider
+            pure virtual function "Stream::peek" has no overrider
+  USARTSerial Serial3(USART3);
+              ^
+mainsrc\main.cpp(128): warning:  #111-D: statement is unreachable
+compiling USARTSerial.cpp...
+armcore\USARTSerial.h(34): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::read"
+armcore\USARTSerial.h(35): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::available"
+armcore\USARTSerial.h(36): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::peek"
+compiling Stream.cpp...
+armcore\Stream.cpp(23): error:  #5: cannot open source input file "Arduino.h": No such file or directory
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+.\armcore\armcore.h(31): error:  #84: invalid combination of type specifiers
+mainsrc\main.cpp(26): error:  #322: object of abstract class type "ST7032i" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+            pure virtual function "Stream::read" has no overrider
+            pure virtual function "Stream::peek" has no overrider
+            pure virtual function "Stream::flush" has no overrider
+  ST7032i lcd;
+          ^
+mainsrc\main.cpp(128): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+armcore\armcore.h(31): error:  #84: invalid combination of type specifiers
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+compiling Print.cpp...
+armcore\armcore.h(31): error:  #84: invalid combination of type specifiers
+compiling ST7032i.cpp...
+armcore\armcore.h(31): error:  #84: invalid combination of type specifiers
+compiling USARTSerial.cpp...
+armcore\armcore.h(31): error:  #84: invalid combination of type specifiers
+compiling Stream.cpp...
+armcore\Stream.cpp(23): error:  #5: cannot open source input file "Arduino.h": No such file or directory
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(26): error:  #322: object of abstract class type "ST7032i" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+            pure virtual function "Stream::read" has no overrider
+            pure virtual function "Stream::peek" has no overrider
+            pure virtual function "Stream::flush" has no overrider
+  ST7032i lcd;
+          ^
+mainsrc\main.cpp(128): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+compiling Print.cpp...
+compiling ST7032i.cpp...
+compiling USARTSerial.cpp...
+compiling Stream.cpp...
+armcore\Stream.cpp(23): error:  #5: cannot open source input file "Arduino.h": No such file or directory
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(128): warning:  #111-D: statement is unreachable
+compiling ST7032i.cpp...
+compiling Stream.cpp...
+armcore\Stream.cpp(23): error:  #5: cannot open source input file "Arduino.h": No such file or directory
+Target not created
+Build target 'stdperiph test'
+compiling Stream.cpp...
+armcore\Stream.cpp(34): error:  #20: identifier "millis" is undefined
+armcore\Stream.cpp(46): error:  #20: identifier "millis" is undefined
+armcore\Stream.cpp(185): warning:  #186-D: pointless comparison of unsigned integer with zero
+armcore\Stream.cpp(198): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+armcore\Stream.cpp(248): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(248): error:  #135: class "Stream" has no member "readString"
+armcore\Stream.cpp(250): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(251): error:  #20: identifier "timedRead" is undefined
+armcore\Stream.cpp(260): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(260): error:  #135: class "Stream" has no member "readStringUntil"
+armcore\Stream.cpp(262): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(263): error:  #20: identifier "timedRead" is undefined
+Target not created
+Build target 'stdperiph test'
+compiling Stream.cpp...
+armcore\Stream.cpp(186): warning:  #186-D: pointless comparison of unsigned integer with zero
+armcore\Stream.cpp(199): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+armcore\Stream.cpp(249): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(249): error:  #135: class "Stream" has no member "readString"
+armcore\Stream.cpp(251): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(252): error:  #20: identifier "timedRead" is undefined
+armcore\Stream.cpp(261): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(261): error:  #135: class "Stream" has no member "readStringUntil"
+armcore\Stream.cpp(263): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(264): error:  #20: identifier "timedRead" is undefined
+Target not created
+Build target 'stdperiph test'
+compiling Stream.cpp...
+armcore\Stream.cpp(186): warning:  #186-D: pointless comparison of unsigned integer with zero
+armcore\Stream.cpp(199): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+armcore\Stream.cpp(249): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(249): error:  #135: class "Stream" has no member "readString"
+armcore\Stream.cpp(251): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(252): error:  #20: identifier "timedRead" is undefined
+armcore\Stream.cpp(261): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(261): error:  #135: class "Stream" has no member "readStringUntil"
+armcore\Stream.cpp(263): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(264): error:  #20: identifier "timedRead" is undefined
+Target not created
+Build target 'stdperiph test'
+compiling Stream.cpp...
+armcore\Stream.cpp(199): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+armcore\Stream.cpp(249): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(249): error:  #135: class "Stream" has no member "readString"
+armcore\Stream.cpp(251): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(252): error:  #20: identifier "timedRead" is undefined
+armcore\Stream.cpp(261): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(261): error:  #135: class "Stream" has no member "readStringUntil"
+armcore\Stream.cpp(263): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(264): error:  #20: identifier "timedRead" is undefined
+Target not created
+Build target 'stdperiph test'
+compiling Stream.cpp...
+armcore\Stream.cpp(249): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(249): error:  #135: class "Stream" has no member "readString"
+armcore\Stream.cpp(251): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(252): error:  #20: identifier "timedRead" is undefined
+armcore\Stream.cpp(261): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(261): error:  #135: class "Stream" has no member "readStringUntil"
+armcore\Stream.cpp(263): error:  #20: identifier "String" is undefined
+armcore\Stream.cpp(264): error:  #20: identifier "timedRead" is undefined
+Target not created
+Build target 'stdperiph test'
+compiling Stream.cpp...
+linking...
+Program Size: Code=16100 RO-data=508 RW-data=140 ZI-data=4828  
+FromELF: creating hex file...
+"keil.axf" - 0 Error(s), 0 Warning(s).
+Build target 'stdperiph test'
+linking...
+Program Size: Code=16100 RO-data=508 RW-data=140 ZI-data=4828  
+FromELF: creating hex file...
+"keil.axf" - 0 Error(s), 0 Warning(s).
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(129): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=16108 RO-data=508 RW-data=140 ZI-data=4828  
+FromELF: creating hex file...
+"keil.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\Eclipse\\ARMWork\\stm32f4-stdperiph.keil\\keil.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'stdperiph test'
+linking...
+Program Size: Code=16108 RO-data=508 RW-data=140 ZI-data=4828  
+FromELF: creating hex file...
+"keil.axf" - 0 Error(s), 0 Warning(s).
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(129): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=16108 RO-data=508 RW-data=140 ZI-data=4828  
+FromELF: creating hex file...
+"keil.axf" - 0 Error(s), 1 Warning(s).
+Rebuild target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(129): warning:  #111-D: statement is unreachable
+assembling startup_stm32f4xx.s...
+compiling stm32f4xx_it.c...
+compiling system_stm32f4xx.c...
+compiling delay.c...
+compiling gpio.c...
+compiling i2c.c...
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+compiling Print.cpp...
+compiling spi.c...
+compiling ST7032i.cpp...
+compiling systick.c...
+compiling usart.c...
+compiling USARTSerial.cpp...
+compiling Stream.cpp...
+compiling misc.c...
+compiling stm32f4xx_gpio.c...
+compiling stm32f4xx_rcc.c...
+compiling stm32f4xx_i2c.c...
+compiling stm32f4xx_tim.c...
+compiling stm32f4xx_usart.c...
+compiling stm32f4xx_spi.c...
+linking...
+Program Size: Code=16108 RO-data=508 RW-data=140 ZI-data=4828  
+FromELF: creating hex file...
+"keil.axf" - 0 Error(s), 13 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\Eclipse\\ARMWork\\stm32f4-stdperiph.keil\\keil.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...

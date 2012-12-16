@@ -14,6 +14,7 @@
 ### List of Objects: adding '"systick.o"'
 ### List of Objects: adding '"usart.o"'
 ### List of Objects: adding '"usartserial.o"'
+### List of Objects: adding '"stream.o"'
 ### List of Objects: adding '"misc.o"'
 ### List of Objects: adding '"stm32f4xx_gpio.o"'
 ### List of Objects: adding '"stm32f4xx_rcc.o"'
@@ -22,7 +23,7 @@
 ### List of Objects: adding '"stm32f4xx_usart.o"'
 ### List of Objects: adding '"stm32f4xx_spi.o"'
 ### ADS-LD Command completed:
---cpu Cortex-M4.fp "main.o" "startup_stm32f4xx.o" "stm32f4xx_it.o" "system_stm32f4xx.o" "delay.o" "gpio.o" "i2c.o" "print.o" "spi.o" "st7032i.o" "systick.o" "usart.o" "usartserial.o" "misc.o" "stm32f4xx_gpio.o" "stm32f4xx_rcc.o" "stm32f4xx_i2c.o" "stm32f4xx_tim.o" "stm32f4xx_usart.o" "stm32f4xx_spi.o" 
+--cpu Cortex-M4.fp "main.o" "startup_stm32f4xx.o" "stm32f4xx_it.o" "system_stm32f4xx.o" "delay.o" "gpio.o" "i2c.o" "print.o" "spi.o" "st7032i.o" "systick.o" "usart.o" "usartserial.o" "stream.o" "misc.o" "stm32f4xx_gpio.o" "stm32f4xx_rcc.o" "stm32f4xx_i2c.o" "stm32f4xx_tim.o" "stm32f4xx_usart.o" "stm32f4xx_spi.o" 
 --strict --scatter "keil.sct" 
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
 --info sizes --info totals --info unused --info veneers 
@@ -30,7 +31,7 @@
 ### ADS-LD Output File: 'keil.axf'
 ### ADS-LD Command File: 'keil.lnp'
 ### Checking for dirty Components...
-### Creating CmdFile 'keil.lnp', Handle=0x000006F8
+### Creating CmdFile 'keil.lnp', Handle=0x00000870
 ### Writing '.lnp' file
 ### ADS-LD Command file 'keil.lnp' is ready.
 ### ADS-LD: About to start ADS-LD Thread.

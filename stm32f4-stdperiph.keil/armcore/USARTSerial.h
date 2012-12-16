@@ -16,21 +16,25 @@
 #include "armcore.h"
 #include "usart.h"
 
-#include "Print.h"
+#include "Stream.h"
 
-class USARTSerial : public Print {
+class USARTSerial : public Stream {
 	USART port;
 
 public:
-	void begin(USART_TypeDef * usart_id, GPIOPin rx, GPIOPin tx, const uint32_t baud);
+	USARTSerial(USART_TypeDef * usartx) {
+		port.USARTx = usartx;
+	}
+	
+	void begin(const GPIOPin rx, const GPIOPin tx, const uint32_t baud);
 
 	virtual size_t write(const uint8_t w);
 	using Print::write;
 
-	uint16_t read() { return usart_read(&port); }
-	uint16_t available() { return usart_available(&port); }
-	uint16_t peek() { return usart_peek(&port); }
-	void flush() { usart_flush(&port); }
+	virtual int16_t read() { return usart_read(&port); }
+	virtual int16_t available() { return usart_available(&port); }
+	virtual int16_t peek() { return usart_peek(&port); }
+	virtual void flush() { usart_flush(&port); }
 
 };
 

@@ -19,7 +19,7 @@
 #include "gpio.h"
 
 #include "CharacterLCD.h"
-#include "Print.h"
+#include "Stream.h"
 
 class ST7032i : public Print {
 	static const byte DEFAULT_I2C_ADDRESS = B0111110;
@@ -43,8 +43,8 @@ public:
 	void init(I2CBus * wirex);
 	void begin();
 
-    virtual size_t write(const uint8_t);
-using Print::write;
+   virtual size_t write(const uint8_t);
+	using Print::write;
 	//#if ARDUINO >= 100
 //  virtual size_t println(void) { wrap(); return 1; }
 //#else

@@ -24,20 +24,19 @@
 #include "USARTSerial.h"
 
 ST7032i lcd;
-USARTSerial Serial3;
+USARTSerial Serial3(USART3);
 
 int main(void) {
 	uint16_t bits;
 	uint32_t intval = 40;
 	uint32_t tnow;
-	char tmp[92];
+	uint8_t tmp[64];
 
 	TIM2_timer_start();
 
-	Serial3.begin(USART3, PC11, PC10, 19200);
+	Serial3.begin(PC11, PC10, 19200);
 
-	Serial3.print(
-			"Happy are those who know they are spiritually poor; \n");
+	Serial3.print("This throne of king, this sceptr'd isle, \n");
 	Serial3.print( "The kingdom of heaven belongs to them!\n");
 	Serial3.print( "If thou beest he! But O how fall'n!\n");
 	Serial3.print( "How chang'd from him!\n");
@@ -66,7 +65,7 @@ int main(void) {
 	lcd.init(&Wire1);
 	lcd.begin();
 	lcd.setContrast(46);
-	lcd.print("Yappee!");       // Classic Hello World!
+	lcd.print("Sad!");       // Classic Hello World!
 
 	bits = GPIO_ReadOutputData(GPIOD );
 	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
@@ -106,12 +105,11 @@ int main(void) {
 		while (tnow == millis() / 1000);
 		tnow = millis() / 1000;
 
-		//Serial3.print(tmp);
-		Serial3.print(millis());
-		Serial3.print("\n");
+		Serial3.println(millis());
 
 		lcd.setCursor(0, 1);
 		lcd.print((float)millis()/1000, 2);
+		lcd.print('.');
 
 		digitalWrite(PB12, LOW);
 		spi_transfer(SPI2, (uint8_t *) tmp, 8);
@@ -124,8 +122,7 @@ int main(void) {
 			}
 			tmp[i] = 0;
 			Serial3.print( "> ");
-			Serial3.print( tmp);
-			Serial3.println();
+			Serial3.println((char*)tmp);
 		}
 
 	}
