@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?>
-
-<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="cdt.managedbuild.config.gnu.cross.exe.release.1729894382">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.cross.exe.release.1729894382" moduleId="org.eclipse.cdt.core.settings" name="build_flash">
@@ -20,22 +18,27 @@
 					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.release.1729894382." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.release.1914469323" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.release">
 							<option id="cdt.managedbuild.option.gnu.cross.prefix.327542273" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix" value="arm-none-eabi-" valueType="string"/>
-							<option id="cdt.managedbuild.option.gnu.cross.path.593897231" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" value="/usr/local/codesourcery/bin:/opt/local/bin:/usr/bin:/bin" valueType="string"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.593897231" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" value="C:\Program Files (x86)\CodeSourcery\CodeBench_Lite_ARM_EABI\bin" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.665794591" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
 							<builder buildPath="${workspace_loc:/stm32f4-float-math_test/Release}" id="cdt.managedbuild.builder.gnu.cross.835744322" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross">
 								<outputEntries>
-									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="flash"/>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="build_flash"/>
 								</outputEntries>
 							</builder>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.498022732" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
-								<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.option.optimization.level.410254456" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" value="gnu.c.optimization.level.more" valueType="enumerated"/>
+								<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.option.optimization.level.410254456" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" value="gnu.c.optimization.level.size" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.debugging.level.1876885108" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.790193245" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32Library/CMSIS/Include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32Library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32Library/CMSIS/STM32F4xx}&quot;"/>
+									<listOptionValue builtIn="false" value="C:/Users/Sin/Documents/Eclipse/ARMWork/stm32f4-usart/STM32Library/CMSIS/Include"/>
+									<listOptionValue builtIn="false" value="C:/Users/Sin/Documents/Eclipse/ARMWork/stm32f4-usart/STM32Library/STM32F4xx_StdPeriph_Driver/inc"/>
+									<listOptionValue builtIn="false" value="C:/Users/Sin/Documents/Eclipse/ARMWork/stm32f4-usart/STM32Library/CMSIS/STM32F4xx"/>
+									<listOptionValue builtIn="false" value="../stm32f4-usart/stm32f4-usart"/>
+									<listOptionValue builtIn="false" value="C:/Users/Sin/Documents/Eclipse/ARMWork/stm32f4-usart/STM32Library/armcore"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/STM32F4xx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-usart}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32Library/armcore}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/armcore}&quot;"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1006894909" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER=1"/>
@@ -45,14 +48,19 @@
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.679403152" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.95679498" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
-								<option id="gnu.cpp.compiler.option.optimization.level.203250572" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.more" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.optimization.level.203250572" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.size" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.debugging.level.1519322154" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.108317723" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32Library/CMSIS/Include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32Library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32Library/CMSIS/STM32F4xx}&quot;"/>
+									<listOptionValue builtIn="false" value="C:/Users/Sin/Documents/Eclipse/ARMWork/stm32f4-usart/STM32Library/CMSIS/Include"/>
+									<listOptionValue builtIn="false" value="C:/Users/Sin/Documents/Eclipse/ARMWork/stm32f4-usart/STM32Library/STM32F4xx_StdPeriph_Driver/inc"/>
+									<listOptionValue builtIn="false" value="C:/Users/Sin/Documents/Eclipse/ARMWork/stm32f4-usart/STM32Library/CMSIS/STM32F4xx"/>
+									<listOptionValue builtIn="false" value="../stm32f4-usart/stm32f4-usart"/>
+									<listOptionValue builtIn="false" value="C:/Users/Sin/Documents/Eclipse/ARMWork/stm32f4-usart/STM32Library/armcore"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/STM32F4xx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-usart}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32Library/armcore}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/armcore}&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.235340339" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER=1"/>
@@ -77,20 +85,20 @@
 							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.1279496748" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.571740264" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
 								<option id="gnu.both.asm.option.include.paths.119252141" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32Library/CMSIS/Include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32Library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32Library/CMSIS/STM32F4xx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/STM32F4xx}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/CMSIS/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32f4-usart}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32Library/armcore}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/STM32F4xx_StdPeriph_Driver/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/stm32library/armcore}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1188378186" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="armcore|STM32F4xx_StdPeriph_Driver/src|STM32F4xx_StdPeriph_Driver" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
-						<entry excluding="src/stm32f4xx_wwdg.c|src/stm32f4xx_sdio.c|src/stm32f4xx_hash.c|src/stm32f4xx_exti.c|src/stm32f4xx_cryp_tdes.c|src/stm32f4xx_crc.c|src/stm32f4xx_adc.c|src/stm32f4xx_fsmc.c|src/stm32f4xx_pwr.c|src/stm32f4xx_dac.c|src/stm32f4xx_rtc.c|src/stm32f4xx_dbgmcu.c|template/|src/stm32f4xx_hash_sha1.c|src/stm32f4xx_cryp.c|src/stm32f4xx_rng.c|src/stm32f4xx_cryp_des.c|src/stm32f4xx_dma.c|src/stm32f4xx_can.c|src/stm32f4xx_syscfg.c|src/stm32f4xx_hash_md5.c|src/stm32f4xx_iwdg.c|src/stm32f4xx_dcmi.c|src/stm32f4xx_flash.c|src/stm32f4xx_cryp_aes.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="STM32F4xx_StdPeriph_Driver"/>
-						<entry excluding="usart3.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="armcore"/>
+						<entry excluding="stm32f4xx_stdperiph_driver_src|STM32F4xx_StdPeriph_Driver/src|armcore|STM32F4xx_StdPeriph_Driver" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="USARTSerial.cpp|ST7032i.cpp|Print.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="armcore"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="stm32f4xx_stdperiph_driver_src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

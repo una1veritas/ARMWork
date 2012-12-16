@@ -60,7 +60,7 @@ PC7 			USART6_RX
 
 void usart_begin(USART_TypeDef * usartx, USART * usx, GPIOPin rx, GPIOPin tx, const uint32_t baud);
 size_t usart_write(USART * usx, const uint16_t w);
-//size_t usart_print(USART * usx, const char * s);
+size_t usart_print(USART * usx, const char * s);
 uint16_t usart_read(USART * usx);
 uint16_t usart_available(USART * usx);
 void usart_flush(USART * usx);

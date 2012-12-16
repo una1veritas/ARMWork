@@ -177,12 +177,12 @@ size_t usart_write(USART * usx, const uint16_t w) {
 	return 1;
 }
 
-/*
-void usart_print(USART * usx, const char * s) {
-	while (*s)
-		usart_write(usx, (uint16_t) *s++);
+size_t usart_print(USART * usx, const char * s) {
+	size_t n = 0;
+	while (s[n])
+		usart_write(usx, (uint16_t) s[n++]);
+	return n;
 }
-*/
 
 uint16_t usart_polling_read(USART_TypeDef * USARTx /*usartx[usx]*/) {
 	return USART_ReceiveData(USARTx);

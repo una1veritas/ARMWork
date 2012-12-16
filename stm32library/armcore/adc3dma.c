@@ -20,8 +20,12 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4_discovery.h"
+//#include "stm32f4_discovery.h"
 #include <stdio.h>
+
+#include <stm32f4xx.h>
+
+#include "adc3dma.h"
 
 /** @addtogroup STM32F4_Discovery_Peripheral_Examples
   * @{
@@ -33,7 +37,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define ADC3_DR_ADDRESS     ((uint32_t)0x4001224C)
+#define ADC3_DR_ADDRESS     ((uint32_t) ADC3+0x4C)
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -51,8 +55,6 @@ void ADC3_CH12_DMA_Config(void);
   * @param  None
   * @retval None
   */
-int main(void)
-{
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
        file (startup_stm32f4xx.s) before to branch to application main.
@@ -64,18 +66,21 @@ int main(void)
   /*  - DMA2_Stream0 channel2 configuration                                   */
   /*  - Configure ADC Channel12 pin as analog input                           */
   /*  - Configure ADC3 Channel12                                              */
-  ADC3_CH12_DMA_Config();
+/*
+int main(void)
+{
+ADC3_CH12_DMA_Config(); // PC02
 
-  /* Start ADC3 Software Conversion */ 
+  // Start ADC3 Software Conversion
   ADC_SoftwareStartConv(ADC3);
 
   while (1)
   {
-  /* convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)*/
+  // convert the ADC value (from 0 to 0xFFF) to a voltage value (from 0V to 3.3V)
     ADC3ConvertedVoltage = ADC3ConvertedValue *3300/0xFFF;
   }
 }
-
+*/
 
 /**
   * @brief  ADC3 channel12 with DMA configuration
@@ -147,26 +152,6 @@ void ADC3_CH12_DMA_Config(void)
   ADC_Cmd(ADC3, ENABLE);
 }
 
-#ifdef  USE_FULL_ASSERT
-
-/**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
-void assert_failed(uint8_t* file, uint32_t line)
-{ 
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-
-  /* Infinite loop */
-  while (1)
-  {
-  }
-}
-#endif
 
 /**
   * @}

@@ -8,8 +8,5 @@ environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/FP_
 environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/FP_SOFT/delimiter=\:
 environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/FP_SOFT/operation=append
 environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/FP_SOFT/value=-mfloat-abi\=soft
-environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/PATH/delimiter=\:
-environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/PATH/operation=replace
-environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/PATH/value=/usr/local/summon/bin\:/opt/local/bin\:/usr/bin\:/bin\:/usr/sbin\:/sbin
 environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/append=true
 environment/project/cdt.managedbuild.config.gnu.cross.exe.release.1729894382/appendContributed=true
