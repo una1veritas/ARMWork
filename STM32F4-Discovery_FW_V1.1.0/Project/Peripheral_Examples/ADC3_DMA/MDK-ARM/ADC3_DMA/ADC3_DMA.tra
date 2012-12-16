@@ -1,0 +1,31 @@
+*** Creating Trace Output File '.\ADC3_DMA\ADC3_DMA.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '".\adc3_dma\main.o"'
+### List of Objects: adding '".\adc3_dma\stm32f4xx_it.o"'
+### List of Objects: adding '".\adc3_dma\system_stm32f4xx.o"'
+### List of Objects: adding '".\adc3_dma\stm32f4_discovery.o"'
+### List of Objects: adding '".\adc3_dma\stm32f4xx_rcc.o"'
+### List of Objects: adding '".\adc3_dma\misc.o"'
+### List of Objects: adding '".\adc3_dma\stm32f4xx_gpio.o"'
+### List of Objects: adding '".\adc3_dma\stm32f4xx_syscfg.o"'
+### List of Objects: adding '".\adc3_dma\stm32f4xx_exti.o"'
+### List of Objects: adding '".\adc3_dma\stm32f4xx_dma.o"'
+### List of Objects: adding '".\adc3_dma\stm32f4xx_adc.o"'
+### List of Objects: adding '".\adc3_dma\startup_stm32f4xx.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M4.fp ".\adc3_dma\main.o" ".\adc3_dma\stm32f4xx_it.o" ".\adc3_dma\system_stm32f4xx.o" ".\adc3_dma\stm32f4_discovery.o" ".\adc3_dma\stm32f4xx_rcc.o" ".\adc3_dma\misc.o" ".\adc3_dma\stm32f4xx_gpio.o" ".\adc3_dma\stm32f4xx_syscfg.o" ".\adc3_dma\stm32f4xx_exti.o" ".\adc3_dma\stm32f4xx_dma.o" ".\adc3_dma\stm32f4xx_adc.o" ".\adc3_dma\startup_stm32f4xx.o" 
+--library_type=microlib --strict --scatter ".\ADC3_DMA\ADC3_DMA.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\ADC3_DMA\ADC3_DMA.map" -o .\ADC3_DMA\ADC3_DMA.axf### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: '.\ADC3_DMA\ADC3_DMA.axf'
+### ADS-LD Command File: '.\ADC3_DMA\ADC3_DMA.lnp'
+### Checking for dirty Components...
+### Creating CmdFile '.\ADC3_DMA\ADC3_DMA.lnp', Handle=0x00000420
+### Writing '.lnp' file
+### ADS-LD Command file '.\ADC3_DMA\ADC3_DMA.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

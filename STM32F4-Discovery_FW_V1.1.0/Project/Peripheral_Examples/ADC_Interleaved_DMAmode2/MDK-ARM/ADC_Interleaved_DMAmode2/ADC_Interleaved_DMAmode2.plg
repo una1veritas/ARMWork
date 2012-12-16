@@ -1,0 +1,13 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\Sin\Documents\Eclipse\ARMWork\STM32F4-Discovery_FW_V1.1.0\Project\Peripheral_Examples\ADC_Interleaved_DMAmode2\MDK-ARM\ADC_Interleaved_DMAmode2.uvproj
+Project File Date:  12/16/2012
+
+<h2>Output:</h2>
+Build target 'ADC_Interleaved_DMAmode2'
+linking...
+Program Size: Code=1304 RO-data=424 RW-data=8 ZI-data=1136  
+".\ADC_Interleaved_DMAmode2\ADC_Interleaved_DMAmode2.axf" - 0 Error(s), 0 Warning(s).
