@@ -27,7 +27,6 @@ typedef struct {
 } USARTRing;
 
 typedef struct _USART {
-//	uint8_t usid;
 	USART_TypeDef * USARTx;
 	USARTRing * rxring, * txring;
 } USART;

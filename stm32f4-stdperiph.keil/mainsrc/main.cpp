@@ -25,6 +25,7 @@
 
 ST7032i lcd;
 USARTSerial Serial3(USART3);
+I2CBus Wire;
 
 int main(void) {
 	uint16_t bits;
@@ -61,8 +62,8 @@ int main(void) {
 	spi_begin(SPI2, PB13, PB14, PB15, PB12);
 	digitalWrite(PB12, HIGH);
 
-	i2c_begin(&Wire1, PB9, PB8, 100000);
-	lcd.init(&Wire1);
+	i2c_begin(&Wire, I2C1, PB9, PB8, 100000);
+	lcd.init(&Wire);
 	lcd.begin();
 	lcd.setContrast(46);
 	lcd.print("Sad!");       // Classic Hello World!

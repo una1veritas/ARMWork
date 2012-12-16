@@ -1,0 +1,5 @@
+--cpu Cortex-M3 ".\stm3210e-eval_xl\i2croutines.o" ".\stm3210e-eval_xl\main.o" ".\stm3210e-eval_xl\stm32f10x_it.o" ".\stm3210e-eval_xl\stm32f10x_dma.o" ".\stm3210e-eval_xl\stm32f10x_flash.o" ".\stm3210e-eval_xl\stm32f10x_gpio.o" ".\stm3210e-eval_xl\stm32f10x_rcc.o" ".\stm3210e-eval_xl\misc.o" ".\stm3210e-eval_xl\stm32f10x_i2c.o" ".\stm3210e-eval_xl\core_cm3.o" ".\stm3210e-eval_xl\system_stm32f10x.o" ".\stm3210e-eval_xl\startup_stm32f10x_xl.o" 
+--library_type=microlib --strict --scatter ".\STM3210E-EVAL_XL\Optimized I2C examples.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\STM3210E-EVAL_XL\Optimized I2C examples.map" -o ".\STM3210E-EVAL_XL\Optimized I2C examples.axf"

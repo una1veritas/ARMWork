@@ -44,7 +44,6 @@
 /* You can monitor the converted value by adding the variable "ADC3ConvertedValue" 
    to the debugger watch window */
 __IO uint16_t ADC3ConvertedValue = 0;
-__IO uint32_t ADC3ConvertedVoltage = 0;
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/

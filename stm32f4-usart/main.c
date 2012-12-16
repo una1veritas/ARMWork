@@ -12,6 +12,7 @@
 
 #include "stm32f4xx_it.h"
 
+#include "armcore.h"
 #include "gpio.h"
 #include "delay.h"
 #include "usart.h"
@@ -23,6 +24,7 @@ int main(void) {
 	uint32_t tnow;
 	char tmp[92];
 	USART Serial;
+	uint16 i;
 
 	TIM2_timer_start();
 
@@ -62,60 +64,35 @@ int main(void) {
 	delay_ms(intval);
 	tnow = millis() / 1000;
 
+	uint32_t sum;
 	while (1) {
-		bits = GPIO_ReadOutputData(GPIOD );
-
-		GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
-		delay_ms(intval);
-
-		GPIOWrite(GPIOD, PinBit(PD14) | (bits & 0x0fff));
-		delay_ms(intval);
-
-		GPIOWrite(GPIOD, PinBit(PD15) | (bits & 0x0fff));
-		delay_ms(intval);
-
-		GPIOWrite(GPIOD, PinBit(PD12) | (bits & 0x0fff));
-		delay_ms(intval);
-		//
-		bits &= 0x0fff;
-		switch ((tnow % 60) / 15) {
-		case 3:
-			bits |= PinBit(PD12);
-		case 2:
-			bits |= PinBit(PD15);
-		case 1:
-			bits |= PinBit(PD14);
-		case 0:
-		default:
-			bits |= PinBit(PD13);
-			break;
+		sum = 0;
+		for(i = 0; i < 8; i++) {
+			sum += ADC3ConvertedValue; // *3300/0xFFF;
+			delay_us(333);
 		}
+		sum /= 8;
+
+		tmp[0] = 0;
+		bits = 0;
+		if ( sum>>9 ) {
+			bits |= PinBit(PD13);
+		}
+		if ( sum>>10 ) {
+			bits |= PinBit(PD14);
+		}
+		if ( sum>>11 ) {
+			bits |= PinBit(PD15);
+		}
+		if ( sum>>12) {
+			bits |= PinBit(PD12);
+		}
+		//
 		GPIOWrite(GPIOD, bits);
 
-		while (tnow == millis() / 1000)
-			;
-		tnow = millis() / 1000;
-
-		sprintf(tmp, "%04ld ", millis());
-		usart_print(&Serial, tmp);
-
-		uint16_t i = 0;
-
-		for(i = 0; i < 8; i++) {
-			ADC3ConvertedVoltage = ADC3ConvertedValue *3300/0xFFF;
-			sprintf(tmp, "%04ld ", ADC3ConvertedVoltage);
+		if ( (millis() % 1000) < 5 ) {
+			sprintf(tmp, " %06ld %06ld\n", millis(), sum);
 			usart_print(&Serial, tmp);
-			delay_ms(5);
-		}
-		usart_print(&Serial, "\n");
-		if (usart_available(&Serial) > 0) {
-			while (usart_available(&Serial) > 0 && i < 92) {
-				tmp[i++] = (char) usart_read(&Serial);
-			}
-			tmp[i] = 0;
-			usart_print(&Serial, "> ");
-			usart_print(&Serial, tmp);
-			usart_print(&Serial, "\n");
 		}
 	}
 	return 0;

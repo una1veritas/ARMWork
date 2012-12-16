@@ -1,0 +1,5 @@
+--cpp -c --cpu Cortex-M4.fp -g -O2 --apcs=interwork -I.\mainsrc -I..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\stm32library\CMSIS\Include -I..\stm32library\CMSIS\STM32F4xx -I.\armcore 
+-I C:\Keil\ARM\RV31\INC 
+-I C:\Keil\ARM\CMSIS\Include 
+-I C:\Keil\ARM\Inc\ST\STM32F4xx 
+-DUSE_STDPERIPH_DRIVER -o "st7032i.o" --omf_browse "st7032i.crf" --depend "st7032i.d" "armcore\ST7032i.cpp"

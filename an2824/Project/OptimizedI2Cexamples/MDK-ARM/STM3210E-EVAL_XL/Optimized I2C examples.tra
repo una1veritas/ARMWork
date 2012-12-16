@@ -1,0 +1,31 @@
+*** Creating Trace Output File '.\STM3210E-EVAL_XL\Optimized I2C examples.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '".\stm3210e-eval_xl\i2croutines.o"'
+### List of Objects: adding '".\stm3210e-eval_xl\main.o"'
+### List of Objects: adding '".\stm3210e-eval_xl\stm32f10x_it.o"'
+### List of Objects: adding '".\stm3210e-eval_xl\stm32f10x_dma.o"'
+### List of Objects: adding '".\stm3210e-eval_xl\stm32f10x_flash.o"'
+### List of Objects: adding '".\stm3210e-eval_xl\stm32f10x_gpio.o"'
+### List of Objects: adding '".\stm3210e-eval_xl\stm32f10x_rcc.o"'
+### List of Objects: adding '".\stm3210e-eval_xl\misc.o"'
+### List of Objects: adding '".\stm3210e-eval_xl\stm32f10x_i2c.o"'
+### List of Objects: adding '".\stm3210e-eval_xl\core_cm3.o"'
+### List of Objects: adding '".\stm3210e-eval_xl\system_stm32f10x.o"'
+### List of Objects: adding '".\stm3210e-eval_xl\startup_stm32f10x_xl.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M3 ".\stm3210e-eval_xl\i2croutines.o" ".\stm3210e-eval_xl\main.o" ".\stm3210e-eval_xl\stm32f10x_it.o" ".\stm3210e-eval_xl\stm32f10x_dma.o" ".\stm3210e-eval_xl\stm32f10x_flash.o" ".\stm3210e-eval_xl\stm32f10x_gpio.o" ".\stm3210e-eval_xl\stm32f10x_rcc.o" ".\stm3210e-eval_xl\misc.o" ".\stm3210e-eval_xl\stm32f10x_i2c.o" ".\stm3210e-eval_xl\core_cm3.o" ".\stm3210e-eval_xl\system_stm32f10x.o" ".\stm3210e-eval_xl\startup_stm32f10x_xl.o" 
+--library_type=microlib --strict --scatter ".\STM3210E-EVAL_XL\Optimized I2C examples.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\STM3210E-EVAL_XL\Optimized I2C examples.map" -o ".\STM3210E-EVAL_XL\Optimized I2C examples.axf"### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: '.\STM3210E-EVAL_XL\Optimized I2C examples.axf'
+### ADS-LD Command File: '.\STM3210E-EVAL_XL\Optimized I2C examples.lnp'
+### Checking for dirty Components...
+### Creating CmdFile '.\STM3210E-EVAL_XL\Optimized I2C examples.lnp', Handle=0x00000838
+### Writing '.lnp' file
+### ADS-LD Command file '.\STM3210E-EVAL_XL\Optimized I2C examples.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.
