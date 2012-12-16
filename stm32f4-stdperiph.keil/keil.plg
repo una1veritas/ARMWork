@@ -1,0 +1,496 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\Sin\Documents\Eclipse\ARMWork\stm32f4-stdperiph.keil\keil.uvproj
+Project File Date:  12/16/2012
+
+<h2>Output:</h2>
+Build target 'stdperiph test'
+compiling main.cpp...
+.\armcore\USARTSerial.h(27): warning:  #1300-D: write inherits implicit virtual
+mainsrc\main.cpp(122): error:  #167: argument of type "USARTSerial *" is incompatible with parameter of type "USART *"
+mainsrc\main.cpp(123): error:  #167: argument of type "USARTSerial *" is incompatible with parameter of type "USART *"
+mainsrc\main.cpp(124): error:  #167: argument of type "USARTSerial *" is incompatible with parameter of type "USART *"
+mainsrc\main.cpp(127): error:  #20: identifier "usart_print" is undefined
+mainsrc\main.cpp(133): warning:  #111-D: statement is unreachable
+compiling delay.c...
+armcore\delay.c(49): error:  #268: declaration may not appear after executable statement in block
+armcore\delay.c(49): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+armcore\delay.c(55): warning:  #223-D: function "NVIC_Init" declared implicitly
+compiling gpio.c...
+armcore\gpio.c(91): error:  #268: declaration may not appear after executable statement in block
+armcore\gpio.c(103): error:  #77-D: this declaration has no storage class or type specifier
+armcore\gpio.c(103): error:  #65: expected a ";"
+armcore\gpio.c(130): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+armcore\ST7032i.cpp(110): error:  #18: expected a ")"
+armcore\ST7032i.cpp(111): error:  #18: expected a ")"
+armcore\ST7032i.cpp(114): error:  #18: expected a ")"
+armcore\ST7032i.cpp(115): error:  #18: expected a ")"
+armcore\ST7032i.cpp(118): error:  #18: expected a ")"
+armcore\ST7032i.cpp(119): error:  #18: expected a ")"
+armcore\ST7032i.cpp(122): error:  #18: expected a ")"
+armcore\ST7032i.cpp(123): error:  #18: expected a ")"
+armcore\ST7032i.cpp(126): error:  #18: expected a ")"
+armcore\ST7032i.cpp(128): error:  #18: expected a ")"
+armcore\ST7032i.cpp(158): error:  #18: expected a ")"
+armcore\ST7032i.cpp(159): error:  #18: expected a ")"
+armcore\ST7032i.cpp(161): error:  #18: expected a ")"
+armcore\ST7032i.cpp(163): error:  #18: expected a ")"
+armcore\ST7032i.cpp(164): error:  #18: expected a ")"
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+.\armcore\USARTSerial.h(27): warning:  #1300-D: write inherits implicit virtual
+mainsrc\main.cpp(122): error:  #167: argument of type "USARTSerial *" is incompatible with parameter of type "USART *"
+mainsrc\main.cpp(123): error:  #167: argument of type "USARTSerial *" is incompatible with parameter of type "USART *"
+mainsrc\main.cpp(124): error:  #167: argument of type "USARTSerial *" is incompatible with parameter of type "USART *"
+mainsrc\main.cpp(127): error:  #20: identifier "usart_print" is undefined
+mainsrc\main.cpp(133): warning:  #111-D: statement is unreachable
+compiling delay.c...
+armcore\delay.c(49): error:  #268: declaration may not appear after executable statement in block
+armcore\delay.c(49): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+armcore\delay.c(55): warning:  #223-D: function "NVIC_Init" declared implicitly
+compiling gpio.c...
+armcore\gpio.c(91): error:  #268: declaration may not appear after executable statement in block
+armcore\gpio.c(103): error:  #77-D: this declaration has no storage class or type specifier
+armcore\gpio.c(103): error:  #65: expected a ";"
+armcore\gpio.c(130): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+armcore\ST7032i.cpp(110): error:  #18: expected a ")"
+armcore\ST7032i.cpp(111): error:  #18: expected a ")"
+armcore\ST7032i.cpp(114): error:  #18: expected a ")"
+armcore\ST7032i.cpp(115): error:  #18: expected a ")"
+armcore\ST7032i.cpp(118): error:  #18: expected a ")"
+armcore\ST7032i.cpp(119): error:  #18: expected a ")"
+armcore\ST7032i.cpp(122): error:  #18: expected a ")"
+armcore\ST7032i.cpp(123): error:  #18: expected a ")"
+armcore\ST7032i.cpp(126): error:  #18: expected a ")"
+armcore\ST7032i.cpp(128): error:  #18: expected a ")"
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+.\armcore\USARTSerial.h(27): warning:  #1300-D: write inherits implicit virtual
+mainsrc\main.cpp(122): error:  #167: argument of type "USARTSerial *" is incompatible with parameter of type "USART *"
+mainsrc\main.cpp(123): error:  #167: argument of type "USARTSerial *" is incompatible with parameter of type "USART *"
+mainsrc\main.cpp(124): error:  #167: argument of type "USARTSerial *" is incompatible with parameter of type "USART *"
+mainsrc\main.cpp(127): error:  #20: identifier "usart_print" is undefined
+mainsrc\main.cpp(133): warning:  #111-D: statement is unreachable
+compiling delay.c...
+armcore\delay.c(49): error:  #268: declaration may not appear after executable statement in block
+armcore\delay.c(49): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+armcore\delay.c(55): warning:  #223-D: function "NVIC_Init" declared implicitly
+compiling gpio.c...
+armcore\gpio.c(91): error:  #268: declaration may not appear after executable statement in block
+armcore\gpio.c(103): error:  #77-D: this declaration has no storage class or type specifier
+armcore\gpio.c(103): error:  #65: expected a ";"
+armcore\gpio.c(130): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+.\armcore\USARTSerial.h(27): warning:  #1300-D: write inherits implicit virtual
+mainsrc\main.cpp(127): error:  #20: identifier "usart_print" is undefined
+mainsrc\main.cpp(133): warning:  #111-D: statement is unreachable
+compiling delay.c...
+armcore\delay.c(49): error:  #268: declaration may not appear after executable statement in block
+armcore\delay.c(49): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+armcore\delay.c(55): warning:  #223-D: function "NVIC_Init" declared implicitly
+compiling gpio.c...
+armcore\gpio.c(91): error:  #268: declaration may not appear after executable statement in block
+armcore\gpio.c(103): error:  #77-D: this declaration has no storage class or type specifier
+armcore\gpio.c(103): error:  #65: expected a ";"
+armcore\gpio.c(130): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(39): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(41): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(42): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(43): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(48): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(49): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(50): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(51): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(52): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(53): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(54): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(55): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(56): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(110): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(111): error:  #135: class "USARTSerial" has no member "print"
+mainsrc\main.cpp(127): error:  #20: identifier "usart_print" is undefined
+mainsrc\main.cpp(133): warning:  #111-D: statement is unreachable
+compiling delay.c...
+armcore\delay.c(49): error:  #268: declaration may not appear after executable statement in block
+armcore\delay.c(49): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+armcore\delay.c(55): warning:  #223-D: function "NVIC_Init" declared implicitly
+compiling gpio.c...
+armcore\gpio.c(91): error:  #268: declaration may not appear after executable statement in block
+armcore\gpio.c(103): error:  #77-D: this declaration has no storage class or type specifier
+armcore\gpio.c(103): error:  #65: expected a ";"
+armcore\gpio.c(130): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+compiling USARTSerial.cpp...
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+.\armcore\Print.h(26): error:  #5: cannot open source input file "WString.h": No such file or directory
+compiling delay.c...
+armcore\delay.c(49): error:  #268: declaration may not appear after executable statement in block
+armcore\delay.c(49): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+armcore\delay.c(55): warning:  #223-D: function "NVIC_Init" declared implicitly
+compiling gpio.c...
+armcore\gpio.c(91): error:  #268: declaration may not appear after executable statement in block
+armcore\gpio.c(103): error:  #77-D: this declaration has no storage class or type specifier
+armcore\gpio.c(103): error:  #65: expected a ";"
+armcore\gpio.c(130): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
+compiling Print.cpp...
+armcore\Print.cpp(26): error:  #5: cannot open source input file "Arduino.h": No such file or directory
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+compiling USARTSerial.cpp...
+armcore\Print.h(26): error:  #5: cannot open source input file "WString.h": No such file or directory
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+.\armcore\Print.h(56): error:  #20: identifier "__FlashStringHelper" is undefined
+.\armcore\Print.h(57): error:  #20: identifier "String" is undefined
+.\armcore\Print.h(66): error:  #20: identifier "Printable" is undefined
+.\armcore\Print.h(66): error:  #403: invalid redeclaration of member function "Print::print(const <error-type> &)" (declared at line 57)
+.\armcore\Print.h(68): error:  #20: identifier "__FlashStringHelper" is undefined
+.\armcore\Print.h(69): error:  #20: identifier "String" is undefined
+.\armcore\Print.h(78): error:  #20: identifier "Printable" is undefined
+.\armcore\Print.h(78): error:  #403: invalid redeclaration of member function "Print::println(const <error-type> &)" (declared at line 69)
+mainsrc\main.cpp(127): error:  #20: identifier "usart_print" is undefined
+mainsrc\main.cpp(133): warning:  #111-D: statement is unreachable
+compiling delay.c...
+armcore\delay.c(49): error:  #268: declaration may not appear after executable statement in block
+armcore\delay.c(49): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+armcore\delay.c(55): warning:  #223-D: function "NVIC_Init" declared implicitly
+compiling gpio.c...
+armcore\gpio.c(91): error:  #268: declaration may not appear after executable statement in block
+armcore\gpio.c(103): error:  #77-D: this declaration has no storage class or type specifier
+armcore\gpio.c(103): error:  #65: expected a ";"
+armcore\gpio.c(130): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
+compiling Print.cpp...
+armcore\Print.cpp(26): error:  #5: cannot open source input file "Arduino.h": No such file or directory
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+compiling USARTSerial.cpp...
+armcore\Print.h(56): error:  #20: identifier "__FlashStringHelper" is undefined
+armcore\Print.h(57): error:  #20: identifier "String" is undefined
+armcore\Print.h(66): error:  #20: identifier "Printable" is undefined
+armcore\Print.h(66): error:  #403: invalid redeclaration of member function "Print::print(const <error-type> &)" (declared at line 57)
+armcore\Print.h(68): error:  #20: identifier "__FlashStringHelper" is undefined
+armcore\Print.h(69): error:  #20: identifier "String" is undefined
+armcore\Print.h(78): error:  #20: identifier "Printable" is undefined
+armcore\Print.h(78): error:  #403: invalid redeclaration of member function "Print::println(const <error-type> &)" (declared at line 69)
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(127): error:  #20: identifier "usart_print" is undefined
+mainsrc\main.cpp(133): warning:  #111-D: statement is unreachable
+compiling delay.c...
+armcore\delay.c(49): error:  #268: declaration may not appear after executable statement in block
+armcore\delay.c(49): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+armcore\delay.c(55): warning:  #223-D: function "NVIC_Init" declared implicitly
+compiling gpio.c...
+armcore\gpio.c(91): error:  #268: declaration may not appear after executable statement in block
+armcore\gpio.c(103): error:  #77-D: this declaration has no storage class or type specifier
+armcore\gpio.c(103): error:  #65: expected a ";"
+armcore\gpio.c(130): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
+compiling Print.cpp...
+armcore\Print.cpp(26): error:  #5: cannot open source input file "Arduino.h": No such file or directory
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+compiling USARTSerial.cpp...
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(127): error:  #135: class "USARTSerial" has no member "rint"
+mainsrc\main.cpp(133): warning:  #111-D: statement is unreachable
+compiling delay.c...
+armcore\delay.c(49): error:  #268: declaration may not appear after executable statement in block
+armcore\delay.c(49): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+armcore\delay.c(55): warning:  #223-D: function "NVIC_Init" declared implicitly
+compiling gpio.c...
+armcore\gpio.c(91): error:  #268: declaration may not appear after executable statement in block
+armcore\gpio.c(103): error:  #77-D: this declaration has no storage class or type specifier
+armcore\gpio.c(103): error:  #65: expected a ";"
+armcore\gpio.c(130): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
+compiling Print.cpp...
+armcore\Print.cpp(26): error:  #5: cannot open source input file "Arduino.h": No such file or directory
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(133): warning:  #111-D: statement is unreachable
+compiling delay.c...
+armcore\delay.c(49): error:  #268: declaration may not appear after executable statement in block
+armcore\delay.c(49): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+armcore\delay.c(55): warning:  #223-D: function "NVIC_Init" declared implicitly
+compiling gpio.c...
+armcore\gpio.c(91): error:  #268: declaration may not appear after executable statement in block
+armcore\gpio.c(103): error:  #77-D: this declaration has no storage class or type specifier
+armcore\gpio.c(103): error:  #65: expected a ";"
+armcore\gpio.c(130): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
+compiling Print.cpp...
+armcore\Print.cpp(26): error:  #5: cannot open source input file "Arduino.h": No such file or directory
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+Target not created
+Build target 'stdperiph test'
+compiling delay.c...
+armcore\delay.c(49): error:  #268: declaration may not appear after executable statement in block
+armcore\delay.c(49): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+armcore\delay.c(55): warning:  #223-D: function "NVIC_Init" declared implicitly
+compiling gpio.c...
+armcore\gpio.c(91): error:  #268: declaration may not appear after executable statement in block
+armcore\gpio.c(103): error:  #77-D: this declaration has no storage class or type specifier
+armcore\gpio.c(103): error:  #65: expected a ";"
+armcore\gpio.c(130): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
+compiling Print.cpp...
+armcore\Print.cpp(27): error:  #13: expected a file name
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+Target not created
+Build target 'stdperiph test'
+compiling delay.c...
+armcore\delay.c(31): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+armcore\delay.c(55): warning:  #223-D: function "NVIC_Init" declared implicitly
+compiling gpio.c...
+armcore\gpio.c(91): error:  #268: declaration may not appear after executable statement in block
+armcore\gpio.c(103): error:  #77-D: this declaration has no storage class or type specifier
+armcore\gpio.c(103): error:  #65: expected a ";"
+armcore\gpio.c(130): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
+compiling Print.cpp...
+armcore\Print.cpp(27): error:  #13: expected a file name
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(133): warning:  #111-D: statement is unreachable
+compiling stm32f4xx_it.c...
+compiling system_stm32f4xx.c...
+compiling delay.c...
+compiling gpio.c...
+armcore\gpio.c(91): error:  #268: declaration may not appear after executable statement in block
+armcore\gpio.c(103): error:  #77-D: this declaration has no storage class or type specifier
+armcore\gpio.c(103): error:  #65: expected a ";"
+armcore\gpio.c(130): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
+compiling i2c.c...
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(14): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+armcore\i2c.c(15): warning:  #188-D: enumerated type mixed with another type
+compiling Print.cpp...
+armcore\Print.cpp(27): error:  #13: expected a file name
+compiling spi.c...
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+compiling systick.c...
+compiling usart.c...
+compiling USARTSerial.cpp...
+Target not created
+Build target 'stdperiph test'
+compiling gpio.c...
+armcore\gpio.c(104): error:  #77-D: this declaration has no storage class or type specifier
+armcore\gpio.c(104): error:  #65: expected a ";"
+armcore\gpio.c(131): warning: At end of source:  #12-D: parsing restarts here after previous syntax error
+compiling Print.cpp...
+armcore\Print.cpp(27): error:  #13: expected a file name
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+Target not created
+Build target 'stdperiph test'
+compiling gpio.c...
+compiling Print.cpp...
+armcore\Print.cpp(27): error:  #13: expected a file name
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+Target not created
+Build target 'stdperiph test'
+compiling Print.cpp...
+armcore\Print.cpp(43): error:  #20: identifier "__FlashStringHelper" is undefined
+armcore\Print.cpp(43): error:  #493: no instance of overloaded function "Print::print" matches the specified type
+armcore\Print.cpp(45): error:  #257: const variable "PROGMEM" requires an initializer
+armcore\Print.cpp(45): error:  #65: expected a ";"
+armcore\Print.cpp(48): error:  #20: identifier "p" is undefined
+armcore\Print.cpp(48): error:  #20: identifier "pgm_read_byte" is undefined
+armcore\Print.cpp(45): warning:  #177-D: variable "PROGMEM" was declared but never referenced
+armcore\Print.cpp(55): error:  #20: identifier "String" is undefined
+armcore\Print.cpp(55): error:  #493: no instance of overloaded function "Print::print" matches the specified type
+armcore\Print.cpp(116): error:  #20: identifier "__FlashStringHelper" is undefined
+armcore\Print.cpp(116): error:  #493: no instance of overloaded function "Print::println" matches the specified type
+armcore\Print.cpp(123): error:  #20: identifier "Printable" is undefined
+armcore\Print.cpp(123): error:  #493: no instance of overloaded function "Print::print" matches the specified type
+armcore\Print.cpp(135): error:  #20: identifier "String" is undefined
+armcore\Print.cpp(135): error:  #493: no instance of overloaded function "Print::println" matches the specified type
+armcore\Print.cpp(198): error:  #20: identifier "Printable" is undefined
+armcore\Print.cpp(198): error:  #493: no instance of overloaded function "Print::println" matches the specified type
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+Target not created
+Build target 'stdperiph test'
+compiling Print.cpp...
+armcore\Print.cpp(201): error:  #20: identifier "Printable" is undefined
+armcore\Print.cpp(201): error:  #493: no instance of overloaded function "Print::println" matches the specified type
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+Target not created
+Build target 'stdperiph test'
+compiling Print.cpp...
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(94): error:  #65: expected a ";"
+Target not created
+Build target 'stdperiph test'
+compiling ST7032i.cpp...
+linking...
+keil.axf: Error: L6218E: Undefined symbol GPIO_ReadOutputData (referred from main.o).
+keil.axf: Error: L6218E: Undefined symbol RCC_GetClocksFreq (referred from main.o).
+keil.axf: Error: L6218E: Undefined symbol Print::println() (referred from main.o).
+keil.axf: Error: L6218E: Undefined symbol NVIC_Init (referred from delay.o).
+keil.axf: Error: L6218E: Undefined symbol RCC_APB1PeriphClockCmd (referred from delay.o).
+keil.axf: Error: L6218E: Undefined symbol TIM_ClearITPendingBit (referred from delay.o).
+keil.axf: Error: L6218E: Undefined symbol TIM_Cmd (referred from delay.o).
+keil.axf: Error: L6218E: Undefined symbol TIM_GetCounter (referred from delay.o).
+keil.axf: Error: L6218E: Undefined symbol TIM_GetITStatus (referred from delay.o).
+keil.axf: Error: L6218E: Undefined symbol TIM_ITConfig (referred from delay.o).
+keil.axf: Error: L6218E: Undefined symbol TIM_SetCounter (referred from delay.o).
+keil.axf: Error: L6218E: Undefined symbol TIM_TimeBaseInit (referred from delay.o).
+keil.axf: Error: L6218E: Undefined symbol GPIO_Init (referred from gpio.o).
+keil.axf: Error: L6218E: Undefined symbol GPIO_ReadInputDataBit (referred from gpio.o).
+keil.axf: Error: L6218E: Undefined symbol GPIO_ReadOutputDataBit (referred from gpio.o).
+keil.axf: Error: L6218E: Undefined symbol GPIO_ResetBits (referred from gpio.o).
+keil.axf: Error: L6218E: Undefined symbol GPIO_SetBits (referred from gpio.o).
+keil.axf: Error: L6218E: Undefined symbol GPIO_Write (referred from gpio.o).
+keil.axf: Error: L6218E: Undefined symbol RCC_AHB1PeriphClockCmd (referred from gpio.o).
+keil.axf: Error: L6218E: Undefined symbol GPIO_PinAFConfig (referred from i2c.o).
+keil.axf: Error: L6218E: Undefined symbol I2C_AcknowledgeConfig (referred from i2c.o).
+keil.axf: Error: L6218E: Undefined symbol I2C_CheckEvent (referred from i2c.o).
+keil.axf: Error: L6218E: Undefined symbol I2C_Cmd (referred from i2c.o).
+keil.axf: Error: L6218E: Undefined symbol I2C_GenerateSTART (referred from i2c.o).
+keil.axf: Error: L6218E: Undefined symbol I2C_GenerateSTOP (referred from i2c.o).
+keil.axf: Error: L6218E: Undefined symbol I2C_GetFlagStatus (referred from i2c.o).
+keil.axf: Error: L6218E: Undefined symbol I2C_Init (referred from i2c.o).
+keil.axf: Error: L6218E: Undefined symbol I2C_ReceiveData (referred from i2c.o).
+keil.axf: Error: L6218E: Undefined symbol I2C_Send7bitAddress (referred from i2c.o).
+keil.axf: Error: L6218E: Undefined symbol I2C_SendData (referred from i2c.o).
+keil.axf: Error: L6218E: Undefined symbol RCC_APB1PeriphResetCmd (referred from spi.o).
+keil.axf: Error: L6218E: Undefined symbol RCC_APB2PeriphClockCmd (referred from spi.o).
+keil.axf: Error: L6218E: Undefined symbol SPI_Cmd (referred from spi.o).
+keil.axf: Error: L6218E: Undefined symbol SPI_I2S_GetFlagStatus (referred from spi.o).
+keil.axf: Error: L6218E: Undefined symbol SPI_I2S_ReceiveData (referred from spi.o).
+keil.axf: Error: L6218E: Undefined symbol SPI_I2S_SendData (referred from spi.o).
+keil.axf: Error: L6218E: Undefined symbol SPI_Init (referred from spi.o).
+keil.axf: Error: L6218E: Undefined symbol USART_ClearITPendingBit (referred from usart.o).
+keil.axf: Error: L6218E: Undefined symbol USART_Cmd (referred from usart.o).
+keil.axf: Error: L6218E: Undefined symbol USART_GetFlagStatus (referred from usart.o).
+keil.axf: Error: L6218E: Undefined symbol USART_GetITStatus (referred from usart.o).
+keil.axf: Error: L6218E: Undefined symbol USART_ITConfig (referred from usart.o).
+keil.axf: Error: L6218E: Undefined symbol USART_Init (referred from usart.o).
+keil.axf: Error: L6218E: Undefined symbol USART_ReceiveData (referred from usart.o).
+keil.axf: Error: L6218E: Undefined symbol USART_SendData (referred from usart.o).
+Target not created
+Build target 'stdperiph test'
+compiling misc.c...
+compiling stm32f4xx_gpio.c...
+compiling stm32f4xx_rcc.c...
+compiling stm32f4xx_i2c.c...
+compiling stm32f4xx_tim.c...
+compiling stm32f4xx_usart.c...
+linking...
+keil.axf: Error: L6218E: Undefined symbol Print::println() (referred from main.o).
+keil.axf: Error: L6218E: Undefined symbol SPI_Cmd (referred from spi.o).
+keil.axf: Error: L6218E: Undefined symbol SPI_I2S_GetFlagStatus (referred from spi.o).
+keil.axf: Error: L6218E: Undefined symbol SPI_I2S_ReceiveData (referred from spi.o).
+keil.axf: Error: L6218E: Undefined symbol SPI_I2S_SendData (referred from spi.o).
+keil.axf: Error: L6218E: Undefined symbol SPI_Init (referred from spi.o).
+Target not created
+Build target 'stdperiph test'
+compiling Print.cpp...
+linking...
+keil.axf: Error: L6218E: Undefined symbol SPI_Cmd (referred from spi.o).
+keil.axf: Error: L6218E: Undefined symbol SPI_I2S_GetFlagStatus (referred from spi.o).
+keil.axf: Error: L6218E: Undefined symbol SPI_I2S_ReceiveData (referred from spi.o).
+keil.axf: Error: L6218E: Undefined symbol SPI_I2S_SendData (referred from spi.o).
+keil.axf: Error: L6218E: Undefined symbol SPI_Init (referred from spi.o).
+Target not created
+Build target 'stdperiph test'
+compiling stm32f4xx_spi.c...
+linking...
+Program Size: Code=20136 RO-data=496 RW-data=200 ZI-data=4816  
+"keil.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\Eclipse\\ARMWork\\stm32f4-stdperiph.keil\\keil.AXF" 
+Internal DLL Error
+Build target 'stdperiph test'
+linking...
+Program Size: Code=20136 RO-data=496 RW-data=200 ZI-data=4816  
+"keil.axf" - 0 Error(s), 0 Warning(s).
+Build target 'stdperiph test'
+linking...
+Program Size: Code=20136 RO-data=496 RW-data=200 ZI-data=4816  
+"keil.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\Eclipse\\ARMWork\\stm32f4-stdperiph.keil\\keil.AXF" 
+Load "C:\\Users\\Sin\\Documents\\Eclipse\\ARMWork\\stm32f4-stdperiph.keil\\keil.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'stdperiph test'
+compiling main.cpp...
+.\armcore\ST7032i.h(24): warning:  #611-D: overloaded virtual function "Print::write" is only partially overridden in class "ST7032i"
+mainsrc\main.cpp(132): warning:  #111-D: statement is unreachable
+compiling ST7032i.cpp...
+armcore\ST7032i.h(24): warning:  #611-D: overloaded virtual function "Print::write" is only partially overridden in class "ST7032i"
+armcore\ST7032i.cpp(92): error:  #147: declaration is incompatible with "std::size_t ST7032i::write(std::uint8_t)" (declared at line 46 of "armcore\ST7032i.h")
+armcore\ST7032i.cpp(101): error:  #147: declaration is incompatible with "std::size_t ST7032i::write(std::uint8_t)" (declared at line 46 of "armcore\ST7032i.h")
+armcore\ST7032i.cpp(149): error:  #298: inherited member is not allowed
+Target not created
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(132): warning:  #111-D: statement is unreachable
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(92): error:  #493: no instance of overloaded function "ST7032i::write" matches the specified type
+armcore\ST7032i.cpp(101): error:  #493: no instance of overloaded function "ST7032i::write" matches the specified type
+armcore\ST7032i.cpp(149): error:  #298: inherited member is not allowed
+Target not created
+Build target 'stdperiph test'
+compiling ST7032i.cpp...
+armcore\ST7032i.cpp(142): error:  #298: inherited member is not allowed
+Target not created
+Build target 'stdperiph test'
+compiling ST7032i.cpp...
+linking...
+Program Size: Code=19184 RO-data=492 RW-data=200 ZI-data=4824  
+"keil.axf" - 0 Error(s), 0 Warning(s).
+Build target 'stdperiph test'
+compiling main.cpp...
+mainsrc\main.cpp(132): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=19448 RO-data=492 RW-data=200 ZI-data=4824  
+"keil.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\Eclipse\\ARMWork\\stm32f4-stdperiph.keil\\keil.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...

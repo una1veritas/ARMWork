@@ -1,0 +1,5 @@
+--cpu Cortex-M4.fp "main.o" "startup_stm32f4xx.o" "stm32f4xx_it.o" "system_stm32f4xx.o" "delay.o" "gpio.o" "i2c.o" "print.o" "spi.o" "st7032i.o" "systick.o" "usart.o" "usartserial.o" "misc.o" "stm32f4xx_gpio.o" "stm32f4xx_rcc.o" "stm32f4xx_i2c.o" "stm32f4xx_tim.o" "stm32f4xx_usart.o" "stm32f4xx_spi.o" 
+--strict --scatter "keil.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\keil.map" -o keil.axf
