@@ -17,14 +17,14 @@
 #include "gpio.h"
 #include "delay.h"
 #include "usart.h"
-#include "spi.h"
 #include "i2c.h"
 
 #include "ST7032i.h"
 #include "USARTSerial.h"
 
 ST7032i lcd;
-USARTSerial Serial3;
+USARTSerial Serial3(USART3);
+I2CBus Wire1;
 
 int main(void) {
 	uint16_t bits;
@@ -34,14 +34,11 @@ int main(void) {
 
 	TIM2_timer_start();
 
-	Serial3.begin(USART3, PC11, PC10, 19200);
+	Serial3.begin(PC11, PC10, 19200);
 
-	Serial3.print(
-			"Happy are those who know they are spiritually poor; \n");
-	Serial3.print( "The kingdom of heaven belongs to them!\n");
-	Serial3.print( "If thou beest he! But O how fall'n!\n");
-	Serial3.print( "How chang'd from him!\n");
+	Serial3.print("Happy are those who know they are spiritually poor; \n");
 	Serial3.flush();
+
 	RCC_ClocksTypeDef RCC_Clocks;
 	RCC_GetClocksFreq(&RCC_Clocks);
 
@@ -53,20 +50,18 @@ int main(void) {
 	Serial3.print( RCC_Clocks.PCLK1_Frequency);
 	Serial3.print( ", PCLK2 = ");
 	Serial3.print(RCC_Clocks.PCLK2_Frequency);
-	Serial3.print("\n");
+	Serial3.println();
 	Serial3.flush();
 
 	GPIOMode(PinPort(PD12),
 			(PinBit(PD12) | PinBit(PD13) | PinBit(PD14) | PinBit(PD15)), OUTPUT,
 			FASTSPEED, PUSHPULL, NOPULL);
-	spi_begin(SPI2, PB13, PB14, PB15, PB12);
-	digitalWrite(PB12, HIGH);
 
-	i2c_begin(&Wire1, PB9, PB8, 100000);
+	i2c_begin(&Wire1, I2C1,  PB9, PB8, 100000);
 	lcd.init(&Wire1);
 	lcd.begin();
 	lcd.setContrast(46);
-	lcd.print("Yappee!");       // Classic Hello World!
+	lcd.print("Whoooeee!");       // Classic Hello World!
 
 	bits = GPIO_ReadOutputData(GPIOD );
 	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
@@ -107,26 +102,20 @@ int main(void) {
 		tnow = millis() / 1000;
 
 		//Serial3.print(tmp);
-		Serial3.print(millis());
-		Serial3.print("\n");
+		Serial3.println((float)millis()/1000, 3);
 
-		sprintf(tmp, "%04ld", millis());
 		lcd.setCursor(0, 1);
-		lcd.print((const char *)tmp);
-
-		digitalWrite(PB12, LOW);
-		spi_transfer(SPI2, (uint8_t *) tmp, 8);
-		digitalWrite(PB12, HIGH);
+		lcd.print((float)millis()/1000, 3);
 
 		uint16_t i = 0;
-		if (usart_available(&Serial3) > 0) {
-			while (usart_available(&Serial3) > 0 && i < 92) {
-				tmp[i++] = (char) usart_read(&Serial3);
+		if (Serial3.available() > 0) {
+			while (Serial3.available() > 0 && i < 92) {
+				tmp[i++] = (char) Serial3.read();
 			}
 			tmp[i] = 0;
-			usart_print(&Serial3, "> ");
-			usart_print(&Serial3, tmp);
-			usart_print(&Serial3, "\n");
+			Serial3.print("> ");
+			Serial3.print(tmp);
+			Serial3.print("\n");
 		}
 
 	}

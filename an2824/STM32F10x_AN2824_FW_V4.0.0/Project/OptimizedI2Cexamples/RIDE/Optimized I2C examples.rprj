@@ -1,0 +1,4 @@
+
+<Project Header="Project 'Optimized I2C examples'" Path=".\Optimized I2C examples.rprj" Project="Yes" OutputFile="" sate="96" ActiveApp="Optimized I2C examples" >
+	<ApplicationBuild Header="Optimized I2C examples" Extern=".\Optimized I2C examples.rapp" Path=".\Optimized I2C examples.rapp" OutputFile=".\STM3210E-EVAL_XL\Optimized I2C examples.elf" Config="STM3210E-EVAL_XL" sate="98" />
+</Project>

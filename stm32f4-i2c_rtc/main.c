@@ -1,111 +1,133 @@
-/**
- ******************************************************************************
- * @file    i2c_st7032i_lib/main.c
- * @author  Yasuo Kawachi
- * @version V1.0.0
- * @date    04/15/2009
- * @brief   Main program body
- ******************************************************************************
- * @copy
+/*
+ * main.c
  *
- * Copyright 2008-2009 Yasuo Kawachi All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *  1. Redistributions of source code must retain the above copyright notice,
- *  this list of conditions and the following disclaimer.
- *  2. Redistributions in binary form must reproduce the above copyright notice,
- *  this list of conditions and the following disclaimer in the documentation
- *  and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY YASUO KAWACHI "AS IS" AND ANY EXPRESS OR IMPLIE  D
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL YASUO KAWACHI OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * This software way contain the part of STMicroelectronics firmware.
- * Below notice is applied to the part, but the above BSD license is not.
- *
- * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
- * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
- * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
- * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
- * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
- * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
- *
- * COPYRIGHT 2009 STMicroelectronics
+ *  Created on: 2012/10/08
+ *      Author: sin
  */
 
-/* Includes ------------------------------------------------------------------*/
-#include <ctype.h>
+#include <stdio.h>
+#include <stdint.h>
 
-#include "stm32f4xx.h"
-#include "st7032i.h"
+#include <stm32f4xx.h>
+#include <stm32f4xx_usart.h>
+
+#include "stm32f4xx_it.h"
 
 #include "armcore.h"
+#include "gpio.h"
 #include "delay.h"
 #include "usart.h"
 #include "i2c.h"
-/* Private typedef -----------------------------------------------------------*/
-/* Private define ------------------------------------------------------------*/
-/* Private macro -------------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
-/* Private function prototypes -----------------------------------------------*/
-/* Private functions ---------------------------------------------------------*/
 
-/**
- * @brief  Main program.
- * @param  None
- * @retval : None
- */
+#include "ST7032i.h"
+
+ST7032i lcd;
+USARTSerial Serial3;
+
 int main(void) {
-	int16_t i = 0;
-	const int rxbufsize = 64;
-	char rxbuf[rxbufsize];
-	char printbuf[64];
-	uint32_t tmp32, rtctime = 0;
+	uint16_t bits;
+	uint32_t intval = 40;
+	uint32_t tnow;
+	char tmp[92];
 
 	TIM2_timer_start();
 
-	usart_begin(&Serial3, PD9, PD8, 19200);
-	usart_print(&Serial3, "\r\nWelcome to USART3.\r\n\r\n");
+	Serial3.begin(USART3, PC11, PC10, 19200);
 
-	i2c_begin(100000);
-	ST7032i_Init();
+	Serial3.print(
+			"Happy are those who know they are spiritually poor; \n");
+	Serial3.print( "The kingdom of heaven belongs to them!\n");
+	Serial3.print( "If thou beest he! But O how fall'n!\n");
+	Serial3.print( "How chang'd from him!\n");
+	Serial3.flush();
+	RCC_ClocksTypeDef RCC_Clocks;
+	RCC_GetClocksFreq(&RCC_Clocks);
 
-	ST7032i_Set_Contrast(44);
-	ST7032i_Print_String((const int8_t *) "Welcome to lcd.");
-	usart_print(&Serial3, "2");
-	delay_ms(500);
-//	ST7032i_Command_Write(0x01);
+	Serial3.print( "SYSCLK = ");
+	Serial3.print(RCC_Clocks.SYSCLK_Frequency);
+	Serial3.print( ", HCLK = ");
+	Serial3.print( RCC_Clocks.HCLK_Frequency);
+	Serial3.print( ", PCLK1 = ");
+	Serial3.print( RCC_Clocks.PCLK1_Frequency);
+	Serial3.print( ", PCLK2 = ");
+	Serial3.print(RCC_Clocks.PCLK2_Frequency);
+	Serial3.print("\n");
+	Serial3.flush();
 
-	//Receive character from COM and put it on LCD
+	GPIOMode(PinPort(PD12),
+			(PinBit(PD12) | PinBit(PD13) | PinBit(PD14) | PinBit(PD15)), OUTPUT,
+			FASTSPEED, PUSHPULL, NOPULL);
+	spi_begin(SPI2, PB13, PB14, PB15, PB12);
+	digitalWrite(PB12, HIGH);
+
+	i2c_begin(&Wire1, PB9, PB8, 100000);
+	lcd.init(&Wire1);
+	lcd.begin();
+	lcd.setContrast(46);
+	lcd.print("Yappee!");       // Classic Hello World!
+
+	bits = GPIO_ReadOutputData(GPIOD );
+	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
+	delay_ms(intval);
+	tnow = millis() / 1000;
+	while (tnow == millis() / 1000)
+		;
+	tnow = millis() / 1000;
+
 	while (1) {
+		bits = GPIO_ReadOutputData(GPIOD );
 
-		i2c_requestFrom(0b1101000, 0, (uint8_t *) &tmp32, 3);
-		if (rtctime != (tmp32 & 0xffffff)) {
-			rtctime = tmp32 & 0xffffff;
-			sprintf(printbuf, "%02x:%02x:%02x\r\n", UINT8(rtctime>>16),
-					UINT8(rtctime>>8), UINT8(rtctime) );
-			usart_print(&Serial3, printbuf);
-			ST7032i_Set_DDRAM(((0 * 0x40) % 0x6c) + 0);
-			ST7032i_Print_String((int8_t *) printbuf);
-			if ((rtctime & 0xff) == 0) {
-				i2c_requestFrom(0b1101000, 3, (uint8_t *) &tmp32, 4);
-				sprintf(printbuf, "20%02x %02x/%02x (%x)", UINT8(tmp32>>24),
-						UINT8(tmp32>>16), UINT8(tmp32>>8), UINT8(tmp32) );
-				usart_print(&Serial3, printbuf);
-				ST7032i_Set_DDRAM(((1 * 0x40) % 0x6c) + 0);
-				ST7032i_Print_String((int8_t *) printbuf);
-			}
+		GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
+		delay_ms(intval);
+		GPIOWrite(GPIOD, PinBit(PD14) | (bits & 0x0fff));
+		delay_ms(intval);
+		GPIOWrite(GPIOD, PinBit(PD15) | (bits & 0x0fff));
+		delay_ms(intval);
+		GPIOWrite(GPIOD, PinBit(PD12) | (bits & 0x0fff));
+		delay_ms(intval);
+		//
+		bits &= 0x0fff;
+		switch ((tnow % 60) / 15) {
+		case 3:
+			bits |= PinBit(PD12);
+		case 2:
+			bits |= PinBit(PD15);
+		case 1:
+			bits |= PinBit(PD14);
+		case 0:
+		default:
+			bits |= PinBit(PD13);
+			break;
 		}
-		delay_ms(50);
+		GPIOWrite(GPIOD, bits);
+
+		while (tnow == millis() / 1000);
+		tnow = millis() / 1000;
+
+		//Serial3.print(tmp);
+		Serial3.print(millis());
+		Serial3.print("\n");
+
+		sprintf(tmp, "%04ld", millis());
+		lcd.setCursor(0, 1);
+		lcd.print((const char *)tmp);
+
+		digitalWrite(PB12, LOW);
+		spi_transfer(SPI2, (uint8_t *) tmp, 8);
+		digitalWrite(PB12, HIGH);
+
+		uint16_t i = 0;
+		if (usart_available(&Serial3) > 0) {
+			while (usart_available(&Serial3) > 0 && i < 92) {
+				tmp[i++] = (char) usart_read(&Serial3);
+			}
+			tmp[i] = 0;
+			usart_print(&Serial3, "> ");
+			usart_print(&Serial3, tmp);
+			usart_print(&Serial3, "\n");
+		}
+
 	}
+	return 0;
 }
 

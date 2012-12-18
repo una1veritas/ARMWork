@@ -16,54 +16,25 @@
 #include "armcore.h"
 #include "usart.h"
 
-#include "Print.h"
+#include "Stream.h"
 
-class USARTSerial : public Print {
+class USARTSerial : public Stream {
 	USART port;
 
 public:
-	void begin(USART_TypeDef * usart_id, GPIOPin rx, GPIOPin tx, const uint32_t baud);
+	USARTSerial(USART_TypeDef * usartx) {
+		port.USARTx = usartx;
+	}
+	
+	void begin(const GPIOPin rx, const GPIOPin tx, const uint32_t baud);
 
-	size_t write(const uint8_t w);
-	/*
-	size_t write(const char * str) {
-		size_t n;
-		for (n = 0; str[n]; n++) {
-			write(str[n]);
-		}
-		return n;
-	}*/
+	virtual size_t write(const uint8_t w);
 	using Print::write;
-	//using Print::print;
-	size_t print(const char c) { return write(c); }
-	size_t print(const char * str) { return write(str); }
-	size_t print(const uint32_t val, uint8_t base = DEC) {
-		char tmp[12];
-		switch (base) {
-		case DEC:
-		default:
-		sprintf(tmp, "%ld", val);
-		}
-		return write(tmp);
-	}
 
-	size_t print(const int32_t val) {
-		size_t s = 0;
-		if (val < 0)
-			s = write('-');
-		return print((uint32_t)abs(val)) + s;
-	}
-
-	size_t print(const uint8_t * ptr, size_t n) {
-		for (size_t i = 0; i < n; i++)
-			write(ptr[n]);
-		return n;
-	}
-
-	uint16_t read() { return usart_read(&port); }
-	uint16_t available() { return usart_available(&port); }
-	uint16_t peek() { return usart_peek(&port); }
-	void flush() { usart_flush(&port); }
+	virtual int16_t read() { return usart_read(&port); }
+	virtual int16_t available() { return usart_available(&port); }
+	virtual int16_t peek() { return usart_peek(&port); }
+	virtual void flush() { usart_flush(&port); }
 
 };
 

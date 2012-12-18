@@ -22,7 +22,7 @@
 ### ADS-LD Output File: '.\STM3210E-EVAL_XL\Optimized I2C examples.axf'
 ### ADS-LD Command File: '.\STM3210E-EVAL_XL\Optimized I2C examples.lnp'
 ### Checking for dirty Components...
-### Creating CmdFile '.\STM3210E-EVAL_XL\Optimized I2C examples.lnp', Handle=0x00000838
+### Creating CmdFile '.\STM3210E-EVAL_XL\Optimized I2C examples.lnp', Handle=0x000009B4
 ### Writing '.lnp' file
 ### ADS-LD Command file '.\STM3210E-EVAL_XL\Optimized I2C examples.lnp' is ready.
 ### ADS-LD: About to start ADS-LD Thread.

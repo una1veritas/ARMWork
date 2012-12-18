@@ -21,6 +21,7 @@
  #endif
  */
 #include "armcore.h"
+#include "binary.h"
 #include "delay.h"
 #include "i2c.h"
 #include "ST7032i.h"
@@ -87,44 +88,37 @@ void ST7032i::command(uint8_t value) {
 	delay_us(CMDDELAY);
 }
 
-//
-uint16_t ST7032i::write(uint8_t value) {
+size_t ST7032i::write(uint8_t value) {
 	uint8_t buf[2];
-	buf[0] = 0b01000000;
+	buf[0] = B01000000;
 	buf[1] = value & 0xff;
 	i2c_transmit(wirex,i2c_address, buf, (uint16_t)2);
 	delay_us(CMDDELAY);
 	return 1; // assume success
 }
 
-uint16_t ST7032i::write(uint8_t * a, uint16_t n) {
-	for(uint16_t i = 0; i < n; i++) {
-		write((unsigned char) a[n]);
-	}
-	return n;
-}
 
 void ST7032i::begin() {
 //	delay(40);
-	command(0b00111000); //function set
-	command(0b00111001); // function set
+	command(B00111000); //function set
+	command(B00111001); // function set
 	delay_ms(2);
 
-	command(0b00010100); // interval osc
-	command(0b01110000 | (contrast & 0xf)); // contrast Low 4 bits
+	command(B00010100); // interval osc
+	command(B01110000 | (contrast & 0xf)); // contrast Low 4 bits
 	delay_ms(2);
 
-	command(0b01011100 | ((contrast >> 4) & 0x3)); // contast High/icon/power
-	command(0b01101100); // follower control
+	command(B01011100 | ((contrast >> 4) & 0x3)); // contast High/icon/power
+	command(B01101100); // follower control
 	delay_ms(300);
 
-	command(0b00111000); // function set
-	command(0b00001100); // Display On
+	command(B00111000); // function set
+	command(B00001100); // Display On
 	delay_ms(2);
 
-	command(0b00000001); // Clear Display
+	command(B00000001); // Clear Display
 	delay_ms(2); // Clear Display needs additional wait
-	command(0b00000010); // home, but does not work
+	command(B00000010); // home, but does not work
 	delay_ms(2);
 
 	// finally, set # lines, font size, etc.
@@ -144,23 +138,15 @@ void ST7032i::begin() {
 	command(LCD_ENTRYMODESET | _displaymode);
 }
 
-
-uint16_t ST7032i::print(const char * str) {
-	uint16_t i;
-	for (i = 0; str[i]; i++)
-		write((uint8_t)str[i]);
-	return i; // assume success
-}
-
 void ST7032i::setContrast(byte val) {
 	contrast = 0x7f & val;
-	command( 0b00111000); //function set
-	command(0b00111001); // function set
+	command( B00111000); //function set
+	command(B00111001); // function set
 	delay_ms(2);
-	command(0b01110000 | (contrast & 0xf)); // contrast Low 4 bits
+	command(B01110000 | (contrast & 0xf)); // contrast Low 4 bits
 	delay_ms(2);
-	command(0b01011100 | ((contrast >> 4) & 0x3)); // contast High/icon/power
-	command(0b00111000); // function set
+	command(B01011100 | ((contrast >> 4) & 0x3)); // contast High/icon/power
+	command(B00111000); // function set
 	delay_ms(2);
 }
 

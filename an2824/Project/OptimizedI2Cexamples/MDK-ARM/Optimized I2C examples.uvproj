@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>STM3210E-EVAL_XL</TargetName>
+      <TargetName>STM32F4xx</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>

@@ -21,7 +21,7 @@
   </DaveTm>
 
   <Target>
-    <TargetName>STM3210E-EVAL_XL</TargetName>
+    <TargetName>STM32F4xx</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -960,10 +960,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>37</ColumnNumber>
+      <ColumnNumber>9</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>673</TopLine>
-      <CurrentLine>30</CurrentLine>
+      <TopLine>29</TopLine>
+      <CurrentLine>71</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\src\I2CRoutines.c</PathWithFileName>
       <FilenameWithoutPath>I2CRoutines.c</FilenameWithoutPath>
@@ -976,10 +976,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>25</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>1</CurrentLine>
+      <TopLine>24</TopLine>
+      <CurrentLine>62</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\src\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -1006,7 +1006,7 @@
 
   <Group>
     <GroupName>StdPeriph_Driver</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

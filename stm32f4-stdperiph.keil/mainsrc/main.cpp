@@ -66,7 +66,7 @@ int main(void) {
 	lcd.init(&Wire);
 	lcd.begin();
 	lcd.setContrast(46);
-	lcd.print("Sad!");       // Classic Hello World!
+	lcd.print("Where you live!");       // Classic Hello World!
 
 	bits = GPIO_ReadOutputData(GPIOD );
 	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));

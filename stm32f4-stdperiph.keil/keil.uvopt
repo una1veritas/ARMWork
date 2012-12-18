@@ -195,10 +195,10 @@
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>35</ColumnNumber>
+      <ColumnNumber>39</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>45</TopLine>
-      <CurrentLine>65</CurrentLine>
+      <TopLine>94</TopLine>
+      <CurrentLine>112</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\mainsrc\main.cpp</PathWithFileName>
       <FilenameWithoutPath>main.cpp</FilenameWithoutPath>
@@ -257,7 +257,7 @@
 
   <Group>
     <GroupName>armcore</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -363,10 +363,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>14</ColumnNumber>
+      <ColumnNumber>2</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>36</TopLine>
-      <CurrentLine>236</CurrentLine>
+      <TopLine>60</TopLine>
+      <CurrentLine>77</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\armcore\i2c.c</PathWithFileName>
       <FilenameWithoutPath>i2c.c</FilenameWithoutPath>
@@ -523,10 +523,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>17</ColumnNumber>
+      <ColumnNumber>30</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>63</TopLine>
-      <CurrentLine>71</CurrentLine>
+      <TopLine>78</TopLine>
+      <CurrentLine>79</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\armcore\usart.c</PathWithFileName>
       <FilenameWithoutPath>usart.c</FilenameWithoutPath>
@@ -555,10 +555,10 @@
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>15</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>1</TopLine>
-      <CurrentLine>13</CurrentLine>
+      <CurrentLine>1</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\armcore\USARTSerial.cpp</PathWithFileName>
       <FilenameWithoutPath>USARTSerial.cpp</FilenameWithoutPath>
@@ -691,10 +691,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>28</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>45</TopLine>
+      <CurrentLine>56</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c</PathWithFileName>
       <FilenameWithoutPath>stm32f4xx_i2c.c</FilenameWithoutPath>

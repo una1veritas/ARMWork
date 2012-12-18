@@ -1,0 +1,10 @@
+Dependencies for Project 'I2C_TSensor', Target 'Target 1': (DO NOT MODIFY !)
+F (.\startup_stm32f4xx.s)(0x4F84ECF4)(--cpu Cortex-M4.fp -g --apcs=interwork -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx --list "startup_stm32f4xx.lst" --xref -o "startup_stm32f4xx.o" --depend "startup_stm32f4xx.d")
+F (.\main.c)(0x50CF3D7D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -o "main.o" --omf_browse "main.crf" --depend "main.d")
+I (main.h)(0x50CF3D7D)
+F (.\main.h)(0x50CF3D7D)()
+F (.\stm32f30x_conf.h)(0x50CF3D7D)()
+F (.\stm32f30x_it.c)(0x50CF3D7D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -o "stm32f30x_it.o" --omf_browse "stm32f30x_it.crf" --depend "stm32f30x_it.d")
+I (stm32f30x_it.h)(0x50CF3D7D)
+F (.\stm32f30x_it.h)(0x50CF3D7D)()
+F (.\system_stm32f30x.c)(0x50CF3D7D)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -o "system_stm32f30x.o" --omf_browse "system_stm32f30x.crf" --depend "system_stm32f30x.d")

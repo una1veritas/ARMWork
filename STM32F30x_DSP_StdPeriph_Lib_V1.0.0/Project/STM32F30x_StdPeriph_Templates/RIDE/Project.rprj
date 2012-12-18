@@ -1,0 +1,4 @@
+
+<Project Header="Project 'STM32303C-EVAL'" Path=".\Project.rprj" Project="Yes" OutputFile="" sate="96" ActiveApp="STM32303C-EVAL" >
+	<ApplicationBuild Header="STM32303C-EVAL" Extern=".\Project.rapp" Path=".\Project.rapp" OutputFile=".\obj\Project.elf" sate="98" Config="STM32303C-EVAL" />
+</Project>

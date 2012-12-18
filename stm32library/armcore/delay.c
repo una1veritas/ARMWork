@@ -28,6 +28,7 @@ void TIM2_timer_start(void) {
 	// TIM_TimeBaseInitTypeDef's order is {uint16_t TIM_Prescaler, uint16_t TIM_CounterMode, uint16_t TIM_Period, uint16_t TIM_ClockDivision, uint8_t TIM_RepetitionCounter}
 	TIM_TimeBaseInitTypeDef TimeBaseStructure;
 //			= { 84, TIM_CounterMode_Up, 999, TIM_CKD_DIV1, 0 };
+	NVIC_InitTypeDef NVIC_InitStructure;
 
 	RCC_ClocksTypeDef RCC_Clocks;
 	RCC_GetClocksFreq(&RCC_Clocks);
@@ -46,7 +47,6 @@ void TIM2_timer_start(void) {
 	TIM_SetCounter(TIM2, 0);
 	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
 
-	NVIC_InitTypeDef NVIC_InitStructure;
 	/* Enable the TIM2 gloabal Interrupt */
 	NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;

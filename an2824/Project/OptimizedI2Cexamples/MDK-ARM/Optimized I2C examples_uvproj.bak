@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_proj.xsd">
 
-  <SchemaVersion>1.0</SchemaVersion>
+  <SchemaVersion>1.1</SchemaVersion>
 
   <Header>### uVision Project, (C) Keil Software</Header>
 
@@ -29,6 +29,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
+          <SFDFile></SFDFile>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
           <IncludePath></IncludePath>
@@ -60,6 +61,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopU1X>0</nStopU1X>
+            <nStopU2X>0</nStopU2X>
           </BeforeCompile>
           <BeforeMake>
             <RunUserProg1>0</RunUserProg1>
@@ -133,6 +136,7 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
+            <RestoreTracepoints>0</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>1</TargetSelection>
@@ -341,6 +345,7 @@
             <Rwpi>0</Rwpi>
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>STM32F10X_XL, USE_STDPERIPH_DRIVER</Define>
@@ -356,6 +361,7 @@
             <SplitLS>0</SplitLS>
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -484,6 +490,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -523,6 +530,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -562,6 +570,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -601,6 +610,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -640,6 +650,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -679,6 +690,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -731,6 +743,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
+          <SFDFile></SFDFile>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
           <IncludePath></IncludePath>
@@ -762,6 +775,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopU1X>0</nStopU1X>
+            <nStopU2X>0</nStopU2X>
           </BeforeCompile>
           <BeforeMake>
             <RunUserProg1>0</RunUserProg1>
@@ -835,6 +850,7 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
+            <RestoreTracepoints>0</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>1</TargetSelection>
@@ -1043,6 +1059,7 @@
             <Rwpi>0</Rwpi>
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>USE_STM32100B_EVAL, STM32F10X_MD_VL, USE_STDPERIPH_DRIVER</Define>
@@ -1058,6 +1075,7 @@
             <SplitLS>0</SplitLS>
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -1186,6 +1204,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -1225,6 +1244,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -1264,6 +1284,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -1303,6 +1324,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -1342,6 +1364,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -1386,6 +1409,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -1433,6 +1457,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
+          <SFDFile></SFDFile>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
           <IncludePath></IncludePath>
@@ -1464,6 +1489,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopU1X>0</nStopU1X>
+            <nStopU2X>0</nStopU2X>
           </BeforeCompile>
           <BeforeMake>
             <RunUserProg1>0</RunUserProg1>
@@ -1537,6 +1564,7 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
+            <RestoreTracepoints>0</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>1</TargetSelection>
@@ -1745,6 +1773,7 @@
             <Rwpi>0</Rwpi>
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER, STM32F10X_CL, USE_STM3210C_EVAL</Define>
@@ -1760,6 +1789,7 @@
             <SplitLS>0</SplitLS>
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -1893,6 +1923,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -1932,6 +1963,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -1971,6 +2003,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -2010,6 +2043,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -2049,6 +2083,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -2088,6 +2123,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -2135,12 +2171,13 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
+          <SFDFile></SFDFile>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath>ÿST\STM32F10x\</RegisterFilePath>
-          <DBRegisterFilePath>ÿST\STM32F10x\</DBRegisterFilePath>
+          <RegisterFilePath>yST\STM32F10x\</RegisterFilePath>
+          <DBRegisterFilePath>yST\STM32F10x\</DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -2166,6 +2203,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopU1X>0</nStopU1X>
+            <nStopU2X>0</nStopU2X>
           </BeforeCompile>
           <BeforeMake>
             <RunUserProg1>0</RunUserProg1>
@@ -2239,6 +2278,7 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
+            <RestoreTracepoints>0</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>1</TargetSelection>
@@ -2447,6 +2487,7 @@
             <Rwpi>0</Rwpi>
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>USE_STM3210E_EVAL, STM32F10X_HD, USE_STDPERIPH_DRIVER</Define>
@@ -2462,6 +2503,7 @@
             <SplitLS>0</SplitLS>
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -2590,6 +2632,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -2634,6 +2677,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -2673,6 +2717,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -2712,6 +2757,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -2751,6 +2797,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -2790,6 +2837,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -2837,12 +2885,13 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
+          <SFDFile></SFDFile>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath>ÿST\STM32F10x\</RegisterFilePath>
-          <DBRegisterFilePath>ÿST\STM32F10x\</DBRegisterFilePath>
+          <RegisterFilePath>yST\STM32F10x\</RegisterFilePath>
+          <DBRegisterFilePath>yST\STM32F10x\</DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -2868,6 +2917,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopU1X>0</nStopU1X>
+            <nStopU2X>0</nStopU2X>
           </BeforeCompile>
           <BeforeMake>
             <RunUserProg1>0</RunUserProg1>
@@ -2941,6 +2992,7 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
+            <RestoreTracepoints>0</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>1</TargetSelection>
@@ -3149,6 +3201,7 @@
             <Rwpi>0</Rwpi>
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>USE_STM3210B_EVAL, STM32F10X_MD, USE_STDPERIPH_DRIVER</Define>
@@ -3164,6 +3217,7 @@
             <SplitLS>0</SplitLS>
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -3292,6 +3346,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -3331,6 +3386,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -3370,6 +3426,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -3409,6 +3466,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -3453,6 +3511,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -3492,6 +3551,7 @@
                     <SplitLS>2</SplitLS>
                     <SwStkChk>2</SwStkChk>
                     <NoWarn>2</NoWarn>
+                    <uSurpInc>2</uSurpInc>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>

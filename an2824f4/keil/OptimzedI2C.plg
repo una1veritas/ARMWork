@@ -1,0 +1,543 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\Sin\Documents\Eclipse\ARMWork\an2824f4\keil\OptimzedI2C.uvproj
+Project File Date:  12/18/2012
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling startup_stm32f4xx.s...
+compiling I2CRoutines.c...
+..\src\I2CRoutines.c(22): error:  #5: cannot open source input file "I2CRoutines.h": No such file or directory
+compiling main.c...
+..\src\main.c(22): error:  #5: cannot open source input file "stm32f10x.h": No such file or directory
+compiling stm32f10x_it.c...
+..\src\stm32f10x_it.c(24): error:  #5: cannot open source input file "stm32f10x_it.h": No such file or directory
+compiling misc.c...
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\misc.c(121): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\misc.c(141): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\misc.c(183): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\misc.c(202): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\misc.c(226): warning:  #223-D: function "assert_param" declared implicitly
+compiling stm32f4xx_dma.c...
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(197): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(322): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(479): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(515): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(551): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(635): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(650): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(728): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(758): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(800): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(827): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(936): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(970): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(999): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(1064): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(1109): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(1165): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c(1245): warning:  #223-D: function "assert_param" declared implicitly
+compiling stm32f4xx_gpio.c...
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c(129): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c(193): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c(266): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c(310): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c(332): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c(349): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c(371): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c(389): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c(408): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c(428): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c(451): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c(465): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c(541): warning:  #223-D: function "assert_param" declared implicitly
+compiling stm32f4xx_rcc.c...
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(246): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(302): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(337): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(362): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(402): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(445): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(468): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(494): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(509): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(527): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(554): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(592): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(698): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(751): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(783): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(814): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(991): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1021): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1038): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1055): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1094): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1126): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1153): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1203): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1243): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1282): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1311): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1335): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1382): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1418): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1464): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1496): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1523): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1573): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1613): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1658): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1698): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1760): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c(1791): warning:  #223-D: function "assert_param" declared implicitly
+compiling stm32f4xx_i2c.c...
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(141): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(188): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(317): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(341): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(365): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(393): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(420): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(445): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(470): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(494): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(520): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(544): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(570): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(608): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(636): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(660): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(698): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(711): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(742): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(773): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(797): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(819): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(852): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(876): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(1016): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(1041): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(1104): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(1151): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(1206): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(1281): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(1317): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c(1375): warning:  #223-D: function "assert_param" declared implicitly
+compiling stm32f4xx_tim.c...
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(203): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(293): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(363): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(388): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(412): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(427): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(441): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(455): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(471): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(500): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(525): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(552): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(575): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(595): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(676): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(757): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(838): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(918): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1018): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1061): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1077): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1092): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1107): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1127): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1156): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1184): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1213): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1241): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1271): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1300): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1329): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1358): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1389): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1419): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1449): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1479): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1509): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1538): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1567): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1596): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1622): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1650): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1677): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1704): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1731): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1758): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1789): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1819): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1899): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(1977): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2031): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2046): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2060): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2074): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2094): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2119): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2143): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2167): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2220): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2264): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2289): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2314): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2371): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2409): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2443): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2484): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2514): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2553): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2590): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2617): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2643): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2682): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2703): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2734): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2776): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2821): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2890): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2931): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2955): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(2978): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(3011): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(3071): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(3118): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c(3169): warning:  #223-D: function "assert_param" declared implicitly
+compiling stm32f4xx_usart.c...
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(187): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(241): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(370): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(417): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(443): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(464): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(490): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(547): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(563): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(614): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(634): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(661): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(730): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(748): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(772): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(825): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(910): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(929): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(954): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(1025): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(1043): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(1089): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(1219): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(1282): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(1330): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(1366): warning:  #223-D: function "assert_param" declared implicitly
+..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c(1439): warning:  #223-D: function "assert_param" declared implicitly
+Target not created
+Build target 'Target 1'
+compiling I2CRoutines.c...
+..\src\I2CRoutines.c(22): error:  #5: cannot open source input file "I2CRoutines.h": No such file or directory
+compiling main.c...
+..\src\main.c(22): error:  #5: cannot open source input file "stm32f10x.h": No such file or directory
+compiling stm32f10x_it.c...
+..\src\stm32f10x_it.c(24): error:  #5: cannot open source input file "stm32f10x_it.h": No such file or directory
+compiling misc.c...
+..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h(6968): error:  #5: cannot open source input file "stm32f4xx_conf.h": No such file or directory
+compiling stm32f4xx_dma.c...
+..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h(6968): error:  #5: cannot open source input file "stm32f4xx_conf.h": No such file or directory
+compiling stm32f4xx_gpio.c...
+..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h(6968): error:  #5: cannot open source input file "stm32f4xx_conf.h": No such file or directory
+compiling stm32f4xx_rcc.c...
+..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h(6968): error:  #5: cannot open source input file "stm32f4xx_conf.h": No such file or directory
+compiling stm32f4xx_i2c.c...
+..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h(6968): error:  #5: cannot open source input file "stm32f4xx_conf.h": No such file or directory
+compiling stm32f4xx_tim.c...
+..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h(6968): error:  #5: cannot open source input file "stm32f4xx_conf.h": No such file or directory
+compiling stm32f4xx_usart.c...
+..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h(6968): error:  #5: cannot open source input file "stm32f4xx_conf.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling I2CRoutines.c...
+..\inc\I2CRoutines.h(21): error:  #5: cannot open source input file "stm32f10x.h": No such file or directory
+compiling main.c...
+..\src\main.c(22): error:  #5: cannot open source input file "stm32f10x.h": No such file or directory
+compiling stm32f10x_it.c...
+..\inc\stm32f10x_it.h(26): error:  #5: cannot open source input file "stm32f10x.h": No such file or directory
+compiling misc.c...
+..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h(6968): error:  #5: cannot open source input file "stm32f4xx_conf.h": No such file or directory
+compiling stm32f4xx_dma.c...
+..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h(6968): error:  #5: cannot open source input file "stm32f4xx_conf.h": No such file or directory
+compiling stm32f4xx_gpio.c...
+..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h(6968): error:  #5: cannot open source input file "stm32f4xx_conf.h": No such file or directory
+compiling stm32f4xx_rcc.c...
+..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h(6968): error:  #5: cannot open source input file "stm32f4xx_conf.h": No such file or directory
+compiling stm32f4xx_i2c.c...
+..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h(6968): error:  #5: cannot open source input file "stm32f4xx_conf.h": No such file or directory
+compiling stm32f4xx_tim.c...
+..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h(6968): error:  #5: cannot open source input file "stm32f4xx_conf.h": No such file or directory
+compiling stm32f4xx_usart.c...
+..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h(6968): error:  #5: cannot open source input file "stm32f4xx_conf.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling I2CRoutines.c...
+..\inc\I2CRoutines.h(21): error:  #5: cannot open source input file "stm32f10x.h": No such file or directory
+compiling main.c...
+..\src\main.c(22): error:  #5: cannot open source input file "stm32f10x.h": No such file or directory
+compiling stm32f4xx_it.c...
+..\src\stm32f4xx_it.c(24): error:  #5: cannot open source input file "stm32f10x_it.h": No such file or directory
+compiling misc.c...
+..\inc\stm32f4xx_conf.h(33): error:  #5: cannot open source input file "stm32f10x_dma.h": No such file or directory
+compiling stm32f4xx_dma.c...
+..\inc\stm32f4xx_conf.h(33): error:  #5: cannot open source input file "stm32f10x_dma.h": No such file or directory
+compiling stm32f4xx_gpio.c...
+..\inc\stm32f4xx_conf.h(33): error:  #5: cannot open source input file "stm32f10x_dma.h": No such file or directory
+compiling stm32f4xx_rcc.c...
+..\inc\stm32f4xx_conf.h(33): error:  #5: cannot open source input file "stm32f10x_dma.h": No such file or directory
+compiling stm32f4xx_i2c.c...
+..\inc\stm32f4xx_conf.h(33): error:  #5: cannot open source input file "stm32f10x_dma.h": No such file or directory
+compiling stm32f4xx_tim.c...
+..\inc\stm32f4xx_conf.h(33): error:  #5: cannot open source input file "stm32f10x_dma.h": No such file or directory
+compiling stm32f4xx_usart.c...
+..\inc\stm32f4xx_conf.h(33): error:  #5: cannot open source input file "stm32f10x_dma.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling I2CRoutines.c...
+..\inc\I2CRoutines.h(21): error:  #5: cannot open source input file "stm32f10x.h": No such file or directory
+compiling main.c...
+..\src\main.c(22): error:  #5: cannot open source input file "stm32f10x.h": No such file or directory
+compiling stm32f4xx_it.c...
+..\src\stm32f4xx_it.c(24): error:  #5: cannot open source input file "stm32f10x_it.h": No such file or directory
+compiling misc.c...
+..\inc\stm32f4xx_conf.h(33): error:  #5: cannot open source input file "stm32f10x_dma.h": No such file or directory
+compiling stm32f4xx_dma.c...
+..\inc\stm32f4xx_conf.h(33): error:  #5: cannot open source input file "stm32f10x_dma.h": No such file or directory
+compiling stm32f4xx_gpio.c...
+..\inc\stm32f4xx_conf.h(33): error:  #5: cannot open source input file "stm32f10x_dma.h": No such file or directory
+compiling stm32f4xx_rcc.c...
+..\inc\stm32f4xx_conf.h(33): error:  #5: cannot open source input file "stm32f10x_dma.h": No such file or directory
+compiling stm32f4xx_i2c.c...
+..\inc\stm32f4xx_conf.h(33): error:  #5: cannot open source input file "stm32f10x_dma.h": No such file or directory
+compiling stm32f4xx_tim.c...
+..\inc\stm32f4xx_conf.h(33): error:  #5: cannot open source input file "stm32f10x_dma.h": No such file or directory
+compiling stm32f4xx_usart.c...
+..\inc\stm32f4xx_conf.h(33): error:  #5: cannot open source input file "stm32f10x_dma.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling I2CRoutines.c...
+..\inc\I2CRoutines.h(21): error:  #5: cannot open source input file "stm32f10x.h": No such file or directory
+compiling main.c...
+..\src\main.c(22): error:  #5: cannot open source input file "stm32f10x.h": No such file or directory
+compiling stm32f4xx_it.c...
+..\src\stm32f4xx_it.c(24): error:  #5: cannot open source input file "stm32f10x_it.h": No such file or directory
+compiling misc.c...
+compiling stm32f4xx_dma.c...
+compiling stm32f4xx_gpio.c...
+compiling stm32f4xx_rcc.c...
+compiling stm32f4xx_i2c.c...
+compiling stm32f4xx_tim.c...
+compiling stm32f4xx_usart.c...
+Target not created
+Build target 'Target 1'
+compiling I2CRoutines.c...
+..\inc\I2CRoutines.h(21): error:  #5: cannot open source input file "stm32f10x.h": No such file or directory
+compiling main.c...
+..\src\main.c(22): error:  #5: cannot open source input file "stm32f10x.h": No such file or directory
+compiling stm32f4xx_it.c...
+..\src\stm32f4xx_it.c(24): error:  #5: cannot open source input file "stm32f10x_it.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling I2CRoutines.c...
+..\inc\I2CRoutines.h(21): error:  #5: cannot open source input file "stm32f10x.h": No such file or directory
+compiling main.c...
+..\src\main.c(22): error:  #5: cannot open source input file "stm32f10x.h": No such file or directory
+compiling stm32f4xx_it.c...
+..\src\stm32f4xx_it.c(24): error:  #5: cannot open source input file "stm32f10x_it.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling I2CRoutines.c...
+..\src\I2CRoutines.c(93): error:  #20: identifier "DMA1_FLAG_TC7" is undefined
+..\src\I2CRoutines.c(93): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(95): error:  #20: identifier "DMA1_Channel7" is undefined
+..\src\I2CRoutines.c(97): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(104): error:  #20: identifier "DMA1_FLAG_TC5" is undefined
+..\src\I2CRoutines.c(104): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(106): error:  #20: identifier "DMA1_Channel5" is undefined
+..\src\I2CRoutines.c(108): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(393): error:  #20: identifier "DMA1_FLAG_TC6" is undefined
+..\src\I2CRoutines.c(393): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(395): error:  #20: identifier "DMA1_Channel6" is undefined
+..\src\I2CRoutines.c(397): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(402): error:  #20: identifier "DMA1_FLAG_TC4" is undefined
+..\src\I2CRoutines.c(402): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(404): error:  #20: identifier "DMA1_Channel4" is undefined
+..\src\I2CRoutines.c(406): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(540): error:  #20: identifier "RCC_APB2Periph_GPIOB" is undefined
+..\src\I2CRoutines.c(542): warning:  #223-D: function "RCC_AHBPeriphClockCmd" declared implicitly
+..\src\I2CRoutines.c(542): error:  #20: identifier "RCC_AHBPeriph_DMA1" is undefined
+..\src\I2CRoutines.c(550): error:  #20: identifier "GPIO_Mode_AF_OD" is undefined
+..\src\I2CRoutines.c(571): error:  #20: identifier "GPIO_Mode_AF_OD" is undefined
+..\src\I2CRoutines.c(597): error:  #20: identifier "DMA1_Channel6" is undefined
+..\src\I2CRoutines.c(599): error:  #136: struct "<unnamed>" has no field "DMA_MemoryBaseAddr"
+..\src\I2CRoutines.c(600): error:  #20: identifier "DMA_DIR_PeripheralDST" is undefined
+..\src\I2CRoutines.c(608): error:  #136: struct "<unnamed>" has no field "DMA_M2M"
+..\src\I2CRoutines.c(608): error:  #20: identifier "DMA_M2M_Disable" is undefined
+..\src\I2CRoutines.c(612): error:  #20: identifier "DMA1_Channel7" is undefined
+..\src\I2CRoutines.c(620): error:  #20: identifier "DMA1_Channel4" is undefined
+..\src\I2CRoutines.c(622): error:  #136: struct "<unnamed>" has no field "DMA_MemoryBaseAddr"
+..\src\I2CRoutines.c(623): error:  #20: identifier "DMA_DIR_PeripheralDST" is undefined
+..\src\I2CRoutines.c(631): error:  #136: struct "<unnamed>" has no field "DMA_M2M"
+compiling main.c...
+compiling stm32f4xx_it.c...
+..\src\stm32f4xx_it.c(24): error:  #5: cannot open source input file "stm32f4xx_it.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling I2CRoutines.c...
+..\src\I2CRoutines.c(93): error:  #20: identifier "DMA1_FLAG_TC7" is undefined
+..\src\I2CRoutines.c(93): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(95): error:  #20: identifier "DMA1_Channel7" is undefined
+..\src\I2CRoutines.c(97): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(104): error:  #20: identifier "DMA1_FLAG_TC5" is undefined
+..\src\I2CRoutines.c(104): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(106): error:  #20: identifier "DMA1_Channel5" is undefined
+..\src\I2CRoutines.c(108): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(393): error:  #20: identifier "DMA1_FLAG_TC6" is undefined
+..\src\I2CRoutines.c(393): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(395): error:  #20: identifier "DMA1_Channel6" is undefined
+..\src\I2CRoutines.c(397): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(402): error:  #20: identifier "DMA1_FLAG_TC4" is undefined
+..\src\I2CRoutines.c(402): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(404): error:  #20: identifier "DMA1_Channel4" is undefined
+..\src\I2CRoutines.c(406): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(540): error:  #20: identifier "RCC_APB2Periph_GPIOB" is undefined
+..\src\I2CRoutines.c(542): warning:  #223-D: function "RCC_AHBPeriphClockCmd" declared implicitly
+..\src\I2CRoutines.c(542): error:  #20: identifier "RCC_AHBPeriph_DMA1" is undefined
+..\src\I2CRoutines.c(550): error:  #20: identifier "GPIO_Mode_AF_OD" is undefined
+..\src\I2CRoutines.c(571): error:  #20: identifier "GPIO_Mode_AF_OD" is undefined
+..\src\I2CRoutines.c(597): error:  #20: identifier "DMA1_Channel6" is undefined
+..\src\I2CRoutines.c(599): error:  #136: struct "<unnamed>" has no field "DMA_MemoryBaseAddr"
+..\src\I2CRoutines.c(600): error:  #20: identifier "DMA_DIR_PeripheralDST" is undefined
+..\src\I2CRoutines.c(608): error:  #136: struct "<unnamed>" has no field "DMA_M2M"
+..\src\I2CRoutines.c(608): error:  #20: identifier "DMA_M2M_Disable" is undefined
+..\src\I2CRoutines.c(612): error:  #20: identifier "DMA1_Channel7" is undefined
+..\src\I2CRoutines.c(620): error:  #20: identifier "DMA1_Channel4" is undefined
+..\src\I2CRoutines.c(622): error:  #136: struct "<unnamed>" has no field "DMA_MemoryBaseAddr"
+..\src\I2CRoutines.c(623): error:  #20: identifier "DMA_DIR_PeripheralDST" is undefined
+..\src\I2CRoutines.c(631): error:  #136: struct "<unnamed>" has no field "DMA_M2M"
+compiling stm32f4xx_it.c...
+..\src\stm32f4xx_it.c(24): error:  #5: cannot open source input file "stm32f4xx_it.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling I2CRoutines.c...
+..\src\I2CRoutines.c(93): error:  #20: identifier "DMA1_FLAG_TC7" is undefined
+..\src\I2CRoutines.c(93): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(95): error:  #20: identifier "DMA1_Channel7" is undefined
+..\src\I2CRoutines.c(97): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(104): error:  #20: identifier "DMA1_FLAG_TC5" is undefined
+..\src\I2CRoutines.c(104): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(106): error:  #20: identifier "DMA1_Channel5" is undefined
+..\src\I2CRoutines.c(108): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(393): error:  #20: identifier "DMA1_FLAG_TC6" is undefined
+..\src\I2CRoutines.c(393): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(395): error:  #20: identifier "DMA1_Channel6" is undefined
+..\src\I2CRoutines.c(397): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(402): error:  #20: identifier "DMA1_FLAG_TC4" is undefined
+..\src\I2CRoutines.c(402): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(404): error:  #20: identifier "DMA1_Channel4" is undefined
+..\src\I2CRoutines.c(406): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(540): error:  #20: identifier "RCC_APB2Periph_GPIOB" is undefined
+..\src\I2CRoutines.c(542): warning:  #223-D: function "RCC_AHBPeriphClockCmd" declared implicitly
+..\src\I2CRoutines.c(542): error:  #20: identifier "RCC_AHBPeriph_DMA1" is undefined
+..\src\I2CRoutines.c(550): error:  #20: identifier "GPIO_Mode_AF_OD" is undefined
+..\src\I2CRoutines.c(571): error:  #20: identifier "GPIO_Mode_AF_OD" is undefined
+..\src\I2CRoutines.c(597): error:  #20: identifier "DMA1_Channel6" is undefined
+..\src\I2CRoutines.c(599): error:  #136: struct "<unnamed>" has no field "DMA_MemoryBaseAddr"
+..\src\I2CRoutines.c(600): error:  #20: identifier "DMA_DIR_PeripheralDST" is undefined
+..\src\I2CRoutines.c(608): error:  #136: struct "<unnamed>" has no field "DMA_M2M"
+..\src\I2CRoutines.c(608): error:  #20: identifier "DMA_M2M_Disable" is undefined
+..\src\I2CRoutines.c(612): error:  #20: identifier "DMA1_Channel7" is undefined
+..\src\I2CRoutines.c(620): error:  #20: identifier "DMA1_Channel4" is undefined
+..\src\I2CRoutines.c(622): error:  #136: struct "<unnamed>" has no field "DMA_MemoryBaseAddr"
+..\src\I2CRoutines.c(623): error:  #20: identifier "DMA_DIR_PeripheralDST" is undefined
+..\src\I2CRoutines.c(631): error:  #136: struct "<unnamed>" has no field "DMA_M2M"
+compiling stm32f4xx_it.c...
+..\src\stm32f4xx_it.c(24): error:  #5: cannot open source input file "stm32f4xx_it.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling I2CRoutines.c...
+..\src\I2CRoutines.c(93): error:  #20: identifier "DMA1_FLAG_TCIF7" is undefined
+..\src\I2CRoutines.c(93): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(95): error:  #20: identifier "DMA1_Channel7" is undefined
+..\src\I2CRoutines.c(97): error:  #20: identifier "DMA1_FLAG_TC7" is undefined
+..\src\I2CRoutines.c(97): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(104): error:  #20: identifier "DMA1_FLAG_TC5" is undefined
+..\src\I2CRoutines.c(104): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(106): error:  #20: identifier "DMA1_Channel5" is undefined
+..\src\I2CRoutines.c(108): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(393): error:  #20: identifier "DMA1_FLAG_TC6" is undefined
+..\src\I2CRoutines.c(393): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(395): error:  #20: identifier "DMA1_Channel6" is undefined
+..\src\I2CRoutines.c(397): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(402): error:  #20: identifier "DMA1_FLAG_TC4" is undefined
+..\src\I2CRoutines.c(402): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(404): error:  #20: identifier "DMA1_Channel4" is undefined
+..\src\I2CRoutines.c(406): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(540): error:  #20: identifier "RCC_APB2Periph_GPIOB" is undefined
+..\src\I2CRoutines.c(542): warning:  #223-D: function "RCC_AHBPeriphClockCmd" declared implicitly
+..\src\I2CRoutines.c(542): error:  #20: identifier "RCC_AHBPeriph_DMA1" is undefined
+..\src\I2CRoutines.c(550): error:  #20: identifier "GPIO_Mode_AF_OD" is undefined
+..\src\I2CRoutines.c(571): error:  #20: identifier "GPIO_Mode_AF_OD" is undefined
+..\src\I2CRoutines.c(597): error:  #20: identifier "DMA1_Channel6" is undefined
+..\src\I2CRoutines.c(599): error:  #136: struct "<unnamed>" has no field "DMA_MemoryBaseAddr"
+..\src\I2CRoutines.c(600): error:  #20: identifier "DMA_DIR_PeripheralDST" is undefined
+..\src\I2CRoutines.c(608): error:  #136: struct "<unnamed>" has no field "DMA_M2M"
+..\src\I2CRoutines.c(608): error:  #20: identifier "DMA_M2M_Disable" is undefined
+..\src\I2CRoutines.c(612): error:  #20: identifier "DMA1_Channel7" is undefined
+..\src\I2CRoutines.c(620): error:  #20: identifier "DMA1_Channel4" is undefined
+..\src\I2CRoutines.c(622): error:  #136: struct "<unnamed>" has no field "DMA_MemoryBaseAddr"
+..\src\I2CRoutines.c(623): error:  #20: identifier "DMA_DIR_PeripheralDST" is undefined
+compiling stm32f4xx_it.c...
+..\src\stm32f4xx_it.c(24): error:  #5: cannot open source input file "stm32f4xx_it.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling I2CRoutines.c...
+..\src\I2CRoutines.c(93): error:  #20: identifier "DMA2_FLAG_TCIF7" is undefined
+..\src\I2CRoutines.c(93): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(95): error:  #20: identifier "DMA1_Channel7" is undefined
+..\src\I2CRoutines.c(97): error:  #20: identifier "DMA1_FLAG_TC7" is undefined
+..\src\I2CRoutines.c(97): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(104): error:  #20: identifier "DMA1_FLAG_TC5" is undefined
+..\src\I2CRoutines.c(104): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(106): error:  #20: identifier "DMA1_Channel5" is undefined
+..\src\I2CRoutines.c(108): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(393): error:  #20: identifier "DMA1_FLAG_TC6" is undefined
+..\src\I2CRoutines.c(393): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(395): error:  #20: identifier "DMA1_Channel6" is undefined
+..\src\I2CRoutines.c(397): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(402): error:  #20: identifier "DMA1_FLAG_TC4" is undefined
+..\src\I2CRoutines.c(402): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(404): error:  #20: identifier "DMA1_Channel4" is undefined
+..\src\I2CRoutines.c(406): error:  #165: too few arguments in function call
+..\src\I2CRoutines.c(540): error:  #20: identifier "RCC_APB2Periph_GPIOB" is undefined
+..\src\I2CRoutines.c(542): warning:  #223-D: function "RCC_AHBPeriphClockCmd" declared implicitly
+..\src\I2CRoutines.c(542): error:  #20: identifier "RCC_AHBPeriph_DMA1" is undefined
+..\src\I2CRoutines.c(550): error:  #20: identifier "GPIO_Mode_AF_OD" is undefined
+..\src\I2CRoutines.c(571): error:  #20: identifier "GPIO_Mode_AF_OD" is undefined
+..\src\I2CRoutines.c(597): error:  #20: identifier "DMA1_Channel6" is undefined
+..\src\I2CRoutines.c(599): error:  #136: struct "<unnamed>" has no field "DMA_MemoryBaseAddr"
+..\src\I2CRoutines.c(600): error:  #20: identifier "DMA_DIR_PeripheralDST" is undefined
+..\src\I2CRoutines.c(608): error:  #136: struct "<unnamed>" has no field "DMA_M2M"
+..\src\I2CRoutines.c(608): error:  #20: identifier "DMA_M2M_Disable" is undefined
+..\src\I2CRoutines.c(612): error:  #20: identifier "DMA1_Channel7" is undefined
+..\src\I2CRoutines.c(620): error:  #20: identifier "DMA1_Channel4" is undefined
+..\src\I2CRoutines.c(622): error:  #136: struct "<unnamed>" has no field "DMA_MemoryBaseAddr"
+..\src\I2CRoutines.c(623): error:  #20: identifier "DMA_DIR_PeripheralDST" is undefined
+compiling stm32f4xx_it.c...
+..\src\stm32f4xx_it.c(24): error:  #5: cannot open source input file "stm32f4xx_it.h": No such file or directory
+Target not created

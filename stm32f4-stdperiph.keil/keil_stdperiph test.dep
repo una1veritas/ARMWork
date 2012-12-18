@@ -1,5 +1,5 @@
 Dependencies for Project 'keil', Target 'stdperiph test': (DO NOT MODIFY !)
-F (.\mainsrc\main.cpp)(0x50CDCE38)(--cpp -c --cpu Cortex-M4.fp -g -O2 --apcs=interwork -I.\mainsrc -I..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\stm32library\CMSIS\Include -I..\stm32library\CMSIS\STM32F4xx -I.\armcore -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "main.o" --omf_browse "main.crf" --depend "main.d")
+F (.\mainsrc\main.cpp)(0x50CF1A94)(--cpp -c --cpu Cortex-M4.fp -g -O2 --apcs=interwork -I.\mainsrc -I..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\stm32library\CMSIS\Include -I..\stm32library\CMSIS\STM32F4xx -I.\armcore -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "main.o" --omf_browse "main.crf" --depend "main.d")
 I (C:\Keil\ARM\ARMCC\bin\..\include\stdio.h)(0x4EB0C476)
 I (C:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0C474)
 I (..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h)(0x50CD0D9C)
@@ -43,7 +43,7 @@ I (.\armcore\delay.h)(0x50CD0D9C)
 I (.\armcore\usart.h)(0x50CDCD65)
 I (C:\Keil\ARM\ARMCC\bin\..\include\stdlib.h)(0x4EB0C474)
 I (.\armcore\spi.h)(0x50CD0D9C)
-I (.\armcore\i2c.h)(0x50CDCDA0)
+I (.\armcore\i2c.h)(0x50CDD092)
 I (.\armcore\ST7032i.h)(0x50CD2794)
 I (C:\Keil\ARM\ARMCC\bin\..\include\string.h)(0x4EB0C476)
 I (.\armcore\CharacterLCD.h)(0x50CD0D9C)
@@ -199,7 +199,7 @@ I (..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50CD0D9C)
 I (..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_wwdg.h)(0x50CD0D9C)
 I (..\stm32library\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50CD0D9C)
 F (.\armcore\gpio.h)(0x50CD0D9C)()
-F (.\armcore\i2c.c)(0x50CDD019)(-c --cpu Cortex-M4.fp -g -O2 --apcs=interwork -I.\mainsrc -I..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\stm32library\CMSIS\Include -I..\stm32library\CMSIS\STM32F4xx -I.\armcore -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "i2c.o" --omf_browse "i2c.crf" --depend "i2c.d")
+F (.\armcore\i2c.c)(0x50CF14B1)(-c --cpu Cortex-M4.fp -g -O2 --apcs=interwork -I.\mainsrc -I..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\stm32library\CMSIS\Include -I..\stm32library\CMSIS\STM32F4xx -I.\armcore -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "i2c.o" --omf_browse "i2c.crf" --depend "i2c.d")
 I (..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50CD0D9C)
 I (..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h)(0x50CD0D9C)
 I (..\stm32library\CMSIS\Include\core_cm4.h)(0x50CD0D9B)
@@ -236,11 +236,11 @@ I (..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_wwdg.h)(0x50CD0D9C)
 I (..\stm32library\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50CD0D9C)
 I (armcore\gpio.h)(0x50CD0D9C)
 I (armcore\delay.h)(0x50CD0D9C)
-I (armcore\i2c.h)(0x50CDCDA0)
+I (armcore\i2c.h)(0x50CDD092)
 I (armcore\armcore.h)(0x50CD276A)
 I (C:\Keil\ARM\ARMCC\bin\..\include\stdio.h)(0x4EB0C476)
 I (armcore\binary.h)(0x50BB72EC)
-F (.\armcore\i2c.h)(0x50CDCDA0)()
+F (.\armcore\i2c.h)(0x50CDD092)()
 F (.\armcore\Print.cpp)(0x50CD1A8C)(--cpp -c --cpu Cortex-M4.fp -g -O2 --apcs=interwork -I.\mainsrc -I..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\stm32library\CMSIS\Include -I..\stm32library\CMSIS\STM32F4xx -I.\armcore -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "print.o" --omf_browse "print.crf" --depend "print.d")
 I (C:\Keil\ARM\ARMCC\bin\..\include\stdlib.h)(0x4EB0C474)
 I (C:\Keil\ARM\ARMCC\bin\..\include\stdio.h)(0x4EB0C476)
@@ -330,7 +330,7 @@ I (..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50CD0D9C)
 I (..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50CD0D9C)
 I (..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_wwdg.h)(0x50CD0D9C)
 I (..\stm32library\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50CD0D9C)
-I (armcore\i2c.h)(0x50CDCDA0)
+I (armcore\i2c.h)(0x50CDD092)
 I (armcore\gpio.h)(0x50CD0D9C)
 I (armcore\ST7032i.h)(0x50CD2794)
 I (C:\Keil\ARM\ARMCC\bin\..\include\string.h)(0x4EB0C476)

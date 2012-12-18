@@ -67,7 +67,9 @@ uint8_t digitalRead(GPIOPin portpin) {
 
 void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
               GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd) {
-	if ( port == GPIOB ) {
+		GPIO_InitTypeDef GPIO_InitStructure;
+								
+if ( port == GPIOB ) {
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 	} else if ( port == GPIOC ) {
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
@@ -88,7 +90,6 @@ void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
 	}
 	// assumes port is already waked up.
 
-	GPIO_InitTypeDef GPIO_InitStructure;
         
 	GPIO_InitStructure.GPIO_Pin = pinbit;
 	GPIO_InitStructure.GPIO_Mode = mode;
@@ -100,7 +101,7 @@ void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
 }
 
 
-inline void GPIOWrite(GPIO_TypeDef * port, uint16_t bits) {
+void GPIOWrite(GPIO_TypeDef * port, uint16_t bits) {
 	GPIO_Write(port, bits);
 }
 

@@ -23,11 +23,12 @@ typedef enum __CommDirection {
 
 boolean i2c_begin(I2CBus * wire, I2C_TypeDef * I2Cx, GPIOPin sda, GPIOPin scl, uint32_t clk) {
 	I2C_InitTypeDef I2C_InitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure; 
 	// set default to I2C1
 	uint8_t gpio_af = GPIO_AF_I2C1;
 	uint32_t periph_i2c = RCC_APB1Periph_I2C1;
 
-	wire->I2Cx = I2Cx;
+	wire->I2Cx = I2C1;
 	wire->sda = sda; //PB9;
 	wire->scl = scl; //PB8;
 
@@ -72,6 +73,9 @@ boolean i2c_begin(I2CBus * wire, I2C_TypeDef * I2Cx, GPIOPin sda, GPIOPin scl, u
 
 	/* Apply I2C configuration after enabling it */
 	I2C_Init(wire->I2Cx, &I2C_InitStructure);
+	
+//	I2C_ITConfig();
+	
 	/* I2C Peripheral Enable */
 	I2C_Cmd(wire->I2Cx, ENABLE);
 
