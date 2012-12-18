@@ -1,6 +1,6 @@
 Dependencies for Project 'OptimzedI2C', Target 'Target 1': (DO NOT MODIFY !)
-F (.\startup_stm32f4xx.s)(0x4F84ECF4)(--cpu Cortex-M4.fp -g --apcs=interwork -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx --list "startup_stm32f4xx.lst" --xref -o "startup_stm32f4xx.o" --depend "startup_stm32f4xx.d")
-F (..\src\I2CRoutines.c)(0x50CFA424)(-c --cpu Cortex-M4.fp -g -O1 -Otime --apcs=interwork -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\..\stm32library\CMSIS\STM32F4xx -I..\inc -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "i2croutines.o" --omf_browse "i2croutines.crf" --depend "i2croutines.d")
+F (.\startup_stm32f4xx.s)(0x50CFB895)(--cpu Cortex-M4.fp -g --apcs=interwork -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx --list "startup_stm32f4xx.lst" --xref -o "startup_stm32f4xx.o" --depend "startup_stm32f4xx.d")
+F (..\src\I2CRoutines.c)(0x50CFB895)(-c --cpu Cortex-M4.fp -g -O1 -Otime --apcs=interwork -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\..\stm32library\CMSIS\STM32F4xx -I..\inc -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "i2croutines.o" --omf_browse "i2croutines.crf" --depend "i2croutines.d")
 I (..\inc\I2CRoutines.h)(0x50CF9D0B)
 I (..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h)(0x50CD0D9C)
 I (..\..\stm32library\CMSIS\Include\core_cm4.h)(0x50CD0D9B)
@@ -16,7 +16,7 @@ I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50CD0D9
 I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_i2c.h)(0x50CD0D9C)
 I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50CD0D9C)
 I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50CD0D9C)
-F (..\src\main.c)(0x50CF9D0B)(-c --cpu Cortex-M4.fp -g -O1 -Otime --apcs=interwork -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\..\stm32library\CMSIS\STM32F4xx -I..\inc -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "main.o" --omf_browse "main.crf" --depend "main.d")
+F (..\src\main.c)(0x50CFB895)(-c --cpu Cortex-M4.fp -g -O1 -Otime --apcs=interwork -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\..\stm32library\CMSIS\STM32F4xx -I..\inc -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "main.o" --omf_browse "main.crf" --depend "main.d")
 I (..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h)(0x50CD0D9C)
 I (..\..\stm32library\CMSIS\Include\core_cm4.h)(0x50CD0D9B)
 I (C:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0C474)
@@ -32,11 +32,11 @@ I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_i2c.h)(0x50CD0D9C
 I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50CD0D9C)
 I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50CD0D9C)
 I (..\inc\I2CRoutines.h)(0x50CF9D0B)
-F (..\inc\I2CRoutines.h)(0x50CF9D0B)()
-F (..\src\stm32f4xx_it.c)(0x50CF9D08)(-c --cpu Cortex-M4.fp -g -O1 -Otime --apcs=interwork -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\..\stm32library\CMSIS\STM32F4xx -I..\inc -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "stm32f4xx_it.o" --omf_browse "stm32f4xx_it.crf" --depend "stm32f4xx_it.d")
-F (..\inc\stm32f4xx_conf.h)(0x50CF9CC3)()
-F (..\inc\stm32f10x_conf.h)(0x50CDE484)()
-F (..\inc\stm32f30x_it.h)(0x50CDE484)()
+F (..\inc\I2CRoutines.h)(0x50CFB895)()
+F (..\src\stm32f4xx_it.c)(0x50CFB895)(-c --cpu Cortex-M4.fp -g -O1 -Otime --apcs=interwork -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\..\stm32library\CMSIS\STM32F4xx -I..\inc -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "stm32f4xx_it.o" --omf_browse "stm32f4xx_it.crf" --depend "stm32f4xx_it.d")
+F (..\inc\stm32f4xx_conf.h)(0x50CFB895)()
+F (..\inc\stm32f10x_conf.h)(0x50CFB895)()
+F (..\inc\stm32f30x_it.h)(0x50CFB895)()
 F (..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\misc.c)(0x50CD0D9C)(-c --cpu Cortex-M4.fp -g -O1 -Otime --apcs=interwork -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\..\stm32library\CMSIS\STM32F4xx -I..\inc -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "misc.o" --omf_browse "misc.crf" --depend "misc.d")
 I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50CD0D9C)
 I (..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h)(0x50CD0D9C)
