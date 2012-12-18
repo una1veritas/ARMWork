@@ -1,5 +1,0 @@
--c --cpu Cortex-M4.fp -g -O3 --apcs=interwork -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\CMSIS\STM32F4xx -I..\..\stm32library\armcore -I..\..\stm32f4-stdperiph 
--I C:\Keil\ARM\RV31\INC 
--I C:\Keil\ARM\CMSIS\Include 
--I C:\Keil\ARM\Inc\ST\STM32F4xx 
--DUSE_STDPERIPH_DRIVER -o "systick.o" --omf_browse "systick.crf" --depend "systick.d" "..\..\stm32library\armcore\systick.c"

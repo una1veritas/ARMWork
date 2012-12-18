@@ -23,7 +23,7 @@ typedef enum __CommDirection {
 
 boolean i2c_begin(I2CBus * wire, I2C_TypeDef * I2Cx, GPIOPin sda, GPIOPin scl, uint32_t clk) {
 	I2C_InitTypeDef I2C_InitStructure;
-	NVIC_InitTypeDef NVIC_InitStructure; 
+//s	NVIC_InitTypeDef NVIC_InitStructure; 
 	// set default to I2C1
 	uint8_t gpio_af = GPIO_AF_I2C1;
 	uint32_t periph_i2c = RCC_APB1Periph_I2C1;
@@ -132,10 +132,10 @@ boolean i2c_receive(I2CBus * wire, uint8_t addr, uint8_t req, uint8_t * recv,
 	if (!i2c_start(wire, addr))
 		return false;
 
-	/* Send the EEPROM's internal address to read from: MSB of the address first */
+	// Send the EEPROM's internal address to read from: MSB of the address first 
 	I2C_SendData(wire->I2Cx, req);
 	wire->status = BYTE_TRANSMITTING;
-	/* Test on EV8 and clear it */
+	// Test on EV8 and clear it
 
 	for (wc = 5;
 			!I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED );
@@ -245,3 +245,5 @@ boolean i2c_start(I2CBus * wire, uint8_t addr) {
 	wire->status = DST_ADDRESS_SENT;
 	return true;
 }
+
+
