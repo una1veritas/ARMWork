@@ -1,5 +1,0 @@
---cpu Cortex-M4.fp ".\adc_interleaved_dmamode2\main.o" ".\adc_interleaved_dmamode2\stm32f4xx_it.o" ".\adc_interleaved_dmamode2\system_stm32f4xx.o" ".\adc_interleaved_dmamode2\stm32f4_discovery.o" ".\adc_interleaved_dmamode2\stm32f4xx_rcc.o" ".\adc_interleaved_dmamode2\misc.o" ".\adc_interleaved_dmamode2\stm32f4xx_gpio.o" ".\adc_interleaved_dmamode2\stm32f4xx_syscfg.o" ".\adc_interleaved_dmamode2\stm32f4xx_exti.o" ".\adc_interleaved_dmamode2\stm32f4xx_adc.o" ".\adc_interleaved_dmamode2\stm32f4xx_dma.o" ".\adc_interleaved_dmamode2\startup_stm32f4xx.o" 
---library_type=microlib --strict --scatter ".\ADC_Interleaved_DMAmode2\ADC_Interleaved_DMAmode2.sct" 
---summary_stderr --info summarysizes --map --xref --callgraph --symbols 
---info sizes --info totals --info unused --info veneers 
- --list ".\ADC_Interleaved_DMAmode2\ADC_Interleaved_DMAmode2.map" -o .\ADC_Interleaved_DMAmode2\ADC_Interleaved_DMAmode2.axf

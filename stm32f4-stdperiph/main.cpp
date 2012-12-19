@@ -24,7 +24,6 @@
 
 ST7032i lcd;
 USARTSerial Serial3(USART3);
-I2CBus Wire1;
 
 int main(void) {
 	uint16_t bits;
@@ -57,7 +56,7 @@ int main(void) {
 			(PinBit(PD12) | PinBit(PD13) | PinBit(PD14) | PinBit(PD15)), OUTPUT,
 			FASTSPEED, PUSHPULL, NOPULL);
 
-	i2c_begin(&Wire1, I2C1,  PB9, PB8, 100000);
+	i2c_begin(/*&Wire1, */ I2C1,  PB9, PB8, 100000);
 	lcd.init(&Wire1);
 	lcd.begin();
 	lcd.setContrast(46);
@@ -104,6 +103,11 @@ int main(void) {
 		//Serial3.print(tmp);
 		Serial3.println((float)millis()/1000, 3);
 
+//		lcd.clear();
+		lcd.setCursor(0, 0);
+		lcd.print("                ");
+		lcd.setCursor((millis()/1000)%13, 0);
+		lcd.print("__@");
 		lcd.setCursor(0, 1);
 		lcd.print((float)millis()/1000, 3);
 

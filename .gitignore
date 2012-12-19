@@ -4,4 +4,7 @@
 *.d
 *.mk
 *.lst
+*.__i
+*.zip
+*.gz
 .metadata

@@ -38,23 +38,26 @@ typedef enum __I2C_Status {
 } I2C_Status;
 
 typedef enum __I2C_CommMode {
-	I2C_MODE_NOTDEFINED = 0,
-	I2C_MODE_MASTERTRANSMITTER,
-	I2C_MODE_MASTERRECEIVER,
-	I2C_MODE_SLAVETRANSMITTER,
-	I2C_MODE_SLAVERECEIVER,
+	I2C_MODE_MASTER = 0,
+	I2C_MODE_MASTER_TX,
+	I2C_MODE_MASTER_RX,
+	I2C_MODE_SLAVE,
+	I2C_MODE_SLAVE_TX,
+	I2C_MODE_SLAVE_RX
 } I2C_CommMode;
 
 typedef struct __I2CBus {
 	I2C_TypeDef * I2Cx;
 	GPIOPin sda, scl;
-	boolean master;
-	I2C_Status status;
+	uint8_t address;
 	I2C_CommMode mode;
+	boolean irq;
+	__IO I2C_Status status;
 } I2CBus;
 
+extern I2CBus Wire1, Wire2, Wire3;
 
-boolean i2c_begin(I2CBus * wire, I2C_TypeDef * i2cx, GPIOPin sda, GPIOPin scl, uint32_t clk); //I2C_TypeDef * I2Cx, uint32_t clk);
+boolean i2c_begin(/*I2CBus * wire,*/ I2C_TypeDef * i2cx, GPIOPin sda, GPIOPin scl, uint32_t clk); //I2C_TypeDef * I2Cx, uint32_t clk);
 boolean i2c_start(I2CBus * wire, uint8_t addr);
 boolean i2c_transmit(I2CBus * wire, uint8_t addr, uint8_t * data, uint16_t length);
 //void i2c_receive(uint8_t addr, uint8_t * data, uint16_t nlimit);

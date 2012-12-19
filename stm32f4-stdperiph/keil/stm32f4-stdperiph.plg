@@ -3,27 +3,7 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\Users\Sin\Documents\github\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.uvproj
-Project File Date:  12/18/2012
+C:\Users\Sin\Documents\Eclipse\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.uvproj
+Project File Date:  12/19/2012
 
 <h2>Output:</h2>
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(26): warning:  #177-D: variable "NVIC_InitStructure" was declared but never referenced
-..\..\stm32library\armcore\i2c.c(115): error:  #20: identifier "temp" is undefined
-Target not created
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(26): warning:  #177-D: variable "NVIC_InitStructure" was declared but never referenced
-..\..\stm32library\armcore\i2c.c(90): warning:  #550-D: variable "temp" was set but never used
-linking...
-Program Size: Code=14876 RO-data=508 RW-data=128 ZI-data=4840  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(90): warning:  #550-D: variable "temp" was set but never used
-linking...
-Program Size: Code=14876 RO-data=508 RW-data=128 ZI-data=4840  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).

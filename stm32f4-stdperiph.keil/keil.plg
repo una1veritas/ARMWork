@@ -4,28 +4,6 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 C:\Users\Sin\Documents\Eclipse\ARMWork\stm32f4-stdperiph.keil\keil.uvproj
-Project File Date:  12/16/2012
+Project File Date:  12/18/2012
 
 <h2>Output:</h2>
-Build target 'stdperiph test'
-compiling main.cpp...
-mainsrc\main.cpp(130): warning:  #111-D: statement is unreachable
-compiling i2c.c...
-armcore\i2c.c(26): warning:  #177-D: variable "NVIC_InitStructure" was declared but never referenced
-compiling ST7032i.cpp...
-linking...
-Program Size: Code=16120 RO-data=508 RW-data=128 ZI-data=4840  
-FromELF: creating hex file...
-"keil.axf" - 0 Error(s), 2 Warning(s).
-Build target 'stdperiph test'
-compiling main.cpp...
-mainsrc\main.cpp(130): warning:  #111-D: statement is unreachable
-linking...
-Program Size: Code=16128 RO-data=508 RW-data=128 ZI-data=4840  
-FromELF: creating hex file...
-"keil.axf" - 0 Error(s), 1 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\Eclipse\\ARMWork\\stm32f4-stdperiph.keil\\keil.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
