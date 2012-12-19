@@ -3,7 +3,9 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\Users\Sin\Documents\Eclipse\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.uvproj
+C:\Users\Sin\Documents\github\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.uvproj
 Project File Date:  12/19/2012
 
 <h2>Output:</h2>
+Clean started: Project: 'stm32f4-stdperiph'
+   deleting intermediate output files for target 'Target 1'
