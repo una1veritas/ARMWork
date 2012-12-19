@@ -1,0 +1,5 @@
+--cpu Cortex-M4 "startup_stm32f4xx.o" "main.o" "stm32f4xx_it.o" "system_stm32f4xx.o" "adc3dma.o" "delay.o" "gpio.o" "i2c.o" "print.o" "st7032i.o" "stream.o" "systick.o" "usart.o" "usartserial.o" "misc.o" "stm32f4xx_dma.o" "stm32f4xx_gpio.o" "stm32f4xx_i2c.o" "stm32f4xx_rcc.o" "stm32f4xx_tim.o" "stm32f4xx_usart.o" "stm32f4xx_adc.o" 
+--strict --scatter "stm32f4-stdperiph.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\stm32f4-stdperiph.map" -o stm32f4-stdperiph.axf

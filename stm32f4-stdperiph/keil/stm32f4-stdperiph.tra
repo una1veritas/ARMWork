@@ -32,7 +32,7 @@
 ### ADS-LD Output File: 'stm32f4-stdperiph.axf'
 ### ADS-LD Command File: 'stm32f4-stdperiph.lnp'
 ### Checking for dirty Components...
-### Creating CmdFile 'stm32f4-stdperiph.lnp', Handle=0x00000EB4
+### Creating CmdFile 'stm32f4-stdperiph.lnp', Handle=0x000004F0
 ### Writing '.lnp' file
 ### ADS-LD Command file 'stm32f4-stdperiph.lnp' is ready.
 ### ADS-LD: About to start ADS-LD Thread.
