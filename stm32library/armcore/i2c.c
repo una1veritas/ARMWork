@@ -259,20 +259,27 @@ boolean i2c_start(I2CBus * wire, uint8_t addr) {
 /*
 void I2C1_EV_IRQHandler(void) {
 
-	if ( Wire1.status == READY && I2C_GetITStatus(I2C1, I2C_IT_SB ) == SET 
-						&& I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT )) {
-		// Test on EV5 and clear it 
-		Wire1.status = START_ISSUED;
-		// Send address for write 
-		I2C_Send7bitAddress(I2C1, (Wire1.address) << 1, I2C_Direction_Transmitter );
-		// Test on EV6 and clear it 
-	} else if ( Wire1.status == START_ISSUED && I2C_GetITStatus(I2C1, I2C_IT_ADDR ) == SET 
-						 && I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ) ) {
-		Wire1.status = DST_ADDRESS_SENT;
-
+	switch(Wire1.status) {
+		case START_BIT_ISSUED:
+			break;
+		case ADDRESS_SENT_MATCHED:
+			break;
 	}
-
+	if ( I2C_GetITStatus(I2C1, I2C_IT_SB ) == SET ) {
+		if ( Wire1.status == START_BIT_ISSUED && I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT )) {
+			// Test on EV5 and clear it 
+			I2C_Send7bitAddress(I2C1, (Wire1.address) << 1, I2C_Direction_Transmitter );
+			Wire1.status = ADDRESS_SENT_MATCHED;
+		} else {
+			// error!!
+		}
+	} else if ( I2C_GetITStatus(I2C1, I2C_IT_ADDR ) == SET ) {
+		if ( Wire1.status == 	ADDRESS_SENT_MATCHED && I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ) ) {
+		} else {
+			// error!!
+		}
+	}
 		I2C_ITConfig(I2C1, I2C_IT_EVT, DISABLE);
-
+		I2C_ClearITPendingBit(I2C1, I2C_IT_EVT);
 }
 */
