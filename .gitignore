@@ -5,6 +5,7 @@
 *.mk
 *.lst
 *.__i
+*.bak
 *.zip
 *.gz
 .metadata

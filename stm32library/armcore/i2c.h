@@ -9,15 +9,15 @@
 #define I2C_H_
 
 #include "armcore.h"
+#include <stm32f4xx_i2c.h>
+
+#include "armcore.h"
+#include "gpio.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include <stm32f4xx_i2c.h>
-
-#include "armcore.h"
-#include "gpio.h"
 
 typedef enum __I2C_Status {
 	NOT_READY = 0xff,
@@ -46,13 +46,17 @@ typedef enum __I2C_CommMode {
 	I2C_MODE_SLAVE_RX
 } I2C_CommMode;
 
+#define I2C_BUFFER_SIZE 256
 typedef struct __I2CBus {
 	I2C_TypeDef * I2Cx;
 	GPIOPin sda, scl;
 	uint8_t address;
 	I2C_CommMode mode;
-	boolean irq;
-//	__IO I2C_Status status;
+	boolean irqmode;
+	__IO I2C_Status status;
+	__IO uint16_t position;
+	__IO uint16_t length;
+	uint8_t databytes[I2C_BUFFER_SIZE];
 } I2CBus;
 
 extern I2CBus Wire1, Wire2, Wire3;
