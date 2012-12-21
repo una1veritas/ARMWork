@@ -66,8 +66,8 @@ int main(void) {
 			(PinBit(PD12) | PinBit(PD13) | PinBit(PD14) | PinBit(PD15)), OUTPUT,
 			FASTSPEED, PUSHPULL, NOPULL);
 
-	i2c_begin(/*&Wire1, */ I2C1,  PB9, PB8, 100000);
-	lcd.init(&Wire1);
+	i2c_begin(&I2CBuffer1,  PB9, PB8, 100000);
+	lcd.init(&I2CBuffer1);
 	lcd.begin();
 	lcd.setContrast(46);
 	lcd.print("Whoooeee!");       // Classic Hello World!

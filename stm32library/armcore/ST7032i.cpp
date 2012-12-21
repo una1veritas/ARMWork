@@ -59,7 +59,7 @@
 //
 
 //
-void ST7032i::init(I2CBus * wx) {
+void ST7032i::init(I2CBuffer * wx) {
 	_numlines = 2;
 	_numcolumns = 16;
 	_position = 0;
