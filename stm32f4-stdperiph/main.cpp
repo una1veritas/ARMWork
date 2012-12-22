@@ -35,7 +35,7 @@ int main(void) {
 
 	Serial3.begin(PC11, PC10, 19200);
 
-	Serial3.println("This royal throne of kings, this scepter'd isle, \n"
+	const char message[] = "This royal throne of kings, this scepter'd isle, \n"
 "This earth of majesty, this seat of Mars, \n"
 "This other Eden, demi-paradise, \n"
 "This fortress built by Nature for herself\n"
@@ -45,7 +45,10 @@ int main(void) {
 "Which serves it in the office of a wall, \n"
 "Or as a moat defensive to a house, \n"
 "Against the envy of less happier lands, \n"
-"This blessed plot, this earth, this realm, this England,");
+"This blessed plot, this earth, this realm, this England,";
+	const uint16 messlen = strlen(message);
+	
+	Serial3.println(message);
 	Serial3.flush();
 
 	RCC_ClocksTypeDef RCC_Clocks;
@@ -111,16 +114,17 @@ int main(void) {
 		tnow = millis() / 1000;
 
 		//Serial3.print(tmp);
-		Serial3.println((float)millis()/1000, 3);
-
-//		lcd.clear();
+		Serial3.print((float)millis()/1000, 3);
+		Serial3.print(" ");
+		Serial3.println(lcd.rc());
+		//		lcd.clear();
 		lcd.setCursor(0, 0);
-		lcd.print("                ");
-		lcd.setCursor((millis()/1000)%13, 0);
-		lcd.print("__@");
+		lcd.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
 		lcd.setCursor(0, 1);
 		lcd.print((float)millis()/1000, 3);
-
+		Serial3.print(" ");
+		Serial3.println(lcd.rc());
+		
 		uint16_t i = 0;
 		if (Serial3.available() > 0) {
 			while (Serial3.available() > 0 && i < 92) {

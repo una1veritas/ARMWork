@@ -130,7 +130,7 @@ void ST7032i::begin() {
 
 	// clear it off
 	clear();
-	home();
+//	home();
 
 	// Initialize to default text direction (for romance languages)
 	_displaymode = LCD_ENTRYLEFT | LCD_ENTRYSHIFTDECREMENT;
@@ -154,11 +154,13 @@ void ST7032i::setContrast(byte val) {
 
 void ST7032i::clear() {
 	command(LCD_CLEARDISPLAY); // clear display, set cursor position to zero
+	_position = 0;
 	delay_ms(200);  // this command takes a long time!
 }
 
 void ST7032i::home() {
 	command(LCD_RETURNHOME);  // set cursor position to zero
+	_position = 0;
 	delay_ms(200);  // this command takes a long time!
 }
 

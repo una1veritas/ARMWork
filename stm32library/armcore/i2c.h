@@ -20,8 +20,8 @@ extern "C" {
 
 
 typedef enum __I2C_Status {
-	NOT_READY = 0xff,
-	READY = 0,
+	NOT_READY = 0,
+	READY,
 	STARTING,
 	ADDRESS_SENDING,
 	BYTE_TRANSFERRING,
@@ -35,6 +35,7 @@ typedef enum __I2C_Status {
 	RECEIVE_BYTE_COMPLETED,
 	RECEIVE_COMPLETED,
 	*/
+	FAILURE = 0x80
 } I2C_Status;
 
 typedef enum __I2C_CommMode {
