@@ -27,9 +27,11 @@ typedef enum __I2C_Status {
 	BYTE_TRANSFERRING,
 	TRANSMISSION_COMPLETED,
 	
-	REQUESTCODE_SENDING,
+	REQUEST_SENDING,
 	RESTARTING,
 	RECEIVER_ADDRESS_SENDING,
+	BYTE_RECEIVING,
+	END_RECEIVING,
 	/*
 	RECEIVE_BYTE_READY,
 	BEFORELAST_BYTE_RECEIVED,
@@ -62,9 +64,9 @@ typedef struct __I2CBuffer {
 	uint8_t databytes[I2C_BUFFER_SIZE];
 } I2CBuffer;
 
-extern I2CBuffer I2CBuffer1, I2CBuffer2, I2CBuffer3;
+extern I2CBuffer I2C1Buffer, I2C2Buffer, I2C3Buffer;
 
-boolean i2c_begin(I2CBuffer * I2Cbuf, GPIOPin sda, GPIOPin scl, uint32_t clk); //I2C_TypeDef * I2Cx, uint32_t clk);
+boolean i2c_begin(I2CBuffer * I2Cbuf, I2C_TypeDef * I2Cx, GPIOPin sda, GPIOPin scl, uint32_t clk); //I2C_TypeDef * I2Cx, uint32_t clk);
 boolean i2c_start(I2CBuffer * I2Cbuf, uint8_t addr);
 boolean i2c_transmit(I2CBuffer * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t length);
 //void i2c_receive(uint8_t addr, uint8_t * data, uint16_t nlimit);

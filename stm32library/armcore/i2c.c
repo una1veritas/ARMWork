@@ -21,22 +21,25 @@ typedef enum __CommDirection {
 } CommDirection;
 */
 
-I2CBuffer I2CBuffer1 = { I2C1 }, I2CBuffer2 = { I2C2 }, I2CBuffer3 = { I2C3 };
+I2CBuffer I2C1Buffer, I2C2Buffer, I2C3Buffer;
 
-boolean i2c_begin(I2CBuffer * wirebuf, GPIOPin sda, GPIOPin scl, uint32_t clk) {
+boolean i2c_begin(I2CBuffer * wirebuf, I2C_TypeDef * i2cx, GPIOPin sda, GPIOPin scl, uint32_t clk) {
 	I2C_InitTypeDef I2C_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure; 
 	// set default to I2C1
 	uint8_t gpio_af = GPIO_AF_I2C1;
 	uint32_t periph_i2c = RCC_APB1Periph_I2C1;
+	wirebuf->I2Cx = I2C1;
 	
 	wirebuf->sda = sda; //PB9;
 	wirebuf->scl = scl; //PB8;
 
-	if ( wirebuf->I2Cx == I2C2 ) {
+	if ( i2cx == I2C2 ) {
+		wirebuf->I2Cx = I2C2;
 		gpio_af = GPIO_AF_I2C2;
 		periph_i2c = RCC_APB1Periph_I2C2;
-	} else if ( wirebuf->I2Cx == I2C3 ) {
+	} else if ( i2cx == I2C3 ) {
+		wirebuf->I2Cx = I2C3;
 		gpio_af = GPIO_AF_I2C3;
 		periph_i2c = RCC_APB1Periph_I2C3;
 	//} else { I2C1, use initiali values set to the variables
@@ -152,7 +155,7 @@ boolean i2c_receive(I2CBuffer * wire, uint8_t addr, uint8_t req, uint8_t * recv,
 	if ( false /*wire->irqmode*/ ) {
 		wire->address = addr;
 		wire->databytes[0] = req;
-		wire->length = length;
+		wire->length = lim;
 		wire->status = STARTING;
 		I2C_ITConfig(wire->I2Cx, I2C_IT_EVT, ENABLE);
 		I2C_GenerateSTART(wire->I2Cx, ENABLE);
@@ -240,104 +243,110 @@ boolean i2c_start(I2CBuffer * wire, uint8_t addr) {
 void I2C1_EV_IRQHandler(void) {
 	uint32_t temp;
 	
-	if ( I2CBuffer1.mode == I2C_MODE_MASTER_TX ) {
+	if ( I2C1Buffer.mode == I2C_MODE_MASTER_TX ) {
 		if ( I2C_GetITStatus(I2C1, I2C_IT_SB ) == SET
-			&& I2CBuffer1.status == STARTING ) {
+			&& I2C1Buffer.status == STARTING ) {
 			// read SR2 and clear it
 			I2C_ReadRegister(I2C1, I2C_Register_SR2);  //	temp = I2C1->SR2;	//	I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT );
-			I2C_Send7bitAddress(I2C1, (I2CBuffer1.address) << 1, I2C_Direction_Transmitter );
-			I2CBuffer1.status = ADDRESS_SENDING;
+			I2C_Send7bitAddress(I2C1, (I2C1Buffer.address) << 1, I2C_Direction_Transmitter );
+			I2C1Buffer.status = ADDRESS_SENDING;
 		} else 
 		if ( I2C_GetITStatus(I2C1, I2C_IT_ADDR ) == SET 
-			&& I2CBuffer1.status == ADDRESS_SENDING ) {
+			&& I2C1Buffer.status == ADDRESS_SENDING ) {
 			I2C_ReadRegister(I2C1, I2C_Register_SR2); //	temp = I2C1->SR2;	//	I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED );
 			//
-			I2CBuffer1.position = 0;
-			I2C_SendData(I2CBuffer1.I2Cx, I2CBuffer1.databytes[I2CBuffer1.position]);
-			I2CBuffer1.status = BYTE_TRANSFERRING;
+			I2C1Buffer.position = 0;
+			I2C_SendData(I2C1Buffer.I2Cx, I2C1Buffer.databytes[I2C1Buffer.position]);
+			I2C1Buffer.status = BYTE_TRANSFERRING;
 		} else 
 		if ( I2C_GetITStatus(I2C1, I2C_IT_BTF ) == SET 
-			&& I2CBuffer1.status == BYTE_TRANSFERRING ) {
+			&& I2C1Buffer.status == BYTE_TRANSFERRING ) {
 			// Test on EV8 and clear it
 			I2C_ReadRegister(I2C1, I2C_Register_SR2); //	temp = I2C1->SR2;	//	I2C_CheckEvent(I2CBuffer1.I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED );
 			//
-			I2CBuffer1.position++;
-			if ( I2CBuffer1.position < I2CBuffer1.length ) {
-				I2C_SendData(I2CBuffer1.I2Cx, I2CBuffer1.databytes[I2CBuffer1.position]);
-				I2CBuffer1.status = BYTE_TRANSFERRING;
+			I2C1Buffer.position++;
+			if ( I2C1Buffer.position < I2C1Buffer.length ) {
+				I2C_SendData(I2C1Buffer.I2Cx, I2C1Buffer.databytes[I2C1Buffer.position]);
+				I2C1Buffer.status = BYTE_TRANSFERRING;
 			} else {
 				I2C_ITConfig(I2C1, I2C_IT_EVT, DISABLE);	
 				// generate stop condition
-				I2C_GenerateSTOP(I2CBuffer1.I2Cx, ENABLE);
-				I2CBuffer1.status = TRANSMISSION_COMPLETED;
-				I2CBuffer1.mode = I2C_MODE_MASTER;
+				I2C_GenerateSTOP(I2C1Buffer.I2Cx, ENABLE);
+				I2C1Buffer.status = TRANSMISSION_COMPLETED;
+				I2C1Buffer.mode = I2C_MODE_MASTER;
 			}			
 		} else {
 			// unexpected case
 			I2C_ITConfig(I2C1, I2C_IT_EVT, DISABLE);
-			I2CBuffer1.status |= FAILURE;
+			I2C1Buffer.status |= FAILURE;
 		}
 	} else 
-	if (  I2CBuffer1.mode == I2C_MODE_MASTER_RX ) {
+	if (  I2C1Buffer.mode == I2C_MODE_MASTER_RX ) {
 		if ( I2C_GetITStatus(I2C1, I2C_IT_SB ) == SET
-			&& I2CBuffer1.status == STARTING ) {
-			// read SR2 and clear it
-			I2C_ReadRegister(I2C1, I2C_Register_SR2);  //	temp = I2C1->SR2;	//	I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT );
-			I2C_Send7bitAddress(I2C1, (I2CBuffer1.address) << 1, I2C_Direction_Transmitter );
-			I2CBuffer1.status = ADDRESS_SENDING;
+			&& I2C1Buffer.status == STARTING ) {
+				// read SR2 and clear it
+				I2C_ReadRegister(I2C1, I2C_Register_SR2);  //	temp = I2C1->SR2;	//	I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT );
+				I2C_Send7bitAddress(I2C1, (I2C1Buffer.address) << 1, I2C_Direction_Transmitter );
+				I2C1Buffer.status = ADDRESS_SENDING;
 		} else 
 		if ( I2C_GetITStatus(I2C1, I2C_IT_ADDR ) == SET 
-			&& I2CBuffer1.status == ADDRESS_SENDING ) {
-			// Test on EV8 and clear it
-			I2C_ReadRegister(I2C1, I2C_Register_SR2);  //	temp = I2C1->SR2;	//	I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED );
-			I2C_SendData(I2C1, I2CBuffer1.databytes[0]);
-			I2CBuffer1.status = REQUEST_SENDING;			
+			&& I2C1Buffer.status == ADDRESS_SENDING ) {
+				// Test on EV8 and clear it
+				I2C_ReadRegister(I2C1, I2C_Register_SR2);  //	temp = I2C1->SR2;	//	I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED );
+				I2C_SendData(I2C1, I2C1Buffer.databytes[0]);
+				I2C1Buffer.status = REQUEST_SENDING;			
 		} else 
 		if ( I2C_GetITStatus(I2C1, I2C_IT_BTF ) == SET 
-			&& I2CBuffer1.status == REQUEST_SENDING ) {
-			I2C_ReadRegister(I2C1, I2C_Register_SR2);  //	temp = I2C1->SR2;	//	I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED );		
-			/* Send STRAT condition a second time */
-			I2C_GenerateSTART(wire->I2Cx, ENABLE);
-			I2CBuffer1.status = RESTARTING;
+			&& I2C1Buffer.status == REQUEST_SENDING ) {
+				I2C_ReadRegister(I2C1, I2C_Register_SR2);  //	temp = I2C1->SR2;	//	I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED );		
+				/* Send STRAT condition a second time */
+				I2C_GenerateSTART(I2C1, ENABLE);
+				I2C1Buffer.status = RESTARTING;
 		} else 
-			if (I2C_GetITStatus(I2C1, I2C_IT_SB ) == SET
-			&& I2CBuffer1.status == RESTARTING ) {
-			I2C_ReadRegister(I2C1, I2C_Register_SR2); //	temp = I2C1->SR2;	//	I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED );
-			//
-			I2C_Send7bitAddress(wire->I2Cx, addr << 1, I2C_Direction_Receiver );
-			I2CBuffer1.status = RECEIVER_ADDRESS_SENDING;
+		if (I2C_GetITStatus(I2C1, I2C_IT_SB ) == SET
+			&& I2C1Buffer.status == RESTARTING ) {
+				I2C_ReadRegister(I2C1, I2C_Register_SR2); //	temp = I2C1->SR2;	//	I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED );
+				//
+				I2C_Send7bitAddress(I2C1, I2C1Buffer.address << 1, I2C_Direction_Receiver );
+				I2C1Buffer.status = RECEIVER_ADDRESS_SENDING;
 		} else 
 		if ( I2C_GetITStatus(I2C1, I2C_IT_ADDR ) == SET 
-			&& I2CBuffer1.status == RECEIVER_ADDRESS_SENDING ) {
-			I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED );
-
-				I2CBuffer1.position = 0;
-			I2C_SendData(I2CBuffer1.I2Cx, I2CBuffer1.databytes[I2CBuffer1.position]);
-			I2CBuffer1.status = BYTE_TRANSFERRING;
+			&& I2C1Buffer.status == RECEIVER_ADDRESS_SENDING ) {
+				I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED );
+				I2C1Buffer.position = 0;
+				I2C1Buffer.status = BYTE_RECEIVING;
+		} else
+		if ( I2C_GetITStatus(I2C1, I2C_IT_RXNE | I2C_IT_BTF ) == SET 
+			&& I2C1Buffer.status == BYTE_RECEIVING ) {
+				I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED );
+				/* Read a byte from the salve */
+				I2C1Buffer.databytes[I2C1Buffer.position++] = I2C_ReceiveData(I2C1);
+				if ( I2C1Buffer.position < I2C1Buffer.length ) {
+					I2C1Buffer.status = BYTE_RECEIVING;
+				} else {
+					/* Disable Acknowledgement */
+					I2C_AcknowledgeConfig(I2C1, DISABLE);
+					/* Send STOP Condition */
+					I2C_GenerateSTOP(I2C1, ENABLE);
+					I2C1Buffer.status = END_RECEIVING;
+				}
 		} else 
-		if ( I2C_GetITStatus(I2C1, I2C_IT_BTF ) == SET 
-			&& I2CBuffer1.status == BYTE_TRANSFERRING ) {
-			// Test on EV8 and clear it
-			I2C_ReadRegister(I2C1, I2C_Register_SR2); //	temp = I2C1->SR2;	//	I2C_CheckEvent(I2CBuffer1.I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED );
-			//
-			I2CBuffer1.position++;
-			if ( I2CBuffer1.position < I2CBuffer1.length ) {
-				I2C_SendData(I2CBuffer1.I2Cx, I2CBuffer1.databytes[I2CBuffer1.position]);
-				I2CBuffer1.status = BYTE_TRANSFERRING;
-			} else {
+		if ( I2C_GetITStatus(I2C1, I2C_IT_RXNE | I2C_IT_BTF ) == SET 
+			&& I2C1Buffer.status == END_RECEIVING ) {
+				I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_RECEIVED );
+				I2C1Buffer.databytes[I2C1Buffer.position] = I2C_ReceiveData(I2C1);
+				/* Enable Acknowledgement to be ready for another reception */
+				I2C_AcknowledgeConfig(I2C1, ENABLE);
 				I2C_ITConfig(I2C1, I2C_IT_EVT, DISABLE);	
-				// generate stop condition
-				I2C_GenerateSTOP(I2CBuffer1.I2Cx, ENABLE);
-				I2CBuffer1.status = TRANSMISSION_COMPLETED;
-				I2CBuffer1.mode = I2C_MODE_MASTER;
-			}			
+				I2C1Buffer.status = TRANSMISSION_COMPLETED;
+				I2C1Buffer.mode = I2C_MODE_MASTER;
 		} else {
 			// unexpected case
 			I2C_ITConfig(I2C1, I2C_IT_EVT, DISABLE);
-			I2CBuffer1.status |= FAILURE;
+			I2C1Buffer.status |= FAILURE;
 		}
 	} else {
 			I2C_ITConfig(I2C1, I2C_IT_EVT, DISABLE);
-		I2CBuffer1.status |= FAILURE;
+		I2C1Buffer.status |= FAILURE;
 	}
 }

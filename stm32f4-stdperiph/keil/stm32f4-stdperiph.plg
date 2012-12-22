@@ -4,6 +4,46 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 C:\Users\Sin\Documents\github\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.uvproj
-Project File Date:  12/20/2012
+Project File Date:  12/22/2012
 
 <h2>Output:</h2>
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(140): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(100): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(317): error:  #20: identifier "BYTE_RECEIVING" is undefined
+..\..\stm32library\armcore\i2c.c(320): error:  #20: identifier "BYTE_RECEIVING" is undefined
+..\..\stm32library\armcore\i2c.c(339): error:  #20: identifier "wire" is undefined
+..\..\stm32library\armcore\i2c.c(244): warning:  #177-D: variable "temp" was declared but never referenced
+compiling ST7032i.cpp...
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(140): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(100): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(339): error:  #20: identifier "wire" is undefined
+..\..\stm32library\armcore\i2c.c(244): warning:  #177-D: variable "temp" was declared but never referenced
+compiling ST7032i.cpp...
+Target not created
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(100): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(342): error:  #20: identifier "wire" is undefined
+..\..\stm32library\armcore\i2c.c(244): warning:  #177-D: variable "temp" was declared but never referenced
+Target not created
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(100): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(342): error:  #44: expression must have pointer type
+..\..\stm32library\armcore\i2c.c(244): warning:  #177-D: variable "temp" was declared but never referenced
+Target not created
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(100): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(244): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=16124 RO-data=980 RW-data=128 ZI-data=5104  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
