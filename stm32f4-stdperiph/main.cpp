@@ -35,17 +35,18 @@ int main(void) {
 
 	Serial3.begin(PC11, PC10, 19200);
 
-	const char message[] = "This royal throne of kings, this scepter'd isle, \n"
-"This earth of majesty, this seat of Mars, \n"
-"This other Eden, demi-paradise, \n"
-"This fortress built by Nature for herself\n"
-"Against infection and the hand of war, \n"
-"This happy breed of men, this little world,\n" 
-"This precious stone set in the silver sea, \n"
-"Which serves it in the office of a wall, \n"
-"Or as a moat defensive to a house, \n"
-"Against the envy of less happier lands, \n"
-"This blessed plot, this earth, this realm, this England,";
+	const char message[] = 
+			"This royal throne of kings, this scepter'd isle, \n"
+			"This earth of majesty, this seat of Mars, \n"
+			"This other Eden, demi-paradise, \n"
+			"This fortress built by Nature for herself\n"
+			"Against infection and the hand of war, \n"
+			"This happy breed of men, this little world,\n" 
+			"This precious stone set in the silver sea, \n"
+			"Which serves it in the office of a wall, \n"
+			"Or as a moat defensive to a house, \n"
+			"Against the envy of less happier lands, \n"
+			"This blessed plot, this earth, this realm, this England,";
 	const uint16 messlen = strlen(message);
 	
 	Serial3.println(message);

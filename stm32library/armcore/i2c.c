@@ -26,23 +26,23 @@ I2CBuffer I2C1Buffer, I2C2Buffer, I2C3Buffer;
 boolean i2c_begin(I2CBuffer * wirebuf, I2C_TypeDef * i2cx, GPIOPin sda, GPIOPin scl, uint32_t clk) {
 	I2C_InitTypeDef I2C_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure; 
-	// set default to I2C1
 	uint8_t gpio_af = GPIO_AF_I2C1;
 	uint32_t periph_i2c = RCC_APB1Periph_I2C1;
-	wirebuf->I2Cx = I2C1;
 	
+	wirebuf->I2Cx = i2cx;
 	wirebuf->sda = sda; //PB9;
 	wirebuf->scl = scl; //PB8;
 
-	if ( i2cx == I2C2 ) {
-		wirebuf->I2Cx = I2C2;
+	if ( wirebuf->I2Cx == I2C2 ) {
 		gpio_af = GPIO_AF_I2C2;
 		periph_i2c = RCC_APB1Periph_I2C2;
-	} else if ( i2cx == I2C3 ) {
-		wirebuf->I2Cx = I2C3;
+	} else if ( wirebuf->I2Cx == I2C3 ) {
 		gpio_af = GPIO_AF_I2C3;
 		periph_i2c = RCC_APB1Periph_I2C3;
-	//} else { I2C1, use initiali values set to the variables
+	} else { //I2C1, use initiali values set to the variables
+		wirebuf->I2Cx = I2C1;
+		gpio_af = GPIO_AF_I2C1;
+		periph_i2c = RCC_APB1Periph_I2C1;
 	}
 	
 	/* I2C Periph clock enable */
@@ -87,7 +87,7 @@ boolean i2c_begin(I2CBuffer * wirebuf, I2C_TypeDef * i2cx, GPIOPin sda, GPIOPin 
 	I2C_Cmd(wirebuf->I2Cx, ENABLE);
 
 //	wire->status = NOT_READY;
-	wirebuf->mode = I2C_MODE_MASTER;
+	wirebuf->mode = I2C_MODE_MASTER_IDLE;
 	wirebuf->irqmode = true;
 	wirebuf->address = (uint8_t)I2C_AcknowledgedAddress_7bit;
 
@@ -99,13 +99,14 @@ boolean i2c_transmit(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t le
 	uint16_t wc;
 	uint32_t temp;
 	
-	wire->mode = I2C_MODE_MASTER_TX;
-	
-	for (wc = 5; I2C_GetFlagStatus(wire->I2Cx, I2C_FLAG_BUSY ); wc--) {
+	for (wc = 5; I2C_GetFlagStatus(wire->I2Cx, I2C_FLAG_BUSY ) 
+	//&& wire->mode != I2C_MODE_MASTER_IDLE
+	; wc--) {
 		if (wc == 0)
 			return false;
 		delay_us(667);
 	}
+	wire->mode = I2C_MODE_MASTER_TX;
 	wire->status = READY;
 	if ( wire->irqmode ) {
 		wire->address = addr;
@@ -114,6 +115,7 @@ boolean i2c_transmit(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t le
 		wire->status = STARTING;
 		I2C_ITConfig(wire->I2Cx, I2C_IT_EVT, ENABLE);
 		I2C_GenerateSTART(wire->I2Cx, ENABLE);
+		//
 	} else {
 		//polling mode
 		if (!i2c_start(wire, addr))
@@ -133,8 +135,8 @@ boolean i2c_transmit(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t le
 		temp = wire->I2Cx->SR2;	// Clear ADDR flag
 		I2C_GenerateSTOP(wire->I2Cx, ENABLE);
 		__enable_irq();
+		wire->mode = I2C_MODE_MASTER_IDLE;
 	}
-	wire->mode = I2C_MODE_MASTER;
 	return true;
 }
 
@@ -152,7 +154,7 @@ boolean i2c_receive(I2CBuffer * wire, uint8_t addr, uint8_t req, uint8_t * recv,
 	}
 	wire->status = READY;
 	
-	if ( false /*wire->irqmode*/ ) {
+	if ( false /*wire->irqmode */ ) {
 		wire->address = addr;
 		wire->databytes[0] = req;
 		wire->length = lim;
@@ -213,7 +215,7 @@ boolean i2c_receive(I2CBuffer * wire, uint8_t addr, uint8_t req, uint8_t * recv,
 
 		/* Enable Acknowledgement to be ready for another reception */
 		I2C_AcknowledgeConfig(wire->I2Cx, ENABLE);
-		wire->mode = I2C_MODE_MASTER;
+		wire->mode = I2C_MODE_MASTER_IDLE;
 	}
 	return true;
 }
@@ -247,13 +249,17 @@ void I2C1_EV_IRQHandler(void) {
 		if ( I2C_GetITStatus(I2C1, I2C_IT_SB ) == SET
 			&& I2C1Buffer.status == STARTING ) {
 			// read SR2 and clear it
-			I2C_ReadRegister(I2C1, I2C_Register_SR2);  //	temp = I2C1->SR2;	//	I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT );
+			I2C_ReadRegister(I2C1, I2C_Register_SR2);  //	
+			//	temp = I2C1->SR2;	//	
+			//I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT );
 			I2C_Send7bitAddress(I2C1, (I2C1Buffer.address) << 1, I2C_Direction_Transmitter );
 			I2C1Buffer.status = ADDRESS_SENDING;
 		} else 
 		if ( I2C_GetITStatus(I2C1, I2C_IT_ADDR ) == SET 
 			&& I2C1Buffer.status == ADDRESS_SENDING ) {
-			I2C_ReadRegister(I2C1, I2C_Register_SR2); //	temp = I2C1->SR2;	//	I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED );
+			I2C_ReadRegister(I2C1, I2C_Register_SR2); //	
+			//	temp = I2C1->SR2;	//	
+			//I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED );
 			//
 			I2C1Buffer.position = 0;
 			I2C_SendData(I2C1Buffer.I2Cx, I2C1Buffer.databytes[I2C1Buffer.position]);
@@ -273,7 +279,7 @@ void I2C1_EV_IRQHandler(void) {
 				// generate stop condition
 				I2C_GenerateSTOP(I2C1Buffer.I2Cx, ENABLE);
 				I2C1Buffer.status = TRANSMISSION_COMPLETED;
-				I2C1Buffer.mode = I2C_MODE_MASTER;
+				I2C1Buffer.mode = I2C_MODE_MASTER_IDLE;
 			}			
 		} else {
 			// unexpected case
@@ -339,14 +345,16 @@ void I2C1_EV_IRQHandler(void) {
 				I2C_AcknowledgeConfig(I2C1, ENABLE);
 				I2C_ITConfig(I2C1, I2C_IT_EVT, DISABLE);	
 				I2C1Buffer.status = TRANSMISSION_COMPLETED;
-				I2C1Buffer.mode = I2C_MODE_MASTER;
+				I2C1Buffer.mode = I2C_MODE_MASTER_IDLE;
 		} else {
 			// unexpected case
 			I2C_ITConfig(I2C1, I2C_IT_EVT, DISABLE);
 			I2C1Buffer.status |= FAILURE;
 		}
-	} else {
-			I2C_ITConfig(I2C1, I2C_IT_EVT, DISABLE);
+	} 
+	else {
+		I2C_ITConfig(I2C1, I2C_IT_EVT, DISABLE);
 		I2C1Buffer.status |= FAILURE;
 	}
+	
 }

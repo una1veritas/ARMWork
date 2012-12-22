@@ -43,10 +43,10 @@ typedef enum __I2C_Status {
 } I2C_Status;
 
 typedef enum __I2C_CommMode {
-	I2C_MODE_MASTER = 0,
+	I2C_MODE_MASTER_IDLE = 0,
 	I2C_MODE_MASTER_TX,
 	I2C_MODE_MASTER_RX,
-	I2C_MODE_SLAVE,
+	I2C_MODE_SLAVE_IDLE,
 	I2C_MODE_SLAVE_TX,
 	I2C_MODE_SLAVE_RX
 } I2C_CommMode;
@@ -56,8 +56,8 @@ typedef struct __I2CBuffer {
 	I2C_TypeDef * I2Cx;
 	GPIOPin sda, scl;
 	uint8_t address;
-	I2C_CommMode mode;
 	boolean irqmode;
+	__IO I2C_CommMode mode;
 	__IO I2C_Status status;
 	__IO uint16_t position;
 	__IO uint16_t length;
