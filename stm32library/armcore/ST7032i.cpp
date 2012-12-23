@@ -94,6 +94,7 @@ size_t ST7032i::write(uint8_t value) {
 	buf[1] = value & 0xff;
 	i2c_transmit(wirex,i2c_address, buf, (uint16_t)2);
 	delay_us(CMDDELAY);
+	_position++;
 	return 1; // assume success
 }
 

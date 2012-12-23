@@ -22,6 +22,7 @@ typedef enum __CommDirection {
 */
 
 I2CBuffer I2C1Buffer, I2C2Buffer, I2C3Buffer;
+//uint32 swatch[8];
 
 boolean i2c_begin(I2CBuffer * wirebuf, I2C_TypeDef * i2cx, GPIOPin sda, GPIOPin scl, uint32_t clk) {
 	I2C_InitTypeDef I2C_InitStructure;
@@ -113,12 +114,13 @@ boolean i2c_transmit(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t le
 		memcpy(wire->databytes, data, length);
 		wire->length = length;
 		wire->status = STARTING;
+//		swatch[STARTING] = micros();
 		I2C_ITConfig(wire->I2Cx, I2C_IT_EVT, ENABLE);
 		I2C_GenerateSTART(wire->I2Cx, ENABLE);
-		//
+
 	} else {
 		//polling mode
-		if (!i2c_start(wire, addr))
+		if (!i2c_start(wire, I2C_Direction_Transmitter))
 			return false;
 
 		for (i = 0; i < length; i++) {
@@ -220,23 +222,25 @@ boolean i2c_receive(I2CBuffer * wire, uint8_t addr, uint8_t req, uint8_t * recv,
 	return true;
 }
 
-boolean i2c_start(I2CBuffer * wire, uint8_t addr) {
+boolean i2c_start(I2CBuffer * wire, uint8_t direction) {
 	uint16_t wc;
 
 	I2C_GenerateSTART(wire->I2Cx, ENABLE);
 	/* Test on EV5 and clear it */
+	delay_us(7);
 	for (wc = 5; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_MODE_SELECT ); wc--) {
 		if (wc == 0)
 			return false;
-		delay_us(667);
+		delay_us(17);
 	}
 	/* Send address for write */
-	I2C_Send7bitAddress(wire->I2Cx, addr << 1, I2C_Direction_Transmitter );
+	I2C_Send7bitAddress(wire->I2Cx, wire->address << 1, direction); //I2C_Direction_Transmitter );
 	/* Test on EV6 and clear it */
+	delay_us(7);
 	for (wc = 5; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ); wc--) {
 		if (wc == 0)
 			return false;
-		delay_us(667);
+		delay_us(17);
 	}	
 	return true;
 }
@@ -254,6 +258,7 @@ void I2C1_EV_IRQHandler(void) {
 			//I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT );
 			I2C_Send7bitAddress(I2C1, (I2C1Buffer.address) << 1, I2C_Direction_Transmitter );
 			I2C1Buffer.status = ADDRESS_SENDING;
+//						swatch[ADDRESS_SENDING] = micros();
 		} else 
 		if ( I2C_GetITStatus(I2C1, I2C_IT_ADDR ) == SET 
 			&& I2C1Buffer.status == ADDRESS_SENDING ) {
@@ -264,6 +269,7 @@ void I2C1_EV_IRQHandler(void) {
 			I2C1Buffer.position = 0;
 			I2C_SendData(I2C1Buffer.I2Cx, I2C1Buffer.databytes[I2C1Buffer.position]);
 			I2C1Buffer.status = BYTE_TRANSFERRING;
+//						swatch[BYTE_TRANSFERRING] = micros();
 		} else 
 		if ( I2C_GetITStatus(I2C1, I2C_IT_BTF ) == SET 
 			&& I2C1Buffer.status == BYTE_TRANSFERRING ) {
@@ -274,12 +280,14 @@ void I2C1_EV_IRQHandler(void) {
 			if ( I2C1Buffer.position < I2C1Buffer.length ) {
 				I2C_SendData(I2C1Buffer.I2Cx, I2C1Buffer.databytes[I2C1Buffer.position]);
 				I2C1Buffer.status = BYTE_TRANSFERRING;
+
 			} else {
 				I2C_ITConfig(I2C1, I2C_IT_EVT, DISABLE);	
 				// generate stop condition
 				I2C_GenerateSTOP(I2C1Buffer.I2Cx, ENABLE);
 				I2C1Buffer.status = TRANSMISSION_COMPLETED;
 				I2C1Buffer.mode = I2C_MODE_MASTER_IDLE;
+//				swatch[I2C_MODE_MASTER_IDLE] = micros();
 			}			
 		} else {
 			// unexpected case

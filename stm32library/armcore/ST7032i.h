@@ -37,12 +37,6 @@ class ST7032i : public Print {
 	GPIOPin pin_bklight;
 
 	void command(byte value);
-	uint8_t row() {
-		return (_position/0x40);
-	}	
-	uint8_t column() {
-		return ((_position/0x40) & 1) + (((_position%0x40)/0x14) & 1)*2;
-	}
 
 public:
 
@@ -60,10 +54,19 @@ public:
 //	void wrap();
 //	void ST7032i_clearLine(ST7032i * lcd);
 
-	uint16 rc() {
-		uint16 rc = row()*100 + column();
-		return _position;
+	uint8_t row() {
+		uint8_t tp = 0;
+		if( _position & 0x40 )
+			tp = 1;
+		if ( (_position & ~0x40) >= 0x14 )
+			tp += 2;
+		return tp;
+	}	
+	uint8_t column() {
+		uint8_t tp = _position & ~0x40;
+		return tp % 0x14;
 	}
+
 
 	void home();
 	void clear();

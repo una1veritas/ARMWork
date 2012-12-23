@@ -117,14 +117,16 @@ int main(void) {
 		//Serial3.print(tmp);
 		Serial3.print((float)millis()/1000, 3);
 		Serial3.print(" ");
-		Serial3.println(lcd.rc());
+		Serial3.print(lcd.row());
+		Serial3.print(" ");
+		Serial3.print(lcd.column());
+		Serial3.print(" ");		Serial3.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
+		Serial3.println();
 		//		lcd.clear();
 		lcd.setCursor(0, 0);
 		lcd.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
 		lcd.setCursor(0, 1);
 		lcd.print((float)millis()/1000, 3);
-		Serial3.print(" ");
-		Serial3.println(lcd.rc());
 		
 		uint16_t i = 0;
 		if (Serial3.available() > 0) {

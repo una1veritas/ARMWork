@@ -67,7 +67,7 @@ typedef struct __I2CBuffer {
 extern I2CBuffer I2C1Buffer, I2C2Buffer, I2C3Buffer;
 
 boolean i2c_begin(I2CBuffer * I2Cbuf, I2C_TypeDef * I2Cx, GPIOPin sda, GPIOPin scl, uint32_t clk); //I2C_TypeDef * I2Cx, uint32_t clk);
-boolean i2c_start(I2CBuffer * I2Cbuf, uint8_t addr);
+boolean i2c_start(I2CBuffer * I2Cbuf, uint8_t direction);
 boolean i2c_transmit(I2CBuffer * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t length);
 //void i2c_receive(uint8_t addr, uint8_t * data, uint16_t nlimit);
 boolean i2c_receive(I2CBuffer * I2Cbuf, uint8_t addr, uint8_t req, uint8_t * recv, uint16_t lim);
