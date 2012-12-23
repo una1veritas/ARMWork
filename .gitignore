@@ -1,6 +1,7 @@
 *.mk
 *.o
 *.elf
+*.hex
 *.d
 *.mk
 *.lst
