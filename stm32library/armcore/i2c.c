@@ -95,7 +95,58 @@ boolean i2c_begin(I2CBuffer * wirebuf, I2C_TypeDef * i2cx, GPIOPin sda, GPIOPin 
 	return true;
 }
 
+boolean i2c_start_send(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t length) {
+	uint16_t i;
+	uint16_t wc;
+
+	//polling mode	
+	for (wc=0; I2C_GetFlagStatus(wire->I2Cx, I2C_FLAG_BUSY) == SET ; wc++ ){
+			if (wc > 50)
+				return false;
+			delay_us(20);
+	}
+	wire->mode = I2C_MODE_MASTER_TX;
+	wire->status = READY;
+
+	I2C_GenerateSTART(wire->I2Cx, ENABLE);
+	/* Test on EV5 and clear it */
+	for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_MODE_SELECT ); wc++) {
+		if (wc > 50)
+			return false;
+		delay_us(20);
+	} // wc = 1
+	/* Send address for write */
+	I2C_Send7bitAddress(wire->I2Cx, addr << 1, I2C_Direction_Transmitter );
+	/* Test on EV6 and clear it */
+	for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ); wc++) {
+	if (wc > 50)
+		return false;
+		delay_us(20);
+	} // wc = 5
+	
+	for (i = 0; i < length; i++) {
+		I2C_SendData(wire->I2Cx, data[i]);
+		// Test on EV8 and clear it
+		for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED ); wc++) {
+			if (wc > 50)
+				return false;
+			delay_us(20);
+		}
+	} // wc = 6
+
+	return true;
+}
+
 boolean i2c_transmit(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t length) {
+	if ( !i2c_start_send(wire, addr, data, length) ) 
+		return false;
+	I2C_GenerateSTOP(wire->I2Cx, ENABLE);
+	wire->mode = I2C_MODE_MASTER_IDLE;	
+	return true;
+}
+
+/*
+boolean i2c_irq_transmit(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t length) {
 	uint16_t i;
 	uint16_t wc;
 	uint32_t temp;
@@ -141,111 +192,70 @@ boolean i2c_transmit(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t le
 	}
 	return true;
 }
+*/
 
-boolean i2c_requestreceive(I2CBuffer * wire, uint8_t addr, uint8_t req, uint8_t * recv,
-		uint16_t lim) {
+boolean i2c_receive(I2CBuffer * wire, uint8_t addr, uint8_t * recv, uint16_t lim) {
 	uint16_t i;
 	uint16_t wc;
 
-	for (wc = 5; I2C_GetFlagStatus(wire->I2Cx, I2C_FLAG_BUSY ); wc--) {
-		if (wc == 0)
-			return false;
-		delay_us(667);
+	//polling mode
+	/*
+	for (wc=0; I2C_GetFlagStatus(wire->I2Cx, I2C_FLAG_BUSY) == SET ; wc++ ){
+			if (wc > 50)
+				return false;
+			delay_us(20);
 	}
+	*/
 	wire->mode = I2C_MODE_MASTER_RX;
 	wire->status = READY;
-	wire->address = addr;
-	
-	if ( wire->irqmode  ) {
-		wire->databytes[0] = req;
-		wire->length = lim;
-		wire->status = STARTING;
-		I2C_ITConfig(wire->I2Cx, I2C_IT_EVT, ENABLE);
-		I2C_GenerateSTART(wire->I2Cx, ENABLE);
-
-	} else {
-		//polling mode
-		if (!i2c_start(wire, I2C_Direction_Transmitter))
-			return false;
-
-		I2C_SendData(wire->I2Cx, req);
-		// Test on EV8 and clear it
-		for (wc = 5; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED ); wc--) {
-			if (wc == 0)
-				return false;
-			delay_us(67);
-		}
-		/* Send STRAT condition a second time */
-		if (!i2c_start(wire, I2C_Direction_Receiver))
-			return false;
-
-		for (i = 1; i < lim; i++) {
-			for (wc = 5; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_BYTE_RECEIVED ); wc--) {
-				if (wc == 0)
-					return false;
-				delay_us(67);
-			}
-			/* Read a byte from the EEPROM */
-			*recv++ = I2C_ReceiveData(wire->I2Cx);
-		}
-
-		/* Disable Acknowledgement */
-		I2C_AcknowledgeConfig(wire->I2Cx, DISABLE);
-		/* Send STOP Condition */
-		// generate stop condition
-		__disable_irq();
-//		I2C_ReadRegister(I2C1, I2C_Register_SR2);// Clear ADDR flag
-//		temp = wire->I2Cx->SR2;	// Clear ADDR flag
-		I2C_GenerateSTOP(wire->I2Cx, ENABLE);
-		__enable_irq();
-		for (wc = 5; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_BYTE_RECEIVED ); wc--) {
-			if (wc == 0)
-				return false;
-			delay_us(67);
-		}
-		/* Read a byte from the EEPROM */
-		*recv = I2C_ReceiveData(wire->I2Cx);
-
-		/* Enable Acknowledgement to be ready for another reception */
-		I2C_AcknowledgeConfig(wire->I2Cx, ENABLE);
-		wire->mode = I2C_MODE_MASTER_IDLE;
-		
-		I2C_ReadRegister(I2C1, I2C_Register_SR2);	// Clear ADDR flag
-		I2C_ReadRegister(I2C1, I2C_Register_SR2);	// Clear ADDR flag
-	}
-	return true;
-}
-
-boolean i2c_start(I2CBuffer * wire, uint8_t direction) {
-	uint16_t wc;
-
+	/* Send STRAT condition as restart */
 	I2C_GenerateSTART(wire->I2Cx, ENABLE);
 	/* Test on EV5 and clear it */
-	delay_us(7);
-	for (wc = 5; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_MODE_SELECT ); wc--) {
-		if (wc == 0)
+	for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_MODE_SELECT ); wc++) {
+		if (wc > 50)
 			return false;
-		delay_us(27);
-	}
-	/* Send address for write */
-	I2C_Send7bitAddress(wire->I2Cx, wire->address << 1, direction); //I2C_Direction_Transmitter );
+		delay_us(20);
+	} // wc = 1
+	/* Send address for read */
+	I2C_Send7bitAddress(wire->I2Cx, addr << 1, I2C_Direction_Receiver );
 	/* Test on EV6 and clear it */
-	delay_us(17);
-	if ( direction == I2C_Direction_Transmitter ) {
-		for (wc = 5; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ); wc--) {
-			if (wc == 0)
+	for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED ); wc++) {
+		if (wc > 50)
+			return false;
+		delay_us(20);
+	} 
+	
+	for (i = 1; i < lim; i++) {
+		// Test on EV7 and clear it
+		for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_BYTE_RECEIVED); wc++) {
+			if (wc > 50)
 				return false;
-			delay_us(67);
-		}	
-	} else {
-		for (wc = 5; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED ); wc--) {
-			if (wc == 0)
-				return false;
-			delay_us(67);
-		}	
+			delay_us(20);
+		}
+		/* Read a byte from the slave */
+		*recv++ = I2C_ReceiveData(wire->I2Cx);
+	} 
+	
+	/* Disable Acknowledgement */
+	I2C_AcknowledgeConfig(wire->I2Cx, DISABLE);
+	/* Send STOP Condition */
+	//	I2C_ReadRegister(I2C1, I2C_Register_SR2);	// Clear ADDR flag
+	I2C_GenerateSTOP(wire->I2Cx, ENABLE);
+	for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_BYTE_RECEIVED ); wc++) {
+		if (wc > 50)
+			return false;
+		delay_us(20);
 	}
+	/* Read the last byte */
+	*recv = I2C_ReceiveData(wire->I2Cx);
+	
+	/* Enable Acknowledgement to be ready for another reception */
+	I2C_AcknowledgeConfig(wire->I2Cx, ENABLE);
+
+	wire->mode = I2C_MODE_MASTER_IDLE;
 	return true;
 }
+
 
 
 void I2C1_EV_IRQHandler(void) {
