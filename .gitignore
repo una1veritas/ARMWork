@@ -5,4 +5,5 @@
 *.mk
 *.lst
 *.bak
+.DS_Store
 .metadata
