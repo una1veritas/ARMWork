@@ -71,10 +71,15 @@ int main(void) {
 			FASTSPEED, PUSHPULL, NOPULL);
 
 	i2c_begin(&I2C1Buffer, I2C1, PB9, PB8, 100000);
+	
 	lcd.init(&I2C1Buffer);
 	lcd.begin();
 	lcd.setContrast(46);
-	lcd.print("Whoooeee!");       // Classic Hello World!
+	lcd.print("Go!");       // Classic Hello World!
+
+	i2c_requestreceive(&I2C1Buffer, B1101000, 0, (uint8_t*)tmp, 4);
+	delay_ms(5);
+	Serial3.println(*((uint32_t *)tmp), HEX);
 
 	bits = GPIO_ReadOutputData(GPIOD );
 	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));

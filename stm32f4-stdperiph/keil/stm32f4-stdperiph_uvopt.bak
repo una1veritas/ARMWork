@@ -249,10 +249,10 @@
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>56</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>98</TopLine>
-      <CurrentLine>122</CurrentLine>
+      <TopLine>55</TopLine>
+      <CurrentLine>79</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\main.cpp</PathWithFileName>
       <FilenameWithoutPath>main.cpp</FilenameWithoutPath>
@@ -311,7 +311,7 @@
 
   <Group>
     <GroupName>armcore</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -465,10 +465,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>2</ColumnNumber>
+      <ColumnNumber>19</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>265</TopLine>
-      <CurrentLine>290</CurrentLine>
+      <TopLine>127</TopLine>
+      <CurrentLine>145</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\stm32library\armcore\i2c.c</PathWithFileName>
       <FilenameWithoutPath>i2c.c</FilenameWithoutPath>
