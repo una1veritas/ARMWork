@@ -7,3 +7,341 @@ C:\Users\Sin\Documents\github\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.u
 Project File Date:  12/24/2012
 
 <h2>Output:</h2>
+<<<<<<< HEAD
+=======
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(150): warning:  #111-D: statement is unreachable
+compiling stm32f4xx_it.c...
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(103): error:  #18: expected a ")"
+..\..\stm32library\armcore\i2c.c(132): warning:  #12-D: parsing restarts here after previous syntax error
+..\..\stm32library\armcore\i2c.c(132): error:  #127: expected a statement
+..\..\stm32library\armcore\i2c.c(132): warning:  #940-D: missing return statement at end of non-void function "i2c_transmit"
+..\..\stm32library\armcore\i2c.c(99): warning:  #177-D: variable "i" was declared but never referenced
+..\..\stm32library\armcore\i2c.c(100): warning:  #177-D: variable "wc" was declared but never referenced
+..\..\stm32library\armcore\i2c.c(101): warning:  #177-D: variable "temp" was declared but never referenced
+..\..\stm32library\armcore\i2c.c(137): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(288): warning:  #177-D: variable "temp" was declared but never referenced
+compiling ST7032i.cpp...
+compiling usart.c...
+compiling USARTSerial.cpp...
+Target not created
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(101): warning:  #177-D: variable "temp" was declared but never referenced
+..\..\stm32library\armcore\i2c.c(136): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(287): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=19536 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(135): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(286): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=19536 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(144): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(295): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=19560 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=19560 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(160): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(311): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=19628 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(160): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(311): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=19596 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+linking...
+Program Size: Code=19596 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(160): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(311): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=19600 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(160): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(311): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=19624 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(160): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(311): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=19632 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(160): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(311): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=19632 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(145): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(296): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=19624 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(145): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(296): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=19624 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(150): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(153): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(304): warning:  #177-D: variable "temp" was declared but never referenced
+compiling ST7032i.cpp...
+linking...
+Program Size: Code=19660 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(152): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(303): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=19664 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(146): error:  #20: identifier "wire" is undefined
+..\main.cpp(146): error:  #167: argument of type "char *" is incompatible with parameter of type "std::uint8_t *"
+..\main.cpp(147): error:  #20: identifier "i2c_receive" is undefined
+..\main.cpp(155): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(152): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(225): error:  #20: identifier "length" is undefined
+..\..\stm32library\armcore\i2c.c(253): warning:  #940-D: missing return statement at end of non-void function "i2c_receive"
+..\..\stm32library\armcore\i2c.c(289): warning:  #177-D: variable "temp" was declared but never referenced
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(146): error:  #20: identifier "wire" is undefined
+..\main.cpp(146): error:  #167: argument of type "char *" is incompatible with parameter of type "std::uint8_t *"
+..\main.cpp(147): error:  #20: identifier "i2c_receive" is undefined
+..\main.cpp(155): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(152): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(225): error:  #20: identifier "length" is undefined
+..\..\stm32library\armcore\i2c.c(253): warning:  #940-D: missing return statement at end of non-void function "i2c_receive"
+..\..\stm32library\armcore\i2c.c(289): warning:  #177-D: variable "temp" was declared but never referenced
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(146): error:  #20: identifier "wire" is undefined
+..\main.cpp(146): error:  #167: argument of type "char *" is incompatible with parameter of type "std::uint8_t *"
+..\main.cpp(147): error:  #20: identifier "i2c_receive" is undefined
+..\main.cpp(155): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(152): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(253): warning:  #940-D: missing return statement at end of non-void function "i2c_receive"
+..\..\stm32library\armcore\i2c.c(289): warning:  #177-D: variable "temp" was declared but never referenced
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(146): error:  #20: identifier "wire" is undefined
+..\main.cpp(146): error:  #167: argument of type "char *" is incompatible with parameter of type "std::uint8_t *"
+..\main.cpp(147): error:  #167: argument of type "std::uint8_t *" is incompatible with parameter of type "std::uint16_t"
+..\main.cpp(147): error:  #140: too many arguments in function call
+..\main.cpp(155): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(152): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(253): warning:  #940-D: missing return statement at end of non-void function "i2c_receive"
+..\..\stm32library\armcore\i2c.c(289): warning:  #177-D: variable "temp" was declared but never referenced
+compiling ST7032i.cpp...
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(146): error:  #20: identifier "wire" is undefined
+..\main.cpp(146): error:  #167: argument of type "char *" is incompatible with parameter of type "std::uint8_t *"
+..\main.cpp(147): error:  #167: argument of type "std::uint8_t *" is incompatible with parameter of type "std::uint16_t"
+..\main.cpp(147): error:  #140: too many arguments in function call
+..\main.cpp(155): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(152): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(290): warning:  #177-D: variable "temp" was declared but never referenced
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(146): error:  #20: identifier "wire" is undefined
+..\main.cpp(146): error:  #167: argument of type "char *" is incompatible with parameter of type "std::uint8_t *"
+..\main.cpp(147): error:  #167: argument of type "std::uint8_t *" is incompatible with parameter of type "std::uint16_t"
+..\main.cpp(147): error:  #140: too many arguments in function call
+..\main.cpp(155): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(146): error:  #167: argument of type "char *" is incompatible with parameter of type "std::uint8_t *"
+..\main.cpp(147): error:  #167: argument of type "std::uint8_t *" is incompatible with parameter of type "std::uint16_t"
+..\main.cpp(147): error:  #140: too many arguments in function call
+..\main.cpp(155): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(147): error:  #167: argument of type "std::uint8_t *" is incompatible with parameter of type "std::uint16_t"
+..\main.cpp(147): error:  #140: too many arguments in function call
+..\main.cpp(155): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(155): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=19540 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=19540 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=19540 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(152): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(261): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+stm32f4-stdperiph.axf: Error: L6218E: Undefined symbol i2c_start (referred from i2c.o).
+Target not created
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+_____^
+*** error 56: cannot open file
+Build target 'Target 1'
+linking...
+stm32f4-stdperiph.axf: Error: L6218E: Undefined symbol i2c_start (referred from i2c.o).
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(155): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(174): warning:  #223-D: function "i2c_start" declared implicitly
+..\..\stm32library\armcore\i2c.c(152): warning:  #550-D: variable "temp" was set but never used
+..\..\stm32library\armcore\i2c.c(261): warning:  #177-D: variable "temp" was declared but never referenced
+compiling ST7032i.cpp...
+linking...
+stm32f4-stdperiph.axf: Error: L6218E: Undefined symbol i2c_start (referred from i2c.o).
+Target not created
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(262): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=19032 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=19032 RO-data=1012 RW-data=164 ZI-data=5644  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+>>>>>>> origin/win@home

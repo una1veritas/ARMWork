@@ -24,7 +24,6 @@
 
 ST7032i lcd;
 USARTSerial Serial3(USART3);
-I2CBus Wire1;
 
 int main(void) {
 	uint16_t bits;
@@ -36,7 +35,21 @@ int main(void) {
 
 	Serial3.begin(PC11, PC10, 19200);
 
-	Serial3.print("Happy are those who know they are spiritually poor; \n");
+	const char message[] = 
+			"This royal throne of kings, this scepter'd isle, \n"
+			"This earth of majesty, this seat of Mars, \n"
+			"This other Eden, demi-paradise, \n"
+			"This fortress built by Nature for herself\n"
+			"Against infection and the hand of war, \n"
+			"This happy breed of men, this little world,\n" 
+			"This precious stone set in the silver sea, \n"
+			"Which serves it in the office of a wall, \n"
+			"Or as a moat defensive to a house, \n"
+			"Against the envy of less happier lands, \n"
+			"This blessed plot, this earth, this realm, this England,";
+	const uint16 messlen = strlen(message);
+	
+	Serial3.println(message);
 	Serial3.flush();
 
 	RCC_ClocksTypeDef RCC_Clocks;
@@ -57,11 +70,12 @@ int main(void) {
 			(PinBit(PD12) | PinBit(PD13) | PinBit(PD14) | PinBit(PD15)), OUTPUT,
 			FASTSPEED, PUSHPULL, NOPULL);
 
-	i2c_begin(&Wire1, I2C1,  PB9, PB8, 100000);
-	lcd.init(&Wire1);
+	i2c_begin(&I2C1Buffer, I2C1, PB9, PB8, 100000);
+	
+	lcd.init(&I2C1Buffer);
 	lcd.begin();
 	lcd.setContrast(46);
-	lcd.print("Whoooeee!");       // Classic Hello World!
+	lcd.print("Hello!");       // Classic Hello World
 
 	bits = GPIO_ReadOutputData(GPIOD );
 	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
@@ -102,11 +116,22 @@ int main(void) {
 		tnow = millis() / 1000;
 
 		//Serial3.print(tmp);
-		Serial3.println((float)millis()/1000, 3);
-
+		Serial3.print((float)millis()/1000, 3);
+		Serial3.print(" ");
+		Serial3.print(lcd.row());
+		Serial3.print(" ");
+		Serial3.print(lcd.column());
+		Serial3.print(" ");		
+		Serial3.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
+		Serial3.println();
+		//		lcd.clear();
+		/*
+		lcd.setCursor(0, 0);
+		lcd.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
 		lcd.setCursor(0, 1);
 		lcd.print((float)millis()/1000, 3);
-
+		*/
+		
 		uint16_t i = 0;
 		if (Serial3.available() > 0) {
 			while (Serial3.available() > 0 && i < 92) {
@@ -116,6 +141,14 @@ int main(void) {
 			Serial3.print("> ");
 			Serial3.print(tmp);
 			Serial3.print("\n");
+		
+			tmp[0] = 0;
+			if ( i2c_start_send(&I2C1Buffer, B1101000, (uint8*)tmp, 1) ) {
+				i2c_receive(&I2C1Buffer, B1101000, (uint8_t*)tmp, 4);
+			}
+			//delay_ms(5);
+			Serial3.println(*((uint32_t *)tmp), HEX);
+
 		}
 
 	}

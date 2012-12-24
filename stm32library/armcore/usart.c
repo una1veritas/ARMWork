@@ -68,15 +68,16 @@ uint16_t ring_peek(USARTRing * r) {
 	return r->buf[r->tail];
 }
 
-void usart_begin(USART * usx, GPIOPin rx, GPIOPin tx, uint32_t baud) {
+void usart_begin(USART * usx, USART_TypeDef * usartx, GPIOPin rx, GPIOPin tx, uint32_t baud) {
 	USART_InitTypeDef USART_InitStruct; // this is for the USART1 initilization
 	NVIC_InitTypeDef NVIC_InitStructure; // this is used to configure the NVIC (nested vector interrupt controller)
 	//
 	uint8_t af = GPIO_AF_USART1;
 	IRQn_Type irq = USART1_IRQn;
+	usx->USARTx = usartx;
 	//usx->USARTx = usartx;
 
-	if (usx->USARTx == USART1) {
+	if ( usx->USARTx == USART1) {
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
 		af = GPIO_AF_USART1;
 		irq = USART1_IRQn;
@@ -177,12 +178,14 @@ size_t usart_write(USART * usx, const uint16_t w) {
 	return 1;
 }
 
-/*
-void usart_print(USART * usx, const char * s) {
-	while (*s)
+size_t usart_print(USART * usx, const char * s) {
+	size_t n = 0;
+	while (*s) {
 		usart_write(usx, (uint16_t) *s++);
+		n++;
+	}
+	return n;
 }
-*/
 
 uint16_t usart_polling_read(USART_TypeDef * USARTx /*usartx[usx]*/) {
 	return USART_ReceiveData(USARTx);

@@ -31,7 +31,7 @@ class ST7032i : public Print {
 	  uint8_t _numlines, _numcolumns;
 	  uint8_t _position;
 //
-	  I2CBus * wirex;
+	I2CBuffer * wirex;
 	byte contrast;
 	byte i2c_address;
 	GPIOPin pin_bklight;
@@ -40,7 +40,7 @@ class ST7032i : public Print {
 
 public:
 
-	void init(I2CBus * wirex);
+	void init(I2CBuffer * );
 	void begin();
 
    virtual size_t write(const uint8_t);
@@ -53,6 +53,20 @@ public:
 //#endif
 //	void wrap();
 //	void ST7032i_clearLine(ST7032i * lcd);
+
+	uint8_t row() {
+		uint8_t tp = 0;
+		if( _position & 0x40 )
+			tp = 1;
+		if ( (_position & ~0x40) >= 0x14 )
+			tp += 2;
+		return tp;
+	}	
+	uint8_t column() {
+		uint8_t tp = _position & ~0x40;
+		return tp % 0x14;
+	}
+
 
 	void home();
 	void clear();

@@ -1,0 +1,5 @@
+--cpu Cortex-M4.fp "startup_stm32f4xx.o" "i2c.o" "main.o" "stm32f4xx_it.o" "system_stm32f4xx.o" "usart.o" "delay.o" "gpio.o" "misc.o" "stm32f4xx_gpio.o" "stm32f4xx_i2c.o" "stm32f4xx_rcc.o" "stm32f4xx_tim.o" "stm32f4xx_usart.o" 
+--strict --scatter "stm32f4-usart.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\stm32f4-usart.map" -o stm32f4-usart.axf

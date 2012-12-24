@@ -9,56 +9,67 @@
 #define I2C_H_
 
 #include "armcore.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <stm32f4xx_i2c.h>
 
 #include "armcore.h"
 #include "gpio.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 typedef enum __I2C_Status {
-	NOT_READY = 0xff,
-	READY = 0,
-	START_ISSUED,
-	DST_ADDRESS_SENT,
-	SRC_ADDRESS_SENT,
-	BYTE_TRANSMITTING,
-	BYTE_TRANSMITTED,
+	NOT_READY = 0,
+	READY,
+	STARTING,
+	ADDRESS_SENDING,
+	BYTE_TRANSFERRING,
 	TRANSMISSION_COMPLETED,
-	RESTART_ISSUED,
+	
+	REQUEST_SENDING,
+	RESTARTING,
+	RECEIVER_ADDRESS_SENDING,
+	BYTE_RECEIVING,
+	END_RECEIVING,
+	/*
 	RECEIVE_BYTE_READY,
-	BYTE_RECEIVED,
 	BEFORELAST_BYTE_RECEIVED,
 	LAST_BYTE_READY,
 	RECEIVE_BYTE_COMPLETED,
 	RECEIVE_COMPLETED,
+	*/
+	FAILURE = 0x80
 } I2C_Status;
 
 typedef enum __I2C_CommMode {
-	I2C_MODE_NOTDEFINED = 0,
-	I2C_MODE_MASTERTRANSMITTER,
-	I2C_MODE_MASTERRECEIVER,
-	I2C_MODE_SLAVETRANSMITTER,
-	I2C_MODE_SLAVERECEIVER,
+	I2C_MODE_MASTER_IDLE = 0,
+	I2C_MODE_MASTER_TX,
+	I2C_MODE_MASTER_RX,
+	I2C_MODE_SLAVE_IDLE,
+	I2C_MODE_SLAVE_TX,
+	I2C_MODE_SLAVE_RX
 } I2C_CommMode;
 
-typedef struct __I2CBus {
+#define I2C_BUFFER_SIZE 256
+typedef struct __I2CBuffer {
 	I2C_TypeDef * I2Cx;
 	GPIOPin sda, scl;
-	boolean master;
-	I2C_Status status;
-	I2C_CommMode mode;
-} I2CBus;
+	uint8_t address;
+	boolean irqmode;
+	__IO I2C_CommMode mode;
+	__IO I2C_Status status;
+	__IO uint16_t position;
+	__IO uint16_t length;
+	uint8_t databytes[I2C_BUFFER_SIZE];
+} I2CBuffer;
 
+extern I2CBuffer I2C1Buffer, I2C2Buffer, I2C3Buffer;
 
-boolean i2c_begin(I2CBus * wire, I2C_TypeDef * i2cx, GPIOPin sda, GPIOPin scl, uint32_t clk); //I2C_TypeDef * I2Cx, uint32_t clk);
-boolean i2c_start(I2CBus * wire, uint8_t addr);
-boolean i2c_transmit(I2CBus * wire, uint8_t addr, uint8_t * data, uint16_t length);
-//void i2c_receive(uint8_t addr, uint8_t * data, uint16_t nlimit);
-boolean i2c_receive(I2CBus * wire, uint8_t addr, uint8_t req, uint8_t * recv, uint16_t lim);
+boolean i2c_begin(I2CBuffer * I2Cbuf, I2C_TypeDef * I2Cx, GPIOPin sda, GPIOPin scl, uint32_t clk); //I2C_TypeDef * I2Cx, uint32_t clk);
+boolean i2c_transmit(I2CBuffer * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t length);
+boolean i2c_start_send(I2CBuffer * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t length);
+boolean i2c_receive(I2CBuffer * I2Cbuf, uint8_t addr, uint8_t * recv, uint16_t lim);
 
 #ifdef __cplusplus
 }

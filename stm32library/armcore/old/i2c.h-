@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * i2c.h
  *
@@ -21,3 +22,28 @@ void i2c_transmit(I2C_TypeDef * I2Cx, uint8_t addr, uint8_t * data, uint16_t n);
 #endif
 
 #endif /* I2C_H_ */
+=======
+/*
+ * i2c.h
+ *
+ *  Created on: 2012/11/03
+ *      Author: sin
+ */
+
+#ifndef I2C_H_
+#define I2C_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void i2c_begin(I2C_TypeDef * I2Cx, uint32_t clk);
+void i2c_transmit(I2C_TypeDef * I2Cx, uint8_t addr, uint8_t * data, uint16_t n);
+//void i2c_receive(I2C_TypeDef * I2Cx, uint8_t addr, uint8_t * data, uint16_t nlimit);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* I2C_H_ */
+>>>>>>> origin/win@home

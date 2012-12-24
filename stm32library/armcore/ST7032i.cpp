@@ -59,7 +59,7 @@
 //
 
 //
-void ST7032i::init(I2CBus * wx) {
+void ST7032i::init(I2CBuffer * wx) {
 	_numlines = 2;
 	_numcolumns = 16;
 	_position = 0;
@@ -94,6 +94,7 @@ size_t ST7032i::write(uint8_t value) {
 	buf[1] = value & 0xff;
 	i2c_transmit(wirex,i2c_address, buf, (uint16_t)2);
 	delay_us(CMDDELAY);
+	_position++;
 	return 1; // assume success
 }
 
@@ -130,7 +131,7 @@ void ST7032i::begin() {
 
 	// clear it off
 	clear();
-	home();
+//	home();
 
 	// Initialize to default text direction (for romance languages)
 	_displaymode = LCD_ENTRYLEFT | LCD_ENTRYSHIFTDECREMENT;
@@ -154,11 +155,13 @@ void ST7032i::setContrast(byte val) {
 
 void ST7032i::clear() {
 	command(LCD_CLEARDISPLAY); // clear display, set cursor position to zero
+	_position = 0;
 	delay_ms(200);  // this command takes a long time!
 }
 
 void ST7032i::home() {
 	command(LCD_RETURNHOME);  // set cursor position to zero
+	_position = 0;
 	delay_ms(200);  // this command takes a long time!
 }
 
