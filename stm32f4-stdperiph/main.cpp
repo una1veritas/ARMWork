@@ -75,11 +75,7 @@ int main(void) {
 	lcd.init(&I2C1Buffer);
 	lcd.begin();
 	lcd.setContrast(46);
-	lcd.print("Go!");       // Classic Hello World!
-
-	i2c_requestreceive(&I2C1Buffer, B1101000, 0, (uint8_t*)tmp, 4);
-	delay_ms(5);
-	Serial3.println(*((uint32_t *)tmp), HEX);
+	lcd.print("Hello!");       // Classic Hello World
 
 	bits = GPIO_ReadOutputData(GPIOD );
 	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
@@ -125,7 +121,8 @@ int main(void) {
 		Serial3.print(lcd.row());
 		Serial3.print(" ");
 		Serial3.print(lcd.column());
-		Serial3.print(" ");		Serial3.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
+		Serial3.print(" ");		
+		Serial3.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
 		Serial3.println();
 		//		lcd.clear();
 		lcd.setCursor(0, 0);
@@ -142,6 +139,11 @@ int main(void) {
 			Serial3.print("> ");
 			Serial3.print(tmp);
 			Serial3.print("\n");
+		
+			i2c_requestreceive(&I2C1Buffer, B1101000, 0, (uint8_t*)tmp, 4);
+			//delay_ms(5);
+			Serial3.println(*((uint32_t *)tmp), HEX);
+
 		}
 
 	}

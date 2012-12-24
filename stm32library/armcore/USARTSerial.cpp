@@ -10,7 +10,7 @@
 #include "USARTSerial.h"
 
 void USARTSerial::begin(const GPIOPin rx, const GPIOPin tx, const uint32_t baud) {
-	usart_begin(&port, rx, tx, baud);
+	usart_begin(&port, port.USARTx, rx, tx, baud);
 }
 
 size_t USARTSerial::write(const uint8_t w) {

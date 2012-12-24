@@ -1,0 +1,33 @@
+*** Creating Trace Output File 'stm32f4-usart.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '"startup_stm32f4xx.o"'
+### List of Objects: adding '"i2c.o"'
+### List of Objects: adding '"main.o"'
+### List of Objects: adding '"stm32f4xx_it.o"'
+### List of Objects: adding '"system_stm32f4xx.o"'
+### List of Objects: adding '"usart.o"'
+### List of Objects: adding '"delay.o"'
+### List of Objects: adding '"gpio.o"'
+### List of Objects: adding '"misc.o"'
+### List of Objects: adding '"stm32f4xx_gpio.o"'
+### List of Objects: adding '"stm32f4xx_i2c.o"'
+### List of Objects: adding '"stm32f4xx_rcc.o"'
+### List of Objects: adding '"stm32f4xx_tim.o"'
+### List of Objects: adding '"stm32f4xx_usart.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M4.fp "startup_stm32f4xx.o" "i2c.o" "main.o" "stm32f4xx_it.o" "system_stm32f4xx.o" "usart.o" "delay.o" "gpio.o" "misc.o" "stm32f4xx_gpio.o" "stm32f4xx_i2c.o" "stm32f4xx_rcc.o" "stm32f4xx_tim.o" "stm32f4xx_usart.o" 
+--strict --scatter "stm32f4-usart.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\stm32f4-usart.map" -o stm32f4-usart.axf### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: 'stm32f4-usart.axf'
+### ADS-LD Command File: 'stm32f4-usart.lnp'
+### Checking for dirty Components...
+### Creating CmdFile 'stm32f4-usart.lnp', Handle=0x00000998
+### Writing '.lnp' file
+### ADS-LD Command file 'stm32f4-usart.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

@@ -1,100 +1,58 @@
-/*
- * main.c
- *
- *  Created on: 2012/10/08
- *      Author: sin
- */
-#include <inttypes.h>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <stm32f4xx.h>
+#include <ctype.h>
 
-#include "stm32f4xx_it.h"
+#include "stm32f4xx.h"
+//#include "st7032i.h"
 
 #include "armcore.h"
-#include "gpio.h"
 #include "delay.h"
 #include "usart.h"
-#include "adc3dma.h"
+#include "i2c.h"
 
+ USART Serial3;
+ 
 int main(void) {
-	uint16_t bits;
-	uint32_t intval = 40;
-	uint32_t tnow;
-	char tmp[92];
-	USART Serial;
-	uint16 i;
+//	int16_t i = 0;
+//	const int rxbufsize = 64;
+//	char rxbuf[rxbufsize];
+	char printbuf[64];
+	uint32_t tmp32, rtctime = 0;
 
 	TIM2_timer_start();
 
-	usart_begin(USART3, &Serial, PC11, PC10, 19200);
-	usart_print(&Serial,
-			"Happy are those who know they are spiritually poor; \n");
-	usart_print(&Serial, "The kingdom of heaven belongs to them!\n");
-	usart_print(&Serial, "How many eyes does Mississipi river have?\n");
-	usart_print(&Serial, "Quick brown fox jumped over the lazy dog!\n");
-	usart_flush(&Serial);
+	usart_begin(&Serial3, USART3, PC11, PC10, 19200);
+	usart_print(&Serial3, "\r\nWelcome to USART3.\r\n\r\n");
 
-	RCC_ClocksTypeDef RCC_Clocks;
-	RCC_GetClocksFreq(&RCC_Clocks);
+	i2c_begin(&Wire1, 100000);
+//	ST7032i_Init();
 
-	sprintf(tmp, "SYSCLK = %ld, ", RCC_Clocks.SYSCLK_Frequency);
-	usart_print(&Serial, tmp);
-	sprintf(tmp, "HCLK = %ld, ", RCC_Clocks.HCLK_Frequency);
-	usart_print(&Serial, tmp);
-	sprintf(tmp, "PCLK1 = %ld, ", RCC_Clocks.PCLK1_Frequency);
-	usart_print(&Serial, tmp);
-	sprintf(tmp, "PCLK2 = %ld\r\n", RCC_Clocks.PCLK2_Frequency);
-	usart_print(&Serial, tmp);
-	//
-	sprintf(tmp, "ADC1 = %lx, ADC2 = %lx, ADC3 = %lx\r\n", (uint32_t)ADC1, (uint32_t)ADC2, (uint32_t)ADC3);
-	usart_print(&Serial, tmp);
-//	usart_flush(USART2Serial);
+//	ST7032i_Set_Contrast(44);
+//	ST7032i_Print_String((const int8_t *) "Welcome to lcd.");
 
-	GPIOMode(PinPort(PD12),
-			(PinBit(PD12) | PinBit(PD13) | PinBit(PD14) | PinBit(PD15)), OUTPUT,
-			FASTSPEED, PUSHPULL, NOPULL);
+	delay_ms(500);
+//	ST7032i_Command_Write(0x01);
 
-	ADC3_CH12_DMA_Config();
-	  ADC_SoftwareStartConv(ADC3);
-
-	bits = GPIO_ReadOutputData(GPIOD );
-	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
-	delay_ms(intval);
-	tnow = millis() / 1000;
-
-	uint32_t sum;
+	//Receive character from COM and put it on LCD
 	while (1) {
-		sum = 0;
-		for(i = 0; i < 8; i++) {
-			sum += ADC3ConvertedValue; // *3300/0xFFF;
-			delay_us(333);
-		}
-		sum /= 8;
 
-		tmp[0] = 0;
-		bits = 0;
-		if ( sum>>9 ) {
-			bits |= PinBit(PD13);
+		usart_print(&Serial3, ".");
+		i2c_receive(&Wire1, B1101000, 0, (uint8_t *) &tmp32, 3);
+		if (rtctime != (tmp32 & 0xffffff)) {
+			rtctime = tmp32 & 0xffffff;
+			sprintf(printbuf, "%02x:%02x:%02x\r\n", UINT8(rtctime>>16),
+					UINT8(rtctime>>8), UINT8(rtctime) );
+			usart_print(&Serial3, printbuf);
+//			ST7032i_Set_DDRAM(((0 * 0x40) % 0x6c) + 0);
+//			ST7032i_Print_String((int8_t *) printbuf);
+			if ((rtctime & 0xff) == 0) {
+				i2c_receive(&Wire1, B1101000, 3, (uint8_t *) &tmp32, 4);
+				sprintf(printbuf, "20%02x %02x/%02x (%x)", UINT8(tmp32>>24),
+						UINT8(tmp32>>16), UINT8(tmp32>>8), UINT8(tmp32) );
+				usart_print(&Serial3, printbuf);
+//				ST7032i_Set_DDRAM(((1 * 0x40) % 0x6c) + 0);
+//				ST7032i_Print_String((int8_t *) printbuf);
+			}
 		}
-		if ( sum>>10 ) {
-			bits |= PinBit(PD14);
-		}
-		if ( sum>>11 ) {
-			bits |= PinBit(PD15);
-		}
-		if ( sum>>12) {
-			bits |= PinBit(PD12);
-		}
-		//
-		GPIOWrite(GPIOD, bits);
-
-		if ( (millis() % 1000) < 5 ) {
-			sprintf(tmp, " %06ld %06ld\n", millis(), sum);
-			usart_print(&Serial, tmp);
-		}
+		delay_ms(50);
 	}
-	return 0;
 }
 
