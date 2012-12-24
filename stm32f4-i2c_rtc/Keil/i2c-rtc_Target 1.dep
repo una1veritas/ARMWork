@@ -1,0 +1,168 @@
+Dependencies for Project 'i2c-rtc', Target 'Target 1': (DO NOT MODIFY !)
+F (.\startup_stm32f4xx.s)(0x4F84ECF4)(--cpu Cortex-M4.fp -g --apcs=interwork -I C:\Keil\ARM\RV31\INC -I C:\Users\Sin\Documents\github\ARMWork\stm32library\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx --list "startup_stm32f4xx.lst" --xref -o "startup_stm32f4xx.o" --depend "startup_stm32f4xx.d")
+F (..\i2c1_drv.c)(0x50D7DA0F)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork -I..\..\stm32f4-i2c_rtc -I..\..\stm32library\armcore -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\CMSIS\STM32F4xx -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I C:\Keil\ARM\RV31\INC -I C:\Users\Sin\Documents\github\ARMWork\stm32library\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "i2c1_drv.o" --omf_browse "i2c1_drv.crf" --depend "i2c1_drv.d")
+I (..\i2c1_drv.h)(0x50D7D8DB)
+I (..\..\stm32library\armcore\armcore.h)(0x50D6DD8A)
+I (C:\Keil\ARM\ARMCC\bin\..\include\stdio.h)(0x4EB0C476)
+I (C:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0C474)
+I (..\..\stm32library\armcore\binary.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_i2c.h)(0x50D6DD8A)
+I (..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h)(0x50D6DD8A)
+I (..\..\stm32library\CMSIS\Include\core_cm4.h)(0x50D6DD89)
+I (..\..\stm32library\CMSIS\Include\core_cmInstr.h)(0x50D6DD89)
+I (..\..\stm32library\CMSIS\Include\core_cmFunc.h)(0x50D6DD89)
+I (..\..\stm32library\CMSIS\Include\core_cm4_simd.h)(0x50D6DD89)
+I (..\..\stm32library\CMSIS\STM32F4xx\system_stm32f4xx.h)(0x50D6DD8A)
+I (..\..\stm32f4-i2c_rtc\stm32f4xx_conf.h)(0x50D7D4B7)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_adc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_can.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_crc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_cryp.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dbgmcu.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_exti.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_flash.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_hash.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_iwdg.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_pwr.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rng.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sdio.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_syscfg.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_wwdg.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50D6DD8A)
+F (..\i2c1_drv.h)(0x50D7D8DB)()
+F (..\main.c)(0x50D7DAA7)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork -I..\..\stm32f4-i2c_rtc -I..\..\stm32library\armcore -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\CMSIS\STM32F4xx -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I C:\Keil\ARM\RV31\INC -I C:\Users\Sin\Documents\github\ARMWork\stm32library\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "main.o" --omf_browse "main.crf" --depend "main.d")
+I (C:\Keil\ARM\ARMCC\bin\..\include\stdio.h)(0x4EB0C476)
+I (C:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0C474)
+I (..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h)(0x50D6DD8A)
+I (..\..\stm32library\CMSIS\Include\core_cm4.h)(0x50D6DD89)
+I (..\..\stm32library\CMSIS\Include\core_cmInstr.h)(0x50D6DD89)
+I (..\..\stm32library\CMSIS\Include\core_cmFunc.h)(0x50D6DD89)
+I (..\..\stm32library\CMSIS\Include\core_cm4_simd.h)(0x50D6DD89)
+I (..\..\stm32library\CMSIS\STM32F4xx\system_stm32f4xx.h)(0x50D6DD8A)
+I (..\..\stm32f4-i2c_rtc\stm32f4xx_conf.h)(0x50D7D4B7)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_adc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_can.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_crc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_cryp.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dbgmcu.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_exti.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_flash.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_hash.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_i2c.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_iwdg.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_pwr.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rng.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sdio.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_syscfg.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_wwdg.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50D6DD8A)
+I (..\stm32f4xx_it.h)(0x50D7D4B7)
+I (..\..\stm32library\armcore\armcore.h)(0x50D6DD8A)
+I (..\..\stm32library\armcore\binary.h)(0x50D6DD8A)
+I (..\..\stm32library\armcore\gpio.h)(0x50D6DD8A)
+I (..\..\stm32library\armcore\delay.h)(0x50D6DD8A)
+I (..\..\stm32library\armcore\usart.h)(0x50D7DB0F)
+I (C:\Keil\ARM\ARMCC\bin\..\include\stdlib.h)(0x4EB0C474)
+I (..\..\stm32library\armcore\i2c.h)(0x50D7DB0F)
+I (..\ST7032i.h)(0x50D7D4B7)
+F (..\st7032i.c)(0x50D7D4B7)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork -I..\..\stm32f4-i2c_rtc -I..\..\stm32library\armcore -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\CMSIS\STM32F4xx -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I C:\Keil\ARM\RV31\INC -I C:\Users\Sin\Documents\github\ARMWork\stm32library\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "st7032i.o" --omf_browse "st7032i.crf" --depend "st7032i.d")
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50D6DD8A)
+I (..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h)(0x50D6DD8A)
+I (..\..\stm32library\CMSIS\Include\core_cm4.h)(0x50D6DD89)
+I (C:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0C474)
+I (..\..\stm32library\CMSIS\Include\core_cmInstr.h)(0x50D6DD89)
+I (..\..\stm32library\CMSIS\Include\core_cmFunc.h)(0x50D6DD89)
+I (..\..\stm32library\CMSIS\Include\core_cm4_simd.h)(0x50D6DD89)
+I (..\..\stm32library\CMSIS\STM32F4xx\system_stm32f4xx.h)(0x50D6DD8A)
+I (..\..\stm32f4-i2c_rtc\stm32f4xx_conf.h)(0x50D7D4B7)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_adc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_can.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_crc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_cryp.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dbgmcu.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_exti.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_flash.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_hash.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_i2c.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_iwdg.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_pwr.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rng.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sdio.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_syscfg.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_wwdg.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50D6DD8A)
+I (..\st7032i.h)(0x50D7D4B7)
+I (..\..\stm32library\armcore\delay.h)(0x50D6DD8A)
+I (..\..\stm32library\armcore\i2c.h)(0x50D7DB0F)
+I (..\..\stm32library\armcore\armcore.h)(0x50D6DD8A)
+I (C:\Keil\ARM\ARMCC\bin\..\include\stdio.h)(0x4EB0C476)
+I (..\..\stm32library\armcore\binary.h)(0x50D6DD8A)
+I (..\..\stm32library\armcore\gpio.h)(0x50D6DD8A)
+F (..\st7032i.h)(0x50D7D4B7)()
+F (..\stm32f4xx_conf.h)(0x50D7D4B7)()
+F (..\stm32f4xx_it.c)(0x50D7D4B7)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork -I..\..\stm32f4-i2c_rtc -I..\..\stm32library\armcore -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\CMSIS\STM32F4xx -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I C:\Keil\ARM\RV31\INC -I C:\Users\Sin\Documents\github\ARMWork\stm32library\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "stm32f4xx_it.o" --omf_browse "stm32f4xx_it.crf" --depend "stm32f4xx_it.d")
+I (..\stm32f4xx_it.h)(0x50D7D4B7)
+I (..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h)(0x50D6DD8A)
+I (..\..\stm32library\CMSIS\Include\core_cm4.h)(0x50D6DD89)
+I (C:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0C474)
+I (..\..\stm32library\CMSIS\Include\core_cmInstr.h)(0x50D6DD89)
+I (..\..\stm32library\CMSIS\Include\core_cmFunc.h)(0x50D6DD89)
+I (..\..\stm32library\CMSIS\Include\core_cm4_simd.h)(0x50D6DD89)
+I (..\..\stm32library\CMSIS\STM32F4xx\system_stm32f4xx.h)(0x50D6DD8A)
+I (..\..\stm32f4-i2c_rtc\stm32f4xx_conf.h)(0x50D7D4B7)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_adc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_can.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_crc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_cryp.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dbgmcu.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dma.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_exti.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_flash.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_hash.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_gpio.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_i2c.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_iwdg.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_pwr.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rng.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rtc.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_sdio.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_syscfg.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_tim.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_wwdg.h)(0x50D6DD8A)
+I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50D6DD8A)
+F (..\stm32f4xx_it.h)(0x50D7D4B7)()

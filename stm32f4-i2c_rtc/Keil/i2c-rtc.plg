@@ -1,0 +1,71 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\Sin\Documents\github\ARMWork\stm32f4-i2c_rtc\Keil\i2c-rtc.uvproj
+Project File Date:  12/24/2012
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling main.c...
+..\main.c(37): error:  #136: struct "_USART" has no field "print"
+..\main.c(39): error:  #136: struct "_USART" has no field "print"
+..\main.c(40): error:  #136: struct "_USART" has no field "print"
+..\main.c(41): error:  #136: struct "_USART" has no field "print"
+..\main.c(42): error:  #136: struct "_USART" has no field "flush"
+..\main.c(43): error:  #268: declaration may not appear after executable statement in block
+..\main.c(46): error:  #136: struct "_USART" has no field "print"
+..\main.c(47): error:  #136: struct "_USART" has no field "print"
+..\main.c(48): error:  #136: struct "_USART" has no field "print"
+..\main.c(49): error:  #136: struct "_USART" has no field "print"
+..\main.c(50): error:  #136: struct "_USART" has no field "print"
+..\main.c(51): error:  #136: struct "_USART" has no field "print"
+..\main.c(52): error:  #136: struct "_USART" has no field "print"
+..\main.c(53): error:  #136: struct "_USART" has no field "print"
+..\main.c(54): error:  #136: struct "_USART" has no field "print"
+..\main.c(55): error:  #136: struct "_USART" has no field "flush"
+..\main.c(60): warning:  #223-D: function "spi_begin" declared implicitly
+..\main.c(63): error:  #20: identifier "Wire1" is undefined
+..\main.c(63): error:  #167: argument of type "int" is incompatible with parameter of type "I2C_TypeDef *"
+..\main.c(63): warning:  #188-D: enumerated type mixed with another type
+..\main.c(63): warning:  #69-D: integer conversion resulted in truncation
+..\main.c(63): error:  #165: too few arguments in function call
+..\main.c(64): error:  #20: identifier "lcd" is undefined
+..\main.c(108): error:  #136: struct "_USART" has no field "print"
+..\main.c(109): error:  #136: struct "_USART" has no field "print"
+..\main.c(116): warning:  #223-D: function "spi_transfer" declared implicitly
+..\main.c(119): error:  #268: declaration may not appear after executable statement in block
+..\main.c(131): warning:  #111-D: statement is unreachable
+compiling st7032i.c...
+..\st7032i.c(57): error:  #65: expected a ";"
+..\st7032i.c(60): error:  #65: expected a ";"
+..\st7032i.c(61): error:  #65: expected a ";"
+..\st7032i.c(65): error:  #67: expected a "}"
+..\st7032i.c(66): error:  #67: expected a "}"
+..\st7032i.c(67): error:  #67: expected a "}"
+..\st7032i.c(68): error:  #67: expected a "}"
+..\st7032i.c(69): error:  #67: expected a "}"
+..\st7032i.c(70): error:  #67: expected a "}"
+..\st7032i.c(71): error:  #67: expected a "}"
+..\st7032i.c(72): error:  #67: expected a "}"
+..\st7032i.c(73): error:  #67: expected a "}"
+..\st7032i.c(74): error:  #67: expected a "}"
+..\st7032i.c(75): error:  #67: expected a "}"
+..\st7032i.c(76): error:  #67: expected a "}"
+..\st7032i.c(77): error:  #67: expected a "}"
+..\st7032i.c(89): error:  #18: expected a ")"
+..\st7032i.c(106): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+Target not created
