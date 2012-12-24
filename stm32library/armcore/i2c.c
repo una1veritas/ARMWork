@@ -105,13 +105,15 @@ boolean i2c_start_send(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t 
 				return false;
 			delay_us(20);
 	}
-	wire->mode = I2C_MODE_MASTER_TX;
 	wire->status = READY;
+if (I2C_GetFlagStatus(I2C1, I2C_FLAG_SB) == SET) {
+	wc = 0;
+}
 
 	I2C_GenerateSTART(wire->I2Cx, ENABLE);
 	/* Test on EV5 and clear it */
 	for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_MODE_SELECT ); wc++) {
-		if (wc > 50)
+		if (wc > 100)
 			return false;
 		delay_us(20);
 	} // wc = 1
@@ -138,12 +140,28 @@ boolean i2c_start_send(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t 
 }
 
 boolean i2c_transmit(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t length) {
-	if ( !i2c_start_send(wire, addr, data, length) ) 
-		return false;
+	boolean t;
+	wire->mode = I2C_MODE_MASTER_TX;
+	t = i2c_start_send(wire, addr, data, length);
 	I2C_GenerateSTOP(wire->I2Cx, ENABLE);
-	wire->mode = I2C_MODE_MASTER_IDLE;	
-	return true;
+	wire->mode = I2C_MODE_MASTER_IDLE;
+	if ( t )
+		return true;
+	return false;
 }
+
+boolean i2c_request(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t len, uint16_t lim) {
+	boolean t;
+	wire->mode = I2C_MODE_MASTER_RX;
+	t = i2c_start_send(wire, addr, data, len);
+	if ( t && i2c_receive(&I2C1Buffer, addr, data, lim) ) {
+		wire->mode = I2C_MODE_MASTER_IDLE;
+		return true;
+	}
+	I2C_GenerateSTOP(wire->I2Cx, ENABLE);
+	return false;
+}
+
 
 /*
 boolean i2c_irq_transmit(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t length) {
@@ -199,13 +217,6 @@ boolean i2c_receive(I2CBuffer * wire, uint8_t addr, uint8_t * recv, uint16_t lim
 	uint16_t wc;
 
 	//polling mode
-	/*
-	for (wc=0; I2C_GetFlagStatus(wire->I2Cx, I2C_FLAG_BUSY) == SET ; wc++ ){
-			if (wc > 50)
-				return false;
-			delay_us(20);
-	}
-	*/
 	wire->mode = I2C_MODE_MASTER_RX;
 	wire->status = READY;
 	/* Send STRAT condition as restart */
@@ -228,7 +239,7 @@ boolean i2c_receive(I2CBuffer * wire, uint8_t addr, uint8_t * recv, uint16_t lim
 	for (i = 1; i < lim; i++) {
 		// Test on EV7 and clear it
 		for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_BYTE_RECEIVED); wc++) {
-			if (wc > 50)
+			if (wc > 100)
 				return false;
 			delay_us(20);
 		}
@@ -242,7 +253,7 @@ boolean i2c_receive(I2CBuffer * wire, uint8_t addr, uint8_t * recv, uint16_t lim
 	//	I2C_ReadRegister(I2C1, I2C_Register_SR2);	// Clear ADDR flag
 	I2C_GenerateSTOP(wire->I2Cx, ENABLE);
 	for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_BYTE_RECEIVED ); wc++) {
-		if (wc > 50)
+		if (wc > 100)
 			return false;
 		delay_us(20);
 	}
