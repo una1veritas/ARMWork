@@ -21,8 +21,8 @@
 
 #include "ST7032i.h"
 
-ST7032i lcd;
-USARTSerial Serial3;
+//ST7032i lcd;
+USART Serial3;
 
 int main(void) {
 	uint16_t bits;
@@ -32,7 +32,7 @@ int main(void) {
 
 	TIM2_timer_start();
 
-	Serial3.begin(USART3, PC11, PC10, 19200);
+	usart_begin(&Serial3, USART3, PC11, PC10, 19200);
 
 	Serial3.print(
 			"Happy are those who know they are spiritually poor; \n");

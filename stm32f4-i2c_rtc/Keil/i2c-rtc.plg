@@ -1,0 +1,772 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\Sin\Documents\github\ARMWork\stm32f4-i2c_rtc\Keil\i2c-rtc.uvproj
+Project File Date:  12/24/2012
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling startup_stm32f4xx.s...
+compiling i2c1_drv.c...
+..\i2c1_drv.h(17): error:  #5: cannot open source input file "includes.h": No such file or directory
+compiling main.c...
+..\main.c(12): error:  #5: cannot open source input file "stm32f4xx_usart.h": No such file or directory
+compiling st7032i.c...
+..\st7032i.c(46): error:  #5: cannot open source input file "stm32f4xx_rcc.h": No such file or directory
+compiling stm32f4xx_it.c...
+Target not created
+Build target 'Target 1'
+compiling i2c1_drv.c...
+..\i2c1_drv.h(74): error:  #20: identifier "Boolean" is undefined
+..\i2c1_drv.h(96): error:  #20: identifier "Boolean" is undefined
+..\i2c1_drv.h(96): error:  #20: identifier "Int8U" is undefined
+..\i2c1_drv.h(96): error:  #20: identifier "pInt8U" is undefined
+..\i2c1_drv.h(96): error:  #20: identifier "Int32U" is undefined
+..\i2c1_drv.h(98): warning:  #1-D: last line of file ends without a newline
+..\i2c1_drv.c(19): error:  #20: identifier "Boolean" is undefined
+..\i2c1_drv.c(20): error:  #20: identifier "Boolean" is undefined
+error type>(21): error:  #20: identifier "Int8U" is undefined
+..\i2c1_drv.c(22): error:  #20: identifier "Int32U" is undefined
+error type>(23): error:  #20: identifier "pInt8U" is undefined
+..\i2c1_drv.c(36): error:  #20: identifier "I2C_EVENT_SLAVE_ACK_FAILURE" is undefined
+..\i2c1_drv.c(36): warning:  #223-D: function "I2C_GetLastEvent" declared implicitly
+..\i2c1_drv.c(36): error:  #20: identifier "I2C1" is undefined
+..\i2c1_drv.c(39): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(39): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(40): warning:  #223-D: function "I2C_ClearFlag" declared implicitly
+..\i2c1_drv.c(40): error:  #20: identifier "I2C_FLAG_AF" is undefined
+..\i2c1_drv.c(42): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(57): warning:  #223-D: function "I2C_GetLastEvent" declared implicitly
+..\i2c1_drv.c(57): error:  #20: identifier "I2C1" is undefined
+..\i2c1_drv.c(59): error:  #20: identifier "I2C_EVENT_MASTER_MODE_SELECT" is undefined
+..\i2c1_drv.c(60): warning:  #223-D: function "I2C_SendData" declared implicitly
+..\i2c1_drv.c(63): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(63): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(64): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(67): error:  #20: identifier "I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED" is undefined
+..\i2c1_drv.c(68): error:  #20: identifier "I2C_EVENT_MASTER_BYTE_TRANSMITTED" is undefined
+..\i2c1_drv.c(71): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(79): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(79): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(83): error:  #20: identifier "I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED" is undefined
+..\i2c1_drv.c(86): warning:  #223-D: function "I2C_AcknowledgeConfig" declared implicitly
+..\i2c1_drv.c(86): error:  #20: identifier "DISABLE" is undefined
+..\i2c1_drv.c(87): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(87): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(90): error:  #20: identifier "I2C_EVENT_MASTER_BYTE_RECEIVED" is undefined
+..\i2c1_drv.c(93): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(93): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(94): warning:  #223-D: function "I2C_AcknowledgeConfig" declared implicitly
+..\i2c1_drv.c(94): error:  #20: identifier "DISABLE" is undefined
+..\i2c1_drv.c(96): warning:  #223-D: function "I2C_ReceiveData" declared implicitly
+..\i2c1_drv.c(99): error:  #20: identifier "TRUE" is undefined
+compiling main.c...
+..\main.c(12): error:  #5: cannot open source input file "stm32f4xx_usart.h": No such file or directory
+compiling st7032i.c...
+..\st7032i.c(46): error:  #5: cannot open source input file "stm32f4xx_rcc.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling i2c1_drv.c...
+..\i2c1_drv.h(74): error:  #20: identifier "boolean" is undefined
+..\i2c1_drv.h(96): error:  #20: identifier "Boolean" is undefined
+..\i2c1_drv.h(96): error:  #20: identifier "Int8U" is undefined
+..\i2c1_drv.h(96): error:  #20: identifier "pInt8U" is undefined
+..\i2c1_drv.h(96): error:  #20: identifier "Int32U" is undefined
+..\i2c1_drv.h(98): warning:  #1-D: last line of file ends without a newline
+..\i2c1_drv.c(19): error:  #20: identifier "Boolean" is undefined
+..\i2c1_drv.c(20): error:  #20: identifier "Boolean" is undefined
+error type>(21): error:  #20: identifier "Int8U" is undefined
+..\i2c1_drv.c(22): error:  #20: identifier "Int32U" is undefined
+error type>(23): error:  #20: identifier "pInt8U" is undefined
+..\i2c1_drv.c(36): error:  #20: identifier "I2C_EVENT_SLAVE_ACK_FAILURE" is undefined
+..\i2c1_drv.c(36): warning:  #223-D: function "I2C_GetLastEvent" declared implicitly
+..\i2c1_drv.c(36): error:  #20: identifier "I2C1" is undefined
+..\i2c1_drv.c(39): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(39): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(40): warning:  #223-D: function "I2C_ClearFlag" declared implicitly
+..\i2c1_drv.c(40): error:  #20: identifier "I2C_FLAG_AF" is undefined
+..\i2c1_drv.c(42): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(57): warning:  #223-D: function "I2C_GetLastEvent" declared implicitly
+..\i2c1_drv.c(57): error:  #20: identifier "I2C1" is undefined
+..\i2c1_drv.c(59): error:  #20: identifier "I2C_EVENT_MASTER_MODE_SELECT" is undefined
+..\i2c1_drv.c(60): warning:  #223-D: function "I2C_SendData" declared implicitly
+..\i2c1_drv.c(63): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(63): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(64): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(67): error:  #20: identifier "I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED" is undefined
+..\i2c1_drv.c(68): error:  #20: identifier "I2C_EVENT_MASTER_BYTE_TRANSMITTED" is undefined
+..\i2c1_drv.c(71): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(79): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(79): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(83): error:  #20: identifier "I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED" is undefined
+..\i2c1_drv.c(86): warning:  #223-D: function "I2C_AcknowledgeConfig" declared implicitly
+..\i2c1_drv.c(86): error:  #20: identifier "DISABLE" is undefined
+..\i2c1_drv.c(87): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(87): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(90): error:  #20: identifier "I2C_EVENT_MASTER_BYTE_RECEIVED" is undefined
+..\i2c1_drv.c(93): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(93): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(94): warning:  #223-D: function "I2C_AcknowledgeConfig" declared implicitly
+..\i2c1_drv.c(94): error:  #20: identifier "DISABLE" is undefined
+..\i2c1_drv.c(96): warning:  #223-D: function "I2C_ReceiveData" declared implicitly
+..\i2c1_drv.c(99): error:  #20: identifier "TRUE" is undefined
+compiling main.c...
+..\main.c(12): error:  #5: cannot open source input file "stm32f4xx_usart.h": No such file or directory
+compiling st7032i.c...
+..\st7032i.c(46): error:  #5: cannot open source input file "stm32f4xx_rcc.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling i2c1_drv.c...
+..\i2c1_drv.h(22): error:  #5: cannot open source input file "armcore.h": No such file or directory
+compiling main.c...
+..\main.c(12): error:  #5: cannot open source input file "stm32f4xx_usart.h": No such file or directory
+compiling st7032i.c...
+..\st7032i.c(46): error:  #5: cannot open source input file "stm32f4xx_rcc.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling i2c1_drv.c...
+..\i2c1_drv.h(99): error:  #20: identifier "Boolean" is undefined
+..\i2c1_drv.h(99): error:  #20: identifier "Int8U" is undefined
+..\i2c1_drv.h(99): error:  #20: identifier "pInt8U" is undefined
+..\i2c1_drv.h(99): error:  #20: identifier "Int32U" is undefined
+..\i2c1_drv.h(101): warning:  #1-D: last line of file ends without a newline
+..\i2c1_drv.c(19): error:  #20: identifier "Boolean" is undefined
+..\i2c1_drv.c(20): error:  #20: identifier "Boolean" is undefined
+error type>(21): error:  #20: identifier "Int8U" is undefined
+..\i2c1_drv.c(22): error:  #20: identifier "Int32U" is undefined
+error type>(23): error:  #20: identifier "pInt8U" is undefined
+..\i2c1_drv.c(36): error:  #20: identifier "I2C_EVENT_SLAVE_ACK_FAILURE" is undefined
+..\i2c1_drv.c(36): warning:  #223-D: function "I2C_GetLastEvent" declared implicitly
+..\i2c1_drv.c(36): error:  #20: identifier "I2C1" is undefined
+..\i2c1_drv.c(39): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(39): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(40): warning:  #223-D: function "I2C_ClearFlag" declared implicitly
+..\i2c1_drv.c(40): error:  #20: identifier "I2C_FLAG_AF" is undefined
+..\i2c1_drv.c(42): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(57): warning:  #223-D: function "I2C_GetLastEvent" declared implicitly
+..\i2c1_drv.c(57): error:  #20: identifier "I2C1" is undefined
+..\i2c1_drv.c(59): error:  #20: identifier "I2C_EVENT_MASTER_MODE_SELECT" is undefined
+..\i2c1_drv.c(60): warning:  #223-D: function "I2C_SendData" declared implicitly
+..\i2c1_drv.c(63): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(63): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(64): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(67): error:  #20: identifier "I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED" is undefined
+..\i2c1_drv.c(68): error:  #20: identifier "I2C_EVENT_MASTER_BYTE_TRANSMITTED" is undefined
+..\i2c1_drv.c(71): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(79): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(79): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(83): error:  #20: identifier "I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED" is undefined
+..\i2c1_drv.c(86): warning:  #223-D: function "I2C_AcknowledgeConfig" declared implicitly
+..\i2c1_drv.c(86): error:  #20: identifier "DISABLE" is undefined
+..\i2c1_drv.c(87): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(87): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(90): error:  #20: identifier "I2C_EVENT_MASTER_BYTE_RECEIVED" is undefined
+..\i2c1_drv.c(93): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(93): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(94): warning:  #223-D: function "I2C_AcknowledgeConfig" declared implicitly
+..\i2c1_drv.c(94): error:  #20: identifier "DISABLE" is undefined
+..\i2c1_drv.c(96): warning:  #223-D: function "I2C_ReceiveData" declared implicitly
+..\i2c1_drv.c(99): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(116): error:  #20: identifier "I2C_InitTypeDef" is undefined
+compiling main.c...
+..\main.c(24): error:  #20: identifier "ST7032i" is undefined
+..\main.c(25): error:  #20: identifier "USARTSerial" is undefined
+..\main.c(43): error:  #268: declaration may not appear after executable statement in block
+..\main.c(60): warning:  #223-D: function "spi_begin" declared implicitly
+..\main.c(63): error:  #20: identifier "Wire1" is undefined
+..\main.c(63): error:  #167: argument of type "int" is incompatible with parameter of type "I2C_TypeDef *"
+..\main.c(63): warning:  #188-D: enumerated type mixed with another type
+..\main.c(63): warning:  #69-D: integer conversion resulted in truncation
+..\main.c(63): error:  #165: too few arguments in function call
+..\main.c(116): warning:  #223-D: function "spi_transfer" declared implicitly
+..\main.c(119): error:  #268: declaration may not appear after executable statement in block
+..\main.c(125): warning:  #223-D: function "usart_print" declared implicitly
+..\main.c(131): warning:  #111-D: statement is unreachable
+compiling st7032i.c...
+..\st7032i.c(57): error:  #65: expected a ";"
+..\st7032i.c(60): error:  #65: expected a ";"
+..\st7032i.c(61): error:  #65: expected a ";"
+..\st7032i.c(65): error:  #67: expected a "}"
+..\st7032i.c(66): error:  #67: expected a "}"
+..\st7032i.c(67): error:  #67: expected a "}"
+..\st7032i.c(68): error:  #67: expected a "}"
+..\st7032i.c(69): error:  #67: expected a "}"
+..\st7032i.c(70): error:  #67: expected a "}"
+..\st7032i.c(71): error:  #67: expected a "}"
+..\st7032i.c(72): error:  #67: expected a "}"
+..\st7032i.c(73): error:  #67: expected a "}"
+..\st7032i.c(74): error:  #67: expected a "}"
+..\st7032i.c(75): error:  #67: expected a "}"
+..\st7032i.c(76): error:  #67: expected a "}"
+..\st7032i.c(77): error:  #67: expected a "}"
+..\st7032i.c(89): error:  #18: expected a ")"
+..\st7032i.c(106): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+compiling stm32f4xx_it.c...
+Target not created
+Build target 'Target 1'
+compiling i2c1_drv.c...
+..\i2c1_drv.h(101): warning:  #1-D: last line of file ends without a newline
+..\i2c1_drv.c(19): error:  #20: identifier "Boolean" is undefined
+..\i2c1_drv.c(20): error:  #20: identifier "Boolean" is undefined
+error type>(21): error:  #20: identifier "Int8U" is undefined
+..\i2c1_drv.c(22): error:  #20: identifier "Int32U" is undefined
+error type>(23): error:  #20: identifier "pInt8U" is undefined
+..\i2c1_drv.c(36): error:  #20: identifier "I2C_EVENT_SLAVE_ACK_FAILURE" is undefined
+..\i2c1_drv.c(36): warning:  #223-D: function "I2C_GetLastEvent" declared implicitly
+..\i2c1_drv.c(36): error:  #20: identifier "I2C1" is undefined
+..\i2c1_drv.c(39): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(39): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(40): warning:  #223-D: function "I2C_ClearFlag" declared implicitly
+..\i2c1_drv.c(40): error:  #20: identifier "I2C_FLAG_AF" is undefined
+..\i2c1_drv.c(42): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(57): warning:  #223-D: function "I2C_GetLastEvent" declared implicitly
+..\i2c1_drv.c(57): error:  #20: identifier "I2C1" is undefined
+..\i2c1_drv.c(59): error:  #20: identifier "I2C_EVENT_MASTER_MODE_SELECT" is undefined
+..\i2c1_drv.c(60): warning:  #223-D: function "I2C_SendData" declared implicitly
+..\i2c1_drv.c(63): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(63): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(64): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(67): error:  #20: identifier "I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED" is undefined
+..\i2c1_drv.c(68): error:  #20: identifier "I2C_EVENT_MASTER_BYTE_TRANSMITTED" is undefined
+..\i2c1_drv.c(71): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(79): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(79): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(83): error:  #20: identifier "I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED" is undefined
+..\i2c1_drv.c(86): warning:  #223-D: function "I2C_AcknowledgeConfig" declared implicitly
+..\i2c1_drv.c(86): error:  #20: identifier "DISABLE" is undefined
+..\i2c1_drv.c(87): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(87): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(90): error:  #20: identifier "I2C_EVENT_MASTER_BYTE_RECEIVED" is undefined
+..\i2c1_drv.c(93): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(93): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(94): warning:  #223-D: function "I2C_AcknowledgeConfig" declared implicitly
+..\i2c1_drv.c(94): error:  #20: identifier "DISABLE" is undefined
+..\i2c1_drv.c(96): warning:  #223-D: function "I2C_ReceiveData" declared implicitly
+..\i2c1_drv.c(99): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(116): error:  #20: identifier "I2C_InitTypeDef" is undefined
+..\i2c1_drv.c(117): error:  #20: identifier "GPIO_InitTypeDef" is undefined
+..\i2c1_drv.c(118): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+..\i2c1_drv.c(120): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(124): warning:  #223-D: function "RCC_AHB1PeriphClockCmd" declared implicitly
+..\i2c1_drv.c(124): error:  #20: identifier "RCC_AHB1Periph_GPIOB" is undefined
+compiling main.c...
+..\main.c(24): error:  #20: identifier "ST7032i" is undefined
+..\main.c(25): error:  #20: identifier "USARTSerial" is undefined
+..\main.c(43): error:  #268: declaration may not appear after executable statement in block
+..\main.c(60): warning:  #223-D: function "spi_begin" declared implicitly
+..\main.c(63): error:  #20: identifier "Wire1" is undefined
+..\main.c(63): error:  #167: argument of type "int" is incompatible with parameter of type "I2C_TypeDef *"
+..\main.c(63): warning:  #188-D: enumerated type mixed with another type
+..\main.c(63): warning:  #69-D: integer conversion resulted in truncation
+..\main.c(63): error:  #165: too few arguments in function call
+..\main.c(116): warning:  #223-D: function "spi_transfer" declared implicitly
+..\main.c(119): error:  #268: declaration may not appear after executable statement in block
+..\main.c(125): warning:  #223-D: function "usart_print" declared implicitly
+..\main.c(131): warning:  #111-D: statement is unreachable
+compiling st7032i.c...
+..\st7032i.c(57): error:  #65: expected a ";"
+..\st7032i.c(60): error:  #65: expected a ";"
+..\st7032i.c(61): error:  #65: expected a ";"
+..\st7032i.c(65): error:  #67: expected a "}"
+..\st7032i.c(66): error:  #67: expected a "}"
+..\st7032i.c(67): error:  #67: expected a "}"
+..\st7032i.c(68): error:  #67: expected a "}"
+..\st7032i.c(69): error:  #67: expected a "}"
+..\st7032i.c(70): error:  #67: expected a "}"
+..\st7032i.c(71): error:  #67: expected a "}"
+..\st7032i.c(72): error:  #67: expected a "}"
+..\st7032i.c(73): error:  #67: expected a "}"
+..\st7032i.c(74): error:  #67: expected a "}"
+..\st7032i.c(75): error:  #67: expected a "}"
+..\st7032i.c(76): error:  #67: expected a "}"
+..\st7032i.c(77): error:  #67: expected a "}"
+..\st7032i.c(89): error:  #18: expected a ")"
+..\st7032i.c(106): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+Target not created
+Build target 'Target 1'
+compiling i2c1_drv.c...
+..\i2c1_drv.c(19): error:  #20: identifier "Boolean" is undefined
+..\i2c1_drv.c(20): error:  #20: identifier "Boolean" is undefined
+error type>(21): error:  #20: identifier "Int8U" is undefined
+..\i2c1_drv.c(22): error:  #20: identifier "Int32U" is undefined
+error type>(23): error:  #20: identifier "pInt8U" is undefined
+..\i2c1_drv.c(36): error:  #20: identifier "I2C_EVENT_SLAVE_ACK_FAILURE" is undefined
+..\i2c1_drv.c(36): warning:  #223-D: function "I2C_GetLastEvent" declared implicitly
+..\i2c1_drv.c(36): error:  #20: identifier "I2C1" is undefined
+..\i2c1_drv.c(39): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(39): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(40): warning:  #223-D: function "I2C_ClearFlag" declared implicitly
+..\i2c1_drv.c(40): error:  #20: identifier "I2C_FLAG_AF" is undefined
+..\i2c1_drv.c(42): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(57): warning:  #223-D: function "I2C_GetLastEvent" declared implicitly
+..\i2c1_drv.c(57): error:  #20: identifier "I2C1" is undefined
+..\i2c1_drv.c(59): error:  #20: identifier "I2C_EVENT_MASTER_MODE_SELECT" is undefined
+..\i2c1_drv.c(60): warning:  #223-D: function "I2C_SendData" declared implicitly
+..\i2c1_drv.c(63): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(63): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(64): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(67): error:  #20: identifier "I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED" is undefined
+..\i2c1_drv.c(68): error:  #20: identifier "I2C_EVENT_MASTER_BYTE_TRANSMITTED" is undefined
+..\i2c1_drv.c(71): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(79): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(79): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(83): error:  #20: identifier "I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED" is undefined
+..\i2c1_drv.c(86): warning:  #223-D: function "I2C_AcknowledgeConfig" declared implicitly
+..\i2c1_drv.c(86): error:  #20: identifier "DISABLE" is undefined
+..\i2c1_drv.c(87): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(87): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(90): error:  #20: identifier "I2C_EVENT_MASTER_BYTE_RECEIVED" is undefined
+..\i2c1_drv.c(93): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(93): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(94): warning:  #223-D: function "I2C_AcknowledgeConfig" declared implicitly
+..\i2c1_drv.c(94): error:  #20: identifier "DISABLE" is undefined
+..\i2c1_drv.c(96): warning:  #223-D: function "I2C_ReceiveData" declared implicitly
+..\i2c1_drv.c(99): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(116): error:  #20: identifier "I2C_InitTypeDef" is undefined
+..\i2c1_drv.c(117): error:  #20: identifier "GPIO_InitTypeDef" is undefined
+..\i2c1_drv.c(118): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+..\i2c1_drv.c(120): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(124): warning:  #223-D: function "RCC_AHB1PeriphClockCmd" declared implicitly
+..\i2c1_drv.c(124): error:  #20: identifier "RCC_AHB1Periph_GPIOB" is undefined
+compiling main.c...
+..\main.c(24): error:  #20: identifier "ST7032i" is undefined
+..\main.c(25): error:  #20: identifier "USARTSerial" is undefined
+..\main.c(43): error:  #268: declaration may not appear after executable statement in block
+..\main.c(60): warning:  #223-D: function "spi_begin" declared implicitly
+..\main.c(63): error:  #20: identifier "Wire1" is undefined
+..\main.c(63): error:  #167: argument of type "int" is incompatible with parameter of type "I2C_TypeDef *"
+..\main.c(63): warning:  #188-D: enumerated type mixed with another type
+..\main.c(63): warning:  #69-D: integer conversion resulted in truncation
+..\main.c(63): error:  #165: too few arguments in function call
+..\main.c(116): warning:  #223-D: function "spi_transfer" declared implicitly
+..\main.c(119): error:  #268: declaration may not appear after executable statement in block
+..\main.c(125): warning:  #223-D: function "usart_print" declared implicitly
+..\main.c(131): warning:  #111-D: statement is unreachable
+compiling st7032i.c...
+..\st7032i.c(57): error:  #65: expected a ";"
+..\st7032i.c(60): error:  #65: expected a ";"
+..\st7032i.c(61): error:  #65: expected a ";"
+..\st7032i.c(65): error:  #67: expected a "}"
+..\st7032i.c(66): error:  #67: expected a "}"
+..\st7032i.c(67): error:  #67: expected a "}"
+..\st7032i.c(68): error:  #67: expected a "}"
+..\st7032i.c(69): error:  #67: expected a "}"
+..\st7032i.c(70): error:  #67: expected a "}"
+..\st7032i.c(71): error:  #67: expected a "}"
+..\st7032i.c(72): error:  #67: expected a "}"
+..\st7032i.c(73): error:  #67: expected a "}"
+..\st7032i.c(74): error:  #67: expected a "}"
+..\st7032i.c(75): error:  #67: expected a "}"
+..\st7032i.c(76): error:  #67: expected a "}"
+..\st7032i.c(77): error:  #67: expected a "}"
+..\st7032i.c(89): error:  #18: expected a ")"
+..\st7032i.c(106): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+Target not created
+Build target 'Target 1'
+compiling i2c1_drv.c...
+..\i2c1_drv.c(22): error:  #20: identifier "Int32U" is undefined
+error type>(36): error:  #20: identifier "I2C_EVENT_SLAVE_ACK_FAILURE" is undefined
+..\i2c1_drv.c(36): warning:  #223-D: function "I2C_GetLastEvent" declared implicitly
+..\i2c1_drv.c(36): error:  #20: identifier "I2C1" is undefined
+..\i2c1_drv.c(39): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(39): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(40): warning:  #223-D: function "I2C_ClearFlag" declared implicitly
+..\i2c1_drv.c(40): error:  #20: identifier "I2C_FLAG_AF" is undefined
+..\i2c1_drv.c(42): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(57): warning:  #223-D: function "I2C_GetLastEvent" declared implicitly
+..\i2c1_drv.c(57): error:  #20: identifier "I2C1" is undefined
+..\i2c1_drv.c(59): error:  #20: identifier "I2C_EVENT_MASTER_MODE_SELECT" is undefined
+..\i2c1_drv.c(60): warning:  #223-D: function "I2C_SendData" declared implicitly
+..\i2c1_drv.c(63): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(63): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(64): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(67): error:  #20: identifier "I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED" is undefined
+..\i2c1_drv.c(68): error:  #20: identifier "I2C_EVENT_MASTER_BYTE_TRANSMITTED" is undefined
+..\i2c1_drv.c(71): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(79): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(79): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(83): error:  #20: identifier "I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED" is undefined
+..\i2c1_drv.c(86): warning:  #223-D: function "I2C_AcknowledgeConfig" declared implicitly
+..\i2c1_drv.c(86): error:  #20: identifier "DISABLE" is undefined
+..\i2c1_drv.c(87): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(87): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(90): error:  #20: identifier "I2C_EVENT_MASTER_BYTE_RECEIVED" is undefined
+..\i2c1_drv.c(93): warning:  #223-D: function "I2C_GenerateSTOP" declared implicitly
+..\i2c1_drv.c(93): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(94): warning:  #223-D: function "I2C_AcknowledgeConfig" declared implicitly
+..\i2c1_drv.c(94): error:  #20: identifier "DISABLE" is undefined
+..\i2c1_drv.c(96): warning:  #223-D: function "I2C_ReceiveData" declared implicitly
+..\i2c1_drv.c(99): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(116): error:  #20: identifier "I2C_InitTypeDef" is undefined
+..\i2c1_drv.c(117): error:  #20: identifier "GPIO_InitTypeDef" is undefined
+..\i2c1_drv.c(118): error:  #20: identifier "NVIC_InitTypeDef" is undefined
+..\i2c1_drv.c(120): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(124): warning:  #223-D: function "RCC_AHB1PeriphClockCmd" declared implicitly
+..\i2c1_drv.c(124): error:  #20: identifier "RCC_AHB1Periph_GPIOB" is undefined
+..\i2c1_drv.c(124): error:  #20: identifier "ENABLE" is undefined
+..\i2c1_drv.c(125): warning:  #223-D: function "RCC_AHB1PeriphResetCmd" declared implicitly
+..\i2c1_drv.c(125): error:  #20: identifier "DISABLE" is undefined
+..\i2c1_drv.c(127): warning:  #223-D: function "I2C_DeInit" declared implicitly
+..\i2c1_drv.c(127): error:  #20: identifier "I2C1" is undefined
+..\i2c1_drv.c(128): warning:  #223-D: function "GPIO_PinAFConfig" declared implicitly
+..\i2c1_drv.c(128): error:  #20: identifier "GPIOB" is undefined
+compiling main.c...
+..\main.c(24): error:  #20: identifier "ST7032i" is undefined
+..\main.c(25): error:  #20: identifier "USARTSerial" is undefined
+..\main.c(43): error:  #268: declaration may not appear after executable statement in block
+..\main.c(60): warning:  #223-D: function "spi_begin" declared implicitly
+..\main.c(63): error:  #20: identifier "Wire1" is undefined
+..\main.c(63): error:  #167: argument of type "int" is incompatible with parameter of type "I2C_TypeDef *"
+..\main.c(63): warning:  #188-D: enumerated type mixed with another type
+..\main.c(63): warning:  #69-D: integer conversion resulted in truncation
+..\main.c(63): error:  #165: too few arguments in function call
+..\main.c(116): warning:  #223-D: function "spi_transfer" declared implicitly
+..\main.c(119): error:  #268: declaration may not appear after executable statement in block
+..\main.c(125): warning:  #223-D: function "usart_print" declared implicitly
+..\main.c(131): warning:  #111-D: statement is unreachable
+compiling st7032i.c...
+..\st7032i.c(57): error:  #65: expected a ";"
+..\st7032i.c(60): error:  #65: expected a ";"
+..\st7032i.c(61): error:  #65: expected a ";"
+..\st7032i.c(65): error:  #67: expected a "}"
+..\st7032i.c(66): error:  #67: expected a "}"
+..\st7032i.c(67): error:  #67: expected a "}"
+..\st7032i.c(68): error:  #67: expected a "}"
+..\st7032i.c(69): error:  #67: expected a "}"
+..\st7032i.c(70): error:  #67: expected a "}"
+..\st7032i.c(71): error:  #67: expected a "}"
+..\st7032i.c(72): error:  #67: expected a "}"
+..\st7032i.c(73): error:  #67: expected a "}"
+..\st7032i.c(74): error:  #67: expected a "}"
+..\st7032i.c(75): error:  #67: expected a "}"
+..\st7032i.c(76): error:  #67: expected a "}"
+..\st7032i.c(77): error:  #67: expected a "}"
+..\st7032i.c(89): error:  #18: expected a ")"
+..\st7032i.c(106): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+Target not created
+Build target 'Target 1'
+compiling i2c1_drv.c...
+..\i2c1_drv.c(44): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(66): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(73): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(101): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(122): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(186): warning:  #223-D: function "AtomicExchange" declared implicitly
+..\i2c1_drv.c(186): error:  #20: identifier "FALSE" is undefined
+..\i2c1_drv.c(200): warning:  #223-D: function "AtomicExchange" declared implicitly
+..\i2c1_drv.c(200): error:  #20: identifier "TRUE" is undefined
+..\i2c1_drv.c(212): error:  #20: identifier "Int8U" is undefined
+..\i2c1_drv.c(212): error:  #20: identifier "pInt8U" is undefined
+..\i2c1_drv.c(212): error:  #20: identifier "Int32U" is undefined
+..\i2c1_drv.c(214): error:  #20: identifier "FALSE" is undefined
+compiling main.c...
+..\main.c(24): error:  #20: identifier "ST7032i" is undefined
+..\main.c(25): error:  #20: identifier "USARTSerial" is undefined
+..\main.c(43): error:  #268: declaration may not appear after executable statement in block
+..\main.c(60): warning:  #223-D: function "spi_begin" declared implicitly
+..\main.c(63): error:  #20: identifier "Wire1" is undefined
+..\main.c(63): error:  #167: argument of type "int" is incompatible with parameter of type "I2C_TypeDef *"
+..\main.c(63): warning:  #188-D: enumerated type mixed with another type
+..\main.c(63): warning:  #69-D: integer conversion resulted in truncation
+..\main.c(63): error:  #165: too few arguments in function call
+..\main.c(116): warning:  #223-D: function "spi_transfer" declared implicitly
+..\main.c(119): error:  #268: declaration may not appear after executable statement in block
+..\main.c(125): warning:  #223-D: function "usart_print" declared implicitly
+..\main.c(131): warning:  #111-D: statement is unreachable
+compiling st7032i.c...
+..\st7032i.c(57): error:  #65: expected a ";"
+..\st7032i.c(60): error:  #65: expected a ";"
+..\st7032i.c(61): error:  #65: expected a ";"
+..\st7032i.c(65): error:  #67: expected a "}"
+..\st7032i.c(66): error:  #67: expected a "}"
+..\st7032i.c(67): error:  #67: expected a "}"
+..\st7032i.c(68): error:  #67: expected a "}"
+..\st7032i.c(69): error:  #67: expected a "}"
+..\st7032i.c(70): error:  #67: expected a "}"
+..\st7032i.c(71): error:  #67: expected a "}"
+..\st7032i.c(72): error:  #67: expected a "}"
+..\st7032i.c(73): error:  #67: expected a "}"
+..\st7032i.c(74): error:  #67: expected a "}"
+..\st7032i.c(75): error:  #67: expected a "}"
+..\st7032i.c(76): error:  #67: expected a "}"
+..\st7032i.c(77): error:  #67: expected a "}"
+..\st7032i.c(89): error:  #18: expected a ")"
+..\st7032i.c(106): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+Target not created
+Build target 'Target 1'
+compiling i2c1_drv.c...
+..\i2c1_drv.c(186): warning:  #223-D: function "AtomicExchange" declared implicitly
+..\i2c1_drv.c(200): warning:  #223-D: function "AtomicExchange" declared implicitly
+..\i2c1_drv.c(212): error:  #20: identifier "Int8U" is undefined
+..\i2c1_drv.c(212): error:  #20: identifier "pInt8U" is undefined
+..\i2c1_drv.c(212): error:  #20: identifier "Int32U" is undefined
+compiling main.c...
+..\main.c(24): error:  #20: identifier "ST7032i" is undefined
+..\main.c(25): error:  #20: identifier "USARTSerial" is undefined
+..\main.c(43): error:  #268: declaration may not appear after executable statement in block
+..\main.c(60): warning:  #223-D: function "spi_begin" declared implicitly
+..\main.c(63): error:  #20: identifier "Wire1" is undefined
+..\main.c(63): error:  #167: argument of type "int" is incompatible with parameter of type "I2C_TypeDef *"
+..\main.c(63): warning:  #188-D: enumerated type mixed with another type
+..\main.c(63): warning:  #69-D: integer conversion resulted in truncation
+..\main.c(63): error:  #165: too few arguments in function call
+..\main.c(116): warning:  #223-D: function "spi_transfer" declared implicitly
+..\main.c(119): error:  #268: declaration may not appear after executable statement in block
+..\main.c(125): warning:  #223-D: function "usart_print" declared implicitly
+..\main.c(131): warning:  #111-D: statement is unreachable
+compiling st7032i.c...
+..\st7032i.c(57): error:  #65: expected a ";"
+..\st7032i.c(60): error:  #65: expected a ";"
+..\st7032i.c(61): error:  #65: expected a ";"
+..\st7032i.c(65): error:  #67: expected a "}"
+..\st7032i.c(66): error:  #67: expected a "}"
+..\st7032i.c(67): error:  #67: expected a "}"
+..\st7032i.c(68): error:  #67: expected a "}"
+..\st7032i.c(69): error:  #67: expected a "}"
+..\st7032i.c(70): error:  #67: expected a "}"
+..\st7032i.c(71): error:  #67: expected a "}"
+..\st7032i.c(72): error:  #67: expected a "}"
+..\st7032i.c(73): error:  #67: expected a "}"
+..\st7032i.c(74): error:  #67: expected a "}"
+..\st7032i.c(75): error:  #67: expected a "}"
+..\st7032i.c(76): error:  #67: expected a "}"
+..\st7032i.c(77): error:  #67: expected a "}"
+..\st7032i.c(89): error:  #18: expected a ")"
+..\st7032i.c(106): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+Target not created
+Build target 'Target 1'
+compiling i2c1_drv.c...
+..\i2c1_drv.c(186): warning:  #223-D: function "AtomicExchange" declared implicitly
+..\i2c1_drv.c(200): warning:  #223-D: function "AtomicExchange" declared implicitly
+compiling main.c...
+..\main.c(24): error:  #20: identifier "ST7032i" is undefined
+..\main.c(25): error:  #20: identifier "USARTSerial" is undefined
+..\main.c(43): error:  #268: declaration may not appear after executable statement in block
+..\main.c(60): warning:  #223-D: function "spi_begin" declared implicitly
+..\main.c(63): error:  #20: identifier "Wire1" is undefined
+..\main.c(63): error:  #167: argument of type "int" is incompatible with parameter of type "I2C_TypeDef *"
+..\main.c(63): warning:  #188-D: enumerated type mixed with another type
+..\main.c(63): warning:  #69-D: integer conversion resulted in truncation
+..\main.c(63): error:  #165: too few arguments in function call
+..\main.c(116): warning:  #223-D: function "spi_transfer" declared implicitly
+..\main.c(119): error:  #268: declaration may not appear after executable statement in block
+..\main.c(125): warning:  #223-D: function "usart_print" declared implicitly
+..\main.c(131): warning:  #111-D: statement is unreachable
+compiling st7032i.c...
+..\st7032i.c(57): error:  #65: expected a ";"
+..\st7032i.c(60): error:  #65: expected a ";"
+..\st7032i.c(61): error:  #65: expected a ";"
+..\st7032i.c(65): error:  #67: expected a "}"
+..\st7032i.c(66): error:  #67: expected a "}"
+..\st7032i.c(67): error:  #67: expected a "}"
+..\st7032i.c(68): error:  #67: expected a "}"
+..\st7032i.c(69): error:  #67: expected a "}"
+..\st7032i.c(70): error:  #67: expected a "}"
+..\st7032i.c(71): error:  #67: expected a "}"
+..\st7032i.c(72): error:  #67: expected a "}"
+..\st7032i.c(73): error:  #67: expected a "}"
+..\st7032i.c(74): error:  #67: expected a "}"
+..\st7032i.c(75): error:  #67: expected a "}"
+..\st7032i.c(76): error:  #67: expected a "}"
+..\st7032i.c(77): error:  #67: expected a "}"
+..\st7032i.c(89): error:  #18: expected a ")"
+..\st7032i.c(106): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+Target not created
+Build target 'Target 1'
+compiling main.c...
+..\main.c(35): error:  #20: identifier "Serial3" is undefined
+..\main.c(43): error:  #268: declaration may not appear after executable statement in block
+..\main.c(60): warning:  #223-D: function "spi_begin" declared implicitly
+..\main.c(63): error:  #20: identifier "Wire1" is undefined
+..\main.c(63): error:  #167: argument of type "int" is incompatible with parameter of type "I2C_TypeDef *"
+..\main.c(63): warning:  #188-D: enumerated type mixed with another type
+..\main.c(63): warning:  #69-D: integer conversion resulted in truncation
+..\main.c(63): error:  #165: too few arguments in function call
+..\main.c(64): error:  #20: identifier "lcd" is undefined
+..\main.c(116): warning:  #223-D: function "spi_transfer" declared implicitly
+..\main.c(119): error:  #268: declaration may not appear after executable statement in block
+..\main.c(125): warning:  #223-D: function "usart_print" declared implicitly
+..\main.c(131): warning:  #111-D: statement is unreachable
+compiling st7032i.c...
+..\st7032i.c(57): error:  #65: expected a ";"
+..\st7032i.c(60): error:  #65: expected a ";"
+..\st7032i.c(61): error:  #65: expected a ";"
+..\st7032i.c(65): error:  #67: expected a "}"
+..\st7032i.c(66): error:  #67: expected a "}"
+..\st7032i.c(67): error:  #67: expected a "}"
+..\st7032i.c(68): error:  #67: expected a "}"
+..\st7032i.c(69): error:  #67: expected a "}"
+..\st7032i.c(70): error:  #67: expected a "}"
+..\st7032i.c(71): error:  #67: expected a "}"
+..\st7032i.c(72): error:  #67: expected a "}"
+..\st7032i.c(73): error:  #67: expected a "}"
+..\st7032i.c(74): error:  #67: expected a "}"
+..\st7032i.c(75): error:  #67: expected a "}"
+..\st7032i.c(76): error:  #67: expected a "}"
+..\st7032i.c(77): error:  #67: expected a "}"
+..\st7032i.c(89): error:  #18: expected a ")"
+..\st7032i.c(106): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+Target not created
+Build target 'Target 1'
+compiling main.c...
+..\main.c(35): error:  #167: argument of type "USART_TypeDef *" is incompatible with parameter of type "const GPIOPin"
+..\main.c(35): error:  #140: too many arguments in function call
+..\main.c(37): error:  #136: struct "_USART" has no field "print"
+..\main.c(39): error:  #136: struct "_USART" has no field "print"
+..\main.c(40): error:  #136: struct "_USART" has no field "print"
+..\main.c(41): error:  #136: struct "_USART" has no field "print"
+..\main.c(42): error:  #136: struct "_USART" has no field "flush"
+..\main.c(43): error:  #268: declaration may not appear after executable statement in block
+..\main.c(46): error:  #136: struct "_USART" has no field "print"
+..\main.c(47): error:  #136: struct "_USART" has no field "print"
+..\main.c(48): error:  #136: struct "_USART" has no field "print"
+..\main.c(49): error:  #136: struct "_USART" has no field "print"
+..\main.c(50): error:  #136: struct "_USART" has no field "print"
+..\main.c(51): error:  #136: struct "_USART" has no field "print"
+..\main.c(52): error:  #136: struct "_USART" has no field "print"
+..\main.c(53): error:  #136: struct "_USART" has no field "print"
+..\main.c(54): error:  #136: struct "_USART" has no field "print"
+..\main.c(55): error:  #136: struct "_USART" has no field "flush"
+..\main.c(60): warning:  #223-D: function "spi_begin" declared implicitly
+..\main.c(63): error:  #20: identifier "Wire1" is undefined
+..\main.c(63): error:  #167: argument of type "int" is incompatible with parameter of type "I2C_TypeDef *"
+..\main.c(63): warning:  #188-D: enumerated type mixed with another type
+..\main.c(63): warning:  #69-D: integer conversion resulted in truncation
+..\main.c(63): error:  #165: too few arguments in function call
+..\main.c(64): error:  #20: identifier "lcd" is undefined
+..\main.c(108): error:  #136: struct "_USART" has no field "print"
+..\main.c(109): error:  #136: struct "_USART" has no field "print"
+..\main.c(116): warning:  #223-D: function "spi_transfer" declared implicitly
+..\main.c(119): error:  #268: declaration may not appear after executable statement in block
+..\main.c(125): warning:  #223-D: function "usart_print" declared implicitly
+..\main.c(131): warning:  #111-D: statement is unreachable
+compiling st7032i.c...
+..\st7032i.c(57): error:  #65: expected a ";"
+..\st7032i.c(60): error:  #65: expected a ";"
+..\st7032i.c(61): error:  #65: expected a ";"
+..\st7032i.c(65): error:  #67: expected a "}"
+..\st7032i.c(66): error:  #67: expected a "}"
+..\st7032i.c(67): error:  #67: expected a "}"
+..\st7032i.c(68): error:  #67: expected a "}"
+..\st7032i.c(69): error:  #67: expected a "}"
+..\st7032i.c(70): error:  #67: expected a "}"
+..\st7032i.c(71): error:  #67: expected a "}"
+..\st7032i.c(72): error:  #67: expected a "}"
+..\st7032i.c(73): error:  #67: expected a "}"
+..\st7032i.c(74): error:  #67: expected a "}"
+..\st7032i.c(75): error:  #67: expected a "}"
+..\st7032i.c(76): error:  #67: expected a "}"
+..\st7032i.c(77): error:  #67: expected a "}"
+..\st7032i.c(89): error:  #18: expected a ")"
+..\st7032i.c(106): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(118): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(130): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(142): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(154): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(166): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+..\st7032i.c(177): error:  #18: expected a ")"
+Target not created
