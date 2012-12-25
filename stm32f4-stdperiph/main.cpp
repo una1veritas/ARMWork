@@ -124,13 +124,12 @@ int main(void) {
 		Serial3.print(" ");		
 		Serial3.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
 		Serial3.println();
+		
 		//		lcd.clear();
-		/*
 		lcd.setCursor(0, 0);
 		lcd.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
 		lcd.setCursor(0, 1);
 		lcd.print((float)millis()/1000, 3);
-		*/
 		
 		uint16_t i = 0;
 		if (Serial3.available() > 0) {
@@ -143,11 +142,10 @@ int main(void) {
 			Serial3.print("\n");
 		
 			tmp[0] = 0;
-			if ( i2c_start_send(&I2C1Buffer, B1101000, (uint8*)tmp, 1) ) {
-				i2c_receive(&I2C1Buffer, B1101000, (uint8_t*)tmp, 4);
+			if ( i2c_request(&I2C1Buffer, B1101000, (uint8_t*)tmp, 1, 4) ) {
+				Serial3.println(*((uint32_t *)tmp), HEX);
 			}
 			//delay_ms(5);
-			Serial3.println(*((uint32_t *)tmp), HEX);
 
 		}
 

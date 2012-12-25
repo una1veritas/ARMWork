@@ -7,8 +7,6 @@ C:\Users\Sin\Documents\github\ARMWork\stm32f4-i2c_rtc\Keil\i2c-rtc.uvproj
 Project File Date:  12/24/2012
 
 <h2>Output:</h2>
-<<<<<<< HEAD
-=======
 Build target 'Target 1'
 compiling main.c...
 ..\main.c(37): error:  #136: struct "_USART" has no field "print"
@@ -71,4 +69,3 @@ compiling st7032i.c...
 ..\st7032i.c(177): error:  #18: expected a ")"
 ..\st7032i.c(177): error:  #18: expected a ")"
 Target not created
->>>>>>> origin/win@home

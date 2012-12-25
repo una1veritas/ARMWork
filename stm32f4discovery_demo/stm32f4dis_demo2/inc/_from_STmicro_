@@ -1,7 +1,0 @@
-stm32f4_dsp_stdperiph_lib.zip:
-	/STM32F4xx_DSP_StdPeriph_Lib_V1.0.0/Libraries/CMSIS/Device/ST/Include/stm32f4xx.h
-	/STM32F4xx_DSP_StdPeriph_Lib_V1.0.0/Libraries/CMSIS/Device/ST/Include/system_stm32f4xx.h
-	/STM32F4xx_DSP_StdPeriph_Lib_V1.0.0/Libraries/CMSIS/Include/core_cm4.h
-	/STM32F4xx_DSP_StdPeriph_Lib_V1.0.0/Libraries/CMSIS/Include/core_cm4_simd.h
-	/STM32F4xx_DSP_StdPeriph_Lib_V1.0.0/Libraries/CMSIS/Include/core_cmFunc.h
-	/STM32F4xx_DSP_StdPeriph_Lib_V1.0.0/Libraries/CMSIS/Include/core_cmInstr.h

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdtprojectproperties>
+<section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.IncludePaths">
+<language name="C Source File">
+<includepath workspace_path="true">/stm32f4-float-math_test</includepath>
+<includepath workspace_path="true">/stm32f4-float-math_test/STM32F4xx_StdPeriph_Driver/inc</includepath>
+<includepath workspace_path="true">/STM32Library/CMSIS/STM32F4xx</includepath>
+<includepath workspace_path="true">/STM32Library/CMSIS/Include</includepath>
+
+</language>
+<language name="C++ Source File">
+<includepath workspace_path="true">/stm32f4-float-math_test</includepath>
+<includepath workspace_path="true">/stm32f4-float-math_test/STM32F4xx_StdPeriph_Driver/inc</includepath>
+<includepath workspace_path="true">/STM32Library/CMSIS/STM32F4xx</includepath>
+<includepath workspace_path="true">/STM32Library/CMSIS/Include</includepath>
+
+</language>
+<language name="Object File">
+
+</language>
+<language name="Assembly Source File">
+<includepath workspace_path="true">/stm32f4-float-math_test/STM32F4xx_StdPeriph_Driver/inc</includepath>
+<includepath workspace_path="true">/STM32Library/CMSIS/STM32F4xx</includepath>
+<includepath workspace_path="true">/STM32Library/CMSIS/Include</includepath>
+
+</language>
+</section>
+<section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.Macros">
+<language name="C Source File">
+<macro>
+<name>USE_STDPERIPH_DRIVER</name><value>1</value>
+</macro>
+
+</language>
+<language name="C++ Source File">
+<macro>
+<name>USE_STDPERIPH_DRIVER</name><value>1</value>
+</macro>
+
+</language>
+<language name="Object File">
+
+</language>
+<language name="Assembly Source File">
+
+</language>
+</section>
+</cdtprojectproperties>
