@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<workspace>
+  <project>
+    <path>$WS_DIR$\Project.ewp</path>
+  </project>
+  <batchBuild>
+    <batchDefinition>
+      <name>All</name>
+      <member>
+        <project>Project</project>
+        <configuration>IAR_STM32F217ZE_SK</configuration>
+      </member>
+      <member>
+        <project>Project</project>
+        <configuration>IAR_STM32F457_SK</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+</workspace>
+
+
