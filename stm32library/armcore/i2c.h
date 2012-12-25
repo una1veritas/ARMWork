@@ -52,25 +52,26 @@ typedef enum __I2C_CommMode {
 } I2C_CommMode;
 
 #define I2C_BUFFER_SIZE 256
-typedef struct __I2CBuffer {
+typedef struct __I2CContext {
 	I2C_TypeDef * I2Cx;
 	GPIOPin sda, scl;
 	uint8_t address;
-	boolean irqmode;
+//	boolean irqmode;
 	__IO I2C_CommMode mode;
-	__IO I2C_Status status;
+	__IO uint32 status;
 	__IO uint16_t position;
-	__IO uint16_t length;
-	uint8_t databytes[I2C_BUFFER_SIZE];
-} I2CBuffer;
+	__IO uint16_t limlen;
+	uint8_t * buffer;
+//	boolean stopMode;
+} I2CContext;
 
-extern I2CBuffer I2C1Buffer, I2C2Buffer, I2C3Buffer;
+extern I2CContext I2C1Buffer, I2C2Buffer, I2C3Buffer;
 
-boolean i2c_begin(I2CBuffer * I2Cbuf, I2C_TypeDef * I2Cx, GPIOPin sda, GPIOPin scl, uint32_t clk); //I2C_TypeDef * I2Cx, uint32_t clk);
-boolean i2c_transmit(I2CBuffer * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t length);
-boolean i2c_request(I2CBuffer * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t len, uint16_t lim);
-boolean i2c_start_send(I2CBuffer * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t length);
-boolean i2c_receive(I2CBuffer * I2Cbuf, uint8_t addr, uint8_t * recv, uint16_t lim);
+boolean i2c_begin(I2CContext * I2Cbuf, I2C_TypeDef * I2Cx, GPIOPin sda, GPIOPin scl, uint32_t clk); //I2C_TypeDef * I2Cx, uint32_t clk);
+boolean i2c_transmit(I2CContext * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t length);
+boolean i2c_request(I2CContext * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t len, uint16_t lim);
+boolean i2c_start_send(I2CContext * I2Cbuf);
+boolean i2c_receive(I2CContext * I2Cbuf);
 
 #ifdef __cplusplus
 }
