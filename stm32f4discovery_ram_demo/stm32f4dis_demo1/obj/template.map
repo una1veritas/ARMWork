@@ -1,0 +1,433 @@
+
+Discarded input sections
+
+ .data          0x00000000        0x0 obj/vector.o
+ .bss           0x00000000        0x0 obj/vector.o
+ .data          0x00000000        0x0 obj/main.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+rom              0x20000000         0x00020000         xrw
+ram              0x10000000         0x0000f000         xrw
+stack            0x1000f000         0x00001000         xrw
+nvram            0x40024000         0x00001000         rw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD obj/vector.o
+LOAD obj/main.o
+LOAD c:/program files/codesourcery/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib/thumb2\libc.a
+LOAD c:/program files/codesourcery/bin/../lib/gcc/arm-none-eabi/4.6.1/thumb2\libgcc.a
+LOAD c:/program files/codesourcery/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib/thumb2\libm.a
+START GROUP
+LOAD c:/program files/codesourcery/bin/../lib/gcc/arm-none-eabi/4.6.1/thumb2\libgcc.a
+LOAD c:/program files/codesourcery/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib/thumb2\libc.a
+END GROUP
+                0x20000000                _startof_flash = ORIGIN (rom)
+                0x20020000                _endof_flash = (ORIGIN (rom) + 0x20000)
+                0x10000000                _startof_sram = ORIGIN (ram)
+                0x1000f000                _endof_sram = (ORIGIN (ram) + 0xf000)
+                0x40024000                _startof_nvram = ORIGIN (nvram)
+                0x40025000                _endof_nvram = (ORIGIN (nvram) + 0x1000)
+                0x1000f000                _startof_stack = ORIGIN (stack)
+                0x10010000                _endof_stack = (ORIGIN (stack) + 0x1000)
+
+.text           0x20000000      0x2c4
+ FILL mask 0xff
+ *(.VECTOR)
+ .VECTOR        0x20000000      0x188 obj/vector.o
+                0x20000000                vector
+                0x20000188                _text = .
+                0x20000188                PROVIDE (text, .)
+ *(.text .text.*)
+ .text          0x20000188        0x2 obj/vector.o
+                0x20000188                hndl_TIM6_DAC
+                0x20000188                hndl_I2C3_EV
+                0x20000188                hndl_PendSV
+                0x20000188                hndl_CAN2_TX
+                0x20000188                hndl_CAN2_RX1
+                0x20000188                hndl_USART3
+                0x20000188                hndl_USART1
+                0x20000188                hndl_DMA1_Stream2
+                0x20000188                hndl_USART6
+                0x20000188                hndl_OTG_HS
+                0x20000188                hndl_BusFault
+                0x20000188                hndl_RCC
+                0x20000188                hndl_CAN1_TX
+                0x20000188                hndl_TIM8_UP_TIM13
+                0x20000188                hndl_DCMI
+                0x20000188                hndl_SVCall
+                0x20000188                hndl_TIM8_BRK_TIM12
+                0x20000188                hndl_EXTI3
+                0x20000188                hndl_USART2
+                0x20000188                hndl_I2C1_EV
+                0x20000188                hndl_I2C1_ER
+                0x20000188                hndl_PVD
+                0x20000188                hndl_RTC_WKUP
+                0x20000188                hndl_TIM8_CC
+                0x20000188                hndl_OTG_FS
+                0x20000188                hndl_ETH
+                0x20000188                hndl_CAN1_RX1
+                0x20000188                hndl_TIM5
+                0x20000188                hndl_TIM2
+                0x20000188                hndl_EXTI0
+                0x20000188                hndl_TIM7
+                0x20000188                hndl_OTG_FS_WKUP
+                0x20000188                hndl_SPI3
+                0x20000188                hndl_DMA2_Stream5
+                0x20000188                hndl_TIM1_BRK_TIM9
+                0x20000188                hndl_TRAP
+                0x20000188                hndl_USART5
+                0x20000188                hndl_TIM4
+                0x20000188                hndl_CAN1_RX0
+                0x20000188                hndl_DMA2_Stream2
+                0x20000188                hndl_DMA1_Stream6
+                0x20000188                hndl_TIM1_UP_TIM10
+                0x20000188                hndl_FPU
+                0x20000188                hndl_EXTI15_10
+                0x20000188                hndl_OTG_HS_EP1_IN
+                0x20000188                hndl_DMA2_Stream1
+                0x20000188                hndl_TIM3
+                0x20000188                hndl_SDIO
+                0x20000188                hndl_EXTI9_5
+                0x20000188                hndl_ADC
+                0x20000188                hndl_OTG_HS_EP1_OUT
+                0x20000188                hndl_TIM1_CC
+                0x20000188                hndl_DMA1_Stream3
+                0x20000188                hndl_DMA1_Stream5
+                0x20000188                hndl_DMA2_Stream7
+                0x20000188                hndl_DMA2_Stream3
+                0x20000188                hndl_RTC_Alarm
+                0x20000188                hndl_TIM8_TRG_COM_TIM14
+                0x20000188                hndl_TAMP_STAMP
+                0x20000188                hndl_EXTI4
+                0x20000188                hndl_Debug_Monitor
+                0x20000188                hndl_HardFault
+                0x20000188                hndl_DMA1_Stream0
+                0x20000188                hndl_DMA2_Stream0
+                0x20000188                hndl_CAN1_SCE
+                0x20000188                hndl_DMA2_Stream4
+                0x20000188                hndl_I2C3_ER
+                0x20000188                hndl_FLASH
+                0x20000188                hndl_UsageFault
+                0x20000188                hndl_CAN2_SCE
+                0x20000188                hndl_OTG_HS_WKUP
+                0x20000188                hndl_DMA1_Stream4
+                0x20000188                hndl_CRYP
+                0x20000188                hndl_SPI2
+                0x20000188                hndl_WWDG
+                0x20000188                hndl_I2C2_ER
+                0x20000188                hndl_DMA2_Stream6
+                0x20000188                hndl_FSMC
+                0x20000188                hndl_HASH_RNG
+                0x20000188                hndl_TIM1_TRG_COM_TIM11
+                0x20000188                hndl_MemManage
+                0x20000188                hndl_EXTI2
+                0x20000188                hndl_EXTI1
+                0x20000188                hndl_USART4
+                0x20000188                hndl_I2C2_EV
+                0x20000188                hndl_CAN2_RX0
+                0x20000188                hndl_DMA1_Stream7
+                0x20000188                hndl_DMA1_Stream1
+                0x20000188                hndl_ETH_WKUP
+                0x20000188                hndl_SPI1
+                0x20000188                hndl_NMI
+ *fill*         0x2000018a        0x2 00
+ .text          0x2000018c       0xf8 obj/main.o
+                0x2000018c                init_RCC
+                0x200001b4                init
+                0x20000250                start
+                0x2000026c                hndl_SysTick
+ .text.startup  0x20000284       0x40 obj/main.o
+                0x20000284                main
+ *(.gnu.linkonce.t*)
+ *(.gcc_except_table)
+ *(.rodata .rodata.*)
+ *(.gnu.linkonce.r*)
+
+.glue_7         0x200002c4        0x0
+ .glue_7        0x00000000        0x0 linker stubs
+
+.glue_7t        0x200002c4        0x0
+ .glue_7t       0x00000000        0x0 linker stubs
+
+.vfp11_veneer   0x200002c4        0x0
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x200002c4        0x0
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.iplt           0x200002c4        0x0
+ .iplt          0x00000000        0x0 obj/vector.o
+
+.rel.dyn        0x200002c4        0x0
+ .rel.iplt      0x00000000        0x0 obj/vector.o
+
+.ARM.excep      0x200002c4        0x0
+ FILL mask 0xff
+                0x200002c4                __exidx_start = .
+ *(.ARM.exidx*)
+                0x200002c4                __exidx_end = .
+                0x200002c4                __extab_start = .
+ *(.ARM.extab*)
+                0x200002c4                __exidx_end = .
+                0x200002c4                . = ALIGN (0x4)
+                0x200002c4                _etext = .
+                0x200002c4                PROVIDE (etext, .)
+                0x200002c4                _sidata = .
+
+.data           0x10000000        0x0 load address 0x200002c4
+ FILL mask 0xff
+                0x10000000                . = ALIGN (0x4)
+                0x10000000                _sdata = .
+ *(.data .data.*)
+ *(.gnu.linkonce.d*)
+                0x10000000                . = ALIGN (0x4)
+                0x10000000                _edata = .
+                0x10000000                PROVIDE (edata, .)
+
+.igot.plt       0x10000000        0x0
+ .igot.plt      0x00000000        0x0 obj/vector.o
+
+.bss            0x10000000        0x4
+                0x10000000                _sbss = .
+                0x10000000                __bss_start = .
+                0x10000000                __bss_start__ = .
+ *(.bss .bss.*)
+ .bss           0x10000000        0x4 obj/main.o
+ *(.gnu.linkonce.b*)
+ *(COMMON)
+                0x10000004                . = ALIGN (0x4)
+                0x10000004                _ebss = .
+                0x10000004                _heap = .
+                0x10000004                PROVIDE (heap, .)
+                0x10000004                _bss_end__ = .
+                0x10000004                __bss_end__ = .
+                0x10000004                __end__ = .
+                0x10000004                PROVIDE (end, .)
+                0x10000004                _end = .
+
+.nonvolatile    0x40024000        0x0
+                0x40024000                _snonvolatile = .
+ *(.nonvolatile .nonvolatile.*)
+                0x40024000                _enonvolatile = .
+
+.stack          0x1000f000        0x0
+ *(.stack)
+ *(.STACK)
+                0x1000f000                . = ALIGN (0x4)
+                0x1000f000                . = ALIGN (0x4)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x00000000       0x30
+ *(.comment)
+ .comment       0x00000000       0x30 obj/vector.o
+                                 0x31 (size before relaxing)
+ .comment       0x00000000       0x31 obj/main.o
+
+.ARM.attributes
+                0x00000000       0x39
+ .ARM.attributes
+                0x00000000       0x39 obj/vector.o
+ .ARM.attributes
+                0x00000039       0x39 obj/main.o
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000       0x48
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x20 obj/vector.o
+ .debug_aranges
+                0x00000020       0x28 obj/main.o
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x00000000      0x866
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x00000000       0xfa obj/vector.o
+ .debug_info    0x000000fa      0x76c obj/main.o
+
+.debug_abbrev   0x00000000      0x259
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000       0xab obj/vector.o
+ .debug_abbrev  0x000000ab      0x1ae obj/main.o
+
+.debug_line     0x00000000      0x1e6
+ *(.debug_line)
+ .debug_line    0x00000000       0xbb obj/vector.o
+ .debug_line    0x000000bb      0x12b obj/main.o
+
+.debug_frame    0x00000000       0x94
+ *(.debug_frame)
+ .debug_frame   0x00000000       0x20 obj/vector.o
+ .debug_frame   0x00000020       0x74 obj/main.o
+
+.debug_str      0x00000000      0x2f7
+ *(.debug_str)
+ .debug_str     0x00000000       0xd1 obj/vector.o
+                                0x10d (size before relaxing)
+ .debug_str     0x000000d1      0x226 obj/main.o
+                                0x30d (size before relaxing)
+
+.debug_loc      0x00000000       0xd3
+ *(.debug_loc)
+ .debug_loc     0x00000000       0xd3 obj/main.o
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+OUTPUT(obj/template.elf elf32-littlearm)
+
+.debug_ranges   0x00000000       0x48
+ .debug_ranges  0x00000000       0x48 obj/main.o
+
+Cross Reference Table
+
+Symbol                                            File
+_ebss                                             obj/main.o
+_edata                                            obj/main.o
+_endof_stack                                      obj/vector.o
+_sbss                                             obj/main.o
+_sdata                                            obj/main.o
+_sidata                                           obj/main.o
+hndl_ADC                                          obj/vector.o
+hndl_BusFault                                     obj/vector.o
+hndl_CAN1_RX0                                     obj/vector.o
+hndl_CAN1_RX1                                     obj/vector.o
+hndl_CAN1_SCE                                     obj/vector.o
+hndl_CAN1_TX                                      obj/vector.o
+hndl_CAN2_RX0                                     obj/vector.o
+hndl_CAN2_RX1                                     obj/vector.o
+hndl_CAN2_SCE                                     obj/vector.o
+hndl_CAN2_TX                                      obj/vector.o
+hndl_CRYP                                         obj/vector.o
+hndl_DCMI                                         obj/vector.o
+hndl_DMA1_Stream0                                 obj/vector.o
+hndl_DMA1_Stream1                                 obj/vector.o
+hndl_DMA1_Stream2                                 obj/vector.o
+hndl_DMA1_Stream3                                 obj/vector.o
+hndl_DMA1_Stream4                                 obj/vector.o
+hndl_DMA1_Stream5                                 obj/vector.o
+hndl_DMA1_Stream6                                 obj/vector.o
+hndl_DMA1_Stream7                                 obj/vector.o
+hndl_DMA2_Stream0                                 obj/vector.o
+hndl_DMA2_Stream1                                 obj/vector.o
+hndl_DMA2_Stream2                                 obj/vector.o
+hndl_DMA2_Stream3                                 obj/vector.o
+hndl_DMA2_Stream4                                 obj/vector.o
+hndl_DMA2_Stream5                                 obj/vector.o
+hndl_DMA2_Stream6                                 obj/vector.o
+hndl_DMA2_Stream7                                 obj/vector.o
+hndl_Debug_Monitor                                obj/vector.o
+hndl_ETH                                          obj/vector.o
+hndl_ETH_WKUP                                     obj/vector.o
+hndl_EXTI0                                        obj/vector.o
+hndl_EXTI1                                        obj/vector.o
+hndl_EXTI15_10                                    obj/vector.o
+hndl_EXTI2                                        obj/vector.o
+hndl_EXTI3                                        obj/vector.o
+hndl_EXTI4                                        obj/vector.o
+hndl_EXTI9_5                                      obj/vector.o
+hndl_FLASH                                        obj/vector.o
+hndl_FPU                                          obj/vector.o
+hndl_FSMC                                         obj/vector.o
+hndl_HASH_RNG                                     obj/vector.o
+hndl_HardFault                                    obj/vector.o
+hndl_I2C1_ER                                      obj/vector.o
+hndl_I2C1_EV                                      obj/vector.o
+hndl_I2C2_ER                                      obj/vector.o
+hndl_I2C2_EV                                      obj/vector.o
+hndl_I2C3_ER                                      obj/vector.o
+hndl_I2C3_EV                                      obj/vector.o
+hndl_MemManage                                    obj/vector.o
+hndl_NMI                                          obj/vector.o
+hndl_OTG_FS                                       obj/vector.o
+hndl_OTG_FS_WKUP                                  obj/vector.o
+hndl_OTG_HS                                       obj/vector.o
+hndl_OTG_HS_EP1_IN                                obj/vector.o
+hndl_OTG_HS_EP1_OUT                               obj/vector.o
+hndl_OTG_HS_WKUP                                  obj/vector.o
+hndl_PVD                                          obj/vector.o
+hndl_PendSV                                       obj/vector.o
+hndl_RCC                                          obj/vector.o
+hndl_RTC_Alarm                                    obj/vector.o
+hndl_RTC_WKUP                                     obj/vector.o
+hndl_SDIO                                         obj/vector.o
+hndl_SPI1                                         obj/vector.o
+hndl_SPI2                                         obj/vector.o
+hndl_SPI3                                         obj/vector.o
+hndl_SVCall                                       obj/vector.o
+hndl_SysTick                                      obj/main.o
+                                                  obj/vector.o
+hndl_TAMP_STAMP                                   obj/vector.o
+hndl_TIM1_BRK_TIM9                                obj/vector.o
+hndl_TIM1_CC                                      obj/vector.o
+hndl_TIM1_TRG_COM_TIM11                           obj/vector.o
+hndl_TIM1_UP_TIM10                                obj/vector.o
+hndl_TIM2                                         obj/vector.o
+hndl_TIM3                                         obj/vector.o
+hndl_TIM4                                         obj/vector.o
+hndl_TIM5                                         obj/vector.o
+hndl_TIM6_DAC                                     obj/vector.o
+hndl_TIM7                                         obj/vector.o
+hndl_TIM8_BRK_TIM12                               obj/vector.o
+hndl_TIM8_CC                                      obj/vector.o
+hndl_TIM8_TRG_COM_TIM14                           obj/vector.o
+hndl_TIM8_UP_TIM13                                obj/vector.o
+hndl_TRAP                                         obj/vector.o
+hndl_USART1                                       obj/vector.o
+hndl_USART2                                       obj/vector.o
+hndl_USART3                                       obj/vector.o
+hndl_USART4                                       obj/vector.o
+hndl_USART5                                       obj/vector.o
+hndl_USART6                                       obj/vector.o
+hndl_UsageFault                                   obj/vector.o
+hndl_WWDG                                         obj/vector.o
+init                                              obj/main.o
+init_RCC                                          obj/main.o
+main                                              obj/main.o
+start                                             obj/main.o
+                                                  obj/vector.o
+vector                                            obj/vector.o
