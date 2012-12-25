@@ -168,8 +168,8 @@ boolean i2c_request(I2CContext * wire, uint8_t addr, uint8_t * data, uint16_t le
 	t = i2c_start_send(wire);
 	if ( !t ) {
 			wire->status = 0x80000000 | I2C_GetLastEvent(wire->I2Cx);
-	I2C_GenerateSTOP(wire->I2Cx, ENABLE);
-	return false;
+			I2C_GenerateSTOP(wire->I2Cx, ENABLE);
+			return false;
 	}
 	wire->limlen = lim;
 	if ( t && i2c_receive(&I2C1Buffer) ) {
@@ -244,26 +244,26 @@ boolean i2c_receive(I2CContext * wire) {
 	I2C_GenerateSTART(wire->I2Cx, ENABLE);
 	/* Test on EV5 and clear it */
 	for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_MODE_SELECT ); wc++) {
-		if (wc > 50)
+		if (wc > 17)
 			return false;
-		delay_us(20);
+		delay_us(17);
 	} // wc = 1
 	/* Send address for read */
 	I2C_Send7bitAddress(wire->I2Cx, wire->address << 1, I2C_Direction_Receiver );
 	/* Test on EV6 and clear it */
 	for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED ); wc++) {
-		if (wc > 50)
+		if (wc > 8)
 			return false;
-		delay_us(20);
+		delay_us(67);
 	} 
 	
 	recv = wire->buffer;
 	for (i = wire->limlen; i > 0; ) {
 		// Test on EV7 and clear it
 		for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_BYTE_RECEIVED); wc++) {
-			if (wc > 50)
+			if (wc > 72)
 				return false;
-			delay_us(33);
+			delay_us(67);
 		}
 		/* Read a byte from the slave */
 		*recv++ = I2C_ReceiveData(wire->I2Cx);

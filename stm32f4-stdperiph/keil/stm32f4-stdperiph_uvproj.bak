@@ -581,6 +581,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_adc.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_i2c.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
