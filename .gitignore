@@ -5,14 +5,9 @@
 *.d
 *.mk
 *.lst
-<<<<<<< HEAD
 *.bak
 *__i
 .DS_Store
-=======
-*.__i
-*.bak
 *.zip
 *.gz
->>>>>>> origin/win@home
 .metadata
