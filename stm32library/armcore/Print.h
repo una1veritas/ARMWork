@@ -35,7 +35,7 @@ class Print
 {
   private:
     int write_error;
-    size_t printNumber(unsigned long, uint8_t);
+    size_t printNumber(uint32, uint8_t);
     size_t printFloat(double, uint8_t);
 
   protected:
@@ -56,25 +56,27 @@ class Print
 //    size_t print(const __FlashStringHelper *);
 //    size_t print(const String &);
     size_t print(const char[]);
-    size_t print(char);
-    size_t print(unsigned char, int = DEC);
-    size_t print(int, int = DEC);
-    size_t print(unsigned int, int = DEC);
-    size_t print(long, int = DEC);
-    size_t print(unsigned long, int = DEC);
-    size_t print(double, int = 2);
+    size_t print(const char);
+    size_t print(uint8, uint8 = DEC);
+    size_t print(int16, uint8 = DEC);
+    size_t print(uint16, uint8 = DEC);
+    size_t print(int32, uint8 = DEC);
+    size_t print(uint32, uint8 = DEC);
+    size_t print(double, uint8 = 2);
 //    size_t print(const Printable&);
+		size_t printByte(uint8 * array, uint8 length, char sep = ' ');
+		size_t printByte(uint8 val);
 
 //    size_t println(const __FlashStringHelper *);
 //    size_t println(const String &s);
     size_t println(const char[]);
-    size_t println(char);
-    size_t println(unsigned char, int = DEC);
-    size_t println(int, int = DEC);
-    size_t println(unsigned int, int = DEC);
-    size_t println(long, int = DEC);
-    size_t println(unsigned long, int = DEC);
-    size_t println(double, int = 2);
+    size_t println(const char);
+    size_t println(uint8, uint8 = DEC);
+    size_t println(int16, uint8 = DEC);
+    size_t println(uint16, uint8 = DEC);
+    size_t println(int32, uint8 = DEC);
+    size_t println(uint32, uint8 = DEC);
+    size_t println(double, uint8 = 2);
 //    size_t println(const Printable&);
     size_t println(void);
 };

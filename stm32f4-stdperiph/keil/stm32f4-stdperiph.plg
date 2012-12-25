@@ -4,276 +4,434 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 C:\Users\Sin\Documents\github\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.uvproj
-Project File Date:  12/24/2012
+Project File Date:  12/25/2012
 
 <h2>Output:</h2>
 Build target 'Target 1'
 compiling main.cpp...
-..\main.cpp(154): warning:  #111-D: statement is unreachable
-linking...
-Program Size: Code=19140 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
+..\..\stm32library\armcore\ST7032i.h(34): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.h(43): error:  #20: identifier "I2CBuffer" is undefined
+..\main.cpp(153): warning:  #111-D: statement is unreachable
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(262): warning:  #177-D: variable "temp" was declared but never referenced
-..\..\stm32library\armcore\i2c.c(397): error:  #20: identifier "waitForStartConditionAfterWriteFollowedByRestart" is undefined
-Target not created
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(94): error:  #165: too few arguments in function call
-..\..\stm32library\armcore\i2c.c(262): warning:  #177-D: variable "temp" was declared but never referenced
-..\..\stm32library\armcore\i2c.c(397): error:  #20: identifier "waitForStartConditionAfterWriteFollowedByRestart" is undefined
-Target not created
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-_____^
-*** error 56: cannot open file
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(262): warning:  #177-D: variable "temp" was declared but never referenced
-..\..\stm32library\armcore\i2c.c(397): error:  #20: identifier "waitForStartConditionAfterWriteFollowedByRestart" is undefined
-Target not created
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-_____^
-*** error 56: cannot open file
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(262): warning:  #177-D: variable "temp" was declared but never referenced
-linking...
-Program Size: Code=19200 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(264): warning:  #177-D: variable "temp" was declared but never referenced
-linking...
-Program Size: Code=19208 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(211): error:  #114: label "failre" was referenced but not defined
-..\..\stm32library\armcore\i2c.c(253): warning:  #177-D: label "failure" was declared but never referenced
-..\..\stm32library\armcore\i2c.c(261): warning:  #177-D: variable "temp" was declared but never referenced
-Target not created
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(211): error:  #114: label "failre" was referenced but not defined
-..\..\stm32library\armcore\i2c.c(253): warning:  #177-D: label "failure" was declared but never referenced
-..\..\stm32library\armcore\i2c.c(261): warning:  #177-D: variable "temp" was declared but never referenced
-Target not created
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(219): error:  #114: label "failre" was referenced but not defined
-..\..\stm32library\armcore\i2c.c(261): warning:  #177-D: variable "temp" was declared but never referenced
-Target not created
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-_____^
-*** error 56: cannot open file
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(261): warning:  #177-D: variable "temp" was declared but never referenced
-linking...
-Program Size: Code=19212 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(261): warning:  #177-D: variable "temp" was declared but never referenced
-..\..\stm32library\armcore\i2c.c - 0 Error(s), 1 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=19220 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(261): warning:  #177-D: variable "temp" was declared but never referenced
-linking...
-Program Size: Code=19220 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(259): warning:  #177-D: variable "temp" was declared but never referenced
-linking...
-Program Size: Code=19220 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling main.cpp...
-..\main.cpp(152): warning:  #111-D: statement is unreachable
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(151): warning:  #177-D: variable "t" was declared but never referenced
-..\..\stm32library\armcore\i2c.c(271): warning:  #177-D: variable "temp" was declared but never referenced
+..\..\stm32library\armcore\i2c.c(90): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(92): error:  #136: struct "__I2CContext" has no field "irqmode"
+..\..\stm32library\armcore\i2c.c(98): error:  #147-D: declaration is incompatible with "boolean i2c_start_send(I2CContext *)" (declared at line 73 of "..\..\stm32library\armcore\i2c.h")
+..\..\stm32library\armcore\i2c.c(108): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(157): error:  #140: too many arguments in function call
+..\..\stm32library\armcore\i2c.c(215): error:  #147-D: declaration is incompatible with "boolean i2c_receive(I2CContext *)" (declared at line 74 of "..\..\stm32library\armcore\i2c.h")
+..\..\stm32library\armcore\i2c.c(221): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(277): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(283): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(287): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(292): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(293): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(294): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(298): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(302): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(303): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(304): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(305): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(311): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(318): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(323): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(327): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(330): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(334): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(337): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(341): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(344): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(348): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(351): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(353): error:  #136: struct "__I2CContext" has no field "position"
 compiling ST7032i.cpp...
-linking...
-Program Size: Code=19268 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
+..\..\stm32library\armcore\ST7032i.h(34): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.h(43): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CBuffer" is undefined
+Target not created
 Build target 'Target 1'
+compiling main.cpp...
+..\..\stm32library\armcore\ST7032i.h(34): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.h(43): error:  #20: identifier "I2CBuffer" is undefined
+..\main.cpp(153): warning:  #111-D: statement is unreachable
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(151): warning:  #177-D: variable "t" was declared but never referenced
-..\..\stm32library\armcore\i2c.c(271): warning:  #177-D: variable "temp" was declared but never referenced
-linking...
-Program Size: Code=19268 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
+..\..\stm32library\armcore\i2c.c(98): error:  #147-D: declaration is incompatible with "boolean i2c_start_send(I2CContext *)" (declared at line 73 of "..\..\stm32library\armcore\i2c.h")
+..\..\stm32library\armcore\i2c.c(108): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(157): error:  #140: too many arguments in function call
+..\..\stm32library\armcore\i2c.c(215): error:  #147-D: declaration is incompatible with "boolean i2c_receive(I2CContext *)" (declared at line 74 of "..\..\stm32library\armcore\i2c.h")
+..\..\stm32library\armcore\i2c.c(221): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(277): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(283): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(287): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(292): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(293): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(294): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(298): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(302): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(303): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(304): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(305): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(311): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(318): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(323): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(327): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(330): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(334): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(337): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(341): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(344): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(348): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(351): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(353): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(354): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(357): error:  #136: struct "__I2CContext" has no field "status"
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.h(34): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.h(43): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CBuffer" is undefined
+Target not created
 Build target 'Target 1'
-linking...
-Program Size: Code=19268 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
+compiling main.cpp...
+..\..\stm32library\armcore\ST7032i.h(43): error:  #20: identifier "I2CBuffer" is undefined
+..\main.cpp(153): warning:  #111-D: statement is unreachable
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(114): error:  #254: type name is not allowed
-..\..\stm32library\armcore\i2c.c(153): warning:  #177-D: variable "t" was declared but never referenced
-..\..\stm32library\armcore\i2c.c(273): warning:  #177-D: variable "temp" was declared but never referenced
+..\..\stm32library\armcore\i2c.c(98): error:  #147-D: declaration is incompatible with "boolean i2c_start_send(I2CContext *)" (declared at line 73 of "..\..\stm32library\armcore\i2c.h")
+..\..\stm32library\armcore\i2c.c(108): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(157): error:  #140: too many arguments in function call
+..\..\stm32library\armcore\i2c.c(215): error:  #147-D: declaration is incompatible with "boolean i2c_receive(I2CContext *)" (declared at line 74 of "..\..\stm32library\armcore\i2c.h")
+..\..\stm32library\armcore\i2c.c(221): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(277): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(283): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(287): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(292): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(293): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(294): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(298): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(302): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(303): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(304): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(305): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(311): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(318): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(323): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(327): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(330): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(334): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(337): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(341): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(344): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(348): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(351): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(353): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(354): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(357): error:  #136: struct "__I2CContext" has no field "status"
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.h(43): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CBuffer" is undefined
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(153): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(98): error:  #147-D: declaration is incompatible with "boolean i2c_start_send(I2CContext *)" (declared at line 73 of "..\..\stm32library\armcore\i2c.h")
+..\..\stm32library\armcore\i2c.c(108): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(157): error:  #140: too many arguments in function call
+..\..\stm32library\armcore\i2c.c(215): error:  #147-D: declaration is incompatible with "boolean i2c_receive(I2CContext *)" (declared at line 74 of "..\..\stm32library\armcore\i2c.h")
+..\..\stm32library\armcore\i2c.c(221): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(277): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(283): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(287): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(292): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(293): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(294): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(298): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(302): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(303): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(304): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(305): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(311): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(318): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(323): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(327): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(330): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(334): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(337): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(341): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(344): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(348): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(351): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(353): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(354): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(357): error:  #136: struct "__I2CContext" has no field "status"
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #147: declaration is incompatible with "void ST7032i::init(I2CContext *)" (declared at line 43 of "..\..\stm32library\armcore\ST7032i.h")
 Target not created
 Build target 'Target 1'
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(114): error:  #254: type name is not allowed
-..\..\stm32library\armcore\i2c.c(153): warning:  #177-D: variable "t" was declared but never referenced
-..\..\stm32library\armcore\i2c.c(273): warning:  #177-D: variable "temp" was declared but never referenced
+..\..\stm32library\armcore\i2c.c(108): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(121): error:  #20: identifier "addr" is undefined
+..\..\stm32library\armcore\i2c.c(129): error:  #20: identifier "length" is undefined
+..\..\stm32library\armcore\i2c.c(130): error:  #20: identifier "data" is undefined
+..\..\stm32library\armcore\i2c.c(145): error:  #140: too many arguments in function call
+..\..\stm32library\armcore\i2c.c(156): error:  #140: too many arguments in function call
+..\..\stm32library\armcore\i2c.c(157): error:  #140: too many arguments in function call
+..\..\stm32library\armcore\i2c.c(215): error:  #147-D: declaration is incompatible with "boolean i2c_receive(I2CContext *)" (declared at line 74 of "..\..\stm32library\armcore\i2c.h")
+..\..\stm32library\armcore\i2c.c(221): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(277): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(283): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(287): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(292): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(293): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(294): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(298): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(302): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(303): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(304): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(305): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(311): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(318): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(323): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(327): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(330): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(334): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(337): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(341): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(344): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(348): error:  #136: struct "__I2CContext" has no field "status"
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #147: declaration is incompatible with "void ST7032i::init(I2CContext *)" (declared at line 43 of "..\..\stm32library\armcore\ST7032i.h")
 Target not created
 Build target 'Target 1'
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(114): error:  #254: type name is not allowed
-..\..\stm32library\armcore\i2c.c(273): warning:  #177-D: variable "temp" was declared but never referenced
+..\..\stm32library\armcore\i2c.c(108): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(121): error:  #20: identifier "addr" is undefined
+..\..\stm32library\armcore\i2c.c(129): error:  #20: identifier "length" is undefined
+..\..\stm32library\armcore\i2c.c(130): error:  #20: identifier "data" is undefined
+..\..\stm32library\armcore\i2c.c(145): error:  #140: too many arguments in function call
+..\..\stm32library\armcore\i2c.c(156): error:  #140: too many arguments in function call
+..\..\stm32library\armcore\i2c.c(157): error:  #140: too many arguments in function call
+..\..\stm32library\armcore\i2c.c(215): error:  #147-D: declaration is incompatible with "boolean i2c_receive(I2CContext *)" (declared at line 74 of "..\..\stm32library\armcore\i2c.h")
+..\..\stm32library\armcore\i2c.c(221): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(277): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(283): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(287): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(292): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(293): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(294): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(298): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(302): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(303): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(304): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(305): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(311): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(318): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(323): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(327): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(330): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(334): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(337): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(341): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(344): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(348): error:  #136: struct "__I2CContext" has no field "status"
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #147: declaration is incompatible with "void ST7032i::init(I2CContext *)" (declared at line 43 of "..\..\stm32library\armcore\ST7032i.h")
 Target not created
 Build target 'Target 1'
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(114): error:  #254: type name is not allowed
-..\..\stm32library\armcore\i2c.c(273): warning:  #177-D: variable "temp" was declared but never referenced
+..\..\stm32library\armcore\i2c.c(145): error:  #140: too many arguments in function call
+..\..\stm32library\armcore\i2c.c(156): error:  #140: too many arguments in function call
+..\..\stm32library\armcore\i2c.c(157): error:  #140: too many arguments in function call
+..\..\stm32library\armcore\i2c.c(215): error:  #147-D: declaration is incompatible with "boolean i2c_receive(I2CContext *)" (declared at line 74 of "..\..\stm32library\armcore\i2c.h")
+..\..\stm32library\armcore\i2c.c(221): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(277): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(283): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(287): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(292): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(293): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(294): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(298): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(302): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(303): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(304): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(305): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(311): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(318): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(323): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(327): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(330): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(334): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(337): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(341): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(344): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(348): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(351): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(353): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(354): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(357): error:  #136: struct "__I2CContext" has no field "status"
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #147: declaration is incompatible with "void ST7032i::init(I2CContext *)" (declared at line 43 of "..\..\stm32library\armcore\ST7032i.h")
 Target not created
 Build target 'Target 1'
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(273): warning:  #177-D: variable "temp" was declared but never referenced
-linking...
-Program Size: Code=19280 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=19280 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(271): warning:  #177-D: variable "temp" was declared but never referenced
-linking...
-Program Size: Code=19268 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(273): warning:  #177-D: variable "temp" was declared but never referenced
-linking...
-Program Size: Code=19280 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=19280 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
+..\..\stm32library\armcore\i2c.c(159): error:  #140: too many arguments in function call
+..\..\stm32library\armcore\i2c.c(160): error:  #140: too many arguments in function call
+..\..\stm32library\armcore\i2c.c(218): error:  #147-D: declaration is incompatible with "boolean i2c_receive(I2CContext *)" (declared at line 74 of "..\..\stm32library\armcore\i2c.h")
+..\..\stm32library\armcore\i2c.c(224): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(280): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(286): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(290): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(295): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(296): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(297): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(301): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(305): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(306): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(307): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(308): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(314): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(321): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(326): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(330): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(333): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(337): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(340): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(344): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(347): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(351): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(354): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(356): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(357): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(360): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(363): error:  #136: struct "__I2CContext" has no field "position"
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #147: declaration is incompatible with "void ST7032i::init(I2CContext *)" (declared at line 43 of "..\..\stm32library\armcore\ST7032i.h")
+Target not created
 Build target 'Target 1'
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(140): warning:  #177-D: variable "t" was declared but never referenced
-..\..\stm32library\armcore\i2c.c(273): warning:  #177-D: variable "temp" was declared but never referenced
-linking...
-Program Size: Code=19276 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
+..\..\stm32library\armcore\i2c.c(160): error:  #20: identifier "length" is undefined
+..\..\stm32library\armcore\i2c.c(222): error:  #147-D: declaration is incompatible with "boolean i2c_receive(I2CContext *)" (declared at line 74 of "..\..\stm32library\armcore\i2c.h")
+..\..\stm32library\armcore\i2c.c(228): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(284): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(290): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(294): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(299): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(300): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(301): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(305): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(309): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(310): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(311): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(312): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(318): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(325): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(330): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(334): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(337): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(341): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(344): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(348): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(351): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(355): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(358): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(360): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(361): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(364): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(367): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(368): error:  #136: struct "__I2CContext" has no field "position"
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #147: declaration is incompatible with "void ST7032i::init(I2CContext *)" (declared at line 43 of "..\..\stm32library\armcore\ST7032i.h")
+Target not created
 Build target 'Target 1'
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(272): warning:  #177-D: variable "temp" was declared but never referenced
-linking...
-Program Size: Code=19280 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+..\..\stm32library\armcore\i2c.c(222): error:  #147-D: declaration is incompatible with "boolean i2c_receive(I2CContext *)" (declared at line 74 of "..\..\stm32library\armcore\i2c.h")
+..\..\stm32library\armcore\i2c.c(228): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(284): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(290): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(294): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(299): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(300): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(301): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(305): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(309): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(310): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(311): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(312): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(318): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(325): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(330): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(334): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(337): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(341): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(344): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(348): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(351): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(355): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(358): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(360): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(361): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(364): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(367): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(368): error:  #136: struct "__I2CContext" has no field "position"
+..\..\stm32library\armcore\i2c.c(369): error:  #136: struct "__I2CContext" has no field "status"
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #147: declaration is incompatible with "void ST7032i::init(I2CContext *)" (declared at line 43 of "..\..\stm32library\armcore\ST7032i.h")
+Target not created
 Build target 'Target 1'
-linking...
-Program Size: Code=19280 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(222): error:  #147-D: declaration is incompatible with "boolean i2c_receive(I2CContext *)" (declared at line 74 of "..\..\stm32library\armcore\i2c.h")
+..\..\stm32library\armcore\i2c.c(228): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(399): warning:  #1-D: last line of file ends without a newline
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #147: declaration is incompatible with "void ST7032i::init(I2CContext *)" (declared at line 43 of "..\..\stm32library\armcore\ST7032i.h")
+Target not created
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(228): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(238): error:  #20: identifier "addr" is undefined
+..\..\stm32library\armcore\i2c.c(246): error:  #20: identifier "lim" is undefined
+..\..\stm32library\armcore\i2c.c(254): error:  #20: identifier "recv" is undefined
+..\..\stm32library\armcore\i2c.c(268): error:  #20: identifier "recv" is undefined
+..\..\stm32library\armcore\i2c.c(399): warning:  #1-D: last line of file ends without a newline
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #147: declaration is incompatible with "void ST7032i::init(I2CContext *)" (declared at line 43 of "..\..\stm32library\armcore\ST7032i.h")
+Target not created
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(248): error:  #20: identifier "lim" is undefined
+..\..\stm32library\armcore\i2c.c(401): warning:  #1-D: last line of file ends without a newline
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CBuffer" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #147: declaration is incompatible with "void ST7032i::init(I2CContext *)" (declared at line 43 of "..\..\stm32library\armcore\ST7032i.h")
+Target not created
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(248): error:  #20: identifier "lim" is undefined
+..\..\stm32library\armcore\i2c.c(401): warning:  #1-D: last line of file ends without a newline
+compiling ST7032i.cpp...
+Target not created
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(248): error:  #20: identifier "lim" is undefined
+Target not created
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(248): error:  #20: identifier "lim" is undefined
+Target not created
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
+_____^
+*** error 56: cannot open file
 Build target 'Target 1'
+compiling i2c.c...
 linking...
-Program Size: Code=19280 RO-data=1012 RW-data=164 ZI-data=5644  
+Program Size: Code=18436 RO-data=1012 RW-data=164 ZI-data=4892  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -283,23 +441,9 @@ Verify OK.
 Application running ...
 Build target 'Target 1'
 compiling main.cpp...
-..\main.cpp(152): warning:  #111-D: statement is unreachable
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(272): warning:  #177-D: variable "temp" was declared but never referenced
+..\main.cpp(155): warning:  #111-D: statement is unreachable
 linking...
-Program Size: Code=19276 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(272): warning:  #177-D: variable "temp" was declared but never referenced
-linking...
-Program Size: Code=19276 RO-data=1012 RW-data=164 ZI-data=5644  
+Program Size: Code=18464 RO-data=1012 RW-data=164 ZI-data=4892  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -308,10 +452,22 @@ Programming Done.
 Verify OK.
 Application running ...
 Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(271): warning:  #177-D: variable "temp" was declared but never referenced
+compiling main.cpp...
+..\main.cpp(155): warning:  #111-D: statement is unreachable
 linking...
-Program Size: Code=19248 RO-data=1012 RW-data=164 ZI-data=5644  
+Program Size: Code=18464 RO-data=1012 RW-data=164 ZI-data=4892  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(155): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=18464 RO-data=1012 RW-data=164 ZI-data=4892  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -323,15 +479,47 @@ Build target 'Target 1'
 compiling main.cpp...
 ..\main.cpp(155): warning:  #111-D: statement is unreachable
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(262): warning:  #177-D: variable "temp" was declared but never referenced
+..\..\stm32library\armcore\i2c.c(129): error:  #136: struct "__I2CContext" has no field "length"
+..\..\stm32library\armcore\i2c.c(130): error:  #136: struct "__I2CContext" has no field "databytes"
+..\..\stm32library\armcore\i2c.c(146): error:  #136: struct "__I2CContext" has no field "length"
+..\..\stm32library\armcore\i2c.c(147): error:  #136: struct "__I2CContext" has no field "databytes"
+..\..\stm32library\armcore\i2c.c(160): error:  #136: struct "__I2CContext" has no field "length"
+..\..\stm32library\armcore\i2c.c(161): error:  #136: struct "__I2CContext" has no field "databytes"
+..\..\stm32library\armcore\i2c.c(163): error:  #136: struct "__I2CContext" has no field "length"
+..\..\stm32library\armcore\i2c.c(247): error:  #136: struct "__I2CContext" has no field "databytes"
+..\..\stm32library\armcore\i2c.c(248): error:  #136: struct "__I2CContext" has no field "length"
 compiling ST7032i.cpp...
-linking...
-Program Size: Code=19032 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
+Target not created
 Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(155): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(129): error:  #136: struct "__I2CContext" has no field "length"
+..\..\stm32library\armcore\i2c.c(130): error:  #136: struct "__I2CContext" has no field "databytes"
+..\..\stm32library\armcore\i2c.c(146): error:  #136: struct "__I2CContext" has no field "length"
+..\..\stm32library\armcore\i2c.c(147): error:  #136: struct "__I2CContext" has no field "databytes"
+..\..\stm32library\armcore\i2c.c(160): error:  #136: struct "__I2CContext" has no field "length"
+..\..\stm32library\armcore\i2c.c(161): error:  #136: struct "__I2CContext" has no field "databytes"
+..\..\stm32library\armcore\i2c.c(163): error:  #136: struct "__I2CContext" has no field "length"
+..\..\stm32library\armcore\i2c.c(247): error:  #136: struct "__I2CContext" has no field "databytes"
+..\..\stm32library\armcore\i2c.c(248): error:  #136: struct "__I2CContext" has no field "length"
+compiling ST7032i.cpp...
+Target not created
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(247): error:  #136: struct "__I2CContext" has no field "databytes"
+..\..\stm32library\armcore\i2c.c(248): error:  #136: struct "__I2CContext" has no field "length"
+Target not created
+Build target 'Target 1'
+compiling i2c.c...
 linking...
-Program Size: Code=19032 RO-data=1012 RW-data=164 ZI-data=5644  
+Program Size: Code=18464 RO-data=1012 RW-data=164 ZI-data=4892  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling i2c.c...
+linking...
+Program Size: Code=18484 RO-data=1012 RW-data=164 ZI-data=4892  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -341,9 +529,129 @@ Verify OK.
 Application running ...
 Build target 'Target 1'
 compiling main.cpp...
-..\main.cpp(154): warning:  #111-D: statement is unreachable
+..\main.cpp(157): warning:  #111-D: statement is unreachable
 linking...
-Program Size: Code=19140 RO-data=1012 RW-data=164 ZI-data=5644  
+Program Size: Code=18512 RO-data=1012 RW-data=164 ZI-data=4892  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(158): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=18524 RO-data=1012 RW-data=164 ZI-data=4892  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(134): error:  #135: class "__I2CContext" has no member "status"
+..\main.cpp(157): error:  #135: class "__I2CContext" has no member "status"
+..\main.cpp(167): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(156): error:  #136: struct "__I2CContext" has no field "status"
+..\..\stm32library\armcore\i2c.c(172): error:  #136: struct "__I2CContext" has no field "status"
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(167): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(158): warning:  #188-D: enumerated type mixed with another type
+..\..\stm32library\armcore\i2c.c(175): warning:  #188-D: enumerated type mixed with another type
+compiling ST7032i.cpp...
+linking...
+Program Size: Code=18664 RO-data=1012 RW-data=164 ZI-data=4892  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(126): error:  #304: no instance of overloaded function "USARTSerial::print" matches the argument list
+..\main.cpp(167): warning:  #111-D: statement is unreachable
+Target not created
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+_____^
+*** error 56: cannot open file
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(167): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=18656 RO-data=1012 RW-data=164 ZI-data=4892  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(168): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(155): warning:  #188-D: enumerated type mixed with another type
+..\..\stm32library\armcore\i2c.c(158): warning:  #188-D: enumerated type mixed with another type
+..\..\stm32library\armcore\i2c.c(172): warning:  #188-D: enumerated type mixed with another type
+..\..\stm32library\armcore\i2c.c(175): warning:  #188-D: enumerated type mixed with another type
+linking...
+Program Size: Code=18676 RO-data=1012 RW-data=164 ZI-data=4892  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(168): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+compiling ST7032i.cpp...
+linking...
+Program Size: Code=18676 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(170): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=18692 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(170): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+linking...
+Program Size: Code=18700 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(162): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=18592 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -353,16 +661,33 @@ Verify OK.
 Application running ...
 Build target 'Target 1'
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(142): error:  #65: expected a ";"
-..\..\stm32library\armcore\i2c.c(257): warning:  #177-D: variable "temp" was declared but never referenced
+linking...
+Program Size: Code=18592 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(146): error:  #268: declaration may not appear after executable statement in block
+..\..\stm32library\armcore\i2c.c(146): warning:  #940-D: missing return statement at end of non-void function "i2c_start_send"
+..\..\stm32library\armcore\i2c.c(146): error:  #67: expected a "}"
 Target not created
 Build target 'Target 1'
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(257): warning:  #177-D: variable "temp" was declared but never referenced
+..\..\stm32library\armcore\i2c.c(146): error:  #268: declaration may not appear after executable statement in block
+..\..\stm32library\armcore\i2c.c(146): warning:  #940-D: missing return statement at end of non-void function "i2c_start_send"
+..\..\stm32library\armcore\i2c.c(146): error:  #67: expected a "}"
+Target not created
+Build target 'Target 1'
+compiling i2c.c...
 linking...
-Program Size: Code=19144 RO-data=1012 RW-data=164 ZI-data=5644  
+Program Size: Code=18588 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
 Erase Done.
 Programming Done.
@@ -370,22 +695,58 @@ Verify OK.
 Application running ...
 Build target 'Target 1'
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(257): warning:  #177-D: variable "temp" was declared but never referenced
 linking...
-Program Size: Code=19144 RO-data=1012 RW-data=164 ZI-data=5644  
+Program Size: Code=18588 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
 Erase Done.
 Programming Done.
 Verify OK.
 Application running ...
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(270): warning:  #177-D: variable "temp" was declared but never referenced
-..\..\stm32library\armcore\i2c.c - 0 Error(s), 1 Warning(s).
 Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(138): warning:  #223-D: function "I2C_GetFlagState" declared implicitly
 linking...
-Program Size: Code=19224 RO-data=1012 RW-data=164 ZI-data=5644  
+stm32f4-stdperiph.axf: Error: L6218E: Undefined symbol I2C_GetFlagState (referred from i2c.o).
+Target not created
+Build target 'Target 1'
+compiling i2c.c...
+linking...
+Program Size: Code=18600 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+linking...
+Program Size: Code=18604 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+linking...
+Program Size: Code=18604 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+linking...
+Program Size: Code=18600 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -395,29 +756,10 @@ Verify OK.
 Application running ...
 Build target 'Target 1'
 compiling main.cpp...
-..\main.cpp(145): error:  #20: identifier "i2c_request" is undefined
-..\main.cpp(153): warning:  #111-D: statement is unreachable
-Target not created
-Build target 'Target 1'
-compiling main.cpp...
-..\main.cpp(153): warning:  #111-D: statement is unreachable
+..\main.cpp(165): warning:  #111-D: statement is unreachable
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(270): warning:  #177-D: variable "temp" was declared but never referenced
-compiling ST7032i.cpp...
 linking...
-Program Size: Code=19216 RO-data=1012 RW-data=164 ZI-data=5644  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(270): warning:  #177-D: variable "temp" was declared but never referenced
-linking...
-Program Size: Code=19216 RO-data=1012 RW-data=164 ZI-data=5644  
+Program Size: Code=18652 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -426,10 +768,590 @@ Programming Done.
 Verify OK.
 Application running ...
 Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(273): warning:  #177-D: variable "temp" was declared but never referenced
 linking...
-Program Size: Code=19236 RO-data=1012 RW-data=164 ZI-data=5644  
+Program Size: Code=18652 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+linking...
+Program Size: Code=18676 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+linking...
+Program Size: Code=18676 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+linking...
+Program Size: Code=18676 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+linking...
+Program Size: Code=18708 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+linking...
+Program Size: Code=18688 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+linking...
+Program Size: Code=18684 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+linking...
+Program Size: Code=18648 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(150): error:  #308: more than one instance of overloaded function "USARTSerial::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (int, int)
+            object type is: USARTSerial
+                                Serial3.print((uint16)tmp[2]>>4, HEX);
+                                        ^
+..\main.cpp(151): error:  #308: more than one instance of overloaded function "USARTSerial::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (int, int)
+            object type is: USARTSerial
+                                Serial3.print((uint16)tmp[2]&0x0f, HEX);
+                                        ^
+..\main.cpp(152): error:  #308: more than one instance of overloaded function "USARTSerial::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (int, int)
+            object type is: USARTSerial
+                                Serial3.print((uint16)tmp[1]>>4, HEX);
+                                        ^
+..\main.cpp(153): error:  #308: more than one instance of overloaded function "USARTSerial::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (int, int)
+            object type is: USARTSerial
+                                Serial3.print((uint16)tmp[1]&0x0f, HEX);
+                                        ^
+..\main.cpp(154): error:  #308: more than one instance of overloaded function "USARTSerial::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (int, int)
+            object type is: USARTSerial
+                                Serial3.print((uint16)tmp[0]>>4, HEX);
+                                        ^
+..\main.cpp(155): error:  #308: more than one instance of overloaded function "USARTSerial::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (int, int)
+            object type is: USARTSerial
+                                Serial3.print((uint16)tmp[0]&0x0f, HEX);
+                                        ^
+..\main.cpp(165): warning:  #111-D: statement is unreachable
+compiling Print.cpp...
+..\..\stm32library\armcore\Print.cpp(76): error:  #493: no instance of overloaded function "Print::print" matches the specified type
+..\..\stm32library\armcore\Print.cpp(81): error:  #493: no instance of overloaded function "Print::print" matches the specified type
+..\..\stm32library\armcore\Print.cpp(86): error:  #493: no instance of overloaded function "Print::print" matches the specified type
+..\..\stm32library\armcore\Print.cpp(91): error:  #493: no instance of overloaded function "Print::print" matches the specified type
+..\..\stm32library\armcore\Print.cpp(107): error:  #493: no instance of overloaded function "Print::print" matches the specified type
+..\..\stm32library\armcore\Print.cpp(161): error:  #493: no instance of overloaded function "Print::println" matches the specified type
+..\..\stm32library\armcore\Print.cpp(163): error:  #308: more than one instance of overloaded function "Print::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (unsigned char, int)
+    size_t n = print(b, base);
+               ^
+..\..\stm32library\armcore\Print.cpp(168): error:  #493: no instance of overloaded function "Print::println" matches the specified type
+..\..\stm32library\armcore\Print.cpp(170): error:  #308: more than one instance of overloaded function "Print::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (int, int)
+    size_t n = print(num, base);
+               ^
+..\..\stm32library\armcore\Print.cpp(175): error:  #493: no instance of overloaded function "Print::println" matches the specified type
+..\..\stm32library\armcore\Print.cpp(177): error:  #308: more than one instance of overloaded function "Print::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (unsigned int, int)
+    size_t n = print(num, base);
+               ^
+..\..\stm32library\armcore\Print.cpp(182): error:  #493: no instance of overloaded function "Print::println" matches the specified type
+..\..\stm32library\armcore\Print.cpp(189): error:  #493: no instance of overloaded function "Print::println" matches the specified type
+..\..\stm32library\armcore\Print.cpp(196): error:  #493: no instance of overloaded function "Print::println" matches the specified type
+..\..\stm32library\armcore\Print.cpp(258): error:  #308: more than one instance of overloaded function "Print::print" matches the argument list:
+            function "Print::print(char)"
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (unsigned long)
+    n += print(int_part);
+         ^
+..\..\stm32library\armcore\Print.cpp: 0 warnings, 15 errors
+compiling ST7032i.cpp...
+compiling Stream.cpp...
+compiling USARTSerial.cpp...
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(150): error:  #308: more than one instance of overloaded function "USARTSerial::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (int, int)
+            object type is: USARTSerial
+                                Serial3.print((uint16)tmp[2]>>4, HEX);
+                                        ^
+..\main.cpp(151): error:  #308: more than one instance of overloaded function "USARTSerial::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (int, int)
+            object type is: USARTSerial
+                                Serial3.print((uint16)tmp[2]&0x0f, HEX);
+                                        ^
+..\main.cpp(152): error:  #308: more than one instance of overloaded function "USARTSerial::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (int, int)
+            object type is: USARTSerial
+                                Serial3.print((uint16)tmp[1]>>4, HEX);
+                                        ^
+..\main.cpp(153): error:  #308: more than one instance of overloaded function "USARTSerial::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (int, int)
+            object type is: USARTSerial
+                                Serial3.print((uint16)tmp[1]&0x0f, HEX);
+                                        ^
+..\main.cpp(154): error:  #308: more than one instance of overloaded function "USARTSerial::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (int, int)
+            object type is: USARTSerial
+                                Serial3.print((uint16)tmp[0]>>4, HEX);
+                                        ^
+..\main.cpp(155): error:  #308: more than one instance of overloaded function "USARTSerial::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (int, int)
+            object type is: USARTSerial
+                                Serial3.print((uint16)tmp[0]&0x0f, HEX);
+                                        ^
+..\main.cpp(165): warning:  #111-D: statement is unreachable
+compiling Print.cpp...
+..\..\stm32library\armcore\Print.cpp(107): error:  #493: no instance of overloaded function "Print::print" matches the specified type
+..\..\stm32library\armcore\Print.cpp(161): error:  #493: no instance of overloaded function "Print::println" matches the specified type
+..\..\stm32library\armcore\Print.cpp(163): error:  #308: more than one instance of overloaded function "Print::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (unsigned char, int)
+    size_t n = print(b, base);
+               ^
+..\..\stm32library\armcore\Print.cpp(168): error:  #493: no instance of overloaded function "Print::println" matches the specified type
+..\..\stm32library\armcore\Print.cpp(170): error:  #308: more than one instance of overloaded function "Print::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (int, int)
+    size_t n = print(num, base);
+               ^
+..\..\stm32library\armcore\Print.cpp(175): error:  #493: no instance of overloaded function "Print::println" matches the specified type
+..\..\stm32library\armcore\Print.cpp(177): error:  #308: more than one instance of overloaded function "Print::print" matches the argument list:
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (unsigned int, int)
+    size_t n = print(num, base);
+               ^
+..\..\stm32library\armcore\Print.cpp(182): error:  #493: no instance of overloaded function "Print::println" matches the specified type
+..\..\stm32library\armcore\Print.cpp(189): error:  #493: no instance of overloaded function "Print::println" matches the specified type
+..\..\stm32library\armcore\Print.cpp(196): error:  #493: no instance of overloaded function "Print::println" matches the specified type
+..\..\stm32library\armcore\Print.cpp(258): error:  #308: more than one instance of overloaded function "Print::print" matches the argument list:
+            function "Print::print(char)"
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, int)"
+            argument types are: (unsigned long)
+    n += print(int_part);
+         ^
+..\..\stm32library\armcore\Print.cpp: 0 warnings, 11 errors
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(165): warning:  #111-D: statement is unreachable
+compiling Print.cpp...
+..\..\stm32library\armcore\Print.cpp(213): error:  #147: declaration is incompatible with "std::size_t Print::printNumber(unsigned long, std::uint8_t)" (declared at line 38 of "..\..\stm32library\armcore\Print.h")
+..\..\stm32library\armcore\Print.cpp(258): error:  #308: more than one instance of overloaded function "Print::print" matches the argument list:
+            function "Print::print(char)"
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, uint8)"
+            argument types are: (unsigned long)
+    n += print(int_part);
+         ^
+..\..\stm32library\armcore\Print.cpp: 0 warnings, 2 errors
+compiling ST7032i.cpp...
+compiling Stream.cpp...
+compiling USARTSerial.cpp...
+Target not created
+Build target 'Target 1'
+compiling Print.cpp...
+..\..\stm32library\armcore\Print.cpp(213): error:  #147: declaration is incompatible with "std::size_t Print::printNumber(unsigned long, std::uint8_t)" (declared at line 38 of "..\..\stm32library\armcore\Print.h")
+..\..\stm32library\armcore\Print.cpp(258): error:  #308: more than one instance of overloaded function "Print::print" matches the argument list:
+            function "Print::print(char)"
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, uint8)"
+            argument types are: (unsigned long)
+    n += print(int_part);
+         ^
+..\..\stm32library\armcore\Print.cpp: 0 warnings, 2 errors
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(165): warning:  #111-D: statement is unreachable
+compiling Print.cpp...
+..\..\stm32library\armcore\Print.cpp(258): error:  #308: more than one instance of overloaded function "Print::print" matches the argument list:
+            function "Print::print(char)"
+            function "Print::print(uint8, uint8)"
+            function "Print::print(int16, uint8)"
+            function "Print::print(uint16, uint8)"
+            function "Print::print(int32, uint8)"
+            function "Print::print(uint32, uint8)"
+            function "Print::print(double, uint8)"
+            argument types are: (unsigned long)
+    n += print(int_part);
+         ^
+..\..\stm32library\armcore\Print.cpp: 0 warnings, 1 error
+compiling ST7032i.cpp...
+compiling Stream.cpp...
+compiling USARTSerial.cpp...
+Target not created
+Build target 'Target 1'
+compiling Print.cpp...
+linking...
+Program Size: Code=18648 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18648 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(165): warning:  #111-D: statement is unreachable
+compiling Print.cpp...
+compiling ST7032i.cpp...
+compiling Stream.cpp...
+compiling USARTSerial.cpp...
+linking...
+Program Size: Code=18648 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(166): warning:  #111-D: statement is unreachable
+..\main.cpp(33): warning:  #177-D: variable "tlomg" was declared but never referenced
+compiling Print.cpp...
+..\..\stm32library\armcore\Print.cpp(132): error:  #135: class "Print" has no member "printByte"
+..\..\stm32library\armcore\Print.cpp(135): error:  #20: identifier "print" is undefined
+compiling ST7032i.cpp...
+compiling Stream.cpp...
+compiling USARTSerial.cpp...
+Target not created
+Build target 'Target 1'
+compiling Print.cpp...
+..\..\stm32library\armcore\Print.cpp(132): error:  #135: class "Print" has no member "printByte"
+..\..\stm32library\armcore\Print.cpp(135): error:  #20: identifier "print" is undefined
+Target not created
+Build target 'Target 1'
+compiling Print.cpp...
+..\..\stm32library\armcore\Print.cpp(107): error:  #493: no instance of overloaded function "Print::print" matches the specified type
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(166): warning:  #111-D: statement is unreachable
+..\main.cpp(33): warning:  #177-D: variable "tlomg" was declared but never referenced
+compiling Print.cpp...
+compiling ST7032i.cpp...
+compiling Stream.cpp...
+compiling USARTSerial.cpp...
+linking...
+Program Size: Code=18692 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18692 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(160): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=18616 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18616 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling Print.cpp...
+..\..\stm32library\armcore\Print.cpp(214): error:  #147: declaration is incompatible with "std::size_t Print::printNumber(uint32, std::uint8_t, uint8)" (declared at line 38 of "..\..\stm32library\armcore\Print.h")
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(150): error:  #304: no instance of overloaded function "USARTSerial::print" matches the argument list
+..\main.cpp(160): warning:  #111-D: statement is unreachable
+compiling Print.cpp...
+..\..\stm32library\armcore\Print.cpp(134): error:  #20: identifier "i" is undefined
+compiling ST7032i.cpp...
+compiling Stream.cpp...
+compiling USARTSerial.cpp...
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(150): error:  #304: no instance of overloaded function "USARTSerial::print" matches the argument list
+..\main.cpp(160): warning:  #111-D: statement is unreachable
+compiling Print.cpp...
+..\..\stm32library\armcore\Print.cpp(134): error:  #20: identifier "i" is undefined
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(150): error:  #304: no instance of overloaded function "USARTSerial::print" matches the argument list
+..\main.cpp(160): warning:  #111-D: statement is unreachable
+compiling Print.cpp...
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(150): error:  #167: argument of type "char *" is incompatible with parameter of type "uint8 *"
+..\main.cpp(150): error:  #165: too few arguments in function call
+..\main.cpp(150): error:  #65: expected a ";"
+..\main.cpp(160): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(150): error:  #167: argument of type "char *" is incompatible with parameter of type "uint8 *"
+..\main.cpp(150): error:  #165: too few arguments in function call
+..\main.cpp(150): error:  #65: expected a ";"
+..\main.cpp(160): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(160): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=18620 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(164): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=18664 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(164): warning:  #111-D: statement is unreachable
+compiling Print.cpp...
+..\..\stm32library\armcore\Print.cpp(141): error:  #304: no instance of overloaded function "Print::printByte" matches the argument list
+..\..\stm32library\armcore\Print.cpp(141): error:  #304: no instance of overloaded function "Print::printByte" matches the argument list
+compiling ST7032i.cpp...
+compiling Stream.cpp...
+compiling USARTSerial.cpp...
+Target not created
+Build target 'Target 1'
+compiling Print.cpp...
+linking...
+Program Size: Code=18672 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(164): warning:  #111-D: statement is unreachable
+compiling Print.cpp...
+..\..\stm32library\armcore\Print.cpp(144): warning:  #940-D: missing return statement at end of non-void function "Print::printByte(uint8)"
+compiling ST7032i.cpp...
+compiling Stream.cpp...
+compiling USARTSerial.cpp...
+linking...
+Program Size: Code=18680 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling Print.cpp...
+linking...
+Program Size: Code=18680 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(164): warning:  #111-D: statement is unreachable
+compiling Print.cpp...
+compiling ST7032i.cpp...
+compiling Stream.cpp...
+compiling USARTSerial.cpp...
+linking...
+Program Size: Code=18692 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
