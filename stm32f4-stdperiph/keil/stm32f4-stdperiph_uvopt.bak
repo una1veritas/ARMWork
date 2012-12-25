@@ -1,5 +1,8 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/win@home
 =======
 >>>>>>> origin/win@home
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
@@ -177,7 +180,11 @@
           <Number>0</Number>
           <Type>0</Type>
 <<<<<<< HEAD
+<<<<<<< HEAD
           <LineNumber>146</LineNumber>
+=======
+          <LineNumber>105</LineNumber>
+>>>>>>> origin/win@home
 =======
           <LineNumber>105</LineNumber>
 >>>>>>> origin/win@home
@@ -190,7 +197,11 @@
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
 <<<<<<< HEAD
+<<<<<<< HEAD
           <Filename>C:\Users\Sin\Documents\github\ARMWork\stm32f4-stdperiph\main.cpp</Filename>
+=======
+          <Filename>C:\Users\Sin\Documents\github\ARMWork\stm32library\armcore\i2c.c</Filename>
+>>>>>>> origin/win@home
 =======
           <Filename>C:\Users\Sin\Documents\github\ARMWork\stm32library\armcore\i2c.c</Filename>
 >>>>>>> origin/win@home
@@ -201,8 +212,11 @@
           <Number>1</Number>
           <Type>0</Type>
 <<<<<<< HEAD
+<<<<<<< HEAD
           <LineNumber>212</LineNumber>
 =======
+=======
+>>>>>>> origin/win@home
           <LineNumber>110</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
@@ -220,6 +234,9 @@
           <Number>2</Number>
           <Type>0</Type>
           <LineNumber>117</LineNumber>
+<<<<<<< HEAD
+>>>>>>> origin/win@home
+=======
 >>>>>>> origin/win@home
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
@@ -251,12 +268,18 @@
           <ItemText>wc</ItemText>
         </Ww>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/win@home
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
           <ItemText>i</ItemText>
         </Ww>
+<<<<<<< HEAD
+>>>>>>> origin/win@home
+=======
 >>>>>>> origin/win@home
       </WatchWindow1>
       <DebugFlag>
@@ -314,7 +337,11 @@
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <TopLine>169</TopLine>
+=======
+      <TopLine>168</TopLine>
+>>>>>>> origin/win@home
 =======
       <TopLine>168</TopLine>
 >>>>>>> origin/win@home
@@ -334,8 +361,13 @@
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <TopLine>112</TopLine>
       <CurrentLine>146</CurrentLine>
+=======
+      <TopLine>108</TopLine>
+      <CurrentLine>145</CurrentLine>
+>>>>>>> origin/win@home
 =======
       <TopLine>108</TopLine>
       <CurrentLine>145</CurrentLine>
@@ -491,8 +523,13 @@
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <TopLine>51</TopLine>
       <CurrentLine>69</CurrentLine>
+=======
+      <TopLine>50</TopLine>
+      <CurrentLine>70</CurrentLine>
+>>>>>>> origin/win@home
 =======
       <TopLine>50</TopLine>
       <CurrentLine>70</CurrentLine>
@@ -558,15 +595,21 @@
       <tvExp>0</tvExp>
       <Focus>0</Focus>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>201</TopLine>
       <CurrentLine>212</CurrentLine>
 =======
+=======
+>>>>>>> origin/win@home
       <ColumnNumber>17</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>112</TopLine>
       <CurrentLine>118</CurrentLine>
+<<<<<<< HEAD
+>>>>>>> origin/win@home
+=======
 >>>>>>> origin/win@home
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\stm32library\armcore\i2c.c</PathWithFileName>
@@ -631,7 +674,11 @@
       <ColumnNumber>20</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <TopLine>28</TopLine>
+=======
+      <TopLine>22</TopLine>
+>>>>>>> origin/win@home
 =======
       <TopLine>22</TopLine>
 >>>>>>> origin/win@home
@@ -899,8 +946,13 @@
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
+=======
+      <TopLine>1373</TopLine>
+      <CurrentLine>1381</CurrentLine>
+>>>>>>> origin/win@home
 =======
       <TopLine>1373</TopLine>
       <CurrentLine>1381</CurrentLine>
@@ -930,6 +982,7 @@
   </Group>
 
 </ProjectOpt>
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
@@ -1794,6 +1847,8 @@
   </Group>
 
 </ProjectOpt>
+>>>>>>> origin/win@home
+=======
 >>>>>>> origin/win@home
 =======
 >>>>>>> origin/win@home
