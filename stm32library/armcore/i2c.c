@@ -124,20 +124,19 @@ boolean i2c_start_send(I2CContext * wire) {
 	} // wc = 5
 	
 	sendp = wire->buffer;
-	for (i = wire->limlen; i > 0; i--) {
+	for (i = 0; i < wire->limlen; i++) { //i > 0; i--) {
 		I2C_SendData(wire->I2Cx, *sendp++);
-		if ( i == 1  && wire->mode == I2C_MODE_MASTER_TX) {
-			I2C_GenerateSTOP(wire->I2Cx, ENABLE);
-		}
-		// Test on EV8 and clear it
 		for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) ; wc++) {
-			if ( I2C_GetFlagStatus(wire->I2Cx, I2C_FLAG_BUSY) == RESET ) 
-				break;
+//		if ( I2C_GetFlagStatus(wire->I2Cx, I2C_FLAG_BUSY) == RESET ) break;
 			if (wc > 8)
 				return false;
 			delay_us(67);
 		}
-	} // wc = 6
+
+	}
+	if ( wire->mode == I2C_MODE_MASTER_TX ) {
+		I2C_GenerateSTOP(wire->I2Cx, ENABLE);
+	}
 
 	return true;
 }
@@ -244,10 +243,10 @@ boolean i2c_receive(I2CContext * wire) {
 	I2C_GenerateSTART(wire->I2Cx, ENABLE);
 	/* Test on EV5 and clear it */
 	for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_MODE_SELECT ); wc++) {
-		if (wc > 17)
+		if (wc > 8)
 			return false;
-		delay_us(17);
-	} // wc = 1
+		delay_us(67);
+	} 
 	/* Send address for read */
 	I2C_Send7bitAddress(wire->I2Cx, wire->address << 1, I2C_Direction_Receiver );
 	/* Test on EV6 and clear it */

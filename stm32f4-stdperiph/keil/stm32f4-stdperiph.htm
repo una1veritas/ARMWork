@@ -3,7 +3,7 @@
 <title>Static Call Graph - [C:\Users\Sin\Documents\github\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image C:\Users\Sin\Documents\github\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Wed Dec 26 00:36:13 2012
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Wed Dec 26 22:54:03 2012
 <BR><P>
 <H3>Maximum Stack Usage =        832 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -512,7 +512,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[74]"></a>main</STRONG> (Thumb, 1192 bytes, Stack size 632 bytes, main.o(.text))
+<P><STRONG><a name="[74]"></a>main</STRONG> (Thumb, 1198 bytes, Stack size 632 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 832<LI>Call Chain = main &rArr; Print::print(double, unsigned char) &rArr; Print::printFloat(double, unsigned char) &rArr; Print::print(int, unsigned char) &rArr; Print::printNumber(unsigned, unsigned char) &rArr; Print::write(const char*) &rArr; strlen
 </UL>
 <BR>[Calls]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_read
@@ -722,7 +722,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[b3]"></a>i2c_start_send</STRONG> (Thumb, 232 bytes, Stack size 24 bytes, i2c.o(.text))
+<P><STRONG><a name="[b3]"></a>i2c_start_send</STRONG> (Thumb, 214 bytes, Stack size 24 bytes, i2c.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_SendData

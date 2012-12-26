@@ -139,8 +139,10 @@ int main(void) {
 		//		lcd.clear();
 		lcd.setCursor(0, 0);
 		lcd.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
-		Serial3.print(" I2C Status ");
-		Serial3.println(I2C1Buffer.status, HEX);
+		if ( I2C1Buffer.status & 0x80000000 ) {
+			Serial3.print(" I2C Status ");
+			Serial3.println(I2C1Buffer.status, HEX);
+		}
 		lcd.setCursor(0, 1);
 		lcd.print((float)millis()/1000, 3);
 		
