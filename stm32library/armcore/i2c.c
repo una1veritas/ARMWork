@@ -158,7 +158,7 @@ boolean i2c_transmit(I2CContext * wire, uint8_t addr, uint8_t * data, uint16_t l
 	return false;
 }
 
-boolean i2c_request(I2CContext * wire, uint8_t addr, uint8_t * data, uint16_t len, uint16_t lim) {
+boolean i2c_request(I2CContext * wire, uint8_t addr, uint8_t * data, uint16_t len) {
 	boolean t;
 	wire->mode = I2C_MODE_MASTER_RX;
 	wire->address = addr;
@@ -170,15 +170,7 @@ boolean i2c_request(I2CContext * wire, uint8_t addr, uint8_t * data, uint16_t le
 			I2C_GenerateSTOP(wire->I2Cx, ENABLE);
 			return false;
 	}
-	wire->limlen = lim;
-	if ( t && i2c_receive(&I2C1Buffer) ) {
-		wire->mode = I2C_MODE_MASTER_IDLE;
-		wire->status = I2C_GetLastEvent(wire->I2Cx);
-		return true;
-	}
-	wire->status = 0x80000000 | I2C_GetLastEvent(wire->I2Cx);
-	I2C_GenerateSTOP(wire->I2Cx, ENABLE);
-	return false;
+	return true;
 }
 
 
@@ -231,20 +223,22 @@ boolean i2c_irq_transmit(I2CContext * wire, uint8_t addr, uint8_t * data, uint16
 }
 */
 
-boolean i2c_receive(I2CContext * wire) {
+boolean i2c_receive(I2CContext * wire, uint8_t * data, uint16_t lim) {
 	uint16_t i;
 	uint16_t wc;
 	uint8 * recv;
 	
 	//polling mode
 	wire->mode = I2C_MODE_MASTER_RX;
+	wire->buffer = data;
+	wire->limlen = lim;
 //	wire->status = READY;
 	/* Send STRAT condition as restart */
 	I2C_GenerateSTART(wire->I2Cx, ENABLE);
 	/* Test on EV5 and clear it */
 	for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_MODE_SELECT ); wc++) {
 		if (wc > 8)
-			return false;
+			goto failure;
 		delay_us(67);
 	} 
 	/* Send address for read */
@@ -252,7 +246,7 @@ boolean i2c_receive(I2CContext * wire) {
 	/* Test on EV6 and clear it */
 	for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED ); wc++) {
 		if (wc > 8)
-			return false;
+			goto failure;
 		delay_us(67);
 	} 
 	
@@ -260,8 +254,8 @@ boolean i2c_receive(I2CContext * wire) {
 	for (i = wire->limlen; i > 0; ) {
 		// Test on EV7 and clear it
 		for (wc = 0; !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_BYTE_RECEIVED); wc++) {
-			if (wc > 72)
-				return false;
+			if (wc > 200)
+			goto failure;
 			delay_us(67);
 		}
 		/* Read a byte from the slave */
@@ -278,6 +272,11 @@ boolean i2c_receive(I2CContext * wire) {
 	I2C_AcknowledgeConfig(wire->I2Cx, ENABLE);
 	wire->mode = I2C_MODE_MASTER_IDLE;
 	return true;
+	
+failure:
+	wire->status = 0x80000000 | I2C_GetLastEvent(wire->I2Cx);
+	I2C_GenerateSTOP(wire->I2Cx, ENABLE);
+	return false;
 }
 
 

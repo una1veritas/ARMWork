@@ -29,6 +29,7 @@ int main(void) {
 	uint16_t bits;
 	uint32_t intval = 40;
 	uint32_t tnow;
+	uint8 length = 4;
 	char tmp[128];
 	uint32 clock, calendar;
 	
@@ -127,9 +128,10 @@ int main(void) {
 		//Serial3.println();
 
 		Serial3.print(", Clock: ");
-		tmp[0] = 0;
-		if ( i2c_request(&I2C1Buffer, B1101000, (uint8_t*)tmp, 1, 3) ) {
-			Serial3.printByte((uint8*)tmp, 3);
+		tmp[0] = 3;
+		if ( i2c_request(&I2C1Buffer, B1101000, (uint8_t*)tmp, 1) 
+			&& i2c_receive(&I2C1Buffer, (uint8_t*)&clock, 3) ) {
+			Serial3.printByte(clock);
 			Serial3.println();
 		} else {
 			Serial3.print("I2C Status ");
