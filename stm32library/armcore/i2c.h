@@ -69,9 +69,9 @@ extern I2CContext I2C1Buffer, I2C2Buffer, I2C3Buffer;
 
 boolean i2c_begin(I2CContext * I2Cbuf, I2C_TypeDef * I2Cx, GPIOPin sda, GPIOPin scl, uint32_t clk); //I2C_TypeDef * I2Cx, uint32_t clk);
 boolean i2c_transmit(I2CContext * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t length);
-boolean i2c_request(I2CContext * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t len, uint16_t lim);
+boolean i2c_request(I2CContext * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t len);
 boolean i2c_start_send(I2CContext * I2Cbuf);
-boolean i2c_receive(I2CContext * I2Cbuf);
+boolean i2c_receive(I2CContext * I2Cbuf, uint8_t * data, uint16_t lim);
 
 #ifdef __cplusplus
 }

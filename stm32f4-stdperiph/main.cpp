@@ -29,7 +29,9 @@ int main(void) {
 	uint16_t bits;
 	uint32_t intval = 40;
 	uint32_t tnow;
+	uint8 length = 4;
 	char tmp[128];
+	uint32 clock, calendar;
 	
 	TIM2_timer_start();
 
@@ -124,39 +126,38 @@ int main(void) {
 		Serial3.print(" ");		
 		Serial3.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
 		//Serial3.println();
+
+		Serial3.print(", Clock: ");
+		tmp[0] = 0;
+		if ( i2c_request(&I2C1Buffer, 0x68, (uint8_t*)tmp, 1) 
+			&& i2c_receive(&I2C1Buffer, (uint8_t*)tmp, 7) ) {
+			Serial3.printByte(0xffffff &(*(uint32*)tmp));
+			Serial3.print(" ");
+			Serial3.printByte(*(uint32*)(tmp+4));
+			Serial3.println();
+		} else {
+			Serial3.print("I2C Status ");
+			Serial3.println(I2C1Buffer.status, HEX);
+		}
 		
 		//		lcd.clear();
 		lcd.setCursor(0, 0);
-
 		lcd.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
-		Serial3.print(" I2C Status ");
-		Serial3.println(I2C1Buffer.status, HEX);
+		if ( I2C1Buffer.status & 0x80000000 ) {
+			Serial3.print(" I2C Status ");
+			Serial3.println(I2C1Buffer.status, HEX);
+		}
 		lcd.setCursor(0, 1);
 		lcd.print((float)millis()/1000, 3);
-
 		
 		uint16_t i = 0;
 		if (Serial3.available() > 0) {
 			while (Serial3.available() > 0 && i < 92) {
 				tmp[i++] = (char) Serial3.read();
 			}
-			tmp[i] = 0;
 			Serial3.print("> ");
 			Serial3.print(tmp);
 			Serial3.print("\n");
-		
-			tmp[0] = 0;
-			if ( i2c_request(&I2C1Buffer, B1101000, (uint8_t*)tmp, 1, 3) ) {
-				Serial3.printByte(tmp[2]);
-				Serial3.print(':');
-				Serial3.printByte(tmp[1]);
-				Serial3.print(':');
-				Serial3.printByte(tmp[0]);
-				Serial3.println();
-			} else {
-		Serial3.print(" I2C Status ");
-		Serial3.println(I2C1Buffer.status, HEX);
-			}
 
 		}
 
