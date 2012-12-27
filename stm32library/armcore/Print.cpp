@@ -150,7 +150,7 @@ size_t Print::printByte(uint32 val) {
 	n += printByte((uint8)(val>>24 &0xff));
 	n += printByte((uint8)(val>>16 &0xff));
 	n += printByte((uint8)(val>>8 &0xff));
-	n += print((uint8)val);
+	n += printByte((uint8)val);
 	return n;
 }
 

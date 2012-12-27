@@ -1,6 +1,6 @@
 Dependencies for Project 'stm32f4-stdperiph', Target 'Target 1': (DO NOT MODIFY !)
 F (.\startup_stm32f4xx.s)(0x50D6DD88)(--cpu Cortex-M4 -g --apcs=interwork -I C:\Keil\ARM\RV31\INC -I C:\Users\Sin\Documents\github\ARMWork\stm32library\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx --list "startup_stm32f4xx.lst" --xref -o "startup_stm32f4xx.o" --depend "startup_stm32f4xx.d")
-F (..\main.cpp)(0x50DB214F)(--cpp -c --cpu Cortex-M4 -g -O0 --apcs=interwork -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\CMSIS\STM32F4xx -I..\..\stm32library\armcore -I..\..\stm32f4-stdperiph -I C:\Keil\ARM\RV31\INC -I C:\Users\Sin\Documents\github\ARMWork\stm32library\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "main.o" --omf_browse "main.crf" --depend "main.d")
+F (..\main.cpp)(0x50DB9A20)(--cpp -c --cpu Cortex-M4 -g -O0 --apcs=interwork -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\CMSIS\STM32F4xx -I..\..\stm32library\armcore -I..\..\stm32f4-stdperiph -I C:\Keil\ARM\RV31\INC -I C:\Users\Sin\Documents\github\ARMWork\stm32library\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "main.o" --omf_browse "main.crf" --depend "main.d")
 I (C:\Keil\ARM\ARMCC\bin\..\include\stdio.h)(0x4EB0C476)
 I (C:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x4EB0C474)
 I (..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h)(0x50D6DD8A)
@@ -238,7 +238,7 @@ I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_usart.h)(0x50D6DD
 I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_wwdg.h)(0x50D6DD8A)
 I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\misc.h)(0x50D6DD8A)
 F (..\..\stm32library\armcore\gpio.h)(0x50D6DD8A)()
-F (..\..\stm32library\armcore\i2c.c)(0x50DB1959)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\CMSIS\STM32F4xx -I..\..\stm32library\armcore -I..\..\stm32f4-stdperiph -I C:\Keil\ARM\RV31\INC -I C:\Users\Sin\Documents\github\ARMWork\stm32library\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "i2c.o" --omf_browse "i2c.crf" --depend "i2c.d")
+F (..\..\stm32library\armcore\i2c.c)(0x50DB98CB)(-c --cpu Cortex-M4 -g -O0 --apcs=interwork -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\CMSIS\STM32F4xx -I..\..\stm32library\armcore -I..\..\stm32f4-stdperiph -I C:\Keil\ARM\RV31\INC -I C:\Users\Sin\Documents\github\ARMWork\stm32library\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "i2c.o" --omf_browse "i2c.crf" --depend "i2c.d")
 I (C:\Keil\ARM\ARMCC\bin\..\include\string.h)(0x4EB0C476)
 I (..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_rcc.h)(0x50D6DD8A)
 I (..\..\stm32library\CMSIS\STM32F4xx\stm32f4xx.h)(0x50D6DD8A)
@@ -281,7 +281,7 @@ I (..\..\stm32library\armcore\armcore.h)(0x50D6DD8A)
 I (C:\Keil\ARM\ARMCC\bin\..\include\stdio.h)(0x4EB0C476)
 I (..\..\stm32library\armcore\binary.h)(0x50D6DD8A)
 F (..\..\stm32library\armcore\i2c.h)(0x50DB1746)()
-F (..\..\stm32library\armcore\Print.cpp)(0x50DB1CF5)(--cpp -c --cpu Cortex-M4 -g -O0 --apcs=interwork -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\CMSIS\STM32F4xx -I..\..\stm32library\armcore -I..\..\stm32f4-stdperiph -I C:\Keil\ARM\RV31\INC -I C:\Users\Sin\Documents\github\ARMWork\stm32library\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "print.o" --omf_browse "print.crf" --depend "print.d")
+F (..\..\stm32library\armcore\Print.cpp)(0x50DB972D)(--cpp -c --cpu Cortex-M4 -g -O0 --apcs=interwork -I..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc -I..\..\stm32library\CMSIS\Include -I..\..\stm32library\CMSIS\STM32F4xx -I..\..\stm32library\armcore -I..\..\stm32f4-stdperiph -I C:\Keil\ARM\RV31\INC -I C:\Users\Sin\Documents\github\ARMWork\stm32library\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F4xx -DUSE_STDPERIPH_DRIVER -o "print.o" --omf_browse "print.crf" --depend "print.d")
 I (C:\Keil\ARM\ARMCC\bin\..\include\stdlib.h)(0x4EB0C474)
 I (C:\Keil\ARM\ARMCC\bin\..\include\stdio.h)(0x4EB0C476)
 I (C:\Keil\ARM\ARMCC\bin\..\include\string.h)(0x4EB0C476)

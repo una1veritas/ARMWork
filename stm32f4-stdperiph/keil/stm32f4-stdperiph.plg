@@ -4,28 +4,22 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 C:\Users\Sin\Documents\github\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.uvproj
-Project File Date:  12/26/2012
+Project File Date:  12/27/2012
 
 <h2>Output:</h2>
 Build target 'Target 1'
 compiling main.cpp...
-..\main.cpp(159): warning:  #111-D: statement is unreachable
-..\main.cpp(33): warning:  #177-D: variable "clock" was declared but never referenced
-..\main.cpp(33): warning:  #177-D: variable "calendar" was declared but never referenced
-compiling i2c.c...
+..\main.cpp(163): warning:  #111-D: statement is unreachable
+..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
+..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
 linking...
-Program Size: Code=18700 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
 Build target 'Target 1'
 compiling i2c.c...
 linking...
-Program Size: Code=18700 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -36,7 +30,7 @@ Application running ...
 Build target 'Target 1'
 compiling i2c.c...
 linking...
-Program Size: Code=18708 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -47,65 +41,7 @@ Application running ...
 Build target 'Target 1'
 compiling i2c.c...
 linking...
-Program Size: Code=18676 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling main.cpp...
-..\main.cpp(161): warning:  #111-D: statement is unreachable
-..\main.cpp(33): warning:  #177-D: variable "clock" was declared but never referenced
-..\main.cpp(33): warning:  #177-D: variable "calendar" was declared but never referenced
-linking...
-Program Size: Code=18684 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-linking...
-Program Size: Code=18724 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-linking...
-Program Size: Code=18708 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-linking...
-Program Size: Code=18664 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-linking...
-Program Size: Code=18668 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -127,7 +63,7 @@ Application running ...
 Build target 'Target 1'
 compiling i2c.c...
 linking...
-Program Size: Code=18664 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=18708 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -138,7 +74,7 @@ Application running ...
 Build target 'Target 1'
 compiling i2c.c...
 linking...
-Program Size: Code=18668 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=18708 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -149,7 +85,7 @@ Application running ...
 Build target 'Target 1'
 compiling i2c.c...
 linking...
-Program Size: Code=18664 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=18708 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -160,7 +96,7 @@ Application running ...
 Build target 'Target 1'
 compiling i2c.c...
 linking...
-Program Size: Code=18660 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=18708 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -169,12 +105,92 @@ Programming Done.
 Verify OK.
 Application running ...
 Build target 'Target 1'
-compiling main.cpp...
-..\main.cpp(161): warning:  #111-D: statement is unreachable
-..\main.cpp(33): warning:  #177-D: variable "clock" was declared but never referenced
-..\main.cpp(33): warning:  #177-D: variable "calendar" was declared but never referenced
+compiling i2c.c...
 linking...
-Program Size: Code=18660 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+linking...
+Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+linking...
+Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+linking...
+Program Size: Code=18708 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(231): warning:  #260-D: explicit type is missing ("int" assumed)
+linking...
+Program Size: Code=18720 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(231): warning:  #260-D: explicit type is missing ("int" assumed)
+linking...
+Program Size: Code=18736 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18736 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(231): warning:  #260-D: explicit type is missing ("int" assumed)
+linking...
+Program Size: Code=18764 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(102): warning:  #177-D: variable "watch" was declared but never referenced
+..\..\stm32library\armcore\i2c.c(103): warning:  #177-D: variable "wait" was declared but never referenced
+..\..\stm32library\armcore\i2c.c(233): warning:  #260-D: explicit type is missing ("int" assumed)
+linking...
+Program Size: Code=18772 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -184,9 +200,42 @@ Verify OK.
 Application running ...
 Build target 'Target 1'
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(162): warning:  #177-D: variable "t" was declared but never referenced
+..\..\stm32library\armcore\i2c.c(108): error:  #114: label "failure" was referenced but not defined
+..\..\stm32library\armcore\i2c.c(231): warning:  #260-D: explicit type is missing ("int" assumed)
+compiling Print.cpp...
+Target not created
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+_____^
+*** error 56: cannot open file
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(231): warning:  #260-D: explicit type is missing ("int" assumed)
 linking...
-Program Size: Code=18648 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=18800 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(232): warning:  #260-D: explicit type is missing ("int" assumed)
+linking...
+Program Size: Code=18808 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(232): warning:  #260-D: explicit type is missing ("int" assumed)
+linking...
+Program Size: Code=18820 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -196,123 +245,44 @@ Verify OK.
 Application running ...
 Build target 'Target 1'
 compiling main.cpp...
-..\main.cpp(161): warning:  #111-D: statement is unreachable
-..\main.cpp(33): warning:  #177-D: variable "clock" was declared but never referenced
-..\main.cpp(33): warning:  #177-D: variable "calendar" was declared but never referenced
-linking...
-Program Size: Code=18648 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-linking...
-Program Size: Code=18664 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling main.cpp...
-..\main.cpp(161): warning:  #111-D: statement is unreachable
-..\main.cpp(33): warning:  #177-D: variable "clock" was declared but never referenced
-..\main.cpp(33): warning:  #177-D: variable "calendar" was declared but never referenced
-linking...
-Program Size: Code=18664 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling main.cpp...
-..\main.cpp(162): warning:  #111-D: statement is unreachable
-..\main.cpp(34): warning:  #177-D: variable "clock" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
-linking...
-Program Size: Code=18668 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-linking...
-Program Size: Code=18668 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling main.cpp...
-..\main.cpp(132): error:  #140: too many arguments in function call
-..\main.cpp(162): warning:  #111-D: statement is unreachable
-..\main.cpp(34): warning:  #177-D: variable "clock" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(161): error:  #147-D: declaration is incompatible with "boolean i2c_request(I2CContext *, uint8_t, uint8_t *, uint16_t)" (declared at line 72 of "..\..\stm32library\armcore\i2c.h")
-..\..\stm32library\armcore\i2c.c(174): error:  #165: too few arguments in function call
-..\..\stm32library\armcore\i2c.c(234): error:  #147-D: declaration is incompatible with "boolean i2c_receive(I2CContext *, uint8_t *, uint16_t)" (declared at line 74 of "..\..\stm32library\armcore\i2c.h")
-compiling ST7032i.cpp...
-Target not created
-Build target 'Target 1'
-compiling main.cpp...
-..\main.cpp(132): error:  #140: too many arguments in function call
-..\main.cpp(162): warning:  #111-D: statement is unreachable
-..\main.cpp(34): warning:  #177-D: variable "clock" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
-compiling i2c.c...
-Target not created
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-_____^
-*** error 56: cannot open file
-Build target 'Target 1'
-compiling main.cpp...
 ..\main.cpp(163): warning:  #111-D: statement is unreachable
-..\main.cpp(34): warning:  #177-D: variable "clock" was declared but never referenced
+..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
 ..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
 linking...
-Program Size: Code=18648 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=18820 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=18648 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
 Build target 'Target 1'
 compiling main.cpp...
-..\main.cpp(133): error:  #167: argument of type "std::uint8_t *" is incompatible with parameter of type "std::uint8_t"
-..\main.cpp(133): error:  #167: argument of type "uint8" is incompatible with parameter of type "std::uint8_t *"
-..\main.cpp(133): error:  #165: too few arguments in function call
-..\main.cpp(163): warning:  #111-D: statement is unreachable
+..\main.cpp(136): error:  #158: expression must be an lvalue or a function designator
+..\main.cpp(165): warning:  #111-D: statement is unreachable
+..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
 ..\main.cpp(34): warning:  #177-D: variable "clock" was declared but never referenced
 ..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
 Target not created
 Build target 'Target 1'
 compiling main.cpp...
-..\main.cpp(163): warning:  #111-D: statement is unreachable
+..\main.cpp(136): error:  #158: expression must be an lvalue or a function designator
+..\main.cpp(165): warning:  #111-D: statement is unreachable
+..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
+..\main.cpp(34): warning:  #177-D: variable "clock" was declared but never referenced
+..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(165): warning:  #111-D: statement is unreachable
+..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
 ..\main.cpp(34): warning:  #177-D: variable "clock" was declared but never referenced
 ..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
 linking...
-Program Size: Code=18644 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=18836 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
+"stm32f4-stdperiph.axf" - 0 Error(s), 4 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
 Erase Done.
 Programming Done.
@@ -320,163 +290,14 @@ Verify OK.
 Application running ...
 Build target 'Target 1'
 compiling main.cpp...
-..\main.cpp(163): warning:  #111-D: statement is unreachable
+..\main.cpp(165): warning:  #111-D: statement is unreachable
 ..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
+..\main.cpp(34): warning:  #177-D: variable "clock" was declared but never referenced
 ..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
 linking...
-Program Size: Code=18640 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=18840 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=18640 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling main.cpp...
-..\main.cpp(163): warning:  #111-D: statement is unreachable
-..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
-compiling Print.cpp...
-compiling ST7032i.cpp...
-compiling Stream.cpp...
-compiling USARTSerial.cpp...
-linking...
-Program Size: Code=18764 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling Print.cpp...
-linking...
-Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling Print.cpp...
-..\..\stm32library\armcore\Print.cpp(150): error:  #308: more than one instance of overloaded function "Print::printByte" matches the argument list:
-            function "Print::printByte(uint8)"
-            function "Print::printByte(uint32)"
-            argument types are: (int)
-        n += printByte((uint8)val>>24 &0xff);
-             ^
-..\..\stm32library\armcore\Print.cpp(151): error:  #308: more than one instance of overloaded function "Print::printByte" matches the argument list:
-            function "Print::printByte(uint8)"
-            function "Print::printByte(uint32)"
-            argument types are: (int)
-        n += printByte((uint8)val>>16 &0xff);
-             ^
-..\..\stm32library\armcore\Print.cpp(152): error:  #308: more than one instance of overloaded function "Print::printByte" matches the argument list:
-            function "Print::printByte(uint8)"
-            function "Print::printByte(uint32)"
-            argument types are: (int)
-        n += printByte((uint8)val>>8 &0xff);
-             ^
-..\..\stm32library\armcore\Print.cpp: 0 warnings, 3 errors
-Target not created
-Build target 'Target 1'
-compiling Print.cpp...
-..\..\stm32library\armcore\Print.cpp(150): error:  #308: more than one instance of overloaded function "Print::printByte" matches the argument list:
-            function "Print::printByte(uint8)"
-            function "Print::printByte(uint32)"
-            argument types are: (int)
-        n += printByte((uint8)val>>24 &0xff);
-             ^
-..\..\stm32library\armcore\Print.cpp(151): error:  #308: more than one instance of overloaded function "Print::printByte" matches the argument list:
-            function "Print::printByte(uint8)"
-            function "Print::printByte(uint32)"
-            argument types are: (int)
-        n += printByte((uint8)val>>16 &0xff);
-             ^
-..\..\stm32library\armcore\Print.cpp(152): error:  #308: more than one instance of overloaded function "Print::printByte" matches the argument list:
-            function "Print::printByte(uint8)"
-            function "Print::printByte(uint32)"
-            argument types are: (int)
-        n += printByte((uint8)val>>8 &0xff);
-             ^
-..\..\stm32library\armcore\Print.cpp: 0 warnings, 3 errors
-Target not created
-Build target 'Target 1'
-compiling Print.cpp...
-linking...
-Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling main.cpp...
-..\main.cpp(163): warning:  #111-D: statement is unreachable
-..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
-linking...
-Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling main.cpp...
-..\main.cpp(163): warning:  #111-D: statement is unreachable
-..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
-linking...
-Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling main.cpp...
-..\main.cpp(163): warning:  #111-D: statement is unreachable
-..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
-linking...
-Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling main.cpp...
-..\main.cpp(163): warning:  #111-D: statement is unreachable
-..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
-linking...
-Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
+"stm32f4-stdperiph.axf" - 0 Error(s), 4 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
 Erase Done.
 Programming Done.

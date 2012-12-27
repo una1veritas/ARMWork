@@ -128,10 +128,12 @@ int main(void) {
 		//Serial3.println();
 
 		Serial3.print(", Clock: ");
-		tmp[0] = 3;
-		if ( i2c_request(&I2C1Buffer, B1101000, (uint8_t*)tmp, 1) 
-			&& i2c_receive(&I2C1Buffer, (uint8_t*)&clock, 3) ) {
-			Serial3.printByte(clock);
+		tmp[0] = 0;
+		if ( i2c_request(&I2C1Buffer, 0x68, (uint8_t*)tmp, 1) 
+			&& i2c_receive(&I2C1Buffer, (uint8_t*)tmp, 7) ) {
+			Serial3.printByte(0xffffff &(*(uint32*)tmp));
+			Serial3.print(" ");
+			Serial3.printByte(*(uint32*)(tmp+4));
 			Serial3.println();
 		} else {
 			Serial3.print("I2C Status ");
