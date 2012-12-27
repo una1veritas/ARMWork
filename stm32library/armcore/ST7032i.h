@@ -31,7 +31,7 @@ class ST7032i : public Print {
 	  uint8_t _numlines, _numcolumns;
 	  uint8_t _position;
 //
-	I2CContext * wirex;
+	I2CBuffer * wirex;
 	byte contrast;
 	byte i2c_address;
 	GPIOPin pin_bklight;
@@ -40,7 +40,7 @@ class ST7032i : public Print {
 
 public:
 
-	void init(I2CContext * );
+	void init(I2CBuffer * );
 	void begin();
 
    virtual size_t write(const uint8_t);

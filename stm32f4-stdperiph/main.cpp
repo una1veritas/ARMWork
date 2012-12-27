@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <ctype.h>
 
 #include <stm32f4xx.h>
 #include <stm32f4xx_usart.h>
@@ -21,17 +22,18 @@
 
 #include "ST7032i.h"
 #include "USARTSerial.h"
+#include "DS1307.h"
 
 ST7032i lcd;
 USARTSerial Serial3(USART3);
+DS1307 rtc(I2C1Buffer);
 
 int main(void) {
 	uint16_t bits;
 	uint32_t intval = 40;
 	uint32_t tnow;
-	uint8 length = 4;
 	char tmp[128];
-	uint32 clock, calendar;
+	uint16_t i = 0;
 	
 	TIM2_timer_start();
 
@@ -127,18 +129,13 @@ int main(void) {
 		Serial3.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
 		//Serial3.println();
 
+		rtc.updateTime();
 		Serial3.print(", Clock: ");
-		tmp[0] = 0;
-		if ( i2c_request(&I2C1Buffer, 0x68, (uint8_t*)tmp, 1) 
-			&& i2c_receive(&I2C1Buffer, (uint8_t*)tmp, 7) ) {
-			Serial3.printByte(0xffffff &(*(uint32*)tmp));
-			Serial3.print(" ");
-			Serial3.printByte(*(uint32*)(tmp+4));
-			Serial3.println();
-		} else {
-			Serial3.print("I2C Status ");
-			Serial3.println(I2C1Buffer.status, HEX);
-		}
+			Serial3.printByte( rtc.time );
+		rtc.updateCalendar();
+		Serial3.print(" ");
+		Serial3.printByte( rtc.cal );
+		Serial3.println();
 		
 		//		lcd.clear();
 		lcd.setCursor(0, 0);
@@ -150,15 +147,33 @@ int main(void) {
 		lcd.setCursor(0, 1);
 		lcd.print((float)millis()/1000, 3);
 		
-		uint16_t i = 0;
+
+		char c;
 		if (Serial3.available() > 0) {
 			while (Serial3.available() > 0 && i < 92) {
-				tmp[i++] = (char) Serial3.read();
+				c = (char) Serial3.read();
+				if ( c == '\n' || c == '\r' || c == ' ' ) {
+					tmp[i] = 0;
+					break;
+				}
+				tmp[i++] = c;
 			}
-			Serial3.print("> ");
-			Serial3.print(tmp);
-			Serial3.print("\n");
+			if ( strlen(tmp) and (c == 0x0d or c == 0x0a) ) {
 
+				if (tmp[0] == 't') {
+					rtc.time = strtol(tmp+1, 0, 16);
+					rtc.setTime(rtc.time);
+				} else if (tmp[0] == 'c') {
+					rtc.cal = strtol(tmp+1, 0, 16);
+					rtc.setCalendar(rtc.cal);
+				}
+				Serial3.print("> ");
+				Serial3.print(rtc.time, HEX);
+				Serial3.print(" ");
+				Serial3.print(rtc.cal, HEX);
+				Serial3.print("\n");
+				i = 0;
+			}
 		}
 
 	}

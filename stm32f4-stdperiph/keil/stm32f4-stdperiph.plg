@@ -9,209 +9,51 @@ Project File Date:  12/27/2012
 <h2>Output:</h2>
 Build target 'Target 1'
 compiling main.cpp...
-..\main.cpp(163): warning:  #111-D: statement is unreachable
+..\main.cpp(165): warning:  #111-D: statement is unreachable
 ..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
+..\main.cpp(34): warning:  #177-D: variable "clock" was declared but never referenced
 ..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
-linking...
-Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
-Build target 'Target 1'
 compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(102): warning:  #177-D: variable "wc" was declared but never referenced
+..\..\stm32library\armcore\i2c.c(166): warning:  #177-D: variable "t" was declared but never referenced
+..\..\stm32library\armcore\i2c.c(310): warning:  #177-D: variable "wire" was declared but never referenced
+compiling ST7032i.cpp...
 linking...
-Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=18884 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+"stm32f4-stdperiph.axf" - 0 Error(s), 7 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
 Erase Done.
 Programming Done.
 Verify OK.
 Application running ...
 Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(165): warning:  #111-D: statement is unreachable
+..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
+..\main.cpp(34): warning:  #177-D: variable "clock" was declared but never referenced
+..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
 compiling i2c.c...
-linking...
-Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-linking...
-Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-linking...
-Program Size: Code=18704 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-linking...
-Program Size: Code=18708 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-linking...
-Program Size: Code=18708 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-linking...
-Program Size: Code=18708 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-linking...
-Program Size: Code=18708 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-linking...
-Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-linking...
-Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-linking...
-Program Size: Code=18696 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-linking...
-Program Size: Code=18708 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(231): warning:  #260-D: explicit type is missing ("int" assumed)
-linking...
-Program Size: Code=18720 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(231): warning:  #260-D: explicit type is missing ("int" assumed)
-linking...
-Program Size: Code=18736 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=18736 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(231): warning:  #260-D: explicit type is missing ("int" assumed)
-linking...
-Program Size: Code=18764 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(102): warning:  #177-D: variable "watch" was declared but never referenced
-..\..\stm32library\armcore\i2c.c(103): warning:  #177-D: variable "wait" was declared but never referenced
-..\..\stm32library\armcore\i2c.c(233): warning:  #260-D: explicit type is missing ("int" assumed)
-linking...
-Program Size: Code=18772 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(108): error:  #114: label "failure" was referenced but not defined
-..\..\stm32library\armcore\i2c.c(231): warning:  #260-D: explicit type is missing ("int" assumed)
-compiling Print.cpp...
+..\..\stm32library\armcore\i2c.c(180): error:  #140: too many arguments in function call
+..\..\stm32library\armcore\i2c.c(190): error:  #147-D: declaration is incompatible with "boolean i2c_start_receive(I2CContext *)" (declared at line 77 of "..\..\stm32library\armcore\i2c.h")
+..\..\stm32library\armcore\i2c.c(255): warning:  #177-D: variable "wire" was declared but never referenced
+compiling ST7032i.cpp...
 Target not created
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
 _____^
 *** error 56: cannot open file
 Build target 'Target 1'
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(231): warning:  #260-D: explicit type is missing ("int" assumed)
+..\..\stm32library\armcore\i2c.c(255): warning:  #177-D: variable "wire" was declared but never referenced
 linking...
-Program Size: Code=18800 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=18908 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(255): warning:  #177-D: variable "wire" was declared but never referenced
+linking...
+Program Size: Code=18908 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -221,9 +63,9 @@ Verify OK.
 Application running ...
 Build target 'Target 1'
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(232): warning:  #260-D: explicit type is missing ("int" assumed)
+..\..\stm32library\armcore\i2c.c(254): warning:  #177-D: variable "wire" was declared but never referenced
 linking...
-Program Size: Code=18808 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=18868 RO-data=1012 RW-data=164 ZI-data=4900  
 FromELF: creating hex file...
 "stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
@@ -231,75 +73,840 @@ Erase Done.
 Programming Done.
 Verify OK.
 Application running ...
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(9): error:  #5: cannot open source input file "avr/pgmspace.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(14): error:  #5: cannot open source input file "WProgram.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(37): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.h(40): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.h(42): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.h(43): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.h(44): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.h(45): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.h(46): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.h(47): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.h(48): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.h(58): error:  #77-D: this declaration has no storage class or type specifier
+..\..\stm32library\armcore\DS1307.h(58): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.h(59): error:  #77-D: this declaration has no storage class or type specifier
+..\..\stm32library\armcore\DS1307.h(59): error:  #101: "PROGMEM" has already been declared in the current scope
+..\..\stm32library\armcore\DS1307.h(59): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.h(98): error:  #20: identifier "NameOfDay" is undefined
+..\..\stm32library\armcore\DS1307.h(98): error:  #20: identifier "strcpy_P" is undefined
+..\..\stm32library\armcore\DS1307.h(103): error:  #20: identifier "NameOfMonth" is undefined
+..\..\stm32library\armcore\DS1307.h(103): error:  #20: identifier "strcpy_P" is undefined
+..\..\stm32library\armcore\DS1307.cpp(11): error:  #5: cannot open source input file "Wire.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(58): error:  #77-D: this declaration has no storage class or type specifier
+..\..\stm32library\armcore\DS1307.h(58): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.h(59): error:  #77-D: this declaration has no storage class or type specifier
+..\..\stm32library\armcore\DS1307.h(59): error:  #101: "PROGMEM" has already been declared in the current scope
+..\..\stm32library\armcore\DS1307.h(59): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.h(98): error:  #20: identifier "NameOfDay" is undefined
+..\..\stm32library\armcore\DS1307.h(98): error:  #20: identifier "strcpy_P" is undefined
+..\..\stm32library\armcore\DS1307.h(103): error:  #20: identifier "NameOfMonth" is undefined
+..\..\stm32library\armcore\DS1307.h(103): error:  #20: identifier "strcpy_P" is undefined
+..\..\stm32library\armcore\DS1307.cpp(11): error:  #5: cannot open source input file "Wire.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(59): error:  #20: identifier "prog_char" is undefined
+..\..\stm32library\armcore\DS1307.h(61): error:  #20: identifier "prog_char" is undefined
+..\..\stm32library\armcore\DS1307.h(100): error:  #20: identifier "strcpy_P" is undefined
+..\..\stm32library\armcore\DS1307.h(105): error:  #20: identifier "strcpy_P" is undefined
+..\..\stm32library\armcore\DS1307.cpp(11): error:  #5: cannot open source input file "Wire.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(100): error:  #20: identifier "strcpy_P" is undefined
+..\..\stm32library\armcore\DS1307.h(105): error:  #20: identifier "strcpy_P" is undefined
+..\..\stm32library\armcore\DS1307.cpp(11): error:  #5: cannot open source input file "Wire.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(100): error:  #20: identifier "strcpy" is undefined
+..\..\stm32library\armcore\DS1307.h(105): error:  #20: identifier "strcpy" is undefined
+..\..\stm32library\armcore\DS1307.cpp(11): error:  #5: cannot open source input file "Wire.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(101): error:  #20: identifier "strcpy" is undefined
+..\..\stm32library\armcore\DS1307.h(106): error:  #20: identifier "strcpy" is undefined
+..\..\stm32library\armcore\DS1307.cpp(11): error:  #5: cannot open source input file "Wire.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(101): error:  #20: identifier "strcpy" is undefined
+..\..\stm32library\armcore\DS1307.h(106): error:  #20: identifier "strcpy" is undefined
+..\..\stm32library\armcore\DS1307.cpp(11): error:  #5: cannot open source input file "Wire.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(101): error:  #20: identifier "strcpy" is undefined
+..\..\stm32library\armcore\DS1307.h(106): error:  #20: identifier "strcpy" is undefined
+..\..\stm32library\armcore\DS1307.cpp(11): error:  #5: cannot open source input file "Wire.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(101): error:  #20: identifier "strcpy" is undefined
+..\..\stm32library\armcore\DS1307.h(106): error:  #20: identifier "strcpy" is undefined
+..\..\stm32library\armcore\DS1307.cpp(15): error:  #77-D: this declaration has no storage class or type specifier
+..\..\stm32library\armcore\DS1307.cpp(15): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.cpp(17): error:  #77-D: this declaration has no storage class or type specifier
+..\..\stm32library\armcore\DS1307.cpp(17): error:  #247: variable "PROGMEM" has already been defined
+..\..\stm32library\armcore\DS1307.cpp(17): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.cpp(27): error:  #20: identifier "Wire" is undefined
+..\..\stm32library\armcore\DS1307.cpp(51): error:  #20: identifier "Wire" is undefined
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.cpp(15): error:  #77-D: this declaration has no storage class or type specifier
+..\..\stm32library\armcore\DS1307.cpp(15): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.cpp(17): error:  #77-D: this declaration has no storage class or type specifier
+..\..\stm32library\armcore\DS1307.cpp(17): error:  #247: variable "PROGMEM" has already been defined
+..\..\stm32library\armcore\DS1307.cpp(17): error:  #65: expected a ";"
+..\..\stm32library\armcore\DS1307.cpp(27): error:  #20: identifier "Wire" is undefined
+..\..\stm32library\armcore\DS1307.cpp(51): error:  #20: identifier "Wire" is undefined
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.cpp(16): error:  #20: identifier "prog_char" is undefined
+..\..\stm32library\armcore\DS1307.cpp(17): error:  #520: initialization with "{...}" expected for aggregate object
+..\..\stm32library\armcore\DS1307.cpp(19): error:  #20: identifier "prog_char" is undefined
+..\..\stm32library\armcore\DS1307.cpp(20): error:  #520: initialization with "{...}" expected for aggregate object
+..\..\stm32library\armcore\DS1307.cpp(29): error:  #20: identifier "Wire" is undefined
+..\..\stm32library\armcore\DS1307.cpp(53): error:  #20: identifier "Wire" is undefined
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.cpp(29): error:  #20: identifier "Wire" is undefined
+..\..\stm32library\armcore\DS1307.cpp(53): error:  #20: identifier "Wire" is undefined
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(25): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\DS1307.h(72): error:  #20: identifier "I2CContext" is undefined
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+linking...
+Program Size: Code=18868 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(165): warning:  #111-D: statement is unreachable
+..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
+..\main.cpp(34): warning:  #177-D: variable "clock" was declared but never referenced
+..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(254): warning:  #177-D: variable "wire" was declared but never referenced
+compiling ST7032i.cpp...
+compiling DS1307.cpp...
+linking...
+Program Size: Code=18868 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=18868 RO-data=1012 RW-data=164 ZI-data=4900  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(27): error:  #20: identifier "DS1307" is undefined
+..\main.cpp(166): warning:  #111-D: statement is unreachable
+..\main.cpp(33): warning:  #177-D: variable "length" was declared but never referenced
+..\main.cpp(35): warning:  #177-D: variable "clock" was declared but never referenced
+..\main.cpp(35): warning:  #177-D: variable "calendar" was declared but never referenced
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(28): error:  #289: no instance of constructor "DS1307::DS1307" matches the argument list
+..\main.cpp(167): warning:  #111-D: statement is unreachable
+..\main.cpp(34): warning:  #177-D: variable "length" was declared but never referenced
+..\main.cpp(36): warning:  #177-D: variable "clock" was declared but never referenced
+..\main.cpp(36): warning:  #177-D: variable "calendar" was declared but never referenced
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(28): error:  #289: no instance of constructor "DS1307::DS1307" matches the argument list
+..\main.cpp(165): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\..\stm32library\armcore\DS1307.h(72): error:  #366: "DS1307::DS1307(I2CContext &)" provides no initializer for:
+            reference member "DS1307::i2cx"
+        DS1307(I2CContext & wire) : time(0), cal(0) {
+                                                    ^
+..\main.cpp(165): warning:  #111-D: statement is unreachable
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(72): error:  #366: "DS1307::DS1307(I2CContext &)" provides no initializer for:
+            reference member "DS1307::i2cx"
+        DS1307(I2CContext & wire) : time(0), cal(0) {
+                                                    ^
+..\..\stm32library\armcore\DS1307.cpp(49): error:  #413: no suitable conversion function from "I2CContext" to "I2CContext *" exists
+..\..\stm32library\armcore\DS1307.cpp(50): error:  #413: no suitable conversion function from "I2CContext" to "I2CContext *" exists
+..\..\stm32library\armcore\DS1307.cpp(75): error:  #413: no suitable conversion function from "I2CContext" to "I2CContext *" exists
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(165): warning:  #111-D: statement is unreachable
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.cpp(49): error:  #413: no suitable conversion function from "I2CContext" to "I2CContext *" exists
+..\..\stm32library\armcore\DS1307.cpp(50): error:  #413: no suitable conversion function from "I2CContext" to "I2CContext *" exists
+..\..\stm32library\armcore\DS1307.cpp(75): error:  #413: no suitable conversion function from "I2CContext" to "I2CContext *" exists
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+linking...
+Program Size: Code=18884 RO-data=1012 RW-data=164 ZI-data=4916  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(132): error:  #135: class "DS1307" has no member "clock"
+..\main.cpp(132): error:  #65: expected a ";"
+..\main.cpp(158): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(132): error:  #308: more than one instance of overloaded function "USARTSerial::printByte" matches the argument list:
+            function "Print::printByte(uint8)"
+            function "Print::printByte(uint32)"
+            argument types are: (long)
+            object type is: USARTSerial
+                        Serial3.printByte( rtc.time ));
+                                ^
+..\main.cpp(132): error:  #65: expected a ";"
+..\main.cpp(158): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(132): error:  #65: expected a ";"
+..\main.cpp(158): warning:  #111-D: statement is unreachable
+compiling DS1307.cpp...
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(158): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=19568 RO-data=1012 RW-data=164 ZI-data=4916  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(152): error:  #20: identifier "isspace" is undefined
+..\main.cpp(165): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(166): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=19824 RO-data=1284 RW-data=164 ZI-data=4916  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(156): error:  #65: expected a ";"
+..\main.cpp(165): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(165): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=19600 RO-data=1012 RW-data=164 ZI-data=4916  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(166): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=19592 RO-data=1012 RW-data=164 ZI-data=4916  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(168): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=19836 RO-data=1284 RW-data=164 ZI-data=4916  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(161): error:  #167: argument of type "uint32 *" is incompatible with parameter of type "char **"
+..\main.cpp(169): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(169): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=20156 RO-data=1284 RW-data=164 ZI-data=4916  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(159): error:  #18: expected a ")"
+..\main.cpp(159): error:  #7: unrecognized token
+..\main.cpp(169): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(159): error:  #18: expected a ")"
+..\main.cpp(159): error:  #7: unrecognized token
+..\main.cpp(169): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(159): error:  #18: expected a ")"
+..\main.cpp(159): error:  #7: unrecognized token
+..\main.cpp(169): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(159): error:  #18: expected a ")"
+..\main.cpp(159): error:  #7: unrecognized token
+..\main.cpp(169): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(159): error:  #18: expected a ")"
+..\main.cpp(159): error:  #7: unrecognized token
+..\main.cpp(169): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(169): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=20144 RO-data=1284 RW-data=164 ZI-data=4916  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(169): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=20152 RO-data=1284 RW-data=164 ZI-data=4916  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(165): error:  #165: too few arguments in function call
+..\main.cpp(172): warning:  #111-D: statement is unreachable
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(172): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=20180 RO-data=1284 RW-data=164 ZI-data=4916  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(172): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=20184 RO-data=1284 RW-data=164 ZI-data=4916  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.cpp(75): error:  #167: argument of type "std::uint8_t **" is incompatible with parameter of type "std::uint8_t *"
+Target not created
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+_____^
+*** error 56: cannot open file
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.cpp(75): error:  #167: argument of type "std::uint8_t **" is incompatible with parameter of type "std::uint8_t *"
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+linking...
+Program Size: Code=20180 RO-data=1284 RW-data=164 ZI-data=4916  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(180): error:  #169: expected a declaration
+..\main.cpp(181): error:  #169: expected a declaration
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(180): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=20256 RO-data=1284 RW-data=164 ZI-data=4916  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\..\stm32library\armcore\ST7032i.h(34): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\ST7032i.h(43): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\DS1307.h(25): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\DS1307.h(72): error:  #20: identifier "I2CContext" is undefined
+..\main.cpp(180): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(148): error:  #137: expression must be a modifiable lvalue
+..\..\stm32library\armcore\i2c.c(164): error:  #137: expression must be a modifiable lvalue
+..\..\stm32library\armcore\i2c.c(178): error:  #137: expression must be a modifiable lvalue
+..\..\stm32library\armcore\i2c.c(254): warning:  #177-D: variable "wire" was declared but never referenced
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.h(34): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\ST7032i.h(43): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CContext" is undefined
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(25): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\DS1307.h(72): error:  #20: identifier "I2CContext" is undefined
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(26): error:  #5: cannot open source input file "twi.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\..\stm32library\armcore\ST7032i.h(43): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\DS1307.h(25): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\DS1307.h(72): error:  #20: identifier "I2CContext" is undefined
+..\main.cpp(180): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(148): error:  #137: expression must be a modifiable lvalue
+..\..\stm32library\armcore\i2c.c(164): error:  #137: expression must be a modifiable lvalue
+..\..\stm32library\armcore\i2c.c(178): error:  #137: expression must be a modifiable lvalue
+..\..\stm32library\armcore\i2c.c(254): warning:  #177-D: variable "wire" was declared but never referenced
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.h(43): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CContext" is undefined
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(25): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\DS1307.h(72): error:  #20: identifier "I2CContext" is undefined
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(26): error:  #5: cannot open source input file "twi.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\..\stm32library\armcore\DS1307.h(25): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\DS1307.h(72): error:  #20: identifier "I2CContext" is undefined
+..\main.cpp(180): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(148): error:  #137: expression must be a modifiable lvalue
+..\..\stm32library\armcore\i2c.c(164): error:  #137: expression must be a modifiable lvalue
+..\..\stm32library\armcore\i2c.c(178): error:  #137: expression must be a modifiable lvalue
+..\..\stm32library\armcore\i2c.c(254): warning:  #177-D: variable "wire" was declared but never referenced
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #147: declaration is incompatible with "void ST7032i::init(I2CBuffer *)" (declared at line 43 of "..\..\stm32library\armcore\ST7032i.h")
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(25): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\DS1307.h(72): error:  #20: identifier "I2CContext" is undefined
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(26): error:  #5: cannot open source input file "twi.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\..\stm32library\armcore\DS1307.h(72): error:  #20: identifier "I2CContext" is undefined
+..\main.cpp(180): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(148): error:  #137: expression must be a modifiable lvalue
+..\..\stm32library\armcore\i2c.c(164): error:  #137: expression must be a modifiable lvalue
+..\..\stm32library\armcore\i2c.c(178): error:  #137: expression must be a modifiable lvalue
+..\..\stm32library\armcore\i2c.c(254): warning:  #177-D: variable "wire" was declared but never referenced
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #147: declaration is incompatible with "void ST7032i::init(I2CBuffer *)" (declared at line 43 of "..\..\stm32library\armcore\ST7032i.h")
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(72): error:  #20: identifier "I2CContext" is undefined
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(26): error:  #5: cannot open source input file "twi.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(180): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(148): error:  #137: expression must be a modifiable lvalue
+..\..\stm32library\armcore\i2c.c(164): error:  #137: expression must be a modifiable lvalue
+..\..\stm32library\armcore\i2c.c(178): error:  #137: expression must be a modifiable lvalue
+..\..\stm32library\armcore\i2c.c(254): warning:  #177-D: variable "wire" was declared but never referenced
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #147: declaration is incompatible with "void ST7032i::init(I2CBuffer *)" (declared at line 43 of "..\..\stm32library\armcore\ST7032i.h")
+compiling DS1307.cpp...
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(26): error:  #5: cannot open source input file "twi.h": No such file or directory
+Target not created
 Build target 'Target 1'
 compiling i2c.c...
-..\..\stm32library\armcore\i2c.c(232): warning:  #260-D: explicit type is missing ("int" assumed)
+..\..\stm32library\armcore\i2c.c(256): warning:  #177-D: variable "wire" was declared but never referenced
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #20: identifier "I2CContext" is undefined
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #147: declaration is incompatible with "void ST7032i::init(I2CBuffer *)" (declared at line 43 of "..\..\stm32library\armcore\ST7032i.h")
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(26): error:  #5: cannot open source input file "twi.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling ST7032i.cpp...
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(26): error:  #5: cannot open source input file "twi.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.h(56): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::available"
+..\..\stm32library\armcore\I2CWire.h(57): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::read"
+..\..\stm32library\armcore\I2CWire.h(58): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::peek"
+..\..\stm32library\armcore\I2CWire.h(70): error:  #322: object of abstract class type "I2CWire" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+            pure virtual function "Stream::read" has no overrider
+            pure virtual function "Stream::peek" has no overrider
+  extern I2CWire Wire;
+                 ^
+..\..\stm32library\armcore\I2CWire.cpp(29): error:  #5: cannot open source input file "Wire.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.h(56): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::available"
+..\..\stm32library\armcore\I2CWire.h(57): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::read"
+..\..\stm32library\armcore\I2CWire.h(58): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::peek"
+..\..\stm32library\armcore\I2CWire.h(70): error:  #322: object of abstract class type "I2CWire" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+            pure virtual function "Stream::read" has no overrider
+            pure virtual function "Stream::peek" has no overrider
+  extern I2CWire Wire;
+                 ^
+..\..\stm32library\armcore\I2CWire.cpp(29): error:  #5: cannot open source input file "Wire.h": No such file or directory
+Target not created
+Build target 'Target 1'
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.h(56): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::available"
+..\..\stm32library\armcore\I2CWire.h(57): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::read"
+..\..\stm32library\armcore\I2CWire.h(58): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::peek"
+..\..\stm32library\armcore\I2CWire.h(70): error:  #322: object of abstract class type "I2CWire" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+            pure virtual function "Stream::read" has no overrider
+            pure virtual function "Stream::peek" has no overrider
+  extern I2CWire Wire;
+                 ^
+..\..\stm32library\armcore\I2CWire.cpp(29): error:  #5: cannot open source input file "Wire.h": No such file or directory
+Target not created
+Build target 'Target 1'
 linking...
-Program Size: Code=18820 RO-data=1012 RW-data=164 ZI-data=4900  
+Program Size: Code=20300 RO-data=1284 RW-data=164 ZI-data=5668  
 FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=20300 RO-data=1284 RW-data=164 ZI-data=5668  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
 Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
 Erase Done.
 Programming Done.
 Verify OK.
 Application running ...
 Build target 'Target 1'
-compiling main.cpp...
-..\main.cpp(163): warning:  #111-D: statement is unreachable
-..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
-linking...
-Program Size: Code=18820 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 3 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-compiling main.cpp...
-..\main.cpp(136): error:  #158: expression must be an lvalue or a function designator
-..\main.cpp(165): warning:  #111-D: statement is unreachable
-..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "clock" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.h(56): error:  #317: return type is not identical to nor covariant with return type "std::int16_t" of overridden virtual function "Stream::available"
+..\..\stm32library\armcore\I2CWire.h(70): error:  #322: object of abstract class type "I2CWire" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+  extern I2CWire Wire;
+                 ^
+..\..\stm32library\armcore\I2CWire.cpp(29): error:  #5: cannot open source input file "Wire.h": No such file or directory
 Target not created
 Build target 'Target 1'
 compiling main.cpp...
-..\main.cpp(136): error:  #158: expression must be an lvalue or a function designator
-..\main.cpp(165): warning:  #111-D: statement is unreachable
-..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "clock" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
+..\..\stm32library\armcore\USARTSerial.h(35): error:  #317: return type is not identical to nor covariant with return type "std::size_t" of overridden virtual function "Stream::available"
+..\main.cpp(28): error:  #322: object of abstract class type "USARTSerial" is not allowed:
+            pure virtual function "Stream::available" has no overrider
+  USARTSerial Serial3(USART3);
+              ^
+..\main.cpp(180): warning:  #111-D: statement is unreachable
+compiling ST7032i.cpp...
+compiling Stream.cpp...
+compiling USARTSerial.cpp...
+..\..\stm32library\armcore\USARTSerial.h(35): error:  #317: return type is not identical to nor covariant with return type "std::size_t" of overridden virtual function "Stream::available"
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(29): error:  #5: cannot open source input file "Wire.h": No such file or directory
 Target not created
 Build target 'Target 1'
 compiling main.cpp...
-..\main.cpp(165): warning:  #111-D: statement is unreachable
-..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "clock" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
-linking...
-Program Size: Code=18836 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 4 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
+..\main.cpp(180): warning:  #111-D: statement is unreachable
+compiling USARTSerial.cpp...
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(29): error:  #5: cannot open source input file "Wire.h": No such file or directory
+Target not created
 Build target 'Target 1'
-compiling main.cpp...
-..\main.cpp(165): warning:  #111-D: statement is unreachable
-..\main.cpp(32): warning:  #177-D: variable "length" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "clock" was declared but never referenced
-..\main.cpp(34): warning:  #177-D: variable "calendar" was declared but never referenced
-linking...
-Program Size: Code=18840 RO-data=1012 RW-data=164 ZI-data=4900  
-FromELF: creating hex file...
-"stm32f4-stdperiph.axf" - 0 Error(s), 4 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(33): error:  #276: name followed by "::" must be a class or namespace name
+..\..\stm32library\armcore\I2CWire.cpp(34): error:  #276: name followed by "::" must be a class or namespace name
+..\..\stm32library\armcore\I2CWire.cpp(35): error:  #276: name followed by "::" must be a class or namespace name
+..\..\stm32library\armcore\I2CWire.cpp(39): error:  #276: name followed by "::" must be a class or namespace name
+..\..\stm32library\armcore\I2CWire.cpp(39): error:  #260-D: explicit type is missing ("int" assumed)
+..\..\stm32library\armcore\I2CWire.cpp(41): warning:  #940-D: missing return statement at end of non-void function "TwoWire"
+..\..\stm32library\armcore\I2CWire.cpp(45): error:  #276: name followed by "::" must be a class or namespace name
+..\..\stm32library\armcore\I2CWire.cpp(47): error:  #20: identifier "rxBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(48): error:  #20: identifier "rxBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(50): error:  #20: identifier "txBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(51): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(53): error:  #20: identifier "twi_init" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(56): error:  #276: name followed by "::" must be a class or namespace name
+..\..\stm32library\armcore\I2CWire.cpp(58): error:  #20: identifier "twi_setAddress" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(59): error:  #20: identifier "onRequestService" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(59): error:  #20: identifier "twi_attachSlaveTxEvent" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(60): error:  #20: identifier "onReceiveService" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(60): error:  #20: identifier "twi_attachSlaveRxEvent" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(61): error:  #20: identifier "begin" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(64): error:  #276: name followed by "::" must be a class or namespace name
+..\..\stm32library\armcore\I2CWire.cpp(66): error:  #20: identifier "begin" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(69): error:  #276: name followed by "::" must be a class or namespace name
+..\..\stm32library\armcore\I2CWire.cpp(76): error:  #20: identifier "rxBuffer" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(76): error:  #20: identifier "twi_readFrom" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(78): error:  #20: identifier "rxBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(79): error:  #20: identifier "rxBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(84): error:  #276: name followed by "::" must be a class or namespace name
+..\..\stm32library\armcore\I2CWire.cpp(86): error:  #20: identifier "requestFrom" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(89): error:  #276: name followed by "::" must be a class or namespace name
+..\..\stm32library\armcore\I2CWire.cpp(91): error:  #20: identifier "requestFrom" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(94): error:  #276: name followed by "::" must be a class or namespace name
+Target not created
+Build target 'Target 1'
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(33): error:  #135: class "I2CWire" has no member "transmitting"
+..\..\stm32library\armcore\I2CWire.cpp(40): error:  #366: "I2CWire::I2CWire()" provides no initializer for:
+            reference member "I2CWire::i2c"
+  {
+  ^
+..\..\stm32library\armcore\I2CWire.cpp(47): error:  #20: identifier "rxBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(48): error:  #20: identifier "rxBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(50): error:  #20: identifier "txBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(51): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(53): error:  #20: identifier "twi_init" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(58): error:  #20: identifier "twi_setAddress" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(59): error:  #20: identifier "onRequestService" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(59): error:  #20: identifier "twi_attachSlaveTxEvent" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(60): error:  #20: identifier "onReceiveService" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(60): error:  #20: identifier "twi_attachSlaveRxEvent" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(76): error:  #20: identifier "rxBuffer" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(76): error:  #20: identifier "twi_readFrom" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(78): error:  #20: identifier "rxBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(79): error:  #20: identifier "rxBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "transmitting" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(104): error:  #20: identifier "txAddress" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(106): error:  #20: identifier "txBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(107): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(131): error:  #20: identifier "txAddress" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(131): error:  #20: identifier "txBuffer" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(131): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(131): error:  #20: identifier "twi_writeTo" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(133): error:  #20: identifier "txBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(136): error:  #20: identifier "transmitting" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(153): error:  #20: identifier "transmitting" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(156): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(161): error:  #20: identifier "txBuffer" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(161): error:  #20: identifier "txBufferIndex" is undefined
+Target not created
+Build target 'Target 1'
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(33): error:  #135: class "I2CWire" has no member "transmitting"
+..\..\stm32library\armcore\I2CWire.cpp(40): error:  #366: "I2CWire::I2CWire()" provides no initializer for:
+            reference member "I2CWire::i2c"
+  {
+  ^
+..\..\stm32library\armcore\I2CWire.cpp(47): error:  #20: identifier "i2cx" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(47): error:  #167: argument of type "int" is incompatible with parameter of type "I2C_TypeDef *"
+..\..\stm32library\armcore\I2CWire.cpp(47): error:  #165: too few arguments in function call
+..\..\stm32library\armcore\I2CWire.cpp(49): error:  #20: identifier "twi_init" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(54): error:  #20: identifier "twi_setAddress" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(55): error:  #20: identifier "onRequestService" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(55): error:  #20: identifier "twi_attachSlaveTxEvent" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(56): error:  #20: identifier "onReceiveService" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(56): error:  #20: identifier "twi_attachSlaveRxEvent" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(72): error:  #20: identifier "rxBuffer" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(72): error:  #20: identifier "twi_readFrom" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(74): error:  #20: identifier "rxBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(75): error:  #20: identifier "rxBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(98): error:  #20: identifier "transmitting" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(100): error:  #20: identifier "txAddress" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "txBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(103): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "txAddress" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "txBuffer" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "twi_writeTo" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(129): error:  #20: identifier "txBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(132): error:  #20: identifier "transmitting" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(149): error:  #20: identifier "transmitting" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(152): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(157): error:  #20: identifier "txBuffer" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(157): error:  #20: identifier "txBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(164): error:  #20: identifier "twi_transmit" is undefined
+Target not created
+Build target 'Target 1'
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(33): error:  #135: class "I2CWire" has no member "transmitting"
+..\..\stm32library\armcore\I2CWire.cpp(40): error:  #366: "I2CWire::I2CWire()" provides no initializer for:
+            reference member "I2CWire::i2c"
+  {
+  ^
+..\..\stm32library\armcore\I2CWire.cpp(47): error:  #167: argument of type "int" is incompatible with parameter of type "I2C_TypeDef *"
+..\..\stm32library\armcore\I2CWire.cpp(47): error:  #165: too few arguments in function call
+..\..\stm32library\armcore\I2CWire.cpp(49): error:  #20: identifier "twi_init" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(54): error:  #20: identifier "twi_setAddress" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(55): error:  #20: identifier "onRequestService" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(55): error:  #20: identifier "twi_attachSlaveTxEvent" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(56): error:  #20: identifier "onReceiveService" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(56): error:  #20: identifier "twi_attachSlaveRxEvent" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(72): error:  #20: identifier "rxBuffer" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(72): error:  #20: identifier "twi_readFrom" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(74): error:  #20: identifier "rxBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(75): error:  #20: identifier "rxBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(98): error:  #20: identifier "transmitting" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(100): error:  #20: identifier "txAddress" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "txBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(103): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "txAddress" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "txBuffer" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "twi_writeTo" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(129): error:  #20: identifier "txBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(132): error:  #20: identifier "transmitting" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(149): error:  #20: identifier "transmitting" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(152): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(157): error:  #20: identifier "txBuffer" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(157): error:  #20: identifier "txBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(164): error:  #20: identifier "twi_transmit" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(174): error:  #20: identifier "transmitting" is undefined
+Target not created
+Build target 'Target 1'
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(33): error:  #135: class "I2CWire" has no member "transmitting"
+..\..\stm32library\armcore\I2CWire.cpp(40): error:  #366: "I2CWire::I2CWire()" provides no initializer for:
+            reference member "I2CWire::i2c"
+  {
+  ^
+..\..\stm32library\armcore\I2CWire.cpp(47): error:  #167: argument of type "int" is incompatible with parameter of type "GPIOPin"
+..\..\stm32library\armcore\I2CWire.cpp(47): error:  #165: too few arguments in function call
+..\..\stm32library\armcore\I2CWire.cpp(49): error:  #20: identifier "twi_init" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(54): error:  #20: identifier "twi_setAddress" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(55): error:  #20: identifier "onRequestService" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(55): error:  #20: identifier "twi_attachSlaveTxEvent" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(56): error:  #20: identifier "onReceiveService" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(56): error:  #20: identifier "twi_attachSlaveRxEvent" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(72): error:  #20: identifier "rxBuffer" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(72): error:  #20: identifier "twi_readFrom" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(74): error:  #20: identifier "rxBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(75): error:  #20: identifier "rxBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(98): error:  #20: identifier "transmitting" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(100): error:  #20: identifier "txAddress" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "txBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(103): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "txAddress" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "txBuffer" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "twi_writeTo" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(129): error:  #20: identifier "txBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(132): error:  #20: identifier "transmitting" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(149): error:  #20: identifier "transmitting" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(152): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(157): error:  #20: identifier "txBuffer" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(157): error:  #20: identifier "txBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(164): error:  #20: identifier "twi_transmit" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(174): error:  #20: identifier "transmitting" is undefined
+Target not created
+Build target 'Target 1'
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(40): error:  #366: "I2CWire::I2CWire()" provides no initializer for:
+            reference member "I2CWire::i2c"
+  {
+  ^
+..\..\stm32library\armcore\I2CWire.cpp(47): error:  #167: argument of type "int" is incompatible with parameter of type "GPIOPin"
+..\..\stm32library\armcore\I2CWire.cpp(47): error:  #165: too few arguments in function call
+..\..\stm32library\armcore\I2CWire.cpp(49): error:  #20: identifier "twi_init" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(54): error:  #20: identifier "twi_setAddress" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(55): error:  #20: identifier "onRequestService" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(55): error:  #20: identifier "twi_attachSlaveTxEvent" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(56): error:  #20: identifier "onReceiveService" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(56): error:  #20: identifier "twi_attachSlaveRxEvent" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(72): error:  #20: identifier "rxBuffer" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(72): error:  #20: identifier "twi_readFrom" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(74): error:  #20: identifier "rxBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(75): error:  #20: identifier "rxBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(98): error:  #20: identifier "transmitting" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(100): error:  #20: identifier "txAddress" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "txBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(103): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "txAddress" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "txBuffer" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "twi_writeTo" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(129): error:  #20: identifier "txBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(132): error:  #20: identifier "transmitting" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(149): error:  #20: identifier "transmitting" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(152): error:  #20: identifier "txBufferLength" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(157): error:  #20: identifier "txBuffer" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(157): error:  #20: identifier "txBufferIndex" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(164): error:  #20: identifier "twi_transmit" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(174): error:  #20: identifier "transmitting" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(182): error:  #20: identifier "twi_transmit" is undefined
+Target not created
