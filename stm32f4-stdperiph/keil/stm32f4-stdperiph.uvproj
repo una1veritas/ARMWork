@@ -536,6 +536,26 @@
               <FileType>5</FileType>
               <FilePath>..\..\stm32library\armcore\USARTSerial.h</FilePath>
             </File>
+            <File>
+              <FileName>DS1307.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\stm32library\armcore\DS1307.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>DS1307.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\stm32library\armcore\DS1307.h</FilePath>
+            </File>
+            <File>
+              <FileName>I2CWire.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\stm32library\armcore\I2CWire.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>I2CWire.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\stm32library\armcore\I2CWire.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

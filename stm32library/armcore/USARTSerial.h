@@ -32,7 +32,7 @@ public:
 	using Print::write;
 
 	virtual int16_t read() { return usart_read(&port); }
-	virtual int16_t available() { return usart_available(&port); }
+	virtual size_t available() { return usart_available(&port); }
 	virtual int16_t peek() { return usart_peek(&port); }
 	virtual void flush() { usart_flush(&port); }
 
