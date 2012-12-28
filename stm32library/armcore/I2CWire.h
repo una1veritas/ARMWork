@@ -21,17 +21,25 @@ class I2CWire : public Stream
     void begin();
 	
     void beginTransmission(uint8);
+//    void beginRequest(uint8);
+		uint8_t endTransmission(uint8 = true);
+		uint8_t endRequest(void);
 
-	uint8_t endTransmission(void);
-		uint8_t endTransmission(uint8);
-
-		uint8_t requestFrom(uint8, uint16);
-		uint8_t requestFrom(uint8, uint16, uint8);
+		uint8_t receiveFrom(uint8, uint16);
+		uint8_t requestFrom(uint8 addr, uint16 qtty) { return receiveFrom(addr, qtty); } 
 	
     virtual size_t write(uint8_t);
-	virtual size_t available(void);
-    virtual int16 read(void);
-    virtual int16 peek(void);
+		virtual inline size_t write(int8 v) { return write((uint8) v); }
+		virtual size_t available(void) {
+		int32 d = ((int32)i2cbuf->limlen - i2cbuf->position);
+		return (d>0? (size_t)d: 0);
+	}
+    virtual int16 read(void) {
+			return i2cbuf->buffer[i2cbuf->position++];
+		}
+    virtual int16 peek(void) {
+			return i2cbuf->buffer[i2cbuf->position];
+		}
 		virtual void flush(void);
 //    void onReceive( void (*)(int) );
 //    void onRequest( void (*)(void) );
@@ -39,7 +47,7 @@ class I2CWire : public Stream
     using Print::write;
 };
 
-extern I2CWire Wire1(I2C1);
+//extern I2CWire Wire1(I2C1);
 
 #endif
 

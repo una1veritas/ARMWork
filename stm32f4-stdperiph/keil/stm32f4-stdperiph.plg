@@ -8,555 +8,332 @@ Project File Date:  12/28/2012
 
 <h2>Output:</h2>
 Build target 'Target 1'
+compiling I2CWire.cpp...
+linking...
+stm32f4-stdperiph.axf: Error: L6218E: Undefined symbol I2CWire::peek() (referred from i2cwire.o).
+stm32f4-stdperiph.axf: Error: L6218E: Undefined symbol I2CWire::read() (referred from i2cwire.o).
+stm32f4-stdperiph.axf: Error: L6218E: Undefined symbol I2CWire::available() (referred from i2cwire.o).
+Target not created
+Build target 'Target 1'
+compiling I2CWire.cpp...
+linking...
+Program Size: Code=20300 RO-data=1284 RW-data=164 ZI-data=5668  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling I2CWire.cpp...
+linking...
+Program Size: Code=20300 RO-data=1284 RW-data=164 ZI-data=5668  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(84): error:  #20: identifier "wire" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(86): warning:  #187-D: use of "=" where "==" may have been intended
+..\..\stm32library\armcore\I2CWire.cpp(99): warning:  #187-D: use of "=" where "==" may have been intended
+..\..\stm32library\armcore\I2CWire.cpp(110): error:  #20: identifier "wire" is undefined
+..\..\stm32library\armcore\I2CWire.cpp(114): warning:  #940-D: missing return statement at end of non-void function "I2CWire::endTransmission(std::uint8_t)"
+..\..\stm32library\armcore\I2CWire.cpp(70): warning:  #177-D: variable "ret" was declared but never referenced
+Target not created
+Build target 'Target 1'
+compiling I2CWire.cpp...
+linking...
+Program Size: Code=20300 RO-data=1284 RW-data=164 ZI-data=5668  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
 compiling main.cpp...
-..\main.cpp(180): warning:  #111-D: statement is unreachable
+..\main.cpp(181): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=20724 RO-data=1316 RW-data=164 ZI-data=5692  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(182): warning:  #111-D: statement is unreachable
+linking...
+Program Size: Code=20708 RO-data=1316 RW-data=164 ZI-data=5692  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=20708 RO-data=1316 RW-data=164 ZI-data=5692  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(27): error:  #291: no default constructor exists for class "ST7032i"
+..\main.cpp(81): error:  #135: class "ST7032i" has no member "init"
+..\main.cpp(182): warning:  #111-D: statement is unreachable
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #963: return type may not be specified on a constructor
+..\..\stm32library\armcore\ST7032i.cpp(87): error:  #413: no suitable conversion function from "I2CWire" to "I2CBuffer *" exists
+..\..\stm32library\armcore\ST7032i.cpp(95): error:  #413: no suitable conversion function from "I2CWire" to "I2CBuffer *" exists
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(81): error:  #135: class "ST7032i" has no member "init"
+..\main.cpp(182): warning:  #111-D: statement is unreachable
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #963: return type may not be specified on a constructor
+..\..\stm32library\armcore\ST7032i.cpp(87): error:  #413: no suitable conversion function from "I2CWire" to "I2CBuffer *" exists
+..\..\stm32library\armcore\ST7032i.cpp(95): error:  #413: no suitable conversion function from "I2CWire" to "I2CBuffer *" exists
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(182): warning:  #111-D: statement is unreachable
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(62): error:  #963: return type may not be specified on a constructor
+..\..\stm32library\armcore\ST7032i.cpp(87): error:  #413: no suitable conversion function from "I2CWire" to "I2CBuffer *" exists
+..\..\stm32library\armcore\ST7032i.cpp(95): error:  #413: no suitable conversion function from "I2CWire" to "I2CBuffer *" exists
+Target not created
+Build target 'Target 1'
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(87): error:  #413: no suitable conversion function from "I2CWire" to "I2CBuffer *" exists
+..\..\stm32library\armcore\ST7032i.cpp(95): error:  #413: no suitable conversion function from "I2CWire" to "I2CBuffer *" exists
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(182): warning:  #111-D: statement is unreachable
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(87): error:  #265-D: member "I2CWire::i2cbuf" (declared at line 15 of "..\..\stm32library\armcore\I2CWire.h") is inaccessible
+..\..\stm32library\armcore\ST7032i.cpp(95): error:  #413: no suitable conversion function from "I2CWire" to "I2CBuffer *" exists
+Target not created
+Build target 'Target 1'
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(89): error:  #308: more than one instance of overloaded function "I2CWire::write" matches the argument list:
+            function "I2CWire::write(std::uint8_t)"
+            function "Print::write(const char *)"
+            argument types are: (int)
+            object type is: I2CWire
+        wirex.write(0x00);
+              ^
+..\..\stm32library\armcore\ST7032i.cpp(84): warning:  #177-D: variable "buf" was declared but never referenced
+..\..\stm32library\armcore\ST7032i.cpp(99): error:  #413: no suitable conversion function from "I2CWire" to "I2CBuffer *" exists
+Target not created
+Build target 'Target 1'
+compiling ST7032i.cpp...
+..\..\stm32library\armcore\ST7032i.cpp(84): warning:  #177-D: variable "buf" was declared but never referenced
+..\..\stm32library\armcore\ST7032i.cpp(99): error:  #413: no suitable conversion function from "I2CWire" to "I2CBuffer *" exists
+Target not created
+Build target 'Target 1'
+compiling ST7032i.cpp...
+linking...
+Program Size: Code=20720 RO-data=1316 RW-data=164 ZI-data=5692  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
 compiling i2c.c...
 ..\..\stm32library\armcore\i2c.c(256): warning:  #177-D: variable "wire" was declared but never referenced
+compiling I2CWire.cpp...
+linking...
+Program Size: Code=20704 RO-data=1316 RW-data=164 ZI-data=5692  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(182): warning:  #111-D: statement is unreachable
+compiling ST7032i.cpp...
+compiling I2CWire.cpp...
+linking...
+Program Size: Code=20704 RO-data=1320 RW-data=164 ZI-data=5692  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(28): error:  #289: no instance of constructor "DS1307::DS1307" matches the argument list
+..\main.cpp(182): warning:  #111-D: statement is unreachable
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.cpp(49): error:  #20: identifier "i2cx" is undefined
+..\..\stm32library\armcore\DS1307.cpp(75): error:  #20: identifier "i2cx" is undefined
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(182): warning:  #111-D: statement is unreachable
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.cpp(49): error:  #20: identifier "i2cx" is undefined
+..\..\stm32library\armcore\DS1307.cpp(75): error:  #20: identifier "i2cx" is undefined
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(182): warning:  #111-D: statement is unreachable
+compiling i2c.c...
+..\..\stm32library\armcore\i2c.c(256): warning:  #177-D: variable "wire" was declared but never referenced
+compiling Print.cpp...
 compiling ST7032i.cpp...
 compiling Stream.cpp...
 compiling USARTSerial.cpp...
 compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.cpp(30): error:  #20: identifier "Wire" is undefined
+..\..\stm32library\armcore\DS1307.cpp(75): error:  #20: identifier "i2cx" is undefined
 compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.h(17): error:  #130: expected a "{"
-..\..\stm32library\armcore\I2CWire.h(17): error:  #67: expected a "}"
-..\..\stm32library\armcore\I2CWire.cpp(39): error:  #493: no instance of overloaded function "I2CWire::I2CWire" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(47): error:  #167: argument of type "int" is incompatible with parameter of type "GPIOPin"
-..\..\stm32library\armcore\I2CWire.cpp(47): error:  #165: too few arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(49): error:  #20: identifier "twi_init" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(52): error:  #147: declaration is incompatible with "void I2CWire::begin()" (declared at line 45)
-..\..\stm32library\armcore\I2CWire.cpp(54): error:  #20: identifier "twi_setAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(55): error:  #20: identifier "onRequestService" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(55): error:  #20: identifier "twi_attachSlaveTxEvent" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(56): error:  #20: identifier "onReceiveService" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(56): error:  #20: identifier "twi_attachSlaveRxEvent" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(60): error:  #147: declaration is incompatible with "void I2CWire::begin()" (declared at line 45)
-..\..\stm32library\armcore\I2CWire.cpp(62): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(65): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(uint8, uint8)" (declared at line 24 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(72): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(72): error:  #20: identifier "twi_readFrom" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(74): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(75): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(82): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(85): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(std::uint8_t, std::uint8_t)" (declared at line 80)
-..\..\stm32library\armcore\I2CWire.cpp(87): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(90): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(std::uint8_t, std::uint8_t)" (declared at line 80)
-..\..\stm32library\armcore\I2CWire.cpp(92): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(98): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(100): error:  #20: identifier "txAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(103): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(106): error:  #147: declaration is incompatible with "void I2CWire::beginTransmission(std::uint8_t)" (declared at line 95)
-..\..\stm32library\armcore\I2CWire.cpp(124): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::endTransmission()" (declared at line 22 of "..\..\stm32library\armcore\I2CWire.h")
+Target not created
+Build target 'Target 1'
+compiling i2c.c...
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.cpp(30): error:  #20: identifier "Wire" is undefined
+..\..\stm32library\armcore\DS1307.cpp(75): error:  #20: identifier "i2cx" is undefined
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\..\stm32library\armcore\DS1307.h(75): error:  #292: "wirex" is not a nonstatic data member or base class of class "DS1307"
+..\..\stm32library\armcore\DS1307.h(75): error:  #366: "DS1307::DS1307(I2CWire &)" provides no initializer for:
+            reference member "DS1307::wire"
+        DS1307(I2CWire & i2cwire) : wirex(i2cwire), time(0), cal(0) {}
+                                                                    ^
+..\main.cpp(182): warning:  #111-D: statement is unreachable
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.h(75): error:  #292: "wirex" is not a nonstatic data member or base class of class "DS1307"
+..\..\stm32library\armcore\DS1307.h(75): error:  #366: "DS1307::DS1307(I2CWire &)" provides no initializer for:
+            reference member "DS1307::wire"
+        DS1307(I2CWire & i2cwire) : wirex(i2cwire), time(0), cal(0) {}
+                                                                    ^
+..\..\stm32library\armcore\DS1307.cpp(30): error:  #20: identifier "Wire" is undefined
+..\..\stm32library\armcore\DS1307.cpp(75): error:  #20: identifier "i2cx" is undefined
+Target not created
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(182): warning:  #111-D: statement is unreachable
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.cpp(30): error:  #20: identifier "Wire" is undefined
+..\..\stm32library\armcore\DS1307.cpp(75): error:  #20: identifier "i2cx" is undefined
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.cpp(43): error:  #20: identifier "Wire" is undefined
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+linking...
+Program Size: Code=20784 RO-data=1320 RW-data=164 ZI-data=5692  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(43): error:  #20: identifier "wire" is undefined
 Target not created
 Build target 'Target 1'
 compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.cpp(39): error:  #493: no instance of overloaded function "I2CWire::I2CWire" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(47): error:  #167: argument of type "int" is incompatible with parameter of type "GPIOPin"
-..\..\stm32library\armcore\I2CWire.cpp(47): error:  #165: too few arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(49): error:  #20: identifier "twi_init" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(52): error:  #147: declaration is incompatible with "void I2CWire::begin()" (declared at line 45)
-..\..\stm32library\armcore\I2CWire.cpp(54): error:  #20: identifier "twi_setAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(55): error:  #20: identifier "onRequestService" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(55): error:  #20: identifier "twi_attachSlaveTxEvent" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(56): error:  #20: identifier "onReceiveService" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(56): error:  #20: identifier "twi_attachSlaveRxEvent" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(60): error:  #147: declaration is incompatible with "void I2CWire::begin()" (declared at line 45)
-..\..\stm32library\armcore\I2CWire.cpp(62): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(65): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(uint8, uint8)" (declared at line 22 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(68): error:  #20: identifier "BUFFER_LENGTH" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(72): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(72): error:  #20: identifier "twi_readFrom" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(74): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(75): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(82): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(85): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(std::uint8_t, std::uint8_t)" (declared at line 80)
-..\..\stm32library\armcore\I2CWire.cpp(87): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(90): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(std::uint8_t, std::uint8_t)" (declared at line 80)
-..\..\stm32library\armcore\I2CWire.cpp(92): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(98): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(100): error:  #20: identifier "txAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(103): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(106): error:  #147: declaration is incompatible with "void I2CWire::beginTransmission(std::uint8_t)" (declared at line 95)
-..\..\stm32library\armcore\I2CWire.cpp(124): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::endTransmission()" (declared at line 20 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(127): error:  #20: identifier "txAddress" is undefined
+linking...
+Program Size: Code=20796 RO-data=1320 RW-data=164 ZI-data=5692  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling I2CWire.cpp...
+linking...
+Program Size: Code=20788 RO-data=1320 RW-data=164 ZI-data=5692  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(182): warning:  #111-D: statement is unreachable
+compiling ST7032i.cpp...
+compiling DS1307.cpp...
+..\..\stm32library\armcore\DS1307.cpp(39): error:  #135: class "I2CWire" has no member "requestFrom"
+compiling I2CWire.cpp...
+Target not created
+Build target 'Target 1'
+compiling DS1307.cpp...
+linking...
+Program Size: Code=20788 RO-data=1320 RW-data=164 ZI-data=5692  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(182): warning:  #111-D: statement is unreachable
+compiling ST7032i.cpp...
+compiling DS1307.cpp...
+compiling I2CWire.cpp...
+..\..\stm32library\armcore\I2CWire.cpp(27): error:  #135: class "I2CWire" has no member "receiveFrom"
+..\..\stm32library\armcore\I2CWire.cpp(34): error:  #20: identifier "i2cbuf" is undefined
 Target not created
 Build target 'Target 1'
 compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.cpp(24): error:  #167: argument of type "int" is incompatible with parameter of type "GPIOPin"
-..\..\stm32library\armcore\I2CWire.cpp(24): error:  #165: too few arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(26): error:  #20: identifier "twi_init" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(29): error:  #147: declaration is incompatible with "void I2CWire::begin()" (declared at line 22)
-..\..\stm32library\armcore\I2CWire.cpp(31): error:  #20: identifier "twi_setAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(32): error:  #20: identifier "onRequestService" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(32): error:  #20: identifier "twi_attachSlaveTxEvent" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(33): error:  #20: identifier "onReceiveService" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(33): error:  #20: identifier "twi_attachSlaveRxEvent" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(37): error:  #147: declaration is incompatible with "void I2CWire::begin()" (declared at line 22)
-..\..\stm32library\armcore\I2CWire.cpp(39): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(42): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(uint8, uint8)" (declared at line 22 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(45): error:  #20: identifier "BUFFER_LENGTH" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(49): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(49): error:  #20: identifier "twi_readFrom" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(51): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(52): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(59): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(62): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(std::uint8_t, std::uint8_t)" (declared at line 57)
-..\..\stm32library\armcore\I2CWire.cpp(64): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(67): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(std::uint8_t, std::uint8_t)" (declared at line 57)
-..\..\stm32library\armcore\I2CWire.cpp(69): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(75): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(77): error:  #20: identifier "txAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(79): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(80): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(83): error:  #147: declaration is incompatible with "void I2CWire::beginTransmission(std::uint8_t)" (declared at line 72)
-..\..\stm32library\armcore\I2CWire.cpp(101): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::endTransmission()" (declared at line 20 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(104): error:  #20: identifier "txAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(104): error:  #20: identifier "txBuffer" is undefined
-Target not created
+linking...
+Program Size: Code=20776 RO-data=1320 RW-data=164 ZI-data=5692  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
 Build target 'Target 1'
-compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.cpp(24): error:  #167: argument of type "int" is incompatible with parameter of type "GPIOPin"
-..\..\stm32library\armcore\I2CWire.cpp(24): error:  #165: too few arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(27): error:  #147: declaration is incompatible with "void I2CWire::begin()" (declared at line 22)
-..\..\stm32library\armcore\I2CWire.cpp(29): error:  #20: identifier "twi_setAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(30): error:  #20: identifier "onRequestService" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(30): error:  #20: identifier "twi_attachSlaveTxEvent" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(31): error:  #20: identifier "onReceiveService" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(31): error:  #20: identifier "twi_attachSlaveRxEvent" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(35): error:  #147: declaration is incompatible with "void I2CWire::begin()" (declared at line 22)
-..\..\stm32library\armcore\I2CWire.cpp(37): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(40): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(uint8, uint8)" (declared at line 22 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(43): error:  #20: identifier "BUFFER_LENGTH" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(47): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(47): error:  #20: identifier "twi_readFrom" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(49): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(50): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(57): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(60): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(std::uint8_t, std::uint8_t)" (declared at line 55)
-..\..\stm32library\armcore\I2CWire.cpp(62): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(65): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(std::uint8_t, std::uint8_t)" (declared at line 55)
-..\..\stm32library\armcore\I2CWire.cpp(67): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(73): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(75): error:  #20: identifier "txAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(77): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(78): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(81): error:  #147: declaration is incompatible with "void I2CWire::beginTransmission(std::uint8_t)" (declared at line 70)
-..\..\stm32library\armcore\I2CWire.cpp(99): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::endTransmission()" (declared at line 20 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "txAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "txBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "txBufferLength" is undefined
-Target not created
+compiling DS1307.cpp...
+linking...
+Program Size: Code=20776 RO-data=1320 RW-data=164 ZI-data=5692  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
 Build target 'Target 1'
+compiling DS1307.cpp...
 compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.h(35): error:  #289: no instance of constructor "I2CWire::I2CWire" matches the argument list
-..\..\stm32library\armcore\I2CWire.cpp(27): error:  #147: declaration is incompatible with "void I2CWire::begin()" (declared at line 22)
-..\..\stm32library\armcore\I2CWire.cpp(29): error:  #20: identifier "twi_setAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(30): error:  #20: identifier "onRequestService" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(30): error:  #20: identifier "twi_attachSlaveTxEvent" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(31): error:  #20: identifier "onReceiveService" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(31): error:  #20: identifier "twi_attachSlaveRxEvent" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(35): error:  #147: declaration is incompatible with "void I2CWire::begin()" (declared at line 22)
-..\..\stm32library\armcore\I2CWire.cpp(37): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(40): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(uint8, uint8)" (declared at line 22 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(43): error:  #20: identifier "BUFFER_LENGTH" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(47): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(47): error:  #20: identifier "twi_readFrom" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(49): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(50): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(57): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(60): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(std::uint8_t, std::uint8_t)" (declared at line 55)
-..\..\stm32library\armcore\I2CWire.cpp(62): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(65): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(std::uint8_t, std::uint8_t)" (declared at line 55)
-..\..\stm32library\armcore\I2CWire.cpp(67): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(73): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(75): error:  #20: identifier "txAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(77): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(78): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(81): error:  #147: declaration is incompatible with "void I2CWire::beginTransmission(std::uint8_t)" (declared at line 70)
-..\..\stm32library\armcore\I2CWire.cpp(99): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::endTransmission()" (declared at line 20 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "txAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "txBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "twi_writeTo" is undefined
-Target not created
+linking...
+Program Size: Code=20784 RO-data=1320 RW-data=164 ZI-data=5692  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
 Build target 'Target 1'
-compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.cpp(27): error:  #147: declaration is incompatible with "void I2CWire::begin()" (declared at line 22)
-..\..\stm32library\armcore\I2CWire.cpp(29): error:  #20: identifier "twi_setAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(30): error:  #20: identifier "onRequestService" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(30): error:  #20: identifier "twi_attachSlaveTxEvent" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(31): error:  #20: identifier "onReceiveService" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(31): error:  #20: identifier "twi_attachSlaveRxEvent" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(35): error:  #147: declaration is incompatible with "void I2CWire::begin()" (declared at line 22)
-..\..\stm32library\armcore\I2CWire.cpp(37): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(40): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(uint8, uint8)" (declared at line 22 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(43): error:  #20: identifier "BUFFER_LENGTH" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(47): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(47): error:  #20: identifier "twi_readFrom" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(49): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(50): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(57): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(60): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(std::uint8_t, std::uint8_t)" (declared at line 55)
-..\..\stm32library\armcore\I2CWire.cpp(62): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(65): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::requestFrom(std::uint8_t, std::uint8_t)" (declared at line 55)
-..\..\stm32library\armcore\I2CWire.cpp(67): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(73): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(75): error:  #20: identifier "txAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(77): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(78): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(81): error:  #147: declaration is incompatible with "void I2CWire::beginTransmission(std::uint8_t)" (declared at line 70)
-..\..\stm32library\armcore\I2CWire.cpp(99): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::endTransmission()" (declared at line 20 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "txAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "txBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(102): error:  #20: identifier "twi_writeTo" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(104): error:  #20: identifier "txBufferIndex" is undefined
-Target not created
+compiling DS1307.cpp...
+linking...
+Program Size: Code=20784 RO-data=1320 RW-data=164 ZI-data=5692  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 0 Warning(s).
 Build target 'Target 1'
+compiling main.cpp...
+..\main.cpp(182): warning:  #111-D: statement is unreachable
+compiling ST7032i.cpp...
+compiling DS1307.cpp...
 compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.cpp(30): error:  #20: identifier "BUFFER_LENGTH" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(34): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(34): error:  #20: identifier "twi_readFrom" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(36): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(37): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(47): error:  #493: no instance of overloaded function "I2CWire::requestFrom" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(52): error:  #493: no instance of overloaded function "I2CWire::requestFrom" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(60): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(62): error:  #20: identifier "txAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(64): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(65): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(68): error:  #147: declaration is incompatible with "void I2CWire::beginTransmission(std::uint8_t)" (declared at line 57)
-..\..\stm32library\armcore\I2CWire.cpp(86): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::endTransmission()" (declared at line 20 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(89): error:  #20: identifier "txAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(89): error:  #20: identifier "txBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(89): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(89): error:  #20: identifier "twi_writeTo" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(91): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(94): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(103): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(111): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(114): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(114): error:  #20: identifier "BUFFER_LENGTH" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(119): error:  #20: identifier "txBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(119): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(126): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(134): error:  #493: no instance of overloaded function "I2CWire::write" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(136): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(144): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(154): error:  #20: identifier "rxBufferLength" is undefined
-Target not created
-Build target 'Target 1'
-compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.cpp(31): warning:  #69-D: integer conversion resulted in truncation
-..\..\stm32library\armcore\I2CWire.cpp(34): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(34): error:  #20: identifier "twi_readFrom" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(36): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(37): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(47): error:  #493: no instance of overloaded function "I2CWire::requestFrom" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(52): error:  #493: no instance of overloaded function "I2CWire::requestFrom" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(60): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(62): error:  #20: identifier "txAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(64): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(65): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(68): error:  #147: declaration is incompatible with "void I2CWire::beginTransmission(std::uint8_t)" (declared at line 57)
-..\..\stm32library\armcore\I2CWire.cpp(86): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::endTransmission()" (declared at line 22 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(89): error:  #20: identifier "txAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(89): error:  #20: identifier "txBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(89): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(89): error:  #20: identifier "twi_writeTo" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(91): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(94): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(103): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(111): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(114): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(119): error:  #20: identifier "txBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(119): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(126): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(134): error:  #493: no instance of overloaded function "I2CWire::write" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(136): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(144): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(154): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(154): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(165): error:  #20: identifier "rxBufferIndex" is undefined
-Target not created
-Build target 'Target 1'
-compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.cpp(34): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(34): error:  #20: identifier "twi_readFrom" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(36): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(37): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(47): error:  #493: no instance of overloaded function "I2CWire::requestFrom" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(52): error:  #493: no instance of overloaded function "I2CWire::requestFrom" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(60): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(62): error:  #20: identifier "txAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(64): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(65): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(68): error:  #147: declaration is incompatible with "void I2CWire::beginTransmission(std::uint8_t)" (declared at line 57)
-..\..\stm32library\armcore\I2CWire.cpp(86): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::endTransmission()" (declared at line 22 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(89): error:  #20: identifier "txAddress" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(89): error:  #20: identifier "txBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(89): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(89): error:  #20: identifier "twi_writeTo" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(91): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(94): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(103): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(111): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(114): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(119): error:  #20: identifier "txBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(119): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(126): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(134): error:  #493: no instance of overloaded function "I2CWire::write" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(136): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(144): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(154): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(154): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(165): error:  #20: identifier "rxBufferIndex" is undefined
-Target not created
-Build target 'Target 1'
-compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.h(19): error:  #413: no suitable conversion function from "I2CBuffer" to "I2CBuffer *" exists
-..\..\stm32library\armcore\I2CWire.cpp(39): error:  #504-D: nonstandard form for taking the address of a member function
-..\..\stm32library\armcore\I2CWire.cpp(39): error:  #120: return value type does not match the function type
-..\..\stm32library\armcore\I2CWire.cpp(68): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::endTransmission()" (declared at line 25 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(82): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(90): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(93): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(98): error:  #20: identifier "txBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(98): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(105): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(113): error:  #493: no instance of overloaded function "I2CWire::write" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(115): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(123): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(133): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(133): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(144): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(144): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(145): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(159): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(159): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(160): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(172): error:  #135: class "I2CWire" has no member "onReceiveService"
-..\..\stm32library\armcore\I2CWire.cpp(175): error:  #20: identifier "user_onReceive" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(181): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(181): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(187): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(197): error:  #135: class "I2CWire" has no member "onRequestService"
-..\..\stm32library\armcore\I2CWire.cpp(200): error:  #20: identifier "user_onRequest" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(205): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(206): error:  #20: identifier "txBufferLength" is undefined
-Target not created
-Build target 'Target 1'
-compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.cpp(39): error:  #504-D: nonstandard form for taking the address of a member function
-..\..\stm32library\armcore\I2CWire.cpp(39): error:  #120: return value type does not match the function type
-..\..\stm32library\armcore\I2CWire.cpp(68): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::endTransmission()" (declared at line 25 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(82): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(90): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(93): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(98): error:  #20: identifier "txBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(98): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(105): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(113): error:  #493: no instance of overloaded function "I2CWire::write" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(115): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(123): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(133): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(133): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(144): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(144): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(145): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(159): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(159): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(160): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(172): error:  #135: class "I2CWire" has no member "onReceiveService"
-..\..\stm32library\armcore\I2CWire.cpp(175): error:  #20: identifier "user_onReceive" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(181): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(181): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(187): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(197): error:  #135: class "I2CWire" has no member "onRequestService"
-..\..\stm32library\armcore\I2CWire.cpp(200): error:  #20: identifier "user_onRequest" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(205): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(206): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(212): error:  #135: class "I2CWire" has no member "onReceive"
-Target not created
-Build target 'Target 1'
-compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.cpp(68): error:  #147: declaration is incompatible with "std::uint8_t I2CWire::endTransmission()" (declared at line 25 of "..\..\stm32library\armcore\I2CWire.h")
-..\..\stm32library\armcore\I2CWire.cpp(82): error:  #140: too many arguments in function call
-..\..\stm32library\armcore\I2CWire.cpp(90): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(93): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(98): error:  #20: identifier "txBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(98): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(105): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(113): error:  #493: no instance of overloaded function "I2CWire::write" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(115): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(123): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(133): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(133): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(144): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(144): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(145): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(159): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(159): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(160): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(172): error:  #135: class "I2CWire" has no member "onReceiveService"
-..\..\stm32library\armcore\I2CWire.cpp(175): error:  #20: identifier "user_onReceive" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(181): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(181): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(187): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(197): error:  #135: class "I2CWire" has no member "onRequestService"
-..\..\stm32library\armcore\I2CWire.cpp(200): error:  #20: identifier "user_onRequest" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(205): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(206): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(212): error:  #135: class "I2CWire" has no member "onReceive"
-..\..\stm32library\armcore\I2CWire.cpp(214): error:  #20: identifier "user_onReceive" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(218): error:  #135: class "I2CWire" has no member "onRequest"
-Target not created
-Build target 'Target 1'
-compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.cpp(90): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(93): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(98): error:  #20: identifier "i2cbuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(108): error:  #493: no instance of overloaded function "I2CWire::write" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(110): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(118): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(128): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(128): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(139): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(139): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(140): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(154): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(154): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(155): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(167): error:  #135: class "I2CWire" has no member "onReceiveService"
-..\..\stm32library\armcore\I2CWire.cpp(170): error:  #20: identifier "user_onReceive" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(176): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(176): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(182): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(192): error:  #135: class "I2CWire" has no member "onRequestService"
-..\..\stm32library\armcore\I2CWire.cpp(195): error:  #20: identifier "user_onRequest" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(200): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(201): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(207): error:  #135: class "I2CWire" has no member "onReceive"
-..\..\stm32library\armcore\I2CWire.cpp(209): error:  #20: identifier "user_onReceive" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(213): error:  #135: class "I2CWire" has no member "onRequest"
-..\..\stm32library\armcore\I2CWire.cpp(215): error:  #20: identifier "user_onRequest" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(220): error:  #289: no instance of constructor "I2CWire::I2CWire" matches the argument list
-Target not created
-Build target 'Target 1'
-compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.cpp(90): error:  #20: identifier "i2cbuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(93): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(108): error:  #493: no instance of overloaded function "I2CWire::write" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(110): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(118): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(128): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(128): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(139): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(139): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(140): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(154): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(154): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(155): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(167): error:  #135: class "I2CWire" has no member "onReceiveService"
-..\..\stm32library\armcore\I2CWire.cpp(170): error:  #20: identifier "user_onReceive" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(176): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(176): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(182): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(192): error:  #135: class "I2CWire" has no member "onRequestService"
-..\..\stm32library\armcore\I2CWire.cpp(195): error:  #20: identifier "user_onRequest" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(200): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(201): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(207): error:  #135: class "I2CWire" has no member "onReceive"
-..\..\stm32library\armcore\I2CWire.cpp(209): error:  #20: identifier "user_onReceive" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(213): error:  #135: class "I2CWire" has no member "onRequest"
-..\..\stm32library\armcore\I2CWire.cpp(215): error:  #20: identifier "user_onRequest" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(220): error:  #289: no instance of constructor "I2CWire::I2CWire" matches the argument list
-Target not created
-Build target 'Target 1'
-compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.cpp(90): error:  #20: identifier "i2cbuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(93): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(108): error:  #493: no instance of overloaded function "I2CWire::write" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(110): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(118): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(128): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(128): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(139): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(139): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(140): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(154): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(154): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(155): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(167): error:  #135: class "I2CWire" has no member "onReceiveService"
-..\..\stm32library\armcore\I2CWire.cpp(170): error:  #20: identifier "user_onReceive" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(176): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(176): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(182): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(192): error:  #135: class "I2CWire" has no member "onRequestService"
-..\..\stm32library\armcore\I2CWire.cpp(195): error:  #20: identifier "user_onRequest" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(200): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(201): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(207): error:  #135: class "I2CWire" has no member "onReceive"
-..\..\stm32library\armcore\I2CWire.cpp(209): error:  #20: identifier "user_onReceive" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(213): error:  #135: class "I2CWire" has no member "onRequest"
-..\..\stm32library\armcore\I2CWire.cpp(215): error:  #20: identifier "user_onRequest" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(220): error:  #289: no instance of constructor "I2CWire::I2CWire" matches the argument list
-Target not created
-Build target 'Target 1'
-compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.cpp(98): error:  #20: identifier "i2cbuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(108): error:  #493: no instance of overloaded function "I2CWire::write" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(110): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(118): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(128): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(128): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(139): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(139): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(140): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(154): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(154): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(155): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(167): error:  #135: class "I2CWire" has no member "onReceiveService"
-..\..\stm32library\armcore\I2CWire.cpp(170): error:  #20: identifier "user_onReceive" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(176): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(176): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(182): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(192): error:  #135: class "I2CWire" has no member "onRequestService"
-..\..\stm32library\armcore\I2CWire.cpp(195): error:  #20: identifier "user_onRequest" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(200): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(201): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(207): error:  #135: class "I2CWire" has no member "onReceive"
-..\..\stm32library\armcore\I2CWire.cpp(209): error:  #20: identifier "user_onReceive" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(213): error:  #135: class "I2CWire" has no member "onRequest"
-..\..\stm32library\armcore\I2CWire.cpp(215): error:  #20: identifier "user_onRequest" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(220): error:  #289: no instance of constructor "I2CWire::I2CWire" matches the argument list
-Target not created
-Build target 'Target 1'
-compiling I2CWire.cpp...
-..\..\stm32library\armcore\I2CWire.cpp(108): error:  #493: no instance of overloaded function "I2CWire::write" matches the specified type
-..\..\stm32library\armcore\I2CWire.cpp(110): error:  #20: identifier "transmitting" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(118): error:  #20: identifier "twi_transmit" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(128): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(128): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(139): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(139): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(140): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(154): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(154): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(155): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(167): error:  #135: class "I2CWire" has no member "onReceiveService"
-..\..\stm32library\armcore\I2CWire.cpp(170): error:  #20: identifier "user_onReceive" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(176): error:  #20: identifier "rxBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(176): error:  #20: identifier "rxBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(182): error:  #20: identifier "rxBuffer" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(192): error:  #135: class "I2CWire" has no member "onRequestService"
-..\..\stm32library\armcore\I2CWire.cpp(195): error:  #20: identifier "user_onRequest" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(200): error:  #20: identifier "txBufferIndex" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(201): error:  #20: identifier "txBufferLength" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(207): error:  #135: class "I2CWire" has no member "onReceive"
-..\..\stm32library\armcore\I2CWire.cpp(209): error:  #20: identifier "user_onReceive" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(213): error:  #135: class "I2CWire" has no member "onRequest"
-..\..\stm32library\armcore\I2CWire.cpp(215): error:  #20: identifier "user_onRequest" is undefined
-..\..\stm32library\armcore\I2CWire.cpp(220): error:  #289: no instance of constructor "I2CWire::I2CWire" matches the argument list
-Target not created
+linking...
+Program Size: Code=20784 RO-data=1320 RW-data=164 ZI-data=5692  
+FromELF: creating hex file...
+"stm32f4-stdperiph.axf" - 0 Error(s), 1 Warning(s).
+Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-stdperiph\\keil\\stm32f4-stdperiph.AXF" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...

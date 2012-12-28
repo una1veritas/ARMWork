@@ -23,7 +23,7 @@
 #include "armcore.h"
 #include "binary.h"
 #include "delay.h"
-#include "i2c.h"
+#include "I2CWire.h"
 #include "ST7032i.h"
 
 // private constants
@@ -59,7 +59,7 @@
 //
 
 //
-void ST7032i::init(I2CBuffer * wx) {
+ST7032i::ST7032i(I2CWire & wx) : wirex(wx){
 	_numlines = 2;
 	_numcolumns = 16;
 	_position = 0;
@@ -67,7 +67,7 @@ void ST7032i::init(I2CBuffer * wx) {
 	contrast = DEFAULTCONTRAST;
 	pin_bklight = PIN_NOT_DEFINED;
 
-	wirex = wx;
+//	wirex = wx;
 	/*
 	 // for some 1 line displays you can select a 10 pixel high font
 	 if ((dotsize != 0) && (lines == 1)) {
@@ -81,18 +81,28 @@ void ST7032i::init(I2CBuffer * wx) {
 //
 
 void ST7032i::command(uint8_t value) {
-	uint8_t buf[2];
-	buf[0] = (byte) 0x00;
-	buf[1] = value;
-	i2c_transmit(wirex, i2c_address, buf, (uint16_t)2);
+//	uint8_t buf[2];
+//	buf[0] = (byte) 0x00;
+//	buf[1] = value;
+//	i2c_transmit(wirex, i2c_address, buf, (uint16_t)2);
+	wirex.beginTransmission(i2c_address);
+	wirex.write((uint8)0x00);
+	wirex.write(value);
+	wirex.endTransmission();
+	
 	delay_us(CMDDELAY);
 }
 
 size_t ST7032i::write(uint8_t value) {
-	uint8_t buf[2];
-	buf[0] = B01000000;
-	buf[1] = value & 0xff;
-	i2c_transmit(wirex,i2c_address, buf, (uint16_t)2);
+//	uint8_t buf[2];
+//	buf[0] = B01000000;
+//	buf[1] = value & 0xff;
+//	i2c_transmit(wirex,i2c_address, buf, (uint16_t)2);
+	wirex.beginTransmission(i2c_address);
+	wirex.write((uint8)B01000000);
+	wirex.write((uint8)value);
+	wirex.endTransmission();
+
 	delay_us(CMDDELAY);
 	_position++;
 	return 1; // assume success

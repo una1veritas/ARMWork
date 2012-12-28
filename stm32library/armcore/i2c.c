@@ -146,7 +146,7 @@ boolean i2c_transmit(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t le
 	wire->address = addr;
 	wire->limlen = length;
 	memcpy(wire->buffer, data, length);
-	wire->position = 0;
+//	wire->position = 0;
 	if ( i2c_start_send(wire) ) {
 		// generate stop cond. inside of start_send
 		wire->mode = I2C_MODE_MASTER_IDLE;
@@ -162,7 +162,7 @@ boolean i2c_request(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t len
 	wire->address = addr;
 	wire->limlen = length;
 	memcpy(wire->buffer, data, length);
-	wire->position = 0;
+//	wire->position = 0;
 	if ( i2c_start_send(wire) ) {
 		wire->mode = I2C_MODE_MASTER_IDLE;
 		//wire->status = I2C_GetLastEvent(wire->I2Cx);
@@ -253,7 +253,7 @@ boolean i2c_start_receive(I2CBuffer * wire) {
  *
  *************************************************************************/
 void I2C1_EV_IRQHandler(void) {
-	I2CBuffer * wire = &I2C1Buffer;
+//	I2CBuffer * wire = &I2C1Buffer;
 
 }
 

@@ -17,12 +17,14 @@
 #include <Wire.h>
 */
 #include "armcore.h"
-#include "i2c.h"
+#include "I2CWire.h"
+
 // library interface description
 class DS1307 {
 	// library-accessible "private" interface
 private:
-	I2CBuffer & i2cx;
+//	I2CBuffer & i2cx;
+	I2CWire & wire;
 
 	void readRegisters(byte reg, uint8_t *, byte);
 	void writeRegisters(byte reg, uint8_t *, byte);
@@ -69,7 +71,8 @@ public:
 public:
 	uint32 time, cal;
 
-	DS1307(I2CBuffer & wire) : i2cx(wire), time(0), cal(0) {}
+//	DS1307(I2CBuffer & wire) : i2cx(wire), time(0), cal(0) {}
+	DS1307(I2CWire & i2cwire) : wire(i2cwire), time(0), cal(0) {}
 
 	void init() {
 		start();

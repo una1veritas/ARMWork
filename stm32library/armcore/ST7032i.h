@@ -20,6 +20,7 @@
 
 #include "CharacterLCD.h"
 #include "Stream.h"
+#include "I2CWire.h"
 
 class ST7032i : public Print {
 	static const byte DEFAULT_I2C_ADDRESS = B0111110;
@@ -31,7 +32,8 @@ class ST7032i : public Print {
 	  uint8_t _numlines, _numcolumns;
 	  uint8_t _position;
 //
-	I2CBuffer * wirex;
+//	I2CBuffer * wirex;
+	I2CWire & wirex;
 	byte contrast;
 	byte i2c_address;
 	GPIOPin pin_bklight;
@@ -40,7 +42,8 @@ class ST7032i : public Print {
 
 public:
 
-	void init(I2CBuffer * );
+//	void init(I2CBuffer * );
+	ST7032i(I2CWire &);
 	void begin();
 
    virtual size_t write(const uint8_t);
