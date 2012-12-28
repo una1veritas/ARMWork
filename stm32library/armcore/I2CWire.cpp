@@ -1,29 +1,9 @@
-/*
-  TwoWire.cpp - TWI/I2C library for Wiring & Arduino
-  Copyright (c) 2006 Nicholas Zambetti.  All right reserved.
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- 
-  Modified 2012 by Todd Krein (todd@krein.org) to implement repeated starts
-*/
 
 extern "C" {
   #include <stdlib.h>
   #include <string.h>
   #include <inttypes.h>
-  #include "I2CWire.h"
+  #include "i2c.h"
 }
 
 #include "I2CWire.h"
@@ -36,77 +16,41 @@ extern "C" {
 
 // Constructors ////////////////////////////////////////////////////////////////
 
-I2CWire::I2CWire()
-{
-}
 
 // Public Methods //////////////////////////////////////////////////////////////
 
 void I2CWire::begin(void)
 {
-  i2c_begin(&i2c, I2C1, 100000);
-
-  twi_init();
+	i2c_begin(&I2C1Buffer, I2C1, PB9, PB8, 100000);
 }
 
-void I2CWire::begin(uint8_t address)
-{
-  twi_setAddress(address);
-  twi_attachSlaveTxEvent(onRequestService);
-  twi_attachSlaveRxEvent(onReceiveService);
-  begin();
-}
-
-void I2CWire::begin(int address)
-{
-  begin((uint8_t)address);
-}
-
-uint8_t I2CWire::requestFrom(uint8_t address, uint8_t quantity, uint8_t sendStop)
+uint8_t I2CWire::requestFrom(uint8_t address, uint16 quantity, uint8_t sendStop)
 {
   // clamp to buffer length
   if(quantity > BUFFER_LENGTH){
     quantity = BUFFER_LENGTH;
   }
   // perform blocking read into buffer
-  uint8_t read = twi_readFrom(address, rxBuffer, quantity, sendStop);
-  // set rx buffer iterator vars
-  rxBufferIndex = 0;
-  rxBufferLength = read;
+  i2cbuf->address = address;
+  i2cbuf->limlen = quantity;
+	i2cbuf->mode = I2C_MODE_MASTER_RQ;
+	i2cbuf->position = 0;
 
-  return read;
+  return 1;
 }
 
-uint8_t I2CWire::requestFrom(uint8_t address, uint8_t quantity)
+uint8_t I2CWire::requestFrom(uint8_t address, uint16 quantity)
 {
   return requestFrom((uint8_t)address, (uint8_t)quantity, (uint8_t)true);
-}
-
-uint8_t I2CWire::requestFrom(int address, int quantity)
-{
-  return requestFrom((uint8_t)address, (uint8_t)quantity, (uint8_t)true);
-}
-
-uint8_t I2CWire::requestFrom(int address, int quantity, int sendStop)
-{
-  return requestFrom((uint8_t)address, (uint8_t)quantity, (uint8_t)sendStop);
 }
 
 void I2CWire::beginTransmission(uint8_t address)
 {
-  // indicate that we are transmitting
-  transmitting = 1;
-  // set address of targeted slave
-  txAddress = address;
-  // reset tx buffer iterator vars
-  txBufferIndex = 0;
-  txBufferLength = 0;
+	i2cbuf->mode = I2C_MODE_MASTER_TX;
+	i2cbuf->address = address;
+	i2cbuf->position = 0;
 }
 
-void I2CWire::beginTransmission(int address)
-{
-  beginTransmission((uint8_t)address);
-}
 
 //
 //	Originally, 'endTransmission' was an f(void) function.
@@ -123,13 +67,10 @@ void I2CWire::beginTransmission(int address)
 //
 uint8_t I2CWire::endTransmission(uint8_t sendStop)
 {
+  int8_t ret = 0;
   // transmit buffer (blocking)
-  int8_t ret = twi_writeTo(txAddress, txBuffer, txBufferLength, 1, sendStop);
-  // reset tx buffer iterator vars
-  txBufferIndex = 0;
-  txBufferLength = 0;
-  // indicate that we are done transmitting
-  transmitting = 0;
+	if ( i2c_start_send(i2cbuf) )
+		ret = i2cbuf->limlen;
   return ret;
 }
 
@@ -146,24 +87,19 @@ uint8_t I2CWire::endTransmission(void)
 // or after beginTransmission(address)
 size_t I2CWire::write(uint8_t data)
 {
-  if(transmitting){
+  if(i2cbuf->mode == I2C_MODE_MASTER_TX or i2cbuf->mode == I2C_MODE_MASTER_RQ){
   // in master transmitter mode
     // don't bother if buffer is full
-    if(txBufferLength >= BUFFER_LENGTH){
-      setWriteError();
-      return 0;
-    }
+//    if(txBufferLength >= BUFFER_LENGTH){
+//      setWriteError();
+//      return 0;
+//    }
     // put byte in tx buffer
-    txBuffer[txBufferIndex] = data;
-    ++txBufferIndex;
-    // update amount in buffer   
-    txBufferLength = txBufferIndex;
-  }else{
-  // in slave send mode
-    // reply to master
-    twi_transmit(&data, 1);
+    i2cbuf->buffer[i2cbuf->position++] = data;
+    i2cbuf->limlen++;
   }
-  return 1;
+	
+	return 1;
 }
 
 // must be called in:
