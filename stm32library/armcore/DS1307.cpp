@@ -26,53 +26,52 @@ const char DS1307::NameOfMonth[]=
 void DS1307::readRegisters(uint8_t addr, uint8_t * regvals, uint8_t num) {
 	// use the Wire lib to connect to tho rtc
 	// reset the resgiter pointer to zero
-/*
-	Wire.beginTransmission(DS1307_CTRL_ID);
-#if ARDUINO >= 100
+
+	wire.beginTransmission(DS1307_CTRL_ID);
+//#if ARDUINO >= 100
 //    WIRE_WRITE(addr); //Wire.send(addr);
- 	Wire.write(addr);
-#else
- 	Wire.send(addr);
-#endif
-	Wire.endTransmission();
+ 	wire.write(addr);
+//#else
+ //	Wire.send(addr);
+//#endif
+	wire.endRequest();
 	// request num bytes of data
-	Wire.requestFrom((uint8_t)DS1307_CTRL_ID, num);
+	wire.receiveFrom((uint8_t)DS1307_CTRL_ID, num);
 	for(int i = 0; i < num; i++) {
 		// store data in raw bcd format
-#if ARDUINO >= 100
-		*regvals++ = Wire.read(); //Wire.receive();
-#else
-		*regvals++ = Wire.receive(); //Wire.receive();
-#endif
+//#if ARDUINO >= 100
+		*regvals++ = wire.read(); //Wire.receive();
+//#else
+//		*regvals++ = Wire.receive(); //Wire.receive();
+//#endif
 	}
-	*/
-	i2c_request(&i2cx, DS1307_CTRL_ID, &addr, 1);
-	i2c_receive(&i2cx, regvals, num);
+	
+//	i2c_request(&i2cx, DS1307_CTRL_ID, &addr, 1);
+//	i2c_receive(&i2cx, regvals, num);
 }
 
 // update the data on the IC from the bcd formatted data in the buffer
 void DS1307::writeRegisters(uint8_t addr, uint8_t *regvals, uint8_t num)
 {
-	/*
-	Wire.beginTransmission(DS1307_CTRL_ID);
-#if ARDUINO >= 100
-	Wire.write(addr); // reset register pointer
-#else
-	Wire.send(addr); // reset register pointer
-#endif
+	wire.beginTransmission(DS1307_CTRL_ID);
+//#if ARDUINO >= 100
+	wire.write(addr); // reset register pointer
+//#else
+//	Wire.send(addr); // reset register pointer
+//#endif
 	for(int i=0; i<num; i++) {
-#if ARDUINO >= 100
-		Wire.write(*regvals++);
-#else
-		Wire.send(*regvals++);
-#endif
+//#if ARDUINO >= 100
+		wire.write(*regvals++);
+//#else
+//		Wire.send(*regvals++);
+//#endif
 	}
-	Wire.endTransmission();
-	*/
-	uint8 buf[8];
-	buf[0] = addr;
-	memcpy(buf+1, regvals, num);
-	i2c_transmit(&i2cx, DS1307_CTRL_ID, buf, num+1);
+	wire.endTransmission();
+
+//	uint8 buf[8];
+//	buf[0] = addr;
+//	memcpy(buf+1, regvals, num);
+//	i2c_transmit(&i2cx, DS1307_CTRL_ID, buf, num+1);
 }
 
 

@@ -18,15 +18,16 @@
 #include "gpio.h"
 #include "delay.h"
 #include "usart.h"
-#include "i2c.h"
+#include "I2CWire.h"
 
 #include "ST7032i.h"
 #include "USARTSerial.h"
 #include "DS1307.h"
 
-ST7032i lcd;
 USARTSerial Serial3(USART3);
-DS1307 rtc(I2C1Buffer);
+I2CWire Wire1(I2C1);
+ST7032i lcd(Wire1);
+DS1307 rtc(Wire1);
 
 int main(void) {
 	uint16_t bits;
@@ -74,9 +75,10 @@ int main(void) {
 			(PinBit(PD12) | PinBit(PD13) | PinBit(PD14) | PinBit(PD15)), OUTPUT,
 			FASTSPEED, PUSHPULL, NOPULL);
 
-	i2c_begin(&I2C1Buffer, I2C1, PB9, PB8, 100000);
+	//i2c_begin(&I2C1Buffer, I2C1, PB9, PB8, 100000);
+	Wire1.begin();
 	
-	lcd.init(&I2C1Buffer);
+//	lcd.init(&I2C1Buffer);
 	lcd.begin();
 	lcd.setContrast(46);
 	lcd.print("Hello!");       // Classic Hello World

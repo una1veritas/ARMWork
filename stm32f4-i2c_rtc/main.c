@@ -17,55 +17,51 @@
 #include "gpio.h"
 #include "delay.h"
 #include "usart.h"
-#include "i2c.h"
+#include "i2c1_drv.h"
 
-#include "ST7032i.h"
-
+//#include "ST7032i.h"
+static USART USerial3;
 //ST7032i lcd;
-USART Serial3;
 
 int main(void) {
 	uint16_t bits;
 	uint32_t intval = 40;
 	uint32_t tnow;
 	char tmp[92];
-
+	RCC_ClocksTypeDef RCC_Clocks;
+	uint16_t i;
+	
 	TIM2_timer_start();
 
-	usart_begin(&Serial3, USART3, PC11, PC10, 19200);
+	usart_begin(&USerial3, USART3, PC11, PC10, 19200);
 
-	Serial3.print(
-			"Happy are those who know they are spiritually poor; \n");
-	Serial3.print( "The kingdom of heaven belongs to them!\n");
-	Serial3.print( "If thou beest he! But O how fall'n!\n");
-	Serial3.print( "How chang'd from him!\n");
-	Serial3.flush();
-	RCC_ClocksTypeDef RCC_Clocks;
+	usart_print(&USerial3, 
+			"Happy are those who know they are spiritually poor; \n"
+			"The kingdom of heaven belongs to them!\n");
+	usart_flush(&USerial3);
+	
 	RCC_GetClocksFreq(&RCC_Clocks);
 
-	Serial3.print( "SYSCLK = ");
-	Serial3.print(RCC_Clocks.SYSCLK_Frequency);
-	Serial3.print( ", HCLK = ");
-	Serial3.print( RCC_Clocks.HCLK_Frequency);
-	Serial3.print( ", PCLK1 = ");
-	Serial3.print( RCC_Clocks.PCLK1_Frequency);
-	Serial3.print( ", PCLK2 = ");
-	Serial3.print(RCC_Clocks.PCLK2_Frequency);
-	Serial3.print("\n");
-	Serial3.flush();
+	sprintf(tmp, "SYSCLK = %ul\n", RCC_Clocks.SYSCLK_Frequency);
+	usart_print(&USerial3, tmp);
+	sprintf(tmp, "PCLK1 = %ul\n", RCC_Clocks.PCLK1_Frequency);
+	usart_flush(&USerial3);
 
 	GPIOMode(PinPort(PD12),
 			(PinBit(PD12) | PinBit(PD13) | PinBit(PD14) | PinBit(PD15)), OUTPUT,
 			FASTSPEED, PUSHPULL, NOPULL);
+			/*
 	spi_begin(SPI2, PB13, PB14, PB15, PB12);
 	digitalWrite(PB12, HIGH);
-
+*/
+	I2C1_Init();
+/*
 	i2c_begin(&Wire1, PB9, PB8, 100000);
 	lcd.init(&Wire1);
 	lcd.begin();
 	lcd.setContrast(46);
 	lcd.print("Yappee!");       // Classic Hello World!
-
+*/
 	bits = GPIO_ReadOutputData(GPIOD );
 	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
 	delay_ms(intval);
@@ -105,26 +101,23 @@ int main(void) {
 		tnow = millis() / 1000;
 
 		//Serial3.print(tmp);
-		Serial3.print(millis());
-		Serial3.print("\n");
+		sprintf(tmp, "%04ld\n", millis());
+		usart_print(&USerial3, tmp);
 
-		sprintf(tmp, "%04ld", millis());
-		lcd.setCursor(0, 1);
-		lcd.print((const char *)tmp);
-
+		/*
 		digitalWrite(PB12, LOW);
 		spi_transfer(SPI2, (uint8_t *) tmp, 8);
 		digitalWrite(PB12, HIGH);
-
-		uint16_t i = 0;
-		if (usart_available(&Serial3) > 0) {
-			while (usart_available(&Serial3) > 0 && i < 92) {
-				tmp[i++] = (char) usart_read(&Serial3);
+*/
+		i = 0;
+		if (usart_available(&USerial3) > 0) {
+			while (usart_available(&USerial3) > 0 && i < 92) {
+				tmp[i++] = (char) usart_read(&USerial3);
 			}
 			tmp[i] = 0;
-			usart_print(&Serial3, "> ");
-			usart_print(&Serial3, tmp);
-			usart_print(&Serial3, "\n");
+			usart_print(&USerial3, "> ");
+			usart_print(&USerial3, tmp);
+			usart_print(&USerial3, "\n");
 		}
 
 	}
