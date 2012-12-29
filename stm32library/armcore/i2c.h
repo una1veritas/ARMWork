@@ -58,7 +58,7 @@ typedef struct __I2CBuffer {
 	I2C_TypeDef * I2Cx;
 	GPIOPin sda, scl;
 	uint8_t address;
-//	boolean irqmode;
+	boolean irqmode;
 	__IO I2C_CommMode mode;
 	__IO uint32 status;
 	__IO uint16_t position;

@@ -48,33 +48,34 @@
 #include "stm32f4xx_i2c.h"
 #include "st7032i.h"
 
-#include "i2c.h"
+#include "i2c1_drv.h"
+#include "armcore.h"
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 __IO int8_t DDRAM_Data[ROWS][COLUMNS];
 __IO uint8_t DDRAM_Address = 0;
-__IO uint8_t Entry_Mode = 0b00000110;
+__IO uint8_t Entry_Mode = B00000110;
 __IO int8_t Increment = 1;
 __IO int8_t Shift = 0;
-__IO uint8_t Display = 0b00001100;
-__IO uint8_t Power_Icon_Contrast =0b01011100;
+__IO uint8_t Display = B00001100;
+__IO uint8_t Power_Icon_Contrast =B01011100;
 __IO uint8_t Contrast = 40;
 __IO uint8_t IconRAM[16];
 __IO uint8_t Icon_Table[13][2] = {
-    {0x00, 0b10000},
-    {0x02, 0b10000},
-    {0x04, 0b10000},
-    {0x06, 0b10000},
-    {0x07, 0b10000},
-    {0x07, 0b01000},
-    {0x09, 0b10000},
-    {0x0B, 0b10000},
-    {0x0D, 0b10000},
-    {0x0D, 0b01000},
-    {0x0D, 0b00100},
-    {0x0D, 0b00010},
-    {0x0F, 0b10000}};
+    {0x00, B10000},
+    {0x02, B10000},
+    {0x04, B10000},
+    {0x06, B10000},
+    {0x07, B10000},
+    {0x07, B01000},
+    {0x09, B10000},
+    {0x0B, B10000},
+    {0x0D, B10000},
+    {0x0D, B01000},
+    {0x0D, B00100},
+    {0x0D, B00010},
+    {0x0F, B10000}};
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 /**
@@ -86,7 +87,7 @@ void ST7032i_Clear(void)
 {
   uint32_t i;
 
-  ST7032i_Command_Write(0b00000001);
+  ST7032i_Command_Write(B00000001);
   DDRAM_Address = 0;
   for(i=0;i<16;i++)
     {
@@ -103,7 +104,7 @@ void ST7032i_Clear(void)
   */
 void ST7032i_Return(void)
 {
-  ST7032i_Command_Write(0b00000010);
+  ST7032i_Command_Write(B00000010);
   DDRAM_Address = 0;
   delay_ms(2);
 }
@@ -115,7 +116,7 @@ void ST7032i_Return(void)
   */
 void ST7032i_Increment(void)
 {
-  ST7032i_Command_Write(( Entry_Mode & 0b11111101) | 0b00000010);
+  ST7032i_Command_Write(( Entry_Mode & B11111101) | B00000010);
   Increment = 1;
   delay_us(27);
 }
@@ -127,7 +128,7 @@ void ST7032i_Increment(void)
   */
 void ST7032i_Decrement(void)
 {
-  ST7032i_Command_Write(( Entry_Mode & 0b11111101) | 0b00000000);
+  ST7032i_Command_Write(( Entry_Mode & B11111101) | B00000000);
   Increment = -1;
   delay_us(27);
 }
@@ -139,7 +140,7 @@ void ST7032i_Decrement(void)
   */
 void ST7032i_Shift_Enable(void)
 {
-  ST7032i_Command_Write(( Entry_Mode & 0b11111110) | 0b00000001);
+  ST7032i_Command_Write(( Entry_Mode & B11111110) | B00000001);
   Shift = 1;
   delay_us(27);
 }
@@ -151,7 +152,7 @@ void ST7032i_Shift_Enable(void)
   */
 void ST7032i_Shift_Disable(void)
 {
-  ST7032i_Command_Write(( Entry_Mode & 0b11111110) | 0b00000000);
+  ST7032i_Command_Write(( Entry_Mode & B11111110) | B00000000);
   Shift = 0;
   delay_us(27);
 }
@@ -163,7 +164,7 @@ void ST7032i_Shift_Disable(void)
   */
 void ST7032i_Display_On(void)
 {
-  ST7032i_Command_Write(( Display & 0b11111011) | 0b00000100);
+  ST7032i_Command_Write(( Display & B11111011) | B00000100);
   delay_us(27);
 }
 
@@ -174,7 +175,7 @@ void ST7032i_Display_On(void)
   */
 void ST7032i_Display_Off(void)
 {
-  ST7032i_Command_Write(( Display & 0b11111011) | 0b00000000);
+  ST7032i_Command_Write(( Display & B11111011) | B00000000);
   delay_us(27);
 }
 
@@ -185,7 +186,7 @@ void ST7032i_Display_Off(void)
   */
 void ST7032i_Cursor_On(void)
 {
-  ST7032i_Command_Write(( Display & 0b11111101) | 0b00000010);
+  ST7032i_Command_Write(( Display & B11111101) | B00000010);
   delay_us(27);
 }
 
@@ -196,7 +197,7 @@ void ST7032i_Cursor_On(void)
   */
 void ST7032i_Cursor_Off(void)
 {
-  ST7032i_Command_Write(( Display & 0b11111101) | 0b00000000);
+  ST7032i_Command_Write(( Display & B11111101) | B00000000);
   delay_us(27);
 }
 
@@ -207,7 +208,7 @@ void ST7032i_Cursor_Off(void)
   */
 void ST7032i_Cursor_Blink_On(void)
 {
-  ST7032i_Command_Write(( Display & 0b11111110) | 0b00000001);
+  ST7032i_Command_Write(( Display & B11111110) | B00000001);
   delay_us(27);
 }
 
@@ -218,7 +219,7 @@ void ST7032i_Cursor_Blink_On(void)
   */
 void ST7032i_Cursor_Blink_Off(void)
 {
-  ST7032i_Command_Write(( Display & 0b11111110) | 0b00000000);
+  ST7032i_Command_Write(( Display & B11111110) | B00000000);
   delay_us(27);
 }
 
@@ -229,7 +230,7 @@ void ST7032i_Cursor_Blink_Off(void)
   */
 void ST7032i_Set_DDRAM(uint8_t address)
 {
-  ST7032i_Command_Write(0b10000000 | address);
+  ST7032i_Command_Write(B10000000 | address);
   DDRAM_Address = address;
   delay_us(27);
 }
@@ -242,12 +243,12 @@ void ST7032i_Set_DDRAM(uint8_t address)
 void ST7032i_Set_Contrast(uint8_t contrast)
 {
   //Contrast set
-  ST7032i_Command_Write(0b01110000 | (contrast & 0b00001111));
+  ST7032i_Command_Write(B01110000 | (contrast & B00001111));
 
   delay_us(27);
 
   //Power/Icon/Contrast control
-  ST7032i_Command_Write(Power_Icon_Contrast | ( (contrast >> 4) & 0b00000011 ) );
+  ST7032i_Command_Write(Power_Icon_Contrast | ( (contrast >> 4) & B00000011 ) );
 
   delay_us(27);
 }
@@ -260,7 +261,7 @@ void ST7032i_Set_Contrast(uint8_t contrast)
 void ST7032i_Icon_Set(uint8_t number)
 {
   //icon address set
-  ST7032i_Command_Write(0b01000000 | Icon_Table[number][0] );
+  ST7032i_Command_Write(B01000000 | Icon_Table[number][0] );
   delay_us(27);
 
   //icon data set
@@ -268,7 +269,7 @@ void ST7032i_Icon_Set(uint8_t number)
   delay_us(27);
 
   //restore DDRAM address to ac
-  ST7032i_Command_Write(0b10000000 | DDRAM_Address);
+  ST7032i_Command_Write(B10000000 | DDRAM_Address);
   delay_us(27);
 }
 
@@ -280,7 +281,7 @@ void ST7032i_Icon_Set(uint8_t number)
 void ST7032i_Icon_Clear(uint8_t number)
 {
   //icon address set
-  ST7032i_Command_Write(0b01000000 | Icon_Table[number][0] );
+  ST7032i_Command_Write(B01000000 | Icon_Table[number][0] );
   delay_us(27);
 
   //icon data reset
@@ -288,7 +289,7 @@ void ST7032i_Icon_Clear(uint8_t number)
   delay_us(27);
 
   //restore DDRAM address to ac
-  ST7032i_Command_Write(0b10000000 | DDRAM_Address);
+  ST7032i_Command_Write(B10000000 | DDRAM_Address);
   delay_us(27);
 
 }
@@ -301,7 +302,7 @@ void ST7032i_Icon_Clear(uint8_t number)
 void ST7032i_Icon_On(void)
 {
   //Power/Icon/Contrast control
-  ST7032i_Command_Write(Power_Icon_Contrast | ( (Contrast >> 4) & 0b00000011 ) | 0b00001000 );
+  ST7032i_Command_Write(Power_Icon_Contrast | ( (Contrast >> 4) & B00000011 ) | B00001000 );
   delay_us(27);
 }
 
@@ -313,7 +314,7 @@ void ST7032i_Icon_On(void)
 void ST7032i_Icon_Off(void)
 {
   //Power/Icon/Contrast control
-  ST7032i_Command_Write( (Power_Icon_Contrast | ( (Contrast >> 4) & 0b00000011 )) & 0b11110111);
+  ST7032i_Command_Write( (Power_Icon_Contrast | ( (Contrast >> 4) & B00000011 )) & B11110111);
   delay_us(27);
 }
 
@@ -345,22 +346,22 @@ void ST7032i_Init(void)
 //  I2C_Configuration();
 
   //Function Set
-  ST7032i_Command_Write(0b00111000);
+  ST7032i_Command_Write(B00111000);
 
   delay_us(27);
 
   //Function Set
-  ST7032i_Command_Write(0b00111001);
+  ST7032i_Command_Write(B00111001);
 
   delay_us(27);
 
   //Bias and OSC frequency
-  ST7032i_Command_Write(0b00010100);
+  ST7032i_Command_Write(B00010100);
 
   delay_us(27);
 
   //Contrast set
-  ST7032i_Command_Write(0b01110000);
+  ST7032i_Command_Write(B01110000);
 
   delay_us(27);
 
@@ -373,12 +374,12 @@ void ST7032i_Init(void)
   ST7032i_Set_Contrast(Contrast);
 
   //Follower control
-  ST7032i_Command_Write(0b01101100);
+  ST7032i_Command_Write(B01101100);
 
   delay_ms(200);
 
   //Function Set
-  ST7032i_Command_Write(0b00111001);
+  ST7032i_Command_Write(B00111001);
 
   delay_us(27);
 
@@ -443,21 +444,21 @@ void ST7032i_Putchar(int8_t chardata)
   if (DDRAM_Address == 0x10)
     {
       DDRAM_Address = 0x40;
-      ST7032i_Command_Write(0b10000000 | DDRAM_Address);
+      ST7032i_Command_Write(B10000000 | DDRAM_Address);
       delay_us(27);
     }
 
   if (DDRAM_Address == 0x3F)
     {
       DDRAM_Address = 0x0F;
-      ST7032i_Command_Write(0b10000000 | DDRAM_Address);
+      ST7032i_Command_Write(B10000000 | DDRAM_Address);
       delay_us(27);
     }
 
   if (DDRAM_Address == 0xFF)
     {
       DDRAM_Address = 0x0;
-      ST7032i_Command_Write(0b10000000 | DDRAM_Address);
+      ST7032i_Command_Write(B10000000 | DDRAM_Address);
       delay_us(27);
     }
 
@@ -466,18 +467,18 @@ void ST7032i_Putchar(int8_t chardata)
       for(i=0;i<16;i++)
         {
           DDRAM_Data[0][i] =  DDRAM_Data[1][i];
-          ST7032i_Command_Write(0b10000000 | (0x00 + i));
+          ST7032i_Command_Write(B10000000 | (0x00 + i));
           ST7032i_Data_Write(DDRAM_Data[0][i]);
         }
       for(i=0;i<16;i++)
         {
           DDRAM_Data[1][i] =  ' ';
-          ST7032i_Command_Write(0b10000000 | (0x40 + i));
+          ST7032i_Command_Write(B10000000 | (0x40 + i));
           ST7032i_Data_Write(DDRAM_Data[1][i]);
         }
 
       DDRAM_Address = 0x40;
-      ST7032i_Command_Write(0b10000000 | DDRAM_Address);
+      ST7032i_Command_Write(B10000000 | DDRAM_Address);
       delay_us(27);
     }
 }
@@ -532,28 +533,12 @@ void I2C_Configuration(void)
   */
 void ST7032i_Command_Write(uint8_t Data)
 {
-	uint8_t data[] = { 0b00000000, Data };
-	i2c_transmit(ST7032I_ADDR, data, 2);
+	uint8_t buf[2];
+	buf[0] = 0x00;//B00000000;
+	buf[1] = Data;
+//	i2c_transmit(ST7032I_ADDR, data, 2);
+	I2C1_DataTransfer(ST7032I_ADDR, buf, 2);
 	return;
-
-  /* Send STRAT condition */
-  I2C_GenerateSTART(I2C1, ENABLE);
-  /* Test on EV5 and clear it */
-  while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT));
-  /* Send EEPROM address for write */
-  I2C_Send7bitAddress(I2C1, ST7032I_ADDR << 1, I2C_Direction_Transmitter);
-  /* Test on EV6 and clear it */
-  while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED));
-  /* Send the EEPROM's internal address to write to : MSB of the address first */
-  I2C_SendData(I2C1, 0b00000000);
-  /* Test on EV8 and clear it */
-  while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED));
-  /* Send the EEPROM's internal address to write to : MSB of the address first */
-  I2C_SendData(I2C1, Data);
-  /* Test on EV8 and clear it */
-  while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED));
-  /* Send STOP condition */
-  I2C_GenerateSTOP(I2C1, ENABLE);
 }
 
 /**
@@ -561,28 +546,12 @@ void ST7032i_Command_Write(uint8_t Data)
   * @param  Data : "Data" Data
   * @retval None
   */
-void ST7032i_Data_Write(uint8_t Data)
+void ST7032i_Data_Write(uint8_t d)
 {
-	uint8_t data[] = { 0b01000000, Data };
-	i2c_transmit(ST7032I_ADDR, data, 2);
+	uint8_t data[2];
+data[0]= B01000000;
+data[1] = d;
+	I2C1_DataTransfer(ST7032I_ADDR, data, 2);
 	return;
 
-  /* Send STRAT condition */
-  I2C_GenerateSTART(I2C1, ENABLE);
-  /* Test on EV5 and clear it */
-  while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT));
-  /* Send EEPROM address for write */
-  I2C_Send7bitAddress(I2C1, ST7032I_ADDR << 1, I2C_Direction_Transmitter);
-  /* Test on EV6 and clear it */
-  while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED));
-  /* Send the EEPROM's internal address to write to : MSB of the address first */
-  I2C_SendData(I2C1, 0b01000000);
-  /* Test on EV8 and clear it */
-  while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED));
-  /* Send the EEPROM's internal address to write to : MSB of the address first */
-  I2C_SendData(I2C1, Data);
-  /* Test on EV8 and clear it */
-  while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED));
-  /* Send STOP condition */
-  I2C_GenerateSTOP(I2C1, ENABLE);
 }

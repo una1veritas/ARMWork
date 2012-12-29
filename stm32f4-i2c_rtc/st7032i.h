@@ -49,6 +49,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx.h"
 //#include "platform_config.h"
+#include "armcore.h"
 #include "delay.h"
 
 /* Exported constants --------------------------------------------------------*/
@@ -56,7 +57,7 @@
 #define I2C_CLOCK                  100000
 #define ROWS                       2
 #define COLUMNS                    16
-#define ST7032I_ADDR               0b0111110
+#define ST7032I_ADDR               B0111110
 /* Exported types ------------------------------------------------------------*/
 extern __IO int8_t DDRAM_Data[ROWS][COLUMNS];
 extern __IO uint8_t DDRAM_Address;

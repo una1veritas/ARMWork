@@ -3,7 +3,7 @@
 <title>Static Call Graph - [C:\Users\Sin\Documents\github\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image C:\Users\Sin\Documents\github\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Fri Dec 28 18:58:20 2012
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Sat Dec 29 01:58:11 2012
 <BR><P>
 <H3>Maximum Stack Usage =        832 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -721,7 +721,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[ba]"></a>i2c_begin</STRONG> (Thumb, 354 bytes, Stack size 72 bytes, i2c.o(.text))
+<P><STRONG><a name="[ba]"></a>i2c_begin</STRONG> (Thumb, 356 bytes, Stack size 72 bytes, i2c.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 140<LI>Call Chain = i2c_begin &rArr; I2C_Init &rArr; RCC_GetClocksFreq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Init
@@ -738,7 +738,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::begin()
 </UL>
 
-<P><STRONG><a name="[c0]"></a>i2c_start_send</STRONG> (Thumb, 228 bytes, Stack size 24 bytes, i2c.o(.text))
+<P><STRONG><a name="[c0]"></a>i2c_start_send</STRONG> (Thumb, 232 bytes, Stack size 24 bytes, i2c.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_SendData
@@ -784,14 +784,21 @@ Global Symbols
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::receiveFrom(unsigned char, unsigned short)
 </UL>
 
-<P><STRONG><a name="[ce]"></a>i2c_receive</STRONG> (Thumb, 102 bytes, Stack size 24 bytes, i2c.o(.text), UNUSED)
+<P><STRONG><a name="[ce]"></a>i2c_receive</STRONG> (Thumb, 100 bytes, Stack size 24 bytes, i2c.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
 <LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 
-<P><STRONG><a name="[2c]"></a>I2C1_EV_IRQHandler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, i2c.o(.text))
+<P><STRONG><a name="[2c]"></a>I2C1_EV_IRQHandler</STRONG> (Thumb, 112 bytes, Stack size 16 bytes, i2c.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = I2C1_EV_IRQHandler &rArr; I2C_GetLastEvent
+</UL>
+<BR>[Calls]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_SendData
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Send7bitAddress
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
+</UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
 <P><STRONG><a name="[2d]"></a>I2C1_ER_IRQHandler</STRONG> (Thumb, 46 bytes, Stack size 16 bytes, i2c.o(.text))
@@ -884,9 +891,9 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 5]<UL><LI> main.o(.constdata__ZTV6Stream)
 <LI> st7032i.o(.constdata__ZTV7ST7032i)
-<LI> print.o(.constdata__ZTV5Print)
 <LI> usartserial.o(.constdata__ZTV11USARTSerial)
 <LI> i2cwire.o(.constdata__ZTV7I2CWire)
+<LI> print.o(.constdata__ZTV5Print)
 </UL>
 <P><STRONG><a name="[98]"></a>Print::print(unsigned char, unsigned char)</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, print.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = Print::print(unsigned char, unsigned char) &rArr; Print::print(unsigned, unsigned char) &rArr; Print::printNumber(unsigned, unsigned char) &rArr; Print::write(const char*) &rArr; strlen
@@ -1588,6 +1595,7 @@ Global Symbols
 
 <P><STRONG><a name="[c6]"></a>I2C_GenerateSTOP</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C1_ER_IRQHandler
+<LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C1_EV_IRQHandler
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_receive
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_request
@@ -1597,7 +1605,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[c4]"></a>I2C_Send7bitAddress</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
+<BR><BR>[Called By]<UL><LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C1_EV_IRQHandler
+<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
 <LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
 </UL>
 
@@ -1624,7 +1633,8 @@ Global Symbols
 <P><STRONG><a name="[18f]"></a>I2C_ARPCmd</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text), UNUSED)
 
 <P><STRONG><a name="[c5]"></a>I2C_SendData</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
+<BR><BR>[Called By]<UL><LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C1_EV_IRQHandler
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
 </UL>
 
 <P><STRONG><a name="[cc]"></a>I2C_ReceiveData</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
@@ -1660,6 +1670,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = I2C_GetLastEvent
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C1_ER_IRQHandler
+<LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C1_EV_IRQHandler
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_receive
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_request
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_transmit
