@@ -25,10 +25,10 @@
 ### ADS-LD Output File: 'i2c-rtc.axf'
 ### ADS-LD Command File: 'i2c-rtc.lnp'
 ### Checking for dirty Components...
-### Creating CmdFile 'i2c-rtc.lnp', Handle=0x000003F4
+### Creating CmdFile 'i2c-rtc.lnp', Handle=0x00000488
 ### Writing '.lnp' file
 ### ADS-LD Command file 'i2c-rtc.lnp' is ready.
 ### ADS-LD: About to start ADS-LD Thread.
-### ADS-LD: executed with 1 errors
+### ADS-LD: executed with 0 errors
 ### Updating obj list
 ### LDADS_file() completed.
