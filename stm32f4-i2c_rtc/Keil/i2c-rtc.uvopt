@@ -229,8 +229,13 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
+<<<<<<< HEAD
       <TopLine>57</TopLine>
       <CurrentLine>58</CurrentLine>
+=======
+      <TopLine>2</TopLine>
+      <CurrentLine>20</CurrentLine>
+>>>>>>> origin/win@home
       <bDave2>0</bDave2>
       <PathWithFileName>..\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -325,8 +330,13 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
+<<<<<<< HEAD
       <TopLine>526</TopLine>
       <CurrentLine>540</CurrentLine>
+=======
+      <TopLine>512</TopLine>
+      <CurrentLine>530</CurrentLine>
+>>>>>>> origin/win@home
       <bDave2>0</bDave2>
       <PathWithFileName>..\st7032i.c</PathWithFileName>
       <FilenameWithoutPath>st7032i.c</FilenameWithoutPath>

@@ -147,8 +147,11 @@ int main(void) {
 			Serial3.println(I2C1Buffer.status, HEX);
 		}
 		lcd.setCursor(0, 1);
-		lcd.print((float)millis()/1000, 3);
-		
+		lcd.printByte((uint8)(rtc.time>>16));
+		lcd.print(':');
+		lcd.printByte((uint8)(rtc.time>>8));
+		lcd.print(':');
+		lcd.printByte((uint8)rtc.time);
 
 		char c;
 		if (Serial3.available() > 0) {

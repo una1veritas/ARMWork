@@ -3,7 +3,7 @@
 <title>Static Call Graph - [C:\Users\Sin\Documents\github\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image C:\Users\Sin\Documents\github\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Sat Dec 29 01:58:11 2012
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Sun Dec 30 01:27:33 2012
 <BR><P>
 <H3>Maximum Stack Usage =        832 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -522,21 +522,22 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[7b]"></a>main</STRONG> (Thumb, 1306 bytes, Stack size 632 bytes, main.o(.text))
+<P><STRONG><a name="[7b]"></a>main</STRONG> (Thumb, 1318 bytes, Stack size 632 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 832<LI>Call Chain = main &rArr; Print::print(double, unsigned char) &rArr; Print::printFloat(double, unsigned char) &rArr; Print::print(int, unsigned char) &rArr; Print::printNumber(unsigned, unsigned char) &rArr; Print::write(const char*) &rArr; strlen
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_read
+<BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_read
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;millis
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::setCursor(unsigned char, unsigned char)
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::begin()
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::setContrast(unsigned char)
 <LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::begin()
-<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::setTime(const long&)
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::setTime(const long&)
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::updateCalendar()
-<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::setCalendar(const long&)
+<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::setCalendar(const long&)
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::updateTime()
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printByte(unsigned)
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printByte(unsigned char)
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println()
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println(unsigned, unsigned char)
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println(const char*)
@@ -544,6 +545,7 @@ Global Symbols
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(unsigned, unsigned char)
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(unsigned char, unsigned char)
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(double, unsigned char)
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(char)
 <LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(const char*)
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USARTSerial::begin(_GPIOPin, _GPIOPin, unsigned)
 <LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_timer_start
@@ -557,7 +559,7 @@ Global Symbols
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USARTSerial::flush()
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
-<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2f
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
@@ -592,7 +594,7 @@ Global Symbols
 <P><STRONG><a name="[5f]"></a>SystemInit</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, system_stm32f4xx.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = SystemInit
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetSysClock
+<BR>[Calls]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetSysClock
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(.text)
 </UL>
@@ -601,28 +603,28 @@ Global Symbols
 <P><STRONG><a name="[81]"></a>TIM2_timer_start</STRONG> (Thumb, 136 bytes, Stack size 40 bytes, delay.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = TIM2_timer_start &rArr; RCC_GetClocksFreq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_TimeBaseInit
-<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCounter
-<LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_ITConfig
-<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_Cmd
-<LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
-<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
+<BR>[Calls]<UL><LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_TimeBaseInit
+<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_SetCounter
+<LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_ITConfig
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_Cmd
+<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
 <LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_GetClocksFreq
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[ab]"></a>micros</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, delay.o(.text))
+<P><STRONG><a name="[ad]"></a>micros</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, delay.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = micros
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_GetCounter
+<BR>[Calls]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_GetCounter
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
+<BR>[Called By]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 </UL>
 
 <P><STRONG><a name="[93]"></a>millis</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, delay.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
+<BR><BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
 <LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_flush
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -640,13 +642,13 @@ Global Symbols
 <LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::clear()
 </UL>
 
-<P><STRONG><a name="[ad]"></a>delay_us</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, delay.o(.text))
+<P><STRONG><a name="[af]"></a>delay_us</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, delay.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = delay_us &rArr; micros
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;micros
+<BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;micros
 </UL>
-<BR>[Called By]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
+<BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
 <LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_write
 <LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::write(unsigned char)
 <LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::command(unsigned char)
@@ -655,60 +657,60 @@ Global Symbols
 <P><STRONG><a name="[29]"></a>TIM2_IRQHandler</STRONG> (Thumb, 44 bytes, Stack size 8 bytes, delay.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = TIM2_IRQHandler &rArr; TIM_GetITStatus
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_GetITStatus
-<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_ClearITPendingBit
+<BR>[Calls]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_GetITStatus
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_ClearITPendingBit
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
 <P><STRONG><a name="[8b]"></a>PinPort</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, gpio.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<BR><BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
 </UL>
 
 <P><STRONG><a name="[8a]"></a>PinBit</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, gpio.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digitalRead
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digitalWrite
-<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pinMode
+<BR><BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digitalRead
+<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digitalWrite
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pinMode
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
 </UL>
 
-<P><STRONG><a name="[bb]"></a>PinSource</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, gpio.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<P><STRONG><a name="[bd]"></a>PinSource</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, gpio.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
 <LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
 </UL>
 
-<P><STRONG><a name="[b0]"></a>pinMode</STRONG> (Thumb, 68 bytes, Stack size 24 bytes, gpio.o(.text))
+<P><STRONG><a name="[b2]"></a>pinMode</STRONG> (Thumb, 68 bytes, Stack size 24 bytes, gpio.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = pinMode &rArr; GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_AHB1PeriphClockCmd
-<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
+<BR>[Calls]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_AHB1PeriphClockCmd
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinBit
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::ST7032i(I2CWire&)
+<BR>[Called By]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::ST7032i(I2CWire&)
 </UL>
 
-<P><STRONG><a name="[b3]"></a>digitalWrite</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, gpio.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
-<LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
+<P><STRONG><a name="[b5]"></a>digitalWrite</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, gpio.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinBit
 </UL>
 
-<P><STRONG><a name="[b6]"></a>digitalRead</STRONG> (Thumb, 88 bytes, Stack size 24 bytes, gpio.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ReadOutputDataBit
-<LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ReadInputDataBit
+<P><STRONG><a name="[b8]"></a>digitalRead</STRONG> (Thumb, 88 bytes, Stack size 24 bytes, gpio.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ReadOutputDataBit
+<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ReadInputDataBit
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinBit
 </UL>
 
 <P><STRONG><a name="[8c]"></a>GPIOMode</STRONG> (Thumb, 188 bytes, Stack size 40 bytes, gpio.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = GPIOMode &rArr; GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_AHB1PeriphClockCmd
-<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
+<BR>[Calls]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_AHB1PeriphClockCmd
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
 </UL>
@@ -716,21 +718,21 @@ Global Symbols
 <P><STRONG><a name="[91]"></a>GPIOWrite</STRONG> (Thumb, 16 bytes, Stack size 16 bytes, gpio.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = GPIOWrite
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Write
+<BR>[Calls]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Write
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[ba]"></a>i2c_begin</STRONG> (Thumb, 356 bytes, Stack size 72 bytes, i2c.o(.text))
+<P><STRONG><a name="[bc]"></a>i2c_begin</STRONG> (Thumb, 356 bytes, Stack size 72 bytes, i2c.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 140<LI>Call Chain = i2c_begin &rArr; I2C_Init &rArr; RCC_GetClocksFreq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Init
-<LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_ITConfig
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Cmd
-<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinAFConfig
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinSource
-<LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
-<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
+<BR>[Calls]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Init
+<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_ITConfig
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Cmd
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinAFConfig
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinSource
+<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
 <LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinPort
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinBit
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOMode
@@ -738,115 +740,116 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::begin()
 </UL>
 
-<P><STRONG><a name="[c0]"></a>i2c_start_send</STRONG> (Thumb, 232 bytes, Stack size 24 bytes, i2c.o(.text))
+<P><STRONG><a name="[c2]"></a>i2c_start_send</STRONG> (Thumb, 232 bytes, Stack size 24 bytes, i2c.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_SendData
-<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Send7bitAddress
-<LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetFlagStatus
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
-<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTART
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_CheckEvent
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
+<BR>[Calls]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_SendData
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Send7bitAddress
+<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetFlagStatus
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTART
+<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_CheckEvent
+<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;millis
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_request
-<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_transmit
+<BR>[Called By]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_request
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_transmit
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::endTransmission(unsigned char)
 </UL>
 
-<P><STRONG><a name="[c7]"></a>i2c_transmit</STRONG> (Thumb, 66 bytes, Stack size 24 bytes, i2c.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
-<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<P><STRONG><a name="[c9]"></a>i2c_transmit</STRONG> (Thumb, 66 bytes, Stack size 24 bytes, i2c.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
+<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 
-<P><STRONG><a name="[ca]"></a>i2c_request</STRONG> (Thumb, 74 bytes, Stack size 24 bytes, i2c.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
-<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<P><STRONG><a name="[cc]"></a>i2c_request</STRONG> (Thumb, 74 bytes, Stack size 24 bytes, i2c.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
+<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 
-<P><STRONG><a name="[cb]"></a>i2c_start_receive</STRONG> (Thumb, 252 bytes, Stack size 24 bytes, i2c.o(.text))
+<P><STRONG><a name="[cd]"></a>i2c_start_receive</STRONG> (Thumb, 252 bytes, Stack size 24 bytes, i2c.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = i2c_start_receive &rArr; delay_us &rArr; micros
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Send7bitAddress
-<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_ReceiveData
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
-<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTART
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_CheckEvent
-<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_AcknowledgeConfig
-<LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
+<BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Send7bitAddress
+<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_ReceiveData
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTART
+<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_CheckEvent
+<LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_AcknowledgeConfig
+<LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;millis
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_receive
+<BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_receive
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::receiveFrom(unsigned char, unsigned short)
 </UL>
 
-<P><STRONG><a name="[ce]"></a>i2c_receive</STRONG> (Thumb, 100 bytes, Stack size 24 bytes, i2c.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
-<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
-<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+<P><STRONG><a name="[d0]"></a>i2c_receive</STRONG> (Thumb, 100 bytes, Stack size 24 bytes, i2c.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
+<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 
-<P><STRONG><a name="[2c]"></a>I2C1_EV_IRQHandler</STRONG> (Thumb, 112 bytes, Stack size 16 bytes, i2c.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = I2C1_EV_IRQHandler &rArr; I2C_GetLastEvent
+<P><STRONG><a name="[2c]"></a>I2C1_EV_IRQHandler</STRONG> (Thumb, 138 bytes, Stack size 8 bytes, i2c.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = I2C1_EV_IRQHandler &rArr; I2C_GetLastEvent
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_SendData
-<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Send7bitAddress
-<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
+<BR>[Calls]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_SendData
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Send7bitAddress
+<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
 <P><STRONG><a name="[2d]"></a>I2C1_ER_IRQHandler</STRONG> (Thumb, 46 bytes, Stack size 16 bytes, i2c.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = I2C1_ER_IRQHandler &rArr; I2C_GetLastEvent
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
-<LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_ClearFlag
+<BR>[Calls]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_ClearFlag
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
-<P><STRONG><a name="[d0]"></a>Print::printNumber(unsigned, unsigned char)</STRONG> (Thumb, 74 bytes, Stack size 56 bytes, print.o(.text))
+<P><STRONG><a name="[d2]"></a>Print::printNumber(unsigned, unsigned char)</STRONG> (Thumb, 74 bytes, Stack size 56 bytes, print.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = Print::printNumber(unsigned, unsigned char) &rArr; Print::write(const char*) &rArr; strlen
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::write(const char*)
+<BR>[Calls]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::write(const char*)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(int, unsigned char)
+<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(int, unsigned char)
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(unsigned, unsigned char)
 </UL>
 
-<P><STRONG><a name="[d3]"></a>Print::print(char)</STRONG> (Thumb, 18 bytes, Stack size 16 bytes, print.o(.text))
+<P><STRONG><a name="[9f]"></a>Print::print(char)</STRONG> (Thumb, 18 bytes, Stack size 16 bytes, print.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = Print::print(char)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println(char)
 <LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printByte(unsigned char*, unsigned char, char)
-<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(int, unsigned char)
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
+<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(int, unsigned char)
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println()
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[d2]"></a>Print::print(int, unsigned char)</STRONG> (Thumb, 84 bytes, Stack size 24 bytes, print.o(.text))
+<P><STRONG><a name="[d4]"></a>Print::print(int, unsigned char)</STRONG> (Thumb, 84 bytes, Stack size 24 bytes, print.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = Print::print(int, unsigned char) &rArr; Print::printNumber(unsigned, unsigned char) &rArr; Print::write(const char*) &rArr; strlen
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(char)
-<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printNumber(unsigned, unsigned char)
+<BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printNumber(unsigned, unsigned char)
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(char)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println(int, unsigned char)
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printByte(unsigned char)
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(short, unsigned char)
-<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(short, unsigned char)
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printByte(unsigned char)
 </UL>
 
 <P><STRONG><a name="[87]"></a>Print::print(const char*)</STRONG> (Thumb, 16 bytes, Stack size 16 bytes, print.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Print::print(const char*) &rArr; Print::write(const char*) &rArr; strlen
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::write(const char*)
+<BR>[Calls]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::write(const char*)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
+<BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println(const char*)
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -854,32 +857,32 @@ Global Symbols
 <P><STRONG><a name="[88]"></a>Print::print(unsigned, unsigned char)</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, print.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = Print::print(unsigned, unsigned char) &rArr; Print::printNumber(unsigned, unsigned char) &rArr; Print::write(const char*) &rArr; strlen
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printNumber(unsigned, unsigned char)
+<BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printNumber(unsigned, unsigned char)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(unsigned short, unsigned char)
-<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
+<BR>[Called By]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(unsigned short, unsigned char)
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println(unsigned, unsigned char)
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(unsigned char, unsigned char)
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[d4]"></a>Print::printFloat(double, unsigned char)</STRONG> (Thumb, 378 bytes, Stack size 72 bytes, print.o(.text))
+<P><STRONG><a name="[d5]"></a>Print::printFloat(double, unsigned char)</STRONG> (Thumb, 378 bytes, Stack size 72 bytes, print.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 176<LI>Call Chain = Print::printFloat(double, unsigned char) &rArr; Print::print(int, unsigned char) &rArr; Print::printNumber(unsigned, unsigned char) &rArr; Print::write(const char*) &rArr; strlen
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(int, unsigned char)
-<LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(char)
+<BR>[Calls]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(int, unsigned char)
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(unsigned, unsigned char)
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(char)
 <LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(const char*)
-<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdcmple
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2uiz
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdcmple
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2uiz
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(double, unsigned char)
 </UL>
@@ -904,13 +907,13 @@ Global Symbols
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[df]"></a>Print::print(short, unsigned char)</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, print.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(int, unsigned char)
+<P><STRONG><a name="[e0]"></a>Print::print(short, unsigned char)</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, print.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(int, unsigned char)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println(short, unsigned char)
 </UL>
 
-<P><STRONG><a name="[e0]"></a>Print::print(unsigned short, unsigned char)</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, print.o(.text), UNUSED)
+<P><STRONG><a name="[e1]"></a>Print::print(unsigned short, unsigned char)</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, print.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(unsigned, unsigned char)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println(unsigned short, unsigned char)
@@ -919,30 +922,31 @@ Global Symbols
 <P><STRONG><a name="[97]"></a>Print::print(double, unsigned char)</STRONG> (Thumb, 24 bytes, Stack size 24 bytes, print.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 200<LI>Call Chain = Print::print(double, unsigned char) &rArr; Print::printFloat(double, unsigned char) &rArr; Print::print(int, unsigned char) &rArr; Print::printNumber(unsigned, unsigned char) &rArr; Print::write(const char*) &rArr; strlen
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
+<BR>[Calls]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println(double, unsigned char)
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[e1]"></a>Print::printByte(unsigned char)</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, print.o(.text))
+<P><STRONG><a name="[9e]"></a>Print::printByte(unsigned char)</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, print.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = Print::printByte(unsigned char) &rArr; Print::print(int, unsigned char) &rArr; Print::printNumber(unsigned, unsigned char) &rArr; Print::write(const char*) &rArr; strlen
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(int, unsigned char)
+<BR>[Calls]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(int, unsigned char)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printByte(unsigned char*, unsigned char, char)
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printByte(unsigned)
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[e2]"></a>Print::printByte(unsigned char*, unsigned char, char)</STRONG> (Thumb, 50 bytes, Stack size 32 bytes, print.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printByte(unsigned char)
-<LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(char)
+<BR><BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printByte(unsigned char)
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(char)
 </UL>
 
 <P><STRONG><a name="[9a]"></a>Print::printByte(unsigned)</STRONG> (Thumb, 56 bytes, Stack size 16 bytes, print.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = Print::printByte(unsigned) &rArr; Print::printByte(unsigned char) &rArr; Print::print(int, unsigned char) &rArr; Print::printNumber(unsigned, unsigned char) &rArr; Print::write(const char*) &rArr; strlen
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printByte(unsigned char)
+<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printByte(unsigned char)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -950,7 +954,7 @@ Global Symbols
 <P><STRONG><a name="[89]"></a>Print::println()</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, print.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = Print::println() &rArr; Print::print(char)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(char)
+<BR>[Calls]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(char)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println(double, unsigned char)
 <LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println(int, unsigned char)
@@ -973,8 +977,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[e3]"></a>Print::println(char)</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, print.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(char)
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println()
+<BR><BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println()
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(char)
 </UL>
 
 <P><STRONG><a name="[e4]"></a>Print::println(unsigned char, unsigned char)</STRONG> (Thumb, 36 bytes, Stack size 24 bytes, print.o(.text), UNUSED)
@@ -983,17 +987,17 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[e5]"></a>Print::println(short, unsigned char)</STRONG> (Thumb, 36 bytes, Stack size 24 bytes, print.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(short, unsigned char)
+<BR><BR>[Calls]<UL><LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(short, unsigned char)
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println()
 </UL>
 
 <P><STRONG><a name="[e6]"></a>Print::println(unsigned short, unsigned char)</STRONG> (Thumb, 36 bytes, Stack size 24 bytes, print.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(unsigned short, unsigned char)
+<BR><BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(unsigned short, unsigned char)
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println()
 </UL>
 
 <P><STRONG><a name="[e7]"></a>Print::println(int, unsigned char)</STRONG> (Thumb, 36 bytes, Stack size 24 bytes, print.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(int, unsigned char)
+<BR><BR>[Calls]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(int, unsigned char)
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::println()
 </UL>
 
@@ -1014,7 +1018,7 @@ Global Symbols
 <P><STRONG><a name="[e9]"></a>ST7032i::command(unsigned char)</STRONG> (Thumb, 50 bytes, Stack size 16 bytes, st7032i.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = ST7032i::command(unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
+<BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 <LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::beginTransmission(unsigned char)
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::endTransmission(unsigned char)
 </UL>
@@ -1038,10 +1042,10 @@ Global Symbols
 <LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::clear()
 </UL>
 
-<P><STRONG><a name="[a3]"></a>ST7032i::ST7032i(I2CWire&)</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, st7032i.o(.text))
+<P><STRONG><a name="[a5]"></a>ST7032i::ST7032i(I2CWire&)</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, st7032i.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = ST7032i::ST7032i(I2CWire&) &rArr; pinMode &rArr; GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pinMode
+<BR>[Calls]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pinMode
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__sti___8_main_cpp
 </UL>
@@ -1079,7 +1083,7 @@ Global Symbols
 <P><STRONG><a name="[6a]"></a>ST7032i::write(unsigned char)</STRONG> (Thumb, 58 bytes, Stack size 16 bytes, st7032i.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = ST7032i::write(unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
+<BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 <LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::beginTransmission(unsigned char)
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::endTransmission(unsigned char)
 </UL>
@@ -1200,7 +1204,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_count
 </UL>
-<BR>[Called By]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_read
+<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_read
 <LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
 <LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
 <LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
@@ -1216,10 +1220,10 @@ Global Symbols
 <P><STRONG><a name="[101]"></a>usart_begin</STRONG> (Thumb, 450 bytes, Stack size 72 bytes, usart.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 140<LI>Call Chain = usart_begin &rArr; USART_Init &rArr; RCC_GetClocksFreq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinAFConfig
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinSource
-<LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
-<LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
+<BR>[Calls]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinAFConfig
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinSource
+<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
+<LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
 <LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
 <LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinPort
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinBit
@@ -1240,7 +1244,7 @@ Global Symbols
 <P><STRONG><a name="[10a]"></a>usart_write</STRONG> (Thumb, 70 bytes, Stack size 16 bytes, usart.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = usart_write &rArr; delay_us &rArr; micros
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
+<BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 <LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ITConfig
 <LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_enque
 <LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_is_full
@@ -1257,7 +1261,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ReceiveData
 </UL>
 
-<P><STRONG><a name="[9e]"></a>usart_read</STRONG> (Thumb, 26 bytes, Stack size 12 bytes, usart.o(.text))
+<P><STRONG><a name="[a0]"></a>usart_read</STRONG> (Thumb, 26 bytes, Stack size 12 bytes, usart.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = usart_read &rArr; ring_deque
 </UL>
 <BR>[Calls]<UL><LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_deque
@@ -1373,8 +1377,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::beginTransmission(unsigned char)
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::endTransmission(unsigned char)
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::setTime(const long&)
-<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::setCalendar(const long&)
+<BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::setTime(const long&)
+<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::setCalendar(const long&)
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::stop()
 <LI><a href="#[119]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::start()
 <LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::writeRegister(unsigned char, unsigned char)
@@ -1396,7 +1400,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[a0]"></a>DS1307::setTime(const long&)</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, ds1307.o(.text))
+<P><STRONG><a name="[a2]"></a>DS1307::setTime(const long&)</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, ds1307.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = DS1307::setTime(const long&) &rArr; DS1307::writeRegisters(unsigned char, unsigned char*, unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::writeRegisters(unsigned char, unsigned char*, unsigned char)
@@ -1404,7 +1408,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[a1]"></a>DS1307::setCalendar(const long&)</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, ds1307.o(.text))
+<P><STRONG><a name="[a3]"></a>DS1307::setCalendar(const long&)</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, ds1307.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = DS1307::setCalendar(const long&) &rArr; DS1307::writeRegisters(unsigned char, unsigned char*, unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::writeRegisters(unsigned char, unsigned char*, unsigned char)
@@ -1430,10 +1434,10 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[11b]"></a>DS1307::JD2000(unsigned char, unsigned char, unsigned char)</STRONG> (Thumb, 174 bytes, Stack size 96 bytes, ds1307.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<BR><BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::JD2000(const long&)
 </UL>
@@ -1451,7 +1455,7 @@ Global Symbols
 <P><STRONG><a name="[8d]"></a>I2CWire::begin()</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, i2cwire.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 156<LI>Call Chain = I2CWire::begin() &rArr; i2c_begin &rArr; I2C_Init &rArr; RCC_GetClocksFreq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1466,9 +1470,9 @@ Global Symbols
 <P><STRONG><a name="[eb]"></a>I2CWire::endTransmission(unsigned char)</STRONG> (Thumb, 126 bytes, Stack size 16 bytes, i2cwire.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
+<BR>[Calls]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
 </UL>
 <BR>[Called By]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::endRequest()
 <LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::writeRegisters(unsigned char, unsigned char*, unsigned char)
@@ -1487,9 +1491,9 @@ Global Symbols
 <P><STRONG><a name="[115]"></a>I2CWire::receiveFrom(unsigned char, unsigned short)</STRONG> (Thumb, 104 bytes, Stack size 24 bytes, i2cwire.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = I2CWire::receiveFrom(unsigned char, unsigned short) &rArr; i2c_start_receive &rArr; delay_us &rArr; micros
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
-<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
+<BR>[Calls]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
 </UL>
 <BR>[Called By]<UL><LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::readRegisters(unsigned char, unsigned char*, unsigned char)
 </UL>
@@ -1504,10 +1508,10 @@ Global Symbols
 </UL>
 <P><STRONG><a name="[17d]"></a>NVIC_PriorityGroupConfig</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, misc.o(.text), UNUSED)
 
-<P><STRONG><a name="[a9]"></a>NVIC_Init</STRONG> (Thumb, 108 bytes, Stack size 16 bytes, misc.o(.text))
+<P><STRONG><a name="[ab]"></a>NVIC_Init</STRONG> (Thumb, 108 bytes, Stack size 16 bytes, misc.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = NVIC_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
 <LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_timer_start
 <LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
 </UL>
@@ -1522,10 +1526,10 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_AHB1PeriphResetCmd
 </UL>
 
-<P><STRONG><a name="[b2]"></a>GPIO_Init</STRONG> (Thumb, 144 bytes, Stack size 20 bytes, stm32f4xx_gpio.o(.text))
+<P><STRONG><a name="[b4]"></a>GPIO_Init</STRONG> (Thumb, 144 bytes, Stack size 20 bytes, stm32f4xx_gpio.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = GPIO_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pinMode
+<BR>[Called By]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pinMode
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOMode
 </UL>
 
@@ -1533,40 +1537,40 @@ Global Symbols
 
 <P><STRONG><a name="[182]"></a>GPIO_PinLockConfig</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(.text), UNUSED)
 
-<P><STRONG><a name="[b8]"></a>GPIO_ReadInputDataBit</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(.text), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digitalRead
+<P><STRONG><a name="[ba]"></a>GPIO_ReadInputDataBit</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digitalRead
 </UL>
 
 <P><STRONG><a name="[183]"></a>GPIO_ReadInputData</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(.text), UNUSED)
 
-<P><STRONG><a name="[b7]"></a>GPIO_ReadOutputDataBit</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(.text), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digitalRead
+<P><STRONG><a name="[b9]"></a>GPIO_ReadOutputDataBit</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digitalRead
 </UL>
 
 <P><STRONG><a name="[90]"></a>GPIO_ReadOutputData</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[b4]"></a>GPIO_SetBits</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(.text), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digitalWrite
+<P><STRONG><a name="[b6]"></a>GPIO_SetBits</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digitalWrite
 </UL>
 
-<P><STRONG><a name="[b5]"></a>GPIO_ResetBits</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(.text), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digitalWrite
+<P><STRONG><a name="[b7]"></a>GPIO_ResetBits</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digitalWrite
 </UL>
 
 <P><STRONG><a name="[184]"></a>GPIO_WriteBit</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(.text), UNUSED)
 
-<P><STRONG><a name="[b9]"></a>GPIO_Write</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(.text))
+<P><STRONG><a name="[bb]"></a>GPIO_Write</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOWrite
 </UL>
 
 <P><STRONG><a name="[185]"></a>GPIO_ToggleBits</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(.text), UNUSED)
 
-<P><STRONG><a name="[bc]"></a>GPIO_PinAFConfig</STRONG> (Thumb, 70 bytes, Stack size 20 bytes, stm32f4xx_gpio.o(.text))
+<P><STRONG><a name="[be]"></a>GPIO_PinAFConfig</STRONG> (Thumb, 70 bytes, Stack size 20 bytes, stm32f4xx_gpio.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = GPIO_PinAFConfig
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
 <LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
 </UL>
 
@@ -1574,44 +1578,44 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphResetCmd
 </UL>
 
-<P><STRONG><a name="[bd]"></a>I2C_Init</STRONG> (Thumb, 218 bytes, Stack size 48 bytes, stm32f4xx_i2c.o(.text))
+<P><STRONG><a name="[bf]"></a>I2C_Init</STRONG> (Thumb, 218 bytes, Stack size 48 bytes, stm32f4xx_i2c.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = I2C_Init &rArr; RCC_GetClocksFreq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_GetClocksFreq
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
 </UL>
 
 <P><STRONG><a name="[186]"></a>I2C_StructInit</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text), UNUSED)
 
-<P><STRONG><a name="[be]"></a>I2C_Cmd</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<P><STRONG><a name="[c0]"></a>I2C_Cmd</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
 </UL>
 
-<P><STRONG><a name="[c2]"></a>I2C_GenerateSTART</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
+<P><STRONG><a name="[c4]"></a>I2C_GenerateSTART</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
 </UL>
 
-<P><STRONG><a name="[c6]"></a>I2C_GenerateSTOP</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
+<P><STRONG><a name="[c8]"></a>I2C_GenerateSTOP</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C1_ER_IRQHandler
 <LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C1_EV_IRQHandler
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_receive
-<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_request
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
+<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_receive
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
+<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_request
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::receiveFrom(unsigned char, unsigned short)
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::endTransmission(unsigned char)
 </UL>
 
-<P><STRONG><a name="[c4]"></a>I2C_Send7bitAddress</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
+<P><STRONG><a name="[c6]"></a>I2C_Send7bitAddress</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C1_EV_IRQHandler
-<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
 </UL>
 
-<P><STRONG><a name="[cd]"></a>I2C_AcknowledgeConfig</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
+<P><STRONG><a name="[cf]"></a>I2C_AcknowledgeConfig</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
 </UL>
 
 <P><STRONG><a name="[187]"></a>I2C_OwnAddress2Config</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text), UNUSED)
@@ -1632,13 +1636,13 @@ Global Symbols
 
 <P><STRONG><a name="[18f]"></a>I2C_ARPCmd</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text), UNUSED)
 
-<P><STRONG><a name="[c5]"></a>I2C_SendData</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
+<P><STRONG><a name="[c7]"></a>I2C_SendData</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C1_EV_IRQHandler
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
 </UL>
 
-<P><STRONG><a name="[cc]"></a>I2C_ReceiveData</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
+<P><STRONG><a name="[ce]"></a>I2C_ReceiveData</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
 </UL>
 
 <P><STRONG><a name="[190]"></a>I2C_TransmitPEC</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text), UNUSED)
@@ -1655,36 +1659,36 @@ Global Symbols
 
 <P><STRONG><a name="[196]"></a>I2C_ReadRegister</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text), UNUSED)
 
-<P><STRONG><a name="[bf]"></a>I2C_ITConfig</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<P><STRONG><a name="[c1]"></a>I2C_ITConfig</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
 </UL>
 
-<P><STRONG><a name="[c3]"></a>I2C_CheckEvent</STRONG> (Thumb, 42 bytes, Stack size 16 bytes, stm32f4xx_i2c.o(.text))
+<P><STRONG><a name="[c5]"></a>I2C_CheckEvent</STRONG> (Thumb, 42 bytes, Stack size 16 bytes, stm32f4xx_i2c.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = I2C_CheckEvent
 </UL>
-<BR>[Called By]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
-<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
+<BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
 </UL>
 
-<P><STRONG><a name="[c9]"></a>I2C_GetLastEvent</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, stm32f4xx_i2c.o(.text))
+<P><STRONG><a name="[cb]"></a>I2C_GetLastEvent</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, stm32f4xx_i2c.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = I2C_GetLastEvent
 </UL>
 <BR>[Called By]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C1_ER_IRQHandler
 <LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C1_EV_IRQHandler
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_receive
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_request
-<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_transmit
+<LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_receive
+<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_request
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_transmit
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::receiveFrom(unsigned char, unsigned short)
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::endTransmission(unsigned char)
 </UL>
 
-<P><STRONG><a name="[c1]"></a>I2C_GetFlagStatus</STRONG> (Thumb, 42 bytes, Stack size 12 bytes, stm32f4xx_i2c.o(.text))
+<P><STRONG><a name="[c3]"></a>I2C_GetFlagStatus</STRONG> (Thumb, 42 bytes, Stack size 12 bytes, stm32f4xx_i2c.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = I2C_GetFlagStatus
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
+<BR>[Called By]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
 </UL>
 
-<P><STRONG><a name="[cf]"></a>I2C_ClearFlag</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
+<P><STRONG><a name="[d1]"></a>I2C_ClearFlag</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[2d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C1_ER_IRQHandler
 </UL>
 
@@ -1739,7 +1743,7 @@ Global Symbols
 <P><STRONG><a name="[86]"></a>RCC_GetClocksFreq</STRONG> (Thumb, 222 bytes, Stack size 20 bytes, stm32f4xx_rcc.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = RCC_GetClocksFreq
 </UL>
-<BR>[Called By]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Init
+<BR>[Called By]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Init
 <LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_timer_start
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
@@ -1754,8 +1758,8 @@ Global Symbols
 
 <P><STRONG><a name="[1ae]"></a>RCC_I2SCLKConfig</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(.text), UNUSED)
 
-<P><STRONG><a name="[b1]"></a>RCC_AHB1PeriphClockCmd</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pinMode
+<P><STRONG><a name="[b3]"></a>RCC_AHB1PeriphClockCmd</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pinMode
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOMode
 </UL>
 
@@ -1763,8 +1767,8 @@ Global Symbols
 
 <P><STRONG><a name="[1b0]"></a>RCC_AHB3PeriphClockCmd</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(.text), UNUSED)
 
-<P><STRONG><a name="[a5]"></a>RCC_APB1PeriphClockCmd</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<P><STRONG><a name="[a7]"></a>RCC_APB1PeriphClockCmd</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
 <LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_timer_start
 <LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
 </UL>
@@ -1815,7 +1819,7 @@ Global Symbols
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphResetCmd
 </UL>
 
-<P><STRONG><a name="[a6]"></a>TIM_TimeBaseInit</STRONG> (Thumb, 104 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text))
+<P><STRONG><a name="[a8]"></a>TIM_TimeBaseInit</STRONG> (Thumb, 104 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_timer_start
 </UL>
 
@@ -1825,14 +1829,14 @@ Global Symbols
 
 <P><STRONG><a name="[1be]"></a>TIM_CounterModeConfig</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text), UNUSED)
 
-<P><STRONG><a name="[a7]"></a>TIM_SetCounter</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text))
+<P><STRONG><a name="[a9]"></a>TIM_SetCounter</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_timer_start
 </UL>
 
 <P><STRONG><a name="[1bf]"></a>TIM_SetAutoreload</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text), UNUSED)
 
-<P><STRONG><a name="[ac]"></a>TIM_GetCounter</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;micros
+<P><STRONG><a name="[ae]"></a>TIM_GetCounter</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;micros
 </UL>
 
 <P><STRONG><a name="[1c0]"></a>TIM_GetPrescaler</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text), UNUSED)
@@ -1847,7 +1851,7 @@ Global Symbols
 
 <P><STRONG><a name="[1c5]"></a>TIM_SetClockDivision</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text), UNUSED)
 
-<P><STRONG><a name="[aa]"></a>TIM_Cmd</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text))
+<P><STRONG><a name="[ac]"></a>TIM_Cmd</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_timer_start
 </UL>
 
@@ -1977,7 +1981,7 @@ Global Symbols
 
 <P><STRONG><a name="[1f2]"></a>TIM_CCPreloadControl</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text), UNUSED)
 
-<P><STRONG><a name="[a8]"></a>TIM_ITConfig</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text))
+<P><STRONG><a name="[aa]"></a>TIM_ITConfig</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_timer_start
 </UL>
 
@@ -1987,13 +1991,13 @@ Global Symbols
 
 <P><STRONG><a name="[1f5]"></a>TIM_ClearFlag</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text), UNUSED)
 
-<P><STRONG><a name="[ae]"></a>TIM_GetITStatus</STRONG> (Thumb, 34 bytes, Stack size 12 bytes, stm32f4xx_tim.o(.text))
+<P><STRONG><a name="[b0]"></a>TIM_GetITStatus</STRONG> (Thumb, 34 bytes, Stack size 12 bytes, stm32f4xx_tim.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = TIM_GetITStatus
 </UL>
 <BR>[Called By]<UL><LI><a href="#[29]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_IRQHandler
 </UL>
 
-<P><STRONG><a name="[af]"></a>TIM_ClearITPendingBit</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text))
+<P><STRONG><a name="[b1]"></a>TIM_ClearITPendingBit</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[29]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_IRQHandler
 </UL>
 
@@ -2151,7 +2155,7 @@ Global Symbols
 <LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
 </UL>
 
-<P><STRONG><a name="[9f]"></a>strtol</STRONG> (Thumb, 112 bytes, Stack size 32 bytes, strtol.o(.text))
+<P><STRONG><a name="[a1]"></a>strtol</STRONG> (Thumb, 112 bytes, Stack size 32 bytes, strtol.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = strtol &rArr; _strtoul
 </UL>
 <BR>[Calls]<UL><LI><a href="#[138]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_strtoul
@@ -2164,14 +2168,14 @@ Global Symbols
 <P><STRONG><a name="[84]"></a>strlen</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, strlen.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = strlen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::write(const char*)
+<BR>[Called By]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::write(const char*)
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[c8]"></a>__aeabi_memcpy</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_memcpy_v6.o(.text), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_receive
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_request
-<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_transmit
+<P><STRONG><a name="[ca]"></a>__aeabi_memcpy</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_memcpy_v6.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_receive
+<LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_request
+<LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_transmit
 </UL>
 
 <P><STRONG><a name="[13a]"></a>__rt_memcpy</STRONG> (Thumb, 138 bytes, Stack size 0 bytes, rt_memcpy_v6.o(.text), UNUSED)
@@ -2210,11 +2214,11 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_locale
 </UL>
-<BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
+<BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
 </UL>
 
 <P><STRONG><a name="[139]"></a>__aeabi_errno_addr</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, rt_errno_addr_intlibspace.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
+<BR><BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
 <LI><a href="#[138]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_strtoul
 </UL>
 
@@ -2228,7 +2232,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_chval
 <LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_errno_addr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
+<BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strtol
 </UL>
 
 <P><STRONG><a name="[13c]"></a>__rt_SIGPVFN</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, defsig_pvfn_outer.o(.text))
@@ -2334,16 +2338,16 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> usartserial.o(.constdata__ZTV11USARTSerial)
 </UL>
-<P><STRONG><a name="[d1]"></a>Print::write(const char*)</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, print.o(i._ZN5Print5writeEPKc))
+<P><STRONG><a name="[d3]"></a>Print::write(const char*)</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, print.o(i._ZN5Print5writeEPKc))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = Print::write(const char*) &rArr; strlen
 </UL>
 <BR>[Calls]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printNumber(unsigned, unsigned char)
+<BR>[Called By]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printNumber(unsigned, unsigned char)
 <LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::print(const char*)
 </UL>
 
-<P><STRONG><a name="[a2]"></a>Stream::Stream__sub_object()</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, main.o(i._ZN6StreamC2Ev))
+<P><STRONG><a name="[a4]"></a>Stream::Stream__sub_object()</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, main.o(i._ZN6StreamC2Ev))
 <BR><BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__sti___8_main_cpp
 </UL>
 
@@ -2367,10 +2371,10 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> rt_ctype_table.o(.text)
 </UL>
-<P><STRONG><a name="[d8]"></a>__aeabi_dadd</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, daddsub_clz.o(x$fpl$dadd))
+<P><STRONG><a name="[d9]"></a>__aeabi_dadd</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, daddsub_clz.o(x$fpl$dadd))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = __aeabi_dadd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
+<BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::JD2000(unsigned char, unsigned char, unsigned char)
 </UL>
 
@@ -2384,10 +2388,10 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dcmple
 </UL>
 
-<P><STRONG><a name="[d7]"></a>__aeabi_ddiv</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, ddiv.o(x$fpl$ddiv))
+<P><STRONG><a name="[d8]"></a>__aeabi_ddiv</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, ddiv.o(x$fpl$ddiv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_ddiv
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
+<BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
 </UL>
 
 <P><STRONG><a name="[149]"></a>_ddiv</STRONG> (Thumb, 552 bytes, Stack size 32 bytes, ddiv.o(x$fpl$ddiv), UNUSED)
@@ -2395,10 +2399,10 @@ Global Symbols
 <LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
-<P><STRONG><a name="[dd]"></a>__aeabi_d2iz</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dfix.o(x$fpl$dfix))
+<P><STRONG><a name="[de]"></a>__aeabi_d2iz</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dfix.o(x$fpl$dfix))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_d2iz
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
+<BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::JD2000(unsigned char, unsigned char, unsigned char)
 </UL>
 
@@ -2406,33 +2410,33 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
-<P><STRONG><a name="[d9]"></a>__aeabi_d2uiz</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dfixu.o(x$fpl$dfixu))
+<P><STRONG><a name="[da]"></a>__aeabi_d2uiz</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dfixu.o(x$fpl$dfixu))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_d2uiz
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
+<BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
 </UL>
 
 <P><STRONG><a name="[14b]"></a>_dfixu</STRONG> (Thumb, 90 bytes, Stack size 32 bytes, dfixu.o(x$fpl$dfixu), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dnaninf
 </UL>
 
-<P><STRONG><a name="[de]"></a>__aeabi_i2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt))
-<BR><BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
+<P><STRONG><a name="[df]"></a>__aeabi_i2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt))
+<BR><BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::JD2000(unsigned char, unsigned char, unsigned char)
 </UL>
 
 <P><STRONG><a name="[222]"></a>_dflt</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dflt), UNUSED)
 
-<P><STRONG><a name="[da]"></a>__aeabi_ui2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dfltu))
-<BR><BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
+<P><STRONG><a name="[db]"></a>__aeabi_ui2d</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dfltu))
+<BR><BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
 </UL>
 
 <P><STRONG><a name="[223]"></a>_dfltu</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, dflt_clz.o(x$fpl$dfltu), UNUSED)
 
-<P><STRONG><a name="[d6]"></a>__aeabi_cdcmple</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dleqf.o(x$fpl$dleqf))
+<P><STRONG><a name="[d7]"></a>__aeabi_cdcmple</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dleqf.o(x$fpl$dleqf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_cdcmple
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
+<BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
 </UL>
 
 <P><STRONG><a name="[14c]"></a>_dcmple</STRONG> (Thumb, 120 bytes, Stack size 32 bytes, dleqf.o(x$fpl$dleqf), UNUSED)
@@ -2444,10 +2448,10 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_drcmple
 </UL>
 
-<P><STRONG><a name="[dc]"></a>__aeabi_dmul</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dmul.o(x$fpl$dmul))
+<P><STRONG><a name="[dd]"></a>__aeabi_dmul</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, dmul.o(x$fpl$dmul))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_dmul
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
+<BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::JD2000(unsigned char, unsigned char, unsigned char)
 </UL>
 
@@ -2473,20 +2477,20 @@ Global Symbols
 <LI><a href="#[145]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_dadd
 </UL>
 
-<P><STRONG><a name="[d5]"></a>__aeabi_cdrcmple</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, drleqf.o(x$fpl$drleqf))
+<P><STRONG><a name="[d6]"></a>__aeabi_cdrcmple</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, drleqf.o(x$fpl$drleqf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = __aeabi_cdrcmple
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
+<BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
 </UL>
 
 <P><STRONG><a name="[14f]"></a>_drcmple</STRONG> (Thumb, 108 bytes, Stack size 16 bytes, drleqf.o(x$fpl$drleqf), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__fpl_dcmple_InfNaN
 </UL>
 
-<P><STRONG><a name="[db]"></a>__aeabi_drsub</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, daddsub_clz.o(x$fpl$drsb))
+<P><STRONG><a name="[dc]"></a>__aeabi_drsub</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, daddsub_clz.o(x$fpl$drsb))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_drsub
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
+<BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Print::printFloat(double, unsigned char)
 </UL>
 
 <P><STRONG><a name="[151]"></a>_drsb</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, daddsub_clz.o(x$fpl$drsb), UNUSED)
@@ -2544,12 +2548,12 @@ Local Symbols
 <P><STRONG><a name="[6b]"></a>__sti___8_main_cpp</STRONG> (Thumb, 70 bytes, Stack size 16 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = __sti___8_main_cpp &rArr; ST7032i::ST7032i(I2CWire&) &rArr; pinMode &rArr; GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::ST7032i(I2CWire&)
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stream::Stream__sub_object()
+<BR>[Calls]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::ST7032i(I2CWire&)
+<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stream::Stream__sub_object()
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.init_array)
 </UL>
-<P><STRONG><a name="[a4]"></a>SetSysClock</STRONG> (Thumb, 198 bytes, Stack size 0 bytes, system_stm32f4xx.o(.text))
+<P><STRONG><a name="[a6]"></a>SetSysClock</STRONG> (Thumb, 198 bytes, Stack size 0 bytes, system_stm32f4xx.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemInit
 </UL>
 
