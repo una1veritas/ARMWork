@@ -5,13 +5,8 @@
 *.axf
 *.d
 *.mk
-<<<<<<< HEAD
 *.lst
 *.bak
-*__i
-.DS_Store
-=======
-*.lst
 *.__i
 *.map
 *.plg
@@ -21,7 +16,6 @@
 *.sct
 *.bak
 *.dep
->>>>>>> origin/win@home
 *.zip
 *.gz
 .metadata
