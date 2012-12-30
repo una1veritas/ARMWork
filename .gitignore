@@ -2,12 +2,26 @@
 *.o
 *.elf
 *.hex
+*.axf
 *.d
 *.mk
+<<<<<<< HEAD
 *.lst
 *.bak
 *__i
 .DS_Store
+=======
+*.lst
+*.__i
+*.map
+*.plg
+*.lnp
+*.crf
+*.tra
+*.sct
+*.bak
+*.dep
+>>>>>>> origin/win@home
 *.zip
 *.gz
 .metadata

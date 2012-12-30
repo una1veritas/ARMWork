@@ -43,7 +43,7 @@ uint8_t I2CWire::receiveFrom(uint8_t address, uint16 quantity)
 	i2cbuf->status = I2C_GetLastEvent(i2cbuf->I2Cx);
 	//memcpy(data, i2cbuf->buffer, i2cbuf->limlen) ;
 	if ( t ) {
-		i2cbuf->mode = I2C_MODE_MASTER_IDLE;
+		i2cbuf->mode = I2C_MODE_IDLE;
 		return i2cbuf->limlen;
 	}
 	i2cbuf->status |= 0x80000000;
@@ -84,7 +84,7 @@ uint8_t I2CWire::endTransmission(uint8_t sendStop)
 	//	memcpy(wire->buffer, data, length);
 		if ( i2c_start_send(i2cbuf) ) {
 			// generate stop cond. inside of start_send
-			i2cbuf->mode = I2C_MODE_MASTER_IDLE;
+			i2cbuf->mode = I2C_MODE_IDLE;
 			//wire->status = I2C_GetLastEvent(wire->I2Cx);
 			return i2cbuf->limlen;
 		}
@@ -95,7 +95,7 @@ uint8_t I2CWire::endTransmission(uint8_t sendStop)
 //		i2cbuf->limlen = length;
 //		memcpy(i2cbuf->buffer, data, length);
 		if ( i2c_start_send(i2cbuf) ) {
-			i2cbuf->mode = I2C_MODE_MASTER_IDLE;
+			i2cbuf->mode = I2C_MODE_IDLE;
 			//wire->status = I2C_GetLastEvent(wire->I2Cx);
 			return i2cbuf->limlen;
 		}

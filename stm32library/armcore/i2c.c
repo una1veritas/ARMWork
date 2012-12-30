@@ -88,7 +88,7 @@ boolean i2c_begin(I2CBuffer * wirebuf, I2C_TypeDef * i2cx, GPIOPin sda, GPIOPin 
 	I2C_Cmd(wirebuf->I2Cx, ENABLE);
 	
 	wirebuf->status = NOT_READY;
-	wirebuf->mode = I2C_MODE_MASTER_IDLE;
+	wirebuf->mode = I2C_MODE_IDLE;
 	wirebuf->irqmode = false;
 //	wirebuf->address = (uint8_t)I2C_AcknowledgedAddress_7bit;
 //I2C_ReadRegister(wirebuf->I2Cx, wirebuf->I2Cx->SR1);
@@ -108,10 +108,14 @@ boolean i2c_start_send(I2CBuffer * wire) {
 		if ( millis() > watch + wait )
 			return false;
 	}
-	
+
 	wire->position = 0;
 	watch = millis();
+//	I2C_ITConfig(wire->I2Cx, I2C_IT_EVT | I2C_IT_ERR | I2C_IT_BUF, ENABLE );
 	I2C_GenerateSTART(wire->I2Cx, ENABLE);
+//	while (wire->mode != I2C_MODE_IDLE);
+//	I2C_ITConfig(wire->I2Cx, I2C_IT_EVT | I2C_IT_ERR | I2C_IT_BUF, DISABLE );
+//	return true;
 	delay_us(15);
 	/* Test on EV5 and clear it */
 	while ( !I2C_CheckEvent(wire->I2Cx, I2C_EVENT_MASTER_MODE_SELECT) ) {
@@ -149,7 +153,7 @@ boolean i2c_transmit(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t le
 //	wire->position = 0;
 	if ( i2c_start_send(wire) ) {
 		// generate stop cond. inside of start_send
-		wire->mode = I2C_MODE_MASTER_IDLE;
+		wire->mode = I2C_MODE_IDLE;
 		//wire->status = I2C_GetLastEvent(wire->I2Cx);
 		return true;
 	}
@@ -164,7 +168,7 @@ boolean i2c_request(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t len
 	memcpy(wire->buffer, data, length);
 //	wire->position = 0;
 	if ( i2c_start_send(wire) ) {
-		wire->mode = I2C_MODE_MASTER_IDLE;
+		wire->mode = I2C_MODE_IDLE;
 		//wire->status = I2C_GetLastEvent(wire->I2Cx);
 		return true;
 	}
@@ -180,7 +184,7 @@ boolean i2c_receive(I2CBuffer * wire, uint8_t * data, uint16_t lim) {
 	t = i2c_start_receive(wire);
 	memcpy(data, wire->buffer, wire->limlen) ;
 	if ( t ) {
-		wire->mode = I2C_MODE_MASTER_IDLE;
+		wire->mode = I2C_MODE_IDLE;
 		//wire->status = I2C_GetLastEvent(wire->I2Cx);
 		return true;
 	}
@@ -253,22 +257,26 @@ boolean i2c_start_receive(I2CBuffer * wire) {
  *
  *************************************************************************/
 void I2C1_EV_IRQHandler(void) {
-	uint32 evt = I2C_GetLastEvent(I2C1);
-	switch(evt) {
+	I2C1Buffer.status = I2C_GetLastEvent(I2C1);
+	switch(I2C1Buffer.status) {
 		case I2C_EVENT_MASTER_MODE_SELECT:
-				I2C_Send7bitAddress(I2C1Buffer.I2Cx, I2C1Buffer.address << 1, I2C_Direction_Transmitter );
-			break;
+			I2C_Send7bitAddress(I2C1Buffer.I2Cx, I2C1Buffer.address << 1, I2C_Direction_Transmitter );
+			I2C1Buffer.position = 0;
+		break;
 		case I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED:
 		case I2C_EVENT_MASTER_BYTE_TRANSMITTED:
-			I2C_SendData(I2C1, I2C1Buffer.position++);
-			if ( I2C1Buffer.position == I2C1Buffer.limlen ) {
+			if ( I2C1Buffer.position < I2C1Buffer.limlen ) {
+				I2C_SendData(I2C1, I2C1Buffer.position++);
+				//I2C1Buffer.mode = I2C_MODE_IDLE;
+			} else {
 				if ( I2C1Buffer.mode == I2C_MODE_MASTER_TX ) {
 					I2C_GenerateSTOP(I2C1, ENABLE);
-				}
-				I2C1Buffer.mode = I2C_MODE_MASTER_IDLE;
-				//I2C_ITConfig(I2C1, I2C_IT_EVT | I2C_IT_ERR | I2C_IT_BUF, DISABLE );
-				//I2C1Buffer.position = 0;
+				}	
+				I2C1Buffer.mode = I2C_MODE_IDLE;
 			}
+			break;
+		case I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED:
+			I2C1Buffer.position = 0;
 			break;
 	}
 
@@ -291,6 +299,6 @@ void I2C1_ER_IRQHandler(void) {
     I2C_GenerateSTOP(I2C1,ENABLE);
     I2C_ClearFlag(I2C1,I2C_FLAG_AF);
   }
-  wire->mode = I2C_MODE_MASTER_IDLE;
+  wire->mode = I2C_MODE_IDLE;
   wire->status = levt | 0x80000000;
 }
