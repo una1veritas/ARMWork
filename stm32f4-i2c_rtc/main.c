@@ -19,8 +19,7 @@
 #include "usart.h"
 #include "i2c1_drv.h"
 
-#include "st7032i.h"
-
+//#include "ST7032i.h"
 static USART USerial3;
 //ST7032i lcd;
 
@@ -56,13 +55,13 @@ int main(void) {
 	digitalWrite(PB12, HIGH);
 */
 	I2C1_Init();
-//	i2c_begin(&Wire1, PB9, PB8, 100000);
-	ST7032i_Init();
-//	lcd.begin();
-//	lcd.setContrast(46);
-ST7032i_Clear();
-ST7032i_Print_String("Yapee!");//	lcd.print("Yappee!");       // Classic Hello World!
-
+/*
+	i2c_begin(&Wire1, PB9, PB8, 100000);
+	lcd.init(&Wire1);
+	lcd.begin();
+	lcd.setContrast(46);
+	lcd.print("Yappee!");       // Classic Hello World!
+*/
 	bits = GPIO_ReadOutputData(GPIOD );
 	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
 	delay_ms(intval);

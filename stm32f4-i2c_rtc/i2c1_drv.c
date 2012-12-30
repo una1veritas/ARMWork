@@ -127,10 +127,10 @@ NVIC_InitTypeDef NVIC_InitStructure;
   RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOB, DISABLE);
 
   I2C_DeInit(I2C1);
-  GPIO_PinAFConfig(GPIOB, GPIO_PinSource9, GPIO_AF_I2C1);
-  GPIO_PinAFConfig(GPIOB, GPIO_PinSource8, GPIO_AF_I2C1);
+  GPIO_PinAFConfig(GPIOB, GPIO_PinSource6, GPIO_AF_I2C1);
+  GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_I2C1);
 
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_8;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7;
   GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
@@ -138,7 +138,7 @@ NVIC_InitTypeDef NVIC_InitStructure;
   GPIO_Init(GPIOB, &GPIO_InitStructure);
 
 
-  RCC_APB1PeriphClockCmd( RCC_APB1Periph_I2C1, ENABLE);
+  RCC_APB1PeriphClockCmd(  RCC_APB1Periph_I2C1, ENABLE);
 
   // I2C configuration
   I2C_InitStructure.I2C_Mode = I2C_Mode_I2C;
@@ -183,7 +183,7 @@ NVIC_InitTypeDef NVIC_InitStructure;
  *************************************************************************/
 boolean I2C1_Open (void)
 {
-  return 1; //(0 != AtomicExchange(false, &s_I2C_NotUsed));
+  return(0 != AtomicExchange(false, &s_I2C_NotUsed));
 }
 
 /*************************************************************************
@@ -197,7 +197,7 @@ boolean I2C1_Open (void)
  *************************************************************************/
 void I2C1_Close (void)
 {
-//  AtomicExchange(true, &s_I2C_NotUsed);
+  AtomicExchange(true, &s_I2C_NotUsed);
 }
 
 /*************************************************************************

@@ -6,7 +6,6 @@
 *.d
 *.mk
 *.lst
-*.bak
 *.__i
 *.map
 *.plg
