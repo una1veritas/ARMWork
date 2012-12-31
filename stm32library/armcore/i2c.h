@@ -69,11 +69,14 @@ typedef struct __I2CBuffer {
 extern I2CBuffer I2C1Buffer, I2C2Buffer, I2C3Buffer;
 
 boolean i2c_begin(I2CBuffer * I2Cbuf, I2C_TypeDef * I2Cx, GPIOPin sda, GPIOPin scl, uint32_t clk); //I2C_TypeDef * I2Cx, uint32_t clk);
+
+void i2c_setup_comm(I2CBuffer * I2Cbuf, I2C_CommMode mode, uint8_t dstaddr, uint8_t * databuffer, uint16_t length);
+boolean i2c_start_send(I2CBuffer * I2Cbuf);
+boolean i2c_start_receive(I2CBuffer * I2Cbuf);
+
 boolean i2c_transmit(I2CBuffer * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t length);
 boolean i2c_request(I2CBuffer * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t len);
 boolean i2c_receive(I2CBuffer * I2Cbuf, uint8_t * data, uint16_t lim);
-boolean i2c_start_send(I2CBuffer * I2Cbuf);
-boolean i2c_start_receive(I2CBuffer * I2Cbuf);
 
 void I2C1_EV_IRQHandler(void);
 
