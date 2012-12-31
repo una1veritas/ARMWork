@@ -34,12 +34,11 @@ typedef struct __I2CBuffer {
 	GPIOPin sda, scl;
 	uint8_t address;
 	boolean irqmode;
-	__IO I2C_CommMode mode;
-	__IO uint32 status;
+	__IO I2C_Mode mode;
 	__IO uint16_t position;
 	__IO uint16_t limlen;
 	uint8_t buffer[I2C_BUFFER_SIZE];
-//	boolean stopMode;
+	uint32 flagstatus;
 } I2CBuffer;
 
 extern I2CBuffer I2C1Buffer, I2C2Buffer, I2C3Buffer;
