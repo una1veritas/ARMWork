@@ -24,36 +24,22 @@ void I2CWire::begin(GPIOPin sda, GPIOPin scl, uint32_t clk)
 	i2c_begin(&I2C1Buffer, I2C1, sda, scl, clk);
 }
 
+void I2CWire::beginTransmission(uint8_t address) {
+	dstaddress = address;
+	txposition = 0;
+	txlength = 0;
+}
+
 uint8_t I2CWire::receiveFrom(uint8_t address, uint16 quantity)
 {
   // clamp to buffer length
   if(quantity > BUFFER_LENGTH)
     quantity = BUFFER_LENGTH;
-  
-  // perform blocking read into buffer
-  i2cbuf->address = address;
-  i2cbuf->limlen = quantity;
-	i2cbuf->mode = I2C_MODE_MASTER_RX;
-	i2cbuf->position = 0;
-	
-	boolean t;
-	//i2cbuf->mode = I2C_MODE_MASTER_RX;
-	//i2cbuf->limlen = lim;
-	t = i2c_start_receive(i2cbuf);
-	i2cbuf->status = I2C_GetLastEvent(i2cbuf->I2Cx);
-	//memcpy(data, i2cbuf->buffer, i2cbuf->limlen) ;
-	if ( t ) {
-		i2cbuf->mode = I2C_MODE_IDLE;
-		return i2cbuf->limlen;
+	rxposition = 0;
+ 	if ( i2c_receive(i2cbuf, rxbuffer, quantity) ) {
+		return (rxlength = quantity);
 	}
-	i2cbuf->status |= 0x80000000;
-	I2C_GenerateSTOP(i2cbuf->I2Cx, ENABLE);
-	return 0;		
-}
-
-void I2CWire::beginTransmission(uint8_t address) {
-	dstaddress = address;
-	txindex = 0;
+	return 0;
 }
 
 //
@@ -71,23 +57,17 @@ void I2CWire::beginTransmission(uint8_t address) {
 //
 uint8_t I2CWire::endTransmission(uint8_t sendStop)
 {
-	uint8 mode;
 //  int8_t ret = 0;
   // transmit buffer (blocking)
-	if ( sendStop )
-		mode = I2C_MODE_MASTER_TX;
-	else
-		mode = I2C_MODE_MASTER_RQ;
-	i2c_setup_comm(i2cbuf, mode, dstaddress, txbuf, txindex);
-
-	if ( i2c_start_send(i2cbuf) ) {
-		// generate stop cond. inside of start_send
-		i2cbuf->mode = I2C_MODE_IDLE;
-		return i2cbuf->limlen;
+	if ( sendStop ) {
+		if ( i2c_transmit(i2cbuf, dstaddress, txbuffer, txlength) )
+			return txlength;
+		return 0;
+	} else {
+		if ( i2c_request(i2cbuf, dstaddress, txbuffer, txlength) )
+			return txlength;
+		return 0;
 	}
-	i2cbuf->status = 0x80000000 | I2C_GetLastEvent(i2cbuf->I2Cx);
-	I2C_GenerateSTOP(i2cbuf->I2Cx, ENABLE);
-	return 0;
 }
 
 //	This provides backwards compatibility with the original
@@ -102,18 +82,14 @@ uint8_t I2CWire::endRequest() {
 // or after beginTransmission(address)
 size_t I2CWire::write(uint8_t data)
 {
-  if(i2cbuf->mode == I2C_MODE_MASTER_TX or i2cbuf->mode == I2C_MODE_MASTER_RQ){
-  // in master transmitter mode
-    // don't bother if buffer is full
-//    if(txBufferLength >= BUFFER_LENGTH){
+  // don't bother if buffer is full
+	if(txlength >= BUFFER_LENGTH){
 //      setWriteError();
 //      return 0;
-//    }
-    // put byte in tx buffer
-    i2cbuf->buffer[i2cbuf->position++] = data;
-    i2cbuf->limlen++;
   }
-	
+  // put byte in tx buffer
+  txbuffer[txposition++] = data;
+  txlength = txposition;
 	return 1;
 }
 

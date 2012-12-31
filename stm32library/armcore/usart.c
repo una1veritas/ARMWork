@@ -313,19 +313,22 @@ void UART4_IRQHandler(void) {
  }
  }
  }
+*/
+void USART6_IRQHandler(void) {
+	if (USART_GetITStatus(USART6, USART_IT_RXNE )) {
+		ring_enque(&rxring[USART6Serial],
+				USART_ReceiveData(USART6 ));
+	}
 
- void USART6_IRQHandler(void) {
- if (USART_GetITStatus(USART6, USART_IT_RXNE )) {
- buffer_enque(&rxring[USART6Serial], USART_ReceiveData(USART6) );
- }
+	if (USART_GetITStatus(USART6, USART_IT_TXE )) {
+		if (txring[USART6Serial].count == 0) {
+			USART_ITConfig(USART6, USART_IT_TXE, (FunctionalState) DISABLE);
+			USART_ClearITPendingBit(USART6, USART_IT_TXE );
+		} else {
+			USART_SendData(USART6,
+					ring_deque(&txring[USART6Serial]));
+		}
+	}
+}
 
- if (USART_GetITStatus(USART6, USART_IT_TXE )) {
- if (txring[USART6Serial].count == 0) {
- USART_ITConfig(USART6, USART_IT_TXE, (FunctionalState) DISABLE);
- USART_ClearITPendingBit(USART6, USART_IT_TXE );
- } else {
- USART_SendData(USART6, buffer_deque(&txring[USART6Serial]));
- }
- }
- }
- */
+

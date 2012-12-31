@@ -14,6 +14,12 @@ class I2CWire : public Stream
   private:
 		I2C_TypeDef * i2cx;
 		I2CBuffer * i2cbuf;
+
+		uint8 dstaddress;
+		uint8 rxbuffer[I2C_BUFFER_SIZE];
+		uint8 txbuffer[I2C_BUFFER_SIZE];
+		int16 rxposition, txposition;
+		int16 rxlength, txlength;
 	
   public:
     I2CWire(I2C_TypeDef * i2c) : i2cx(i2c) {
@@ -32,14 +38,14 @@ class I2CWire : public Stream
     virtual size_t write(uint8_t);
 		virtual inline size_t write(int8 v) { return write((uint8) v); }
 		virtual size_t available(void) {
-		int32 d = ((int32)i2cbuf->limlen - i2cbuf->position);
-		return (d>0? (size_t)d: 0);
-	}
+		uint16 d = (rxlength - rxposition);
+			return (d>0? (size_t)d: 0);
+		}
     virtual int16 read(void) {
-			return i2cbuf->buffer[i2cbuf->position++];
+			return rxbuffer[rxposition++];
 		}
     virtual int16 peek(void) {
-			return i2cbuf->buffer[i2cbuf->position];
+			return rxbuffer[rxposition];
 		}
 		virtual void flush(void);
 //    void onReceive( void (*)(int) );

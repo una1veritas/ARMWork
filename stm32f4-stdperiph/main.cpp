@@ -24,7 +24,7 @@
 #include "USARTSerial.h"
 #include "DS1307.h"
 
-USARTSerial Serial3(USART3);
+USARTSerial Serial6(USART6);
 I2CWire Wire1(I2C1);
 ST7032i lcd(Wire1);
 DS1307 rtc(Wire1);
@@ -38,7 +38,7 @@ int main(void) {
 	
 	TIM2_timer_start();
 
-	Serial3.begin(PC11, PC10, 19200);
+	Serial6.begin(PC7, PC6, 19200);
 
 	const char message[] = 
 			"This royal throne of kings, this scepter'd isle, \n"
@@ -54,22 +54,22 @@ int main(void) {
 			"This blessed plot, this earth, this realm, this England,";
 	const uint16 messlen = strlen(message);
 	
-	Serial3.println(message);
-	Serial3.flush();
+	Serial6.println(message);
+	Serial6.flush();
 
 	RCC_ClocksTypeDef RCC_Clocks;
 	RCC_GetClocksFreq(&RCC_Clocks);
 
-	Serial3.print( "SYSCLK = ");
-	Serial3.print(RCC_Clocks.SYSCLK_Frequency);
-	Serial3.print( ", HCLK = ");
-	Serial3.print( RCC_Clocks.HCLK_Frequency);
-	Serial3.print( ", PCLK1 = ");
-	Serial3.print( RCC_Clocks.PCLK1_Frequency);
-	Serial3.print( ", PCLK2 = ");
-	Serial3.print(RCC_Clocks.PCLK2_Frequency);
-	Serial3.println();
-	Serial3.flush();
+	Serial6.print( "SYSCLK = ");
+	Serial6.print(RCC_Clocks.SYSCLK_Frequency);
+	Serial6.print( ", HCLK = ");
+	Serial6.print( RCC_Clocks.HCLK_Frequency);
+	Serial6.print( ", PCLK1 = ");
+	Serial6.print( RCC_Clocks.PCLK1_Frequency);
+	Serial6.print( ", PCLK2 = ");
+	Serial6.print(RCC_Clocks.PCLK2_Frequency);
+	Serial6.println();
+	Serial6.flush();
 
 	GPIOMode(PinPort(PD12),
 			(PinBit(PD12) | PinBit(PD13) | PinBit(PD14) | PinBit(PD15)), OUTPUT,
@@ -121,30 +121,30 @@ int main(void) {
 		while (tnow == millis() / 1000);
 		tnow = millis() / 1000;
 
-		//Serial3.print(tmp);
-		Serial3.print((float)millis()/1000, 3);
-		Serial3.print(" ");
-		Serial3.print(lcd.row());
-		Serial3.print(" ");
-		Serial3.print(lcd.column());
-		Serial3.print(" ");		
-		Serial3.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
-		//Serial3.println();
+		//Serial6.print(tmp);
+		Serial6.print((float)millis()/1000, 3);
+		Serial6.print(" ");
+		Serial6.print(lcd.row());
+		Serial6.print(" ");
+		Serial6.print(lcd.column());
+		Serial6.print(" ");		
+		Serial6.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
+		//Serial6.println();
 
 		rtc.updateTime();
-		Serial3.print(", Clock: ");
-			Serial3.printByte( rtc.time );
+		Serial6.print(", Clock: ");
+			Serial6.printByte( rtc.time );
 		rtc.updateCalendar();
-		Serial3.print(" ");
-		Serial3.printByte( rtc.cal );
-		Serial3.println();
+		Serial6.print(" ");
+		Serial6.printByte( rtc.cal );
+		Serial6.println();
 		
 		//		lcd.clear();
 		lcd.setCursor(0, 0);
 		lcd.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
-		if ( I2C1Buffer.status & 0x80000000 ) {
-			Serial3.print(" I2C Status ");
-			Serial3.println(I2C1Buffer.status, HEX);
+		if ( I2C1Buffer.flagstatus & 0x80000000 ) {
+			Serial6.print(" I2C Status ");
+			Serial6.println(I2C1Buffer.flagstatus, HEX);
 		}
 		lcd.setCursor(0, 1);
 		lcd.printByte((uint8)(rtc.time>>16));
@@ -154,9 +154,9 @@ int main(void) {
 		lcd.printByte((uint8)rtc.time);
 
 		char c;
-		if (Serial3.available() > 0) {
-			while (Serial3.available() > 0 && i < 92) {
-				c = (char) Serial3.read();
+		if (Serial6.available() > 0) {
+			while (Serial6.available() > 0 && i < 92) {
+				c = (char) Serial6.read();
 				if ( c == '\n' || c == '\r' || c == ' ' ) {
 					tmp[i] = 0;
 					break;
@@ -172,11 +172,11 @@ int main(void) {
 					rtc.cal = strtol(tmp+1, 0, 16);
 					rtc.setCalendar(rtc.cal);
 				}
-				Serial3.print("> ");
-				Serial3.print(rtc.time, HEX);
-				Serial3.print(" ");
-				Serial3.print(rtc.cal, HEX);
-				Serial3.print("\n");
+				Serial6.print("> ");
+				Serial6.print(rtc.time, HEX);
+				Serial6.print(" ");
+				Serial6.print(rtc.cal, HEX);
+				Serial6.print("\n");
 				i = 0;
 			}
 		}

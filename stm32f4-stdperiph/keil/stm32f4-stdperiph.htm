@@ -3,7 +3,7 @@
 <title>Static Call Graph - [C:\Users\Sin\Documents\github\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image C:\Users\Sin\Documents\github\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Mon Dec 31 19:53:15 2012
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Mon Dec 31 21:51:21 2012
 <BR><P>
 <H3>Maximum Stack Usage =        832 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -114,7 +114,7 @@ Function Pointers
  <LI><a href="#[32]">USART1_IRQHandler</a> from usart.o(.text) referenced from startup_stm32f4xx.o(RESET)
  <LI><a href="#[33]">USART2_IRQHandler</a> from usart.o(.text) referenced from startup_stm32f4xx.o(RESET)
  <LI><a href="#[34]">USART3_IRQHandler</a> from usart.o(.text) referenced from startup_stm32f4xx.o(RESET)
- <LI><a href="#[54]">USART6_IRQHandler</a> from startup_stm32f4xx.o(.text) referenced from startup_stm32f4xx.o(RESET)
+ <LI><a href="#[54]">USART6_IRQHandler</a> from usart.o(.text) referenced from startup_stm32f4xx.o(RESET)
  <LI><a href="#[8]">UsageFault_Handler</a> from stm32f4xx_it.o(.text) referenced from startup_stm32f4xx.o(RESET)
  <LI><a href="#[d]">WWDG_IRQHandler</a> from startup_stm32f4xx.o(.text) referenced from startup_stm32f4xx.o(RESET)
  <LI><a href="#[65]">USARTSerial::flush()</a> from main.o(i._ZN11USARTSerial5flushEv) referenced from usartserial.o(.constdata__ZTV11USARTSerial)
@@ -512,9 +512,6 @@ Global Symbols
 <P><STRONG><a name="[42]"></a>UART5_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f4xx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
-<P><STRONG><a name="[54]"></a>USART6_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f4xx.o(.text))
-<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
-</UL>
 <P><STRONG><a name="[d]"></a>WWDG_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f4xx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
@@ -522,7 +519,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[7b]"></a>main</STRONG> (Thumb, 1330 bytes, Stack size 632 bytes, main.o(.text))
+<P><STRONG><a name="[7b]"></a>main</STRONG> (Thumb, 1334 bytes, Stack size 632 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 832<LI>Call Chain = main &rArr; Print::print(double, unsigned char) &rArr; Print::printFloat(double, unsigned char) &rArr; Print::print(int, unsigned char) &rArr; Print::printNumber(unsigned, unsigned char) &rArr; Print::write(const char*) &rArr; strlen
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_read
@@ -723,7 +720,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[bc]"></a>i2c_begin</STRONG> (Thumb, 356 bytes, Stack size 72 bytes, i2c.o(.text))
+<P><STRONG><a name="[bc]"></a>i2c_begin</STRONG> (Thumb, 358 bytes, Stack size 72 bytes, i2c.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 140<LI>Call Chain = i2c_begin &rArr; I2C_Init &rArr; RCC_GetClocksFreq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Init
@@ -740,7 +737,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::begin(_GPIOPin, _GPIOPin, unsigned)
 </UL>
 
-<P><STRONG><a name="[c2]"></a>i2c_setup_comm</STRONG> (Thumb, 50 bytes, Stack size 24 bytes, i2c.o(.text), UNUSED)
+<P><STRONG><a name="[c2]"></a>i2c_setup_comm</STRONG> (Thumb, 52 bytes, Stack size 24 bytes, i2c.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 
@@ -758,20 +755,27 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_request
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_transmit
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::endTransmission(unsigned char)
 </UL>
 
-<P><STRONG><a name="[cb]"></a>i2c_transmit</STRONG> (Thumb, 74 bytes, Stack size 24 bytes, i2c.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
+<P><STRONG><a name="[cb]"></a>i2c_transmit</STRONG> (Thumb, 78 bytes, Stack size 24 bytes, i2c.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = i2c_transmit &rArr; i2c_start_send &rArr; delay_us &rArr; micros
+</UL>
+<BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
+<BR>[Called By]<UL><LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::endTransmission(unsigned char)
+</UL>
 
-<P><STRONG><a name="[cd]"></a>i2c_request</STRONG> (Thumb, 82 bytes, Stack size 24 bytes, i2c.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
+<P><STRONG><a name="[cd]"></a>i2c_request</STRONG> (Thumb, 86 bytes, Stack size 24 bytes, i2c.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
+</UL>
+<BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
+</UL>
+<BR>[Called By]<UL><LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::endTransmission(unsigned char)
 </UL>
 
 <P><STRONG><a name="[ce]"></a>i2c_start_receive</STRONG> (Thumb, 282 bytes, Stack size 24 bytes, i2c.o(.text))
@@ -787,17 +791,20 @@ Global Symbols
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;millis
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_receive
-<LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::receiveFrom(unsigned char, unsigned short)
 </UL>
 
-<P><STRONG><a name="[d1]"></a>i2c_receive</STRONG> (Thumb, 78 bytes, Stack size 24 bytes, i2c.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
+<P><STRONG><a name="[d1]"></a>i2c_receive</STRONG> (Thumb, 82 bytes, Stack size 24 bytes, i2c.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = i2c_receive &rArr; i2c_start_receive &rArr; delay_us &rArr; micros
+</UL>
+<BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
 <LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
+<BR>[Called By]<UL><LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::receiveFrom(unsigned char, unsigned short)
+</UL>
 
-<P><STRONG><a name="[2c]"></a>I2C1_EV_IRQHandler</STRONG> (Thumb, 138 bytes, Stack size 8 bytes, i2c.o(.text))
+<P><STRONG><a name="[2c]"></a>I2C1_EV_IRQHandler</STRONG> (Thumb, 142 bytes, Stack size 8 bytes, i2c.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = I2C1_EV_IRQHandler &rArr; I2C_GetLastEvent
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_SendData
@@ -807,7 +814,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
-<P><STRONG><a name="[2d]"></a>I2C1_ER_IRQHandler</STRONG> (Thumb, 46 bytes, Stack size 16 bytes, i2c.o(.text))
+<P><STRONG><a name="[2d]"></a>I2C1_ER_IRQHandler</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, i2c.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = I2C1_ER_IRQHandler &rArr; I2C_GetLastEvent
 </UL>
 <BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
@@ -1020,7 +1027,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[ea]"></a>ST7032i::command(unsigned char)</STRONG> (Thumb, 50 bytes, Stack size 16 bytes, st7032i.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = ST7032i::command(unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
+<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = ST7032i::command(unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::beginTransmission(unsigned char)
@@ -1057,7 +1064,7 @@ Global Symbols
 <P><STRONG><a name="[17b]"></a>ST7032i::ST7032i__sub_object(I2CWire&)</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, st7032i.o(.text), UNUSED)
 
 <P><STRONG><a name="[ed]"></a>ST7032i::clear()</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, st7032i.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = ST7032i::clear() &rArr; ST7032i::command(unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
+<BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = ST7032i::clear() &rArr; ST7032i::command(unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 <LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::command(unsigned char)
@@ -1066,7 +1073,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[ee]"></a>ST7032i::display()</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, st7032i.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = ST7032i::display() &rArr; ST7032i::command(unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
+<BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = ST7032i::display() &rArr; ST7032i::command(unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::command(unsigned char)
 </UL>
@@ -1074,7 +1081,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[8e]"></a>ST7032i::begin()</STRONG> (Thumb, 184 bytes, Stack size 8 bytes, st7032i.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = ST7032i::begin() &rArr; ST7032i::display() &rArr; ST7032i::command(unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
+<BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = ST7032i::begin() &rArr; ST7032i::display() &rArr; ST7032i::command(unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::display()
@@ -1085,7 +1092,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[6a]"></a>ST7032i::write(unsigned char)</STRONG> (Thumb, 58 bytes, Stack size 16 bytes, st7032i.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = ST7032i::write(unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
+<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = ST7032i::write(unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::beginTransmission(unsigned char)
@@ -1099,7 +1106,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[9c]"></a>ST7032i::setCursor(unsigned char, unsigned char)</STRONG> (Thumb, 56 bytes, Stack size 32 bytes, st7032i.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = ST7032i::setCursor(unsigned char, unsigned char) &rArr; ST7032i::command(unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
+<BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = ST7032i::setCursor(unsigned char, unsigned char) &rArr; ST7032i::command(unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::command(unsigned char)
 </UL>
@@ -1111,7 +1118,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[8f]"></a>ST7032i::setContrast(unsigned char)</STRONG> (Thumb, 88 bytes, Stack size 16 bytes, st7032i.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = ST7032i::setContrast(unsigned char) &rArr; ST7032i::command(unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
+<BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = ST7032i::setContrast(unsigned char) &rArr; ST7032i::command(unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 <LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::command(unsigned char)
@@ -1196,7 +1203,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_is_full
 </UL>
-<BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART6_IRQHandler
+<LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
 <LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
 <LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
 <LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
@@ -1209,6 +1217,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_count
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_read
+<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART6_IRQHandler
 <LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
 <LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
 <LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
@@ -1347,6 +1356,19 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
+<P><STRONG><a name="[54]"></a>USART6_IRQHandler</STRONG> (Thumb, 92 bytes, Stack size 8 bytes, usart.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = USART6_IRQHandler &rArr; USART_ITConfig
+</UL>
+<BR>[Calls]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SendData
+<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ReceiveData
+<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ITConfig
+<LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_GetITStatus
+<LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ClearITPendingBit
+<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_deque
+<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_enque
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
+</UL>
 <P><STRONG><a name="[82]"></a>USARTSerial::begin(_GPIOPin, _GPIOPin, unsigned)</STRONG> (Thumb, 28 bytes, Stack size 24 bytes, usartserial.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 164<LI>Call Chain = USARTSerial::begin(_GPIOPin, _GPIOPin, unsigned) &rArr; usart_begin &rArr; USART_Init &rArr; RCC_GetClocksFreq
 </UL>
@@ -1363,7 +1385,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> usartserial.o(.constdata__ZTV11USARTSerial)
 </UL>
 <P><STRONG><a name="[114]"></a>DS1307::readRegisters(unsigned char, unsigned char*, unsigned char)</STRONG> (Thumb, 72 bytes, Stack size 24 bytes, ds1307.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = DS1307::readRegisters(unsigned char, unsigned char*, unsigned char) &rArr; I2CWire::receiveFrom(unsigned char, unsigned short) &rArr; i2c_start_receive &rArr; delay_us &rArr; micros
+<BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = DS1307::readRegisters(unsigned char, unsigned char*, unsigned char) &rArr; I2CWire::endRequest() &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::receiveFrom(unsigned char, unsigned short)
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::endRequest()
@@ -1376,7 +1398,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[117]"></a>DS1307::writeRegisters(unsigned char, unsigned char*, unsigned char)</STRONG> (Thumb, 70 bytes, Stack size 32 bytes, ds1307.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = DS1307::writeRegisters(unsigned char, unsigned char*, unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
+<BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = DS1307::writeRegisters(unsigned char, unsigned char*, unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::beginTransmission(unsigned char)
 <LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::endTransmission(unsigned char)
@@ -1389,7 +1411,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[99]"></a>DS1307::updateTime()</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, ds1307.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = DS1307::updateTime() &rArr; DS1307::readRegisters(unsigned char, unsigned char*, unsigned char) &rArr; I2CWire::receiveFrom(unsigned char, unsigned short) &rArr; i2c_start_receive &rArr; delay_us &rArr; micros
+<BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = DS1307::updateTime() &rArr; DS1307::readRegisters(unsigned char, unsigned char*, unsigned char) &rArr; I2CWire::endRequest() &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::readRegisters(unsigned char, unsigned char*, unsigned char)
 </UL>
@@ -1397,7 +1419,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[9b]"></a>DS1307::updateCalendar()</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, ds1307.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = DS1307::updateCalendar() &rArr; DS1307::readRegisters(unsigned char, unsigned char*, unsigned char) &rArr; I2CWire::receiveFrom(unsigned char, unsigned short) &rArr; i2c_start_receive &rArr; delay_us &rArr; micros
+<BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = DS1307::updateCalendar() &rArr; DS1307::readRegisters(unsigned char, unsigned char*, unsigned char) &rArr; I2CWire::endRequest() &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::readRegisters(unsigned char, unsigned char*, unsigned char)
 </UL>
@@ -1405,7 +1427,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[a2]"></a>DS1307::setTime(const long&)</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, ds1307.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = DS1307::setTime(const long&) &rArr; DS1307::writeRegisters(unsigned char, unsigned char*, unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
+<BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = DS1307::setTime(const long&) &rArr; DS1307::writeRegisters(unsigned char, unsigned char*, unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::writeRegisters(unsigned char, unsigned char*, unsigned char)
 </UL>
@@ -1413,7 +1435,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[a3]"></a>DS1307::setCalendar(const long&)</STRONG> (Thumb, 20 bytes, Stack size 16 bytes, ds1307.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = DS1307::setCalendar(const long&) &rArr; DS1307::writeRegisters(unsigned char, unsigned char*, unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
+<BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = DS1307::setCalendar(const long&) &rArr; DS1307::writeRegisters(unsigned char, unsigned char*, unsigned char) &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::writeRegisters(unsigned char, unsigned char*, unsigned char)
 </UL>
@@ -1464,19 +1486,18 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[eb]"></a>I2CWire::beginTransmission(unsigned char)</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, i2cwire.o(.text))
+<P><STRONG><a name="[eb]"></a>I2CWire::beginTransmission(unsigned char)</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, i2cwire.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::writeRegisters(unsigned char, unsigned char*, unsigned char)
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::readRegisters(unsigned char, unsigned char*, unsigned char)
 <LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::write(unsigned char)
 <LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::command(unsigned char)
 </UL>
 
-<P><STRONG><a name="[ec]"></a>I2CWire::endTransmission(unsigned char)</STRONG> (Thumb, 126 bytes, Stack size 16 bytes, i2cwire.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
+<P><STRONG><a name="[ec]"></a>I2CWire::endTransmission(unsigned char)</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, i2cwire.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = I2CWire::endTransmission(unsigned char) &rArr; i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
-<BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
-<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
+<BR>[Calls]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_request
+<LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_transmit
 </UL>
 <BR>[Called By]<UL><LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::endRequest()
 <LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::writeRegisters(unsigned char, unsigned char*, unsigned char)
@@ -1484,27 +1505,23 @@ Global Symbols
 <LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::command(unsigned char)
 </UL>
 
-<P><STRONG><a name="[115]"></a>I2CWire::endRequest()</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, i2cwire.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = I2CWire::endRequest() &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_start_send &rArr; delay_us &rArr; micros
+<P><STRONG><a name="[115]"></a>I2CWire::endRequest()</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, i2cwire.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = I2CWire::endRequest() &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::endTransmission(unsigned char)
 </UL>
 <BR>[Called By]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::readRegisters(unsigned char, unsigned char*, unsigned char)
 </UL>
 
-<P><STRONG><a name="[116]"></a>I2CWire::receiveFrom(unsigned char, unsigned short)</STRONG> (Thumb, 104 bytes, Stack size 24 bytes, i2cwire.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = I2CWire::receiveFrom(unsigned char, unsigned short) &rArr; i2c_start_receive &rArr; delay_us &rArr; micros
+<P><STRONG><a name="[116]"></a>I2CWire::receiveFrom(unsigned char, unsigned short)</STRONG> (Thumb, 52 bytes, Stack size 16 bytes, i2cwire.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = I2CWire::receiveFrom(unsigned char, unsigned short) &rArr; i2c_receive &rArr; i2c_start_receive &rArr; delay_us &rArr; micros
 </UL>
-<BR>[Calls]<UL><LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
-<LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
+<BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_receive
 </UL>
 <BR>[Called By]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::readRegisters(unsigned char, unsigned char*, unsigned char)
 </UL>
 
-<P><STRONG><a name="[67]"></a>I2CWire::write(unsigned char)</STRONG> (Thumb, 50 bytes, Stack size 8 bytes, i2cwire.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = I2CWire::write(unsigned char)
-</UL>
+<P><STRONG><a name="[67]"></a>I2CWire::write(unsigned char)</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, i2cwire.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> i2cwire.o(.constdata__ZTV7I2CWire)
 </UL>
 <P><STRONG><a name="[69]"></a>I2CWire::flush()</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, i2cwire.o(.text))
@@ -1608,8 +1625,6 @@ Global Symbols
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_request
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
-<LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::receiveFrom(unsigned char, unsigned short)
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::endTransmission(unsigned char)
 </UL>
 
 <P><STRONG><a name="[c8]"></a>I2C_Send7bitAddress</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, stm32f4xx_i2c.o(.text))
@@ -1682,8 +1697,6 @@ Global Symbols
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_receive
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_request
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_transmit
-<LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::receiveFrom(unsigned char, unsigned short)
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::endTransmission(unsigned char)
 </UL>
 
 <P><STRONG><a name="[c5]"></a>I2C_GetFlagStatus</STRONG> (Thumb, 42 bytes, Stack size 12 bytes, stm32f4xx_i2c.o(.text))
@@ -2083,7 +2096,8 @@ Global Symbols
 <P><STRONG><a name="[206]"></a>USART_OneBitMethodCmd</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_usart.o(.text), UNUSED)
 
 <P><STRONG><a name="[10a]"></a>USART_SendData</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f4xx_usart.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
+<BR><BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART6_IRQHandler
+<LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
 <LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
 <LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
 <LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
@@ -2091,7 +2105,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[10e]"></a>USART_ReceiveData</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f4xx_usart.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
+<BR><BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART6_IRQHandler
+<LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
 <LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
 <LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
 <LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
@@ -2127,7 +2142,8 @@ Global Symbols
 <P><STRONG><a name="[105]"></a>USART_ITConfig</STRONG> (Thumb, 74 bytes, Stack size 20 bytes, stm32f4xx_usart.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = USART_ITConfig
 </UL>
-<BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART6_IRQHandler
+<LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
 <LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
 <LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
 <LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
@@ -2144,7 +2160,8 @@ Global Symbols
 <P><STRONG><a name="[112]"></a>USART_GetITStatus</STRONG> (Thumb, 110 bytes, Stack size 16 bytes, stm32f4xx_usart.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = USART_GetITStatus
 </UL>
-<BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART6_IRQHandler
+<LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
 <LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
 <LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
 <LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
@@ -2153,7 +2170,8 @@ Global Symbols
 <P><STRONG><a name="[113]"></a>USART_ClearITPendingBit</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, stm32f4xx_usart.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USART_ClearITPendingBit
 </UL>
-<BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
+<BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART6_IRQHandler
+<LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
 <LI><a href="#[34]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
 <LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
 <LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART1_IRQHandler
@@ -2176,7 +2194,7 @@ Global Symbols
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[c3]"></a>__aeabi_memcpy</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_memcpy_v6.o(.text), UNUSED)
+<P><STRONG><a name="[c3]"></a>__aeabi_memcpy</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, rt_memcpy_v6.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_receive
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_request
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_transmit
@@ -2356,7 +2374,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__sti___8_main_cpp
 </UL>
 
-<P><STRONG><a name="[68]"></a>I2CWire::read()</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, i2cwire.o(i._ZN7I2CWire4readEv))
+<P><STRONG><a name="[68]"></a>I2CWire::read()</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, i2cwire.o(i._ZN7I2CWire4readEv))
 <BR>[Address Reference Count : 1]<UL><LI> i2cwire.o(.constdata__ZTV7I2CWire)
 </UL>
 <P><STRONG><a name="[66]"></a>__cxa_pure_virtual</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, pure_virt.o(i.__cxa_pure_virtual))

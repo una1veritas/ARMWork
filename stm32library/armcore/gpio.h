@@ -72,6 +72,8 @@ typedef enum _GPIOPin {
 	PB15 = (PortB <<8) | ((uint16_t)15),
 
 	PC0 = (PortC <<8) | ((uint16_t)0),
+	PC6 = (PortC <<8) | ((uint16_t)6),
+	PC7 = (PortC <<8) | ((uint16_t)7),
 	PC9 = (PortC <<8) | ((uint16_t)9),
 	PC10 = (PortC <<8) | ((uint16_t)10),
 	PC11 = (PortC <<8) | ((uint16_t)11),

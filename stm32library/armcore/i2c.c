@@ -87,7 +87,7 @@ boolean i2c_begin(I2CBuffer * wirebuf, I2C_TypeDef * i2cx, GPIOPin sda, GPIOPin 
 	/* I2C Peripheral Enable */
 	I2C_Cmd(wirebuf->I2Cx, ENABLE);
 	
-	wirebuf->status = NOT_READY;
+	wirebuf->flagstatus = 0;
 	wirebuf->mode = I2C_MODE_IDLE;
 	wirebuf->irqmode = false;
 //	wirebuf->address = (uint8_t)I2C_AcknowledgedAddress_7bit;
@@ -97,11 +97,11 @@ boolean i2c_begin(I2CBuffer * wirebuf, I2C_TypeDef * i2cx, GPIOPin sda, GPIOPin 
 	return true;
 }
 
-void i2c_setup_comm(I2CBuffer * i2cbuff, I2C_CommMode mode, uint8_t dstaddr, uint8_t * data, uint16_t length) {
+void i2c_setup_comm(I2CBuffer * i2cbuff, I2C_Mode mode, uint8_t dstaddr, uint8_t * data, uint16_t length) {
 	i2cbuff->mode = mode;
 	i2cbuff->address = dstaddr;
 	i2cbuff->position = 0;
-	if ( (i2cbuff->limlen = length) > 0 )
+	if ( data != NULL && (i2cbuff->limlen = length) > 0 )
 		memcpy(i2cbuff->buffer, data, i2cbuff->limlen);
 }
 
@@ -112,13 +112,13 @@ boolean i2c_transmit(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t le
 	wire->position = 0;
 	wire->limlen = length;
 	memcpy(wire->buffer, data, length);
-	wire->status = 0;
+	wire->flagstatus = 0;
 	//
 	if ( i2c_start_send(wire) ) {
 		wire->mode = I2C_MODE_IDLE;
 		return true;
 	}
-	wire->status = 0x80000000 | I2C_GetLastEvent(wire->I2Cx);
+	wire->flagstatus = 0x80000000 | I2C_GetLastEvent(wire->I2Cx);
 	return false;
 }
 
@@ -129,14 +129,14 @@ boolean i2c_request(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t len
 	wire->position = 0;
 	wire->limlen = length;
 	memcpy(wire->buffer, data, length); // request command bytes
-	wire->status = 0;
+	wire->flagstatus = 0;
 	//
 	if ( i2c_start_send(wire) ) {
 		wire->mode = I2C_MODE_IDLE;
 		//wire->status = I2C_GetLastEvent(wire->I2Cx);
 		return true;
 	}
-	wire->status = 0x80000000 | I2C_GetLastEvent(wire->I2Cx);
+	wire->flagstatus = 0x80000000 | I2C_GetLastEvent(wire->I2Cx);
 	I2C_GenerateSTOP(wire->I2Cx, ENABLE);
 	return false;
 }
@@ -148,7 +148,7 @@ boolean i2c_receive(I2CBuffer * wire, uint8_t * data, uint16_t lim) {
 	wire->position = 0;
 	wire->limlen = lim;
 //	memcpy(wire->buffer, data, length);
-	wire->status = 0;
+	wire->flagstatus = 0;
 	t = i2c_start_receive(wire);
 	memcpy(data, wire->buffer, wire->limlen) ;
 	if ( t ) {
@@ -156,7 +156,7 @@ boolean i2c_receive(I2CBuffer * wire, uint8_t * data, uint16_t lim) {
 		//wire->status = I2C_GetLastEvent(wire->I2Cx);
 		return true;
 	}
-	wire->status = 0x80000000 | I2C_GetLastEvent(wire->I2Cx);
+	wire->flagstatus = 0x80000000 | I2C_GetLastEvent(wire->I2Cx);
 	I2C_GenerateSTOP(wire->I2Cx, ENABLE);
 	return false;
 }
@@ -273,8 +273,8 @@ boolean i2c_start_receive(I2CBuffer * wire) {
  *
  *************************************************************************/
 void I2C1_EV_IRQHandler(void) {
-	I2C1Buffer.status = I2C_GetLastEvent(I2C1);
-	switch(I2C1Buffer.status) {
+	I2C1Buffer.flagstatus = I2C_GetLastEvent(I2C1);
+	switch(I2C1Buffer.flagstatus) {
 		case I2C_EVENT_MASTER_MODE_SELECT:
 			I2C_Send7bitAddress(I2C1Buffer.I2Cx, I2C1Buffer.address << 1, I2C_Direction_Transmitter );
 			I2C1Buffer.position = 0;
@@ -316,5 +316,5 @@ void I2C1_ER_IRQHandler(void) {
     I2C_ClearFlag(I2C1,I2C_FLAG_AF);
   }
   wire->mode = I2C_MODE_IDLE;
-  wire->status = levt | 0x80000000;
+  wire->flagstatus = levt | 0x80000000;
 }

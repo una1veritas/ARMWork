@@ -45,7 +45,7 @@ extern I2CBuffer I2C1Buffer, I2C2Buffer, I2C3Buffer;
 
 boolean i2c_begin(I2CBuffer * I2Cbuf, I2C_TypeDef * I2Cx, GPIOPin sda, GPIOPin scl, uint32_t clk); //I2C_TypeDef * I2Cx, uint32_t clk);
 
-void i2c_setup_comm(I2CBuffer * I2Cbuf, I2C_CommMode mode, uint8_t dstaddr, uint8_t * databuffer, uint16_t length);
+void i2c_setup_comm(I2CBuffer * I2Cbuf, I2C_Mode mode, uint8_t dstaddr, uint8_t * databuffer, uint16_t length);
 boolean i2c_start_send(I2CBuffer * I2Cbuf);
 boolean i2c_start_receive(I2CBuffer * I2Cbuf);
 
