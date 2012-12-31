@@ -97,13 +97,70 @@ boolean i2c_begin(I2CBuffer * wirebuf, I2C_TypeDef * i2cx, GPIOPin sda, GPIOPin 
 	return true;
 }
 
-void i2c_setup_comm(I2CBuffer * I2Cbuf, I2C_CommMode mode, uint8_t dstaddr, uint8_t * databuffer, uint16_t length) {
-	wire->mode = mode;
-	wire->address = dstaddr;
-	memcpy(wire->buffer, data, length);
+void i2c_setup_comm(I2CBuffer * i2cbuff, I2C_CommMode mode, uint8_t dstaddr, uint8_t * data, uint16_t length) {
+	i2cbuff->mode = mode;
+	i2cbuff->address = dstaddr;
+	i2cbuff->position = 0;
+	if ( (i2cbuff->limlen = length) > 0 )
+		memcpy(i2cbuff->buffer, data, i2cbuff->limlen);
+}
+
+boolean i2c_transmit(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t length) {
+	// setup
+	wire->mode = I2C_MODE_MASTER_TX;
+	wire->address = addr;
 	wire->position = 0;
 	wire->limlen = length;
+	memcpy(wire->buffer, data, length);
+	wire->status = 0;
+	//
+	if ( i2c_start_send(wire) ) {
+		wire->mode = I2C_MODE_IDLE;
+		return true;
+	}
+	wire->status = 0x80000000 | I2C_GetLastEvent(wire->I2Cx);
+	return false;
 }
+
+boolean i2c_request(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t length) {
+	// setup
+	wire->mode = I2C_MODE_MASTER_RQ;
+	wire->address = addr;
+	wire->position = 0;
+	wire->limlen = length;
+	memcpy(wire->buffer, data, length); // request command bytes
+	wire->status = 0;
+	//
+	if ( i2c_start_send(wire) ) {
+		wire->mode = I2C_MODE_IDLE;
+		//wire->status = I2C_GetLastEvent(wire->I2Cx);
+		return true;
+	}
+	wire->status = 0x80000000 | I2C_GetLastEvent(wire->I2Cx);
+	I2C_GenerateSTOP(wire->I2Cx, ENABLE);
+	return false;
+}
+
+boolean i2c_receive(I2CBuffer * wire, uint8_t * data, uint16_t lim) {
+	boolean t;
+	wire->mode = I2C_MODE_MASTER_RX;
+//	wire->address = addr;
+	wire->position = 0;
+	wire->limlen = lim;
+//	memcpy(wire->buffer, data, length);
+	wire->status = 0;
+	t = i2c_start_receive(wire);
+	memcpy(data, wire->buffer, wire->limlen) ;
+	if ( t ) {
+		wire->mode = I2C_MODE_IDLE;
+		//wire->status = I2C_GetLastEvent(wire->I2Cx);
+		return true;
+	}
+	wire->status = 0x80000000 | I2C_GetLastEvent(wire->I2Cx);
+	I2C_GenerateSTOP(wire->I2Cx, ENABLE);
+	return false;
+}
+
 
 boolean i2c_start_send(I2CBuffer * wire) {
 	uint16_t i;
@@ -150,62 +207,6 @@ boolean i2c_start_send(I2CBuffer * wire) {
 		I2C_GenerateSTOP(wire->I2Cx, ENABLE);
 	}
 	return true;
-}
-
-boolean i2c_transmit(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t length) {
-	// setup
-	wire->mode = I2C_MODE_MASTER_TX;
-	wire->address = addr;
-	wire->position = 0;
-	wire->limlen = length;
-	memcpy(wire->buffer, data, length);
-	wire->status = 0;
-	//
-	if ( i2c_start_send(wire) ) {
-		wire->mode = I2C_MODE_IDLE;
-		return true;
-	}
-	wire->status = 0x80000000 | I2C_GetLastEvent(wire->I2Cx);
-	return false;
-}
-
-boolean i2c_request(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t length) {
-	// setup
-	wire->mode = I2C_MODE_MASTER_RQ;
-	wire->address = addr;
-	wire->position = 0;
-	wire->limlen = length;
-	memcpy(wire->buffer, data, length); // request command bytes
-	wire->status = 0;
-	//
-	if ( i2c_start_send(wire) ) {
-		wire->mode = I2C_MODE_IDLE;
-		//wire->status = I2C_GetLastEvent(wire->I2Cx);
-		return true;
-	}
-	wire->status = 0x80000000 | I2C_GetLastEvent(wire->I2Cx);
-	I2C_GenerateSTOP(wire->I2Cx, ENABLE);
-	return false;
-}
-
-boolean i2c_receive(I2CBuffer * wire, uint8_t * data, uint16_t lim) {
-	boolean t;
-	wire->mode = I2C_MODE_MASTER_RX;
-	wire->address = addr;
-	wire->position = 0;
-	wire->limlen = lim;
-	memcpy(wire->buffer, data, length);
-	wire->status = 0;
-	t = i2c_start_receive(wire);
-	memcpy(data, wire->buffer, wire->limlen) ;
-	if ( t ) {
-		wire->mode = I2C_MODE_IDLE;
-		//wire->status = I2C_GetLastEvent(wire->I2Cx);
-		return true;
-	}
-	wire->status = 0x80000000 | I2C_GetLastEvent(wire->I2Cx);
-	I2C_GenerateSTOP(wire->I2Cx, ENABLE);
-	return false;
 }
 
 boolean i2c_start_receive(I2CBuffer * wire) {
@@ -259,15 +260,6 @@ boolean i2c_start_receive(I2CBuffer * wire) {
 	
 	delay_us(15);
 	return true;
-}
-
-void i2c_setup_comm(I2CBuffer * I2Cbuf, I2C_CommMode mode, uint8_t dstaddr, uint8_t * databuffer, uint16_t length) {
-	wire->mode = I2C_MODE_MASTER_RX;
-	wire->address = addr;
-	wire->position = 0;
-	wire->limlen = lim;
-	memcpy(wire->buffer, data, length);
-	wire->status = 0;
 }
 
 

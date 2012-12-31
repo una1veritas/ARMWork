@@ -19,9 +19,9 @@ extern "C" {
 
 // Public Methods //////////////////////////////////////////////////////////////
 
-void I2CWire::begin(void)
+void I2CWire::begin(GPIOPin sda, GPIOPin scl, uint32_t clk)
 {
-	i2c_begin(&I2C1Buffer, I2C1, PB9, PB8, 100000);
+	i2c_begin(&I2C1Buffer, I2C1, sda, scl, clk);
 }
 
 uint8_t I2CWire::receiveFrom(uint8_t address, uint16 quantity)
@@ -52,10 +52,8 @@ uint8_t I2CWire::receiveFrom(uint8_t address, uint16 quantity)
 }
 
 void I2CWire::beginTransmission(uint8_t address) {
-	i2cbuf->mode = I2C_MODE_MASTER_TX;
-	i2cbuf->address = address;
-	i2cbuf->position = 0;
-	i2cbuf->limlen = 0;
+	dstaddress = address;
+	txindex = 0;
 }
 
 //
@@ -73,36 +71,22 @@ void I2CWire::beginTransmission(uint8_t address) {
 //
 uint8_t I2CWire::endTransmission(uint8_t sendStop)
 {
+	uint8 mode;
 //  int8_t ret = 0;
   // transmit buffer (blocking)
-	if ( sendStop == false )
-		i2cbuf->mode == I2C_MODE_MASTER_RQ;
-	if ( i2cbuf->mode == I2C_MODE_MASTER_TX ) {
-	//	wire->mode = I2C_MODE_MASTER_TX;
-	//	wire->address = addr;
-	//	wire->limlen = length;
-	//	memcpy(wire->buffer, data, length);
-		if ( i2c_start_send(i2cbuf) ) {
-			// generate stop cond. inside of start_send
-			i2cbuf->mode = I2C_MODE_IDLE;
-			//wire->status = I2C_GetLastEvent(wire->I2Cx);
-			return i2cbuf->limlen;
-		}
-		i2cbuf->status = 0x80000000 | I2C_GetLastEvent(i2cbuf->I2Cx);
-		return 0;
-	} else if ( i2cbuf->mode == I2C_MODE_MASTER_RQ ) {
-//		i2cbuf->address = addr;
-//		i2cbuf->limlen = length;
-//		memcpy(i2cbuf->buffer, data, length);
-		if ( i2c_start_send(i2cbuf) ) {
-			i2cbuf->mode = I2C_MODE_IDLE;
-			//wire->status = I2C_GetLastEvent(wire->I2Cx);
-			return i2cbuf->limlen;
-		}
-		i2cbuf->status = 0x80000000 | I2C_GetLastEvent(i2cbuf->I2Cx);
-		I2C_GenerateSTOP(i2cbuf->I2Cx, ENABLE);
-		return 0;
-	} 
+	if ( sendStop )
+		mode = I2C_MODE_MASTER_TX;
+	else
+		mode = I2C_MODE_MASTER_RQ;
+	i2c_setup_comm(i2cbuf, mode, dstaddress, txbuf, txindex);
+
+	if ( i2c_start_send(i2cbuf) ) {
+		// generate stop cond. inside of start_send
+		i2cbuf->mode = I2C_MODE_IDLE;
+		return i2cbuf->limlen;
+	}
+	i2cbuf->status = 0x80000000 | I2C_GetLastEvent(i2cbuf->I2Cx);
+	I2C_GenerateSTOP(i2cbuf->I2Cx, ENABLE);
 	return 0;
 }
 
@@ -110,7 +94,6 @@ uint8_t I2CWire::endTransmission(uint8_t sendStop)
 //	definition, and expected behaviour, of endTransmission
 //
 uint8_t I2CWire::endRequest() {
-	i2cbuf->mode == I2C_MODE_MASTER_RQ;
   return endTransmission(false);
 }
 

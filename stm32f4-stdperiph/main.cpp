@@ -76,7 +76,7 @@ int main(void) {
 			FASTSPEED, PUSHPULL, NOPULL);
 
 	//i2c_begin(&I2C1Buffer, I2C1, PB9, PB8, 100000);
-	Wire1.begin();
+	Wire1.begin(PB9, PB8, 100000);
 	
 //	lcd.init(&I2C1Buffer);
 	lcd.begin();

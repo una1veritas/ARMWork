@@ -3,6 +3,7 @@
 #define I2CWire_h
 
 #include <inttypes.h>
+#include "gpio.h"
 #include "i2c.h"
 #include "Stream.h"
 
@@ -13,12 +14,12 @@ class I2CWire : public Stream
   private:
 		I2C_TypeDef * i2cx;
 		I2CBuffer * i2cbuf;
-
+	
   public:
     I2CWire(I2C_TypeDef * i2c) : i2cx(i2c) {
 			i2cbuf = &I2C1Buffer;
 		}
-    void begin();
+    void begin(GPIOPin sda, GPIOPin scl, uint32_t clk = 100000);
 	
     void beginTransmission(uint8);
 //    void beginRequest(uint8);
