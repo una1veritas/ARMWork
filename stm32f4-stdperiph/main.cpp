@@ -30,9 +30,12 @@ ST7032i lcd(Wire1);
 DS1307 rtc(Wire1);
 
 int main(void) {
-	uint16_t bits;
-	uint32_t intval = 40;
+//	uint16_t bits;
+//	uint32_t intval = 40;
 	uint32_t tnow;
+	uint32 halfsec;
+	uint32 millis_offset;
+	uint32 oldtime;
 	char tmp[128];
 	uint16_t i = 0;
 	
@@ -83,75 +86,105 @@ int main(void) {
 	lcd.setContrast(46);
 	lcd.print("Hello!");       // Classic Hello World
 
-	bits = GPIO_ReadOutputData(GPIOD );
-	GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
-	delay_ms(intval);
-	tnow = millis() / 1000;
-	while (tnow == millis() / 1000)
-		;
-	tnow = millis() / 1000;
-
-	while (1) {
-		bits = GPIO_ReadOutputData(GPIOD );
-
-		GPIOWrite(GPIOD, PinBit(PD13) | (bits & 0x0fff));
-		delay_ms(intval);
-		GPIOWrite(GPIOD, PinBit(PD14) | (bits & 0x0fff));
-		delay_ms(intval);
-		GPIOWrite(GPIOD, PinBit(PD15) | (bits & 0x0fff));
-		delay_ms(intval);
-		GPIOWrite(GPIOD, PinBit(PD12) | (bits & 0x0fff));
-		delay_ms(intval);
-		//
-		bits &= 0x0fff;
-		switch ((tnow % 60) / 15) {
-		case 3:
-			bits |= PinBit(PD12);
-		case 2:
-			bits |= PinBit(PD15);
-		case 1:
-			bits |= PinBit(PD14);
-		case 0:
-		default:
-			bits |= PinBit(PD13);
+	tnow = millis();
+	rtc.begin();
+	rtc.updateTime();
+	oldtime = rtc.time;
+	while ( millis() > tnow + 1000 ) {
+		millis_offset = millis();
+		rtc.updateTime();
+		if ( rtc.time != oldtime ) {
+			oldtime = rtc.time;
 			break;
 		}
-		GPIOWrite(GPIOD, bits);
+	}
+	millis_offset %= 1000;
+	halfsec = millis_offset / 500;
+	
+	while (1) {
 
-		while (tnow == millis() / 1000);
-		tnow = millis() / 1000;
-
-		//Serial6.print(tmp);
-		Serial6.print((float)millis()/1000, 3);
-		Serial6.print(" ");
-		Serial6.print(lcd.row());
-		Serial6.print(" ");
-		Serial6.print(lcd.column());
-		Serial6.print(" ");		
-		Serial6.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
-		//Serial6.println();
-
-		rtc.updateTime();
-		Serial6.print(", Clock: ");
-			Serial6.printByte( rtc.time );
-		rtc.updateCalendar();
-		Serial6.print(" ");
-		Serial6.printByte( rtc.cal );
-		Serial6.println();
+		tnow = (millis() - millis_offset) % 1000;
 		
-		//		lcd.clear();
-		lcd.setCursor(0, 0);
-		lcd.write((uint8_t *)message+((millis()/1000)%(messlen-16)), 16);
-		if ( I2C1Buffer.flagstatus & 0x80000000 ) {
-			Serial6.print(" I2C Status ");
-			Serial6.println(I2C1Buffer.flagstatus, HEX);
+		switch(tnow/100) {
+			case 0:
+			case 5:
+				digitalWrite(PD13, HIGH);
+				break;
+			case 1:
+				digitalWrite(PD13, LOW);
+				digitalWrite(PD14, HIGH);
+				break;
+			case 2:
+				digitalWrite(PD14, LOW);
+				digitalWrite(PD15, HIGH);
+				break;
+			case 3:
+				digitalWrite(PD15, LOW);
+				digitalWrite(PD12, HIGH);
+				break;
+			case 4:
+				digitalWrite(PD12, LOW);
+				digitalWrite(PD13, HIGH);
+				break;
+			case 6:
+				digitalWrite(PD13, LOW);
+				digitalWrite(PD12, HIGH);
+				break;
+			case 7:
+				digitalWrite(PD12, LOW);
+				digitalWrite(PD15, HIGH);
+				break;
+			case 8:
+				digitalWrite(PD15, LOW);
+				digitalWrite(PD14, HIGH);
+				break;
+			case 9:
+				digitalWrite(PD14, LOW);
+				digitalWrite(PD13, HIGH);
+				break;
 		}
-		lcd.setCursor(0, 1);
-		lcd.printByte((uint8)(rtc.time>>16));
-		lcd.print(':');
-		lcd.printByte((uint8)(rtc.time>>8));
-		lcd.print(':');
-		lcd.printByte((uint8)rtc.time);
+		//
+		
+		if ( halfsec != tnow / 500 ) {
+			halfsec = tnow / 500;
+			rtc.updateTime();
+			if ( oldtime != rtc.time ) {
+				oldtime = rtc.time;
+
+				Serial6.print("Real Time Clock: ");
+				Serial6.printByte((uint8)(rtc.time>>16));
+				Serial6.print(':');
+				Serial6.printByte((uint8)(rtc.time>>8));
+				Serial6.print(':');
+				Serial6.printByte((uint8)rtc.time);
+				rtc.updateCalendar();
+				Serial6.print(" ");
+				Serial6.printByte( (uint32)rtc.cal+0x20000000 );
+				Serial6.println();
+			}
+			//Serial6.print(tmp);
+//			Serial6.print((float)millis()/500, 3);
+//			Serial6.write((uint8_t *)message+((millis()/500)%(messlen-16)), 16);
+			//Serial6.println();
+		
+			//		lcd.clear();
+			lcd.setCursor(0, 0);
+			lcd.write((uint8_t *)message+((millis()/500)%(messlen-16)), 16);
+			if ( I2C1Buffer.flagstatus & 0x80000000 ) {
+				Serial6.print(" I2C Status ");
+				Serial6.println(I2C1Buffer.flagstatus, HEX);
+			}
+			lcd.setCursor(0, 1);
+			lcd.printByte((uint8)(rtc.time>>16));
+			lcd.print(':');
+			lcd.printByte((uint8)(rtc.time>>8));
+			lcd.print(':');
+			lcd.printByte((uint8)rtc.time);
+			lcd.print(' ');
+			lcd.printByte((uint8)(rtc.cal>>8));
+			lcd.print('/');
+			lcd.printByte((uint8)rtc.cal);
+		}
 
 		char c;
 		if (Serial6.available() > 0) {
@@ -180,7 +213,7 @@ int main(void) {
 				i = 0;
 			}
 		}
-
+		delay_ms(1);
 	}
 	return 0;
 }
