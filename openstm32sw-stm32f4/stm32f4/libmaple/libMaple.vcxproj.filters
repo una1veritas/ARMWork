@@ -1,0 +1,395 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="libmaple\adc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\boards\aeroquad32.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\boards\aeroquad32mini.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\bkp.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\boards.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\cxxabi-compat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\dac.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\usb\descriptors.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\boards\discovery_f4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\dma.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\ext_interrupts.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\exti.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\flash.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\fsmc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\gpio.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\gpioF1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\gpioF2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\comm\HardwareSerial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\comm\HardwareSPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\HardwareTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\i2c.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\iwdg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\boards\maple.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\boards\maple_mini.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\boards\maple_native.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\boards\maple_RET6.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\nvic.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\Print.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\pwm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\pwr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\rcc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\rccF1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\rccF2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\Servo\Servo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\spi.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\syscalls.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\systick.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\timer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\usart.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\usb\usb.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\usb\usb_callbacks.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\usb\usb_lib\usb_core.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\usb\usb_hardware.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\usb\usb_lib\usb_init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\usb\usb_lib\usb_int.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\usb\usb_lib\usb_mem.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\usb\usb_lib\usb_regs.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\usb_serial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libmaple\util.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libraries\Wire\Wire.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\wirish_analog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\wirish_digital.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\wirish_math.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\wirish_shift.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="wirish\wirish_time.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="libmaple\adc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\boards\aeroquad32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\boards\aeroquad32mini.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\bit_constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\bitband.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\bits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\bkp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\boards.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\dac.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\delay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\usb\descriptors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\boards\discovery_f4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\dma.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\ext_interrupts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\exti.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\flash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\fsmc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\gpio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\gpioF1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\gpioF2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\comm\HardwareSerial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\comm\HardwareSPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\HardwareTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\i2c.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\iwdg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\libmaple.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\libmaple_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\boards\maple.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\boards\maple_mini.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\boards\maple_native.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\boards\maple_RET6.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\nvic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\Print.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\pwm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\pwr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\rcc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\rccF1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\rccF2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\ring_buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\scb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\Servo\Servo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\spi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\stm32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\systick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\usart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\usb\usb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\usb\usb_callbacks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\usb\usb_config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\usb\usb_lib\usb_core.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\usb\usb_lib\usb_def.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\usb\usb_hardware.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\usb\usb_lib\usb_init.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\usb\usb_lib\usb_int.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\usb\usb_lib\usb_lib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\usb\usb_lib\usb_mem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\usb\usb_lib\usb_regs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\usb_serial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\usb\usb_lib\usb_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libmaple\util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libraries\Wire\Wire.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\wirish.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\wirish_debug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\wirish_math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\wirish_time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\wirish_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="wirish\WProgram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="build-targets.mk" />
+    <None Include="Makefile" />
+    <None Include="readme.txt" />
+  </ItemGroup>
+</Project>
