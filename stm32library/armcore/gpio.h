@@ -72,6 +72,9 @@ typedef enum _GPIOPin {
 	PB15 = (PortB <<8) | ((uint16_t)15),
 
 	PC0 = (PortC <<8) | ((uint16_t)0),
+	PC2 = (PortC <<8) | ((uint16_t)2),
+	PC3 = (PortC <<8) | ((uint16_t)3),
+	
 	PC6 = (PortC <<8) | ((uint16_t)6),
 	PC7 = (PortC <<8) | ((uint16_t)7),
 	PC9 = (PortC <<8) | ((uint16_t)9),
@@ -115,7 +118,7 @@ typedef enum _GPIOPin {
 //#define analogInputToDigitalPin(p)  ((p < 8) ? (p) + 24 : -1)
 
 #define OUTPUT		GPIO_Mode_OUT
-#define INPUT		GPIO_Mode_IN
+#define INPUT			GPIO_Mode_IN
 #define ALTFUNC		GPIO_Mode_AF
 #define PUSHPULL 	GPIO_OType_PP
 #define ODRAIN 		GPIO_OType_OD
