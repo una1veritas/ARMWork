@@ -4,10 +4,28 @@
 
 -include ../makefile.init
 
-RM := rm
+RM := del
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include armperiph/RTC/subdir.mk
+-include armperiph/Ethernet/utility/subdir.mk
+-include armperiph/Ethernet/examples-libmaple/WebServer/mdk/subdir.mk
+-include armperiph/Ethernet/examples-libmaple/WebServer/subdir.mk
+-include armperiph/Ethernet/examples-libmaple/WebClient/subdir.mk
+-include armperiph/Ethernet/examples-libmaple/UdpNtpClient/subdir.mk
+-include armperiph/Ethernet/examples-libmaple/UDPSendReceiveString/subdir.mk
+-include armperiph/Ethernet/examples-libmaple/TwitterClient/subdir.mk
+-include armperiph/Ethernet/examples-libmaple/TelnetClient/subdir.mk
+-include armperiph/Ethernet/examples-libmaple/PachubeClientString/subdir.mk
+-include armperiph/Ethernet/examples-libmaple/PachubeClient/subdir.mk
+-include armperiph/Ethernet/examples-libmaple/DnsWebClient/subdir.mk
+-include armperiph/Ethernet/examples-libmaple/DhcpChatServer/subdir.mk
+-include armperiph/Ethernet/examples-libmaple/DhcpAddressPrinter/subdir.mk
+-include armperiph/Ethernet/examples-libmaple/ChatServer/subdir.mk
+-include armperiph/Ethernet/examples-libmaple/BarometricPressureWebServer/subdir.mk
+-include armperiph/Ethernet/subdir.mk
+-include armperiph/CLCD/subdir.mk
 -include armcore/subdir.mk
 -include Utilities/jnosky/subdir.mk
 -include Utilities/STM32L-DISCOVERY/subdir.mk
