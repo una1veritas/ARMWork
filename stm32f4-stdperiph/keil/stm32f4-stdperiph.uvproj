@@ -531,6 +531,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\stm32library\armcore\I2CWire.h</FilePath>
             </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\stm32library\armcore\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\stm32library\armcore\spi.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
