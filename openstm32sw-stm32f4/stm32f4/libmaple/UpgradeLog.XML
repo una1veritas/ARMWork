@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="libMaple">
+</Property><Property Name="ソリューション ファイル" Value="C:\Users\Sin\Documents\github\Resource archives\openstm32sw-master\openstm32sw-master\stm32f4\libmaple\libMaple.sln">
+</Property><Property Name="Date" Value="2013年1月2日">
+</Property><Property Name="Time" Value="16:19:18">
+</Property></Properties><Event ErrorLevel="0" Project="libMaple" Source="libMaple.vcproj" Description="Converting project file 'C:\Users\Sin\Documents\github\Resource archives\openstm32sw-master\openstm32sw-master\stm32f4\libmaple\libMaple.vcproj'.">
+</Event><Event ErrorLevel="1" Project="libMaple" Source="libMaple.vcproj" Description="VCConvertEngine could not convert attribute CompileAsManaged =  under Tool VCNMakeTool.">
+</Event><Event ErrorLevel="1" Project="libMaple" Source="libMaple.vcproj" Description="VCConvertEngine could not convert attribute CompileAsManaged =  under Tool VCNMakeTool.">
+</Event><Event ErrorLevel="0" Project="libMaple" Source="libMaple.vcproj" Description="Done converting to new project file 'C:\Users\Sin\Documents\github\Resource archives\openstm32sw-master\openstm32sw-master\stm32f4\libmaple\libMaple.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="libMaple" Source="libMaple.vcproj" Description="Converted">
+</Event></UpgradeLog>
