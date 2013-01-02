@@ -111,7 +111,7 @@
 
 //SPI_TypeDef * spix[] = { SPI1, SPI2, SPI3 };
 
-void spi_begin(SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi,
+void spi_begin(SPI_TypeDef * SPIx, SPIBuffer * spi, GPIOPin sck, GPIOPin miso, GPIOPin mosi,
 		GPIOPin nss) {
 	uint8_t af; // = GPIO_AF_SPI1;
 	SPI_InitTypeDef SPI_InitStruct;
@@ -205,20 +205,22 @@ void spi_begin(SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi,
 	 */
 }
 
-void spi_transfer(SPI_TypeDef * SPIx, /*SPIBus spibus,*/ uint8_t * data, uint16_t nbytes) {
+
+
+void spi_transfer(SPIBuffer * spi, uint8_t * data, uint16_t nbytes) {
 //	SPI_TypeDef * SPIx = spix[spibus];
 	uint8_t rcvdata;
 
 	for (; nbytes; nbytes--) {
 		/* Wait for SPIx Tx buffer empty */
-		while (SPI_I2S_GetFlagStatus(SPIx, SPI_I2S_FLAG_TXE ) == RESET)
+		while (SPI_I2S_GetFlagStatus(spi->SPIx, SPI_I2S_FLAG_TXE ) == RESET)
 			;
-		SPI_I2S_SendData(SPIx, (uint16_t) *data);
+		SPI_I2S_SendData(spi->SPIx, (uint16_t) *data);
 		/* Wait for SPIx data reception */
-		while (SPI_I2S_GetFlagStatus(SPIx, SPI_I2S_FLAG_RXNE ) == RESET)
+		while (SPI_I2S_GetFlagStatus(spi->SPIx, SPI_I2S_FLAG_RXNE ) == RESET)
 			;
 		/* Read SPIy received data */
-		rcvdata = SPI_I2S_ReceiveData(SPIx);
+		rcvdata = SPI_I2S_ReceiveData(spi->SPIx);
 		*data = rcvdata;
 		data++;
 	}

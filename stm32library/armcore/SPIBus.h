@@ -12,8 +12,12 @@
 #define _SPI_H_INCLUDED
 
 #include <stdio.h>
-#include <Arduino.h>
-#include <avr/pgmspace.h>
+//#include <Arduino.h>
+//#include <avr/pgmspace.h>
+#include "armcore.h"
+#include "gpio.h"
+#include "spi.h"
+
 
 #define SPI_CLOCK_DIV4 0x00
 #define SPI_CLOCK_DIV16 0x01
@@ -33,32 +37,41 @@
 #define SPI_CLOCK_MASK 0x03  // SPR1 = bit 1, SPR0 = bit 0 on SPCR
 #define SPI_2XCLOCK_MASK 0x01  // SPI2X = bit 0 on SPSR
 
-class SPIClass {
+#define SPI_MSBFIRST 0x01
+
+class SPIBus {
+	SPI_TypeDef * SPIx;
+	SPIBuffer *spibuffer;
+	GPIOPin pin_sck, pin_miso, pin_mosi, pin_nss;
+	
 public:
-  inline static byte transfer(byte _data);
+	
+	SPIBus() : SPIx(SPI1), pin_sck(PB3), pin_miso(PB4), pin_mosi(PB5), pin_nss(PA15) { }
+
+  inline byte transfer(byte _data);
 
   // SPI Configuration methods
 
-  inline static void attachInterrupt();
-  inline static void detachInterrupt(); // Default
+//  inline static void attachInterrupt();
+//  inline static void detachInterrupt(); // Default
 
-  static void begin(); // Default
-  static void end();
+  void begin(); // Default
+  void end();
 
-  static void setBitOrder(uint8_t);
-  static void setDataMode(uint8_t);
-  static void setClockDivider(uint8_t);
+  void setBitOrder(uint8_t);
+  void setDataMode(uint8_t);
+  void setClockDivider(uint8_t);
 };
 
-extern SPIClass SPI;
+extern SPIBus SPIBus1();
 
-byte SPIClass::transfer(byte _data) {
-  SPDR = _data;
-  while (!(SPSR & _BV(SPIF)))
-    ;
-  return SPDR;
+byte SPIBus::transfer(byte _data) {
+	byte tmp[2] = { _data, 0};
+	spi_transfer(spibuffer, tmp, 1);
+  return tmp[0];
 }
 
+/*
 void SPIClass::attachInterrupt() {
   SPCR |= _BV(SPIE);
 }
@@ -66,5 +79,6 @@ void SPIClass::attachInterrupt() {
 void SPIClass::detachInterrupt() {
   SPCR &= ~_BV(SPIE);
 }
+*/
 
 #endif
