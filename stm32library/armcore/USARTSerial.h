@@ -14,19 +14,23 @@
 #include <stm32f4xx_usart.h>
 
 #include "armcore.h"
+#include "gpio.h"
 #include "usart.h"
 
 #include "Stream.h"
 
 class USARTSerial : public Stream {
 	USART port;
+	GPIOPin pinrx, pintx, pincts, pindtr;
 
 public:
-	USARTSerial(USART_TypeDef * usartx) {
+	USARTSerial(USART_TypeDef * usartx, GPIOPin rx, GPIOPin tx) {
 		port.USARTx = usartx;
+		pinrx = rx;
+		pintx = tx;
 	}
 	
-	void begin(const GPIOPin rx, const GPIOPin tx, const uint32_t baud);
+	void begin(const uint32_t baud);
 
 	virtual size_t write(const uint8_t w);
 	using Print::write;

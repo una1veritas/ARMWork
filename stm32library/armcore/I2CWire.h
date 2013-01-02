@@ -14,6 +14,7 @@ class I2CWire : public Stream
   private:
 		I2C_TypeDef * i2cx;
 		I2CBuffer * i2cbuf;
+		GPIOPin pinscl, pinsda;
 
 		uint8 dstaddress;
 		uint8 rxbuffer[I2C_BUFFER_SIZE];
@@ -22,10 +23,10 @@ class I2CWire : public Stream
 		int16 rxlength, txlength;
 	
   public:
-    I2CWire(I2C_TypeDef * i2c) : i2cx(i2c) {
+    I2CWire(I2C_TypeDef * i2c, GPIOPin scl, GPIOPin sda) : i2cx(i2c), pinscl(scl), pinsda(sda) {
 			i2cbuf = &I2C1Buffer;
 		}
-    void begin(GPIOPin sda, GPIOPin scl, uint32_t clk = 100000);
+    void begin(uint32_t clk = 100000);
 	
     void beginTransmission(uint8);
 //    void beginRequest(uint8);

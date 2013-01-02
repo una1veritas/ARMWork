@@ -4,6 +4,7 @@ extern "C" {
   #include <string.h>
   #include <inttypes.h>
   #include "i2c.h"
+	#include "delay.h"
 }
 
 #include "I2CWire.h"
@@ -19,9 +20,9 @@ extern "C" {
 
 // Public Methods //////////////////////////////////////////////////////////////
 
-void I2CWire::begin(GPIOPin sda, GPIOPin scl, uint32_t clk)
+void I2CWire::begin(uint32_t clkHz)
 {
-	i2c_begin(&I2C1Buffer, I2C1, sda, scl, clk);
+	i2c_begin(&I2C1Buffer, I2C1, pinscl, pinsda, clkHz);
 }
 
 void I2CWire::beginTransmission(uint8_t address) {
@@ -57,17 +58,18 @@ uint8_t I2CWire::receiveFrom(uint8_t address, uint16 quantity)
 //
 uint8_t I2CWire::endTransmission(uint8_t sendStop)
 {
-//  int8_t ret = 0;
+	//  int8_t ret = 0;
   // transmit buffer (blocking)
 	if ( sendStop ) {
-		if ( i2c_transmit(i2cbuf, dstaddress, txbuffer, txlength) )
+		if ( i2c_transmit(i2cbuf, dstaddress, txbuffer, txlength) ) {
 			return txlength;
-		return 0;
+		}
 	} else {
-		if ( i2c_request(i2cbuf, dstaddress, txbuffer, txlength) )
+		if ( i2c_request(i2cbuf, dstaddress, txbuffer, txlength) ) {
 			return txlength;
-		return 0;
+		}
 	}
+	return 0;
 }
 
 //	This provides backwards compatibility with the original

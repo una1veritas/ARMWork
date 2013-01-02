@@ -17,15 +17,15 @@
 #include "armcore.h"
 #include "gpio.h"
 #include "delay.h"
-#include "usart.h"
 #include "I2CWire.h"
-
-#include "ST7032i.h"
 #include "USARTSerial.h"
-#include "DS1307.h"
 
-USARTSerial Serial6(USART6);
-I2CWire Wire1(I2C1);
+#include "CLCD/ST7032i.h"
+#include "RTC/DS1307.h"
+
+USARTSerial Serial6(USART6, PC7, PC6);
+I2CWire Wire1(I2C1, PB8, PB9);
+// periph devices
 ST7032i lcd(Wire1);
 DS1307 rtc(Wire1);
 
@@ -33,15 +33,14 @@ int main(void) {
 //	uint16_t bits;
 //	uint32_t intval = 40;
 	uint32_t tnow;
-	uint32 halfsec;
-	uint32 millis_offset;
+	uint32 partsec;
 	uint32 oldtime;
 	char tmp[128];
 	uint16_t i = 0;
 	
 	TIM2_timer_start();
 
-	Serial6.begin(PC7, PC6, 19200);
+	Serial6.begin(19200);
 
 	const char message[] = 
 			"This royal throne of kings, this scepter'd isle, \n"
@@ -74,37 +73,32 @@ int main(void) {
 	Serial6.println();
 	Serial6.flush();
 
-	GPIOMode(PinPort(PD12),
-			(PinBit(PD12) | PinBit(PD13) | PinBit(PD14) | PinBit(PD15)), OUTPUT,
-			FASTSPEED, PUSHPULL, NOPULL);
+	GPIOMode(PinPort(PD12), 
+					(PinBit(PD12) | PinBit(PD13) | PinBit(PD14) | PinBit(PD15)), 
+					OUTPUT, FASTSPEED, PUSHPULL, NOPULL);
 
-	//i2c_begin(&I2C1Buffer, I2C1, PB9, PB8, 100000);
-	Wire1.begin(PB9, PB8, 100000);
-	
+	Wire1.begin(100000);
 //	lcd.init(&I2C1Buffer);
 	lcd.begin();
 	lcd.setContrast(46);
 	lcd.print("Hello!");       // Classic Hello World
+	delay_ms(1000);
 
-	tnow = millis();
+	lcd.clear();
+	lcd.print("Syncing to rtc");
 	rtc.begin();
 	rtc.updateTime();
 	oldtime = rtc.time;
-	while ( millis() > tnow + 1000 ) {
-		millis_offset = millis();
+	while (oldtime == rtc.time) {
+		delay_ms(10);
 		rtc.updateTime();
-		if ( rtc.time != oldtime ) {
-			oldtime = rtc.time;
-			break;
-		}
 	}
-	millis_offset %= 1000;
-	halfsec = millis_offset / 500;
+	clearMillis();
+	partsec = 0;
 	
 	while (1) {
 
-		tnow = (millis() - millis_offset) % 1000;
-		
+		tnow = millis() % 1000;
 		switch(tnow/100) {
 			case 0:
 			case 5:
@@ -145,12 +139,29 @@ int main(void) {
 		}
 		//
 		
-		if ( halfsec != tnow / 500 ) {
-			halfsec = tnow / 500;
+		if ( partsec != (millis()%1000)/250 ) {
+			partsec = (millis()%1000)/250;
 			rtc.updateTime();
+			if ( I2C1Buffer.flagstatus & 0x80000000 ) {
+				Serial6.print(" I2C Status error ");
+				Serial6.println(I2C1Buffer.flagstatus, HEX);
+			}
+			Serial6.print((float)millis()/1000,3);Serial6.print(' ');
+
 			if ( oldtime != rtc.time ) {
 				oldtime = rtc.time;
 
+				lcd.setCursor(0, 1);
+				lcd.printByte((uint8)(rtc.time>>16));
+				lcd.print(':');
+				lcd.printByte((uint8)(rtc.time>>8));
+				lcd.print(':');
+				lcd.printByte((uint8)rtc.time);
+				lcd.print(' ');
+				lcd.printByte((uint8)(rtc.cal>>8));
+				lcd.print('/');
+				lcd.printByte((uint8)rtc.cal);
+				
 				Serial6.print("Real Time Clock: ");
 				Serial6.printByte((uint8)(rtc.time>>16));
 				Serial6.print(':');
@@ -162,31 +173,19 @@ int main(void) {
 				Serial6.printByte( (uint32)rtc.cal+0x20000000 );
 				Serial6.println();
 			}
-			//Serial6.print(tmp);
-//			Serial6.print((float)millis()/500, 3);
-//			Serial6.write((uint8_t *)message+((millis()/500)%(messlen-16)), 16);
-			//Serial6.println();
-		
+			
+
 			//		lcd.clear();
 			lcd.setCursor(0, 0);
-			lcd.write((uint8_t *)message+((millis()/500)%(messlen-16)), 16);
+			lcd.write((uint8_t *)message+((millis()/250)%(messlen-16)), 16);
 			if ( I2C1Buffer.flagstatus & 0x80000000 ) {
-				Serial6.print(" I2C Status ");
+				Serial6.print(" I2C Status error ");
 				Serial6.println(I2C1Buffer.flagstatus, HEX);
 			}
-			lcd.setCursor(0, 1);
-			lcd.printByte((uint8)(rtc.time>>16));
-			lcd.print(':');
-			lcd.printByte((uint8)(rtc.time>>8));
-			lcd.print(':');
-			lcd.printByte((uint8)rtc.time);
-			lcd.print(' ');
-			lcd.printByte((uint8)(rtc.cal>>8));
-			lcd.print('/');
-			lcd.printByte((uint8)rtc.cal);
+
 		}
 
-		char c;
+		char c = 0;
 		if (Serial6.available() > 0) {
 			while (Serial6.available() > 0 && i < 92) {
 				c = (char) Serial6.read();

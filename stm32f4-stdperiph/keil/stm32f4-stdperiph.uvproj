@@ -125,12 +125,12 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <LimitSpeedToRealTime>1</LimitSpeedToRealTime>
           </Simulator>
           <Target>
             <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>0</RunToMain>
+            <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
@@ -207,7 +207,7 @@
             <hadIRAM>1</hadIRAM>
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
-            <RvdsVP>1</RvdsVP>
+            <RvdsVP>2</RvdsVP>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -337,7 +337,7 @@
             <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>0</OneElfS>
+            <OneElfS>1</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc;..\..\stm32library\CMSIS\Include;..\..\stm32library\CMSIS\STM32F4xx;..\..\stm32library\armcore;..\..\stm32f4-stdperiph</IncludePath>
+              <IncludePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc;..\..\stm32library\CMSIS\Include;..\..\stm32library\CMSIS\STM32F4xx;..\..\stm32f4-stdperiph;..\..\stm32library\armcore;..\..\stm32library\armperiph</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -389,7 +389,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Source Group 1</GroupName>
+          <GroupName>usermain</GroupName>
           <Files>
             <File>
               <FileName>startup_stm32f4xx.s</FileName>
@@ -442,11 +442,6 @@
               <FilePath>..\..\stm32library\armcore\binary.h</FilePath>
             </File>
             <File>
-              <FileName>CharacterLCD.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\CharacterLCD.h</FilePath>
-            </File>
-            <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\stm32library\armcore\delay.c</FilePath>
@@ -485,16 +480,6 @@
               <FileName>Print.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\stm32library\armcore\Print.h</FilePath>
-            </File>
-            <File>
-              <FileName>ST7032i.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\stm32library\armcore\ST7032i.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>ST7032i.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\ST7032i.h</FilePath>
             </File>
             <File>
               <FileName>Stream.cpp</FileName>
@@ -537,16 +522,6 @@
               <FilePath>..\..\stm32library\armcore\USARTSerial.h</FilePath>
             </File>
             <File>
-              <FileName>DS1307.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\stm32library\armcore\DS1307.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>DS1307.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\DS1307.h</FilePath>
-            </File>
-            <File>
               <FileName>I2CWire.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\stm32library\armcore\I2CWire.cpp</FilePath>
@@ -555,6 +530,36 @@
               <FileName>I2CWire.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\stm32library\armcore\I2CWire.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>armperiph</GroupName>
+          <Files>
+            <File>
+              <FileName>ST7032i.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\stm32library\armperiph\CLCD\ST7032i.h</FilePath>
+            </File>
+            <File>
+              <FileName>ST7032i.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\stm32library\armperiph\CLCD\ST7032i.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>CharacterLCD.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\stm32library\armperiph\CLCD\CharacterLCD.h</FilePath>
+            </File>
+            <File>
+              <FileName>DS1307.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\stm32library\armperiph\RTC\DS1307.h</FilePath>
+            </File>
+            <File>
+              <FileName>DS1307.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\stm32library\armperiph\RTC\DS1307.cpp</FilePath>
             </File>
           </Files>
         </Group>
