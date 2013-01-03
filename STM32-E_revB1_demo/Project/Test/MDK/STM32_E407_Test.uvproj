@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>Target 1</TargetName>
+      <TargetName>STM32_E407_Test</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -44,10 +44,10 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\</OutputDirectory>
-          <OutputName>stm32f4-stdperiph</OutputName>
+          <OutputName>STM32_E407_Test</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>1</CreateHexFile>
+          <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\</ListingPath>
@@ -117,7 +117,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>0</UseSimulator>
+            <UseSimulator>1</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -125,12 +125,12 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>1</LimitSpeedToRealTime>
+            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
           </Simulator>
           <Target>
-            <UseTarget>1</UseTarget>
+            <UseTarget>0</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
+            <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
@@ -139,7 +139,7 @@
             <RestoreTracepoints>1</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>13</TargetSelection>
+          <TargetSelection>0</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -153,7 +153,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver>STLink\ST-LINKIII-KEIL_SWO.dll</Driver>
+            <Driver>BIN\UL2CM3.DLL</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -163,9 +163,9 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4104</DriverSelection>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
-          <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
+          <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
         </Utilities>
@@ -337,7 +337,7 @@
             <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>1</OneElfS>
+            <OneElfS>0</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
@@ -348,9 +348,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER</Define>
+              <Define>__CORE__=7</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc;..\..\stm32library\CMSIS\Include;..\..\stm32library\CMSIS\STM32F4xx;..\..\stm32f4-stdperiph;..\..\stm32library\armcore;..\..\stm32library\armperiph</IncludePath>
+              <IncludePath>..\..\Test;..\..\..\board;..\..\..\..\stm32library\STM32F2xx_StdPeriph_Driver\inc;..\..\..\..\stm32library\CMSIS\STM32F2xx;..\..\..\modules;..\Ethernet\app;..\Ethernet\uip;..\Ethernet\uip\httpd;..\..\..\..\stm32library\STM32_ETH_Driver\inc;..\USB\app;..\..\..\..\stm32library\STM32_USB_Device_Library\Core\inc;..\..\..\..\stm32library\STM32_USB_OTG_Driver\inc;..\..\..\..\stm32library\STM32_USB_Device_Library\Class\hid\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -389,7 +389,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>usermain</GroupName>
+          <GroupName>user_main</GroupName>
           <Files>
             <File>
               <FileName>startup_stm32f4xx.s</FileName>
@@ -397,249 +397,99 @@
               <FilePath>.\startup_stm32f4xx.s</FilePath>
             </File>
             <File>
-              <FileName>main.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\main.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_it.c</FileName>
+              <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\stm32f4xx_it.c</FilePath>
+              <FilePath>..\main.c</FilePath>
             </File>
             <File>
-              <FileName>system_stm32f4xx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\system_stm32f4xx.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_it.h</FileName>
+              <FileName>includes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\stm32f4xx_it.h</FilePath>
+              <FilePath>..\includes.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f2xx_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\stm32f2xx_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f2xx_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\stm32f2xx_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f2xx_it.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\stm32f2xx_it.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_stm32f2xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\system_stm32f2xx.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>armcore</GroupName>
+          <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>adc3dma.c</FileName>
+              <FileName>arm_comm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\board\arm_comm.h</FilePath>
+            </File>
+            <File>
+              <FileName>iar_stm32f217ze_sk.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\stm32library\armcore\adc3dma.c</FilePath>
+              <FilePath>..\..\..\board\iar_stm32f217ze_sk.c</FilePath>
             </File>
             <File>
-              <FileName>adc3dma.h</FileName>
+              <FileName>iar_stm32f217ze_sk.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\adc3dma.h</FilePath>
-            </File>
-            <File>
-              <FileName>armcore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\armcore.h</FilePath>
-            </File>
-            <File>
-              <FileName>binary.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\binary.h</FilePath>
-            </File>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\stm32library\armcore\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>delay.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\delay.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\stm32library\armcore\gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\stm32library\armcore\i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>Print.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\stm32library\armcore\Print.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Print.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\Print.h</FilePath>
-            </File>
-            <File>
-              <FileName>Stream.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\stm32library\armcore\Stream.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Stream.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\Stream.h</FilePath>
-            </File>
-            <File>
-              <FileName>systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\stm32library\armcore\systick.c</FilePath>
-            </File>
-            <File>
-              <FileName>systick.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\systick.h</FilePath>
-            </File>
-            <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\stm32library\armcore\usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\usart.h</FilePath>
-            </File>
-            <File>
-              <FileName>USARTSerial.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\stm32library\armcore\USARTSerial.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>USARTSerial.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\USARTSerial.h</FilePath>
-            </File>
-            <File>
-              <FileName>I2CWire.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\stm32library\armcore\I2CWire.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>I2CWire.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\I2CWire.h</FilePath>
-            </File>
-            <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\stm32library\armcore\spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\spi.h</FilePath>
-            </File>
-            <File>
-              <FileName>SPIBus.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\stm32library\armcore\SPIBus.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>SPIBus.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armcore\SPIBus.h</FilePath>
+              <FilePath>..\..\..\board\iar_stm32f217ze_sk.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>armperiph</GroupName>
+          <GroupName>comm</GroupName>
           <Files>
             <File>
-              <FileName>ST7032i.h</FileName>
+              <FileName>disk.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armperiph\CLCD\ST7032i.h</FilePath>
+              <FilePath>..\..\..\modules\disk.h</FilePath>
             </File>
             <File>
-              <FileName>ST7032i.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\stm32library\armperiph\CLCD\ST7032i.cpp</FilePath>
+              <FileName>i2c1_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\modules\i2c1_drv.c</FilePath>
             </File>
             <File>
-              <FileName>CharacterLCD.h</FileName>
+              <FileName>i2c1_drv.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armperiph\CLCD\CharacterLCD.h</FilePath>
+              <FilePath>..\..\..\modules\i2c1_drv.h</FilePath>
             </File>
             <File>
-              <FileName>DS1307.h</FileName>
+              <FileName>sd_card_mode old.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\modules\sd_card_mode old.c</FilePath>
+            </File>
+            <File>
+              <FileName>sd_card_mode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\modules\sd_card_mode.c</FilePath>
+            </File>
+            <File>
+              <FileName>sd_card_mode.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armperiph\RTC\DS1307.h</FilePath>
+              <FilePath>..\..\..\modules\sd_card_mode.h</FilePath>
             </File>
             <File>
-              <FileName>DS1307.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\stm32library\armperiph\RTC\DS1307.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>stdperiph_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>misc.c</FileName>
+              <FileName>Sin_Table.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\misc.c</FilePath>
+              <FilePath>..\..\..\modules\Sin_Table.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_rcc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_adc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_i2c.h</FileName>
+              <FileName>Sin_Table.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_spi.h</FilePath>
+              <FilePath>..\..\..\modules\Sin_Table.h</FilePath>
             </File>
           </Files>
         </Group>

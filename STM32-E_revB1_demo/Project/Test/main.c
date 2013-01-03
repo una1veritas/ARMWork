@@ -21,7 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include <stdio.h>
 #include <string.h>
-#include <yfuns.h>
+//#include <yfuns.h>
 #include "includes.h"
 
 #define DLY_100US  1000

@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <limits.h>
-#include <intrinsics.h>
+//#include <intrinsics.h>
 #include <assert.h>
 #include <math.h>
 #include <stdint.h>
