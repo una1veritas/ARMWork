@@ -190,8 +190,6 @@ void spi_begin(SPI_TypeDef * SPIx, SPIBuffer * spi, GPIOPin sck, GPIOPin miso, G
 	 */
 }
 
-<<<<<<< HEAD
-=======
 void spi_setModes(SPIBuffer * spi, uint16 clkdiv, uint16_t cpol, uint16_t cpha,  uint16_t firstbit) {
 	uint16_t prescaler;
 	switch(clkdiv) {
@@ -234,7 +232,6 @@ void spi_setModes(SPIBuffer * spi, uint16 clkdiv, uint16_t cpol, uint16_t cpha, 
 
 	SPI_Init(spi->SPIx, &spi->InitStruct);
 }
->>>>>>> origin/master
 
 
 void spi_transfer(SPIBuffer * spi, uint8_t * data, uint16_t nbytes) {

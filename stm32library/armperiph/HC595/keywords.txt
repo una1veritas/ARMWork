@@ -1,0 +1,26 @@
+#######################################
+# Syntax Coloring Map for HC595iox
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+HC595iox	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+init	KEYWORD2
+read	KEYWORD2
+write	KEYWORD2
+select	KEYWORD2
+deselect	KEYWORD2
+transfer	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
