@@ -9,7 +9,7 @@
  **    $Revision: #2 $
  **
  ***************************************************************************/
-#include <intrinsics.h>
+//#include <intrinsics.h>
 
 #ifndef __ARM_COMM_DEF_H
 #define __ARM_COMM_DEF_H
