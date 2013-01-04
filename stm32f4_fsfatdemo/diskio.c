@@ -164,7 +164,7 @@ DRESULT disk_write (
 		return(res);
 	}
 
-  Status = SD_WriteMultiBlocksFIXED(buff, sector, BLOCK_SIZE, count); // 4GB Compliant
+  Status = SD_WriteMultiBlocksFIXED((uint8_t *)buff, sector, BLOCK_SIZE, count); // 4GB Compliant
 
 	if (Status == SD_OK)
 	{

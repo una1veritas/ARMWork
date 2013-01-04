@@ -42,7 +42,7 @@ public:
   virtual int16 peek();
   virtual size_t available();
   virtual void flush();
-  int read(void *buf, uint16_t nbyte);
+  size_t read(void *buf, size_t nbyte);
   boolean seek(uint32_t pos);
   uint32_t position();
   uint32_t size();
@@ -57,6 +57,8 @@ public:
 };
 
 class SDClass {
+public:
+	static SPIBus sdspi;
 
 private:
   // These are required for initialisation and use of sdfatlib

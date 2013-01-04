@@ -155,7 +155,7 @@ uint8_t const SD_CARD_TYPE_SDHC = 3;
 class Sd2Card {
  public:
   /** Construct an instance of Sd2Card. */
-  Sd2Card(const byte sd_cs) : chipSelectPin_(sd_cs), errorCode_(0), inBlock_(0), partialBlockRead_(0), type_(0) {}
+  Sd2Card(const GPIOPin sd_cs) : chipSelectPin_(sd_cs), errorCode_(0), inBlock_(0), partialBlockRead_(0), type_(0) {}
   uint32_t cardSize(void);
   uint8_t erase(uint32_t firstBlock, uint32_t lastBlock);
   uint8_t eraseSingleBlockEnable(void);
@@ -210,7 +210,7 @@ class Sd2Card {
   uint8_t writeStop(void);
  private:
   uint32_t block_;
-  uint8_t chipSelectPin_;
+  GPIOPin chipSelectPin_;
   // TODO:
 	uint8_t spiClockRate_;
 //

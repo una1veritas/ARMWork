@@ -17,7 +17,8 @@
  * along with the Arduino Sd2Card Library.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#include <Arduino.h>
+//#include <Arduino.h>
+#include "armcore.h"
 #include <SPI.h>
 #include "Sd2Card.h"
 
@@ -27,7 +28,7 @@
 /** Send a byte to the card */
 inline static void spiSend(uint8_t b) {
 	// TODO:
-	SPI.transfer(b);
+	sdspi.transfer(b);
 //  SPDR = b;
 //  while (!(SPSR & (1 << SPIF)));
 }
@@ -36,7 +37,7 @@ inline static uint8_t spiRec(void) {
 	// TODO:
 //  spiSend(0XFF);
 //  return SPDR;
-	return SPI.transfer(0xff);
+	return sdspi.transfer(0xff);
 }
 #else  // SOFTWARE_SPI
 //------------------------------------------------------------------------------

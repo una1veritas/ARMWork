@@ -95,7 +95,7 @@ int16 File::read() {
 }
 
 // buffered read for more efficient, high speed reading
-size_t File::read(void *buf, uint16_t nbyte) {
+size_t File::read(void *buf, size_t nbyte) {
   if (_file) 
     return _file->read(buf, nbyte);
   return 0;

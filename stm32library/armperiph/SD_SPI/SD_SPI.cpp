@@ -57,6 +57,7 @@
 #define MAX_COMPONENT_LEN 12 // What is max length?
 #define PATH_COMPONENT_BUFFER_LEN MAX_COMPONENT_LEN+1
 
+
 bool getNextPathComponent(char *path, unsigned int *p_offset,
 			  char *buffer) {
   /*
@@ -331,7 +332,7 @@ boolean callback_rmdir(SdFile& parentDir, char *filePathComponent,
 
 /* Implementation of class used to create `SDCard` object. */
 
-
+SDClass::sdspi();
 
 boolean SDClass::begin(byte clkdiv) {
   /*

@@ -18,8 +18,9 @@
  * <http://www.gnu.org/licenses/>.
  */
 #include "SdFat.h"
-#include <avr/pgmspace.h>
-#include <Arduino.h>
+//#include <avr/pgmspace.h>
+//#include <Arduino.h>
+#include "armcore.h"
 //------------------------------------------------------------------------------
 // callback function for date/time
 void (*SdFile::dateTime_)(uint16_t* date, uint16_t* time) = NULL;

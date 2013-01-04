@@ -284,8 +284,8 @@ class SdFile : public Print {
   /** \return SdVolume that contains this file. */
   SdVolume* volume(void) const {return vol_;}
   virtual size_t write(uint8_t b);
-  size_t write(const void* buf, uint16_t nbyte);
-  size_t write(const char* str);
+  virtual size_t write(const void* buf, size_t nbyte);
+  virtual size_t write(const char* str);
 //  void write_P(PGM_P str);
 //  void writeln_P(PGM_P str);
 //------------------------------------------------------------------------------
