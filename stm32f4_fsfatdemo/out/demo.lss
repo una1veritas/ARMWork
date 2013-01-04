@@ -705,7 +705,7 @@ DRESULT disk_write (
 		return(res);
 	}
 
-  Status = SD_WriteMultiBlocksFIXED(buff, sector, BLOCK_SIZE, count); // 4GB Compliant
+  Status = SD_WriteMultiBlocksFIXED((uint8_t *)buff, sector, BLOCK_SIZE, count); // 4GB Compliant
  800062a:	4620      	mov	r0, r4
  800062c:	4629      	mov	r1, r5
  800062e:	f44f 7200 	mov.w	r2, #512	; 0x200

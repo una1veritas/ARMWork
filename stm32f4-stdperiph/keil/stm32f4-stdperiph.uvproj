@@ -581,66 +581,6 @@
               <FileType>8</FileType>
               <FilePath>..\..\stm32library\armperiph\RTC\DS1307.cpp</FilePath>
             </File>
-            <File>
-              <FileName>SD_SPI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armperiph\SD_SPI\SD_SPI.h</FilePath>
-            </File>
-            <File>
-              <FileName>SD_SPI.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\stm32library\armperiph\SD_SPI\SD_SPI.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>File.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\stm32library\armperiph\SD_SPI\File.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>FatStructs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armperiph\SD_SPI\utility\FatStructs.h</FilePath>
-            </File>
-            <File>
-              <FileName>Sd2Card.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\stm32library\armperiph\SD_SPI\utility\Sd2Card.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Sd2Card.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armperiph\SD_SPI\utility\Sd2Card.h</FilePath>
-            </File>
-            <File>
-              <FileName>SdFat.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armperiph\SD_SPI\utility\SdFat.h</FilePath>
-            </File>
-            <File>
-              <FileName>SdFatmainpage.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armperiph\SD_SPI\utility\SdFatmainpage.h</FilePath>
-            </File>
-            <File>
-              <FileName>SdFatUtil.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armperiph\SD_SPI\utility\SdFatUtil.h</FilePath>
-            </File>
-            <File>
-              <FileName>SdFile.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\stm32library\armperiph\SD_SPI\utility\SdFile.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>SdInfo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\stm32library\armperiph\SD_SPI\utility\SdInfo.h</FilePath>
-            </File>
-            <File>
-              <FileName>SdVolume.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\stm32library\armperiph\SD_SPI\utility\SdVolume.cpp</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
