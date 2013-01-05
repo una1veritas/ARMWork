@@ -33,7 +33,7 @@ int main(void) {
 	
 	TIM2_timer_start();
 
-	usart_begin(&Serial6, USART6, PC7, PC6, 115200);
+	usart_begin(&Serial6, USART6, PC7, PC6, 19200); // 7 6
 	usart_print(&Serial6, "\r\nWelcome to USART.\r\n\r\n");
 
 	delay_ms(500);

@@ -93,7 +93,7 @@ int main(void) {
 		delay_ms(10);
 		rtc.updateTime();
 	}
-	clearMillis();
+//	clearMillis();
 	partsec = 0;
 	
 	while (1) {
