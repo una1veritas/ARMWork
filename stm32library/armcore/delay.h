@@ -19,17 +19,23 @@ extern "C" {
 
 extern volatile uint32_t __counter_micros;
 extern volatile uint32_t __counter_millis;
-extern volatile boolean __clear_millis;
+//extern volatile boolean __clear_millis;
 	
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
+
 uint32_t micros(void);
 uint32_t millis(void);
-void clearMillis(void);
+//void clearMillis(void);
 void delay_ms(uint32_t);
 void delay_us(uint32_t);
+
+#define delay(x)  delay_ms(x)
+#define delayMicroseconds(x)  delay_us(x)
+//void delayMicroseconds(uint32 w);
+
 void TIM2_timer_start(void);
 
 void TIM2_IRQHandler(void);

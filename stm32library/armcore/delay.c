@@ -16,7 +16,7 @@
 
 volatile uint32_t __counter_micros;
 volatile uint32_t __counter_millis;
-volatile boolean __clear_millis;
+//volatile boolean __clear_millis;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 /**
@@ -59,7 +59,7 @@ void TIM2_timer_start(void) {
 
 	__counter_micros = 0;
 	__counter_millis = 0;
-	__clear_millis = false;
+//	__clear_millis = false;
 }
 
 uint32_t micros(void) {
@@ -70,9 +70,11 @@ uint32_t millis(void) {
 	return __counter_millis;
 }
 
+/*
 void clearMillis() {
 	__clear_millis = true;
 }
+*/
 
 void delay_ms(uint32_t w) {
 	uint32_t wtill = millis() + w;
@@ -95,12 +97,15 @@ void delay_us(uint32_t w) {
 void TIM2_IRQHandler(void) {
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update ) == SET) {
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update );
+		/*
 		if ( __clear_millis ) {
-			__counter_micros = 0;
+			__counter_millis = 0;
+			__clear_millis = false;
 		} else {
+		*/
 			__counter_micros += 1000;
-		}
-		__counter_millis += 1;
+			__counter_millis += 1;
+/*		} */
 	}
 }
 
