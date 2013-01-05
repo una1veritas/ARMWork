@@ -541,7 +541,6 @@
               <FileType>5</FileType>
               <FilePath>..\..\stm32library\armcore\spi.h</FilePath>
             </File>
-<<<<<<< HEAD
             <File>
               <FileName>SPIBus.cpp</FileName>
               <FileType>8</FileType>
@@ -552,8 +551,6 @@
               <FileType>5</FileType>
               <FilePath>..\..\stm32library\armcore\SPIBus.h</FilePath>
             </File>
-=======
->>>>>>> uv
           </Files>
         </Group>
         <Group>

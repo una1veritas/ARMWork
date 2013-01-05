@@ -17,6 +17,7 @@ extern "C" {
 
 typedef struct _SPIBuffer {
 	SPI_TypeDef * SPIx;
+
 	SPI_InitTypeDef InitStruct;
 	uint8 xbuf[256];
 	uint16 xindex;

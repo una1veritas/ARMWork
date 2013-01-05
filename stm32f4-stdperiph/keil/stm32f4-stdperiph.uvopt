@@ -249,17 +249,10 @@
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-<<<<<<< HEAD
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>19</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>10</TopLine>
-      <CurrentLine>22</CurrentLine>
-=======
-      <ColumnNumber>9</ColumnNumber>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>137</TopLine>
-      <CurrentLine>149</CurrentLine>
->>>>>>> uv
+      <TopLine>1</TopLine>
+      <CurrentLine>29</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\main.cpp</PathWithFileName>
       <FilenameWithoutPath>main.cpp</FilenameWithoutPath>
@@ -318,7 +311,7 @@
 
   <Group>
     <GroupName>armcore</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -394,13 +387,8 @@
       <Focus>0</Focus>
       <ColumnNumber>46</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-<<<<<<< HEAD
       <TopLine>13</TopLine>
       <CurrentLine>39</CurrentLine>
-=======
-      <TopLine>10</TopLine>
-      <CurrentLine>17</CurrentLine>
->>>>>>> uv
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\stm32library\armcore\delay.c</PathWithFileName>
       <FilenameWithoutPath>delay.c</FilenameWithoutPath>
@@ -525,10 +513,10 @@
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>38</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>91</TopLine>
-      <CurrentLine>31</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>1</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\stm32library\armcore\Stream.cpp</PathWithFileName>
       <FilenameWithoutPath>Stream.cpp</FilenameWithoutPath>
@@ -685,17 +673,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-<<<<<<< HEAD
-      <ColumnNumber>28</ColumnNumber>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>201</TopLine>
-      <CurrentLine>233</CurrentLine>
-=======
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
->>>>>>> uv
+      <TopLine>217</TopLine>
+      <CurrentLine>222</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\stm32library\armcore\spi.c</PathWithFileName>
       <FilenameWithoutPath>spi.c</FilenameWithoutPath>
@@ -718,7 +699,6 @@
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
-<<<<<<< HEAD
     <File>
       <GroupNumber>2</GroupNumber>
       <FileNumber>30</FileNumber>
@@ -751,8 +731,6 @@
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
-=======
->>>>>>> uv
   </Group>
 
   <Group>
@@ -763,11 +741,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>3</GroupNumber>
-<<<<<<< HEAD
       <FileNumber>32</FileNumber>
-=======
-      <FileNumber>30</FileNumber>
->>>>>>> uv
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -783,11 +757,7 @@
     </File>
     <File>
       <GroupNumber>3</GroupNumber>
-<<<<<<< HEAD
       <FileNumber>33</FileNumber>
-=======
-      <FileNumber>31</FileNumber>
->>>>>>> uv
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -803,11 +773,7 @@
     </File>
     <File>
       <GroupNumber>3</GroupNumber>
-<<<<<<< HEAD
       <FileNumber>34</FileNumber>
-=======
-      <FileNumber>32</FileNumber>
->>>>>>> uv
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -823,11 +789,7 @@
     </File>
     <File>
       <GroupNumber>3</GroupNumber>
-<<<<<<< HEAD
       <FileNumber>35</FileNumber>
-=======
-      <FileNumber>33</FileNumber>
->>>>>>> uv
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -843,11 +805,7 @@
     </File>
     <File>
       <GroupNumber>3</GroupNumber>
-<<<<<<< HEAD
       <FileNumber>36</FileNumber>
-=======
-      <FileNumber>34</FileNumber>
->>>>>>> uv
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -871,11 +829,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>4</GroupNumber>
-<<<<<<< HEAD
       <FileNumber>37</FileNumber>
-=======
-      <FileNumber>35</FileNumber>
->>>>>>> uv
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -891,11 +845,7 @@
     </File>
     <File>
       <GroupNumber>4</GroupNumber>
-<<<<<<< HEAD
       <FileNumber>38</FileNumber>
-=======
-      <FileNumber>36</FileNumber>
->>>>>>> uv
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -911,11 +861,7 @@
     </File>
     <File>
       <GroupNumber>4</GroupNumber>
-<<<<<<< HEAD
       <FileNumber>39</FileNumber>
-=======
-      <FileNumber>37</FileNumber>
->>>>>>> uv
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -931,11 +877,7 @@
     </File>
     <File>
       <GroupNumber>4</GroupNumber>
-<<<<<<< HEAD
       <FileNumber>40</FileNumber>
-=======
-      <FileNumber>38</FileNumber>
->>>>>>> uv
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -951,11 +893,7 @@
     </File>
     <File>
       <GroupNumber>4</GroupNumber>
-<<<<<<< HEAD
       <FileNumber>41</FileNumber>
-=======
-      <FileNumber>39</FileNumber>
->>>>>>> uv
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -971,11 +909,7 @@
     </File>
     <File>
       <GroupNumber>4</GroupNumber>
-<<<<<<< HEAD
       <FileNumber>42</FileNumber>
-=======
-      <FileNumber>40</FileNumber>
->>>>>>> uv
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -991,11 +925,7 @@
     </File>
     <File>
       <GroupNumber>4</GroupNumber>
-<<<<<<< HEAD
       <FileNumber>43</FileNumber>
-=======
-      <FileNumber>41</FileNumber>
->>>>>>> uv
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -1011,11 +941,7 @@
     </File>
     <File>
       <GroupNumber>4</GroupNumber>
-<<<<<<< HEAD
       <FileNumber>44</FileNumber>
-=======
-      <FileNumber>42</FileNumber>
->>>>>>> uv
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -1031,11 +957,7 @@
     </File>
     <File>
       <GroupNumber>4</GroupNumber>
-<<<<<<< HEAD
       <FileNumber>45</FileNumber>
-=======
-      <FileNumber>43</FileNumber>
->>>>>>> uv
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
