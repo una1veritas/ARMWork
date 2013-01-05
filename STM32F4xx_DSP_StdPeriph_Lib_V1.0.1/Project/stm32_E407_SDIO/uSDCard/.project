@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>uSDCard</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<triggers>clean,full,incremental,</triggers>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.ScannerConfigBuilder</name>
+			<triggers>full,incremental,</triggers>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>STM32F4xx_StdPeriph_Driver</name>
+			<type>2</type>
+			<location>/Users/sin/Documents/github/ARMWork/stm32library/STM32F4xx_StdPeriph_Driver</location>
+		</link>
+		<link>
+			<name>Utilities</name>
+			<type>2</type>
+			<location>/Users/sin/Documents/github/Resources/STM32F4xx_DSP_StdPeriph_Lib_V1.0.1/Utilities</location>
+		</link>
+	</linkedResources>
+</projectDescription>

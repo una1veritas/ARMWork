@@ -24,7 +24,7 @@
 ### ADS-LD Output File: 'stm32f4-usart.axf'
 ### ADS-LD Command File: 'stm32f4-usart.lnp'
 ### Checking for dirty Components...
-### Creating CmdFile 'stm32f4-usart.lnp', Handle=0x00000998
+### Creating CmdFile 'stm32f4-usart.lnp', Handle=0x00000548
 ### Writing '.lnp' file
 ### ADS-LD Command file 'stm32f4-usart.lnp' is ready.
 ### ADS-LD: About to start ADS-LD Thread.
