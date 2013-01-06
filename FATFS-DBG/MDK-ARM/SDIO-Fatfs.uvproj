@@ -44,7 +44,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\</OutputDirectory>
-          <OutputName>stm32f4-SDIO_FATFS</OutputName>
+          <OutputName>SDIO-Fatfs</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -337,7 +337,7 @@
             <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>1</OneElfS>
+            <OneElfS>0</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\stm32f4-SDIO_FATFS;..\SDIO_FATFS;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\armcore</IncludePath>
+              <IncludePath>..\..\FATFS-DBG;..\..\STM32Libraries\armcore;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -389,7 +389,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>maingroup</GroupName>
+          <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
               <FileName>startup_stm32f4xx.s</FileName>
@@ -402,6 +402,26 @@
               <FilePath>..\main.c</FilePath>
             </File>
             <File>
+              <FileName>stm32f4_discovery.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\stm32f4_discovery.c</FilePath>
+            </File>
+            <File>
+              <FileName>diskio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4_discovery_sdio_sd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\stm32f4_discovery_sdio_sd.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32fxxx_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\stm32fxxx_it.c</FilePath>
@@ -411,35 +431,10 @@
               <FileType>1</FileType>
               <FilePath>..\system_stm32f4xx.c</FilePath>
             </File>
-            <File>
-              <FileName>stm32f4_discovery.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\stm32f4_discovery.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>SDIOfatfs</GroupName>
-          <Files>
-            <File>
-              <FileName>diskio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\SDIO_FATFS\diskio.c</FilePath>
-            </File>
-            <File>
-              <FileName>ff.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\SDIO_FATFS\ff.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4_discovery_sdio_sd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\SDIO_FATFS\stm32f4_discovery_sdio_sd.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>stdperiph driver</GroupName>
+          <GroupName>stdperiph_driver</GroupName>
           <Files>
             <File>
               <FileName>misc.c</FileName>
@@ -447,19 +442,24 @@
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_exti.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_exti.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_dma.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c</FilePath>
             </File>
             <File>
+              <FileName>stm32f4xx_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_exti.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32f4xx_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_pwr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_pwr.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_rcc.c</FileName>
@@ -470,11 +470,6 @@
               <FileName>stm32f4xx_sdio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_sdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_spi.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_syscfg.c</FileName>
@@ -490,36 +485,6 @@
               <FileName>stm32f4xx_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>armcore</GroupName>
-          <Files>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\usart.h</FilePath>
             </File>
           </Files>
         </Group>
