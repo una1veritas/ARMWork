@@ -1,23 +1,6 @@
 //******************************************************************************
 // STM32F4 Discovery SDCard + FatFs Test - CLIVE - SOURCER32@GMAIL.COM
 //******************************************************************************
-/*
-The SD Slot/Socket is expected to be wired as follows
- 
-CARDDETECT = PC2 (Retargetable)
-CLK = PC12
-CMD = PD2
-D0 = PC8
-D1 = PC9
-D2 = PC10
-D3 = PC11
-VDD = 3V
-VSS = GND
- 
-PC10 (SCLK) and PC12 (SDIN) potentially conflict with the CS43L22
- 
-The CMD, D0, D1, D2, D3 pins should have 33K or 47K pull up resistors.
-*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -92,7 +75,7 @@ int main(void)
 
   USART6_Configuration();
 
-	puts("FatFs Testing\n\r");
+	puts("FatFs Testing");
 #endif
 
 	memset(&fs32, 0, sizeof(FATFS));
@@ -295,8 +278,7 @@ void NVIC_Configuration(void)
 void RCC_Configuration(void)
 {
   /* --------------------------- System Clocks Configuration -----------------*/
-  /* USART2 clock enable */
-	// -> 6
+  /* USART6 clock enable */
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART6, ENABLE);
 
   /* GPIOA clock enable */
@@ -318,8 +300,8 @@ void GPIO_Configuration(void)
   GPIO_Init(GPIOC, &GPIO_InitStructure);
 
   /* Connect USART pins to AF */
-  GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_USART6);  // USART2_TX
-  GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_USART6);  // USART2_RX
+  GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_USART6);  // USART6_TX
+  GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_USART6);  // USART6_RX
 }
 
 /**************************************************************************************/
@@ -351,7 +333,7 @@ void USART6_Configuration(void)
 }
 
 //******************************************************************************
-// Hosting of stdio functionality through USART2
+// Hosting of stdio functionality through USART6
 //******************************************************************************
 
 #include <rt_misc.h>

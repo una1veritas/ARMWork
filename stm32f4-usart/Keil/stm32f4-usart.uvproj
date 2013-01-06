@@ -12,13 +12,13 @@
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>STM32F407VG</Device>
+          <Device>STM32F407ZG</Device>
           <Vendor>STMicroelectronics</Vendor>
           <Cpu>IRAM(0x20000000-0x2001FFFF) IRAM2(0x10000000-0x1000FFFF) IROM(0x8000000-0x80FFFFF) CLOCK(25000000) CPUTYPE("Cortex-M4") FPU2</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile>"Startup\ST\STM32F4xx\startup_stm32f4xx.s" ("STM32F4xx Startup Code")</StartupFile>
           <FlashDriverDll>UL2CM3(-O207 -S0 -C0 -FO7 -FD20000000 -FC800 -FN1 -FF0STM32F4xx_1024 -FS08000000 -FL0100000)</FlashDriverDll>
-          <DeviceId>6103</DeviceId>
+          <DeviceId>6105</DeviceId>
           <RegisterFile>stm32f4xx.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
@@ -130,7 +130,7 @@
           <Target>
             <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>0</RunToMain>
+            <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
@@ -139,7 +139,7 @@
             <RestoreTracepoints>1</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>13</TargetSelection>
+          <TargetSelection>1</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -153,7 +153,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver>STLink\ST-LINKIII-KEIL_SWO.dll</Driver>
+            <Driver>BIN\UL2CM3.DLL</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -163,10 +163,10 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4104</DriverSelection>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
-          <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash2>BIN\UL2CM3.DLL</Flash2>
+          <Flash3></Flash3>
           <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>
@@ -510,6 +510,16 @@
               <FileName>stm32f4xx_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rtc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_pwr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_pwr.c</FilePath>
             </File>
           </Files>
         </Group>

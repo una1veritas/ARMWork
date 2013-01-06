@@ -20,7 +20,7 @@
 #include "I2CWire.h"
 #include "USARTSerial.h"
 
-#include "CLCD/ST7032i.h"
+#include "ChLCD/ST7032i.h"
 #include "RTC/DS1307.h"
 
 USARTSerial Serial6(USART6, PC7, PC6);
@@ -93,7 +93,7 @@ int main(void) {
 		delay_ms(10);
 		rtc.updateTime();
 	}
-	clearMillis();
+//	clearMillis();
 	partsec = 0;
 	
 	while (1) {

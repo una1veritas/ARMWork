@@ -1,58 +1,180 @@
 #include <ctype.h>
 
 #include "stm32f4xx.h"
-//#include "st7032i.h"
+#include <stm32f4xx_rtc.h>
 
 #include "armcore.h"
 #include "delay.h"
 #include "usart.h"
-#include "i2c.h"
 
- USART Serial3;
+// rtc timer
+static __IO uint32_t TimingDelay;
+__IO uint32_t Secondfraction = 0;
+__IO uint8_t Startevent = 0;
+RTC_InitTypeDef RTC_InitStructure;
+RTC_TimeTypeDef RTC_TimeStruct; 
+
+typedef struct {
+  uint8_t tab[12];
+} Table_TypeDef;
+
+void RTC_Config(void);
+void RTC_AlarmConfig(void);
+Table_TypeDef RTC_Get_Time(uint32_t Secondfraction , RTC_TimeTypeDef* RTC_TimeStructure );
+
+//
+ USART Serial6;
  
 int main(void) {
-//	int16_t i = 0;
-//	const int rxbufsize = 64;
-//	char rxbuf[rxbufsize];
 	char printbuf[64];
-	uint32_t tmp32, rtctime = 0;
+//	uint32_t tmp32;
 
+	RTC_Config();
+	
 	TIM2_timer_start();
 
-	usart_begin(&Serial3, USART3, PC11, PC10, 19200);
-	usart_print(&Serial3, "\r\nWelcome to USART3.\r\n\r\n");
-
-	i2c_begin(&Wire1, 100000);
-//	ST7032i_Init();
-
-//	ST7032i_Set_Contrast(44);
-//	ST7032i_Print_String((const int8_t *) "Welcome to lcd.");
+	usart_begin(&Serial6, USART6, PC7, PC6, 19200); // 7 6
+	usart_print(&Serial6, "\r\nWelcome to USART.\r\n\r\n");
 
 	delay_ms(500);
-//	ST7032i_Command_Write(0x01);
 
-	//Receive character from COM and put it on LCD
 	while (1) {
 
-		usart_print(&Serial3, ".");
-		i2c_receive(&Wire1, B1101000, 0, (uint8_t *) &tmp32, 3);
-		if (rtctime != (tmp32 & 0xffffff)) {
-			rtctime = tmp32 & 0xffffff;
-			sprintf(printbuf, "%02x:%02x:%02x\r\n", UINT8(rtctime>>16),
-					UINT8(rtctime>>8), UINT8(rtctime) );
-			usart_print(&Serial3, printbuf);
-//			ST7032i_Set_DDRAM(((0 * 0x40) % 0x6c) + 0);
-//			ST7032i_Print_String((int8_t *) printbuf);
-			if ((rtctime & 0xff) == 0) {
-				i2c_receive(&Wire1, B1101000, 3, (uint8_t *) &tmp32, 4);
-				sprintf(printbuf, "20%02x %02x/%02x (%x)", UINT8(tmp32>>24),
-						UINT8(tmp32>>16), UINT8(tmp32>>8), UINT8(tmp32) );
-				usart_print(&Serial3, printbuf);
-//				ST7032i_Set_DDRAM(((1 * 0x40) % 0x6c) + 0);
-//				ST7032i_Print_String((int8_t *) printbuf);
-			}
-		}
-		delay_ms(50);
+		    /* Check on the event 'start'*/
+    if(Startevent != 0x0) {
+       /* Get the RTC sub second fraction */
+       Secondfraction = 1000 - ((uint32_t)((uint32_t)RTC_GetSubSecond() * 1000) / (uint32_t)0x3FF);
+    } else {
+      /* Idle */
+      Secondfraction =0x0;
+    }
+    
+    /* Get the Curent time */
+    RTC_GetTime(RTC_Format_BCD, &RTC_TimeStruct);
+    
+    /* Display the curent time and the sub second on the LCD */
+    RTC_Get_Time(Secondfraction , &RTC_TimeStruct);
+		
+		usart_print(&Serial6, ".");
+		sprintf(printbuf, "millis = %dl\r\n", millis()),
+		usart_print(&Serial6, printbuf);
+
+		delay_ms(250);
 	}
 }
 
+/**
+  * @brief  Configures the RTC peripheral by selecting the clock source.
+  * @param  None
+  * @retval None
+  */
+void RTC_Config(void)
+{
+  RTC_TimeTypeDef  RTC_TimeStructure;
+  
+  /* Enable the PWR clock */
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
+
+  /* Allow access to RTC */
+  PWR_BackupAccessCmd(ENABLE);
+  
+  /* Reset RTC Domain */
+  RCC_BackupResetCmd(ENABLE);
+  RCC_BackupResetCmd(DISABLE);
+  
+  /* Enable the LSE OSC */
+  RCC_LSEConfig(RCC_LSE_ON);
+
+  /* Wait till LSE is ready */  
+  while(RCC_GetFlagStatus(RCC_FLAG_LSERDY) == RESET)
+  {
+  }
+
+  /* Select the RTC Clock Source */
+  RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);
+  
+  /* Configure the RTC data register and RTC prescaler */
+  RTC_InitStructure.RTC_AsynchPrediv = 0x1F;
+  RTC_InitStructure.RTC_SynchPrediv  = 0x3FF;
+  RTC_InitStructure.RTC_HourFormat   = RTC_HourFormat_24;
+  RTC_Init(&RTC_InitStructure);
+  
+  /* Set the time to 00h 00mn 00s AM */
+  RTC_TimeStructure.RTC_H12     = RTC_H12_AM;
+  RTC_TimeStructure.RTC_Hours   = 0x00;
+  RTC_TimeStructure.RTC_Minutes = 0x00;
+  RTC_TimeStructure.RTC_Seconds = 0x00;  
+  RTC_SetTime(RTC_Format_BCD, &RTC_TimeStructure);
+}
+
+
+/**
+  * @brief  Configures the RTC Alarm.
+  * @param  None
+  * @retval None
+  */
+void RTC_AlarmConfig(void)
+{
+//  EXTI_InitTypeDef EXTI_InitStructure;
+  RTC_AlarmTypeDef RTC_AlarmStructure;
+  NVIC_InitTypeDef NVIC_InitStructure;
+  
+  /* EXTI configuration */
+//  EXTI_ClearITPendingBit(EXTI_Line17);
+//  EXTI_InitStructure.EXTI_Line = EXTI_Line17;
+//  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+//  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;
+//  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+//  EXTI_Init(&EXTI_InitStructure);
+  
+  /* Enable the RTC Alarm Interrupt */
+  NVIC_InitStructure.NVIC_IRQChannel = RTC_Alarm_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
+ 
+  /* Set the alarmA Masks */
+  RTC_AlarmStructure.RTC_AlarmMask = RTC_AlarmMask_All;
+  RTC_SetAlarm(RTC_Format_BCD, RTC_Alarm_A, &RTC_AlarmStructure);
+  
+  /* Set AlarmA subseconds and enable SubSec Alarm : generate 8 interripts per Second */
+  RTC_AlarmSubSecondConfig(RTC_Alarm_A, 0xFF, RTC_AlarmSubSecondMask_SS14_5);
+
+  /* Enable AlarmA interrupt */
+  RTC_ITConfig(RTC_IT_ALRA, ENABLE);
+
+}
+
+
+/**
+  * @brief  Returns the current time and sub second.
+  * @param  Secondfraction: the sub second fraction.
+  * @param  RTC_TimeStructure : pointer to a RTC_TimeTypeDef structure that 
+  *         contains the current time values. 
+  * @retval table : return current time and sub second in a table form
+  */
+Table_TypeDef RTC_Get_Time(uint32_t Secondfraction , RTC_TimeTypeDef* RTC_TimeStructure )
+{
+  Table_TypeDef table2;
+
+  /* Fill the table2 fields with the current Time*/
+  table2.tab[0] = (((uint8_t)(RTC_TimeStructure->RTC_Hours & 0xF0) >> 0x04) + 0x30);
+  table2.tab[1]  = (((uint8_t)(RTC_TimeStructure->RTC_Hours & 0x0F))+ 0x30);
+  table2.tab[2]  = 0x3A;
+  
+  table2.tab[3]  = (((uint8_t)(RTC_TimeStructure->RTC_Minutes & 0xF0) >> 0x04) + 0x30);
+  table2.tab[4]  =(((uint8_t)(RTC_TimeStructure->RTC_Minutes & 0x0F))+ (uint8_t)0x30);
+  table2.tab[5]  = 0x3A;
+
+  table2.tab[6]   = (((uint8_t)(RTC_TimeStructure->RTC_Seconds & 0xF0) >> 0x04)+ 0x30);
+  table2.tab[7]   = (((uint8_t)(RTC_TimeStructure->RTC_Seconds & 0x0F)) + 0x30);
+  table2.tab[8]   = 0x2E;
+  
+  table2.tab[9]   = (uint8_t)((Secondfraction / 100) + 0x30);
+  table2.tab[10]  = (uint8_t)(((Secondfraction % 100 ) / 10) +0x30);
+  table2.tab[11]  =  (uint8_t)((Secondfraction % 10) +0x30);
+  
+  /* return table2 */
+  return table2;
+}

@@ -114,7 +114,7 @@
         <sRfunc>1</sRfunc>
         <sRbox>1</sRbox>
         <tLdApp>1</tLdApp>
-        <tGomain>0</tGomain>
+        <tGomain>1</tGomain>
         <tRbreak>1</tRbreak>
         <tRwatch>1</tRwatch>
         <tRmem>1</tRmem>
@@ -123,7 +123,7 @@
         <tRtrace>1</tRtrace>
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
-        <nTsel>13</nTsel>
+        <nTsel>1</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -134,7 +134,7 @@
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
         <tIfile></tIfile>
-        <pMon>STLink\ST-LINKIII-KEIL_SWO.dll</pMon>
+        <pMon>BIN\UL2CM3.DLL</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
@@ -160,14 +160,14 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2CM3</Key>
-          <Name>-O207 -S0 -C0 -FO7 -FD20000000 -FC800 -FN1 -FF0STM32F4xx_1024 -FS08000000 -FL0100000)</Name>
+          <Name>-UM0390MEE -O143 -S0 -C0 -P00 -N00("ARM CoreSight JTAG-DP") -D00(4BA00477) -L00(4) -N01("Unknown JTAG device") -D01(06413041) -L01(5) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC800 -FN1 -FF0STM32F4xx_1024 -FS08000000 -FL0100000</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint>
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>66</LineNumber>
+          <LineNumber>44</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -176,71 +176,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>C:\Users\Sin\Documents\github\ARMWork\stm32f4-usart\i2c.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>106</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>C:\Users\Sin\Documents\github\ARMWork\stm32f4-usart\i2c.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
-          <LineNumber>116</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>C:\Users\Sin\Documents\github\ARMWork\stm32f4-usart\i2c.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>3</Number>
-          <Type>0</Type>
-          <LineNumber>134</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>C:\Users\Sin\Documents\github\ARMWork\stm32f4-usart\i2c.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>4</Number>
-          <Type>0</Type>
-          <LineNumber>151</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>C:\Users\Sin\Documents\github\ARMWork\stm32f4-usart\i2c.c</Filename>
+          <Filename>C:\Users\Sin\Documents\github\ARMWork\stm32f4-usart\main.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
@@ -249,9 +185,40 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>tmp32</ItemText>
+          <ItemText>RTC_TimeStruct</ItemText>
+        </Ww>
+        <Ww>
+          <count>1</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Secondfraction</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>tmpreg</ItemText>
         </Ww>
       </WatchWindow1>
+      <MemoryWindow1>
+        <Mm>
+          <WinNumber>1</WinNumber>
+          <SubType>2</SubType>
+          <ItemText>0x40021000</ItemText>
+        </Mm>
+      </MemoryWindow1>
+      <MemoryWindow2>
+        <Mm>
+          <WinNumber>2</WinNumber>
+          <SubType>2</SubType>
+          <ItemText>0x40013800</ItemText>
+        </Mm>
+      </MemoryWindow2>
+      <MemoryWindow3>
+        <Mm>
+          <WinNumber>3</WinNumber>
+          <SubType>2</SubType>
+          <ItemText>0xE000E100</ItemText>
+        </Mm>
+      </MemoryWindow3>
       <DebugFlag>
         <trace>0</trace>
         <periodic>1</periodic>
@@ -275,7 +242,7 @@
         <aSer4>0</aSer4>
         <StkLoc>0</StkLoc>
         <TrcWin>0</TrcWin>
-        <newCpu>0</newCpu>
+        <newCpu>3</newCpu>
         <uProt>0</uProt>
       </DebugFlag>
       <Tracepoint>
@@ -285,8 +252,16 @@
       <LintConfigFile></LintConfigFile>
       <SystemViewers>
         <Entry>
-          <Name>System Viewer\I2C1</Name>
+          <Name>System Viewer\PWR</Name>
           <WinId>35905</WinId>
+        </Entry>
+        <Entry>
+          <Name>System Viewer\RCC</Name>
+          <WinId>35903</WinId>
+        </Entry>
+        <Entry>
+          <Name>System Viewer\RTC</Name>
+          <WinId>35904</WinId>
         </Entry>
       </SystemViewers>
     </TargetOption>
@@ -306,7 +281,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>171</TopLine>
+      <TopLine>166</TopLine>
       <CurrentLine>175</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\startup_stm32f4xx.s</PathWithFileName>
@@ -322,8 +297,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>119</TopLine>
-      <CurrentLine>120</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\i2c.c</PathWithFileName>
       <FilenameWithoutPath>i2c.c</FilenameWithoutPath>
@@ -336,10 +311,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>28</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>8</TopLine>
-      <CurrentLine>39</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>13</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -430,7 +405,7 @@
 
   <Group>
     <GroupName>armcore</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -458,8 +433,8 @@
       <Focus>0</Focus>
       <ColumnNumber>11</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>161</TopLine>
-      <CurrentLine>187</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\stm32library\armcore\usart.c</PathWithFileName>
       <FilenameWithoutPath>usart.c</FilenameWithoutPath>
@@ -506,8 +481,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>55</TopLine>
-      <CurrentLine>77</CurrentLine>
+      <TopLine>70</TopLine>
+      <CurrentLine>84</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\stm32library\armcore\delay.c</PathWithFileName>
       <FilenameWithoutPath>delay.c</FilenameWithoutPath>
@@ -610,8 +585,8 @@
       <Focus>0</Focus>
       <ColumnNumber>66</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>996</TopLine>
-      <CurrentLine>1011</CurrentLine>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c</PathWithFileName>
       <FilenameWithoutPath>stm32f4xx_i2c.c</FilenameWithoutPath>
@@ -663,6 +638,38 @@
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</PathWithFileName>
       <FilenameWithoutPath>stm32f4xx_usart.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>3</GroupNumber>
+      <FileNumber>23</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>902</TopLine>
+      <CurrentLine>909</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rtc.c</PathWithFileName>
+      <FilenameWithoutPath>stm32f4xx_rtc.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>3</GroupNumber>
+      <FileNumber>24</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\stm32library\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_pwr.c</PathWithFileName>
+      <FilenameWithoutPath>stm32f4xx_pwr.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
