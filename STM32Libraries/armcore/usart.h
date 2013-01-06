@@ -19,7 +19,7 @@ extern "C" {
 
 #include "gpio.h"
 
-#define USART_BUFFER_SIZE 512
+#define USART_BUFFER_SIZE 128
 typedef struct {
 	uint16_t buf[USART_BUFFER_SIZE];
 	int16_t head, tail;

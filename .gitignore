@@ -19,5 +19,3 @@
 *.zip
 *.gz
 .metadata
-*.uvgui.*
-*.uvopt

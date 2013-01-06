@@ -73,6 +73,8 @@ int main(void) {
 #ifdef DBG
 	usart_begin(&usart6, USART6, PC7, PC6, 115200);
 	usart_print(&usart6, "FatFs Testing.\r\n");
+	usart_flush(&usart6);
+	
 //	RCC_Configuration();
 
 //	GPIO_Configuration();
@@ -92,6 +94,7 @@ int main(void) {
 	{
 		sprintf(tmp, "res = %d f_mount\n", res);
 		usart_print(&usart6, tmp);
+		usart_flush(&usart6);
 	}
 #endif
 
@@ -105,6 +108,7 @@ int main(void) {
 	{
 		sprintf(tmp, "res = %d f_open MESSAGE.TXT\n", res);
 		usart_print(&usart6, tmp);
+		usart_flush(&usart6);
 	}
 #endif
 
@@ -124,6 +128,7 @@ int main(void) {
 			{
 				sprintf(tmp, "res = %d f_read MESSAGE.TXT\n", res);
 				usart_print(&usart6, tmp);
+			usart_flush(&usart6);
 			}
 #endif
 
@@ -136,6 +141,7 @@ int main(void) {
 			for (i = 0; i < BytesRead; i++)
 				//putchar(Buffer[i]);
 				usart_write(&usart6, Buffer[i]);
+			usart_flush(&usart6);
 #endif
 
 			if (BytesRead < sizeof(Buffer))
@@ -150,11 +156,13 @@ int main(void) {
 		{
 			sprintf(tmp, "res = %d f_close MESSAGE.TXT\n", res);
 			usart_print(&usart6, tmp);
+			usart_flush(&usart6);
 		}
 
 //		printf("Total = %d\n", Total);
 		sprintf(tmp, "Total = %d\n", Total);
 		usart_print(&usart6, tmp);
+		usart_flush(&usart6);
 #endif
 
 		res = f_open(&fil, "LENGTH.TXT", FA_CREATE_ALWAYS | FA_WRITE);
