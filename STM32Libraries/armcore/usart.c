@@ -24,7 +24,8 @@ enum {
 	USART6Serial
 };
 
-USARTRing rxring[6], txring[6];
+// for irq handlers
+USARTRing * rxring[6], * txring[6];
 
 void ring_clear(USARTRing * r) {
 	r->head = 0;
@@ -82,48 +83,48 @@ void usart_begin(USART * usx, USART_TypeDef * usartx, GPIOPin rx, GPIOPin tx, ui
 		af = GPIO_AF_USART1;
 		irq = USART1_IRQn;
 //		usx->usid = USART1Serial;
-		usx->rxring = &rxring[USART1Serial];
-		usx->txring = &txring[USART1Serial];
+		rxring[USART1Serial] = &usx->rxring;
+		txring[USART1Serial] = &usx->txring;
 	} else if (usx->USARTx == USART2) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
 		af = GPIO_AF_USART2;
 		irq = USART2_IRQn;
 //		usx->usid = USART2Serial;
 //		usx->USARTx = USART2;
-		usx->rxring = &rxring[USART2Serial];
-		usx->txring = &txring[USART2Serial];
+		rxring[USART2Serial] = &usx->rxring;
+		txring[USART2Serial] = &usx->txring;
 	} else if (usx->USARTx == USART3) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
 		af = GPIO_AF_USART3;
 		irq = USART3_IRQn;
 //		usx->usid = USART3Serial;
 //		usx->USARTx = USART3;
-		usx->rxring = &rxring[USART3Serial];
-		usx->txring = &txring[USART3Serial];
+		rxring[USART3Serial] = &usx->rxring;
+		txring[USART3Serial] = &usx->txring;
 	} else if (usx->USARTx == UART4) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);
 		af = GPIO_AF_UART4;
 		irq = UART4_IRQn;
 //		usx->usid = UART4Serial;
 //		usx->USARTx = UART4;
-		usx->rxring = &rxring[UART4Serial];
-		usx->txring = &txring[UART4Serial];
+		rxring[UART4Serial] = &usx->rxring;
+		txring[UART4Serial] = &usx->txring;
 	} else if (usx->USARTx == UART5) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART5, ENABLE);
 		af = GPIO_AF_UART5;
 		irq = UART5_IRQn;
 //		usx->usid = UART5Serial;
 //		usx->USARTx = UART5;
-		usx->rxring = &rxring[UART5Serial];
-		usx->txring = &txring[UART5Serial];
+		rxring[UART5Serial] = &usx->rxring;
+		txring[UART5Serial] = &usx->txring;
 	} else { // Serial6
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART6, ENABLE);
 		af = GPIO_AF_USART6;
 		irq = USART6_IRQn;
 //		usx->usid = USART6Serial;
 //		usx->USARTx = USART6;
-		usx->rxring = &rxring[USART6Serial];
-		usx->txring = &txring[USART6Serial];
+		rxring[USART6Serial] = &usx->rxring;
+		txring[USART6Serial] = &usx->txring;
 	}
 
 	GPIOMode(PinPort(rx), PinBit(rx), GPIO_Mode_AF, GPIO_Speed_50MHz,
@@ -148,13 +149,13 @@ void usart_begin(USART * usx, USART_TypeDef * usartx, GPIOPin rx, GPIOPin tx, ui
 
 	NVIC_InitStructure.NVIC_IRQChannel = irq;
 	// we want to configure the USART3 interrupts
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; // this sets the priority group of the USART3 interrupts
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; // this sets the priority group of the USART interrupts
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0; // this sets the subpriority inside the group
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;	// the USART3 interrupts are globally enabled
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;	// the USART interrupts are globally enabled
 	NVIC_Init(&NVIC_InitStructure);	// the properties are passed to the NVIC_Init function which takes care of the low level stuff
 	//
-	ring_clear(usx->rxring); //&rxring[usx->usid]);
-	ring_clear(usx->txring); //&txring[usx->usid]);
+	ring_clear(&usx->rxring); //rxring[usx->usid]);
+	ring_clear(&usx->txring); //txring[usx->usid]);
 	// finally this enables the complete USART3 peripheral
 	USART_Cmd(usx->USARTx, ENABLE);
 }
@@ -168,12 +169,12 @@ void usart_polling_write(USART * usx, const uint16_t w) {
 
 size_t usart_write(USART * usx, const uint16_t w) {
 	uint16_t waitcount = 3;
-	while (ring_is_full(usx->txring) && (waitcount > 0) ) {
+	while (ring_is_full(&usx->txring) && (waitcount > 0) ) {
 		delay_us(667);
 		waitcount--;
 	}
 	USART_ITConfig(usx->USARTx, USART_IT_TXE, DISABLE);
-	ring_enque(usx->txring, w); //&txring[usx->usid], w);
+	ring_enque(&usx->txring, w); //&txring[usx->usid], w);
 	USART_ITConfig(usx->USARTx, USART_IT_TXE, ENABLE);
 	return 1;
 }
@@ -192,7 +193,7 @@ uint16_t usart_polling_read(USART_TypeDef * USARTx /*usartx[usx]*/) {
 }
 
 uint16_t usart_read(USART * usx) {
-	uint16_t w = ring_deque(usx->rxring); //&rxring[usx->usid]);
+	uint16_t w = ring_deque(&usx->rxring); //&rxring[usx->usid]);
 	if (w == 0xffff)
 		return 0; // buffer is empty
 	return w;
@@ -200,7 +201,7 @@ uint16_t usart_read(USART * usx) {
 
 void usart_flush(USART * usx) {
 	uint32_t wtill = millis() + 100;
-	while (ring_count(usx->txring) > 0) {
+	while (ring_count(&usx->txring) > 0) {
 		if (millis() > wtill)
 			break;
 	}
@@ -218,17 +219,17 @@ void usart_flush(USART * usx) {
 	 }
 	 USART_ClearITPendingBit(usx->USARTx, USART_IT_TXE );
 	 */
-	ring_clear(usx->rxring); //&txring[usx->usid]);
+	ring_clear(&usx->rxring); //&txring[usx->usid]);
 }
 
 uint16_t usart_peek(USART * usx) {
 //	if ( buffer_count(&(usx->rxring)) == 0 )
 //		return 0xffff;
-	return ring_peek(usx->rxring); //	rxring[usx->usid].buf[rxring[usx->usid].tail];
+	return ring_peek(&usx->rxring); //	rxring[usx->usid].buf[rxring[usx->usid].tail];
 }
 
 uint16_t usart_available(USART * usx) {
-	return ring_count(usx->rxring);
+	return ring_count(&usx->rxring);
 	//return buffer_count(&rxring[usx->usid]);
 }
 
@@ -236,65 +237,64 @@ uint16_t usart_available(USART * usx) {
 
 void USART1_IRQHandler(void) {
 	if (USART_GetITStatus(USART1, USART_IT_RXNE )) {
-		ring_enque(&rxring[USART1Serial],
+		ring_enque(rxring[USART1Serial],
 				USART_ReceiveData(USART1 ));
 	}
 
 	if (USART_GetITStatus(USART1, USART_IT_TXE )) {
-		if (txring[USART1Serial].count
+		if (txring[USART1Serial]->count
 				== 0) {
 			USART_ITConfig(USART1, USART_IT_TXE, (FunctionalState) DISABLE);
 			USART_ClearITPendingBit(USART1, USART_IT_TXE );
 		} else {
-			USART_SendData(USART1, ring_deque(&txring[USART1Serial]) );
+			USART_SendData(USART1, ring_deque(txring[USART1Serial]) );
 		}
 	}
 }
 
 void USART2_IRQHandler(void) {
 	if (USART_GetITStatus(USART2, USART_IT_RXNE )) {
-		ring_enque(&rxring[USART2Serial]
-				, USART_ReceiveData(USART2 ));
+		ring_enque(rxring[USART2Serial], USART_ReceiveData(USART2 ));
 	}
 	if (USART_GetITStatus(USART2, USART_IT_TXE )) {
-		if (txring[USART2Serial].count
+		if (txring[USART2Serial]->count
 		== 0) {
 			USART_ITConfig(USART2, USART_IT_TXE, (FunctionalState) DISABLE);
 			USART_ClearITPendingBit(USART2, USART_IT_TXE );
 		} else {
-			USART_SendData(USART2, ring_deque(&txring[USART2Serial]));
+			USART_SendData(USART2, ring_deque(txring[USART2Serial]));
 		}
 	}
 }
 
 void USART3_IRQHandler(void) {
 	if (USART_GetITStatus(USART3, USART_IT_RXNE )) {
-		ring_enque(&rxring[USART3Serial],
+		ring_enque(rxring[USART3Serial],
 				USART_ReceiveData(USART3 ));
 	}
 
 	if (USART_GetITStatus(USART3, USART_IT_TXE )) {
-		if (txring[USART3Serial].count == 0) {
+		if (txring[USART3Serial]->count == 0) {
 			USART_ITConfig(USART3, USART_IT_TXE, (FunctionalState) DISABLE);
 			USART_ClearITPendingBit(USART3, USART_IT_TXE );
 		} else {
 			USART_SendData(USART3,
-					ring_deque(&txring[USART3Serial]));
+					ring_deque(txring[USART3Serial]));
 		}
 	}
 }
 
 void UART4_IRQHandler(void) {
 	if (USART_GetITStatus(UART4, USART_IT_RXNE )) {
-		ring_enque(&txring[UART4Serial], USART_ReceiveData(UART4 ));
+		ring_enque(txring[UART4Serial], USART_ReceiveData(UART4 ));
 	}
 
 	if (USART_GetITStatus(UART4, USART_IT_TXE )) {
-		if (txring[UART4Serial].count == 0) {
+		if (txring[UART4Serial]->count == 0) {
 			USART_ITConfig(UART4, USART_IT_TXE, (FunctionalState) DISABLE);
 			USART_ClearITPendingBit(UART4, USART_IT_TXE );
 		} else {
-			USART_SendData(UART4, ring_deque(&txring[UART4Serial]));
+			USART_SendData(UART4, ring_deque(txring[UART4Serial]));
 		}
 	}
 }
@@ -316,17 +316,17 @@ void UART4_IRQHandler(void) {
 */
 void USART6_IRQHandler(void) {
 	if (USART_GetITStatus(USART6, USART_IT_RXNE )) {
-		ring_enque(&rxring[USART6Serial],
+		ring_enque(rxring[USART6Serial],
 				USART_ReceiveData(USART6 ));
 	}
 
 	if (USART_GetITStatus(USART6, USART_IT_TXE )) {
-		if (txring[USART6Serial].count == 0) {
+		if (txring[USART6Serial]->count == 0) {
 			USART_ITConfig(USART6, USART_IT_TXE, (FunctionalState) DISABLE);
 			USART_ClearITPendingBit(USART6, USART_IT_TXE );
 		} else {
 			USART_SendData(USART6,
-					ring_deque(&txring[USART6Serial]));
+					ring_deque(txring[USART6Serial]));
 		}
 	}
 }
