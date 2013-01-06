@@ -76,7 +76,7 @@ void DS1307::writeRegisters(uint8_t addr, uint8_t *regvals, uint8_t num)
 
 
 boolean DS1307::updateTime() {
-	uint32 tmp;
+	uint32 tmp = time;
 	readRegisters((byte) DS1307_SEC, (byte *) &tmp, 3);
 	if (tmp != time) {
 		time = tmp & ((unsigned long)BITS_HR<<16 | BITS_MIN<<8 | BITS_SEC);

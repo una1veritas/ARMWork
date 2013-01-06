@@ -1,9 +1,9 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html><head>
-<title>Static Call Graph - [C:\Users\Sin\Documents\github\ARMWork\stm32f4-sdio_spi\Keil\stm32f4-sdio_spi.axf]</title></head>
+<title>Static Call Graph - [C:\Users\Sin\Documents\ARMWork\stm32f4-sdio_spi\Keil\stm32f4-sdio_spi.axf]</title></head>
 <body><HR>
-<H1>Static Call Graph for image C:\Users\Sin\Documents\github\ARMWork\stm32f4-sdio_spi\Keil\stm32f4-sdio_spi.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Sun Jan 06 01:27:57 2013
+<H1>Static Call Graph for image C:\Users\Sin\Documents\ARMWork\stm32f4-sdio_spi\Keil\stm32f4-sdio_spi.axf</H1><HR>
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Sun Jan 06 16:36:42 2013
 <BR><P>
 <H3>Maximum Stack Usage =        824 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1969,7 +1969,7 @@ Global Symbols
 <LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::writeRegister(unsigned char, unsigned char)
 </UL>
 
-<P><STRONG><a name="[96]"></a>DS1307::updateTime()</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, ds1307.o(.text))
+<P><STRONG><a name="[96]"></a>DS1307::updateTime()</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, ds1307.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = DS1307::updateTime() &rArr; DS1307::readRegisters(unsigned char, unsigned char*, unsigned char) &rArr; I2CWire::endRequest() &rArr; I2CWire::endTransmission(unsigned char) &rArr; i2c_request &rArr; i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[11e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS1307::readRegisters(unsigned char, unsigned char*, unsigned char)
