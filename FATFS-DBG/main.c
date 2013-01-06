@@ -1,23 +1,6 @@
 //******************************************************************************
 // STM32F4 Discovery SDCard + FatFs Test - CLIVE - SOURCER32@GMAIL.COM
 //******************************************************************************
-/*
-The SD Slot/Socket is expected to be wired as follows
- 
-CARDDETECT = PC2 (Retargetable)
-CLK = PC12
-CMD = PD2
-D0 = PC8
-D1 = PC9
-D2 = PC10
-D3 = PC11
-VDD = 3V
-VSS = GND
- 
-PC10 (SCLK) and PC12 (SDIN) potentially conflict with the CS43L22
- 
-The CMD, D0, D1, D2, D3 pins should have 33K or 47K pull up resistors.
-*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,7 +16,7 @@ The CMD, D0, D1, D2, D3 pins should have 33K or 47K pull up resistors.
 void NVIC_Configuration(void);
 void RCC_Configuration(void);
 void GPIO_Configuration(void);
-void USART6_Configuration(void);
+void USART2_Configuration(void);
 
 //******************************************************************************
 
@@ -90,9 +73,9 @@ int main(void)
 
 	GPIO_Configuration();
 
-  USART6_Configuration();
+  USART2_Configuration();
 
-	puts("FatFs Testing\n\r");
+	puts("FatFs Testing");
 #endif
 
 	memset(&fs32, 0, sizeof(FATFS));
@@ -135,7 +118,7 @@ int main(void)
 
 			Total += BytesRead;
 
-#ifdef DBG
+#ifdef DBGX
 			for(i=0; i<BytesRead; i++)
 				putchar(Buffer[i]);
 #endif
@@ -296,11 +279,10 @@ void RCC_Configuration(void)
 {
   /* --------------------------- System Clocks Configuration -----------------*/
   /* USART2 clock enable */
-	// -> 6
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART6, ENABLE);
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
 
   /* GPIOA clock enable */
-  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 }
 
 /**************************************************************************************/
@@ -310,21 +292,21 @@ void GPIO_Configuration(void)
   GPIO_InitTypeDef GPIO_InitStructure;
 
   /*-------------------------- GPIO Configuration ----------------------------*/
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_Init(GPIOC, &GPIO_InitStructure);
+  GPIO_Init(GPIOA, &GPIO_InitStructure);
 
   /* Connect USART pins to AF */
-  GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_USART6);  // USART2_TX
-  GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_USART6);  // USART2_RX
+  GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_USART2);  // USART2_TX
+  GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, GPIO_AF_USART2);  // USART2_RX
 }
 
 /**************************************************************************************/
 
-void USART6_Configuration(void)
+void USART2_Configuration(void)
 {
 	USART_InitTypeDef USART_InitStructure;
 
@@ -345,9 +327,9 @@ void USART6_Configuration(void)
 
   USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
 
-  USART_Init(USART6, &USART_InitStructure);
+  USART_Init(USART2, &USART_InitStructure);
 
-  USART_Cmd(USART6, ENABLE);
+  USART_Cmd(USART2, ENABLE);
 }
 
 //******************************************************************************
@@ -370,16 +352,16 @@ int fputc(int ch, FILE *f)
 	{
 		last = (int)'\r';
 
-  	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
+  	while(USART_GetFlagStatus(USART2, USART_FLAG_TXE) == RESET);
 
- 	  USART_SendData(USART6, last);
+ 	  USART_SendData(USART2, last);
 	}
 	else
 		last = ch;
 
-	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
+	while(USART_GetFlagStatus(USART2, USART_FLAG_TXE) == RESET);
 
-  USART_SendData(USART6, ch);
+  USART_SendData(USART2, ch);
 
   return(ch);
 }
@@ -388,9 +370,9 @@ int fgetc(FILE *f)
 {
 	char ch;
 
-	while(USART_GetFlagStatus(USART6, USART_FLAG_RXNE) == RESET);
+	while(USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == RESET);
 
-	ch = USART_ReceiveData(USART6);
+	ch = USART_ReceiveData(USART2);
 
   return((int)ch);
 }
@@ -409,16 +391,16 @@ void _ttywrch(int ch)
 	{
 		last = (int)'\r';
 
-  	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
+  	while(USART_GetFlagStatus(USART2, USART_FLAG_TXE) == RESET);
 
- 	  USART_SendData(USART6, last);
+ 	  USART_SendData(USART2, last);
 	}
 	else
 		last = ch;
 
-	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
+	while(USART_GetFlagStatus(USART2, USART_FLAG_TXE) == RESET);
 
-  USART_SendData(USART6, ch);
+  USART_SendData(USART2, ch);
 }
 
 void _sys_exit(int return_code)
