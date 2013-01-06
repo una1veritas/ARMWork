@@ -16,7 +16,7 @@
 void NVIC_Configuration(void);
 void RCC_Configuration(void);
 void GPIO_Configuration(void);
-void USART2_Configuration(void);
+void USART6_Configuration(void);
 
 //******************************************************************************
 
@@ -73,7 +73,7 @@ int main(void)
 
 	GPIO_Configuration();
 
-  USART2_Configuration();
+  USART6_Configuration();
 
 	puts("FatFs Testing");
 #endif
@@ -118,7 +118,7 @@ int main(void)
 
 			Total += BytesRead;
 
-#ifdef DBGX
+#ifdef DBG
 			for(i=0; i<BytesRead; i++)
 				putchar(Buffer[i]);
 #endif
@@ -278,11 +278,11 @@ void NVIC_Configuration(void)
 void RCC_Configuration(void)
 {
   /* --------------------------- System Clocks Configuration -----------------*/
-  /* USART2 clock enable */
-  RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+  /* USART6 clock enable */
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART6, ENABLE);
 
   /* GPIOA clock enable */
-  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
 }
 
 /**************************************************************************************/
@@ -292,21 +292,21 @@ void GPIO_Configuration(void)
   GPIO_InitTypeDef GPIO_InitStructure;
 
   /*-------------------------- GPIO Configuration ----------------------------*/
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2 | GPIO_Pin_3;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_Init(GPIOA, &GPIO_InitStructure);
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
 
   /* Connect USART pins to AF */
-  GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_USART2);  // USART2_TX
-  GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, GPIO_AF_USART2);  // USART2_RX
+  GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_USART6);  // USART6_TX
+  GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_USART6);  // USART6_RX
 }
 
 /**************************************************************************************/
 
-void USART2_Configuration(void)
+void USART6_Configuration(void)
 {
 	USART_InitTypeDef USART_InitStructure;
 
@@ -327,13 +327,13 @@ void USART2_Configuration(void)
 
   USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
 
-  USART_Init(USART2, &USART_InitStructure);
+  USART_Init(USART6, &USART_InitStructure);
 
-  USART_Cmd(USART2, ENABLE);
+  USART_Cmd(USART6, ENABLE);
 }
 
 //******************************************************************************
-// Hosting of stdio functionality through USART2
+// Hosting of stdio functionality through USART6
 //******************************************************************************
 
 #include <rt_misc.h>
@@ -352,16 +352,16 @@ int fputc(int ch, FILE *f)
 	{
 		last = (int)'\r';
 
-  	while(USART_GetFlagStatus(USART2, USART_FLAG_TXE) == RESET);
+  	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
 
- 	  USART_SendData(USART2, last);
+ 	  USART_SendData(USART6, last);
 	}
 	else
 		last = ch;
 
-	while(USART_GetFlagStatus(USART2, USART_FLAG_TXE) == RESET);
+	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
 
-  USART_SendData(USART2, ch);
+  USART_SendData(USART6, ch);
 
   return(ch);
 }
@@ -370,9 +370,9 @@ int fgetc(FILE *f)
 {
 	char ch;
 
-	while(USART_GetFlagStatus(USART2, USART_FLAG_RXNE) == RESET);
+	while(USART_GetFlagStatus(USART6, USART_FLAG_RXNE) == RESET);
 
-	ch = USART_ReceiveData(USART2);
+	ch = USART_ReceiveData(USART6);
 
   return((int)ch);
 }
@@ -391,16 +391,16 @@ void _ttywrch(int ch)
 	{
 		last = (int)'\r';
 
-  	while(USART_GetFlagStatus(USART2, USART_FLAG_TXE) == RESET);
+  	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
 
- 	  USART_SendData(USART2, last);
+ 	  USART_SendData(USART6, last);
 	}
 	else
 		last = ch;
 
-	while(USART_GetFlagStatus(USART2, USART_FLAG_TXE) == RESET);
+	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
 
-  USART_SendData(USART2, ch);
+  USART_SendData(USART6, ch);
 }
 
 void _sys_exit(int return_code)
