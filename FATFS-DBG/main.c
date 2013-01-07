@@ -9,21 +9,11 @@
 #include "stm32f4xx.h"
 #include "stm32f4_discovery_sdio_sd.h"
 
-/* Exported functions ------------------------------------------------------- */
-void RTC_Config(void);
-void RTC_TimeRegulate(void);
-void RTC_TimeShow(void);
-void RTC_AlarmShow(void);
-uint8_t USART_Scanf(uint32_t value);
+#include "ff.h"
+#include "diskio.h"
 
-#ifdef __GNUC__
-  /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
-     set to 'Yes') calls __io_putchar() */
-  #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
-#else
-  #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
-#endif /* __GNUC__ */
-
+#include "usart.h"
+#include "gpio.h"
 
 #define DBG
 
@@ -35,9 +25,15 @@ void GPIO_Configuration(void);
 void USART6_Configuration(void);
 
 //******************************************************************************
+/* Exported functions ------------------------------------------------------- */
 
-#include "ff.h"
-#include "diskio.h"
+#ifdef __GNUC__
+  /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
+     set to 'Yes') calls __io_putchar() */
+  #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+  #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif /* __GNUC__ */
 
 FRESULT res;
 FILINFO fno;
@@ -73,6 +69,12 @@ char *dec32(unsigned long i)
 
 //******************************************************************************
 
+<<<<<<< HEAD
+=======
+USART Serial6;
+#define STDSERIAL 	Serial6
+
+>>>>>>> origin/win@home
 int main(void)
 {
   /*!< At this stage the microcontroller clock setting is already configured,
@@ -85,14 +87,10 @@ int main(void)
 
   NVIC_Configuration(); /* Interrupt Config */
 
-
 	
 #ifdef DBG
-	RCC_Configuration();
 
-	GPIO_Configuration();
-
-  USART6_Configuration();
+	usart_begin(&Serial6, USART6, PC7, PC6, 115200);
 
 	puts("FatFs Testing\n");
 	
@@ -101,64 +99,6 @@ int main(void)
 	printf( "SYSCLK = %dl\n", RCC_Clocks.SYSCLK_Frequency);
 	printf( ", HCLK = %dl\n", RCC_Clocks.HCLK_Frequency);
 
-	  /* Output a message on Hyperterminal using printf function */
-  printf("\n\r  *********************** RTC Hardware Calendar Example ***********************\n\r");
-  
-	/*
-  if (RTC_ReadBackupRegister(RTC_BKP_DR0) != 0x32F2)
-  {  
-    // RTC configuration  //
-    RTC_Config();
-
-    // Configure the RTC data register and RTC prescaler //
-    RTC_InitStructure.RTC_AsynchPrediv = AsynchPrediv;
-    RTC_InitStructure.RTC_SynchPrediv = SynchPrediv;
-    RTC_InitStructure.RTC_HourFormat = RTC_HourFormat_24;
-   
-    // Check on RTC init //
-    if (RTC_Init(&RTC_InitStructure) == ERROR)
-    {
-//      printf("\n\r        /!\\***** RTC Prescaler Config failed *******!\\ \n\r");
-    }
-
-    // Configure the time register //
-    RTC_TimeRegulate(); 
-  }
-  else
-  {
-    // Check if the Power On Reset flag is set //
-    if (RCC_GetFlagStatus(RCC_FLAG_PORRST) != RESET)
-    {
-      printf("\r\n Power On Reset occurred....\n\r");
-    }
-    // Check if the Pin Reset flag is set //
-    else if (RCC_GetFlagStatus(RCC_FLAG_PINRST) != RESET)
-    {
-      printf("\r\n External Reset occurred....\n\r");
-    }
-
-    printf("\n\r No need to configure RTC....\n\r");
-    
-    // Enable the PWR clock //
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
-
-    // Allow access to RTC //
-    PWR_BackupAccessCmd(ENABLE);
-
-    // Wait for RTC APB registers synchronisation //
-    RTC_WaitForSynchro();
-
-    // Clear the RTC Alarm Flag //
-    RTC_ClearFlag(RTC_FLAG_ALRAF);
-
-    // Clear the EXTI Line 17 Pending bit (Connected internally to RTC Alarm) //
-    EXTI_ClearITPendingBit(EXTI_Line17);
-
-    // Display the RTC Time and Alarm //
-    RTC_TimeShow();
-    RTC_AlarmShow();
-  }
-	*/
 #endif
 
 	memset(&fs32, 0, sizeof(FATFS));
@@ -358,62 +298,9 @@ void NVIC_Configuration(void)
 
 /**************************************************************************************/
 
-void RCC_Configuration(void)
-{
-  /* --------------------------- System Clocks Configuration -----------------*/
-  /* USART6 clock enable */
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART6, ENABLE);
-
-  /* GPIOA clock enable */
-  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
-}
-
 /**************************************************************************************/
 
-void GPIO_Configuration(void)
-{
-  GPIO_InitTypeDef GPIO_InitStructure;
-
-  /*-------------------------- GPIO Configuration ----------------------------*/
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_Init(GPIOC, &GPIO_InitStructure);
-
-  /* Connect USART pins to AF */
-  GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_USART6);  // USART6_TX
-  GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_USART6);  // USART6_RX
-}
-
 /**************************************************************************************/
-
-void USART6_Configuration(void)
-{
-	USART_InitTypeDef USART_InitStructure;
-
-  /* USARTx configuration ------------------------------------------------------*/
-  /* USARTx configured as follow:
-        - BaudRate = 115200 baud
-        - Word Length = 8 Bits
-        - One Stop Bit
-        - No parity
-        - Hardware flow control disabled (RTS and CTS signals)
-        - Receive and transmit enabled
-  */
-  USART_InitStructure.USART_BaudRate = 115200;
-  USART_InitStructure.USART_WordLength = USART_WordLength_8b;
-  USART_InitStructure.USART_StopBits = USART_StopBits_1;
-  USART_InitStructure.USART_Parity = USART_Parity_No;
-  USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-
-  USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-
-  USART_Init(USART6, &USART_InitStructure);
-
-  USART_Cmd(USART6, ENABLE);
-}
 
 //******************************************************************************
 // Hosting of stdio functionality through USART6
@@ -423,7 +310,9 @@ void USART6_Configuration(void)
 
 #pragma import(__use_no_semihosting_swi)
 
-struct __FILE { int handle; /* Add whatever you need here */ };
+struct __FILE { 
+int handle; /* Add whatever you need here */ 
+};
 FILE __stdout;
 FILE __stdin;
 
@@ -434,30 +323,20 @@ int fputc(int ch, FILE *f)
 	if ((ch == (int)'\n') && (last != (int)'\r'))
 	{
 		last = (int)'\r';
-
-  	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
-
- 	  USART_SendData(USART6, last);
+  	usart_write(&STDSERIAL, last);
+		usart_flush(&STDSERIAL);
 	}
 	else
 		last = ch;
 
-	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
-
-  USART_SendData(USART6, ch);
+	usart_write(&STDSERIAL, last);
 
   return(ch);
 }
 
 int fgetc(FILE *f)
 {
-	char ch;
-
-	while(USART_GetFlagStatus(USART6, USART_FLAG_RXNE) == RESET);
-
-	ch = USART_ReceiveData(USART6);
-
-  return((int)ch);
+  return((int)usart_read(&STDSERIAL));
 }
 
 int ferror(FILE *f)
@@ -466,25 +345,7 @@ int ferror(FILE *f)
   return EOF;
 }
 
-void _ttywrch(int ch)
-{
-	static int last;
 
-	if ((ch == (int)'\n') && (last != (int)'\r'))
-	{
-		last = (int)'\r';
-
-  	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
-
- 	  USART_SendData(USART6, last);
-	}
-	else
-		last = ch;
-
-	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
-
-  USART_SendData(USART6, ch);
-}
 
 /**
   * @brief  Gets numeric values from the hyperterminal.
