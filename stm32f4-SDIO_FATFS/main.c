@@ -9,8 +9,6 @@
 #include "stm32f4xx.h"
 #include "stm32f4_discovery_sdio_sd.h"
 
-#include "armcore.h"
-#include "gpio.h"
 #include "usart.h"
 
 #define DBG
@@ -35,53 +33,55 @@ FATFS fs32;
 char* path;
 
 #if _USE_LFN
-static char lfn[_MAX_LFN + 1];
-fno.lfname = lfn;
-fno.lfsize = sizeof lfn;
+    static char lfn[_MAX_LFN + 1];
+    fno.lfname = lfn;
+    fno.lfsize = sizeof lfn;
 #endif
 
 //******************************************************************************
 
-char *dec32(unsigned long i) {
-	static char str[16];
-	char *s = str + sizeof(str);
+char *dec32(unsigned long i)
+{
+  static char str[16];
+  char *s = str + sizeof(str);
 
-	*--s = 0;
+  *--s = 0;
 
-	do {
-		*--s = '0' + (char) (i % 10);
-		i /= 10;
-	} while (i);
+  do
+  {
+    *--s = '0' + (char)(i % 10);
+    i /= 10;
+  }
+  while(i);
 
-	return (s);
+  return(s);
 }
 
 //******************************************************************************
+USART ser6;
 
-int main(void) {
-	/*!< At this stage the microcontroller clock setting is already configured,
-	 this is done through SystemInit() function which is called from startup
-	 file (startup_stm32f4xx.s) before to branch to application main.
-	 To reconfigure the default setting of SystemInit() function, refer to
-	 system_stm32f4xx.c file
-	 */
-	USART usart6;
-	char tmp[64];
+int main(void)
+{
+  /*!< At this stage the microcontroller clock setting is already configured,
+       this is done through SystemInit() function which is called from startup
+       file (startup_stm32f4xx.s) before to branch to application main.
+       To reconfigure the default setting of SystemInit() function, refer to
+       system_stm32f4xx.c file
+     */
 
-	NVIC_Configuration(); /* Interrupt Config */
+  NVIC_Configuration(); /* Interrupt Config */
 
 #ifdef DBG
-	usart_begin(&usart6, USART6, PC7, PC6, 115200);
-	usart_print(&usart6, "FatFs Testing.\r\n");
-	usart_flush(&usart6);
-	
 //	RCC_Configuration();
 
 //	GPIO_Configuration();
 
-// 	USART6_Configuration();
+//  USART6_Configuration();
 
-//	puts("FatFs Testing");
+	usart_begin(&ser6, USART6, PC7, PC6, 115200);
+	
+	usart_print(&ser6, "FatFs Testing");
+	usart_flush(&ser6);
 #endif
 
 	memset(&fs32, 0, sizeof(FATFS));
@@ -90,32 +90,24 @@ int main(void) {
 
 #ifdef DBG
 	if (res != FR_OK)
-		//printf("res = %d f_mount\n", res);
-	{
-		sprintf(tmp, "res = %d f_mount\n", res);
-		usart_print(&usart6, tmp);
-		usart_flush(&usart6);
-	}
+		printf("res = %d f_mount\n", res);
 #endif
-
+	
 	memset(&fil, 0, sizeof(FIL));
-
+	
 	res = f_open(&fil, "MESSAGE.TXT", FA_READ);
 
 #ifdef DBG
 	if (res != FR_OK)
-		//printf("res = %d f_open MESSAGE.TXT\n", res);
-	{
-		sprintf(tmp, "res = %d f_open MESSAGE.TXT\n", res);
-		usart_print(&usart6, tmp);
-		usart_flush(&usart6);
-	}
+		printf("res = %d f_open MESSAGE.TXT\n", res);
 #endif
-
-	if (res == FR_OK) {
+	
+	if (res == FR_OK)
+	{
 		UINT Total = 0;
 
-		while (1) {
+		while(1)
+		{
 			BYTE Buffer[512];
 			UINT BytesRead;
 			UINT i;
@@ -124,26 +116,19 @@ int main(void) {
 
 #ifdef DBG
 			if (res != FR_OK)
-			//	printf("res = %d f_read MESSAGE.TXT\n", res);
-			{
-				sprintf(tmp, "res = %d f_read MESSAGE.TXT\n", res);
-				usart_print(&usart6, tmp);
-			usart_flush(&usart6);
-			}
+				printf("res = %d f_read MESSAGE.TXT\n", res);
 #endif
-
+			
 			if (res != FR_OK)
 				break;
 
 			Total += BytesRead;
 
 #ifdef DBG
-			for (i = 0; i < BytesRead; i++)
-				//putchar(Buffer[i]);
-				usart_write(&usart6, Buffer[i]);
-			usart_flush(&usart6);
+			for(i=0; i<BytesRead; i++)
+				putchar(Buffer[i]);
 #endif
-
+			
 			if (BytesRead < sizeof(Buffer))
 				break;
 		}
@@ -152,65 +137,47 @@ int main(void) {
 
 #ifdef DBG
 		if (res != FR_OK)
-		//	printf("res = %d f_close MESSAGE.TXT\n", res);
-		{
-			sprintf(tmp, "res = %d f_close MESSAGE.TXT\n", res);
-			usart_print(&usart6, tmp);
-			usart_flush(&usart6);
-		}
+			printf("res = %d f_close MESSAGE.TXT\n", res);
 
-//		printf("Total = %d\n", Total);
-		sprintf(tmp, "Total = %d\n", Total);
-		usart_print(&usart6, tmp);
-		usart_flush(&usart6);
+		printf("Total = %d\n", Total);
 #endif
 
-		res = f_open(&fil, "LENGTH.TXT", FA_CREATE_ALWAYS | FA_WRITE);
+    res = f_open(&fil, "LENGTH.TXT", FA_CREATE_ALWAYS | FA_WRITE);
 
 #ifdef DBG
 		if (res != FR_OK)
-//			printf("res = %d f_open LENGTH.TXT\n", res);
-		{
-			sprintf(tmp, "res = %d f_open LENGTH.TXT\n", res);
-			usart_print(&usart6, tmp);
-		}
+			printf("res = %d f_open LENGTH.TXT\n", res);
 #endif
+	
+    if (res == FR_OK)
+    {
+      UINT BytesWritten;
+      char crlf[] = "\r\n";
+      char *s = dec32(Total);
 
-		if (res == FR_OK) {
-			UINT BytesWritten;
-			char crlf[] = "\r\n";
-			char *s = dec32(Total);
+      res = f_write(&fil, s, strlen(s), &BytesWritten);
 
-			res = f_write(&fil, s, strlen(s), &BytesWritten);
+      res = f_write(&fil, crlf, strlen(crlf), &BytesWritten);
 
-			res = f_write(&fil, crlf, strlen(crlf), &BytesWritten);
-
-			res = f_close(&fil); // LENGTH.TXT
+  		res = f_close(&fil); // LENGTH.TXT
 
 #ifdef DBG			
-			if (res != FR_OK)
-			//	printf("res = %d f_close LENGTH.TXT\n", res);
-			{
-				sprintf(tmp, "res = %d f_close LENGTH.TXT\n", res);
-				usart_print(&usart6, tmp);
-			}
+  		if (res != FR_OK)
+	  		printf("res = %d f_close LENGTH.TXT\n", res);
 #endif			
-		}
+    }
 	}
 
-	res = f_open(&fil, "DIR.TXT", FA_CREATE_ALWAYS | FA_WRITE);
+  res = f_open(&fil, "DIR.TXT", FA_CREATE_ALWAYS | FA_WRITE);
 
 #ifdef DBG
 	if (res != FR_OK)
-//		printf("res = %d f_open DIR.TXT\n", res);
-	{
-		sprintf(tmp, "res = %d f_open DIR.TXT\n", res);
-		usart_print(&usart6, tmp);
-	}
+		printf("res = %d f_open DIR.TXT\n", res);
 #endif
-
-	if (res == FR_OK) {
-		UINT BytesWritten;
+	
+  if (res == FR_OK)
+  {
+    UINT BytesWritten;
 
 		path = "";
 
@@ -218,30 +185,24 @@ int main(void) {
 
 #ifdef DBG
 		if (res != FR_OK)
-		//	printf("res = %d f_opendir\n", res);
-		{
-			sprintf(tmp, "res = %d f_opendir\n", res);
-			usart_print(&usart6, tmp);
-		}
+			printf("res = %d f_opendir\n", res);
 #endif
-
-		if (res == FR_OK) {
-			while (1) {
-				char str[256];
-				char *s = str;
+	
+		if (res == FR_OK)
+		{
+			while(1)
+			{
+        char str[256];
+        char *s = str;
 				char *fn;
 
 				res = f_readdir(&dir, &fno);
 
 #ifdef DBG
 				if (res != FR_OK)
-				//	printf("res = %d f_readdir\n", res);
-				{
-					sprintf(tmp, "res = %d f_readdir\n", res);
-					usart_print(&usart6, tmp);
-				}
+					printf("res = %d f_readdir\n", res);
 #endif
-
+			
 				if ((res != FR_OK) || (fno.fname[0] == 0))
 					break;
 
@@ -252,99 +213,173 @@ int main(void) {
 #endif
 
 #ifdef DBG
-				sprintf(tmp, "%c%c%c%c ", ((fno.fattrib & AM_DIR) ? 'D' : '-'),
-						((fno.fattrib & AM_RDO) ? 'R' : '-'),
-						((fno.fattrib & AM_SYS) ? 'S' : '-'),
-						((fno.fattrib & AM_HID) ? 'H' : '-'));
-				usart_print(&usart6, tmp);
+				printf("%c%c%c%c ",
+					((fno.fattrib & AM_DIR) ? 'D' : '-'),
+					((fno.fattrib & AM_RDO) ? 'R' : '-'),
+					((fno.fattrib & AM_SYS) ? 'S' : '-'),
+					((fno.fattrib & AM_HID) ? 'H' : '-') );
 
-				sprintf(tmp, "%10d ", fno.fsize);
-				usart_print(&usart6, tmp);
+				printf("%10d ", fno.fsize);
 
-				sprintf(tmp, "%s/%s\n", path, fn);
-				usart_print(&usart6, tmp);
+				printf("%s/%s\n", path, fn);
 #endif
-
-				*s++ = ((fno.fattrib & AM_DIR) ? 'D' : '-');
+				
+		  	*s++ = ((fno.fattrib & AM_DIR) ? 'D' : '-');
 				*s++ = ((fno.fattrib & AM_RDO) ? 'R' : '-');
-				*s++ = ((fno.fattrib & AM_SYS) ? 'S' : '-');
-				*s++ = ((fno.fattrib & AM_HID) ? 'H' : '-');
+  			*s++ = ((fno.fattrib & AM_SYS) ? 'S' : '-');
+	  		*s++ = ((fno.fattrib & AM_HID) ? 'H' : '-');
 
-				*s++ = ' ';
+        *s++ = ' ';
 
-				strcpy(s, dec32(fno.fsize));
-				s += strlen(s);
+        strcpy(s, dec32(fno.fsize));
+        s += strlen(s);
 
-				*s++ = ' ';
+        *s++ = ' ';
 
-				strcpy(s, path);
-				s += strlen(s);
+        strcpy(s, path);
+        s += strlen(s);
 
-				*s++ = '/';
+        *s++ = '/';
 
-				strcpy(s, fn);
-				s += strlen(s);
+        strcpy(s, fn);
+        s += strlen(s);
 
-				*s++ = 0x0D;
-				*s++ = 0x0A;
-				*s++ = 0;
+        *s++ = 0x0D;
+        *s++ = 0x0A;
+        *s++ = 0;
 
-				res = f_write(&fil, str, strlen(str), &BytesWritten);
+        res = f_write(&fil, str, strlen(str), &BytesWritten);
 			}
 		}
 
-		res = f_close(&fil); // DIR.TXT
+  	res = f_close(&fil); // DIR.TXT
 
 #ifdef DBG		
-		if (res != FR_OK) {
-			sprintf(tmp, "res = %d f_close DIR.TXT\n", res);
-			usart_print(&usart6, tmp);
-		}
+ 		if (res != FR_OK)
+  		printf("res = %d f_close DIR.TXT\n", res);
 #endif		
-	}
+  }
 
-	while (1)
-		; /* Infinite loop */
+  while(1); /* Infinite loop */
 }
 
 //******************************************************************************
 
-void NVIC_Configuration(void) {
-	NVIC_InitTypeDef NVIC_InitStructure;
+void NVIC_Configuration(void)
+{
+  NVIC_InitTypeDef NVIC_InitStructure;
 
-	/* Configure the NVIC Preemption Priority Bits */
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1 );
+  /* Configure the NVIC Preemption Priority Bits */
+  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
 
-	NVIC_InitStructure.NVIC_IRQChannel = SDIO_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
+  NVIC_InitStructure.NVIC_IRQChannel = SDIO_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
 }
 
 /**************************************************************************************/
 
-void _sys_exit(int return_code) {
-	label: goto label;
-	/* endless loop */
+
+//******************************************************************************
+// Hosting of stdio functionality through USART6
+//******************************************************************************
+
+#include <rt_misc.h>
+
+#pragma import(__use_no_semihosting_swi)
+
+struct __FILE { int handle; /* Add whatever you need here */ };
+FILE __stdout;
+FILE __stdin;
+
+int fputc(int ch, FILE *f)
+{
+	/*
+	static int last;
+
+	if ((ch == (int)'\n') && (last != (int)'\r'))
+	{
+		last = (int)'\r';
+
+  	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
+
+ 	  USART_SendData(USART6, last);
+	}
+	else
+		last = ch;
+
+	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
+
+  USART_SendData(USART6, ch);
+*/
+	usart_write(&ser6, ch);
+  return(ch);
+}
+
+int fgetc(FILE *f)
+{
+/*
+	char ch;
+
+	while(USART_GetFlagStatus(USART6, USART_FLAG_RXNE) == RESET);
+
+	ch = USART_ReceiveData(USART6);
+*/
+  return((int)usart_read(&ser6));
+}
+
+int ferror(FILE *f)
+{
+  /* Your implementation of ferror */
+  return EOF;
+}
+
+void _ttywrch(int ch)
+{
+	/*
+	static int last;
+
+	if ((ch == (int)'\n') && (last != (int)'\r'))
+	{
+		last = (int)'\r';
+
+  	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
+
+ 	  USART_SendData(USART6, last);
+	}
+	else
+		last = ch;
+
+	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
+
+  USART_SendData(USART6, ch);
+	*/	
+	usart_write(&ser6, ch);
+}
+
+void _sys_exit(int return_code)
+{
+label:  goto label;  /* endless loop */
 }
 
 //******************************************************************************
 
 #ifdef  USE_FULL_ASSERT
 /**
- * @brief  Reports the name of the source file and the source line number
- *         where the assert_param error has occurred.
- * @param  file: pointer to the source file name
- * @param  line: assert_param error line source number
- * @retval None
- */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t* file, uint32_t line)
 {
-	/* User can add his own implementation to report the file name and line number,
-	 ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
 
-	while(1); /* Infinite loop */
+  while(1); /* Infinite loop */
 }
 #endif
 

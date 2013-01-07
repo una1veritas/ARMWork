@@ -168,11 +168,15 @@ void usart_polling_write(USART * usx, const uint16_t w) {
 }
 
 size_t usart_write(USART * usx, const uint16_t w) {
-	uint16_t waitcount = 3;
-	while (ring_is_full(&usx->txring) && (waitcount > 0) ) {
-		delay_us(667);
-		waitcount--;
-	}
+//	static uint16 lastchar; for two or more conseq. returns
+	uint16_t waitcount = 7;
+	if ( w == '\r' || w == '\n' )
+		usart_flush(usx);
+	else
+		while (ring_is_full(&usx->txring) && (waitcount > 0) ) {
+			delay_us(667);
+			waitcount--;
+		}
 	USART_ITConfig(usx->USARTx, USART_IT_TXE, DISABLE);
 	ring_enque(&usx->txring, w); //&txring[usx->usid], w);
 	USART_ITConfig(usx->USARTx, USART_IT_TXE, ENABLE);
