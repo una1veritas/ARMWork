@@ -69,12 +69,9 @@ char *dec32(unsigned long i)
 
 //******************************************************************************
 
-<<<<<<< HEAD
-=======
 USART Serial6;
 #define STDSERIAL 	Serial6
 
->>>>>>> origin/win@home
 int main(void)
 {
   /*!< At this stage the microcontroller clock setting is already configured,
