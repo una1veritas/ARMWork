@@ -44,7 +44,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\</OutputDirectory>
-          <OutputName>stm32f4-stdperiph</OutputName>
+          <OutputName>HW_Calendar</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -125,12 +125,12 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>1</LimitSpeedToRealTime>
+            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
           </Simulator>
           <Target>
             <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
+            <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
@@ -337,7 +337,7 @@
             <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>1</OneElfS>
+            <OneElfS>0</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\stm32libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\stm32librarIes\CMSIS\Include;..\..\stm32libraries\CMSIS\STM32F4xx;..\..\stm32f4-stdperiph;..\..\stm32libraries\armcore;..\..\stm32libraries\armperiphlib</IncludePath>
+              <IncludePath>..\..\..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\HW_Calendar;..\..\..\..\..\STM32F4xx_DSP_StdPeriph_Lib_V1.0.1\Libraries\Utilities\STM32_EVAL\STM3240_41_G_EVAL;..\..\..\..\..\STM32F4xx_DSP_StdPeriph_Lib_V1.0.1\Libraries\Utilities\STM32_EVAL\Common</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -389,7 +389,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>usermain</GroupName>
+          <GroupName>targetmain</GroupName>
           <Files>
             <File>
               <FileName>startup_stm32f4xx.s</FileName>
@@ -397,9 +397,14 @@
               <FilePath>.\startup_stm32f4xx.s</FilePath>
             </File>
             <File>
-              <FileName>main.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\main.cpp</FilePath>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\main.h</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_it.c</FileName>
@@ -407,134 +412,94 @@
               <FilePath>..\stm32f4xx_it.c</FilePath>
             </File>
             <File>
+              <FileName>stm32f4xx_it.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\stm32f4xx_it.h</FilePath>
+            </File>
+            <File>
               <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\system_stm32f4xx.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_it.h</FileName>
+              <FileName>stm32f4xx_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\stm32f4xx_it.h</FilePath>
+              <FilePath>..\stm32f4xx_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm324xg_eval.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\STM32F4xx_DSP_StdPeriph_Lib_V1.0.1\Libraries\Utilities\STM32_EVAL\STM3240_41_G_EVAL\stm324xg_eval.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm324xg_eval.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\..\STM32F4xx_DSP_StdPeriph_Lib_V1.0.1\Libraries\Utilities\STM32_EVAL\STM3240_41_G_EVAL\stm324xg_eval.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_eval_legacy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\..\STM32F4xx_DSP_StdPeriph_Lib_V1.0.1\Libraries\Utilities\STM32_EVAL\Common\stm32_eval_legacy.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>armcore</GroupName>
-          <Files>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>I2CWire.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\I2CWire.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Print.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\Print.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>SPIBus.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\SPIBus.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Stream.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\Stream.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>USARTSerial.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\USARTSerial.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>armperiphlib</GroupName>
-          <Files>
-            <File>
-              <FileName>ST7032i.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armperiphlib\ChLCD\ST7032i.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>DS1307.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armperiphlib\RTC\DS1307.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>stdperiph_driver</GroupName>
+          <GroupName>stdperiph</GroupName>
           <Files>
             <File>
               <FileName>misc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_exti.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_exti.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_rcc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_rtc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rtc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_spi.c</FilePath>
+              <FilePath>..\..\..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
+              <FilePath>..\..\..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_tim.c</FileName>
+              <FileName>stm32f4xx_rtc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
+              <FilePath>..\..\..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rtc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_pwr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_pwr.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_syscfg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_syscfg.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_sdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c</FilePath>
             </File>
           </Files>
         </Group>

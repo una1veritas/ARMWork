@@ -3,7 +3,7 @@
 <title>Static Call Graph - [C:\Users\Sin\Documents\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image C:\Users\Sin\Documents\ARMWork\stm32f4-stdperiph\keil\stm32f4-stdperiph.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Sun Jan 06 16:35:59 2013
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Mon Jan 07 21:38:36 2013
 <BR><P>
 <H3>Maximum Stack Usage =        824 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -18,7 +18,8 @@ Functions with no stack information
 <P>
 <H3>
 Mutually Recursive functions
-</H3> <LI><a href="#[1e]">ADC_IRQHandler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1e]">ADC_IRQHandler</a><BR>
+</H3> <LI><a href="#[b]">SysTick_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[b]">SysTick_Handler</a><BR>
+ <LI><a href="#[1e]">ADC_IRQHandler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1e]">ADC_IRQHandler</a><BR>
 </UL>
 <P>
 <H3>
@@ -92,7 +93,7 @@ Function Pointers
  <LI><a href="#[30]">SPI2_IRQHandler</a> from startup_stm32f4xx.o(.text) referenced from startup_stm32f4xx.o(RESET)
  <LI><a href="#[3f]">SPI3_IRQHandler</a> from startup_stm32f4xx.o(.text) referenced from startup_stm32f4xx.o(RESET)
  <LI><a href="#[8]">SVC_Handler</a> from stm32f4xx_it.o(i.SVC_Handler) referenced from startup_stm32f4xx.o(RESET)
- <LI><a href="#[b]">SysTick_Handler</a> from systick.o(i.SysTick_Handler) referenced from startup_stm32f4xx.o(RESET)
+ <LI><a href="#[b]">SysTick_Handler</a> from startup_stm32f4xx.o(.text) referenced from startup_stm32f4xx.o(RESET)
  <LI><a href="#[5e]">SystemInit</a> from system_stm32f4xx.o(i.SystemInit) referenced from startup_stm32f4xx.o(.text)
  <LI><a href="#[e]">TAMP_STAMP_IRQHandler</a> from startup_stm32f4xx.o(.text) referenced from startup_stm32f4xx.o(RESET)
  <LI><a href="#[24]">TIM1_BRK_TIM9_IRQHandler</a> from startup_stm32f4xx.o(.text) referenced from startup_stm32f4xx.o(RESET)
@@ -288,6 +289,13 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[2]"></a>Reset_Handler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, startup_stm32f4xx.o(.text))
+<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
+</UL>
+<P><STRONG><a name="[b]"></a>SysTick_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, startup_stm32f4xx.o(.text))
+<BR><BR>[Calls]<UL><LI><a href="#[b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
+</UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
 <P><STRONG><a name="[1e]"></a>ADC_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f4xx.o(.text))
@@ -697,9 +705,9 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_AHB1PeriphClockCmd
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
 </UL>
 
 <P><STRONG><a name="[92]"></a>GPIO_Init</STRONG> (Thumb, 144 bytes, Stack size 20 bytes, stm32f4xx_gpio.o(i.GPIO_Init))
@@ -712,8 +720,8 @@ Global Symbols
 <P><STRONG><a name="[ef]"></a>GPIO_PinAFConfig</STRONG> (Thumb, 70 bytes, Stack size 20 bytes, stm32f4xx_gpio.o(i.GPIO_PinAFConfig))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = GPIO_PinAFConfig
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
 </UL>
 
 <P><STRONG><a name="[ec]"></a>GPIO_ResetBits</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(i.GPIO_ResetBits))
@@ -739,13 +747,13 @@ Global Symbols
 <P><STRONG><a name="[2b]"></a>I2C1_EV_IRQHandler</STRONG> (Thumb, 200 bytes, Stack size 8 bytes, i2c.o(i.I2C1_EV_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = I2C1_EV_IRQHandler &rArr; I2C_GetLastEvent
 </UL>
-<BR>[Calls]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;millis
+<BR>[Calls]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
+<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_AcknowledgeConfig
+<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;millis
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_SendData
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_ReceiveData
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_ITConfig
-<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetLastEvent
-<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_AcknowledgeConfig
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
@@ -837,31 +845,31 @@ Global Symbols
 <P><STRONG><a name="[a5]"></a>NVIC_Init</STRONG> (Thumb, 108 bytes, Stack size 16 bytes, misc.o(i.NVIC_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = NVIC_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_timer_start
+<BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_timer_start
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
 </UL>
 
 <P><STRONG><a name="[a]"></a>PendSV_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.PendSV_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
 <P><STRONG><a name="[ea]"></a>PinBit</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, gpio.o(i.PinBit))
-<BR><BR>[Called By]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pinMode
+<BR><BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pinMode
 <LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;digitalWrite
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
 </UL>
 
 <P><STRONG><a name="[ed]"></a>PinPort</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, gpio.o(i.PinPort))
-<BR><BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR><BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
 </UL>
 
 <P><STRONG><a name="[ee]"></a>PinSource</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, gpio.o(i.PinSource))
-<BR><BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<BR><BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
 </UL>
 
 <P><STRONG><a name="[91]"></a>RCC_AHB1PeriphClockCmd</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd))
@@ -870,9 +878,9 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[a1]"></a>RCC_APB1PeriphClockCmd</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(i.RCC_APB1PeriphClockCmd))
-<BR><BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_timer_start
+<BR><BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
+<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_timer_start
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_begin
 </UL>
 
 <P><STRONG><a name="[fd]"></a>RCC_APB2PeriphClockCmd</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(i.RCC_APB2PeriphClockCmd))
@@ -889,9 +897,6 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[8]"></a>SVC_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.SVC_Handler))
-<BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
-</UL>
-<P><STRONG><a name="[b]"></a>SysTick_Handler</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, systick.o(i.SysTick_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
 <P><STRONG><a name="[5e]"></a>SystemInit</STRONG> (Thumb, 88 bytes, Stack size 8 bytes, system_stm32f4xx.o(i.SystemInit))
@@ -953,7 +958,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM2_timer_start
 </UL>
 
-<P><STRONG><a name="[40]"></a>UART4_IRQHandler</STRONG> (Thumb, 92 bytes, Stack size 8 bytes, usart.o(i.UART4_IRQHandler))
+<P><STRONG><a name="[40]"></a>UART4_IRQHandler</STRONG> (Thumb, 98 bytes, Stack size 8 bytes, usart.o(i.UART4_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = UART4_IRQHandler &rArr; USART_ITConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SendData
@@ -966,7 +971,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
-<P><STRONG><a name="[31]"></a>USART1_IRQHandler</STRONG> (Thumb, 92 bytes, Stack size 8 bytes, usart.o(i.USART1_IRQHandler))
+<P><STRONG><a name="[31]"></a>USART1_IRQHandler</STRONG> (Thumb, 98 bytes, Stack size 8 bytes, usart.o(i.USART1_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = USART1_IRQHandler &rArr; USART_ITConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SendData
@@ -979,7 +984,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
-<P><STRONG><a name="[32]"></a>USART2_IRQHandler</STRONG> (Thumb, 92 bytes, Stack size 8 bytes, usart.o(i.USART2_IRQHandler))
+<P><STRONG><a name="[32]"></a>USART2_IRQHandler</STRONG> (Thumb, 98 bytes, Stack size 8 bytes, usart.o(i.USART2_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = USART2_IRQHandler &rArr; USART_ITConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SendData
@@ -992,7 +997,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
-<P><STRONG><a name="[33]"></a>USART3_IRQHandler</STRONG> (Thumb, 92 bytes, Stack size 8 bytes, usart.o(i.USART3_IRQHandler))
+<P><STRONG><a name="[33]"></a>USART3_IRQHandler</STRONG> (Thumb, 98 bytes, Stack size 8 bytes, usart.o(i.USART3_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = USART3_IRQHandler &rArr; USART_ITConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SendData
@@ -1005,7 +1010,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
-<P><STRONG><a name="[53]"></a>USART6_IRQHandler</STRONG> (Thumb, 92 bytes, Stack size 8 bytes, usart.o(i.USART6_IRQHandler))
+<P><STRONG><a name="[53]"></a>USART6_IRQHandler</STRONG> (Thumb, 98 bytes, Stack size 8 bytes, usart.o(i.USART6_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = USART6_IRQHandler &rArr; USART_ITConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_SendData
@@ -1081,7 +1086,7 @@ Global Symbols
 <P><STRONG><a name="[7]"></a>UsageFault_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.UsageFault_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
-<P><STRONG><a name="[af]"></a>USARTSerial::begin(unsigned)</STRONG> (Thumb, 24 bytes, Stack size 16 bytes, usartserial.o(i._ZN11USARTSerial5beginEj))
+<P><STRONG><a name="[af]"></a>USARTSerial::begin(unsigned)</STRONG> (Thumb, 28 bytes, Stack size 16 bytes, usartserial.o(i._ZN11USARTSerial5beginEj))
 <BR><BR>[Stack]<UL><LI>Max Depth = 156<LI>Call Chain = USARTSerial::begin(unsigned) &rArr; usart_begin &rArr; USART_Init &rArr; RCC_GetClocksFreq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
@@ -1207,8 +1212,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 <BR>[Address Reference Count : 5]<UL><LI> main.o(.constdata__ZTV6Stream)
-<LI> usartserial.o(.constdata__ZTV11USARTSerial)
 <LI> i2cwire.o(.constdata__ZTV7I2CWire)
+<LI> usartserial.o(.constdata__ZTV11USARTSerial)
 <LI> print.o(.constdata__ZTV5Print)
 <LI> st7032i.o(.constdata__ZTV7ST7032i)
 </UL>
@@ -1477,9 +1482,9 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;micros
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_write
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
+<BR>[Called By]<UL><LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
 <LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_write
 <LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::command(unsigned char)
 <LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::write(unsigned char)
 </UL>
@@ -1497,7 +1502,9 @@ Global Symbols
 <P><STRONG><a name="[dc]"></a>i2c_begin</STRONG> (Thumb, 334 bytes, Stack size 72 bytes, i2c.o(i.i2c_begin))
 <BR><BR>[Stack]<UL><LI>Max Depth = 140<LI>Call Chain = i2c_begin &rArr; I2C_Init &rArr; RCC_GetClocksFreq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinSource
+<BR>[Calls]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Cmd
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinAFConfig
+<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinSource
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinPort
@@ -1505,8 +1512,6 @@ Global Symbols
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOMode
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Init
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_ITConfig
-<LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Cmd
-<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinAFConfig
 </UL>
 <BR>[Called By]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2CWire::begin(unsigned)
 </UL>
@@ -1536,14 +1541,14 @@ Global Symbols
 <P><STRONG><a name="[f1]"></a>i2c_start_receive</STRONG> (Thumb, 246 bytes, Stack size 16 bytes, i2c.o(i.i2c_start_receive))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = i2c_start_receive &rArr; delay_us &rArr; micros
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
-<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;millis
-<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Send7bitAddress
-<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_ReceiveData
-<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
+<BR>[Calls]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
 <LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTART
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_CheckEvent
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_AcknowledgeConfig
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
+<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;millis
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Send7bitAddress
+<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_ReceiveData
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_receive
 </UL>
@@ -1551,15 +1556,15 @@ Global Symbols
 <P><STRONG><a name="[f3]"></a>i2c_start_send</STRONG> (Thumb, 318 bytes, Stack size 16 bytes, i2c.o(i.i2c_start_send))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = i2c_start_send &rArr; delay_us &rArr; micros
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
+<BR>[Calls]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetFlagStatus
+<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTART
+<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_CheckEvent
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;millis
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_SendData
 <LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Send7bitAddress
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_ITConfig
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GetFlagStatus
-<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTOP
-<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_GenerateSTART
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_CheckEvent
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_transmit
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_request
@@ -1627,12 +1632,12 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[97]"></a>millis</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, delay.o(i.millis))
-<BR><BR>[Called By]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_flush
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
+<BR><BR>[Called By]<UL><LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_send
 <LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;i2c_start_receive
 <LI><a href="#[2b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C1_EV_IRQHandler
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_flush
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[e6]"></a>pinMode</STRONG> (Thumb, 68 bytes, Stack size 24 bytes, gpio.o(i.pinMode))
@@ -1695,13 +1700,13 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USARTSerial::available()
 </UL>
 
-<P><STRONG><a name="[b0]"></a>usart_begin</STRONG> (Thumb, 450 bytes, Stack size 72 bytes, usart.o(i.usart_begin))
+<P><STRONG><a name="[b0]"></a>usart_begin</STRONG> (Thumb, 490 bytes, Stack size 72 bytes, usart.o(i.usart_begin))
 <BR><BR>[Stack]<UL><LI>Max Depth = 140<LI>Call Chain = usart_begin &rArr; USART_Init &rArr; RCC_GetClocksFreq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinSource
+<BR>[Calls]<UL><LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinAFConfig
+<LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinSource
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinPort
 <LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinBit
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOMode
@@ -1709,12 +1714,12 @@ Global Symbols
 <LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ITConfig
 <LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Cmd
 <LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_clear
-<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinAFConfig
+<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
 </UL>
 <BR>[Called By]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USARTSerial::begin(unsigned)
 </UL>
 
-<P><STRONG><a name="[b1]"></a>usart_flush</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, usart.o(i.usart_flush))
+<P><STRONG><a name="[b1]"></a>usart_flush</STRONG> (Thumb, 46 bytes, Stack size 16 bytes, usart.o(i.usart_flush))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = usart_flush
 </UL>
 <BR>[Calls]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;millis
@@ -1722,6 +1727,7 @@ Global Symbols
 <LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_clear
 </UL>
 <BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USARTSerial::flush()
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_write
 </UL>
 
 <P><STRONG><a name="[f9]"></a>usart_read</STRONG> (Thumb, 26 bytes, Stack size 12 bytes, usart.o(i.usart_read))
@@ -1732,10 +1738,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[b2]"></a>usart_write</STRONG> (Thumb, 70 bytes, Stack size 16 bytes, usart.o(i.usart_write))
+<P><STRONG><a name="[b2]"></a>usart_write</STRONG> (Thumb, 90 bytes, Stack size 16 bytes, usart.o(i.usart_write))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = usart_write &rArr; delay_us &rArr; micros
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_flush
 <LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ITConfig
 <LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_is_full
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_enque
@@ -1922,7 +1929,7 @@ Global Symbols
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[69]"></a>__sti___8_main_cpp</STRONG> (Thumb, 94 bytes, Stack size 24 bytes, main.o(i.__sti___8_main_cpp))
+<P><STRONG><a name="[69]"></a>__sti___8_main_cpp</STRONG> (Thumb, 98 bytes, Stack size 24 bytes, main.o(i.__sti___8_main_cpp))
 <BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = __sti___8_main_cpp &rArr; ST7032i::ST7032i(I2CWire&) &rArr; pinMode &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ST7032i::ST7032i(I2CWire&)
