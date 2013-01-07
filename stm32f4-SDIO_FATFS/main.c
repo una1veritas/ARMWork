@@ -259,7 +259,8 @@ int main(void)
   		printf("res = %d f_close DIR.TXT\n", res);
 #endif		
   }
-
+  printf("Good night.\n");
+	
   while(1); /* Infinite loop */
 }
 

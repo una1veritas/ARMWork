@@ -3,59 +3,7 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\Users\Sin\Documents\github\ARMWork\stm32f4-i2c_rtc\Keil\i2c-rtc.uvproj
-Project File Date:  12/29/2012
+C:\Users\Sin\Documents\ARMWork\stm32f4-i2c_rtc\Keil\i2c-rtc.uvproj
+Project File Date:  01/06/2013
 
 <h2>Output:</h2>
-Build target 'Target 1'
-compiling main.c...
-..\main.c(124): warning:  #111-D: statement is unreachable
-compiling st7032i.c...
-linking...
-i2c-rtc.axf: Error: L6218E: Undefined symbol AtomicExchange (referred from i2c1_drv.o).
-Target not created
-Build target 'Target 1'
-compiling i2c1_drv.c...
-..\i2c1_drv.c(21): warning:  #550-D: variable "s_I2C_NotUsed" was set but never used
-linking...
-Program Size: Code=12776 RO-data=536 RW-data=172 ZI-data=4788  
-"i2c-rtc.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Target 1'
-compiling i2c1_drv.c...
-..\i2c1_drv.c(21): warning:  #550-D: variable "s_I2C_NotUsed" was set but never used
-linking...
-Program Size: Code=12780 RO-data=536 RW-data=172 ZI-data=4788  
-"i2c-rtc.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-..\main.c(59): error:  #20: identifier "lcd" is undefined
-..\main.c(59): error:  #20: identifier "Wire1" is undefined
-..\main.c(123): warning:  #111-D: statement is unreachable
-Target not created
-compiling main.c...
-..\main.c(59): warning:  #223-D: function "ST7032i_Init" declared implicitly
-..\main.c(62): warning:  #223-D: function "ST7032i_Clear" declared implicitly
-..\main.c(63): warning:  #223-D: function "ST7032i_Print_String" declared implicitly
-..\main.c(124): warning:  #111-D: statement is unreachable
-..\main.c - 0 Error(s), 4 Warning(s).
-compiling main.c...
-..\main.c(59): warning:  #223-D: function "ST7032i_Init" declared implicitly
-..\main.c(62): warning:  #223-D: function "ST7032i_Clear" declared implicitly
-..\main.c(63): warning:  #223-D: function "ST7032i_Print_String" declared implicitly
-..\main.c(124): warning:  #111-D: statement is unreachable
-..\main.c - 0 Error(s), 4 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-..\main.c(125): warning:  #111-D: statement is unreachable
-linking...
-Program Size: Code=14204 RO-data=536 RW-data=208 ZI-data=4840  
-"i2c-rtc.axf" - 0 Error(s), 1 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-i2c_rtc\\Keil\\i2c-rtc.AXF" 
-Build target 'Target 1'
-linking...
-Program Size: Code=14204 RO-data=536 RW-data=208 ZI-data=4840  
-"i2c-rtc.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-i2c_rtc\\Keil\\i2c-rtc.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
