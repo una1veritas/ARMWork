@@ -19,8 +19,6 @@
 #MDK-ARM
 *.__i
 *.htm
-*.uvproj
-*.uvopt
 *.uvgui.*
 
 #Eclipse
