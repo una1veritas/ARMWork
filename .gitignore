@@ -1,3 +1,4 @@
+#General build artifacts
 *.mk
 *.o
 *.a
@@ -5,9 +6,7 @@
 *.hex
 *.axf
 *.d
-*.mk
 *.lst
-*.__i
 *.map
 *.plg
 *.lnp
@@ -16,6 +15,13 @@
 *.sct
 *.bak
 *.dep
-*.zip
-*.gz
+
+#MDK-ARM
+*.__i
+*.htm
+*.uvproj
+*.uvopt
+*.uvgui.*
+
+#Eclipse
 .metadata
