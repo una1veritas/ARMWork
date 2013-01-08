@@ -1,0 +1,91 @@
+** Board I/O Definitions **
+
+========================= STM32F4-Discovery(STM32F407VGT6) =========================
+-- i8080-Style LCD/OLED
+   Sorry,NOT Applicable!
+
+-- Serial LCD/OLED(Touch Input Disabled on Serial TFT/OLED Displays)
+   STM32 SPI2/Software SPI
+	RES   :   PB0
+	D/C   :   PB1
+	CS    :   PA15
+	SCK   :   PB10
+	MISO  :   PB14
+	MOSI  :   PB15
+
+-- Touch Input(Support ADS7843 Touchpanel Controller)
+   Sorry,NOT Applicable!
+
+-- SDCARD
+   STM32 SPI1
+	CS    :   PB12
+	SCK   :   PA5
+	MOSI  :   PA7
+	MISO  :   PA6
+	INS   :   N/A
+	WP	  :   N/A
+	PWR   :   N/A
+
+-- UART
+   STM32 USART2
+	TX	  :   PA2
+	RX    :   PA3
+
+-- RTC/Battery Backup Data
+   Sorry,NOT Applicable!
+   (but limited support, U need add 32kHz X'tal and Backup Battery!)
+
+
+
+
+============================== REDBULL(STM32F407ZGT6) ==============================
+-- i8080-Style LCD/OLED
+   STM32 FSMC
+/* PORT :  15| 14| 13| 12| 11| 10|  9|  8|  7|  6|  5|  4|  3|  2|  1|  0 */ 
+/* GPIOD: D1 |D0 |---|---|---|D15|D14|D13|CS |---|WR |RD |---|---|D3 |D2  */
+/* GPIOE: D12|D11|D10|D9 |D8 |D7 |D6 |D5 |D4 |---|---|---|---|---|---|--- */
+/* GPIOF: ---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|D/C */
+/* GPIOG: ---|---|---|CS |---|---|---|RST|---|---|---|---|---|---|---|--- */
+
+-- Serial LCD/OLED(Touch Input Disabled When use Serial TFT/OLED Displays)
+   STM32 SPI2/Software SPI
+	RES   :   PG8
+	D/C   :   PG7
+	CS    :   PB12
+	SCK   :   PB13
+	MOSI  :   PB15
+	MISO  :   PB14
+
+-- Touch Input(Support ADS7843 Touchpanel Controller)
+   Software SPI
+	PENIRQ:   PG7
+	CS    :   PB12
+	DCLK  :   PB13
+	DIN   :   PB15
+	DOUT  :   PB14
+
+-- Key Input
+	UP    :   PD3 (as USER2)
+	DOWN  :   PA8 (as USER1)
+	SET   :   PC13(as TAMPER)
+	ESC   :   PA0 (as WAKEUP)
+
+-- SDCARD
+   STM32 SDIO Interface
+	D0	  :   PC8
+	D1    :   PC9
+	D2    :   PC10
+	D3	  :   PC11
+	CLK   :   PC12
+	CMD   :   PD2
+	INS   :   N/A
+	WP	  :   N/A
+	PWR   :   N/A
+
+-- UART
+   STM32 USART1
+	TX	  :   PA9
+	RX    :   PA10
+
+-- RTC/Battery Backup Data
+   STM32 RTC

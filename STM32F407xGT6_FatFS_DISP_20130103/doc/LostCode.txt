@@ -1,0 +1,485 @@
+For BISHOUJO-MAID Nemuisan Only Garbage Texts
+
+
+#USE_EXT_SRAM    = DATA_IN_ExtSRAM
+
+
+#define BUFFER_SIZE	16348
+uint16_t TxBuffer[BUFFER_SIZE];
+uint16_t RxBuffer[BUFFER_SIZE];
+uint32_t WriteReadStatus = 0, Index = 0;
+uint16_t buffext[BUFFER_SIZE] __attribute__ ((section(".extram")));
+uint16_t buffnext[BUFFER_SIZE] __attribute__ ((section(".extram")));
+	uint16_t colour  __attribute__ ((section(".extram")));
+
+void Fill_Buffer(uint16_t *pBuffer, uint16_t BufferLenght, uint32_t Offset)
+{
+  uint16_t IndexTmp = 0;
+
+  /* Put in global buffer same values */
+  for (IndexTmp = 0; IndexTmp < BufferLenght; IndexTmp++ )
+  {
+    pBuffer[IndexTmp] = IndexTmp + Offset;
+  }
+}
+
+
+void SRAM_WriteBuffer2(uint16_t* pBuffer, uint16_t* pextBuffer, uint32_t NumHalfwordToWrite)
+{
+  for(; NumHalfwordToWrite != 0; NumHalfwordToWrite--) /*!< while there is data to write */
+  {
+    /*!< Transfer data to the memory */
+    *pextBuffer = *pBuffer++;
+    
+    /*!< Increment the address*/  
+   pextBuffer++;
+  }   
+}
+
+
+void SRAM_ReadBuffer2(uint16_t* pBuffer, uint16_t* pextBuffer, uint32_t NumHalfwordToRead)
+{
+  for(; NumHalfwordToRead != 0; NumHalfwordToRead--) /*!< while there is data to read */
+  {
+    /*!< Read a half-word from the memory */
+    *pBuffer++ = *pextBuffer;
+
+    /*!< Increment the address*/  
+   pextBuffer++;
+  }  
+}
+
+
+#ifdef DATA_IN_ExtSRAM
+/* sram testcode */
+	Fill_Buffer(TxBuffer, BUFFER_SIZE, 0x3212);
+	SRAM_WriteBuffer2(TxBuffer, buffext, BUFFER_SIZE);
+
+  /* Read data from FSMC SRAM memory */
+	SRAM_ReadBuffer2(RxBuffer, buffext, BUFFER_SIZE);
+
+  /* Read back SRAM memory and check content correctness */   
+  for (Index = 0x00; (Index < BUFFER_SIZE) && (WriteReadStatus == 0); Index++)
+  {
+    if (RxBuffer[Index] != TxBuffer[Index])
+    {
+      WriteReadStatus = Index + 1;
+    }
+  }
+
+  if (WriteReadStatus == 0)
+  { 
+    /* OK */
+    /* Turn on LED1 */
+	printf("inai-san no opants \n");
+  }
+  else
+  { 
+    /* KO */
+    /* Turn on LED2 */
+	printf("nemui-san no pants \n");
+  }
+#endif
+
+
+
+
+
+	TIM5->CNT =0 ;
+	volatile uint32_t start = TIM5->CNT;
+
+	nx = width;
+	ny = height;
+	if((nx >1280)||(ny>1280)) goto png_exit;
+	if(nx >= MAX_X) nx = MAX_X;
+	if(ny >= MAX_Y) ny = MAX_Y;
+
+	/* Centering */
+	lx = (MAX_X - nx) / 2;
+	ly = (MAX_Y - ny) / 2;
+	Display_rect_if(lx,lx + nx - 1,ly,ly + ny - 1);
+
+	
+	row_stride = (png_get_rowbytes(read_ptr, read_info_ptr) + 3) & ~3;
+	/*row_stride =png_get_rowbytes(read_ptr, read_info_ptr);*/
+
+	row_buffer = png_malloc(read_ptr,row_stride);
+   
+	for(k = 0;k < ny;k++) {
+		png_read_row(read_ptr,row_buffer, NULL );
+	
+		for(i = 0,p = row_buffer;i < nx;i++) {
+		#if !defined(USE_SSD1332_SPI_OLED)
+			d = (*p++ >> 3) << 11;
+			d |= (*p++ >> 2) << 5;
+			d |= *p++ >> 3;
+			*p++;
+		#else
+			d = *p++ >> 3;
+			d |= (*p++ >> 2) << 5;
+			d |= (*p++ >> 3) << 11;
+			*p++;
+		#endif
+			Display_wr_dat_if(d);
+		}
+	}
+
+	/* Discard Rest Data if u need. */
+	if(height > ny){
+		i= height-ny;
+			for(k = 0;k < i;k++) {
+			png_read_row(read_ptr,row_buffer, NULL );
+		}
+	}
+	png_free(read_ptr,row_buffer);
+
+	volatile uint32_t end = TIM5->CNT;
+	ts_locate(TS_FILER_HEIGHT-1, 0,0);
+	xprintf("Decode in %duSec\n",end-start);
+
+
+
+#if 0 /* obsolete */
+#define ReadLCDData(x)					\
+	GPIO_RDConf(0); 					\
+	DISPLAY_PORT_CS->BRR   = CTRL_CS; 	\
+	DISPLAY_RD_CLR(); 					\
+	x = DISPLAY_DATAPORT; 				\
+	x = DISPLAY_DATAPORT; 				\
+	DISPLAY_RD_SET(); 					\
+	DISPLAY_PORT_CS->BSRR   = CTRL_CS; 	\
+	GPIO_RDConf(1);
+#endif
+
+
+#if 0
+/**************************************************************************/
+/*! 
+    Fooler Workaround.
+*/
+/**************************************************************************/
+/* Fool Workaround */
+void FSMC_RDConf(uint8_t read)
+{
+
+	FSMC_NORSRAMInitTypeDef  FSMC_NORSRAMInitStructure;
+	FSMC_NORSRAMTimingInitTypeDef  p;
+
+/*-- FSMC Configuration ------------------------------------------------------*/
+	if (read){
+		/* FSMC_Bank1_NORSRAMx configuration */
+	#if defined(USE_HX8312A_TFT)
+		p.FSMC_AddressSetupTime 		= 3;
+		p.FSMC_AddressHoldTime 			= 0;
+		p.FSMC_DataSetupTime 			= 16;
+	#else
+		p.FSMC_AddressSetupTime 		= 1;
+		p.FSMC_AddressHoldTime 			= 0;
+		p.FSMC_DataSetupTime 			= 9;
+	#endif
+		p.FSMC_BusTurnAroundDuration 	= 0;
+		p.FSMC_CLKDivision 				= 0;
+		p.FSMC_DataLatency 				= 0;
+		p.FSMC_AccessMode 				= FSMC_AccessMode_A;
+	}
+	else{
+		/* FSMC_Bank1_NORSRAMx configuration */
+		p.FSMC_AddressSetupTime 		= 5;
+		p.FSMC_AddressHoldTime 			= 0;
+		p.FSMC_DataSetupTime 			= 15;
+		p.FSMC_BusTurnAroundDuration 	= 0;
+		p.FSMC_CLKDivision 				= 0;
+		p.FSMC_DataLatency 				= 0;
+		p.FSMC_AccessMode 				= FSMC_AccessMode_A;
+	}
+
+	/* Color LCD configuration ------------------------------------ */
+	FSMC_NORSRAMInitStructure.FSMC_Bank 					= LCD_FSMC_BANKSELECT;
+	FSMC_NORSRAMInitStructure.FSMC_DataAddressMux 			= FSMC_DataAddressMux_Disable;
+	FSMC_NORSRAMInitStructure.FSMC_MemoryType 				= FSMC_MemoryType_SRAM;
+	FSMC_NORSRAMInitStructure.FSMC_MemoryDataWidth 			= FSMC_MemoryDataWidth_16b;
+	FSMC_NORSRAMInitStructure.FSMC_BurstAccessMode 			= FSMC_BurstAccessMode_Disable;
+	FSMC_NORSRAMInitStructure.FSMC_AsynchronousWait 		= FSMC_AsynchronousWait_Disable;
+	FSMC_NORSRAMInitStructure.FSMC_WaitSignalPolarity 		= FSMC_WaitSignalPolarity_Low;
+	FSMC_NORSRAMInitStructure.FSMC_WrapMode 				= FSMC_WrapMode_Disable;
+	FSMC_NORSRAMInitStructure.FSMC_WaitSignalActive 		= FSMC_WaitSignalActive_BeforeWaitState;
+	FSMC_NORSRAMInitStructure.FSMC_WriteOperation 			= FSMC_WriteOperation_Enable;
+	FSMC_NORSRAMInitStructure.FSMC_WaitSignal 				= FSMC_WaitSignal_Disable;
+	FSMC_NORSRAMInitStructure.FSMC_ExtendedMode 			= FSMC_ExtendedMode_Enable;
+	FSMC_NORSRAMInitStructure.FSMC_WriteBurst 				= FSMC_WriteBurst_Disable;
+	FSMC_NORSRAMInitStructure.FSMC_ReadWriteTimingStruct 	= &p;
+	FSMC_NORSRAMInitStructure.FSMC_WriteTimingStruct 		= &p;
+
+	FSMC_NORSRAMInit(&FSMC_NORSRAMInitStructure);   
+
+	/* Enable FSMC NOR/SRAM Bankx */
+	FSMC_NORSRAMCmd(LCD_FSMC_BANKSELECT, ENABLE);
+}
+
+/* Fool Workaround to Confirmed read */
+void GPIO_RDConf(uint8_t read)
+{
+	GPIO_InitTypeDef GPIO_InitStructure;
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOE |
+						   RCC_AHB1Periph_GPIOF | RCC_AHB1Periph_GPIOG ,ENABLE);
+
+	if(read) GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF;
+	else     GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_OUT;
+
+	/* Set PD.04(NOE), PD.05(NWE) as alternate function push pull */
+	DISPLAY_PORT_WR->BSRR  = CTRL_WR;
+	DISPLAY_PORT_RD->BSRR  = CTRL_RD;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4  | GPIO_Pin_5;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_Init(GPIOD, &GPIO_InitStructure);
+
+	/* Set D/C(RS and A0) Control to FSMC or GPIO */
+	DISPLAY_PORT_DC->BSRR   = CTRL_DC;
+#if defined(USE_HX8312A_TFT)
+	DISPLAY_PORT_DC->BRR   = CTRL_DC;
+#endif
+	GPIO_InitStructure.GPIO_Pin = CTRL_DC;
+	GPIO_Init(DISPLAY_PORT_DC, &GPIO_InitStructure);
+	
+	/* Set CS Control to FSMC or GPIO */
+	DISPLAY_PORT_CS->BSRR   = CTRL_CS;
+	GPIO_InitStructure.GPIO_Pin = CTRL_CS;
+	GPIO_Init(DISPLAY_PORT_CS, &GPIO_InitStructure);
+
+	FSMC_RDConf(read);
+
+}
+#endif
+
+
+#ifdef DATA_IN_ExtSRAM
+uint16_t colour  __attribute__ ((section(".extram")));
+#include "inapantsu.h"
+uint8_t  extbmp[sizeof(inapantsu)] __attribute__ ((section(".extram")));
+#endif
+
+#if 1	/* External SRAM Test */
+#if DATA_IN_ExtSRAM
+	colour = COL_RED;
+	for(;;){
+		Display_FillRect_If(0,MAX_X-1,0,MAX_Y-1,colour);
+		_delay_ms(400);
+		colour = COL_BLUE;
+		Display_FillRect_If(0,MAX_X-1,0,MAX_Y-1,colour);
+		_delay_ms(400);
+		colour = COL_RED;
+		Display_FillRect_If(0,MAX_X-1,0,MAX_Y-1,colour);
+		_delay_ms(400);
+		colour = COL_GREEN;
+		memcpy(extbmp,inapantsu,sizeof(inapantsu));
+		Display_draw_bmp_if((const uint8_t*)extbmp);
+		_delay_ms(500);
+	}
+#endif
+#endif
+
+
+#define READBUF_SIZE 4096
+uint8_t  recount = 0; 
+uint32_t jump =0;
+
+const int Frame_sampfreqs[4] = { 44100, 48000, 32000, 0 };
+const int Frame_bitrates[15] = { 0, 32000, 40000, 48000, 56000, 64000, 80000, 96000, 
+				  112000, 128000, 160000, 192000, 224000, 256000, 320000 };
+/*******************************************************************************
+* Function Name  : GetMP3MaxTime
+* Description    : calculate MP3 time
+* Input          : - MP3buffer: file system buffer
+*				   - buffersize: buffer size
+*				   - mp3filelen: file total size
+* Output         : None
+* Return         : MP3 time
+* Attention		 : None
+*******************************************************************************/
+static uint32_t GetMP3MaxTime(uint8_t *MP3buffer, uint16_t buffersize,uint32_t mp3filelen)
+{
+   uint32_t count = 0 ;	    /* ?CA?÷A1yƒÊA~O?U */
+   uint16_t val ;	        /* CAOƒÊOAAL?CA??aE?O! */
+   uint16_t i ;
+   uint8_t  XBR ;           /* XBR=1(VBR) XBR=0(CBR) */
+   uint8_t  bitrate_index;  /* }EIOAEE€Oy */
+   uint8_t  sample_index;   /* 2ENuAƒÊAEE€Oy */
+   uint8_t  padding_bit;	/* paddingIâ	*/
+   uint32_t framesize;	    /* O!3?÷E */
+   uint32_t mp3maxtime;	    /* 2\EAE}?aOOoAAeIaƒÊ\Iâ */
+   uint32_t maxframe;	    /* O!Ey */
+   uint32_t tag2end;		/* tag2?aEoIâOA */
+   uint8_t  start = 1;	    /* ?CA?ECEn÷A1yID3V2.3.0CnE?ƒÊATAG2 */
+
+   recount = 0 ;
+   jump = 0;
+   if(start)
+    {
+	  if(MP3buffer[0]==0x30&&MP3buffer[1]==0x26&&MP3buffer[2]==0xb2&&MP3buffer[3]==0x75)
+	     return  1;
+	  else if(MP3buffer[0]!='I'||MP3buffer[1]!='D'||MP3buffer[2]!='3') 
+	     goto decode;
+	  if(MP3buffer[3]!=0x03)
+		 return 1;
+      tag2end = 10+(MP3buffer[6]&0x7F)*0x200000+(MP3buffer[7]&0x7F)*0x400+(MP3buffer[8]&0x7F)*0x80+(MP3buffer[9]&0x7F);	/* ?AEaƒÊAƒÊ?tag2?aEoIâOA */
+      count = tag2end;
+      if(count>buffersize - 1)
+        {
+		  jump = count - buffersize ;
+		  start = 0; 
+		  return 0;
+		} 
+	 }
+
+decode:
+   val = MP3buffer[count] ;
+   while (((val & 0xfffa) != 0xfffa) && count < buffersize-1)
+   {
+	val <<= 8;
+	val |= MP3buffer[++count];
+   }
+
+   if(count>=buffersize-1) 
+    {
+	   if(MP3buffer[buffersize-1]==0xff)
+	    {
+		   recount = 1;
+		}
+	   
+	   return 0;
+	}
+
+   if(count + 47 >=buffersize-1)
+    {
+	  recount = 48;
+	  return 0;
+	}
+   
+    count++;
+   	bitrate_index = (MP3buffer[count])>>4;
+    sample_index = ((MP3buffer[count])>>2)&0x03;
+    padding_bit  = ((MP3buffer[count])>>1)&0x01; 
+
+	count = count + 2 ;
+    
+	for(i=count;i<count+36;i++)
+	 {
+	   if(MP3buffer[i]=='X'&&MP3buffer[i+1]=='i'&&MP3buffer[i+2]=='n'&&MP3buffer[i+3]=='g')
+	    {
+		   XBR = 1;
+		   goto framecount;
+		}
+	 }
+	 XBR=0;
+framecount:
+	if(XBR==0)   /* CBR */
+	 {
+	    framesize = (uint32_t)(((144 * Frame_bitrates[bitrate_index]) /
+        Frame_sampfreqs[sample_index])) + padding_bit ;
+		maxframe = (mp3filelen/framesize);
+	 }
+      
+     else  /* VBR */
+	 {
+	     count = count + 40;
+         maxframe=MP3buffer[count+3]+MP3buffer[count+2]*256+MP3buffer[count+1]*256*256+MP3buffer[count]*256*256*256;
+      }
+ 	  mp3maxtime = maxframe*26;
+	  start = 1; 
+	
+	  return mp3maxtime;
+}
+
+/*******************************************************************************
+* Function Name  : GetMP3Time
+* Description    : ?AEaMP32\EAE}?a
+* Input          : - path: MP3LaEAAE?÷
+* Output         : None
+* Return         : None
+* Attention		 : None
+*******************************************************************************/
+int GetMP3Time(FIL* fil, void *work, unsigned int sz_work)
+{  
+	int TotalTime=0;
+	uint16_t mp3recordstart=0;
+	UINT br;
+   if(fil->fsize != 0)
+   {
+      while(mp3recordstart < fil->fsize)              
+	  {
+	     mp3recordstart = mp3recordstart - recount + jump;	  
+		 f_read(fil, (uint8_t*)work, READBUF_SIZE, &br);  
+	
+		 if(TotalTime == 0)
+		 {
+		   TotalTime = GetMP3MaxTime((uint8_t*)work, READBUF_SIZE, fil->fsize);	
+		 } 
+		 else if(TotalTime == 1)
+		 {
+			break;
+		 }
+		 else
+		 {
+		    break;
+		 }
+		 mp3recordstart += READBUF_SIZE;	 			
+	  }
+   }
+   return TotalTime;
+}
+
+#include <stdio.h>
+#include <string.h>
+//Žê‰à•Å‰¹•ÅVBR‰€‘é, ”å›•Å, š×“o‹Í•ÅŒ‘šo"Xing"—V
+static int MP3_XingHeaderCheck(MP3FrameInfo *pMP3FrameInfo, uint8_t *xingReadPoint)
+{
+	uint32_t xingHeaderTotalFrames;
+	uint32_t xingHeaderFileSize;
+
+	uint8_t xingHeaderBuffer[8];
+
+	uint8_t *xingBuffer = xingReadPoint;
+
+	char *temp = strnstr(xingBuffer, (uint8_t *)"Xing",);	//Žê‰àšo’ZšoœuŒ›Š¬"Xing"
+	if(temp == NULL)
+	{
+		printf("No Xing Head!\r\n");
+		return -1;
+	}
+	else
+	{
+		printf("#Xing Head Exist!\r\n");
+
+		memset(xingHeaderBuffer, 0x00, 8);
+		memcpy(xingHeaderBuffer, temp+8,  8);
+		(((uint8_t  *)&(xingHeaderTotalFrames))[0]) = xingHeaderBuffer[0];	//‹b‹\‰£Œdœ{•¯Žâ
+		(((uint8_t  *)&(xingHeaderTotalFrames))[1]) = xingHeaderBuffer[1];
+		(((uint8_t  *)&(xingHeaderTotalFrames))[2]) = xingHeaderBuffer[2];
+		(((uint8_t  *)&(xingHeaderTotalFrames))[3]) = xingHeaderBuffer[3];
+		(((uint8_t  *)&(xingHeaderFileSize))[0]) = xingHeaderBuffer[4];		//‹b‹\œ{—ÂŽüŠC‹Æ
+		(((uint8_t  *)&(xingHeaderFileSize))[1]) = xingHeaderBuffer[5];
+		(((uint8_t  *)&(xingHeaderFileSize))[2]) = xingHeaderBuffer[6];
+		(((uint8_t  *)&(xingHeaderFileSize))[3]) = xingHeaderBuffer[7];
+
+		MSG_PRINTF("#XingHeaderTotalFrames: %d\r\n", xingHeaderTotalFrames);
+		MSG_PRINTF("#XingHeaderFileSize   : %d\r\n", xingHeaderFileSize);
+
+		//VBR—ÂŽüXing—V‰£Œdœ{Šu˜ö•¯Žâ =  œ{›Ÿ•û * ’^›Ÿ‰Ç™™•û /  ‰Ç™™‘È
+		uint32_t xingHeaderTimeInfo = (xingHeaderTotalFrames * (pMP3FrameInfo->outputSamps / pMP3FrameInfo->nChans)) / pMP3FrameInfo->samprate;
+		return xingHeaderTimeInfo;
+	}
+}
+
+
+
+png rendering speed su307395s.png
+Launchpad
+Ofast hard 		inlined 	331353uSec
+
+Ofast hard 		no inlined	331064uSec
+Ofast softfp  	no inlined	331054uSec
+Ofast soft  	no inlined	331130uSec
+
+Sourcery
+Ofast softfp  	no inlined	282337uSec
+Ofast softfp   	inlined		283377uSec

@@ -17,13 +17,12 @@ extern "C" {
 
 typedef struct _SPIBuffer {
 	SPI_TypeDef * SPIx;
-
-	SPI_InitTypeDef InitStruct;
+	SPI_InitTypeDef initStruct;
 	uint8 xbuf[256];
 	uint16 xindex;
 } SPIBuffer;
 
-void spi_begin(SPI_TypeDef * SPIx, SPIBuffer * spi, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss);
+void spi_begin(SPIBuffer * spi, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss);
 void spi_transfer(SPIBuffer * spi, uint8_t * data, uint16_t nbytes);
 void spi_setModes(SPIBuffer * spi, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst);
 

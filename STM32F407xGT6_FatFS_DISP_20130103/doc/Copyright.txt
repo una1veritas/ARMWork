@@ -1,0 +1,107 @@
+******************************************************************************
+  TFT/OLED Display Module & FatFs Test Routine for STM32F4 Series.
+  Since : 20111110
+  by Nemui Trinomius
+     http://nemuisan.blog.bai.ne.jp
+     nemuisan_kawausogasuki@live.jp
+******************************************************************************
+   Copyright (c) 2011-2013
+   - Nemui Trinomius (add REDBULL/STM32F4-Discovery Compatibility support.
+					  add SDIO/MMC FatFs HAL for STM32F4 Support.
+					  and TFT-LCD Module Controller drivers Support. )
+   All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions are met:
+
+   * Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+   * Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in
+     the documentation and/or other materials provided with the
+     distribution.
+   * Neither the name of the copyright holders nor the names of
+     contributors may be used to endorse or promote products derived
+     from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  POSSIBILITY OF SUCH DAMAGE. 
+******************************************************************************
+
+===!NOTICE!===
+Nemuisan uses following INTELLECTUAL PROPERTIES under each licence.
+Those sourcecode are included in this project.
+
+
+* STMicroelectronics CMSIS Libraries
+  STM32F4 DSP and standard peripherals library
+  STM32F105/7, STM32F2 and STM32F4 USB on-the-go Host and device library
+  http://www.st.com/software_license_agreement_liberty_v2
+
+* ChaN's FatFs and FatFs Control(e.g. xprintf()) Apprications
+  http://elm-chan.org/fsw/ff/00index_e.html
+  http://elm-chan.org/fsw/ff/en/appnote.html#license
+  
+* ChaN's TJpgDec Tiny JPEG Decompressor
+  http://elm-chan.org/fsw/tjpgd/00index.html
+  http://elm-chan.org/fsw/tjpgd/en/appnote.html#license
+ 
+* IJG JPEG Library
+  http://www.ijg.org
+ "this software is based in part on the work ofthe Independent JPEG Group".
+
+* libpng & zlib
+  http://www.libpng.org/pub/png/libpng.html
+  http://www.libpng.org/pub/png/src/libpng-LICENSE.txt
+  http://zlib.net/
+  http://zlib.net/zlib_license.html
+
+* giflib
+  http://giflib.sourceforge.net/
+  See ./lib/display/gif/giflib/COPYING
+
+* Helix MP3 Fixpoint Decoder
+  https://datatype.helixcommunity.org/Mp3dec.html
+  See ./lib/audio/helix/mp3/codec/fixpt/LICENSE.txt
+
+
+* M+ Bitmap Fonts for FONTX2 is free font.
+  http://members.at.infoseek.co.jp/yu_izumi/mplus/index.html
+  Yu Izumi thanks!
+
+* Kanamechou Fonts for FONTX2 is free font.
+  http://z.apps.atjp.jp/k12x10/
+  Zoroyoshi thanks!
+
+* K12x10 Fonts for FONTX2 is free font.
+  See ./lib/FONTX2/inc/fonts/KANAME.DOC
+  Takao Nakamura(in Mankai Seisakusho) and Ryuji Takibe thanks!
+
+* WADA Laboratory HOSOMARU Gothic Fonts FONTX2 is Free font.
+  http://en.sourceforge.jp/projects/jis2004/
+  Wada Laboratory and Rare Earth thanks!
+
+* Shinonome Fonts Family for FONTX2 is public domain font.
+  http://openlab.jp/efont/shinonome/
+  "/efont/" thanks!
+
+* Misaki Fonts for FONTX2 is free font.
+  http://www.geocities.jp/littlimi/misaki.htm
+  Num Kadoma thanks!
+
+* TanukiMagic Fonts is free font(Converted From TTF).
+  http://tanukifont.sblo.jp
+  Tanuki-Samurai thanks!
+  
+* Digital-7 Fonts is free font(Converted From TTF).
+  http://www.styleseven.com
+  Sizenko Alexander thanks!

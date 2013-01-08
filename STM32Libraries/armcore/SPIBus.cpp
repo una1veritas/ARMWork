@@ -20,7 +20,7 @@ void SPIBus::begin() {
   // a general purpose output port (it doesn't influence
   // SPI operations).
 
-  spi_begin(SPIx, spibuffer, pin_sck, pin_miso, pin_mosi, pin_nss); 
+  spi_begin(spibuffer, SPIx, pin_sck, pin_miso, pin_mosi, pin_nss); 
 
   // Warning: if the SS pin ever becomes a LOW INPUT then SPI 
   // automatically switches to Slave, so the data direction of 
@@ -35,42 +35,24 @@ void SPIBus::end() {
 
 void SPIBus::setBitOrder(uint8_t bitOrder)
 {
-	SPI_InitTypeDef SPI_InitStruct;
-	
-	SPI_InitStruct.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
-	SPI_InitStruct.SPI_Mode = SPI_Mode_Master;
-	SPI_InitStruct.SPI_DataSize = SPI_DataSize_8b;
-	SPI_InitStruct.SPI_CPOL = SPI_CPOL_Low;
-	SPI_InitStruct.SPI_CPHA = SPI_CPHA_1Edge;
-	SPI_InitStruct.SPI_NSS = SPI_NSS_Soft;
-	SPI_InitStruct.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
-	SPI_InitStruct.SPI_FirstBit = ( bitOrder == SPI_MSBFIRST ? SPI_FirstBit_MSB : SPI_FirstBit_LSB);
-	SPI_InitStruct.SPI_CRCPolynomial = SPI_CRC_Rx;
+	spibuffer->initStruct.SPI_FirstBit = ( bitOrder == SPI_MSBFIRST ? SPI_FirstBit_MSB : SPI_FirstBit_LSB);
 
-	SPI_Init(SPIx, &SPI_InitStruct);
+	SPI_Init(SPIx, &spibuffer->initStruct);
 
 }
 
 void SPIBus::setDataMode(uint8_t mode)
 {
-	SPI_InitTypeDef SPI_InitStruct;
+	spibuffer->initStruct.SPI_CPOL = ((mode & 2 == 0) ? SPI_CPOL_Low : SPI_CPOL_High );
+	spibuffer->initStruct.SPI_CPHA = ((mode & 1 == 0) ? SPI_CPHA_1Edge : SPI_CPHA_2Edge);
 	
-	SPI_InitStruct.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
-	SPI_InitStruct.SPI_Mode = SPI_Mode_Master;
-	SPI_InitStruct.SPI_DataSize = SPI_DataSize_8b;
-	SPI_InitStruct.SPI_CPOL = SPI_CPOL_Low;
-	SPI_InitStruct.SPI_CPHA = SPI_CPHA_1Edge;
-	SPI_InitStruct.SPI_NSS = SPI_NSS_Soft;
-	SPI_InitStruct.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
-	SPI_InitStruct.SPI_FirstBit = SPI_FirstBit_MSB;
-	SPI_InitStruct.SPI_CRCPolynomial = SPI_CRC_Rx;
-
-	SPI_Init(SPIx, &SPI_InitStruct);
+	SPI_Init(SPIx, &spibuffer->initStruct);
 }
 
-void SPIBus::setClockDivider(uint8_t rate)
-{
-//  SPCR = (SPCR & ~SPI_CLOCK_MASK) | (rate & SPI_CLOCK_MASK);
-//  SPSR = (SPSR & ~SPI_2XCLOCK_MASK) | ((rate >> 2) & SPI_2XCLOCK_MASK);
+void SPIBus::setClockDivider(uint16_t rate)
+{	
+	spibuffer->initStruct.SPI_BaudRatePrescaler = rate;
+	
+	SPI_Init(SPIx, &spibuffer->initStruct);
 }
 
