@@ -170,7 +170,7 @@ public:
 	  return 1; // assume success
 	}
 
-  inline void command(uint8_t value) {
+  virtual inline void command(uint8_t value) {
 	  send(value, LOW);
 	}
   

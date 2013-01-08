@@ -20,12 +20,12 @@
 
 #include <Print.h>
 #include <I2CWire.h>
-#include "CharacterLCD.h"
+#include "ChLCD/CharacterLCD.h"
 #endif
 
 
 
-class ST7032i : public Print {
+class ST7032i : public CharacterLCD {
 	static const byte DEFAULT_I2C_ADDRESS = B0111110;
 
 	uint8_t _displayfunction;
@@ -41,16 +41,16 @@ class ST7032i : public Print {
 	byte i2c_address;
 	GPIOPin pin_bklight;
 
-	void command(byte value);
-
 public:
 
 //	void init(I2CBuffer * );
 	ST7032i(I2CWire &);
 	void begin();
 
-   virtual size_t write(const uint8_t);
-	using Print::write;
+	using CharacterLCD::write;
+
+  virtual void send(uint8_t value, uint8_t dcswitch);
+
 	//#if ARDUINO >= 100
 //  virtual size_t println(void) { wrap(); return 1; }
 //#else
@@ -77,20 +77,8 @@ public:
 	void home();
 	void clear();
 	void setCursor(uint8_t c, uint8_t r);
-	void noDisplay();
 	void setContrast(byte c);
 
-	void display();
-	void noBlink();
-	void blink();
-	void noCursor();
-	void showCursor();
-	void scrollDisplayLeft();
-	void scrollDisplayRight();
-	void leftToRight();
-	void rightToLeft();
-	void autoscroll();
-	void noAutoscroll();
 	void createChar(uint8_t location, uint8_t charmap[]);
 
 	//	void ST7032i_backlightOn(ST7032i * lcd); // { digitalWrite(pin_bklight, LOW); }

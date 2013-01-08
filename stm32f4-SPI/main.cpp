@@ -19,28 +19,25 @@
 #include "delay.h"
 #include "I2CWire.h"
 #include "USARTSerial.h"
+#include "SPIBus.h"
 
 #include "ChLCD/ST7032i.h"
-#include "RTC/DS1307.h"
+#include "Boards/stm32f4_discovery.h"
 
 USARTSerial Serial6(USART6, PC7, PC6);
 I2CWire Wire1(I2C1, PB8, PB9);
 // periph devices
 ST7032i lcd(Wire1);
-DS1307 rtc(Wire1);
+SPIBus SPI1Bus();
 
 int main(void) {
-//	uint16_t bits;
-//	uint32_t intval = 40;
-	uint32_t tnow;
-	uint32 partsec;
-	uint32 millis_offset;
-	char tmp[128];
+	uint32 tnow;
+	char tmp[256];
 	uint16_t i = 0;
 	
 	TIM2_timer_start();
 
-	Serial6.begin(19200);
+	Serial6.begin(57600);
 
 	const char message[] = 
 			"This royal throne of kings, this scepter'd isle, \n"
@@ -73,115 +70,36 @@ int main(void) {
 	Serial6.println();
 	Serial6.flush();
 
-	GPIOMode(PinPort(PD12), 
-					(PinBit(PD12) | PinBit(PD13) | PinBit(PD14) | PinBit(PD15)), 
+	GPIOMode(PinPort(LED1), (PinBit(LED1) | PinBit(LED2) | PinBit(LED3) | PinBit(LED4)), 
 					OUTPUT, FASTSPEED, PUSHPULL, NOPULL);
 
 	Wire1.begin(100000);
-//	lcd.init(&I2C1Buffer);
 	lcd.begin();
 	lcd.setContrast(42);
 	lcd.print("Hello!");       // Classic Hello World
 	pinMode(PC3, OUTPUT);
 	digitalWrite(PC3, LOW);
-	delay_ms(1000);
-
-	lcd.clear();
-	lcd.print("Syncing timer..");
-	rtc.begin();
-	rtc.updateTime();
-	do {
-		delay_ms(10);
-	} while (!rtc.updateTime());
-	millis_offset = millis();
-	partsec = 0;
+	
+	for(i = 0; i < 3; i++) {
+		delay_ms(500);
+		lcd.noDisplay();
+		delay_ms(500);
+		lcd.display();
+	}
+	//	lcd.clear();
+	tnow = millis();
 	
 	while (1) {
 
-		tnow = millis() % 1000;
-		switch(tnow/100) {
-			case 0:
-			case 5:
-				digitalWrite(PD13, HIGH);
-				break;
-			case 1:
-				digitalWrite(PD13, LOW);
-				digitalWrite(PD14, HIGH);
-				break;
-			case 2:
-				digitalWrite(PD14, LOW);
-				digitalWrite(PD15, HIGH);
-				break;
-			case 3:
-				digitalWrite(PD15, LOW);
-				digitalWrite(PD12, HIGH);
-				break;
-			case 4:
-				digitalWrite(PD12, LOW);
-				digitalWrite(PD13, HIGH);
-				break;
-			case 6:
-				digitalWrite(PD13, LOW);
-				digitalWrite(PD12, HIGH);
-				break;
-			case 7:
-				digitalWrite(PD12, LOW);
-				digitalWrite(PD15, HIGH);
-				break;
-			case 8:
-				digitalWrite(PD15, LOW);
-				digitalWrite(PD14, HIGH);
-				break;
-			case 9:
-				digitalWrite(PD14, LOW);
-				digitalWrite(PD13, HIGH);
-				break;
-		}
-		//
-		
-		if ( partsec != ((millis() - millis_offset)%1000)/250 ) {
-			partsec = ((millis()-millis_offset)%1000)/250;
-			if ( I2C1Buffer.flagstatus & 0x80000000 ) {
-				Serial6.print(" I2C Status error ");
-				Serial6.println(I2C1Buffer.flagstatus, HEX);
-			}
-
-			if ( rtc.updateTime() ) {
-				lcd.setCursor(0, 1);
-				lcd.printByte((uint8)(rtc.time>>16));
-				lcd.print(':');
-				lcd.printByte((uint8)(rtc.time>>8));
-				lcd.print(':');
-				lcd.printByte((uint8)rtc.time);
-				lcd.print(' ');
-				lcd.printByte((uint8)(rtc.cal>>8));
-				lcd.print('/');
-				lcd.printByte((uint8)rtc.cal);
-				
-				Serial6.print("_counter_millis: ");
-			  Serial6.print((float)millis()/1000,3);
-			  Serial6.print(", ");
-				Serial6.print("Time: ");
-				Serial6.printByte((uint8)(rtc.time>>16));
-				Serial6.print(':');
-				Serial6.printByte((uint8)(rtc.time>>8));
-				Serial6.print(':');
-				Serial6.printByte((uint8)rtc.time);
-				rtc.updateCalendar();
-				Serial6.print(" ");
-				Serial6.printByte( (uint32)rtc.cal+0x20000000 );
-				Serial6.println();
-			}
-			
-
-			//		lcd.clear();
+		if (tnow / 200 != (millis() / 200) ) {
+			tnow = millis();
+			strncpy(tmp, message+((tnow/200) % messlen), 16);
+			tmp[16] = 0;
+			Serial6.println(tmp);
+			lcd.setCursor(0,1);
+			lcd.print(tmp);
 			lcd.setCursor(0, 0);
-			lcd.write((uint8_t *)message+((millis()/250)%(messlen-16)), 16);
-			if ( I2C1Buffer.flagstatus & 0x80000000 ) {
-				Serial6.print(" I2C Status error ");
-				Serial6.println(I2C1Buffer.flagstatus, HEX);
-			}
-
+			lcd.print(((tnow/200) % messlen));
 		}
 
 		char c = 0;
@@ -195,23 +113,12 @@ int main(void) {
 				tmp[i++] = c;
 			}
 			if ( strlen(tmp) and (c == 0x0d or c == 0x0a) ) {
-
-				if (tmp[0] == 't') {
-					rtc.time = strtol(tmp+1, 0, 16);
-					rtc.setTime(rtc.time);
-				} else if (tmp[0] == 'c') {
-					rtc.cal = strtol(tmp+1, 0, 16);
-					rtc.setCalendar(rtc.cal);
-				}
 				Serial6.print("> ");
-				Serial6.print(rtc.time, HEX);
-				Serial6.print(" ");
-				Serial6.print(rtc.cal, HEX);
 				Serial6.print("\n");
 				i = 0;
 			}
 		}
-		delay_ms(1);
+
 	}
 	return 0;
 }

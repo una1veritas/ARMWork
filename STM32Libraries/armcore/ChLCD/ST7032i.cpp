@@ -24,7 +24,7 @@
 #include "binary.h"
 #include "delay.h"
 #include "I2CWire.h"
-#include "ST7032i.h"
+#include "ChLCD/ST7032i.h"
 
 // private constants
 
@@ -80,32 +80,22 @@ ST7032i::ST7032i(I2CWire & wx) : wirex(wx){
 }
 //
 
-void ST7032i::command(uint8_t value) {
-//	uint8_t buf[2];
-//	buf[0] = (byte) 0x00;
-//	buf[1] = value;
-//	i2c_transmit(wirex, i2c_address, buf, (uint16_t)2);
-	wirex.beginTransmission(i2c_address);
-	wirex.write((uint8)0x00);
-	wirex.write(value);
-	wirex.endTransmission();
-	
-	delay_us(CMDDELAY);
-}
+void ST7032i::send(uint8_t value, uint8_t dcswitch) {
+	if ( dcswitch == LOW ) {
+		wirex.beginTransmission(i2c_address);
+		wirex.write((uint8)0x00);
+		wirex.write(value);
+		wirex.endTransmission();	
+		delay_us(CMDDELAY);
+	} else {
+		wirex.beginTransmission(i2c_address);
+		wirex.write((uint8)B01000000);
+		wirex.write((uint8)value);
+		wirex.endTransmission();
 
-size_t ST7032i::write(uint8_t value) {
-//	uint8_t buf[2];
-//	buf[0] = B01000000;
-//	buf[1] = value & 0xff;
-//	i2c_transmit(wirex,i2c_address, buf, (uint16_t)2);
-	wirex.beginTransmission(i2c_address);
-	wirex.write((uint8)B01000000);
-	wirex.write((uint8)value);
-	wirex.endTransmission();
-
-	delay_us(CMDDELAY);
-	_position++;
-	return 1; // assume success
+		delay_us(CMDDELAY);
+		_position++;
+	}
 }
 
 
@@ -184,6 +174,7 @@ void ST7032i::setCursor(uint8_t c, uint8_t r) {
 	command(LCD_SETDDRAMADDR | _position);
 }
 
+/*
 // LCD_DISPLAYON, LCD_BLINKON, LCD_CURSORON
 void ST7032i::noDisplay() {
 	_displaycontrol &= ~LCD_DISPLAYON;
@@ -242,7 +233,7 @@ void ST7032i::noAutoscroll() {
 	_displaymode &= ~LCD_ENTRYSHIFTINCREMENT;
 	command(LCD_ENTRYMODESET | _displaymode);
 }
-
+*/
 void ST7032i::createChar(uint8_t location, uint8_t charmap[]) {
 	int i;
 	location &= 0x7; // we only have 8 locations 0-7

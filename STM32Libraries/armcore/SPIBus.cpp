@@ -11,7 +11,7 @@
 //#include "pins_arduino.h"
 #include "SPIBus.h"
 
-SPIBus SPIBus1();
+//SPIBus SPIBus1();
 
 void SPIBus::begin() {
   // Set direction register for SCK and MOSI pin.
