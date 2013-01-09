@@ -15,6 +15,24 @@ extern "C" {
 #include "armcore.h"
 #include "gpio.h"
 
+#define SPI_CLOCK_DIV2 SPI_BaudRatePrescaler_2
+#define SPI_CLOCK_DIV4 	SPI_BaudRatePrescaler_4
+#define SPI_CLOCK_DIV8 SPI_BaudRatePrescaler_8
+#define SPI_CLOCK_DIV16 SPI_BaudRatePrescaler_16
+#define SPI_CLOCK_DIV32 SPI_BaudRatePrescaler_32
+#define SPI_CLOCK_DIV64 SPI_BaudRatePrescaler_64
+#define SPI_CLOCK_DIV128 SPI_BaudRatePrescaler_128
+#define SPI_CLOCK_DIV256 SPI_BaudRatePrescaler_256
+
+
+#define SPI_MODE0 0
+#define SPI_MODE1 1
+#define SPI_MODE2 2
+#define SPI_MODE3 3
+
+#define SPI_MSBFIRST 0
+#define SPI_LSBFIRST 1
+
 typedef struct _SPIBuffer {
 	SPI_TypeDef * SPIx;
 	SPI_InitTypeDef initStruct;

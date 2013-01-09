@@ -17,11 +17,24 @@
  You will need 5 signal lines to connect to the LCD, 3.3 or 5V for power, 3.3V for LED backlight, and 1 for ground.
  */
 
-#define PIN_SCE   7 //Pin 3 on LCD
-#define PIN_RESET 6 //Pin 4 on LCD
-#define PIN_DC    5 //Pin 5 on LCD
-#define PIN_SDIN  4 //Pin 6 on LCD
-#define PIN_SCLK  3 //Pin 7 on LCD
+#include "armcore.h"
+#include "gpio.h"
+#include "delay.h"
+#include "SPI.h"
+
+void gotoXY(int x, int y);
+void LCDBitmap(char my_array[]);
+void LCDCharacter(char character);
+void LCDString(char *characters);
+void LCDClear(void);
+void LCDInit(void) ;
+void LCDWrite(byte data_or_command, byte data);
+
+#define PIN_SCE   7 //Pin 3 on LCD, ~CS
+#define PIN_RESET 6 //Pin 4 on LCD, initiate reset
+#define PIN_DC    5 //Pin 5 on LCD, Data/Command
+#define PIN_SDIN  4 //Pin 6 on LCD, MOSI
+#define PIN_SCLK  3 //Pin 7 on LCD, SCK
 
 //The DC pin tells the LCD if we are sending a command or data
 #define LCD_COMMAND 0 
@@ -305,15 +318,15 @@ void LCDClear(void) {
 void LCDInit(void) {
 
   //Configure control pins
-  pinMode(PIN_SCE, OUTPUT);
-  pinMode(PIN_RESET, OUTPUT);
-  pinMode(PIN_DC, OUTPUT);
-  pinMode(PIN_SDIN, OUTPUT);
-  pinMode(PIN_SCLK, OUTPUT);
+  pinMode(PD0+PIN_SCE, OUTPUT);
+  pinMode(PD0+PIN_RESET, OUTPUT);
+  pinMode(PD0+PIN_DC, OUTPUT);
+  pinMode(PD0+PIN_SDIN, OUTPUT);
+  pinMode(PD0+PIN_SCLK, OUTPUT);
 
   //Reset the LCD to a known state
-  digitalWrite(PIN_RESET, LOW);
-  digitalWrite(PIN_RESET, HIGH);
+  digitalWrite(PD0+PIN_RESET, LOW);
+  digitalWrite(PD0+PIN_RESET, HIGH);
 
   LCDWrite(LCD_COMMAND, 0x21); //Tell LCD that extended commands follow
   LCDWrite(LCD_COMMAND, 0xB0); //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
@@ -328,11 +341,11 @@ void LCDInit(void) {
 //function sets the DC pin high or low depending, and then sends
 //the data byte
 void LCDWrite(byte data_or_command, byte data) {
-  digitalWrite(PIN_DC, data_or_command); //Tell the LCD that we are writing either to data or a command
+  digitalWrite(PD0+PIN_DC, data_or_command); //Tell the LCD that we are writing either to data or a command
 
   //Send the data
-  digitalWrite(PIN_SCE, LOW);
-  shiftOut(PIN_SDIN, PIN_SCLK, MSBFIRST, data);
-  digitalWrite(PIN_SCE, HIGH);
+  digitalWrite(PD0+PIN_SCE, LOW);
+//  shiftOut(PIN_SDIN, PIN_SCLK, SPI_MSBFIRST, data);
+  digitalWrite(PD0+PIN_SCE, HIGH);
 }
 

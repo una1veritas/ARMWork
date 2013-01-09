@@ -19,25 +19,6 @@
 #include "spi.h"
 
 
-#define SPI_CLOCK_DIV2 SPI_BaudRatePrescaler_2
-#define SPI_CLOCK_DIV4 	SPI_BaudRatePrescaler_4
-#define SPI_CLOCK_DIV8 SPI_BaudRatePrescaler_8
-#define SPI_CLOCK_DIV16 SPI_BaudRatePrescaler_16
-#define SPI_CLOCK_DIV32 SPI_BaudRatePrescaler_32
-#define SPI_CLOCK_DIV64 SPI_BaudRatePrescaler_64
-#define SPI_CLOCK_DIV128 SPI_BaudRatePrescaler_128
-#define SPI_CLOCK_DIV256 SPI_BaudRatePrescaler_256
-
-
-#define SPI_MODE0 0x00
-#define SPI_MODE1 0x04
-#define SPI_MODE2 0x08
-#define SPI_MODE3 0x0C
-
-//#define SPI_2XCLOCK_MASK 0x01  // SPI2X = bit 0 on SPSR
-
-#define SPI_MSBFIRST 0x01
-#define SPI_LSBFIRST 0x00
 
 class SPIBus {
 	SPI_TypeDef * SPIx;

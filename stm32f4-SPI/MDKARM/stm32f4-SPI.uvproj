@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\stm32f4-SPI;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\armcore</IncludePath>
+              <IncludePath>..\..\stm32f4-SPI;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmperiph</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -424,71 +424,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>armcore</GroupName>
-          <Files>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>armcore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\armcore.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>I2CWire.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\I2CWire.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Print.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\Print.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>SPIBus.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\SPIBus.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Stream.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\Stream.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>USARTSerial.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\USARTSerial.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>ST7032i.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\ChLCD\ST7032i.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>StdPeriph_Driver</GroupName>
           <Files>
             <File>
@@ -530,6 +465,61 @@
               <FileName>stm32f4xx_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cmcore</GroupName>
+          <Files>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>armcore.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\armcore.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cmperiph</GroupName>
+          <Files>
+            <File>
+              <FileName>Nokia_5110_Example.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiph\GLCD\Nokia_5110_Example.cpp</FilePath>
             </File>
           </Files>
         </Group>
