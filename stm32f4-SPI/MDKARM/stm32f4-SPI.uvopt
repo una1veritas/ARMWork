@@ -457,7 +457,7 @@
 
   <Group>
     <GroupName>cmcore</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -593,23 +593,39 @@
 
   <Group>
     <GroupName>cmperiph</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>4</GroupNumber>
       <FileNumber>23</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\STM32Libraries\cmperiph\GLCD\Nokia5110.h</PathWithFileName>
+      <FilenameWithoutPath>Nokia5110.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>4</GroupNumber>
+      <FileNumber>24</FileNumber>
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>48</ColumnNumber>
+      <ColumnNumber>18</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>19</TopLine>
-      <CurrentLine>35</CurrentLine>
+      <TopLine>297</TopLine>
+      <CurrentLine>326</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\cmperiph\GLCD\Nokia_5110_Example.cpp</PathWithFileName>
-      <FilenameWithoutPath>Nokia_5110_Example.cpp</FilenameWithoutPath>
+      <PathWithFileName>..\..\STM32Libraries\cmperiph\GLCD\Nokia5110.cpp</PathWithFileName>
+      <FilenameWithoutPath>Nokia5110.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

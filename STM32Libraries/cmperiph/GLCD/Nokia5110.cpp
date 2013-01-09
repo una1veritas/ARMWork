@@ -17,36 +17,17 @@
  You will need 5 signal lines to connect to the LCD, 3.3 or 5V for power, 3.3V for LED backlight, and 1 for ground.
  */
 
+/*
 #include "armcore.h"
 #include "gpio.h"
 #include "delay.h"
 #include "SPI.h"
-
-void gotoXY(int x, int y);
-void LCDBitmap(char my_array[]);
-void LCDCharacter(char character);
-void LCDString(char *characters);
-void LCDClear(void);
-void LCDInit(void) ;
-void LCDWrite(byte data_or_command, byte data);
-
-#define PIN_SCE   7 //Pin 3 on LCD, ~CS
-#define PIN_RESET 6 //Pin 4 on LCD, initiate reset
-#define PIN_DC    5 //Pin 5 on LCD, Data/Command
-#define PIN_SDIN  4 //Pin 6 on LCD, MOSI
-#define PIN_SCLK  3 //Pin 7 on LCD, SCK
-
-//The DC pin tells the LCD if we are sending a command or data
-#define LCD_COMMAND 0 
-#define LCD_DATA  1
-
-//You may find a different size screen, but this one is 84 by 48 pixels
-#define LCD_X     84
-#define LCD_Y     48
+*/
+#include "Nokia5110.h"
 
 //This table contains the hex values that represent pixels
 //for a font that is 5 pixels wide and 8 pixels high
-static const byte ASCII[][5] = {
+const byte Nokia5110::ASCII[][5] = {
   {0x00, 0x00, 0x00, 0x00, 0x00} // 20  
   ,{0x00, 0x00, 0x5f, 0x00, 0x00} // 21 !
   ,{0x00, 0x07, 0x00, 0x07, 0x00} // 22 "
@@ -146,7 +127,7 @@ static const byte ASCII[][5] = {
 };
 
 //This is the SFE flame in bit form
-char SFEFlame[] = {
+const byte Nokia5110::SFEFlame[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
   0x00, 0x00, 0x00, 0xE0, 0xF0, 0xF8, 0xFC, 0xFC, 0xFE, 0xFE, 0xFE, 0xFE, 0x1E, 0x0E, 0x02, 0x00,
@@ -182,7 +163,7 @@ char SFEFlame[] = {
 };
 
 //Another SparkFun logo
-char SFEFlameBubble [] = {
+const byte Nokia5110::SFEFlameBubble [] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80,
   0xC0, 0xC0, 0xE0, 0xE0, 0xF0, 0xF8, 0xF8, 0xFC, 0xFC, 0xFC, 0xFC, 0xFE, 0xFE, 0xFE, 0xFE, 0xFE,
   0xFE, 0xFE, 0xFE, 0xFE, 0xFC, 0xFC, 0xFC, 0xFC, 0xFC, 0xF8, 0xF0, 0xE0, 0xE0, 0xC0, 0xC0, 0x80,
@@ -218,7 +199,7 @@ char SFEFlameBubble [] = {
 };
 
 //This is awesome in bitmap form
-char awesome[] = {
+const byte Nokia5110::awesome[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xC0, 0xE0, 0x70, 0x30, 0x18, 0x1C,
   0x0C, 0x0C, 0x06, 0x06, 0x07, 0x07, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x07,
@@ -253,6 +234,7 @@ char awesome[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  
 };
 
+/*
 void setup(void) {
   LCDInit(); //Init the LCD
 }
@@ -274,78 +256,78 @@ void loop(void) {
   LCDString("Hello World!");
   delay(1000);
 }
-
-void gotoXY(int x, int y) {
-  LCDWrite(0, 0x80 | x);  // Column.
-  LCDWrite(0, 0x40 | y);  // Row.  ?
+*/
+void Nokia5110::gotoXY(int x, int y) {
+  write(0, 0x80 | x);  // Column.
+  write(0, 0x40 | y);  // Row.  ?
 }
 
 //This takes a large array of bits and sends them to the LCD
-void LCDBitmap(char my_array[]){
+void Nokia5110::drawBitmap(char my_array[]){
   for (int index = 0 ; index < (LCD_X * LCD_Y / 8) ; index++)
-    LCDWrite(LCD_DATA, my_array[index]);
+    write(LCD_DATA, my_array[index]);
 }
 
 //This function takes in a character, looks it up in the font table/array
 //And writes it to the screen
 //Each character is 8 bits tall and 5 bits wide. We pad one blank column of
 //pixels on each side of the character for readability.
-void LCDCharacter(char character) {
-  LCDWrite(LCD_DATA, 0x00); //Blank vertical line padding
+void Nokia5110::drawCharacter(char character) {
+  write(LCD_DATA, 0x00); //Blank vertical line padding
 
   for (int index = 0 ; index < 5 ; index++)
-    LCDWrite(LCD_DATA, ASCII[character - 0x20][index]);
+    write(LCD_DATA, ASCII[character - 0x20][index]);
     //0x20 is the ASCII character for Space (' '). The font table starts with this character
 
-  LCDWrite(LCD_DATA, 0x00); //Blank vertical line padding
+  write(LCD_DATA, 0x00); //Blank vertical line padding
 }
 
 //Given a string of characters, one by one is passed to the LCD
-void LCDString(char *characters) {
+void Nokia5110::drawString(char *characters) {
   while (*characters)
-    LCDCharacter(*characters++);
+    drawCharacter(*characters++);
 }
 
 //Clears the LCD by writing zeros to the entire screen
-void LCDClear(void) {
+void Nokia5110::clear(void) {
   for (int index = 0 ; index < (LCD_X * LCD_Y / 8) ; index++)
-    LCDWrite(LCD_DATA, 0x00);
+    write(LCD_DATA, 0x00);
     
   gotoXY(0, 0); //After we clear the display, return to the home position
 }
 
 //This sends the magical commands to the PCD8544
-void LCDInit(void) {
+void Nokia5110::init(void) {
 
   //Configure control pins
-  pinMode(PD0+PIN_SCE, OUTPUT);
-  pinMode(PD0+PIN_RESET, OUTPUT);
-  pinMode(PD0+PIN_DC, OUTPUT);
-  pinMode(PD0+PIN_SDIN, OUTPUT);
-  pinMode(PD0+PIN_SCLK, OUTPUT);
+  pinMode(pin_SCE, OUTPUT);
+  pinMode(pin_RESET, OUTPUT);
+  pinMode(pin_DC, OUTPUT);
+  pinMode(pin_SDIN, OUTPUT);
+  pinMode(pin_SCLK, OUTPUT);
 
   //Reset the LCD to a known state
-  digitalWrite(PD0+PIN_RESET, LOW);
-  digitalWrite(PD0+PIN_RESET, HIGH);
+  digitalWrite(pin_RESET, LOW);
+  digitalWrite(pin_RESET, HIGH);
 
-  LCDWrite(LCD_COMMAND, 0x21); //Tell LCD that extended commands follow
-  LCDWrite(LCD_COMMAND, 0xB0); //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
-  LCDWrite(LCD_COMMAND, 0x04); //Set Temp coefficent
-  LCDWrite(LCD_COMMAND, 0x14); //LCD bias mode 1:48: Try 0x13 or 0x14
+  write(LCD_COMMAND, 0x21); //Tell LCD that extended commands follow
+  write(LCD_COMMAND, 0xB0); //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
+  write(LCD_COMMAND, 0x04); //Set Temp coefficent
+  write(LCD_COMMAND, 0x14); //LCD bias mode 1:48: Try 0x13 or 0x14
 
-  LCDWrite(LCD_COMMAND, 0x20); //We must send 0x20 before modifying the display control mode
-  LCDWrite(LCD_COMMAND, 0x0C); //Set display control, normal mode. 0x0D for inverse
+  write(LCD_COMMAND, 0x20); //We must send 0x20 before modifying the display control mode
+  write(LCD_COMMAND, 0x0C); //Set display control, normal mode. 0x0D for inverse
 }
 
 //There are two memory banks in the LCD, data/RAM and commands. This 
 //function sets the DC pin high or low depending, and then sends
 //the data byte
-void LCDWrite(byte data_or_command, byte data) {
-  digitalWrite(PD0+PIN_DC, data_or_command); //Tell the LCD that we are writing either to data or a command
+void Nokia5110::write(byte data_or_command, byte data) {
+  digitalWrite(pin_DC, data_or_command); //Tell the LCD that we are writing either to data or a command
 
   //Send the data
-  digitalWrite(PD0+PIN_SCE, LOW);
+  digitalWrite(pin_SCE, LOW);
 //  shiftOut(PIN_SDIN, PIN_SCLK, SPI_MSBFIRST, data);
-  digitalWrite(PD0+PIN_SCE, HIGH);
+  digitalWrite(pin_SCE, HIGH);
 }
 

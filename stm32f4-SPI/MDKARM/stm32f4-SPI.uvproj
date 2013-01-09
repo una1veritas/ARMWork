@@ -517,9 +517,14 @@
           <GroupName>cmperiph</GroupName>
           <Files>
             <File>
-              <FileName>Nokia_5110_Example.cpp</FileName>
+              <FileName>Nokia5110.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiph\GLCD\Nokia5110.h</FilePath>
+            </File>
+            <File>
+              <FileName>Nokia5110.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\GLCD\Nokia_5110_Example.cpp</FilePath>
+              <FilePath>..\..\STM32Libraries\cmperiph\GLCD\Nokia5110.cpp</FilePath>
             </File>
           </Files>
         </Group>
