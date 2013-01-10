@@ -10,6 +10,7 @@ class Nokia5110 {
 	GPIOPin pin_SCE;   // 7 //Pin 3 on LCD, ~CS
 	GPIOPin pin_RESET; // 6 //Pin 4 on LCD, initiate reset
 	GPIOPin pin_DC;    //5 //Pin 5 on LCD, Data/Command
+	GPIOPin pin_SDO;  //  4 //Pin 6 on LCD, MOSI
 	GPIOPin pin_SDIN;  //  4 //Pin 6 on LCD, MOSI
 	GPIOPin pin_SCLK;  //  3 //Pin 7 on LCD, SCK
 
@@ -24,8 +25,9 @@ class Nokia5110 {
 	static const uint16 LCD_Y = 48;
 
 public:
-	Nokia5110(SPIBuffer * spix, GPIOPin dc, GPIOPin rst) {
+	Nokia5110(SPIBuffer * spix, GPIOPin sce, GPIOPin dc, GPIOPin rst) {
 		SPIBx = spix;
+		pin_SCE = sce;   // 7 //Pin 3 on LCD, ~CS
 		pin_DC = dc;
 		pin_RESET = rst;
 	}

@@ -24,7 +24,7 @@ extern "C" {
 #define SPI_CLOCK_DIV128 SPI_BaudRatePrescaler_128
 #define SPI_CLOCK_DIV256 SPI_BaudRatePrescaler_256
 
-
+// CPOL:CPHA
 #define SPI_MODE0 0
 #define SPI_MODE1 1
 #define SPI_MODE2 2
@@ -42,7 +42,8 @@ typedef struct _SPIBuffer {
 
 void spi_begin(SPIBuffer * spi, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss);
 uint16 spi_transfer(SPIBuffer * spi, uint16 data);
-void spi_setModes(SPIBuffer * spi, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst);
+void spi_setDataMode(SPIBuffer * spi, uint16 modeid);
+void spi_setMode(SPIBuffer * spi, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst);
 
 #ifdef __cplusplus
 }

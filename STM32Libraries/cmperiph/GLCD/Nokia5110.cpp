@@ -302,16 +302,18 @@ void Nokia5110::init(void) {
   //Configure control pins
   //pinMode(pin_SCE, OUTPUT);
   pinMode(pin_RESET, OUTPUT);
+  digitalWrite(pin_RESET, HIGH);
   pinMode(pin_DC, OUTPUT);
   //pinMode(pin_SDIN, OUTPUT);
   //pinMode(pin_SCLK, OUTPUT);
 
+	delay_ms(20);
   //Reset the LCD to a known state
   digitalWrite(pin_RESET, LOW);
   digitalWrite(pin_RESET, HIGH);
 
   write(LCD_COMMAND, 0x21); //Tell LCD that extended commands follow
-  write(LCD_COMMAND, 0xB0); //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
+  write(LCD_COMMAND, 0xBF); //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
   write(LCD_COMMAND, 0x04); //Set Temp coefficent
   write(LCD_COMMAND, 0x14); //LCD bias mode 1:48: Try 0x13 or 0x14
 
@@ -324,7 +326,7 @@ void Nokia5110::init(void) {
 //the data byte
 void Nokia5110::write(byte data_or_command, byte data) {
 	
-	spi_setModes(SPIBx, SPI_CLOCK_DIV128, SPI_CPOL_Low, SPI_CPHA_1Edge, SPI_MSBFIRST);
+	spi_setMode(SPIBx, 64, SPI_CPOL_High, SPI_CPHA_2Edge, SPI_MSBFIRST); // mode 3, msb first
 	
   digitalWrite(pin_DC, data_or_command); //Tell the LCD that we are writing either to data or a command
   //Send the data

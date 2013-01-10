@@ -27,7 +27,7 @@
 
 USART Serial6;
 SPIBuffer SPI1Buffer;
-Nokia5110 nokiaLCD(&SPI1Buffer, PA3, PA2);
+Nokia5110 nokiaLCD(&SPI1Buffer, PA4, PA3, PA2);
 
 int main(void) {
 	char tmp[256];

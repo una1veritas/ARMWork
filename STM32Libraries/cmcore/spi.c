@@ -111,7 +111,7 @@
 
 //SPI_TypeDef * spix[] = { SPI1, SPI2, SPI3 };
 
-void spi_begin(SPIBuffer * spi, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi,
+void spi_begin(SPIBuffer * spibx, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi,
 		GPIOPin nss) {
 	uint8_t af; // = GPIO_AF_SPI1;
 //	IRQn_Type irq = USART1_IRQn;
@@ -121,15 +121,18 @@ void spi_begin(SPIBuffer * spi, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, G
 	if (SPIx == SPI1) {
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, ENABLE);
 		af = GPIO_AF_SPI1;
+		spibx->SPIx = SPI1;
 		// sck = PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
 	} else if ( SPIx == SPI2 ) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
 		af = GPIO_AF_SPI2;
 		// PB12, 13, 14, 15
+		spibx->SPIx = SPI2;
 	} else {
 		// SPI3
 		RCC_APB1PeriphResetCmd(RCC_APB1Periph_SPI3, ENABLE);
 		af = GPIO_AF_SPI3;
+		spibx->SPIx = SPI3;
 	}
 
 	GPIOMode(PinPort(sck), PinBit(sck), GPIO_Mode_AF, GPIO_Speed_25MHz,
@@ -148,19 +151,19 @@ void spi_begin(SPIBuffer * spi, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, G
 	//GPIO_PinAFConfig(PinPort(nss), PinSource(nss), af);
 
 	// set default parameters
-	spi->initStruct.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
-	spi->initStruct.SPI_Mode = SPI_Mode_Master;
-	spi->initStruct.SPI_DataSize = SPI_DataSize_8b;
-	spi->initStruct.SPI_CPOL = SPI_CPOL_Low;
-	spi->initStruct.SPI_CPHA = SPI_CPHA_1Edge;
-	spi->initStruct.SPI_NSS = SPI_NSS_Soft;
-	spi->initStruct.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
-	spi->initStruct.SPI_FirstBit = SPI_FirstBit_MSB;
-	spi->initStruct.SPI_CRCPolynomial = SPI_CRC_Rx;
+	spibx->initStruct.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
+	spibx->initStruct.SPI_Mode = SPI_Mode_Master;
+	spibx->initStruct.SPI_DataSize = SPI_DataSize_8b;
+	spibx->initStruct.SPI_CPOL = SPI_CPOL_Low;
+	spibx->initStruct.SPI_CPHA = SPI_CPHA_1Edge;
+	spibx->initStruct.SPI_NSS = SPI_NSS_Soft;
+	spibx->initStruct.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
+	spibx->initStruct.SPI_FirstBit = SPI_FirstBit_MSB;
+	spibx->initStruct.SPI_CRCPolynomial = SPI_CRC_Rx;
 
-	SPI_Init(SPIx, &spi->initStruct);
+	SPI_Init(spibx->SPIx, &spibx->initStruct);
 
-	SPI_Cmd(SPIx, ENABLE);
+	SPI_Cmd(spibx->SPIx, ENABLE);
 	/*          5. Enable the NVIC and the corresponding interrupt using the function
 	 *             SPI_ITConfig() if you need to use interrupt mode.
 	 *
@@ -190,7 +193,7 @@ void spi_begin(SPIBuffer * spi, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, G
 	 */
 }
 
-void spi_setModes(SPIBuffer * spi, uint16 clkdiv, uint16_t cpol, uint16_t cpha,  uint16_t firstbit) {
+void spi_setMode(SPIBuffer * spi, uint16 clkdiv, uint16_t cpol, uint16_t cpha,  uint16_t firstbit) {
 	uint16_t prescaler;
 	switch(clkdiv) {
 		case 2:
@@ -233,6 +236,11 @@ void spi_setModes(SPIBuffer * spi, uint16 clkdiv, uint16_t cpol, uint16_t cpha, 
 	SPI_Init(spi->SPIx, &spi->initStruct);
 }
 
+void spi_setDataMode(SPIBuffer * spi, uint16 modeid) {
+	spi->initStruct.SPI_CPOL = (modeid & 2 ? SPI_CPOL_High : SPI_CPOL_Low);
+	spi->initStruct.SPI_CPHA = (modeid & 1 ? SPI_CPHA_2Edge : SPI_CPHA_1Edge );
+	SPI_Init(spi->SPIx, &spi->initStruct);
+}
 
 uint16 spi_transfer(SPIBuffer * spi, uint16 data) {
 	/* Wait for SPIx Tx buffer empty */
