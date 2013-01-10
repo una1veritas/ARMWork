@@ -23,8 +23,11 @@
 
 #include "Boards/stm32f4_discovery.h"
 
+#include "GLCD/Nokia5110.h"
+
 USART Serial6;
-SPIBuffer SPI;
+SPIBuffer SPI1Buffer;
+Nokia5110 nokiaLCD(&SPI1Buffer, PA3, PA2);
 
 int main(void) {
 	char tmp[256];
@@ -45,6 +48,9 @@ int main(void) {
 	
 	TIM2_timer_start();
 	usart_begin(&Serial6, USART6, PC7, PC6, 57600);
+	spi_begin(&SPI1Buffer, SPI1, PA5, PA6, PA7, PA4); //  PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
+	
+	nokiaLCD.init();
 	
 	RCC_ClocksTypeDef RCC_Clocks;
 	RCC_GetClocksFreq(&RCC_Clocks);
@@ -60,6 +66,10 @@ int main(void) {
 
 	GPIOMode(PinPort(LED1), (PinBit(LED1) | PinBit(LED2) | PinBit(LED3) | PinBit(LED4)), 
 					OUTPUT, FASTSPEED, PUSHPULL, NOPULL);
+					
+  nokiaLCD.clear();
+  nokiaLCD.drawBitmap(Nokia5110::SFEFlame);
+  delay(1000);
 
 	while (1) {
 	}

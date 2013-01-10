@@ -234,21 +234,15 @@ void spi_setModes(SPIBuffer * spi, uint16 clkdiv, uint16_t cpol, uint16_t cpha, 
 }
 
 
-void spi_transfer(SPIBuffer * spi, uint8_t * data, uint16_t nbytes) {
-//	SPI_TypeDef * SPIx = spix[spibus];
-	uint8_t rcvdata;
+uint16 spi_transfer(SPIBuffer * spi, uint16 data) {
+	/* Wait for SPIx Tx buffer empty */
+	while (SPI_I2S_GetFlagStatus(spi->SPIx, SPI_I2S_FLAG_TXE ) == RESET) ;
 
-	for (; nbytes; nbytes--) {
-		/* Wait for SPIx Tx buffer empty */
-		while (SPI_I2S_GetFlagStatus(spi->SPIx, SPI_I2S_FLAG_TXE ) == RESET)
-			;
-		SPI_I2S_SendData(spi->SPIx, (uint16_t) *data);
-		/* Wait for SPIx data reception */
-		while (SPI_I2S_GetFlagStatus(spi->SPIx, SPI_I2S_FLAG_RXNE ) == RESET)
-			;
-		/* Read SPIy received data */
-		rcvdata = SPI_I2S_ReceiveData(spi->SPIx);
-		*data = rcvdata;
-		data++;
-	}
+	SPI_I2S_SendData(spi->SPIx, data);
+	/* Wait for SPIx data reception */
+
+	while (SPI_I2S_GetFlagStatus(spi->SPIx, SPI_I2S_FLAG_RXNE ) == RESET) ;
+	/* Read SPIy received data */
+
+	return SPI_I2S_ReceiveData(spi->SPIx);
 }

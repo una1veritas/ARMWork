@@ -41,7 +41,7 @@ typedef struct _SPIBuffer {
 } SPIBuffer;
 
 void spi_begin(SPIBuffer * spi, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss);
-void spi_transfer(SPIBuffer * spi, uint8_t * data, uint16_t nbytes);
+uint16 spi_transfer(SPIBuffer * spi, uint16 data);
 void spi_setModes(SPIBuffer * spi, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst);
 
 #ifdef __cplusplus
