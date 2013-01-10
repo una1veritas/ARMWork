@@ -263,7 +263,7 @@ void Nokia5110::gotoXY(int x, int y) {
 }
 
 //This takes a large array of bits and sends them to the LCD
-void Nokia5110::drawBitmap(char my_array[]){
+void Nokia5110::drawBitmap(const byte my_array[]){
   for (int index = 0 ; index < (LCD_X * LCD_Y / 8) ; index++)
     write(LCD_DATA, my_array[index]);
 }
@@ -298,13 +298,13 @@ void Nokia5110::clear(void) {
 
 //This sends the magical commands to the PCD8544
 void Nokia5110::init(void) {
-
+	
   //Configure control pins
-  pinMode(pin_SCE, OUTPUT);
+  //pinMode(pin_SCE, OUTPUT);
   pinMode(pin_RESET, OUTPUT);
   pinMode(pin_DC, OUTPUT);
-  pinMode(pin_SDIN, OUTPUT);
-  pinMode(pin_SCLK, OUTPUT);
+  //pinMode(pin_SDIN, OUTPUT);
+  //pinMode(pin_SCLK, OUTPUT);
 
   //Reset the LCD to a known state
   digitalWrite(pin_RESET, LOW);
@@ -323,11 +323,15 @@ void Nokia5110::init(void) {
 //function sets the DC pin high or low depending, and then sends
 //the data byte
 void Nokia5110::write(byte data_or_command, byte data) {
+	
+	spi_setModes(SPIBx, SPI_CLOCK_DIV128, SPI_CPOL_Low, SPI_CPHA_1Edge, SPI_MSBFIRST);
+	
   digitalWrite(pin_DC, data_or_command); //Tell the LCD that we are writing either to data or a command
-
   //Send the data
   digitalWrite(pin_SCE, LOW);
+	spi_transfer(SPIBx, data);
 //  shiftOut(PIN_SDIN, PIN_SCLK, SPI_MSBFIRST, data);
   digitalWrite(pin_SCE, HIGH);
+	
 }
 

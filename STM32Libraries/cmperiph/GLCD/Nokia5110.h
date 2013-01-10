@@ -13,6 +13,8 @@ class Nokia5110 {
 	GPIOPin pin_SDIN;  //  4 //Pin 6 on LCD, MOSI
 	GPIOPin pin_SCLK;  //  3 //Pin 7 on LCD, SCK
 
+	SPIBuffer * SPIBx;
+	
 	//The DC pin tells the LCD if we are sending a command or data
 	static const byte LCD_COMMAND = 0; 
 	static const byte LCD_DATA  	= 1;
@@ -22,13 +24,19 @@ class Nokia5110 {
 	static const uint16 LCD_Y = 48;
 
 public:
+	Nokia5110(SPIBuffer * spix, GPIOPin dc, GPIOPin rst) {
+		SPIBx = spix;
+		pin_DC = dc;
+		pin_RESET = rst;
+	}
+	
 	static const byte ASCII[][5];
 	static const byte SFEFlame[];
 	static const byte SFEFlameBubble [];
 	static const byte awesome[];
 
 	void gotoXY(int x, int y);
-	void drawBitmap(char my_array[]);
+	void drawBitmap(const byte my_array[]);
 	void drawCharacter(char character);
 	void drawString(char *characters);
 	void clear(void);
