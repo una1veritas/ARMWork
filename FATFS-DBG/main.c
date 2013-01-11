@@ -87,7 +87,7 @@ int main(void)
 	
 #ifdef DBG
 
-	usart_begin(&Serial6, USART6, PC7, PC6, 115200);
+	usart_init(&Serial6, USART6, PC7, PC6, 115200);
 
 	puts("FatFs Testing\n");
 	

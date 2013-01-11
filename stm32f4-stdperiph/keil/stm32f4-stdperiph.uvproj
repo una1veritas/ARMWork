@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\stm32libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\stm32librarIes\CMSIS\Include;..\..\stm32libraries\CMSIS\STM32F4xx;..\..\stm32f4-stdperiph;..\..\stm32libraries\armcore;..\..\stm32libraries\armperiphlib</IncludePath>
+              <IncludePath>..\..\stm32libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\stm32librarIes\CMSIS\Include;..\..\stm32libraries\CMSIS\STM32F4xx;..\..\stm32f4-stdperiph;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmperiph</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -419,76 +419,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>armcore</GroupName>
-          <Files>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>I2CWire.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\I2CWire.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Print.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\Print.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>SPIBus.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\SPIBus.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Stream.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\Stream.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>USARTSerial.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\USARTSerial.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>armperiphlib</GroupName>
-          <Files>
-            <File>
-              <FileName>ST7032i.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armperiphlib\ChLCD\ST7032i.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>DS1307.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armperiphlib\RTC\DS1307.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>stdperiph_driver</GroupName>
           <Files>
             <File>
@@ -535,6 +465,81 @@
               <FileName>stm32f4xx_tim.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cmcore</GroupName>
+          <Files>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>I2CWire.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\I2CWire.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Print.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\Print.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>SPIBus.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\SPIBus.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Stream.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\Stream.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>USARTSerial.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\USARTSerial.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cmperiphlib</GroupName>
+          <Files>
+            <File>
+              <FileName>DS1307.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiph\RTC\DS1307.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>ST7032i.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiph\ChLCD\ST7032i.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4_discovery.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiph\Boards\stm32f4_discovery.h</FilePath>
             </File>
           </Files>
         </Group>

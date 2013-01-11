@@ -78,7 +78,7 @@ int main(void)
 
 //  USART6_Configuration();
 
-	usart_begin(&ser6, USART6, PC7, PC6, 115200);
+	usart_init(&ser6, USART6, PC7, PC6, 115200);
 	
 	usart_print(&ser6, "FatFs Testing");
 	usart_flush(&ser6);

@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\FATFS-DBG;..\..\STM32Libraries\armcore;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
+              <IncludePath>..\..\FATFS-DBG;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\cmcore</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -489,22 +489,22 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Source Group armcore</GroupName>
+          <GroupName>Source Group cmcore</GroupName>
           <Files>
             <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\delay.c</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\delay.c</FilePath>
             </File>
             <File>
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\gpio.c</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\gpio.c</FilePath>
             </File>
             <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\usart.c</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\usart.c</FilePath>
             </File>
           </Files>
         </Group>

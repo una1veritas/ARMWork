@@ -3,7 +3,7 @@
 <title>Static Call Graph - [C:\Users\Sin\Documents\ARMWork\stm32f4-SDIO_FATFS\MDK-ARM\SDIO-Fatfs.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image C:\Users\Sin\Documents\ARMWork\stm32f4-SDIO_FATFS\MDK-ARM\SDIO-Fatfs.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Tue Jan 08 01:35:47 2013
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Sat Jan 12 00:27:58 2013
 <BR><P>
 <H3>Maximum Stack Usage =       1452 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -760,13 +760,13 @@ Global Symbols
 <P><STRONG><a name="[9]"></a>DebugMon_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32fxxx_it.o(i.DebugMon_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
-<P><STRONG><a name="[9a]"></a>GPIOMode</STRONG> (Thumb, 188 bytes, Stack size 40 bytes, gpio.o(i.GPIOMode))
+<P><STRONG><a name="[9a]"></a>GPIOMode</STRONG> (Thumb, 182 bytes, Stack size 40 bytes, gpio.o(i.GPIOMode))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = GPIOMode &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_AHB1PeriphClockCmd
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
+<BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
 </UL>
 
 <P><STRONG><a name="[9c]"></a>GPIO_Init</STRONG> (Thumb, 124 bytes, Stack size 24 bytes, stm32f4xx_gpio.o(i.GPIO_Init))
@@ -780,7 +780,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = GPIO_PinAFConfig
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_LowLevel_Init
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
+<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
 </UL>
 
 <P><STRONG><a name="[a5]"></a>GPIO_ReadInputDataBit</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(i.GPIO_ReadInputDataBit))
@@ -816,7 +816,7 @@ Global Symbols
 <P><STRONG><a name="[9f]"></a>NVIC_Init</STRONG> (Thumb, 94 bytes, Stack size 20 bytes, misc.o(i.NVIC_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = NVIC_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
+<BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Configuration
 </UL>
 
@@ -827,16 +827,16 @@ Global Symbols
 <P><STRONG><a name="[a]"></a>PendSV_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32fxxx_it.o(i.PendSV_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f4xx.o(RESET)
 </UL>
-<P><STRONG><a name="[106]"></a>PinBit</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, gpio.o(i.PinBit))
-<BR><BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
+<P><STRONG><a name="[108]"></a>PinBit</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, gpio.o(i.PinBit))
+<BR><BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
 </UL>
 
-<P><STRONG><a name="[107]"></a>PinPort</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, gpio.o(i.PinPort))
-<BR><BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
+<P><STRONG><a name="[109]"></a>PinPort</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, gpio.o(i.PinPort))
+<BR><BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
 </UL>
 
-<P><STRONG><a name="[108]"></a>PinSource</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, gpio.o(i.PinSource))
-<BR><BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
+<P><STRONG><a name="[10a]"></a>PinSource</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, gpio.o(i.PinSource))
+<BR><BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
 </UL>
 
 <P><STRONG><a name="[9b]"></a>RCC_AHB1PeriphClockCmd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd))
@@ -844,13 +844,13 @@ Global Symbols
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOMode
 </UL>
 
-<P><STRONG><a name="[105]"></a>RCC_APB1PeriphClockCmd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(i.RCC_APB1PeriphClockCmd))
-<BR><BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
+<P><STRONG><a name="[107]"></a>RCC_APB1PeriphClockCmd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(i.RCC_APB1PeriphClockCmd))
+<BR><BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
 </UL>
 
 <P><STRONG><a name="[bb]"></a>RCC_APB2PeriphClockCmd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(i.RCC_APB2PeriphClockCmd))
 <BR><BR>[Called By]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SD_LowLevel_Init
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
+<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
 </UL>
 
 <P><STRONG><a name="[a2]"></a>RCC_APB2PeriphResetCmd</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, stm32f4xx_rcc.o(i.RCC_APB2PeriphResetCmd))
@@ -1287,8 +1287,8 @@ Global Symbols
 <LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART4_IRQHandler
 </UL>
 
-<P><STRONG><a name="[10a]"></a>USART_Cmd</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_usart.o(i.USART_Cmd))
-<BR><BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
+<P><STRONG><a name="[10b]"></a>USART_Cmd</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f4xx_usart.o(i.USART_Cmd))
+<BR><BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
 </UL>
 
 <P><STRONG><a name="[ca]"></a>USART_GetITStatus</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, stm32f4xx_usart.o(i.USART_GetITStatus))
@@ -1305,7 +1305,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USART_ITConfig
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_write
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
+<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
 <LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART6_IRQHandler
 <LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART3_IRQHandler
 <LI><a href="#[32]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
@@ -1318,7 +1318,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_GetClocksFreq
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
+<BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
 </UL>
 
 <P><STRONG><a name="[cb]"></a>USART_ReceiveData</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, stm32f4xx_usart.o(i.USART_ReceiveData))
@@ -1553,8 +1553,8 @@ Global Symbols
 <LI>Call Chain = main &rArr; f_open &rArr; follow_path &rArr; dir_find &rArr; dir_next &rArr; create_chain &rArr; put_fat &rArr; move_window &rArr; disk_read &rArr;  disk_read (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_print
+<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
 <LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_flush
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
 <LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;f_write
 <LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;f_readdir
 <LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;f_read
@@ -1581,7 +1581,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 </UL>
 
-<P><STRONG><a name="[10b]"></a>millis</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, delay.o(i.millis))
+<P><STRONG><a name="[105]"></a>millis</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, delay.o(i.millis))
 <BR><BR>[Called By]<UL><LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_flush
 </UL>
 
@@ -1594,9 +1594,9 @@ Global Symbols
 <LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;create_chain
 </UL>
 
-<P><STRONG><a name="[109]"></a>ring_clear</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, usart.o(i.ring_clear))
-<BR><BR>[Called By]<UL><LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_flush
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_begin
+<P><STRONG><a name="[106]"></a>ring_clear</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, usart.o(i.ring_clear))
+<BR><BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
+<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_flush
 </UL>
 
 <P><STRONG><a name="[102]"></a>ring_count</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, usart.o(i.ring_count))
@@ -1634,34 +1634,34 @@ Global Symbols
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_enque
 </UL>
 
-<P><STRONG><a name="[f9]"></a>usart_begin</STRONG> (Thumb, 404 bytes, Stack size 80 bytes, usart.o(i.usart_begin))
-<BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = usart_begin &rArr; GPIOMode &rArr; GPIO_Init
-</UL>
-<BR>[Calls]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
-<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinAFConfig
-<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
-<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
-<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_clear
-<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinSource
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinPort
-<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinBit
-<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOMode
-<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
-<LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ITConfig
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Cmd
-</UL>
-<BR>[Called By]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
 <P><STRONG><a name="[fb]"></a>usart_flush</STRONG> (Thumb, 46 bytes, Stack size 16 bytes, usart.o(i.usart_flush))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = usart_flush
 </UL>
 <BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_count
-<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_clear
-<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;millis
+<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_clear
+<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;millis
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_write
 <LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[f9]"></a>usart_init</STRONG> (Thumb, 404 bytes, Stack size 80 bytes, usart.o(i.usart_init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = usart_init &rArr; GPIOMode &rArr; GPIO_Init
+</UL>
+<BR>[Calls]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
+<LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_PinAFConfig
+<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_Init
+<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB1PeriphClockCmd
+<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ring_clear
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinSource
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinPort
+<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PinBit
+<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOMode
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Init
+<LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_ITConfig
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART_Cmd
+</UL>
+<BR>[Called By]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[fa]"></a>usart_print</STRONG> (Thumb, 30 bytes, Stack size 16 bytes, usart.o(i.usart_print))
