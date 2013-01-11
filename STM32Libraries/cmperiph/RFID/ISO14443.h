@@ -79,12 +79,12 @@ struct ISO14443 {
 	void set(const byte tp, const byte * raw) {
 		//PN532::printHexString(raw, 16);
 		type = tp;
-		byte len;
+//		byte len = 0;
 		switch (type) {
 		case FeliCa212kb:
 		case FeliCa424kb:
 			IDLength = 8;
-			len = raw[1];
+//			len = raw[1];
 			memcpy(IDm, raw + 3, 8);
 //			memcpy(PMm, raw + 11, 8);
 //			if (len == 20)
@@ -132,14 +132,14 @@ struct ISO14443 {
 		memset(ID, 0, 8);
 	}
 
-	const boolean operator==(const ISO14443 & c) const {
+	boolean operator==(const ISO14443 & c) const {
 		if (type == c.type && IDLength == c.IDLength) {
 			return memcmp(ID, c.ID, IDLength) == 0;
 		}
 		return false;
 	}
 
-	inline const boolean operator!=(const ISO14443 & c) const {
+	inline boolean operator!=(const ISO14443 & c) const {
 		return !(operator==(c));
 	}
 };

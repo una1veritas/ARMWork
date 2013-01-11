@@ -21,6 +21,12 @@
 #define abs(x)  ((x) < 0 ? -(x) : (x))
 #endif
 
+#ifndef max
+#define max(x, y) 	((x) >= (y)? (x) : (y))
+#endif
+#ifndef min
+#define min(x, y) 	((x) <= (y)? (x) : (y))
+#endif
 
 typedef uint8_t uint8;
 typedef uint8_t byte;
@@ -32,6 +38,9 @@ typedef uint32_t uint32;
 typedef int32_t int32;
 typedef uint64_t uint64;
 typedef int64_t int64;
+
+#define highByte(x) 	((x)>>8&0xff)
+#define lowByte(x) 		((x)&0xff)
 
 #ifdef __cplusplus
 extern "C" {
@@ -45,7 +54,7 @@ typedef uint8_t boolean;
 #define UINT16(x)  ((uint16_t)(x))
 #define HIGHLOW(x, y)  (((uint16_t)(x))<< 8 | y)
 
-size_t strlen(const char * s);
+//size_t strlen(const char * s);
 
 #ifdef __cplusplus
 }

@@ -22,14 +22,12 @@
 
 class SPIBus {
 	SPI_TypeDef * SPIx;
-	SPIBuffer *spibuffer;
+	SPIBuffer *SPIxBuf;
 	GPIOPin pin_sck, pin_miso, pin_mosi, pin_nss;
 	
 public:
 	
 	SPIBus() : SPIx(SPI1), pin_sck(PB3), pin_miso(PB4), pin_mosi(PB5), pin_nss(PA15) { }
-
-  inline byte transfer(byte _data);
 
   // SPI Configuration methods
 
@@ -39,18 +37,16 @@ public:
   void begin(); // Default
   void end();
 
-  void setBitOrder(uint8_t);
-  void setDataMode(uint8_t);
+	inline uint16 transfer(uint16 _data) {
+		return spi_transfer(SPIxBuf, _data);
+	}
+
+  void setBitOrder(uint16_t);
+  void setDataMode(uint16_t);
   void setClockDivider(uint16_t);
 };
 
 extern SPIBus SPIBus1();
-
-byte SPIBus::transfer(byte _data) {
-	byte tmp[2] = { _data, 0};
-	spi_transfer(spibuffer, tmp, 1);
-  return tmp[0];
-}
 
 /*
 void SPIClass::attachInterrupt() {

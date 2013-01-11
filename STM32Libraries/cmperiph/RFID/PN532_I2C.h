@@ -8,13 +8,23 @@
 #ifndef PN532_I2C_H_
 #define PN532_I2C_H_
 
+#ifdef ARDUINO
 #if ARDUINO >= 100
 #include "Arduino.h"
 #else
 #include "WProgram.h"
 #endif
-
 #include <Wire.h>
+
+#else
+
+#include "delay.h"
+#include "armcore.h"
+#include <I2CWire.h>
+
+#endif
+
+
 
 class PN532 {
 /*
@@ -71,8 +81,9 @@ class PN532 {
 
 	static const byte PACKBUFFSIZE = 80;
 //
-	byte pin_irq; // P70_IRQ
-	byte pin_rst;
+	I2CWire & wire;
+	GPIOPin pin_irq; // P70_IRQ
+	GPIOPin pin_rst;
 	byte i2c_addr;
 	//
 	byte chksum;
@@ -82,12 +93,12 @@ class PN532 {
 	volatile byte comm_status;
 	//
 
-	inline void wirewrite(const byte & d) {
-		Wire.write(d);
+	void wirewrite(byte d) {
+		wire.write(d);
 	}
 
-	inline byte wireread() {
-		return Wire.read();
+	byte wireread() {
+		return wire.read();
 	}
 
 	void send(byte d);
@@ -134,17 +145,19 @@ public:
 	static const byte FELICA_CMD_WRITEWITHOUTENCRYPTION = 0x08;
 	static const byte FELICA_CMD_REQUESTSYSTEMCODE = 0x0c;
 
+/*
 	static void printHexString(const byte * a, byte len) {
 		for (int i = 0; i < len; i++) {
-			Serial.print(a[i] >> 4 & 0x0f, HEX);
+			USARTSerial3.print(a[i] >> 4 & 0x0f, HEX);
 			Serial.print(a[i] & 0x0f, HEX);
 			Serial.print(" ");
 		}
 	}
+*/
 
 public:
 
-	PN532(byte addr = I2C_ADDRESS, byte irq = 0xff, byte rst = 0xff);
+	PN532(I2CWire & wirex, byte addr = I2C_ADDRESS, GPIOPin irq = PIN_NOT_DEFINED, GPIOPin rst = PIN_NOT_DEFINED);
 
 	void init();
 	inline void begin() {
@@ -167,9 +180,10 @@ public:
 		WRONG_PREAMBLE,
 		WRONG_POSTAMBLE
 	};
-	const byte status() { return comm_status; }
+	
+	byte status() { return comm_status; }
 	byte status(const byte b) { return (comm_status = b); }
-	const byte command() { return last_command; }
+	byte command() { return last_command; }
 	boolean IRQ_ready(void);
 
 	boolean GetFirmwareVersion();
@@ -200,7 +214,7 @@ public:
 	byte InListPassiveTarget(const byte maxtg, const byte brty, byte * data, const byte initlen);
 	byte InAutoPoll(const byte pollnr, const byte per, const byte * types,
 			const byte typeslen);
-	const byte getAutoPollResponse(byte * respo);
+	byte getAutoPollResponse(byte * respo);
 
 	byte InDataExchange(const byte Tg, const byte * data, const byte length);
 //	byte InDataExchange(const byte Tg, const byte fcmd, const byte * data, const byte len);

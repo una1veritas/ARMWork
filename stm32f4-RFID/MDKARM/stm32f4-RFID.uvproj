@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\stm32f4-SPI;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmperiph</IncludePath>
+              <IncludePath>..\..\stm32f4-SPI;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmperiph;..\..\STM32Libraries\cmcore\coreplus</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -511,6 +511,56 @@
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\armcore.h</FilePath>
             </File>
+            <File>
+              <FileName>I2CWire.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\coreplus\I2CWire.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>I2CWire.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\coreplus\I2CWire.h</FilePath>
+            </File>
+            <File>
+              <FileName>Print.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\coreplus\Print.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Print.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\coreplus\Print.h</FilePath>
+            </File>
+            <File>
+              <FileName>SPIBus.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\coreplus\SPIBus.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>SPIBus.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\coreplus\SPIBus.h</FilePath>
+            </File>
+            <File>
+              <FileName>Stream.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\coreplus\Stream.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Stream.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\coreplus\Stream.h</FilePath>
+            </File>
+            <File>
+              <FileName>USARTSerial.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\coreplus\USARTSerial.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>USARTSerial.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\coreplus\USARTSerial.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -540,46 +590,6 @@
               <FileName>PN532_I2C.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\cmperiph\RFID\PN532_I2C.h</FilePath>
-            </File>
-            <File>
-              <FileName>I2CWire.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\I2CWire.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>I2CWire.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\I2CWire.h</FilePath>
-            </File>
-            <File>
-              <FileName>Print.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\Print.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Print.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\Print.h</FilePath>
-            </File>
-            <File>
-              <FileName>Stream.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\Stream.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Stream.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\Stream.h</FilePath>
-            </File>
-            <File>
-              <FileName>USARTSerial.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\USARTSerial.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>USARTSerial.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\USARTSerial.h</FilePath>
             </File>
           </Files>
         </Group>

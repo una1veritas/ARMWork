@@ -5,6 +5,8 @@
  *      Author: sin
  */
 
+#include <string.h>
+
 //#include <Wire.h>
 #include "PN532_I2C.h"
 
@@ -13,8 +15,11 @@
 //#define PN532COMM
 //#define FELICADEBUG
 
-PN532::PN532(byte addr, byte irq, byte rst) :
-		i2c_addr(addr), pin_irq(irq), pin_rst(rst) {
+PN532::PN532(I2CWire & wirex, byte addr, GPIOPin irq, GPIOPin rst) :
+		wire(wirex) {
+	i2c_addr = addr;
+	pin_irq = irq;
+	pin_rst = rst;
 	if (pin_irq != 0xff) {
 		pinMode(pin_irq, INPUT);
 		digitalWrite(pin_irq, HIGH); // pull-up
@@ -52,7 +57,7 @@ inline void PN532::send(byte d) {
 }
 
 void PN532::send_ack() {
-	Wire.beginTransmission(i2c_addr);
+	wire.beginTransmission(i2c_addr);
 	// clk is streched by PN532 to make a pause to resume from power-down
 	send(PREAMBLE);
 	send(STARTCODE_1);
@@ -60,11 +65,11 @@ void PN532::send_ack() {
 	send(0);
 	send(0xff);
 	wirewrite(POSTAMBLE);
-	Wire.endTransmission();
+	wire.endTransmission();
 }
 
 void PN532::send_nack() {
-	Wire.beginTransmission(i2c_addr);
+	wire.beginTransmission(i2c_addr);
 	// clk is streched by PN532 to make a pause to resume from power-down
 	send(PREAMBLE);
 	send(STARTCODE_1);
@@ -72,7 +77,7 @@ void PN532::send_nack() {
 	send(0xff);
 	send(0);
 	wirewrite(POSTAMBLE);
-	Wire.endTransmission();
+	wire.endTransmission();
 }
 
 boolean PN532::checkACKframe(long timeout) {
@@ -108,7 +113,7 @@ byte PN532::receivepacket(int n) {
 	chksum = 0;
 	byte i;
 	byte len;
-	Wire.requestFrom((int) i2c_addr, (int) n + 1);
+	wire.requestFrom((int) i2c_addr, (int) n + 1);
 	receive();
 	for (i = 0; i < n; i++) {
 		// delayMicroseconds(500);
@@ -143,7 +148,7 @@ byte PN532::receivepacket(int n) {
 void PN532::sendpacket(byte len) {
 	byte * p = packet;
 	chksum = 0;
-	Wire.beginTransmission(i2c_addr);
+	wire.beginTransmission(i2c_addr);
 	// clk is streched by PN532 to make a pause to resume from power-down
 	send(PREAMBLE);
 	send(STARTCODE_1);
@@ -156,7 +161,7 @@ void PN532::sendpacket(byte len) {
 	}
 	wirewrite(~chksum);
 	wirewrite(POSTAMBLE);
-	Wire.endTransmission();
+	wire.endTransmission();
 }
 
 byte PN532::receivepacket() {
@@ -164,7 +169,7 @@ byte PN532::receivepacket() {
 	byte i;
 	byte n = 0;
 
-	Wire.requestFrom((int) i2c_addr, BUFFER_LENGTH);
+	wire.requestFrom((int) i2c_addr, BUFFER_LENGTH);
 	receive();
 	for (i = 0; i < 6; i++) {
 		packet[i] = receive();
@@ -183,7 +188,7 @@ byte PN532::receivepacket() {
 		comm_status = WRONG_PREAMBLE;
 		return 0;
 	}
-//	Wire.requestFrom((int) i2c_addr, (int) n);
+//	wire.requestFrom((int) i2c_addr, (int) n);
 	for (; i < n + 5 + 2; i++) {
 		packet[i] = receive();
 	}
@@ -392,8 +397,8 @@ byte PN532::getCommandResponse(byte * resp, const long & wmillis) {
 	return count;
 }
 
-const byte PN532::getAutoPollResponse(byte * respo) {
-	byte cnt;
+byte PN532::getAutoPollResponse(byte * respo) {
+//	byte cnt;
 	if (!getCommandResponse(respo))
 		return 0;
 	if (respo[0]) {
@@ -510,7 +515,7 @@ void PN532::targetClear() {
 }
 
 byte PN532::mifare_AuthenticateBlock(word blkn, const byte * keyData) {
-	uint8_t len;
+//	uint8_t len;
 	byte tmp[16];
 
 #ifdef MIFAREDEBUG
@@ -523,7 +528,7 @@ byte PN532::mifare_AuthenticateBlock(word blkn, const byte * keyData) {
 	memcpy(tmp + 6, target.UID, max(4, target.IDLength));
 
 	byte authcmd;
-	byte rescount;
+//	byte rescount;
 	switch (keyData[0]) {
 	case 0:
 	case 0xaa:
@@ -559,8 +564,8 @@ byte PN532::mifare_ReadDataBlock(uint8_t blockNumber, uint8_t * data) {
 		Serial.println("Failed to receive ACK for read command");
 #endif
 	}
-	byte c;
-	if (!(c = getCommandResponse(packet))) {
+	byte c = getCommandResponse(packet);
+	if (!c ) {
 #ifdef MIFAREDEBUG
 		Serial.println("Unexpected response");
 		printHexString(packet, 26);
@@ -649,7 +654,7 @@ byte PN532::felica_Polling(byte * resp, const word syscode) {
 	resp[4] = 0; // time slot #
 	byte result = InCommunicateThru(resp, 5);
 	result = getCommunicateThruResponse(resp);
-	printHexString(resp, result);
+//	printHexString(resp, result);
 	if (resp[0] == FELICA_CMD_POLLING + 1) {
 		target.IDLength = 8;
 		memcpy(target.IDm, resp + 1, target.IDLength);
@@ -664,8 +669,8 @@ byte PN532::felica_Polling(byte * resp, const word syscode) {
 byte PN532::getCommunicateThruResponse(byte * data) {
 //	InCommunicateThru(data, len);
 	/* Read the response packet */
-	int count;
-	if (!(count = getCommandResponse(packet))) {
+	int count = getCommandResponse(packet);
+	if (!count ) {
 		return 0;
 	}
 #ifdef FELICADEBUG

@@ -20,7 +20,7 @@ void SPIBus::begin() {
   // a general purpose output port (it doesn't influence
   // SPI operations).
 
-  spi_begin(spibuffer, SPIx, pin_sck, pin_miso, pin_mosi, pin_nss); 
+  spi_begin(SPIxBuf, SPIx, pin_sck, pin_miso, pin_mosi, pin_nss); 
 
   // Warning: if the SS pin ever becomes a LOW INPUT then SPI 
   // automatically switches to Slave, so the data direction of 
@@ -33,26 +33,23 @@ void SPIBus::end() {
 //  SPCR &= ~_BV(SPE);
 }
 
-void SPIBus::setBitOrder(uint8_t bitOrder)
+void SPIBus::setBitOrder(uint16_t bitOrder)
 {
-	spibuffer->initStruct.SPI_FirstBit = ( bitOrder == SPI_MSBFIRST ? SPI_FirstBit_MSB : SPI_FirstBit_LSB);
+	SPIxBuf->initStruct.SPI_FirstBit = ( bitOrder == SPI_MSBFIRST ? SPI_FirstBit_MSB : SPI_FirstBit_LSB);
 
-	SPI_Init(SPIx, &spibuffer->initStruct);
+	SPI_Init(SPIx, &SPIxBuf->initStruct);
 
 }
 
-void SPIBus::setDataMode(uint8_t mode)
+void SPIBus::setDataMode(uint16_t mode)
 {
-	spibuffer->initStruct.SPI_CPOL = ((mode & 2 == 0) ? SPI_CPOL_Low : SPI_CPOL_High );
-	spibuffer->initStruct.SPI_CPHA = ((mode & 1 == 0) ? SPI_CPHA_1Edge : SPI_CPHA_2Edge);
-	
-	SPI_Init(SPIx, &spibuffer->initStruct);
+	spi_setDataMode(SPIxBuf, mode);
 }
 
 void SPIBus::setClockDivider(uint16_t rate)
 {	
-	spibuffer->initStruct.SPI_BaudRatePrescaler = rate;
+	SPIxBuf->initStruct.SPI_BaudRatePrescaler = rate;
 	
-	SPI_Init(SPIx, &spibuffer->initStruct);
+	SPI_Init(SPIx, &SPIxBuf->initStruct);
 }
 

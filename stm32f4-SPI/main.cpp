@@ -81,16 +81,17 @@ int main(void) {
 	
 	while (1) {
 
-		nokiaLCD.clear();
-		nokiaLCD.gotoXY(7- shift%7,0);
-		strncpy(tmp, message+(shift/7), 48);
-		tmp[48] = 0;
-		nokiaLCD.drawString(tmp);
+		if ( millis() / 125 != shift ) {
+			shift = millis()/ 125;
+			nokiaLCD.clear();
+			nokiaLCD.gotoXY(7- shift%7,0);
+			strncpy(tmp, message+((shift/7) % messlen), 48);
+			tmp[48] = 0;
+			nokiaLCD.drawString(tmp);
 //		usart_print(&Serial6, tmp);
 //		usart_print(&Serial6, "\r\n");
-		delay(250);
 
-		shift++;
+		}
 	}
 }
 
