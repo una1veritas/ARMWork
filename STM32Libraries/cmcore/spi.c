@@ -193,34 +193,19 @@ void spi_begin(SPIBuffer * spibx, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso,
 	 */
 }
 
-void spi_setMode(SPIBuffer * spi, uint16 clkdiv, uint16_t cpol, uint16_t cpha,  uint16_t firstbit) {
-	uint16_t prescaler;
-	switch(clkdiv) {
-		case 2:
-			prescaler = SPI_BaudRatePrescaler_2;
+void spi_setMode(SPIBuffer * spi, uint16 prescaler, uint16_t cpol, uint16_t cpha,  uint16_t firstbit) {
+	switch(prescaler) {
+		case SPI_BaudRatePrescaler_2:
+		case SPI_BaudRatePrescaler_4:
+		case SPI_BaudRatePrescaler_8:
+		case SPI_BaudRatePrescaler_16:
+		case SPI_BaudRatePrescaler_32:
+		case SPI_BaudRatePrescaler_64:
+		case SPI_BaudRatePrescaler_256:
 		break;
-		case 4:
-			prescaler = SPI_BaudRatePrescaler_4;
-		break;
-		case 8:
-			prescaler = SPI_BaudRatePrescaler_8;
-		break;
-		case 16:
-			prescaler = SPI_BaudRatePrescaler_16;
-		break;
-		case 32:
-			prescaler = SPI_BaudRatePrescaler_32;
-		break;
-		case 64:
-			prescaler = SPI_BaudRatePrescaler_64;
-		break;
-		case 128:
-			prescaler = SPI_BaudRatePrescaler_128;
-		break;
-		case 256:
+		case SPI_BaudRatePrescaler_128:
 		default:
-			prescaler = SPI_BaudRatePrescaler_256;
-		break;
+			prescaler = SPI_BaudRatePrescaler_128;
 	}
 	
 //	spi->initStruct..SPI_Direction = SPI_Direction_2Lines_FullDuplex;

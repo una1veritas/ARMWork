@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <ctype.h>
+#include <string.h>
 
 #include <stm32f4xx.h>
 #include <stm32f4xx_usart.h>
@@ -50,6 +51,8 @@ int main(void) {
 	usart_begin(&Serial6, USART6, PC7, PC6, 57600);
 	spi_begin(&SPI1Buffer, SPI1, PA5, PA6, PA7, PA4); //  PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
 	
+	usart_print(&Serial6, "Basic initialization has been finished.\n");
+	
 	nokiaLCD.init();
 	
 	RCC_ClocksTypeDef RCC_Clocks;
@@ -59,7 +62,6 @@ int main(void) {
 	usart_print(&Serial6, "\r\n\r\n");
 	usart_flush(&Serial6);
 
-
 	sprintf(tmp, "Clock frequencies: SYSCLK = %dl, HCLK = %dl, PCLK1 = %dl\r\n", 
 		RCC_Clocks.SYSCLK_Frequency, RCC_Clocks.HCLK_Frequency, RCC_Clocks.PCLK1_Frequency);
 	usart_print(&Serial6, tmp); 
@@ -67,11 +69,28 @@ int main(void) {
 	GPIOMode(PinPort(LED1), (PinBit(LED1) | PinBit(LED2) | PinBit(LED3) | PinBit(LED4)), 
 					OUTPUT, FASTSPEED, PUSHPULL, NOPULL);
 					
-  nokiaLCD.clear();
-  nokiaLCD.drawBitmap(Nokia5110::SFEFlame);
-  delay(1000);
+		nokiaLCD.clear();
+		nokiaLCD.drawBitmap(Nokia5110::SFEFlame);
+		delay(1000);
+		
+		nokiaLCD.clear();
+		nokiaLCD.drawBitmap(Nokia5110::SFEFlameBubble);
+		delay(1000);
 
+	uint16 shift = 0;
+	
 	while (1) {
+
+		nokiaLCD.clear();
+		nokiaLCD.gotoXY(7- shift%7,0);
+		strncpy(tmp, message+(shift/7), 48);
+		tmp[48] = 0;
+		nokiaLCD.drawString(tmp);
+//		usart_print(&Serial6, tmp);
+//		usart_print(&Serial6, "\r\n");
+		delay(250);
+
+		shift++;
 	}
 }
 

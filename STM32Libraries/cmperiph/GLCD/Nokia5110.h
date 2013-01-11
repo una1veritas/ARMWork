@@ -24,6 +24,14 @@ class Nokia5110 {
 	static const uint16 LCD_X = 84;
 	static const uint16 LCD_Y = 48;
 
+	inline void select() {
+		spi_setMode(SPIBx, 64, SPI_CPOL_High, SPI_CPHA_2Edge, SPI_MSBFIRST); // mode 3, msb first
+		digitalWrite(pin_SCE, LOW);
+	}
+	
+	inline void deselect() {
+		digitalWrite(pin_SCE, HIGH);
+	}
 public:
 	Nokia5110(SPIBuffer * spix, GPIOPin sce, GPIOPin dc, GPIOPin rst) {
 		SPIBx = spix;
