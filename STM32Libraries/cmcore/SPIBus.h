@@ -8,8 +8,8 @@
  * published by the Free Software Foundation.
  */
 
-#ifndef _SPI_H_INCLUDED
-#define _SPI_H_INCLUDED
+#ifndef _SPIBus_H_INCLUDED
+#define _SPIBus_H_INCLUDED
 
 #include <stdio.h>
 //#include <Arduino.h>

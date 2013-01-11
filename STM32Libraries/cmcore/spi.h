@@ -36,14 +36,14 @@ extern "C" {
 typedef struct _SPIBuffer {
 	SPI_TypeDef * SPIx;
 	SPI_InitTypeDef initStruct;
-	uint8 xbuf[256];
-	uint16 xindex;
+//	uint8 xbuf[256];
+//	uint16 xindex;
 } SPIBuffer;
 
-void spi_begin(SPIBuffer * spi, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss);
-uint16 spi_transfer(SPIBuffer * spi, uint16 data);
-void spi_setDataMode(SPIBuffer * spi, uint16 modeid);
-void spi_setMode(SPIBuffer * spi, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst);
+void spi_init(SPIBuffer * spibuf, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss);
+uint16 spi_transfer(SPIBuffer * spibuf, uint16 data);
+void spi_setDataMode(SPIBuffer * spibuf, uint16 modeid);
+void spi_setMode(SPIBuffer * spibuf, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst);
 
 #ifdef __cplusplus
 }

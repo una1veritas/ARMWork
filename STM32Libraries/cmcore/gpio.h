@@ -72,11 +72,14 @@ typedef enum _GPIOPin_Def {
 	PB15 = (PortB <<8) | ((uint16_t)15),
 
 	PC0 = (PortC <<8) | ((uint16_t)0),
+	PC1 = (PortC <<8) | ((uint16_t)1),
 	PC2 = (PortC <<8) | ((uint16_t)2),
 	PC3 = (PortC <<8) | ((uint16_t)3),
-	
+	PC4 = (PortC <<8) | ((uint16_t)4),
+	PC5 = (PortC <<8) | ((uint16_t)5),
 	PC6 = (PortC <<8) | ((uint16_t)6),
 	PC7 = (PortC <<8) | ((uint16_t)7),
+	PC8 = (PortC <<8) | ((uint16_t)8),
 	PC9 = (PortC <<8) | ((uint16_t)9),
 	PC10 = (PortC <<8) | ((uint16_t)10),
 	PC11 = (PortC <<8) | ((uint16_t)11),
@@ -126,8 +129,8 @@ typedef uint16_t 	GPIOPin;
 #define NOPULL		GPIO_PuPd_NOPULL
 #define PULLUP		GPIO_PuPd_UP
 #define PULLDOWN	GPIO_PuPd_DOWN
-#define LOWSPEED 	GPIO_Speed_2MHz
-#define MEDSPEED 	GPIO_Speed_25MHz
+#define LOWSPEED 		GPIO_Speed_2MHz
+#define MEDSPEED 		GPIO_Speed_25MHz
 #define FASTSPEED 	GPIO_Speed_50MHz
 #define HIGHSPEED 	GPIO_Speed_100MHz
 

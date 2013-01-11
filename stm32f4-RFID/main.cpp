@@ -70,7 +70,8 @@ int main(void) {
 	
 	TIM2_timer_start();
 	Serial6.begin(57600);
-	spi_begin(&SPI1Buffer, SPI1, PA5, PA6, PA7, PA4); //  PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
+	spi_init(&SPI1Buffer, SPI1, PA5, PA6, PA7, PA4); 
+	//  sck = PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
 	Wire1.begin(100000);
 	
 	Serial6.print("Basic initialization has been finished.\n");

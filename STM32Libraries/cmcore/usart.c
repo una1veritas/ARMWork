@@ -69,7 +69,7 @@ uint16_t ring_peek(USARTRing * r) {
 	return r->buf[r->tail];
 }
 
-void usart_begin(USART * usx, USART_TypeDef * usartx, GPIOPin rx, GPIOPin tx, uint32_t baud) {
+void usart_init(USART * usx, USART_TypeDef * usartx, GPIOPin rx, GPIOPin tx, uint32_t baud) {
 	USART_InitTypeDef USART_InitStruct; // this is for the USART1 initilization
 	NVIC_InitTypeDef NVIC_InitStructure; // this is used to configure the NVIC (nested vector interrupt controller)
 	//

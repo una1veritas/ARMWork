@@ -111,29 +111,28 @@
 
 //SPI_TypeDef * spix[] = { SPI1, SPI2, SPI3 };
 
-void spi_begin(SPIBuffer * spibx, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi,
-		GPIOPin nss) {
+void spi_init(SPIBuffer * spibx, SPI_TypeDef * SPIx, 
+							GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss) {
 	uint8_t af; // = GPIO_AF_SPI1;
-//	IRQn_Type irq = USART1_IRQn;
 
 	/* PCLK2 = HCLK/2 */
 	//RCC_PCLK2Config(RCC_HCLK_Div2);
-	if (SPIx == SPI1) {
-		RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, ENABLE);
-		af = GPIO_AF_SPI1;
-		spibx->SPIx = SPI1;
-		// sck = PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
-	} else if ( SPIx == SPI2 ) {
+	if ( SPIx == SPI2 ) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
 		af = GPIO_AF_SPI2;
-		// PB12, 13, 14, 15
 		spibx->SPIx = SPI2;
-	} else {
+		// PB12, 13, 14, 15
+	} else if ( SPIx == SPI3 ) {
 		// SPI3
 		RCC_APB1PeriphResetCmd(RCC_APB1Periph_SPI3, ENABLE);
 		af = GPIO_AF_SPI3;
 		spibx->SPIx = SPI3;
-	}
+	}	else { //if (SPIx == SPI1) {
+		RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, ENABLE);
+		af = GPIO_AF_SPI1;
+		spibx->SPIx = SPI1;
+		// sck = PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
+	} 
 
 	GPIOMode(PinPort(sck), PinBit(sck), GPIO_Mode_AF, GPIO_Speed_25MHz,
 			GPIO_OType_PP, GPIO_PuPd_UP);
@@ -215,7 +214,7 @@ void spi_setMode(SPIBuffer * spi, uint16 prescaler, uint16_t cpol, uint16_t cpha
 	spi->initStruct.SPI_CPHA = (cpha == SPI_CPHA_1Edge? SPI_CPHA_1Edge : SPI_CPHA_2Edge);
 //	spi->initStruct..SPI_NSS = SPI_NSS_Soft;
 	spi->initStruct.SPI_BaudRatePrescaler = prescaler;
-	spi->initStruct.SPI_FirstBit = ( firstbit == SPI_FirstBit_MSB ? SPI_FirstBit_MSB : SPI_FirstBit_LSB);
+	spi->initStruct.SPI_FirstBit = (firstbit == SPI_FirstBit_MSB ? SPI_FirstBit_MSB : SPI_FirstBit_LSB);
 //	spi->initStruct..SPI_CRCPolynomial = SPI_CRC_Rx;
 
 	SPI_Init(spi->SPIx, &spi->initStruct);

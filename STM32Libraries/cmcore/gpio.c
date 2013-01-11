@@ -38,12 +38,11 @@ void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode) {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
 	RCC_AHB1PeriphClockCmd(PortPeriph[portpin>>8 & 0x0f], ENABLE);
-
+	
+	GPIO_StructInit(&GPIO_InitStructure);
+	
 	GPIO_InitStructure.GPIO_Pin = PinBit(portpin);
 	GPIO_InitStructure.GPIO_Mode = mode;
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	//
 	GPIO_Init(Port[portpin>>8 & 0x0f], &GPIO_InitStructure);
 }
@@ -69,7 +68,7 @@ void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
               GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd) {
 		GPIO_InitTypeDef GPIO_InitStructure;
 								
-if ( port == GPIOB ) {
+	if ( port == GPIOB ) {
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 	} else if ( port == GPIOC ) {
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
@@ -85,12 +84,11 @@ if ( port == GPIOB ) {
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOH, ENABLE);
 	} else if ( port == GPIOI ) {
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOI, ENABLE);
-	} else if ( port == GPIOA ) {
+	} else { //if ( port == GPIOA ) {
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 	}
 	// assumes port is already waked up.
 
-        
 	GPIO_InitStructure.GPIO_Pin = pinbit;
 	GPIO_InitStructure.GPIO_Mode = mode;
 	GPIO_InitStructure.GPIO_OType = otype;
