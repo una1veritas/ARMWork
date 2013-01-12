@@ -16,14 +16,6 @@ void RTC_TimeShow(void);
 void RTC_AlarmShow(void);
 uint8_t USART_Scanf(uint32_t value);
 
-#ifdef __GNUC__
-  /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
-     set to 'Yes') calls __io_putchar() */
-  #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
-#else
-  #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
-#endif /* __GNUC__ */
-
 
 #define DBG
 
@@ -94,25 +86,25 @@ int main(void)
   NVIC_Configuration(); /* Interrupt Config */
 
 
-	
-#ifdef DBG
-	RCC_Configuration();
+		RCC_Configuration();
 
 	GPIO_Configuration();
 
   USART6_Configuration();
+  USART_SendData(USART6, '7');
+  USART_SendData(USART6, '7');
+  USART_SendData(USART6, '7');
 
 	puts("FatFs Testing\n");
 	
 	RCC_GetClocksFreq(&RCC_Clocks);
 
-	printf( "SYSCLK = %dl\n", RCC_Clocks.SYSCLK_Frequency);
-	printf( ", HCLK = %dl\n", RCC_Clocks.HCLK_Frequency);
+	printf( "SYSCLK = %ld\n", RCC_Clocks.SYSCLK_Frequency);
+	printf( ", HCLK = %ld\n", RCC_Clocks.HCLK_Frequency);
 
 	  /* Output a message on Hyperterminal using printf function */
   printf("\n\r  *********************** RTC Hardware Calendar Example ***********************\n\r");
   
-	/*
   if (RTC_ReadBackupRegister(RTC_BKP_DR0) != 0x32F2)
   {  
     // RTC configuration  //
@@ -165,184 +157,6 @@ int main(void)
     // Display the RTC Time and Alarm //
     RTC_TimeShow();
     RTC_AlarmShow();
-  }
-	*/
-#endif
-
-	memset(&fs32, 0, sizeof(FATFS));
-
-	res = f_mount(0, &fs32);
-
-#ifdef DBG
-	if (res != FR_OK)
-		printf("res = %d f_mount\n", res);
-#endif
-	
-	memset(&fil, 0, sizeof(FIL));
-	
-	res = f_open(&fil, "MESSAGE.TXT", FA_READ);
-
-#ifdef DBG
-	if (res != FR_OK)
-		printf("res = %d f_open MESSAGE.TXT\n", res);
-#endif
-	
-	if (res == FR_OK)
-	{
-		UINT Total = 0;
-
-		while(1)
-		{
-			BYTE Buffer[512];
-			UINT BytesRead;
-			UINT i;
-
-			res = f_read(&fil, Buffer, sizeof(Buffer), &BytesRead);
-
-#ifdef DBG
-			if (res != FR_OK)
-				printf("res = %d f_read MESSAGE.TXT\n", res);
-#endif
-			
-			if (res != FR_OK)
-				break;
-
-			Total += BytesRead;
-
-#ifdef DBG
-			for(i=0; i<BytesRead; i++)
-				putchar(Buffer[i]);
-#endif
-			
-			if (BytesRead < sizeof(Buffer))
-				break;
-		}
-
-		res = f_close(&fil); // MESSAGE.TXT
-
-#ifdef DBG
-		if (res != FR_OK)
-			printf("res = %d f_close MESSAGE.TXT\n", res);
-
-		printf("Total = %d\n", Total);
-#endif
-
-    res = f_open(&fil, "LENGTH.TXT", FA_CREATE_ALWAYS | FA_WRITE);
-
-#ifdef DBG
-		if (res != FR_OK)
-			printf("res = %d f_open LENGTH.TXT\n", res);
-#endif
-	
-    if (res == FR_OK)
-    {
-      UINT BytesWritten;
-      char crlf[] = "\r\n";
-      char *s = dec32(Total);
-
-      res = f_write(&fil, s, strlen(s), &BytesWritten);
-
-      res = f_write(&fil, crlf, strlen(crlf), &BytesWritten);
-
-  		res = f_close(&fil); // LENGTH.TXT
-
-#ifdef DBG			
-  		if (res != FR_OK)
-	  		printf("res = %d f_close LENGTH.TXT\n", res);
-#endif			
-    }
-	}
-
-  res = f_open(&fil, "DIR.TXT", FA_CREATE_ALWAYS | FA_WRITE);
-
-#ifdef DBG
-	if (res != FR_OK)
-		printf("res = %d f_open DIR.TXT\n", res);
-#endif
-	
-  if (res == FR_OK)
-  {
-    UINT BytesWritten;
-
-		path = "";
-
-		res = f_opendir(&dir, path);
-
-#ifdef DBG
-		if (res != FR_OK)
-			printf("res = %d f_opendir\n", res);
-#endif
-	
-		if (res == FR_OK)
-		{
-			while(1)
-			{
-        char str[256];
-        char *s = str;
-				char *fn;
-
-				res = f_readdir(&dir, &fno);
-
-#ifdef DBG
-				if (res != FR_OK)
-					printf("res = %d f_readdir\n", res);
-#endif
-			
-				if ((res != FR_OK) || (fno.fname[0] == 0))
-					break;
-
-#if _USE_LFN
-				fn = *fno.lfname ? fno.lfname : fno.fname;
-#else
-				fn = fno.fname;
-#endif
-
-#ifdef DBG
-				printf("%c%c%c%c ",
-					((fno.fattrib & AM_DIR) ? 'D' : '-'),
-					((fno.fattrib & AM_RDO) ? 'R' : '-'),
-					((fno.fattrib & AM_SYS) ? 'S' : '-'),
-					((fno.fattrib & AM_HID) ? 'H' : '-') );
-
-				printf("%10d ", fno.fsize);
-
-				printf("%s/%s\n", path, fn);
-#endif
-				
-		  	*s++ = ((fno.fattrib & AM_DIR) ? 'D' : '-');
-				*s++ = ((fno.fattrib & AM_RDO) ? 'R' : '-');
-  			*s++ = ((fno.fattrib & AM_SYS) ? 'S' : '-');
-	  		*s++ = ((fno.fattrib & AM_HID) ? 'H' : '-');
-
-        *s++ = ' ';
-
-        strcpy(s, dec32(fno.fsize));
-        s += strlen(s);
-
-        *s++ = ' ';
-
-        strcpy(s, path);
-        s += strlen(s);
-
-        *s++ = '/';
-
-        strcpy(s, fn);
-        s += strlen(s);
-
-        *s++ = 0x0D;
-        *s++ = 0x0A;
-        *s++ = 0;
-
-        res = f_write(&fil, str, strlen(str), &BytesWritten);
-			}
-		}
-
-  	res = f_close(&fil); // DIR.TXT
-
-#ifdef DBG		
- 		if (res != FR_OK)
-  		printf("res = %d f_close DIR.TXT\n", res);
-#endif		
   }
 
   while(1); /* Infinite loop */
@@ -427,105 +241,6 @@ void USART6_Configuration(void)
 // Hosting of stdio functionality through USART6
 //******************************************************************************
 
-#include <rt_misc.h>
-
-#pragma import(__use_no_semihosting_swi)
-
-struct __FILE { int handle; /* Add whatever you need here */ };
-FILE __stdout;
-FILE __stdin;
-
-int fputc(int ch, FILE *f)
-{
-	static int last;
-
-	if ((ch == (int)'\n') && (last != (int)'\r'))
-	{
-		last = (int)'\r';
-
-  	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
-
- 	  USART_SendData(USART6, last);
-	}
-	else
-		last = ch;
-
-	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
-
-  USART_SendData(USART6, ch);
-
-  return(ch);
-}
-
-int fgetc(FILE *f)
-{
-	char ch;
-
-	while(USART_GetFlagStatus(USART6, USART_FLAG_RXNE) == RESET);
-
-	ch = USART_ReceiveData(USART6);
-
-  return((int)ch);
-}
-
-int ferror(FILE *f)
-{
-  /* Your implementation of ferror */
-  return EOF;
-}
-
-void _ttywrch(int ch)
-{
-	static int last;
-
-	if ((ch == (int)'\n') && (last != (int)'\r'))
-	{
-		last = (int)'\r';
-
-  	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
-
- 	  USART_SendData(USART6, last);
-	}
-	else
-		last = ch;
-
-	while(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET);
-
-  USART_SendData(USART6, ch);
-}
-
-/**
-  * @brief  Gets numeric values from the hyperterminal.
-  * @param  None
-  * @retval None
-  */
-uint8_t USART_Scanf(uint32_t value)
-{
-  uint32_t index = 0;
-  uint32_t tmp[2] = {0, 0};
-
-  while (index < 2)
-  {
-    /* Loop until RXNE = 1 */
-    while (USART_GetFlagStatus(USART6, USART_FLAG_RXNE) == RESET)
-    {}
-    tmp[index++] = (USART_ReceiveData(USART6));
-    if ((tmp[index - 1] < 0x30) || (tmp[index - 1] > 0x39))
-    {
-      printf("\n\r Please enter valid number between 0 and 9 \n\r");
-      index--;
-    }
-  }
-  /* Calculate the Corresponding value */
-  index = (tmp[1] - 0x30) + ((tmp[0] - 0x30) * 10);
-  /* Checks */
-  if (index > value)
-  {
-    printf("\n\r Please enter valid number between 0 and %d \n\r", value);
-    return 0xFF;
-  }
-  return index;
-}
 
 void _sys_exit(int return_code)
 {
@@ -595,13 +310,15 @@ void RTC_Config(void)
 void RTC_TimeRegulate(void)
 {
   uint32_t tmp_hh = 0xFF, tmp_mm = 0xFF, tmp_ss = 0xFF;
+  char tmp[32];
 
   printf("\n\r==============Time Settings=====================================\n\r");
   RTC_TimeStructure.RTC_H12     = RTC_H12_AM;
   printf("  Please Set Hours:\n\r");
   while (tmp_hh == 0xFF)
   {
-    tmp_hh = USART_Scanf(23);
+	  fgets(tmp, 32, stdin);
+    tmp_hh = strtol(tmp,NULL,16);
     RTC_TimeStructure.RTC_Hours = tmp_hh;
   }
   printf("  %0.2d\n\r", tmp_hh);
@@ -609,7 +326,8 @@ void RTC_TimeRegulate(void)
   printf("  Please Set Minutes:\n\r");
   while (tmp_mm == 0xFF)
   {
-    tmp_mm = USART_Scanf(59);
+	  fgets(tmp, 32, stdin);
+    tmp_mm = strtol(tmp,NULL,16);
     RTC_TimeStructure.RTC_Minutes = tmp_mm;
   }
   printf("  %0.2d\n\r", tmp_mm);
@@ -617,7 +335,8 @@ void RTC_TimeRegulate(void)
   printf("  Please Set Seconds:\n\r");
   while (tmp_ss == 0xFF)
   {
-    tmp_ss = USART_Scanf(59);
+	  fgets(tmp, 32, stdin);
+    tmp_ss = strtol(tmp,NULL,16);
     RTC_TimeStructure.RTC_Seconds = tmp_ss;
   }
   printf("  %0.2d\n\r", tmp_ss);
@@ -647,7 +366,8 @@ void RTC_TimeRegulate(void)
   printf("  Please Set Alarm Hours:\n\r");
   while (tmp_hh == 0xFF)
   {
-    tmp_hh = USART_Scanf(23);
+	  fgets(tmp, 32, stdin);
+    tmp_hh = strtol(tmp,NULL,16);
     RTC_AlarmStructure.RTC_AlarmTime.RTC_Hours = tmp_hh;
   }
   printf("  %0.2d\n\r", tmp_hh);
@@ -655,7 +375,8 @@ void RTC_TimeRegulate(void)
   printf("  Please Set Alarm Minutes:\n\r");
   while (tmp_mm == 0xFF)
   {
-    tmp_mm = USART_Scanf(59);
+	  fgets(tmp, 32, stdin);
+    tmp_mm = strtol(tmp,NULL,16);
     RTC_AlarmStructure.RTC_AlarmTime.RTC_Minutes = tmp_mm;
   }
   printf("  %0.2d\n\r", tmp_mm);
@@ -663,7 +384,8 @@ void RTC_TimeRegulate(void)
   printf("  Please Set Alarm Seconds:\n\r");
   while (tmp_ss == 0xFF)
   {
-    tmp_ss = USART_Scanf(59);
+	  fgets(tmp, 32, stdin);
+    tmp_ss = strtol(tmp,NULL,16);
     RTC_AlarmStructure.RTC_AlarmTime.RTC_Seconds = tmp_ss;
   }
   printf("  %0.2d", tmp_ss);
