@@ -44,10 +44,10 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\</OutputDirectory>
-          <OutputName>SDIO-Fatfs</OutputName>
+          <OutputName>stm32f4-RTC</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>0</CreateHexFile>
+          <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\</ListingPath>
@@ -211,7 +211,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>1</useUlib>
+            <useUlib>0</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <RoSelD>3</RoSelD>
@@ -337,20 +337,20 @@
             <Optim>4</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>0</OneElfS>
+            <OneElfS>1</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>0</wLevel>
+            <wLevel>2</wLevel>
             <uThumb>0</uThumb>
-            <uSurpInc>0</uSurpInc>
+            <uSurpInc>1</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER</Define>
+              <Define>USE_STDPERIPH_DRIVER, STM32F4XX</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\FATFS-DBG;..\..\STM32Libraries\armcore;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\armcore</IncludePath>
+              <IncludePath>..\..\FATFS-DBG;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\cmcore</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -407,29 +407,14 @@
               <FilePath>..\stm32f4_discovery.c</FilePath>
             </File>
             <File>
-              <FileName>diskio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\diskio.c</FilePath>
-            </File>
-            <File>
-              <FileName>ff.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\ff.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4_discovery_sdio_sd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\stm32f4_discovery_sdio_sd.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32fxxx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\stm32fxxx_it.c</FilePath>
-            </File>
-            <File>
               <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\stm32f4xx_it.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -494,27 +479,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>armcore</GroupName>
+          <GroupName>cmcore</GroupName>
           <Files>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\gpio.c</FilePath>
-            </File>
             <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\delay.c</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\gpio.c</FilePath>
             </File>
             <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\usart.c</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\usart.c</FilePath>
             </File>
             <File>
-              <FileName>usart.h</FileName>
+              <FileName>armcore.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcore\usart.h</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\armcore.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -7,7 +7,10 @@
 #include <string.h>
 
 #include "stm32f4xx.h"
-#include "stm32f4_discovery_sdio_sd.h"
+//#include "stm32f4_discovery_sdio_sd.h"
+
+#include "armcore.h"
+#include "usart.h"
 
 /* Exported functions ------------------------------------------------------- */
 void RTC_Config(void);
@@ -16,33 +19,9 @@ void RTC_TimeShow(void);
 void RTC_AlarmShow(void);
 uint8_t USART_Scanf(uint32_t value);
 
-
-#define DBG
-
 //******************************************************************************
 
 void NVIC_Configuration(void);
-void RCC_Configuration(void);
-void GPIO_Configuration(void);
-void USART6_Configuration(void);
-
-//******************************************************************************
-
-#include "ff.h"
-#include "diskio.h"
-
-FRESULT res;
-FILINFO fno;
-FIL fil;
-DIR dir;
-FATFS fs32;
-char* path;
-
-#if _USE_LFN
-    static char lfn[_MAX_LFN + 1];
-    fno.lfname = lfn;
-    fno.lfsize = sizeof lfn;
-#endif
 
 //******************************************************************************
 
@@ -73,6 +52,9 @@ RTC_AlarmTypeDef  RTC_AlarmStructure;
                                       may varies due to LSI frequency dispersion. */ 
 __IO uint32_t AsynchPrediv = 0, SynchPrediv = 0;
 
+USART Serial6;
+#define STDSERIAL 	Serial6
+
 int main(void)
 {
   /*!< At this stage the microcontroller clock setting is already configured,
@@ -84,23 +66,15 @@ int main(void)
 	RCC_ClocksTypeDef RCC_Clocks;
 
   NVIC_Configuration(); /* Interrupt Config */
+	
+	usart_init(&Serial6, USART6, PC7, PC6, 115200);
 
-
-		RCC_Configuration();
-
-	GPIO_Configuration();
-
-  USART6_Configuration();
-  USART_SendData(USART6, '7');
-  USART_SendData(USART6, '7');
-  USART_SendData(USART6, '7');
 
 	puts("FatFs Testing\n");
 	
 	RCC_GetClocksFreq(&RCC_Clocks);
 
-	printf( "SYSCLK = %ld\n", RCC_Clocks.SYSCLK_Frequency);
-	printf( ", HCLK = %ld\n", RCC_Clocks.HCLK_Frequency);
+	printf( "SYSCLK = %ld, HCLK = %ld\n", RCC_Clocks.SYSCLK_Frequency, RCC_Clocks.HCLK_Frequency);
 
 	  /* Output a message on Hyperterminal using printf function */
   printf("\n\r  *********************** RTC Hardware Calendar Example ***********************\n\r");
@@ -159,7 +133,12 @@ int main(void)
     RTC_AlarmShow();
   }
 
-  while(1); /* Infinite loop */
+  while(1) /* Infinite loop */
+	{
+		delay(1000);
+    RTC_TimeShow();		
+	}
+	
 }
 
 //******************************************************************************
@@ -178,69 +157,49 @@ void NVIC_Configuration(void)
   NVIC_Init(&NVIC_InitStructure);
 }
 
-/**************************************************************************************/
-
-void RCC_Configuration(void)
-{
-  /* --------------------------- System Clocks Configuration -----------------*/
-  /* USART6 clock enable */
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART6, ENABLE);
-
-  /* GPIOA clock enable */
-  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
-}
-
-/**************************************************************************************/
-
-void GPIO_Configuration(void)
-{
-  GPIO_InitTypeDef GPIO_InitStructure;
-
-  /*-------------------------- GPIO Configuration ----------------------------*/
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_Init(GPIOC, &GPIO_InitStructure);
-
-  /* Connect USART pins to AF */
-  GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_USART6);  // USART6_TX
-  GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_USART6);  // USART6_RX
-}
-
-/**************************************************************************************/
-
-void USART6_Configuration(void)
-{
-	USART_InitTypeDef USART_InitStructure;
-
-  /* USARTx configuration ------------------------------------------------------*/
-  /* USARTx configured as follow:
-        - BaudRate = 115200 baud
-        - Word Length = 8 Bits
-        - One Stop Bit
-        - No parity
-        - Hardware flow control disabled (RTS and CTS signals)
-        - Receive and transmit enabled
-  */
-  USART_InitStructure.USART_BaudRate = 115200;
-  USART_InitStructure.USART_WordLength = USART_WordLength_8b;
-  USART_InitStructure.USART_StopBits = USART_StopBits_1;
-  USART_InitStructure.USART_Parity = USART_Parity_No;
-  USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-
-  USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-
-  USART_Init(USART6, &USART_InitStructure);
-
-  USART_Cmd(USART6, ENABLE);
-}
 
 //******************************************************************************
 // Hosting of stdio functionality through USART6
 //******************************************************************************
 
+#include <rt_misc.h>
+
+#pragma import(__use_no_semihosting_swi)
+
+struct __FILE { 
+int handle; /* Add whatever you need here */ 
+};
+FILE __stdout;
+FILE __stdin;
+
+int fputc(int ch, FILE *f)
+{
+	static int last;
+
+	if ((ch == (int)'\n') && (last != (int)'\r'))
+	{
+		last = (int)'\r';
+  	usart_write(&STDSERIAL, last);
+		usart_flush(&STDSERIAL);
+	}
+	else
+		last = ch;
+
+	usart_write(&STDSERIAL, last);
+
+  return(ch);
+}
+
+int fgetc(FILE *f)
+{
+  return((int)usart_read(&STDSERIAL));
+}
+
+int ferror(FILE *f)
+{
+  /* Your implementation of ferror */
+  return EOF;
+}
 
 void _sys_exit(int return_code)
 {

@@ -11,7 +11,15 @@
 #include <stdio.h>
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "binary.h"
+#include "gpio.h"
+#include "delay.h"
+
+
 #define HEX 16
 #define DEC 10
 #define BIN 2
@@ -42,11 +50,8 @@ typedef int64_t int64;
 #define highByte(x) 	((x)>>8&0xff)
 #define lowByte(x) 		((x)&0xff)
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef uint8_t boolean;
+
 #define true 0xff
 #define false 0x00
 

@@ -145,12 +145,13 @@ void SysTick_Handler(void)
   * @param  None
   * @retval None
   */
+/*
 void SDIO_IRQHandler(void)
 {
-  /* Process All SDIO Interrupt Sources */
+  // Process All SDIO Interrupt Sources 
   SD_ProcessIRQSrc();
 }
-
+*/
 /******************************************************************************/
 /*                 STM32Fxxx Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
