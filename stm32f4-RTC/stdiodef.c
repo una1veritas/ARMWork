@@ -3,13 +3,13 @@
 //******************************************************************************
 
 #include <stdio.h>
-
 #include <stm32f4xx_usart.h>
 
-#define STDUSART  USART6
+#include "stdiodef.h"
 
-#if defined(__KEIL__)
-#error "11111"
+USART usart6;
+
+#if defined(__arm__)
 
 #include <rt_misc.h>
 
@@ -23,30 +23,14 @@ FILE __stdin;
 
 int fputc(int ch, FILE *f)
 {
-  /* Place your implementation of fputc here */
-  /* e.g. write a character to the USART */
-  USART_SendData(STDUSART, (uint8_t) ch);
-
-  /* Loop until the end of transmission */
-  while (USART_GetFlagStatus(STDUSART, USART_FLAG_TC) == RESET)
-  {}
-
-  return ch;
-}
-/*
-{
 	usart_write(&STDSERIAL, ch);
   return(ch);
 }
-*/
+
 int fgetc(FILE *f)
 {
-  /* Loop until the end of transmission */
-  while (USART_GetFlagStatus(STDUSART, USART_FLAG_RXNE) == RESET)
-  {}
-  /* Place your implementation of fputc here */
-  /* e.g. write a character to the USART */
-  return USART_ReceiveData(STDUSART);
+	while (!usart_available(&STDSERIAL));
+	return usart_read(&STDSERIAL);
 }
 
 int ferror(FILE *f)

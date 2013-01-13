@@ -422,9 +422,14 @@
               <FilePath>..\stm32f4_discovery.h</FilePath>
             </File>
             <File>
-              <FileName>stdiofunc.c</FileName>
+              <FileName>stdiodef.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\stdiofunc.c</FilePath>
+              <FilePath>..\stdiodef.c</FilePath>
+            </File>
+            <File>
+              <FileName>stdiodef.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\stdiodef.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -515,6 +520,16 @@
               <FileName>armcore.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\armcore.h</FilePath>
+            </File>
+            <File>
+              <FileName>rtc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\rtc.h</FilePath>
+            </File>
+            <File>
+              <FileName>rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\rtc.c</FilePath>
             </File>
           </Files>
         </Group>
