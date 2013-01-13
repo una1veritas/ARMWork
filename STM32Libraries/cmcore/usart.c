@@ -156,7 +156,7 @@ void usart_init(USART * usx, USART_TypeDef * usartx, GPIOPin rx, GPIOPin tx, uin
 	//
 	ring_clear(&usx->rxring); //rxring[usx->usid]);
 	ring_clear(&usx->txring); //txring[usx->usid]);
-	// finally this enables the complete USART3 peripheral
+	// finally this enables the complete USART peripheral
 	USART_Cmd(usx->USARTx, ENABLE);
 }
 
@@ -170,13 +170,12 @@ void usart_polling_write(USART * usx, const uint16_t w) {
 size_t usart_write(USART * usx, const uint16_t w) {
 //	static uint16 lastchar; for two or more conseq. returns
 	uint16_t waitcount = 7;
-	if ( w == '\r' || w == '\n' )
-		usart_flush(usx);
-	else
-		while (ring_is_full(&usx->txring) && (waitcount > 0) ) {
-			delay_us(667);
-			waitcount--;
-		}
+	while ( waitcount > 0 &&
+				((ring_count(&usx->txring) > 0 && iscntrl(w))
+				|| ring_is_full(&usx->txring) ) ) {
+		delay_us(667);
+		waitcount--;
+	}
 	USART_ITConfig(usx->USARTx, USART_IT_TXE, DISABLE);
 	ring_enque(&usx->txring, w); //&txring[usx->usid], w);
 	USART_ITConfig(usx->USARTx, USART_IT_TXE, ENABLE);
