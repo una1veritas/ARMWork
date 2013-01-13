@@ -65,12 +65,13 @@ int main(void)
      */
 	RCC_ClocksTypeDef RCC_Clocks;
 
-  NVIC_Configuration(); /* Interrupt Config */
+//  NVIC_Configuration(); /* Interrupt Config */
 	
+	TIM2_timer_start();
 	usart_init(&Serial6, USART6, PC7, PC6, 115200);
 
 
-	puts("FatFs Testing\n");
+	puts("RTC Test.\n");
 	
 	RCC_GetClocksFreq(&RCC_Clocks);
 
@@ -174,19 +175,7 @@ FILE __stdin;
 
 int fputc(int ch, FILE *f)
 {
-	static int last;
-
-	if ((ch == (int)'\n') && (last != (int)'\r'))
-	{
-		last = (int)'\r';
-  	usart_write(&STDSERIAL, last);
-		usart_flush(&STDSERIAL);
-	}
-	else
-		last = ch;
-
-	usart_write(&STDSERIAL, last);
-
+	usart_write(&STDSERIAL, ch);
   return(ch);
 }
 
