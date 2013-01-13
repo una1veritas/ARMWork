@@ -12,6 +12,7 @@
 #include "armcore.h"
 #include "usart.h"
 
+
 /* Exported functions ------------------------------------------------------- */
 void RTC_Config(void);
 void RTC_TimeRegulate(void);
@@ -158,42 +159,6 @@ void NVIC_Configuration(void)
   NVIC_Init(&NVIC_InitStructure);
 }
 
-
-//******************************************************************************
-// Hosting of stdio functionality through USART6
-//******************************************************************************
-
-#include <rt_misc.h>
-
-#pragma import(__use_no_semihosting_swi)
-
-struct __FILE { 
-int handle; /* Add whatever you need here */ 
-};
-FILE __stdout;
-FILE __stdin;
-
-int fputc(int ch, FILE *f)
-{
-	usart_write(&STDSERIAL, ch);
-  return(ch);
-}
-
-int fgetc(FILE *f)
-{
-  return((int)usart_read(&STDSERIAL));
-}
-
-int ferror(FILE *f)
-{
-  /* Your implementation of ferror */
-  return EOF;
-}
-
-void _sys_exit(int return_code)
-{
-label:  goto label;  /* endless loop */
-}
 
 /**
   * @brief  Configure the RTC peripheral by selecting the clock source.
@@ -364,7 +329,7 @@ void RTC_TimeShow(void)
 {
   /* Get the current Time */
   RTC_GetTime(RTC_Format_BIN, &RTC_TimeStructure);
-  printf("\n\r  The current time is :  %0.2d:%0.2d:%0.2d \n\r", RTC_TimeStructure.RTC_Hours, RTC_TimeStructure.RTC_Minutes, RTC_TimeStructure.RTC_Seconds);
+  printf("\n  The current time is :  %0.2d:%0.2d:%0.2d \n", RTC_TimeStructure.RTC_Hours, RTC_TimeStructure.RTC_Minutes, RTC_TimeStructure.RTC_Seconds);
 }
 
 /**
@@ -376,7 +341,7 @@ void RTC_AlarmShow(void)
 {
   /* Get the current Alarm */
   RTC_GetAlarm(RTC_Format_BIN, RTC_Alarm_A, &RTC_AlarmStructure);
-  printf("\n\r  The current alarm is :  %0.2d:%0.2d:%0.2d \n\r", RTC_AlarmStructure.RTC_AlarmTime.RTC_Hours, RTC_AlarmStructure.RTC_AlarmTime.RTC_Minutes, RTC_AlarmStructure.RTC_AlarmTime.RTC_Seconds);
+  printf("\n  The current alarm is :  %0.2d:%0.2d:%0.2d \n", RTC_AlarmStructure.RTC_AlarmTime.RTC_Hours, RTC_AlarmStructure.RTC_AlarmTime.RTC_Minutes, RTC_AlarmStructure.RTC_AlarmTime.RTC_Seconds);
 }
 
 //******************************************************************************
