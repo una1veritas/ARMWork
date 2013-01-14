@@ -15,6 +15,8 @@ class Nokia5110 {
 	GPIOPin pin_SCLK;  //  3 //Pin 7 on LCD, SCK
 
 	SPI * SPIx;
+	uint16 textcursor; // bit column position
+	uint8 fontid;
 	
 	//The DC pin tells the LCD if we are sending a command or data
 	static const byte LCD_COMMAND = 0; 
@@ -32,29 +34,43 @@ class Nokia5110 {
 	inline void deselect() {
 		digitalWrite(pin_SCE, HIGH);
 	}
+	
 public:
 	Nokia5110(SPI * spix, GPIOPin sce, GPIOPin dc, GPIOPin rst) {
 		SPIx = spix;
 		pin_SCE = sce;   // 7 //Pin 3 on LCD, ~CS
 		pin_DC = dc;
 		pin_RESET = rst;
+		textcursor = 0;
+		fontid = FIXED8x5;
 	}
+
+	enum {
+		FIXED8x5,
+		PROPORTIONAL10x15
+	};
 	
-	static const byte ASCII[][5];
 	static const byte SFEFlame[];
 //	static const byte SFEFlameBubble [];
 //	static const byte awesome[];
-	static const byte Chicago15x16[];
+	static const byte ascii8x5[];
+	static const byte Chicago10x15[];
 	
+	//
 	void gotoXY(int x, int y);
 	void drawBitmap(const byte my_array[]);
 	void drawCharacter(char character);
 	void drawString(char *characters);
-	void drawFont(const byte font[], int x, int y,  char character);
-//	void drawFontString(const byte font[], const byte hight, char *characters);
 	void clear(void);
 	void init(void);
+	void begin(void) { init(); }
 	void write(byte data_or_command, byte data);
+	
+	void cursor(int col);
+	void selectFont(uint8 id) { fontid = id; }
+	void drawFixedFont(const byte font[], char c);
+	void drawProportionalFont(const byte font[], char c);
+//	void drawFontString(const byte font[], const byte hight, char *characters);
 };
 
 #endif

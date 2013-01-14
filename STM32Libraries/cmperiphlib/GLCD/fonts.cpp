@@ -1,199 +1,8 @@
-/*
- 7-17-2011
- Spark Fun Electronics 2011
- Nathan Seidle
- 
- This code is public domain but you buy me a beer if you use this and we meet someday (Beerware license).
- 
- This code writes a series of images and text to the Nokia 5110 84x48 graphic LCD:
- http://www.sparkfun.com/products/10168
- 
- Do not drive the backlight with 5V. It will smoke. However, the backlight on the LCD seems to be 
- happy with direct drive from the 3.3V regulator.
-
- Although the PCD8544 controller datasheet recommends 3.3V, the graphic Nokia 5110 LCD can run at 3.3V or 5V. 
- No resistors needed on the signal lines.
- 
- You will need 5 signal lines to connect to the LCD, 3.3 or 5V for power, 3.3V for LED backlight, and 1 for ground.
- */
-
-/*
-#include "armcore.h"
-#include "gpio.h"
-#include "delay.h"
-#include "SPI.h"
-*/
-#include <ctype.h>
-
 #include "Nokia5110.h"
-
-/*
-void setup(void) {
-  LCDInit(); //Init the LCD
-}
-
-void loop(void) {
-  LCDClear();
-  LCDBitmap(SFEFlame);
-  delay(1000);
-
-  LCDClear();
-  LCDBitmap(SFEFlameBubble);
-  delay(1000);
-
-  LCDClear();
-  LCDBitmap(awesome);
-  delay(1000);
-
-  LCDClear();
-  LCDString("Hello World!");
-  delay(1000);
-}
-*/
-void Nokia5110::gotoXY(int x, int y) {
-	select();
-  write(0, 0x80 | x);  // Column.
-  write(0, 0x40 | y);  // Row.  ?
-	deselect();
-	textcursor = x + y* 84 ;
-}
-
-void Nokia5110::cursor(int col) {
-	textcursor = col;
-}
-
-//This takes a large array of bits and sends them to the LCD
-void Nokia5110::drawBitmap(const byte my_array[]){
-	select();
-  for (int index = 0 ; index < (LCD_X * LCD_Y / 8) ; index++)
-    write(LCD_DATA, my_array[index]);
-	deselect();
-}
-
-//This function takes in a character, looks it up in the font table/array
-//And writes it to the screen
-//Each character is 8 bits tall and 5 bits wide. We pad one blank column of
-//pixels on each side of the character for readability.
-void Nokia5110::drawCharacter(const char ch) {
-	if ( fontid == PROPORTIONAL10x15 )
-		drawProportionalFont(Chicago10x15, ch);
-	else
-		drawFixedFont(ascii8x5, ch);
-}
-
-void Nokia5110::drawFixedFont(const byte font[], char character) {
-	uint16 width = font[0];
-//	uint16 height = font[1];
-	uint16 pixbytebase = 3;
-	
-	select();
-  write(LCD_DATA, 0x00); //Blank vertical line padding
-  for (int index = 0 ; index < width ; index++)
-    write(LCD_DATA, ascii8x5[pixbytebase + (character - 0x20)*width + index]);
-    //0x20 is the ASCII character for Space (' '). The font table starts with this character
-  write(LCD_DATA, 0x00); //Blank vertical line padding
-	deselect();
-	
-	textcursor += 2 + width;
-}
-
-//This function takes in a character, looks it up in the font table/array
-//And writes it to the screen
-//Each character is 8 bits tall and 5 bits wide. We pad one blank column of
-//pixels on each side of the character for readability.
-void Nokia5110::drawProportionalFont(const byte font[], char character) {
-//	byte mxwidth = font[0];
-	byte height = font[1];
-//	byte proportional = font[2];
-
-	byte percolbytes = height/8 + height%2;
-//	byte textrow = textcursor/percolbytes;
-	
-	uint16 idx = 3;
-	byte fontwidth;
-	byte ch = 0x20;
-	for( ; ch != character; ch++) 
-		idx += 1 + font[idx]*percolbytes;
-	fontwidth = font[idx];
-	idx++;
-	
-	if ( (textcursor % 84) + fontwidth+2 >= 84 )
-		textcursor = (textcursor/84 + 1)*84;
-	if ( character == 0x20 && textcursor%84 == 0 )
-		return;
-	select();
-	for(int bytepos = 0; bytepos < percolbytes; bytepos++) {
-		write(0, 0x80 | textcursor % 84);  // Column.
-		write(0, 0x40 | percolbytes*(textcursor/84) + bytepos ); //0+bytepos+(textcursor/84)*percolbytes);  // Row.  ?
-		write(LCD_DATA, 0x00); //Blank vertical line padding
-		for (int i = 0 ; i < fontwidth ; i++) {
-			write(LCD_DATA, font[idx + bytepos + i*percolbytes]);
-		}
-		write(LCD_DATA, 0x00); //Blank vertical line padding
-	}
-	deselect();
-	//
-	textcursor += fontwidth + 2;
-}
-
-//Given a string of characters, one by one is passed to the LCD
-void Nokia5110::drawString(char *characters) {
-  while (*characters)
-    drawCharacter(*characters++);
-}
-
-//Clears the LCD by writing zeros to the entire screen
-void Nokia5110::clear(void) {
-	select();
-  for (int index = 0 ; index < (LCD_X * LCD_Y / 8) ; index++)
-    write(LCD_DATA, 0x00);
-	deselect();
-  gotoXY(0, 0); //After we clear the display, return to the home position
-}
-
-//This sends the magical commands to the PCD8544
-void Nokia5110::init(void) {
-	
-  //Configure control pins
-  //pinMode(pin_SCE, OUTPUT);
-  pinMode(pin_RESET, OUTPUT);
-  pinMode(pin_DC, OUTPUT);
-  //pinMode(pin_SDIN, OUTPUT);
-  //pinMode(pin_SCLK, OUTPUT);
-
-  //Reset the LCD to a known state
-  digitalWrite(pin_RESET, LOW);
-  digitalWrite(pin_RESET, HIGH);
-
-	select();
-  write(LCD_COMMAND, 0x21); //Tell LCD that extended commands follow
-  write(LCD_COMMAND, 0xBC); //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
-  write(LCD_COMMAND, 0x04); //Set Temp coefficent
-  write(LCD_COMMAND, 0x14); //LCD bias mode 1:48: Try 0x13 or 0x14
-
-  write(LCD_COMMAND, 0x20); //We must send 0x20 before modifying the display control mode
-  write(LCD_COMMAND, 0x0C); //Set display control, normal mode. 0x0D for inverse
-	deselect();
-}
-
-//There are two memory banks in the LCD, data/RAM and commands. This 
-//function sets the DC pin high or low depending, and then sends
-//the data byte
-void Nokia5110::write(byte data_or_command, byte data) {
-	//spi_setMode(SPIBx, 64, SPI_CPOL_High, SPI_CPHA_2Edge, SPI_MSBFIRST); // mode 3, msb first
-	
-  digitalWrite(pin_DC, data_or_command); //Tell the LCD that we are writing either to data or a command
-  //Send the data
-  //digitalWrite(pin_SCE, LOW);
-	spi_transfer(SPIx, data);
-//  shiftOut(PIN_SDIN, PIN_SCLK, SPI_MSBFIRST, data);
-  //digitalWrite(pin_SCE, HIGH);
-}
-
 
 //This table contains the hex values that represent pixels
 //for a font that is 5 pixels wide and 8 pixels high
-const byte Nokia5110::ascii8x5[] = {
+const byte Nokia5110::ASCII[] = {
 	 0x05, 0x08, 'F', // width, hright, proprtional
    0x00, 0x00, 0x00, 0x00, 0x00,  // 20  
    0x00, 0x00, 0x5f, 0x00, 0x00,  // 21 !
@@ -370,7 +179,7 @@ const byte Nokia5110::SFEFlameBubble [] = {
 const byte Nokia5110::Chicago10x15[] =	{
 	0x0A, 0x0F, 'P', // maxwidth, height, proprtional
 	/* ' ' (20), width 06 from +2 byte */
-	0x04, 0x00, 0x00,  0x00, 0x00,  0x00, 0x00,  0x00, 0x00, // 0x00, 0x00,  0x00, 0x00,  
+	0x06, 0x00, 0x00,  0x00, 0x00,  0x00, 0x00,  0x00, 0x00,  0x00, 0x00,  0x00, 0x00,  
 	/* '!' (21), width 02 from +15 byte */
 	0x02, 0xF8, 0x0D,  0xF8, 0x0D,  
 	/* '"' (22), width 03 from +20 byte */
@@ -489,7 +298,7 @@ const byte Nokia5110::Chicago10x15[] =	{
 	0x06, 0x08, 0x0C,  0x08, 0x0F,  0xC8, 0x0B,  0xF8, 0x08,  0x78, 0x08,  0x18, 0x08,  
 	/* '[' (5b), width 02 from +713 byte */
 	0x02, 0xFC, 0x1F,  0xFC, 0x1F,  
-	/* '\\' (5c), width 05 from +718 byte */
+	/* '\' (5c), width 05 from +718 byte */
 	0x05, 0x04, 0x00,  0x38, 0x00,  0xC0, 0x00,  0x00, 0x07,  0x00, 0x08,  
 	/* ']' (5d), width 02 from +729 byte */
 	0x02, 0xFC, 0x1F,  0xFC, 0x1F,  
@@ -560,5 +369,5 @@ const byte Nokia5110::Chicago10x15[] =	{
 	/* '~' (7e), width 06 from +1110 byte */
 	0x06, 0x40, 0x00,  0x20, 0x00,  0x20, 0x00,  0x40, 0x00,  0x40, 0x00,  0x20, 0x00,  
 	/* '' (7f), width 05 from +1123 byte */
-	0x05, 0xFF, 0x0F,  0x01, 0x08,  0x01, 0x08,  0x01, 0x08,  0xFF, 0x0F  
-};
+	0x05, 0xFF, 0x0F,  0x01, 0x08,  0x01, 0x08,  0x01, 0x08,  0xFF, 0x0F,  
+	};

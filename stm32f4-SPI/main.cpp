@@ -73,16 +73,20 @@ int main(void) {
 		nokiaLCD.drawBitmap(Nokia5110::SFEFlame);
 		delay(1000);
 		
-		nokiaLCD.clear();
-		nokiaLCD.drawFont(Nokia5110::Chicago15x16, 0, 0, 'A');
-		nokiaLCD.drawFont(Nokia5110::Chicago15x16, 1, 2, 'y');
-		nokiaLCD.drawFont(Nokia5110::Chicago15x16, 0, 4, 'W');
-		delay(1000);
-		for(;;);
 	uint16 shift = 0;
+	nokiaLCD.selectFont(Nokia5110::PROPORTIONAL10x15);
 	
 	while (1) {
+		nokiaLCD.clear();
+		nokiaLCD.cursor(252 - shift );
+		nokiaLCD.drawString("GNU is Nuke an Uran 01235y!");
+//		nokiaLCD.drawFont(Nokia5110::Chicago10x15, 'A');
+//		nokiaLCD.drawFont(Nokia5110::Chicago10x15, 'W');
+		shift++;
+		shift %= 252;
+		delay(250);
 
+/*
 		if ( millis() / 125 != shift ) {
 			shift = millis()/ 125;
 			nokiaLCD.clear();
@@ -92,8 +96,8 @@ int main(void) {
 			nokiaLCD.drawString(tmp);
 //		usart_print(&Serial6, tmp);
 //		usart_print(&Serial6, "\r\n");
-
 		}
+		*/
 	}
 }
 
