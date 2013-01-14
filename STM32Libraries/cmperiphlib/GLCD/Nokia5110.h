@@ -14,7 +14,7 @@ class Nokia5110 {
 	GPIOPin pin_SDIN;  //  4 //Pin 6 on LCD, MOSI
 	GPIOPin pin_SCLK;  //  3 //Pin 7 on LCD, SCK
 
-	SPIBuffer * SPIBx;
+	SPI * SPIx;
 	
 	//The DC pin tells the LCD if we are sending a command or data
 	static const byte LCD_COMMAND = 0; 
@@ -25,7 +25,7 @@ class Nokia5110 {
 	static const uint16 LCD_Y = 48;
 
 	inline void select() {
-		spi_setMode(SPIBx, 64, SPI_CPOL_High, SPI_CPHA_2Edge, SPI_MSBFIRST); // mode 3, msb first
+		spi_setMode(SPIx, 64, SPI_CPOL_High, SPI_CPHA_2Edge, SPI_MSBFIRST); // mode 3, msb first
 		digitalWrite(pin_SCE, LOW);
 	}
 	
@@ -33,8 +33,8 @@ class Nokia5110 {
 		digitalWrite(pin_SCE, HIGH);
 	}
 public:
-	Nokia5110(SPIBuffer * spix, GPIOPin sce, GPIOPin dc, GPIOPin rst) {
-		SPIBx = spix;
+	Nokia5110(SPI * spix, GPIOPin sce, GPIOPin dc, GPIOPin rst) {
+		SPIx = spix;
 		pin_SCE = sce;   // 7 //Pin 3 on LCD, ~CS
 		pin_DC = dc;
 		pin_RESET = rst;
@@ -42,13 +42,16 @@ public:
 	
 	static const byte ASCII[][5];
 	static const byte SFEFlame[];
-	static const byte SFEFlameBubble [];
-	static const byte awesome[];
-
+//	static const byte SFEFlameBubble [];
+//	static const byte awesome[];
+	static const byte Chicago15x16[];
+	
 	void gotoXY(int x, int y);
 	void drawBitmap(const byte my_array[]);
 	void drawCharacter(char character);
 	void drawString(char *characters);
+	void drawFont(const byte font[], int x, int y,  char character);
+//	void drawFontString(const byte font[], const byte hight, char *characters);
 	void clear(void);
 	void init(void);
 	void write(byte data_or_command, byte data);
