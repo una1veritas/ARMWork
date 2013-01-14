@@ -1,6 +1,0 @@
-eclipse.preferences.version=1
-environment/project/cdt.managedbuild.toolchain.gnu.cross.base.1506751600/PATH/delimiter=;
-environment/project/cdt.managedbuild.toolchain.gnu.cross.base.1506751600/PATH/operation=replace
-environment/project/cdt.managedbuild.toolchain.gnu.cross.base.1506751600/PATH/value=C\:\\Program Files (x86)\\eclipse;C\:/Program Files (x86)/Java/jre7/bin/client;C\:/Program Files (x86)/Java/jre7/bin;C\:/Program Files (x86)/Java/jre7/lib/i386;C\:\\WinAVR-20100110\\bin;C\:\\WinAVR-20100110\\utils\\bin;C\:\\msys\\1.0\\bin\\;C\:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v5.0\\bin\\;C\:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v5.0\\libnvvp\\;C\:\\Windows\\system32;C\:\\Windows;C\:\\Windows\\System32\\Wbem;C\:\\Program Files (x86)\\QuickTime\\QTSystem\\;C\:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C\:\\Program Files (x86)\\CodeSourcery\\CodeBench_Lite_ARM_EABI\\bin
-environment/project/cdt.managedbuild.toolchain.gnu.cross.base.1506751600/append=true
-environment/project/cdt.managedbuild.toolchain.gnu.cross.base.1506751600/appendContributed=true
