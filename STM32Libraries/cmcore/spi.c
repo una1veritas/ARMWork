@@ -111,7 +111,7 @@
 
 //SPI_TypeDef * spix[] = { SPI1, SPI2, SPI3 };
 
-void spi_init(SPIBuffer * spibx, SPI_TypeDef * SPIx, 
+void spi_init(SPI * spibx, SPI_TypeDef * SPIx, 
 							GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss) {
 	uint8_t af; // = GPIO_AF_SPI1;
 
@@ -192,7 +192,7 @@ void spi_init(SPIBuffer * spibx, SPI_TypeDef * SPIx,
 	 */
 }
 
-void spi_setMode(SPIBuffer * spi, uint16 prescaler, uint16_t cpol, uint16_t cpha,  uint16_t firstbit) {
+void spi_setMode(SPI * spi, uint16 prescaler, uint16_t cpol, uint16_t cpha,  uint16_t firstbit) {
 	switch(prescaler) {
 		case SPI_BaudRatePrescaler_2:
 		case SPI_BaudRatePrescaler_4:
@@ -220,13 +220,13 @@ void spi_setMode(SPIBuffer * spi, uint16 prescaler, uint16_t cpol, uint16_t cpha
 	SPI_Init(spi->SPIx, &spi->initStruct);
 }
 
-void spi_setDataMode(SPIBuffer * spi, uint16 modeid) {
+void spi_setDataMode(SPI * spi, uint16 modeid) {
 	spi->initStruct.SPI_CPOL = (modeid & 2 ? SPI_CPOL_High : SPI_CPOL_Low);
 	spi->initStruct.SPI_CPHA = (modeid & 1 ? SPI_CPHA_2Edge : SPI_CPHA_1Edge );
 	SPI_Init(spi->SPIx, &spi->initStruct);
 }
 
-uint16 spi_transfer(SPIBuffer * spi, uint16 data) {
+uint16 spi_transfer(SPI * spi, uint16 data) {
 	/* Wait for SPIx Tx buffer empty */
 	while (SPI_I2S_GetFlagStatus(spi->SPIx, SPI_I2S_FLAG_TXE ) == RESET) ;
 

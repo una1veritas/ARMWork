@@ -29,7 +29,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx.h"
-#include "stm32f4_discovery_sdio_sd.h"
 #include "stm32f4xx_it.h"
 
 /* Private typedef -----------------------------------------------------------*/

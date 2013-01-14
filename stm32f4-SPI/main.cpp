@@ -27,8 +27,8 @@
 #include "GLCD/Nokia5110.h"
 
 USART Serial6;
-SPIBuffer SPI1Buffer;
-Nokia5110 nokiaLCD(&SPI1Buffer, PA4, PA3, PA2);
+SPI SPI1Struct;
+Nokia5110 nokiaLCD(&SPI1Struct, PA4, PA3, PA2);
 
 int main(void) {
 	char tmp[256];
@@ -48,8 +48,8 @@ int main(void) {
 	const uint16 messlen = strlen(message);
 	
 	TIM2_timer_start();
-	usart_begin(&Serial6, USART6, PC7, PC6, 57600);
-	spi_begin(&SPI1Buffer, SPI1, PA5, PA6, PA7, PA4); //  PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
+	usart_init(&Serial6, USART6, PC7, PC6, 57600);
+	spi_init(&SPI1Struct, SPI1, PA5, PA6, PA7, PA4); //  PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
 	
 	usart_print(&Serial6, "Basic initialization has been finished.\n");
 	
@@ -73,14 +73,20 @@ int main(void) {
 		nokiaLCD.drawBitmap(Nokia5110::SFEFlame);
 		delay(1000);
 		
-		nokiaLCD.clear();
-		nokiaLCD.drawBitmap(Nokia5110::SFEFlameBubble);
-		delay(1000);
-
 	uint16 shift = 0;
+	nokiaLCD.selectFont(Nokia5110::PROPORTIONAL10x15);
 	
 	while (1) {
+		nokiaLCD.clear();
+		nokiaLCD.cursor(252 - shift );
+		nokiaLCD.drawString("GNU is Nuke an Uran 01235y!");
+//		nokiaLCD.drawFont(Nokia5110::Chicago10x15, 'A');
+//		nokiaLCD.drawFont(Nokia5110::Chicago10x15, 'W');
+		shift++;
+		shift %= 252;
+		delay(250);
 
+/*
 		if ( millis() / 125 != shift ) {
 			shift = millis()/ 125;
 			nokiaLCD.clear();
@@ -90,8 +96,8 @@ int main(void) {
 			nokiaLCD.drawString(tmp);
 //		usart_print(&Serial6, tmp);
 //		usart_print(&Serial6, "\r\n");
-
 		}
+		*/
 	}
 }
 

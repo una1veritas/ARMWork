@@ -33,17 +33,17 @@ extern "C" {
 #define SPI_MSBFIRST 0
 #define SPI_LSBFIRST 1
 
-typedef struct _SPIBuffer {
+typedef struct _SPI {
 	SPI_TypeDef * SPIx;
 	SPI_InitTypeDef initStruct;
 //	uint8 xbuf[256];
 //	uint16 xindex;
-} SPIBuffer;
+} SPI;
 
-void spi_init(SPIBuffer * spibuf, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss);
-uint16 spi_transfer(SPIBuffer * spibuf, uint16 data);
-void spi_setDataMode(SPIBuffer * spibuf, uint16 modeid);
-void spi_setMode(SPIBuffer * spibuf, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst);
+void spi_init(SPI * spibuf, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss);
+uint16 spi_transfer(SPI * spibuf, uint16 data);
+void spi_setDataMode(SPI * spibuf, uint16 modeid);
+void spi_setMode(SPI * spibuf, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst);
 
 #ifdef __cplusplus
 }
