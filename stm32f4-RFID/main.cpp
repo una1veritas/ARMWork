@@ -16,11 +16,9 @@
 #include "stm32f4xx_it.h"
 
 #include "armcore.h"
-#include "gpio.h"
-#include "delay.h"
 
 #include "USARTSerial.h"
-#include "spi.h"
+#include "SPIBus.h"
 
 #include "Boards/stm32f4_discovery.h"
 #include "GLCD/Nokia5110.h"
@@ -33,11 +31,11 @@ const byte factory_a[] = {
   0xaa, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
 
 USARTSerial Serial6(USART6, PC7, PC6);
-SPIBuffer SPI1Buffer;
-Nokia5110 nokiaLCD(&SPI1Buffer, PA4, PA3, PA2);
+SPIBus SPI1Bus;
+Nokia5110 nokiaLCD(&SPI1Bus, PA4, PA3, PA2);
 
-#define IRQ   PB6
-#define RESET PB7
+#define IRQ   PB11
+#define RESET PB12
 // Not connected by default on the NFC Shield
 
 I2CWire Wire1(I2C1, PB8, PB9);
@@ -70,7 +68,7 @@ int main(void) {
 	
 	TIM2_timer_start();
 	Serial6.begin(57600);
-	spi_init(&SPI1Buffer, SPI1, PA5, PA6, PA7, PA4); 
+	spi_init(&SPI1Bus, SPI1, PA5, PA6, PA7, PA4); 
 	//  sck = PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
 	Wire1.begin(100000);
 	
@@ -93,13 +91,11 @@ int main(void) {
 	GPIOMode(PinPort(LED1), (PinBit(LED1) | PinBit(LED2) | PinBit(LED3) | PinBit(LED4)), 
 					OUTPUT, FASTSPEED, PUSHPULL, NOPULL);
 					
-		nokiaLCD.clear();
-		nokiaLCD.drawBitmap(Nokia5110::SFEFlame);
-		delay(1000);
+	nokiaLCD.clear();
+	nokiaLCD.selectFont(Nokia5110::CHICAGO10);
+	nokiaLCD.drawString("Hello, there.");
+	delay(1000);
 		
-		nokiaLCD.clear();
-		nokiaLCD.drawBitmap(Nokia5110::SFEFlameBubble);
-		delay(1000);
 		
 	PN532_init();
   card.clear();
@@ -156,33 +152,36 @@ int main(void) {
 
 
 void PN532_init() {
-
-  Serial6.print("Firmware version: ");
-  unsigned long r = 0;
-  for (int i = 0; i < 10 ; i++) {
-    if ( (r = nfc.GetFirmwareVersion()) )
+	uint8 respobuf[8];
+  int i;
+  for (i = 0; i < 3 ; i++) {
+    if ( nfc.GetFirmwareVersion() && nfc.getCommandResponse(respobuf) )
       break;
     delay(250);
   }
-  if (! r ) {
+  if ( !(i < 3) ) {
     Serial6.println("Couldn't find PN53x on Wire.");
+    Serial6.println("Halt.");
     while (1); // halt
   } 
-  else {
-    Serial6.println((uint32)r, HEX);
-  }
 
-  // Got ok data, print it out!
-  Serial6.print("Found chip PN5");
-  Serial6.println((uint8)(r & 0xff), HEX);
-  Serial6.print("Firmware ver. ");
-	Serial6.print((uint8)(r>>8 & 0xFF), HEX);
-	Serial6.print('.');
-	Serial6.println((uint8)(r>>16 & 0xFF), HEX);
+	Serial6.print("PN53x IC version '"); 
+	Serial6.print((char) respobuf[0]); 
+	Serial6.print("', firmware ver. "); 
+	Serial6.print(respobuf[1]); 
+	Serial6.print(", rev. "); 
+	Serial6.println(respobuf[2]);
+	Serial6.print("Support "); 
+	if (respobuf[3] & 1 )
+		Serial6.print("ISO/IEC 14443 Type A, ");
+	if (respobuf[3] & 2 )
+		Serial6.print("ISO/IEC 14443 Type B, ");
+	if (respobuf[3] & 4)
+		Serial6.print("ISO 18092 ");
+	Serial6.println();
 
-  Serial6.println("SAMConfiguration");
-
-  nfc.SAMConfiguration();
-  Serial6.println();
+  Serial6.print("SAMConfiguration ");
+  if ( nfc.SAMConfiguration() )
+		Serial6.println("finished.");
 }
 

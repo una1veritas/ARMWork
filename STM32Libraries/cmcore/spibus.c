@@ -107,11 +107,11 @@
 #include "stm32f4xx_spi.h"
 
 #include "gpio.h"
-#include "spi.h"
+#include "spibus.h"
 
 //SPI_TypeDef * spix[] = { SPI1, SPI2, SPI3 };
 
-void spi_init(SPI * spibx, SPI_TypeDef * SPIx, 
+void spi_init(SPIBus * spibx, SPI_TypeDef * SPIx, 
 							GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss) {
 	uint8_t af; // = GPIO_AF_SPI1;
 
@@ -150,17 +150,17 @@ void spi_init(SPI * spibx, SPI_TypeDef * SPIx,
 	//GPIO_PinAFConfig(PinPort(nss), PinSource(nss), af);
 
 	// set default parameters
-	spibx->initStruct.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
-	spibx->initStruct.SPI_Mode = SPI_Mode_Master;
-	spibx->initStruct.SPI_DataSize = SPI_DataSize_8b;
-	spibx->initStruct.SPI_CPOL = SPI_CPOL_Low;
-	spibx->initStruct.SPI_CPHA = SPI_CPHA_1Edge;
-	spibx->initStruct.SPI_NSS = SPI_NSS_Soft;
-	spibx->initStruct.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
-	spibx->initStruct.SPI_FirstBit = SPI_FirstBit_MSB;
-	spibx->initStruct.SPI_CRCPolynomial = SPI_CRC_Rx;
+	spibx->modeStruct.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
+	spibx->modeStruct.SPI_Mode = SPI_Mode_Master;
+	spibx->modeStruct.SPI_DataSize = SPI_DataSize_8b;
+	spibx->modeStruct.SPI_CPOL = SPI_CPOL_Low;
+	spibx->modeStruct.SPI_CPHA = SPI_CPHA_1Edge;
+	spibx->modeStruct.SPI_NSS = SPI_NSS_Soft;
+	spibx->modeStruct.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
+	spibx->modeStruct.SPI_FirstBit = SPI_FirstBit_MSB;
+	spibx->modeStruct.SPI_CRCPolynomial = SPI_CRC_Rx;
 
-	SPI_Init(spibx->SPIx, &spibx->initStruct);
+	SPI_Init(spibx->SPIx, &spibx->modeStruct);
 
 	SPI_Cmd(spibx->SPIx, ENABLE);
 	/*          5. Enable the NVIC and the corresponding interrupt using the function
@@ -192,7 +192,7 @@ void spi_init(SPI * spibx, SPI_TypeDef * SPIx,
 	 */
 }
 
-void spi_setMode(SPI * spi, uint16 prescaler, uint16_t cpol, uint16_t cpha,  uint16_t firstbit) {
+void spi_setMode(SPIBus * spib, uint16 prescaler, uint16_t cpol, uint16_t cpha,  uint16_t firstbit) {
 	switch(prescaler) {
 		case SPI_BaudRatePrescaler_2:
 		case SPI_BaudRatePrescaler_4:
@@ -210,31 +210,31 @@ void spi_setMode(SPI * spi, uint16 prescaler, uint16_t cpol, uint16_t cpha,  uin
 //	spi->initStruct..SPI_Direction = SPI_Direction_2Lines_FullDuplex;
 //	spi->initStruct..SPI_Mode = SPI_Mode_Master;
 //	spi->initStruct..SPI_DataSize = SPI_DataSize_8b;
-	spi->initStruct.SPI_CPOL = (cpol == SPI_CPOL_Low ? SPI_CPOL_Low : SPI_CPOL_High);
-	spi->initStruct.SPI_CPHA = (cpha == SPI_CPHA_1Edge? SPI_CPHA_1Edge : SPI_CPHA_2Edge);
+	spib->modeStruct.SPI_CPOL = (cpol == SPI_CPOL_Low ? SPI_CPOL_Low : SPI_CPOL_High);
+	spib->modeStruct.SPI_CPHA = (cpha == SPI_CPHA_1Edge? SPI_CPHA_1Edge : SPI_CPHA_2Edge);
 //	spi->initStruct..SPI_NSS = SPI_NSS_Soft;
-	spi->initStruct.SPI_BaudRatePrescaler = prescaler;
-	spi->initStruct.SPI_FirstBit = (firstbit == SPI_FirstBit_MSB ? SPI_FirstBit_MSB : SPI_FirstBit_LSB);
+	spib->modeStruct.SPI_BaudRatePrescaler = prescaler;
+	spib->modeStruct.SPI_FirstBit = (firstbit == SPI_FirstBit_MSB ? SPI_FirstBit_MSB : SPI_FirstBit_LSB);
 //	spi->initStruct..SPI_CRCPolynomial = SPI_CRC_Rx;
 
-	SPI_Init(spi->SPIx, &spi->initStruct);
+	SPI_Init(spib->SPIx, &spib->modeStruct);
 }
 
-void spi_setDataMode(SPI * spi, uint16 modeid) {
-	spi->initStruct.SPI_CPOL = (modeid & 2 ? SPI_CPOL_High : SPI_CPOL_Low);
-	spi->initStruct.SPI_CPHA = (modeid & 1 ? SPI_CPHA_2Edge : SPI_CPHA_1Edge );
-	SPI_Init(spi->SPIx, &spi->initStruct);
+void spi_setDataMode(SPIBus * spib, uint16 modeid) {
+	spib->modeStruct.SPI_CPOL = (modeid & 2 ? SPI_CPOL_High : SPI_CPOL_Low);
+	spib->modeStruct.SPI_CPHA = (modeid & 1 ? SPI_CPHA_2Edge : SPI_CPHA_1Edge );
+	SPI_Init(spib->SPIx, &spib->modeStruct);
 }
 
-uint16 spi_transfer(SPI * spi, uint16 data) {
+uint16 spi_transfer(SPIBus * spib, uint16 data) {
 	/* Wait for SPIx Tx buffer empty */
-	while (SPI_I2S_GetFlagStatus(spi->SPIx, SPI_I2S_FLAG_TXE ) == RESET) ;
+	while (SPI_I2S_GetFlagStatus(spib->SPIx, SPI_I2S_FLAG_TXE ) == RESET) ;
 
-	SPI_I2S_SendData(spi->SPIx, data);
+	SPI_I2S_SendData(spib->SPIx, data);
 	/* Wait for SPIx data reception */
 
-	while (SPI_I2S_GetFlagStatus(spi->SPIx, SPI_I2S_FLAG_RXNE ) == RESET) ;
+	while (SPI_I2S_GetFlagStatus(spib->SPIx, SPI_I2S_FLAG_RXNE ) == RESET) ;
 	/* Read SPIy received data */
 
-	return SPI_I2S_ReceiveData(spi->SPIx);
+	return SPI_I2S_ReceiveData(spib->SPIx);
 }

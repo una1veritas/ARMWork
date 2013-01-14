@@ -75,7 +75,7 @@ void Nokia5110::drawBitmap(const byte my_array[]){
 //Each character is 8 bits tall and 5 bits wide. We pad one blank column of
 //pixels on each side of the character for readability.
 void Nokia5110::drawCharacter(const char ch) {
-	if ( fontid == PROPORTIONAL10x15 )
+	if ( fontid == CHICAGO10 )
 		drawProportionalFont(Chicago10x15, ch);
 	else
 		drawFixedFont(ascii8x5, ch);
@@ -185,7 +185,7 @@ void Nokia5110::write(byte data_or_command, byte data) {
   digitalWrite(pin_DC, data_or_command); //Tell the LCD that we are writing either to data or a command
   //Send the data
   //digitalWrite(pin_SCE, LOW);
-	spi_transfer(SPIx, data);
+	spi_transfer(spibus, data);
 //  shiftOut(PIN_SDIN, PIN_SCLK, SPI_MSBFIRST, data);
   //digitalWrite(pin_SCE, HIGH);
 }

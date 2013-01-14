@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>SPI Test</TargetName>
+      <TargetName>RFID Test</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -44,7 +44,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\</OutputDirectory>
-          <OutputName>stm32f4-SPI</OutputName>
+          <OutputName>stm32f4-RFID</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
+            <Optim>3</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\stm32f4-SPI;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmperiph;..\..\STM32Libraries\cmcore\coreplus</IncludePath>
+              <IncludePath>..\..\stm32f4-SPI;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmperiphlib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -487,19 +487,9 @@
               <FilePath>..\..\STM32Libraries\cmcore\i2c.c</FilePath>
             </File>
             <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\spi.c</FilePath>
-            </File>
-            <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\spi.h</FilePath>
             </File>
             <File>
               <FileName>usart.h</FileName>
@@ -532,16 +522,6 @@
               <FilePath>..\..\STM32Libraries\cmcore\Print.h</FilePath>
             </File>
             <File>
-              <FileName>SPIBus.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\SPIBus.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>SPIBus.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\SPIBus.h</FilePath>
-            </File>
-            <File>
               <FileName>Stream.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\Stream.cpp</FilePath>
@@ -556,35 +536,70 @@
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\USARTSerial.h</FilePath>
             </File>
+            <File>
+              <FileName>spibus.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\spibus.c</FilePath>
+            </File>
+            <File>
+              <FileName>spibus.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\spibus.h</FilePath>
+            </File>
+            <File>
+              <FileName>SPI.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\SPI.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>SPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\SPI.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>cmperiph</GroupName>
+          <GroupName>cmperiphlib</GroupName>
           <Files>
-            <File>
-              <FileName>Nokia5110.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\GLCD\Nokia5110.h</FilePath>
-            </File>
             <File>
               <FileName>Nokia5110.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\GLCD\Nokia5110.cpp</FilePath>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\Nokia5110.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Nokia5110.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\Nokia5110.h</FilePath>
             </File>
             <File>
               <FileName>ISO14443.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\RFID\ISO14443.h</FilePath>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\RFID\ISO14443.h</FilePath>
             </File>
             <File>
               <FileName>PN532_I2C.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\RFID\PN532_I2C.cpp</FilePath>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\RFID\PN532_I2C.cpp</FilePath>
             </File>
             <File>
               <FileName>PN532_I2C.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\RFID\PN532_I2C.h</FilePath>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\RFID\PN532_I2C.h</FilePath>
+            </File>
+            <File>
+              <FileName>DS1307.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\RTC\DS1307.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>DS1307.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\RTC\DS1307.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4_discovery.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\Boards\stm32f4_discovery.h</FilePath>
             </File>
           </Files>
         </Group>

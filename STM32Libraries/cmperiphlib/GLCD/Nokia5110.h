@@ -2,9 +2,7 @@
 #define _NOKIA5110_H_
 
 #include "armcore.h"
-#include "gpio.h"
-#include "delay.h"
-#include "SPI.h"
+#include "spibus.h"
 
 class Nokia5110 {
 	GPIOPin pin_SCE;   // 7 //Pin 3 on LCD, ~CS
@@ -14,7 +12,7 @@ class Nokia5110 {
 	GPIOPin pin_SDIN;  //  4 //Pin 6 on LCD, MOSI
 	GPIOPin pin_SCLK;  //  3 //Pin 7 on LCD, SCK
 
-	SPI * SPIx;
+	SPIBus * spibus;
 	uint16 textcursor; // bit column position
 	uint8 fontid;
 	
@@ -27,7 +25,7 @@ class Nokia5110 {
 	static const uint16 LCD_Y = 48;
 
 	inline void select() {
-		spi_setMode(SPIx, 64, SPI_CPOL_High, SPI_CPHA_2Edge, SPI_MSBFIRST); // mode 3, msb first
+		spi_setMode(spibus, 64, SPI_CPOL_High, SPI_CPHA_2Edge, SPI_MSBFIRST); // mode 3, msb first
 		digitalWrite(pin_SCE, LOW);
 	}
 	
@@ -36,8 +34,8 @@ class Nokia5110 {
 	}
 	
 public:
-	Nokia5110(SPI * spix, GPIOPin sce, GPIOPin dc, GPIOPin rst) {
-		SPIx = spix;
+	Nokia5110(SPIBus * spix, GPIOPin sce, GPIOPin dc, GPIOPin rst) {
+		spibus = spix;
 		pin_SCE = sce;   // 7 //Pin 3 on LCD, ~CS
 		pin_DC = dc;
 		pin_RESET = rst;
@@ -47,7 +45,7 @@ public:
 
 	enum {
 		FIXED8x5,
-		PROPORTIONAL10x15
+		CHICAGO10
 	};
 	
 	static const byte SFEFlame[];
