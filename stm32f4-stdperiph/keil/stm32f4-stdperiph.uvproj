@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\stm32libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\stm32librarIes\CMSIS\Include;..\..\stm32libraries\CMSIS\STM32F4xx;..\..\stm32f4-stdperiph;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmperiph</IncludePath>
+              <IncludePath>..\..\stm32libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\stm32librarIes\CMSIS\Include;..\..\stm32libraries\CMSIS\STM32F4xx;..\..\stm32f4-stdperiph;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmperiphlib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -487,11 +487,6 @@
               <FilePath>..\..\STM32Libraries\cmcore\gpio.c</FilePath>
             </File>
             <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\spi.c</FilePath>
-            </File>
-            <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\usart.c</FilePath>
@@ -505,11 +500,6 @@
               <FileName>Print.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\Print.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>SPIBus.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\SPIBus.cpp</FilePath>
             </File>
             <File>
               <FileName>Stream.cpp</FileName>
@@ -529,17 +519,12 @@
             <File>
               <FileName>DS1307.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\RTC\DS1307.cpp</FilePath>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\RTC\DS1307.cpp</FilePath>
             </File>
             <File>
               <FileName>ST7032i.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\ChLCD\ST7032i.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4_discovery.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\Boards\stm32f4_discovery.h</FilePath>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\ChLCD\ST7032i.cpp</FilePath>
             </File>
           </Files>
         </Group>
