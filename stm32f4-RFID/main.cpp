@@ -36,15 +36,14 @@ USARTSerial Serial6(USART6, PC7, PC6);
 SPIBus SPI1Bus;
 Nokia5110 glcd(&SPI1Bus, PA4, PA3, PA2);
 
-#define IRQ   PB11
-#define RESET PB12
+#define PN532_REQ   PB11
+#define PN532_RST 	PB12
 // Not connected by default on the NFC Shield
 
 I2CWire Wire1(I2C1, PB8, PB9);
-PN532 nfc(Wire1, PN532::I2C_ADDRESS, IRQ, RESET);
+PN532 nfc(Wire1, PN532::I2C_ADDRESS, PN532_REQ, PN532_RST);
 void PN532_init();
 ISO14443 card;
-byte buf[48];
 byte polling[] = {
   2,
   TypeA,
@@ -52,7 +51,8 @@ byte polling[] = {
 };
 
 int main(void) {
-	char tmp[256];
+	char tmp[128];
+	byte readerbuf[128];
 
 	TIM2_timer_start();
 	Serial6.begin(57600);
@@ -60,50 +60,43 @@ int main(void) {
 	//  sck = PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
 	Wire1.begin(100000);
 
-	GPIOMode(PinPort(PD12), PinBit(PD12), OUTPUT, MEDSPEED, PUSHPULL, NOPULL);
-	for(int i = 0; i < 3; i++) {
-		digitalWrite(PD12, HIGH);
-		delay(500);
-		digitalWrite(PD12, LOW);
-		delay(500);
-	}
-	
-	Serial6.print("Basic initialization has been finished.\n");
+	GPIOMode(PinPort(LED1), PinBit(LED1), OUTPUT, MEDSPEED, PUSHPULL, NOPULL);
+
+	Serial6.print("\n\nBasic initialization finished.\n");
 	
 	glcd.begin();
 	nfc.begin();
 	
 	RCC_ClocksTypeDef RCC_Clocks;
 	RCC_GetClocksFreq(&RCC_Clocks);
-	
 
 	sprintf(tmp, "Clock frequencies: SYSCLK = %dl, HCLK = %dl, PCLK1 = %dl\r\n", 
 		RCC_Clocks.SYSCLK_Frequency, RCC_Clocks.HCLK_Frequency, RCC_Clocks.PCLK1_Frequency);
 	Serial6.print(tmp); 
-
-					
-	digitalWrite(PD12, HIGH);
+	
+	digitalWrite(LED1, HIGH);
 	glcd.clear();
 //	glcd.selectFont(Nokia5110::CHICAGO10);
 	glcd.drawString("Hello, there.");
-	delay(1000);
-	digitalWrite(PD12, LOW);
-		
+	delay(1000);		
 	PN532_init();
-  card.clear();
+	digitalWrite(PD12, LOW);
 
-	uint16 shift = 0;
+  card.clear();
 		
 	while (1) {
 		uint8 c;
 		
-		if ( (c = nfc.InAutoPoll(1, 1, polling+1, polling[0])) && (c = nfc.getAutoPollResponse((byte*) buf)) ) {
+		if ( (c = nfc.InAutoPoll(1, 1, polling+1, polling[0])) 
+				&& (c = nfc.getAutoPollResponse((byte*) readerbuf)) ) {
+				digitalWrite(LED1, HIGH);
       //mon << mon.printArray(tmp, 8) << mon.endl;
       // NbTg, type1, length1, [Tg, ...]
-      card.set(buf[1], buf+3);
+      card.set(readerbuf[1], readerbuf+3);
 			if ( card.type == 0x11 ) {
 				glcd.clear();
-				glcd.drawString("Felica  IDm: ");
+				glcd.selectFont(Nokia5110::CHICAGO10);
+				glcd.drawString("Felica: ");
 				Serial6.print("FeliCa IDm: ");
 				for(int i = 0; i < 8; i++) {
           Serial6.print((uint8)card.IDm[i], HEX);
@@ -113,9 +106,9 @@ int main(void) {
 				}
         Serial6.println(" detected. ");
 			} else if ( card.type == 0x10 ) {
-//				digitalWrite(LED1, LOW);
 				glcd.clear();
-				glcd.drawString("Mifare  ID: ");
+				glcd.selectFont(Nokia5110::CHICAGO10);
+				glcd.drawString("Mifare: ");
         Serial6.print("Mifare  ID: ");
 				for(int i = 0; i < card.IDLength; i++) {
           Serial6.print(card.UID[i], HEX);
@@ -126,7 +119,7 @@ int main(void) {
 				Serial6.println();
 			}
 			delay(500);
-//			digitalWrite(LED1, HIGH);
+			digitalWrite(LED1, LOW);
 		}
 		
 		/*
@@ -146,7 +139,7 @@ int main(void) {
 
 
 void PN532_init() {
-	uint8 respobuf[8];
+	uint8 respobuf[4];
 	char tmp[64];
   int i;
 

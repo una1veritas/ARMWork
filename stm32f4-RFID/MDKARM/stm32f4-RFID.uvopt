@@ -167,7 +167,7 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>65</LineNumber>
+          <LineNumber>64</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -247,7 +247,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>165</TopLine>
+      <TopLine>166</TopLine>
       <CurrentLine>175</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\startup_stm32f4xx.s</PathWithFileName>
@@ -261,10 +261,10 @@
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>22</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>57</TopLine>
-      <CurrentLine>64</CurrentLine>
+      <TopLine>96</TopLine>
+      <CurrentLine>100</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\main.cpp</PathWithFileName>
       <FilenameWithoutPath>main.cpp</FilenameWithoutPath>
@@ -487,8 +487,8 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>64</TopLine>
-      <CurrentLine>93</CurrentLine>
+      <TopLine>73</TopLine>
+      <CurrentLine>82</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\STM32Libraries\cmcore\delay.c</PathWithFileName>
       <FilenameWithoutPath>delay.c</FilenameWithoutPath>
@@ -503,7 +503,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>28</TopLine>
+      <TopLine>29</TopLine>
       <CurrentLine>30</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\STM32Libraries\cmcore\gpio.c</PathWithFileName>
