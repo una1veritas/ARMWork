@@ -104,15 +104,10 @@ void GPIOWrite(GPIO_TypeDef * port, uint16_t bits) {
 }
 
 
-/*
- void togglePin(uint8 pin) {
- if (pin >= BOARD_NR_GPIO_PINS) {
- return;
- }
 
- GPIO_ToggleBit(PIN_MAP[pin].gpio_device, PIN_MAP[pin].gpio_bit);
- }
- */
+void togglePin(GPIOPin portpin) {
+		GPIO_ToggleBit(Port[portpin >>8 & 0x0f], PinBit(portpin));
+}
 
 /*
  void ConfigPin(GPIO_TypeDef *myGPIO, uint32_t PIN, uint32_t MODE, uint32_t SPEED, uint32_t PUPD) {

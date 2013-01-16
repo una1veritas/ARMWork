@@ -150,6 +150,7 @@ void GPIOWrite(GPIO_TypeDef * port, uint16_t pinbits);
 void GPIOMode(GPIO_TypeDef * port, uint16_t pinbits, GPIOMode_TypeDef mode,
               GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd);
 // void GPIOWrite(GPIO_TypeDef * port, uint16 value);
+void digitalToggle(GPIOPin);
 
 #ifdef __cplusplus
 }
