@@ -44,10 +44,10 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\</OutputDirectory>
-          <OutputName>stm32f4-stdperiph</OutputName>
+          <OutputName>SPI_FLASH_Test</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>1</CreateHexFile>
+          <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\</ListingPath>
@@ -125,12 +125,12 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>1</LimitSpeedToRealTime>
+            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
           </Simulator>
           <Target>
             <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
+            <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
@@ -334,10 +334,10 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>1</OneElfS>
+            <OneElfS>0</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\stm32libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\stm32librarIes\CMSIS\Include;..\..\stm32libraries\CMSIS\STM32F4xx;..\..\stm32f4-stdperiph;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmperiph</IncludePath>
+              <IncludePath>..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -389,7 +389,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>usermain</GroupName>
+          <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
               <FileName>startup_stm32f4xx.s</FileName>
@@ -397,149 +397,39 @@
               <FilePath>.\startup_stm32f4xx.s</FilePath>
             </File>
             <File>
-              <FileName>main.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\main.cpp</FilePath>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32F4xx_StdPeriph_Examples\SPI\SPI_FLASH\main.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\stm32f4xx_it.c</FilePath>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32F4xx_StdPeriph_Examples\SPI\SPI_FLASH\readme.txt</FilePath>
             </File>
             <File>
-              <FileName>system_stm32f4xx.c</FileName>
+              <FileName>spi_flash.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\system_stm32f4xx.c</FilePath>
+              <FilePath>..\..\STM32F4xx_StdPeriph_Examples\SPI\SPI_FLASH\spi_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi_flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32F4xx_StdPeriph_Examples\SPI\SPI_FLASH\spi_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32F4xx_StdPeriph_Examples\SPI\SPI_FLASH\stm32f4xx_conf.h</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_it.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\stm32f4xx_it.h</FilePath>
+              <FilePath>..\..\STM32F4xx_StdPeriph_Examples\SPI\SPI_FLASH\stm32f4xx_it.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>stdperiph_driver</GroupName>
-          <Files>
             <File>
-              <FileName>misc.c</FileName>
+              <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_exti.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_exti.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_rcc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_rtc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rtc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>cmcore</GroupName>
-          <Files>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>Print.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\Print.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>SPIBus.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\SPIBus.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Stream.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\Stream.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>USARTSerial.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\USARTSerial.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\STM32Libraries\cmcore\i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>I2CWire.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\..\STM32Libraries\cmcore\I2CWire.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>cmperiphlib</GroupName>
-          <Files>
-            <File>
-              <FileName>DS1307.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\RTC\DS1307.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>ST7032i.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\ChLCD\ST7032i.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4_discovery.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiph\Boards\stm32f4_discovery.h</FilePath>
+              <FilePath>..\..\STM32F4xx_StdPeriph_Examples\SPI\SPI_FLASH\system_stm32f4xx.c</FilePath>
             </File>
           </Files>
         </Group>
