@@ -406,6 +406,11 @@
               <FileType>5</FileType>
               <FilePath>..\main.h</FilePath>
             </File>
+            <File>
+              <FileName>PCD8544.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\PCD8544.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -561,11 +566,6 @@
               <FileType>5</FileType>
               <FilePath>..\..\..\..\STM32Libraries\cmcore\Boards\stm32f4_discovery.h</FilePath>
             </File>
-            <File>
-              <FileName>Nokia5110.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\..\..\STM32Libraries\cmperiphlib\GLCD\Nokia5110.cpp</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -590,11 +590,6 @@
               <FileName>gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\..\STM32Libraries\cmcore\gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>SPI.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\..\..\STM32Libraries\cmcore\SPI.cpp</FilePath>
             </File>
             <File>
               <FileName>spibus.c</FileName>

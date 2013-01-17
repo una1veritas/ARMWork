@@ -37,8 +37,8 @@
 #include <stdio.h>
 
 #include "armcore.h"
-#include "SPI.h"
-#include "GLCD/Nokia5110.h"
+#include "spibus.h"
+#include "PCD8544.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
