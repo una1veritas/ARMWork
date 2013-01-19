@@ -19,8 +19,7 @@ extern "C" {
 
 extern volatile uint32_t __counter_micros;
 extern volatile uint32_t __counter_millis;
-//extern volatile boolean __clear_millis;
-	
+
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
@@ -28,7 +27,8 @@ extern volatile uint32_t __counter_millis;
 
 uint32_t micros(void);
 uint32_t millis(void);
-//void clearMillis(void);
+void reset_millis(void);
+	
 void delay_ms(uint32_t);
 void delay_us(uint32_t);
 
