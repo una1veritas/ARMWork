@@ -103,10 +103,8 @@ void GPIOWrite(GPIO_TypeDef * port, uint16_t bits) {
 	GPIO_Write(port, bits);
 }
 
-
-
 void togglePin(GPIOPin portpin) {
-		GPIO_ToggleBit(Port[portpin >>8 & 0x0f], PinBit(portpin));
+	GPIO_ToggleBits(PinPort(portpin), PinBit(portpin));
 }
 
 /*
