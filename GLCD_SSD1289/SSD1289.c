@@ -884,7 +884,7 @@ void LCD_WriteBMP(uint8_t Xpos, uint16_t Ypos, uint8_t Height, uint16_t Width, u
 {
   volatile uint32_t index;
   uint16_t *bitmap_ptr = (uint16_t *)bitmap;
-  uint16_t i;
+//  uint16_t i;
   uint32_t size;
   size=(Height * Width);
   LCD_SetDisplayWindow(Xpos, Ypos,Height, Width);

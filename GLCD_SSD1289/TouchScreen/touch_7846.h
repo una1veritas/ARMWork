@@ -48,6 +48,8 @@ void NVIC_TOUCHConfiguration(void);
 void touch_init(void);				  
 void LCD_ShowNum(uint8_t x,uint16_t y,uint16_t data);
 
+void Convert_Pos(void);
+
 void Touch_Adjust(void);
 #ifdef __cplusplus
 }
