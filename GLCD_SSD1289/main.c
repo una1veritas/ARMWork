@@ -12,6 +12,8 @@ int xold,yold;
 
 int main(void)
 {
+  int i = 1;
+
   Delay(0x3FFFFF);
   LCD_Init();
   Delay(0x3FFFFF);
@@ -19,9 +21,14 @@ int main(void)
   LCD_Clear(BLACK);
   //LCD_SetTextColor(BLUE);
   
-  Julia(320, 240, 0, 0, 2, 1.0);
-	
-	while(1)
+  while(1)
+  {
+    Julia2(240,320,120,160,i);
+    i+=10;
+    if(i>1000)
+      i=0;
+  }
+/*	while(1)
  {
    Convert_Pos();
   Pixel(Pen_Point.X0,Pen_Point.Y0,WHITE); 
@@ -29,6 +36,7 @@ int main(void)
   Pixel(Pen_Point.X0+1,Pen_Point.Y0,WHITE);
   Pixel(Pen_Point.X0+1,Pen_Point.Y0+1,WHITE);
  }
+	*/
 }
 
 
