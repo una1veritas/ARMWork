@@ -249,7 +249,8 @@ void Draw_Big_Point(uint16_t x,uint16_t y)
 	Pixel(x,y+1,BLUE);
 	Pixel(x+1,y+1,BLUE);
 }		
-   void Convert_Pos(void)
+
+void Convert_Pos(void)
 {                           
                Read_Ads7846();
                Pen_Point.X0=(int)((Pen_Point.Y-103)/7.7);
