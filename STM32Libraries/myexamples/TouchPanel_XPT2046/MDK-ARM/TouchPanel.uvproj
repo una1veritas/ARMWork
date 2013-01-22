@@ -117,7 +117,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>1</UseSimulator>
+            <UseSimulator>0</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -128,9 +128,9 @@
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
           </Simulator>
           <Target>
-            <UseTarget>0</UseTarget>
+            <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>0</RunToMain>
+            <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
@@ -139,7 +139,7 @@
             <RestoreTracepoints>1</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>1</TargetSelection>
+          <TargetSelection>13</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -153,7 +153,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver>BIN\UL2CM3.DLL</Driver>
+            <Driver>STLink\ST-LINKIII-KEIL_SWO.dll</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -162,11 +162,11 @@
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>0</Capability>
-            <DriverSelection>-1</DriverSelection>
+            <Capability>1</Capability>
+            <DriverSelection>4104</DriverSelection>
           </Flash1>
-          <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>
@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER, STM32F4XX</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\TouchPanel_XPT2046;..\..\..\CMSIS\Include;..\..\..\CMSIS\STM32F4xx;..\..\..\STM32F4xx_StdPeriph_Driver\inc;..\..\..\cmcore</IncludePath>
+              <IncludePath>..\..\TouchPanel_XPT2046;..\..\..\CMSIS\Include;..\..\..\CMSIS\STM32F4xx;..\..\..\STM32F4xx_StdPeriph_Driver\inc;..\..\..\cmcore;..\..\..\cmperiphlib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -466,6 +466,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_syscfg.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -491,10 +501,37 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\cmcore\gpio.c</FilePath>
             </File>
+            <File>
+              <FileName>spibus.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\cmcore\spibus.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\cmcore\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\cmcore\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>SPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\cmcore\SPI.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>TouchPanel</GroupName>
+          <Files>
+            <File>
+              <FileName>XPT2046.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\cmperiphlib\TouchPanel\XPT2046.h</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>
