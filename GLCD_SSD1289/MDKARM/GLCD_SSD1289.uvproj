@@ -451,6 +451,11 @@
               <FileType>5</FileType>
               <FilePath>..\delay.h</FilePath>
             </File>
+            <File>
+              <FileName>Julija.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Julija.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
