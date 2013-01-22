@@ -19,11 +19,11 @@ int main(void)
   Delay(0x3FFFFF);
   touch_init();
   LCD_Clear(BLACK);
-  //LCD_SetTextColor(BLUE);
+  LCD_SetTextColor(BLUE);
   
   while(1)
   {
-    Julia2(240,320,120,160,i);
+    Julia3(240,320,120,160,i);
     i+=10;
     if(i>1000)
       i=0;
