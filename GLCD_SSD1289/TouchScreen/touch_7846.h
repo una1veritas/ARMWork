@@ -5,8 +5,10 @@
 #ifdef __cplusplus
  extern "C" {
 #endif
- 
+
+#include <math.h>	 
 #include "stm32f4xx.h"	
+
 typedef struct 
 {
 	u16 X0;

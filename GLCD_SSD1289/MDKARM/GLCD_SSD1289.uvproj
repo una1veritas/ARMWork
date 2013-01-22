@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -348,7 +348,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER</Define>
+              <Define>USE_STDPERIPH_DRIVER, STM32F4XX, F4DISCOVERRY</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\GLCD_SSD1289;..\TouchScreen;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
             </VariousControls>
@@ -425,6 +425,31 @@
               <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\CMSIS\STM32F4xx\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>Julija.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Julija.h</FilePath>
+            </File>
+            <File>
+              <FileName>SSD1289.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SSD1289.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\stm32f4xx_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>AsciiLib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\AsciiLib.h</FilePath>
+            </File>
+            <File>
+              <FileName>delay.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\delay.h</FilePath>
             </File>
           </Files>
         </Group>

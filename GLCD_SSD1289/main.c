@@ -19,8 +19,9 @@ int main(void)
   LCD_Clear(BLACK);
   //LCD_SetTextColor(BLUE);
   
-  
-while(1)
+  Julia(320, 240, 0, 0, 2, 1.0);
+	
+	while(1)
  {
    Convert_Pos();
   Pixel(Pen_Point.X0,Pen_Point.Y0,WHITE); 
