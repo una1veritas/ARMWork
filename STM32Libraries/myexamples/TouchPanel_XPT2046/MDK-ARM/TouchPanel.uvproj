@@ -502,24 +502,19 @@
               <FilePath>..\..\..\cmcore\gpio.c</FilePath>
             </File>
             <File>
-              <FileName>spibus.c</FileName>
+              <FileName>spistruct.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\cmcore\spibus.c</FilePath>
+              <FilePath>..\..\..\cmcore\spistruct.c</FilePath>
             </File>
             <File>
-              <FileName>usart.c</FileName>
+              <FileName>spistruct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\cmcore\spistruct.h</FilePath>
+            </File>
+            <File>
+              <FileName>usartport.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\cmcore\usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\cmcore\usart.h</FilePath>
-            </File>
-            <File>
-              <FileName>SPI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\cmcore\SPI.h</FilePath>
+              <FilePath>..\..\..\cmcore\usartport.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -530,6 +525,11 @@
               <FileName>XPT2046.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\cmperiphlib\TouchPanel\XPT2046.h</FilePath>
+            </File>
+            <File>
+              <FileName>XPT2046.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\cmperiphlib\TouchPanel\XPT2046.c</FilePath>
             </File>
           </Files>
         </Group>

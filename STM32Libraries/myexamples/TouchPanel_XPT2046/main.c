@@ -14,13 +14,13 @@
 #include "stm32f4xx_it.h"
 
 #include "armcore.h"
-#include "spibus.h"
-#include "usart.h"
+#include "spistruct.h"
+#include "usartport.h"
 
 #include "TouchPanel/XPT2046.h"
 
 USARTPort ser6;
-SPIBus spi1;
+SPIStruct spi1;
 
 int main(void) {
 	char tmp[128];

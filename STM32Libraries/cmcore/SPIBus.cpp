@@ -9,17 +9,17 @@
  */
 
 //#include "pins_arduino.h"
-#include "SPI.h"
+#include "SPIBus.h"
 
-void SPI::begin() {
+void SPIBus::begin() {
   spi_init(spibus, SPIx, pin_sck, pin_miso, pin_mosi, pin_nss); 
 }
 
-void SPI::end() {
+void SPIBus::end() {
 	SPI_Cmd(spibus->SPIx, DISABLE);
 }
 
-void SPI::setBitOrder(uint16_t bitOrder)
+void SPIBus::setBitOrder(uint16_t bitOrder)
 {
 	spibus->modeStruct.SPI_FirstBit = ( bitOrder == SPI_MSBFIRST ? SPI_FirstBit_MSB : SPI_FirstBit_LSB);
 
@@ -27,12 +27,12 @@ void SPI::setBitOrder(uint16_t bitOrder)
 
 }
 
-void SPI::setDataMode(uint16_t mode)
+void SPIBus::setDataMode(uint16_t mode)
 {
 	spi_setDataMode(spibus, mode);
 }
 
-void SPI::setClockDivider(uint16_t rate)
+void SPIBus::setClockDivider(uint16_t rate)
 {	
 	spibus->modeStruct.SPI_BaudRatePrescaler = rate;
 	

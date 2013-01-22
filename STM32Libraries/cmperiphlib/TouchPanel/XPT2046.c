@@ -13,6 +13,7 @@
 *********************************************************************************************************/
 
 /* Includes ------------------------------------------------------------------*/
+#include "armcore.h"
 #include "XPT2046.h"
 //#include "SysTick/systick.h"
 //#include "LCD/LCD.h"
@@ -71,28 +72,12 @@ static void ADS7843_SPI_Init(void)
 * Return         : None
 * Attention		 : None
 *******************************************************************************/
-void TP_Init(void) 
+void TP_Init(GPIOPin sck, GPIOPin si, GPIOPin so, GPIOPin cs, GPIOPin irq)
 { 
   GPIO_InitTypeDef GPIO_InitStruct;
-  RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOB | RCC_APB2Periph_GPIOC, ENABLE);
 
-  /* Configure SPI2 pins: SCK, MISO and MOSI ---------------------------------*/ 
-	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF_PP;
-	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /* TP_CS */
-  GPIO_InitStruct.GPIO_Pin = GPIO_Pin_4;
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOC,&GPIO_InitStruct);
-
-  /* TP_IRQ */
-  GPIO_InitStruct.GPIO_Pin =  GPIO_Pin_5;
-  GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IPU;
-  GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_Init(GPIOC, &GPIO_InitStruct);
+	spi_init(TPStruct.spi, SPI2, sck, si, so, cs);
+	GPIOMode(PinPort(irq), PinBit(irq), GPIO_Mode_IN, GPIO_Speed_50MHz, GPIO_OType_PP, GPIO_PuPd_NOPULL);
   
   TP_CS(1); 
   ADS7843_SPI_Init(); 

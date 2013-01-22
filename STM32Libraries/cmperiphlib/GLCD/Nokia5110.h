@@ -12,7 +12,7 @@ class Nokia5110 {
 	GPIOPin pin_SDIN;  //  4 //Pin 6 on LCD, MOSI
 	GPIOPin pin_SCLK;  //  3 //Pin 7 on LCD, SCK
 
-	SPIBus * spibus;
+	spibus * spibus;
 	uint16 textcursor; // bit column position
 	uint8 fontid;
 	
@@ -34,7 +34,7 @@ class Nokia5110 {
 	}
 	
 public:
-	Nokia5110(SPIBus * spix, GPIOPin sce, GPIOPin dc, GPIOPin rst) {
+	Nokia5110(spibus * spix, GPIOPin sce, GPIOPin dc, GPIOPin rst) {
 		spibus = spix;
 		pin_SCE = sce;   // 7 //Pin 3 on LCD, ~CS
 		pin_DC = dc;
