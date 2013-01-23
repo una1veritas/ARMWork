@@ -17,13 +17,11 @@
 //#include <avr/pgmspace.h>
 #include "armcore.h"
 #include "gpio.h"
-#include "spistruct.h"
+#include "spi.h"
 
 
 class SPIBus {
-	SPI_TypeDef * SPIx;
-	spistruct *spi;
-	GPIOPin pin_sck, pin_miso, pin_mosi, pin_nss;
+	SPIPort *spi;
 	
 public:
 	
