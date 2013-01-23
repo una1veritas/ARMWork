@@ -19,6 +19,7 @@
 //#include "LCD/LCD.h"
 
 /* Private variables ---------------------------------------------------------*/
+/*
 Matrix matrix ;
 Coordinate  display ;
 
@@ -30,10 +31,24 @@ Coordinate DisplaySample[3] =   {
 											{ 270, 90},
                                             { 100,190}
 	                            } ;
-
+*/
 /* Private define ------------------------------------------------------------*/
 #define THRESHOLD 2
 
+static TouchPadStruct TPStruct;// = {0,0,0,0,0, {{0,0}, {0,0}, {0,0}}, {{45,45}, {270,90},{100, 190}}, {}, {}};
+
+	// 	((x) ? GPIO_SetBits(GPIOC,GPIO_Pin_4) : GPIO_ResetBits(GPIOC,GPIO_Pin_4))
+void TP_CS(boolean x) {
+	if (x) 
+		digitalWrite(TPStruct.pin_cs, SET);
+	else
+		digitalWrite(TPStruct.pin_cs, RESET);
+}
+
+//#define TP_INT_IN   GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_5)
+boolean TP_REQ(void) {
+	return GPIO_ReadInputDataBit(PinPort(TPStruct.pin_req), PinBit(TPStruct.pin_req));
+}
 
 /*******************************************************************************
 * Function Name  : ADS7843_SPI_Init
@@ -46,6 +61,9 @@ Coordinate DisplaySample[3] =   {
 static void ADS7843_SPI_Init(void) 
 { 
   SPI_InitTypeDef  SPI_InitStructure;
+//debug
+	usart_print(&stdserial, "ads7843_spi_init\n");
+	
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
   /* DISABLE SPI2 */ 
   SPI_Cmd(SPI2, DISABLE); 
@@ -231,14 +249,15 @@ void TP_GetAdXY(int *x,int *y)
 * Return         : None
 * Attention		 : None
 *******************************************************************************/
+/*
 void TP_DrawPoint(uint16_t Xpos,uint16_t Ypos)
 {
-  LCD_SetPoint(Xpos,Ypos,Blue);     /* Center point */
+  LCD_SetPoint(Xpos,Ypos,Blue);     // Center point /
   LCD_SetPoint(Xpos+1,Ypos,Blue);
   LCD_SetPoint(Xpos,Ypos+1,Blue);
   LCD_SetPoint(Xpos+1,Ypos+1,Blue);	
 }	
-
+*/
 /*******************************************************************************
 * Function Name  : DrawCross
 * Description    : 
@@ -248,6 +267,7 @@ void TP_DrawPoint(uint16_t Xpos,uint16_t Ypos)
 * Return         : None
 * Attention		 : None
 *******************************************************************************/
+/*
 void DrawCross(uint16_t Xpos,uint16_t Ypos)
 {
   LCD_DrawLine(Xpos-15,Ypos,Xpos-2,Ypos,0xffff);
@@ -267,7 +287,7 @@ void DrawCross(uint16_t Xpos,uint16_t Ypos)
   LCD_DrawLine(Xpos+7,Ypos-15,Xpos+15,Ypos-15,RGB565CONVERT(184,158,131));
   LCD_DrawLine(Xpos+15,Ypos-15,Xpos+15,Ypos-7,RGB565CONVERT(184,158,131));	  	
 }	
-	
+	*/
 /*******************************************************************************
 * Function Name  : Read_Ads7846
 * Description    : Get TouchPanel X Y
@@ -290,7 +310,7 @@ Coordinate *Read_Ads7846(void)
 	buffer[1][count]=TP_Y[0];
 	count++;  
   }
-  while(!TP_INT_IN&& count<9);  /* TP_INT_IN  */
+  while(!TP_REQ() && count<9);  /* TP_INT_IN  */
   if(count==9)   /* Average X Y  */ 
   {
 	/* Average X  */
@@ -439,6 +459,7 @@ FunctionalState getDisplayPoint(Coordinate * displayPtr,
 * Return         : None
 * Attention		 : None
 *******************************************************************************/
+/*
 void TouchPanel_Calibrate(void)
 {
   uint8_t i;
@@ -460,7 +481,7 @@ void TouchPanel_Calibrate(void)
   setCalibrationMatrix( &DisplaySample[0],&ScreenSample[0],&matrix );
   LCD_Clear(Black);
 } 
-
+*/
 /*********************************************************************************************************
       END FILE
 *********************************************************************************************************/

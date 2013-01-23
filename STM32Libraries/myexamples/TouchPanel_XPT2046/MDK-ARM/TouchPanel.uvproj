@@ -512,9 +512,14 @@
               <FilePath>..\..\..\cmcore\spistruct.h</FilePath>
             </File>
             <File>
-              <FileName>usartport.c</FileName>
+              <FileName>usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\cmcore\usartport.c</FilePath>
+              <FilePath>..\..\..\cmcore\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\cmcore\usart.h</FilePath>
             </File>
           </Files>
         </Group>

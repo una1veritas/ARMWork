@@ -12,9 +12,7 @@
 //#include <stm32f4xx_usart.h>
 //#include <misc.h>
 
-#include "gpio.h"
-#include "delay.h"
-#include "usartport.h"
+#include "armcore.h"
 
 enum {
 	USART1Serial = 0,

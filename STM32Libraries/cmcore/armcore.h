@@ -18,7 +18,7 @@ extern "C" {
 #include "binary.h"
 #include "gpio.h"
 #include "delay.h"
-
+#include "usart.h"
 
 #define HEX 16
 #define DEC 10
@@ -59,10 +59,13 @@ typedef uint8_t boolean;
 #define UINT16(x)  ((uint16_t)(x))
 #define HIGHLOW(x, y)  (((uint16_t)(x))<< 8 | y)
 
+#define STDUSART USART6
+extern USARTPort stdserial;
 void armcore_init(void);
 //size_t strlen(const char * s);
 
 #ifdef __cplusplus
 }
 #endif
+
 #endif /* ARMCORE_H_ */
