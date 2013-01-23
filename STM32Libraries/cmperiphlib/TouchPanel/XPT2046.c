@@ -63,6 +63,7 @@ static void ADS7843_SPI_Init(void)
   SPI_InitTypeDef  SPI_InitStructure;
 //debug
 	usart_print(&stdserial, "ads7843_spi_init is enabling SPI.\n");
+	usart_flush(&stdserial);
 	
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
   /* DISABLE SPI2 */ 
@@ -90,13 +91,18 @@ static void ADS7843_SPI_Init(void)
 * Return         : None
 * Attention		 : None
 *******************************************************************************/
-void TP_Init(SPIPort * port, GPIOPin sck, GPIOPin si, GPIOPin so, GPIOPin cs, GPIOPin irq)
+void TP_Init(SPIPort * port, GPIOPin sck, GPIOPin si, GPIOPin so, GPIOPin cs, GPIOPin req)
 { 
   GPIO_InitTypeDef GPIO_InitStruct;
+//debug
+	usart_print(&stdserial, "TP_Init is enabling TP.\n");
+	usart_flush(&stdserial);
 
 	TPStruct.port = port;
+	TPStruct.pin_cs = cs;
+	TPStruct.pin_req = req;
 	spi_init(TPStruct.port, SPI2, sck, si, so, cs);
-	GPIOMode(PinPort(irq), PinBit(irq), GPIO_Mode_IN, GPIO_Speed_50MHz, GPIO_OType_PP, GPIO_PuPd_NOPULL);
+	GPIOMode(PinPort(req), PinBit(req), GPIO_Mode_IN, GPIO_Speed_50MHz, GPIO_OType_PP, GPIO_PuPd_NOPULL);
   
   TP_CS(1); 
   ADS7843_SPI_Init(); 
@@ -111,6 +117,7 @@ void TP_Init(SPIPort * port, GPIOPin sck, GPIOPin si, GPIOPin so, GPIOPin cs, GP
 * Return         : None
 * Attention		 : None
 *******************************************************************************/
+/*
 static void DelayUS(vu32 cnt)
 {
   uint16_t i;
@@ -123,8 +130,7 @@ static void DelayUS(vu32 cnt)
      }
   }
 }
-
-
+*/
 /*******************************************************************************
 * Function Name  : WR_CMD
 * Description    : 
@@ -167,7 +173,7 @@ static int RD_AD(void)
   /* Read SPI2 received data */ 
   temp=SPI_I2S_ReceiveData(SPI2); 
   buf=temp<<8; 
-  DelayUS(1); 
+  delay_us(1); 
   while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET); 
   /* Send SPI2 data */ 
   SPI_I2S_SendData(SPI2,0x0000); 
@@ -194,9 +200,9 @@ int Read_X(void)
 {  
   int i; 
   TP_CS(0); 
-  DelayUS(1); 
+  delay_us(1); 
   WR_CMD(CHX); 
-  DelayUS(1); 
+  delay_us(1); 
   i=RD_AD(); 
   TP_CS(1); 
   return i;    
@@ -214,9 +220,9 @@ int Read_Y(void)
 {  
   int i; 
   TP_CS(0); 
-  DelayUS(1); 
+  delay_us(1); 
   WR_CMD(CHY); 
-  DelayUS(1); 
+  delay_us(1); 
   i=RD_AD(); 
   TP_CS(1); 
   return i;     
@@ -235,60 +241,14 @@ void TP_GetAdXY(int *x,int *y)
 { 
   int adx,ady; 
   adx=Read_X(); 
-  DelayUS(1); 
+  delay_us(1); 
   ady=Read_Y(); 
   *x=adx; 
   *y=ady; 
 } 
 
-/*******************************************************************************
-* Function Name  : TP_DrawPoint
-* Description    : 
-* Input          : - Xpos: Row Coordinate
-*                  - Ypos: Line Coordinate 
-* Output         : None
-* Return         : None
-* Attention		 : None
-*******************************************************************************/
-/*
-void TP_DrawPoint(uint16_t Xpos,uint16_t Ypos)
-{
-  LCD_SetPoint(Xpos,Ypos,Blue);     // Center point /
-  LCD_SetPoint(Xpos+1,Ypos,Blue);
-  LCD_SetPoint(Xpos,Ypos+1,Blue);
-  LCD_SetPoint(Xpos+1,Ypos+1,Blue);	
-}	
-*/
-/*******************************************************************************
-* Function Name  : DrawCross
-* Description    : 
-* Input          : - Xpos: Row Coordinate
-*                  - Ypos: Line Coordinate 
-* Output         : None
-* Return         : None
-* Attention		 : None
-*******************************************************************************/
-/*
-void DrawCross(uint16_t Xpos,uint16_t Ypos)
-{
-  LCD_DrawLine(Xpos-15,Ypos,Xpos-2,Ypos,0xffff);
-  LCD_DrawLine(Xpos+2,Ypos,Xpos+15,Ypos,0xffff);
-  LCD_DrawLine(Xpos,Ypos-15,Xpos,Ypos-2,0xffff);
-  LCD_DrawLine(Xpos,Ypos+2,Xpos,Ypos+15,0xffff);
-  
-  LCD_DrawLine(Xpos-15,Ypos+15,Xpos-7,Ypos+15,RGB565CONVERT(184,158,131));
-  LCD_DrawLine(Xpos-15,Ypos+7,Xpos-15,Ypos+15,RGB565CONVERT(184,158,131));
 
-  LCD_DrawLine(Xpos-15,Ypos-15,Xpos-7,Ypos-15,RGB565CONVERT(184,158,131));
-  LCD_DrawLine(Xpos-15,Ypos-7,Xpos-15,Ypos-15,RGB565CONVERT(184,158,131));
-
-  LCD_DrawLine(Xpos+7,Ypos+15,Xpos+15,Ypos+15,RGB565CONVERT(184,158,131));
-  LCD_DrawLine(Xpos+15,Ypos+7,Xpos+15,Ypos+15,RGB565CONVERT(184,158,131));
-
-  LCD_DrawLine(Xpos+7,Ypos-15,Xpos+15,Ypos-15,RGB565CONVERT(184,158,131));
-  LCD_DrawLine(Xpos+15,Ypos-15,Xpos+15,Ypos-7,RGB565CONVERT(184,158,131));	  	
-}	
-	*/
+	
 /*******************************************************************************
 * Function Name  : Read_Ads7846
 * Description    : Get TouchPanel X Y
@@ -452,37 +412,7 @@ FunctionalState getDisplayPoint(Coordinate * displayPtr,
   return(retTHRESHOLD);
 } 
 
-/*******************************************************************************
-* Function Name  : TouchPanel_Calibrate
-* Description    : 
-* Input          : None
-* Output         : None
-* Return         : None
-* Attention		 : None
-*******************************************************************************/
-/*
-void TouchPanel_Calibrate(void)
-{
-  uint8_t i;
-  Coordinate * Ptr;
 
-  for(i=0;i<3;i++)
-  {
-   LCD_Clear(Black);
-   GUI_Text(44,10,"Touch crosshair to calibrate",0xffff,Black);
-   _delay_ms(500);
-   DrawCross(DisplaySample[i].x,DisplaySample[i].y);
-   do
-   {
-     Ptr=Read_Ads7846();
-   }
-   while( Ptr == (void*)0 );
-   ScreenSample[i].x= Ptr->x; ScreenSample[i].y= Ptr->y;
-  }
-  setCalibrationMatrix( &DisplaySample[0],&ScreenSample[0],&matrix );
-  LCD_Clear(Black);
-} 
-*/
 /*********************************************************************************************************
       END FILE
 *********************************************************************************************************/

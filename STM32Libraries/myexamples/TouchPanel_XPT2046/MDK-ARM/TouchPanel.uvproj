@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>3</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -540,6 +540,26 @@
               <FileName>XPT2046.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\cmperiphlib\TouchPanel\XPT2046.c</FilePath>
+            </File>
+            <File>
+              <FileName>SSD1289.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\cmperiphlib\GLCD\SSD1289.c</FilePath>
+            </File>
+            <File>
+              <FileName>SSD1289.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\cmperiphlib\GLCD\SSD1289.h</FilePath>
+            </File>
+            <File>
+              <FileName>AsciiLib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\cmperiphlib\GLCD\AsciiLib.c</FilePath>
+            </File>
+            <File>
+              <FileName>AsciiLib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\cmperiphlib\GLCD\AsciiLib.h</FilePath>
             </File>
           </Files>
         </Group>

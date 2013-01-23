@@ -13,6 +13,9 @@
 //#include <misc.h>
 
 #include "armcore.h"
+#include "usart.h"
+
+USARTPort stdserial;
 
 enum {
 	USART1Serial = 0,

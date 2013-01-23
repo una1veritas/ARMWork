@@ -18,15 +18,17 @@ int main(void)
   LCD_Init();
   Delay(0x3FFFFF);
   touch_init();
-  LCD_Clear(BLUE);
+  LCD_Clear(DGRAY);
+
   LCD_SetTextColor(WHITE);
-	
-	LCD_StringLine(64, 64, "Hello there!");
-  
+  LCD_SetBackColor(BLACK);
+//	LCD_SetCursor(10, 10);
+	LCD_StringLine(10, 10, "This is a pen.");
+  Delay(10000);
 	
   while(1)
   {
-    Julia2(240,320,120,160,i);
+    Julia3(240,320,120,160,i);
     i+=10;
     if(i>1000)
       i=0;
@@ -39,6 +41,6 @@ int main(void)
 		Pixel(Pen_Point.X0+1,Pen_Point.Y0,WHITE);
 		Pixel(Pen_Point.X0+1,Pen_Point.Y0+1,WHITE);
 	}
-*/	
+*/
 }
 

@@ -106,7 +106,6 @@
  */
 #include "stm32f4xx_spi.h"
 
-#include "gpio.h"
 #include "spi.h"
 
 

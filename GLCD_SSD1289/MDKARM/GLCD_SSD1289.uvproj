@@ -43,14 +43,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\</OutputDirectory>
+          <OutputDirectory>.\Out\</OutputDirectory>
           <OutputName>GLCD_SSD1289</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\</ListingPath>
+          <ListingPath>.\Out\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -348,7 +348,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER, STM32F4XX</Define>
+              <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\GLCD_SSD1289;..\TouchScreen;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
             </VariousControls>
@@ -397,14 +397,9 @@
               <FilePath>.\startup_stm32f4xx.s</FilePath>
             </File>
             <File>
-              <FileName>AsciiLib.c</FileName>
+              <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\AsciiLib.c</FilePath>
-            </File>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\delay.c</FilePath>
+              <FilePath>..\main.c</FilePath>
             </File>
             <File>
               <FileName>Julija.c</FileName>
@@ -412,49 +407,49 @@
               <FilePath>..\Julija.c</FilePath>
             </File>
             <File>
-              <FileName>main.c</FileName>
+              <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\main.c</FilePath>
+              <FilePath>..\delay.c</FilePath>
             </File>
-            <File>
-              <FileName>SSD1289.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\SSD1289.c</FilePath>
-            </File>
-            <File>
-              <FileName>SSD1289.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\SSD1289.h</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\stm32f4xx_it.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Touch</GroupName>
-          <Files>
             <File>
               <FileName>touch_7846.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\TouchScreen\touch_7846.c</FilePath>
             </File>
             <File>
-              <FileName>touch_7846.h</FileName>
+              <FileName>stm32f4xx_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\stm32f4xx_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_stm32f4xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\CMSIS\STM32F4xx\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>delay.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\TouchScreen\touch_7846.h</FilePath>
+              <FilePath>..\delay.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>stdperiph</GroupName>
+          <GroupName>StdPeriph_Driver</GroupName>
           <Files>
             <File>
               <FileName>misc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_exti.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_fsmc.c</FileName>
@@ -465,11 +460,6 @@
               <FileName>stm32f4xx_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_exti.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_exti.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_pwr.c</FileName>
@@ -504,12 +494,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>cmsis</GroupName>
+          <GroupName>cmperiphlib</GroupName>
           <Files>
             <File>
-              <FileName>system_stm32f4xx.c</FileName>
+              <FileName>AsciiLib.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\CMSIS\STM32F4xx\system_stm32f4xx.c</FilePath>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\AsciiLib.c</FilePath>
+            </File>
+            <File>
+              <FileName>AsciiLib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\AsciiLib.h</FilePath>
+            </File>
+            <File>
+              <FileName>SSD1289.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\SSD1289.c</FilePath>
+            </File>
+            <File>
+              <FileName>SSD1289.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\SSD1289.h</FilePath>
             </File>
           </Files>
         </Group>
