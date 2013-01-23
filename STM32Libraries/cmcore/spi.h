@@ -13,7 +13,6 @@ extern "C" {
 #endif
 
 #include "armcore.h"
-#include "gpio.h"
 
 #define SPI_CLOCK_DIV2 SPI_BaudRatePrescaler_2
 #define SPI_CLOCK_DIV4 	SPI_BaudRatePrescaler_4
@@ -35,7 +34,7 @@ extern "C" {
 
 typedef struct __SPIPort {
 	SPI_TypeDef * SPIx;
-	GPIOPin pin_sck, pin_mosi, pin_miso, pin_ncs;
+	GPIOPin sck, mosi, miso, defaultcs;
 	SPI_InitTypeDef modeStruct;
 //	uint8 xbuf[256];
 //	uint16 xindex;

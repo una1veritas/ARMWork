@@ -17,7 +17,7 @@
 extern "C" {
 #endif
 
-#include "gpio.h"
+#include "armcore.h"
 
 #define USART_BUFFER_SIZE 128
 typedef struct {

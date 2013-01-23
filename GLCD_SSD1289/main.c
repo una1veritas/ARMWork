@@ -12,7 +12,7 @@ int xold,yold;
 
 int main(void)
 {
-//s  int i = 1;
+	int i = 1;
 
   Delay(0x3FFFFF);
   LCD_Init();
@@ -23,15 +23,15 @@ int main(void)
 	
 	LCD_StringLine(64, 64, "Hello there!");
   
-	/*
+	
   while(1)
   {
-    Julia4(240,320,120,160,i);
+    Julia2(240,320,120,160,i);
     i+=10;
     if(i>1000)
       i=0;
   }
-	*/
+	/*
 	while(1) {
 		Convert_Pos();
 		Pixel(Pen_Point.X0,Pen_Point.Y0,WHITE); 
@@ -39,6 +39,6 @@ int main(void)
 		Pixel(Pen_Point.X0+1,Pen_Point.Y0,WHITE);
 		Pixel(Pen_Point.X0+1,Pen_Point.Y0+1,WHITE);
 	}
-	
+*/	
 }
 

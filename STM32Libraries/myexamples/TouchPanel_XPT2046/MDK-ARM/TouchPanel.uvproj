@@ -502,16 +502,6 @@
               <FilePath>..\..\..\cmcore\gpio.c</FilePath>
             </File>
             <File>
-              <FileName>spistruct.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\cmcore\spistruct.c</FilePath>
-            </File>
-            <File>
-              <FileName>spistruct.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\cmcore\spistruct.h</FilePath>
-            </File>
-            <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\cmcore\usart.c</FilePath>
@@ -520,6 +510,21 @@
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\cmcore\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\cmcore\gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\cmcore\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\cmcore\spi.h</FilePath>
             </File>
           </Files>
         </Group>

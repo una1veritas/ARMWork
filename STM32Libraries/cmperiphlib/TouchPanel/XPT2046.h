@@ -19,7 +19,7 @@
 #include "stm32f4xx.h"
 
 #include "armcore.h"
-#include "spistruct.h"
+#include "spi.h"
 
 /* Private typedef -----------------------------------------------------------*/
 typedef	struct POINT 
@@ -41,8 +41,8 @@ long double An,
 } Matrix ;
 
 typedef struct __TouchPadStruct {
-	SPIStruct * spi;
-	GPIOPin pin_sck, pin_si, pin_so, pin_cs, pin_req;
+	SPIPort * port;
+	GPIOPin pin_cs, pin_req;
  Coordinate ScreenSample[3];
  Coordinate DisplaySample[3];
  Matrix matrix ;
@@ -63,7 +63,7 @@ void TP_CS(boolean x); // 	((x) ? GPIO_SetBits(GPIOC,GPIO_Pin_4) : GPIO_ResetBit
 boolean TP_REQ(void); //#define TP_INT_IN   GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_5)
 
 /* Private function prototypes -----------------------------------------------*/				
-void TP_Init(GPIOPin sck, GPIOPin si, GPIOPin so, GPIOPin cs, GPIOPin req);	
+void TP_Init(SPIPort * port, GPIOPin sck, GPIOPin si, GPIOPin so, GPIOPin cs, GPIOPin req);	
 Coordinate *Read_Ads7846(void);
 void TouchPanel_Calibrate(void);
 void DrawCross(uint16_t Xpos,uint16_t Ypos);

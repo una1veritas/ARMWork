@@ -59,8 +59,8 @@ typedef uint8_t boolean;
 #define UINT16(x)  ((uint16_t)(x))
 #define HIGHLOW(x, y)  (((uint16_t)(x))<< 8 | y)
 
-#define STDUSART USART6
-extern USARTPort stdserial;
+#define DEFAULTUSART USART6
+static USARTPort stdserial;
 void armcore_init(void);
 //size_t strlen(const char * s);
 

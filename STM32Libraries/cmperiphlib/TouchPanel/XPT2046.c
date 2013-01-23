@@ -62,11 +62,11 @@ static void ADS7843_SPI_Init(void)
 { 
   SPI_InitTypeDef  SPI_InitStructure;
 //debug
-	usart_print(&stdserial, "ads7843_spi_init\n");
+	usart_print(&stdserial, "ads7843_spi_init is enabling SPI.\n");
 	
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
   /* DISABLE SPI2 */ 
-  SPI_Cmd(SPI2, DISABLE); 
+  SPI_Cmd(TPStruct.port->SPIx, DISABLE); 
   /* SPI2 Config -------------------------------------------------------------*/ 
   SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex; 
   SPI_InitStructure.SPI_Mode = SPI_Mode_Master; 
@@ -77,9 +77,9 @@ static void ADS7843_SPI_Init(void)
   SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_64; 
   SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB; 
   SPI_InitStructure.SPI_CRCPolynomial = 7; 
-  SPI_Init(SPI2, &SPI_InitStructure); 
+  SPI_Init(TPStruct.port->SPIx, &SPI_InitStructure); 
   /* Enable SPI2 */ 
-  SPI_Cmd(SPI2, ENABLE); 
+  SPI_Cmd(TPStruct.port->SPIx, ENABLE); 
 } 
 
 /*******************************************************************************
@@ -90,11 +90,12 @@ static void ADS7843_SPI_Init(void)
 * Return         : None
 * Attention		 : None
 *******************************************************************************/
-void TP_Init(GPIOPin sck, GPIOPin si, GPIOPin so, GPIOPin cs, GPIOPin irq)
+void TP_Init(SPIPort * port, GPIOPin sck, GPIOPin si, GPIOPin so, GPIOPin cs, GPIOPin irq)
 { 
   GPIO_InitTypeDef GPIO_InitStruct;
 
-	spi_init(TPStruct.spi, SPI2, sck, si, so, cs);
+	TPStruct.port = port;
+	spi_init(TPStruct.port, SPI2, sck, si, so, cs);
 	GPIOMode(PinPort(irq), PinBit(irq), GPIO_Mode_IN, GPIO_Speed_50MHz, GPIO_OType_PP, GPIO_PuPd_NOPULL);
   
   TP_CS(1); 

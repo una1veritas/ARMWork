@@ -55,12 +55,12 @@ BL_CNTL 69 PA10  user defined pwm pin
 #include "stm32f4xx_it.h"
 
 #include "armcore.h"
-#include "spistruct.h"
+#include "spi.h"
 
 #include "TouchPanel/XPT2046.h"
 
 USARTPort ser6;
-SPIStruct spi2;
+SPIPort spi2;
 
 int main(void) {
 	char tmp[128];
@@ -79,7 +79,7 @@ int main(void) {
 	usart_print(&ser6, tmp);
 	usart_print(&ser6, "Now we're going to test XPT2046 Resistive membrane touch panel sensor.\n");
 	
-	TP_Init(PB13, PB15, PB14, PB12, PD6);
+	TP_Init(&spi2, PB13, PB15, PB14, PB12, PD6);
 	
 	while (1);
 }

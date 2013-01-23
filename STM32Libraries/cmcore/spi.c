@@ -113,10 +113,10 @@
 void spi_init(SPIPort * spi, SPI_TypeDef * SPIx,
 							GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss) {
 	uint8_t af; // = GPIO_AF_SPI1;
-	pin_sck = sck;
-	pin_miso = miso;
-	pin_mosi = mosi;
-	pin_ncs = nss;
+	spi->sck = sck;
+	spi->miso = miso;
+	spi->mosi = mosi;
+	spi->defaultcs = nss;
 	/* PCLK2 = HCLK/2 */
 	//RCC_PCLK2Config(RCC_HCLK_Div2);
 	if ( SPIx == SPI2 ) {
@@ -136,19 +136,19 @@ void spi_init(SPIPort * spi, SPI_TypeDef * SPIx,
 		// sck = PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
 	} 
 
-	GPIOMode(PinPort(pin_sck), PinBit(pin_sck), GPIO_Mode_AF, GPIO_Speed_50MHz,
+	GPIOMode(PinPort(spi->sck), PinBit(spi->sck), GPIO_Mode_AF, GPIO_Speed_50MHz,
 			GPIO_OType_PP, GPIO_PuPd_UP);
-	GPIOMode(PinPort(pin_miso), PinBit(pin_miso), GPIO_Mode_AF, GPIO_Speed_50MHz,
+	GPIOMode(PinPort(spi->miso), PinBit(spi->miso), GPIO_Mode_AF, GPIO_Speed_50MHz,
 			GPIO_OType_PP, GPIO_PuPd_UP);
-	GPIOMode(PinPort(pin_mosi), PinBit(pin_mosi), GPIO_Mode_AF, GPIO_Speed_50MHz,
+	GPIOMode(PinPort(spi->mosi), PinBit(spi->mosi), GPIO_Mode_AF, GPIO_Speed_50MHz,
 			GPIO_OType_PP, GPIO_PuPd_UP);
-	GPIO_PinAFConfig(PinPort(pin_sck), PinSource(pin_sck), af);
-	GPIO_PinAFConfig(PinPort(pin_miso), PinSource(pin_miso), af);
-	GPIO_PinAFConfig(PinPort(pin_mosi), PinSource(pin_mosi), af);
+	GPIO_PinAFConfig(PinPort(spi->sck), PinSource(spi->sck), af);
+	GPIO_PinAFConfig(PinPort(spi->miso), PinSource(spi->miso), af);
+	GPIO_PinAFConfig(PinPort(spi->mosi), PinSource(spi->mosi), af);
 	// nSS by software
-	GPIOMode(PinPort(pin_ncs), PinBit(pin_ncs), GPIO_Mode_OUT, GPIO_Speed_50MHz,
+	GPIOMode(PinPort(spi->defaultcs), PinBit(spi->defaultcs), GPIO_Mode_OUT, GPIO_Speed_50MHz,
 			GPIO_OType_PP, GPIO_PuPd_UP);
-	digitalWrite(pin_ncs, HIGH);
+	digitalWrite(spi->defaultcs, HIGH);
 	//GPIO_PinAFConfig(PinPort(nss), PinSource(nss), af);
 
 	// set default parameters
@@ -231,7 +231,7 @@ void spi_setMode(SPIPort * spi, uint16 prescaler, uint16_t cpol, uint16_t cpha, 
 	spi->modeStruct.SPI_FirstBit = (firstbit == SPI_FirstBit_MSB ? SPI_FirstBit_MSB : SPI_FirstBit_LSB);
 //	spi->initStruct..SPI_CRCPolynomial = SPI_CRC_Rx;
 
-	SPI_Init(spi->SPIx, &spib->modeStruct);
+	SPI_Init(spi->SPIx, &spi->modeStruct);
 }
 
 void spi_setDataMode(SPIPort * spi, uint16 modeid) {
