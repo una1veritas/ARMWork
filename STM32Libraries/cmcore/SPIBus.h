@@ -21,11 +21,16 @@
 
 
 class SPIBus {
-	SPIPort *spi;
+	spi *spiport;
+	GPIOPin sck, miso, mosi, nss;
 	
 public:
 	
-	SPIBus() : SPIx(SPI1), pin_sck(PB3), pin_miso(PB4), pin_mosi(PB5), pin_nss(PA15) { }
+	SPIBus(SPI_TypeDef * SPIx, 
+		GPIOPin sckpin, GPIOPin misopin, GPIOPin mosipin, GPIOPin nsspin) : 
+		sck(sckpin), miso(misopin), mosi(mosipin), nss(nsspin)  {
+			spiport->SPIx = SPIx;
+	}
 
   // SPI Configuration methods
 
@@ -36,7 +41,7 @@ public:
   void end();
 
 	inline uint16 transfer(uint16 _data) {
-		return spi_transfer(spi, _data);
+		return spi_transfer(spiport, _data);
 	}
 
   void setBitOrder(uint16_t);

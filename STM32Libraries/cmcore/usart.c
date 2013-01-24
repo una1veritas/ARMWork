@@ -1,5 +1,5 @@
 /*
- * usartport.c
+ * usart.c
  *
  *  Created on: 2012/10/24
  *      Author: sin
@@ -15,7 +15,7 @@
 #include "armcore.h"
 #include "usart.h"
 
-USARTPort stdserial;
+usart stdserial;
 
 enum {
 	USART1Serial = 0,
@@ -71,14 +71,13 @@ uint16_t ring_peek(USARTRing * r) {
 	return r->buf[r->tail];
 }
 
-void usart_init(USARTPort * usx, USART_TypeDef * usartx, GPIOPin rx, GPIOPin tx, uint32_t baud) {
+void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx, uint32_t baud) {
 	USART_InitTypeDef USART_InitStruct; // this is for the USART1 initilization
 	NVIC_InitTypeDef NVIC_InitStructure; // this is used to configure the NVIC (nested vector interrupt controller)
 	//
 	uint8_t af = GPIO_AF_USART1;
 	IRQn_Type irq = USART1_IRQn;
-	usx->USARTx = usartx;
-	//usx->USARTx = usartx;
+	usx->USARTx = USARTx;
 
 	if ( usx->USARTx == USART1) {
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
@@ -162,14 +161,14 @@ void usart_init(USARTPort * usx, USART_TypeDef * usartx, GPIOPin rx, GPIOPin tx,
 	USART_Cmd(usx->USARTx, ENABLE);
 }
 
-void usart_polling_write(USARTPort * usx, const uint16_t w) {
+void usart_polling_write(usart * usx, const uint16_t w) {
 	while (USART_GetFlagStatus(usx->USARTx, USART_FLAG_TXE ) == RESET)
 		;
 	USART_SendData(usx->USARTx, w);
 //	while (USART_GetFlagStatus(USART3, USART_FLAG_TC ) == RESET) ;
 }
 
-size_t usart_write(USARTPort * usx, const uint16_t w) {
+size_t usart_write(usart * usx, const uint16_t w) {
 //	static uint16 lastchar; for two or more conseq. returns
 	uint16_t waitcount = 7;
 	while ( waitcount > 0 &&
@@ -184,7 +183,7 @@ size_t usart_write(USARTPort * usx, const uint16_t w) {
 	return 1;
 }
 
-size_t usart_print(USARTPort * usx, const char * s) {
+size_t usart_print(usart * usx, const char * s) {
 	size_t n = 0;
 	while (*s) {
 		usart_write(usx, (uint16_t) *s++);
@@ -197,14 +196,14 @@ uint16_t usart_polling_read(USART_TypeDef * USARTx /*usartx[usx]*/) {
 	return USART_ReceiveData(USARTx);
 }
 
-uint16_t usart_read(USARTPort * usx) {
+uint16_t usart_read(usart * usx) {
 	uint16_t w = ring_deque(&usx->rxring); //&rxring[usx->usid]);
 	if (w == 0xffff)
 		return 0; // buffer is empty
 	return w;
 }
 
-void usart_flush(USARTPort * usx) {
+void usart_flush(usart * usx) {
 	uint32_t wtill = millis() + 100;
 	while (ring_count(&usx->txring) > 0) {
 		if (millis() > wtill)
@@ -227,13 +226,13 @@ void usart_flush(USARTPort * usx) {
 	ring_clear(&usx->rxring); //&txring[usx->usid]);
 }
 
-uint16_t usart_peek(USARTPort * usx) {
+uint16_t usart_peek(usart * usx) {
 //	if ( buffer_count(&(usx->rxring)) == 0 )
 //		return 0xffff;
 	return ring_peek(&usx->rxring); //	rxring[usx->usid].buf[rxring[usx->usid].tail];
 }
 
-uint16_t usart_available(USARTPort * usx) {
+uint16_t usart_available(usart * usx) {
 	return ring_count(&usx->rxring);
 	//return buffer_count(&rxring[usx->usid]);
 }

@@ -45,8 +45,16 @@ void TP_CS(boolean x) {
 		digitalWrite(TPStruct.pin_cs, RESET);
 }
 
+void TP_select(void) {
+		digitalWrite(TPStruct.pin_cs, RESET);
+}
+
+void TP_deselect(void) {
+		digitalWrite(TPStruct.pin_cs, SET);
+}
+
 //#define TP_INT_IN   GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_5)
-boolean TP_REQ(void) {
+boolean TP_req(void) {
 	return GPIO_ReadInputDataBit(PinPort(TPStruct.pin_req), PinBit(TPStruct.pin_req));
 }
 
@@ -69,6 +77,8 @@ static void ADS7843_SPI_Init(void)
   /* DISABLE SPI2 */ 
   SPI_Cmd(TPStruct.port->SPIx, DISABLE); 
   /* SPI2 Config -------------------------------------------------------------*/ 
+	spi_setMode(TPStruct.port, SPI_BaudRatePrescaler_64, SPI_CPOL_Low, SPI_CPHA_1Edge, SPI_FirstBit_MSB);
+/*
   SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex; 
   SPI_InitStructure.SPI_Mode = SPI_Mode_Master; 
   SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b; 
@@ -79,6 +89,7 @@ static void ADS7843_SPI_Init(void)
   SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB; 
   SPI_InitStructure.SPI_CRCPolynomial = 7; 
   SPI_Init(TPStruct.port->SPIx, &SPI_InitStructure); 
+	*/
   /* Enable SPI2 */ 
   SPI_Cmd(TPStruct.port->SPIx, ENABLE); 
 } 
@@ -101,11 +112,13 @@ void TP_Init(SPIPort * port, GPIOPin sck, GPIOPin si, GPIOPin so, GPIOPin cs, GP
 	TPStruct.port = port;
 	TPStruct.pin_cs = cs;
 	TPStruct.pin_req = req;
-	spi_init(TPStruct.port, SPI2, sck, si, so, cs);
+	spi_init(TPStruct.port, SPI2, sck, si, so, cs);  
+  //TP_CS(1); 
+  //ADS7843_SPI_Init(); 
+  SPI_Cmd(TPStruct.port->SPIx, DISABLE); 
+	spi_setMode(TPStruct.port, SPI_BaudRatePrescaler_64, SPI_CPOL_Low, SPI_CPHA_1Edge, SPI_FirstBit_MSB);
+  SPI_Cmd(TPStruct.port->SPIx, ENABLE);
 	GPIOMode(PinPort(req), PinBit(req), GPIO_Mode_IN, GPIO_Speed_50MHz, GPIO_OType_PP, GPIO_PuPd_NOPULL);
-  
-  TP_CS(1); 
-  ADS7843_SPI_Init(); 
 } 
 
 
@@ -271,7 +284,7 @@ Coordinate *Read_Ads7846(void)
 	buffer[1][count]=TP_Y[0];
 	count++;  
   }
-  while(!TP_REQ() && count<9);  /* TP_INT_IN  */
+  while(!TP_req() && count<9);  /* TP_INT_IN  */
   if(count==9)   /* Average X Y  */ 
   {
 	/* Average X  */

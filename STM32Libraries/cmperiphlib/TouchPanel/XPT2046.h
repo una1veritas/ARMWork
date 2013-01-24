@@ -55,12 +55,14 @@ static TouchPadStruct TPStruct;
 
 /* Private define ------------------------------------------------------------*/
 
-#define	CHX 	0x90
-#define	CHY 	0xd0
+#define	CHX 	((uint8)0x90)
+#define	CHY 	((uint8)0xd0)
 
 
 void TP_CS(boolean x); // 	((x) ? GPIO_SetBits(GPIOC,GPIO_Pin_4) : GPIO_ResetBits(GPIOC,GPIO_Pin_4))
-boolean TP_REQ(void); //#define TP_INT_IN   GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_5)
+void TP_select(void);
+void TP_deselect(void);
+boolean TP_req(void); //#define TP_INT_IN   GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_5)
 
 /* Private function prototypes -----------------------------------------------*/				
 void TP_Init(SPIPort * port, GPIOPin sck, GPIOPin si, GPIOPin so, GPIOPin cs, GPIOPin req);	

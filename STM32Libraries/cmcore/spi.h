@@ -32,19 +32,19 @@ extern "C" {
 #define SPI_MSBFIRST 0
 #define SPI_LSBFIRST 1
 
-typedef struct __SPIPort {
+typedef struct {
 	SPI_TypeDef * SPIx;
 	GPIOPin sck, mosi, miso, defaultcs;
-	SPI_InitTypeDef modeStruct;
+	SPI_InitTypeDef modedef;
 //	uint8 xbuf[256];
 //	uint16 xindex;
-} SPIPort;
+} spi;
 
-void spi_init(SPIPort * spi, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss);
-void spi_disable(SPIPort *);
-uint16 spi_transfer(SPIPort * spi, uint16 data);
-void spi_setDataMode(SPIPort * spi, uint16 modeid);
-void spi_setMode(SPIPort * spi, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst);
+void spi_init(spi * spiport, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss);
+void spi_disable(spi *);
+uint16 spi_transfer(spi * spiport, uint16 data);
+void spi_setDataMode(spi * spiport, uint16 modeid);
+void spi_setMode(spi * spiport, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst);
 
 #ifdef __cplusplus
 }

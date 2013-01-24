@@ -2,7 +2,7 @@
 #define _NOKIA5110_H_
 
 #include "armcore.h"
-#include "spibus.h"
+#include "SPIBus.h"
 
 class Nokia5110 {
 	GPIOPin pin_SCE;   // 7 //Pin 3 on LCD, ~CS
@@ -12,7 +12,7 @@ class Nokia5110 {
 	GPIOPin pin_SDIN;  //  4 //Pin 6 on LCD, MOSI
 	GPIOPin pin_SCLK;  //  3 //Pin 7 on LCD, SCK
 
-	spibus * spibus;
+	SPIBus * bus;
 	uint16 textcursor; // bit column position
 	uint8 fontid;
 	
@@ -25,7 +25,9 @@ class Nokia5110 {
 	static const uint16 LCD_Y = 48;
 
 	inline void select() {
-		spi_setMode(spibus, 64, SPI_CPOL_High, SPI_CPHA_2Edge, SPI_MSBFIRST); // mode 3, msb first
+		bus->setDataMode(SPI_MODE3);
+		bus->setBitOrder(SPI_MSBFIRST);
+		bus->setClockDivider(SPI_BaudRatePrescaler_64); // mode 3, msb first
 		digitalWrite(pin_SCE, LOW);
 	}
 	
@@ -34,8 +36,8 @@ class Nokia5110 {
 	}
 	
 public:
-	Nokia5110(spibus * spix, GPIOPin sce, GPIOPin dc, GPIOPin rst) {
-		spibus = spix;
+	Nokia5110(SPIBus * spix, GPIOPin sce, GPIOPin dc, GPIOPin rst) {
+		bus = spix;
 		pin_SCE = sce;   // 7 //Pin 3 on LCD, ~CS
 		pin_DC = dc;
 		pin_RESET = rst;

@@ -28,10 +28,10 @@ typedef struct {
 	uint16_t count;
 } USARTRing;
 
-typedef struct _USARTPort {
+typedef struct {
 	USART_TypeDef * USARTx;
 	USARTRing rxring, txring;
-} USARTPort;
+} usart;
 
 
 /*
@@ -59,13 +59,13 @@ PC6 			USART6_TX
 PC7 			USART6_RX
 */
 
-void usart_init(USARTPort * usx, USART_TypeDef * usartx, const GPIOPin rx, const GPIOPin tx, const uint32_t baud);
-size_t usart_write(USARTPort * usx, const uint16_t w);
-size_t usart_print(USARTPort * usx, const char * s);
-uint16_t usart_read(USARTPort * usx);
-uint16_t usart_available(USARTPort * usx);
-void usart_flush(USARTPort * usx);
-uint16_t usart_peek(USARTPort * usx);
+void usart_init(usart * usx, USART_TypeDef * usartx, const GPIOPin rx, const GPIOPin tx, const uint32_t baud);
+size_t usart_write(usart * usx, const uint16_t w);
+size_t usart_print(usart * usx, const char * s);
+uint16_t usart_read(usart * usx);
+uint16_t usart_available(usart * usx);
+void usart_flush(usart * usx);
+uint16_t usart_peek(usart * usx);
 
 void USART1_IRQHandler(void);
 void USART2_IRQHandler(void);
@@ -74,7 +74,7 @@ void UART4_IRQHandler(void);
 void UART5_IRQHandler(void);
 void USART6_IRQHandler(void);
 
-extern USARTPort stdserial;
+extern usart stdserial;
 
 #ifdef __cplusplus
 }

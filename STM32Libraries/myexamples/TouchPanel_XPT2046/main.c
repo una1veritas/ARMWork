@@ -66,6 +66,8 @@ SPIPort spi2;
 char tmp[128];
 
 int main(void) {
+	int x, y;
+	uint16 hi;
 	RCC_ClocksTypeDef RCC_Clocks;
 	
 	armcore_init();
@@ -89,6 +91,7 @@ int main(void) {
 	TP_Init(&spi2, PB13, PB15, PB14, PB12, PD6);
   LCD_Clear(DGRAY);
 	
+	/*
   TouchPanel_Calibrate();
 	
   LCD_SetTextColor(WHITE);
@@ -96,8 +99,23 @@ int main(void) {
 //	LCD_SetCursor(10, 10);
 	LCD_StringLine(10, 10, "This is a pen.");
   delay(1000);
-	
-	while (1);
+*/	
+	while (1) {
+		TP_select(); 
+		delay_us(1);
+		spi_transfer(TPStruct.port, CHX);
+		hi = spi_transfer(TPStruct.port,0);
+		x = (hi<<4) | spi_transfer(TPStruct.port,0);
+		delay_us(1); 
+		spi_transfer(TPStruct.port,CHY);
+		hi = spi_transfer(TPStruct.port,0);
+		y = (hi<<4) | spi_transfer(TPStruct.port,0);
+		TP_deselect();
+		//
+		sprintf(tmp, "x = %d, y = %d\n", x, y);
+		usart_print(&stdserial, tmp);
+		delay(1000);
+	}
 }
 
 void TouchPanel_Calibrate(void)
