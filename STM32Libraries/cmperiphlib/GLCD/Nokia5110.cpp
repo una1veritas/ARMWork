@@ -185,7 +185,7 @@ void Nokia5110::write(byte data_or_command, byte data) {
   digitalWrite(pin_DC, data_or_command); //Tell the LCD that we are writing either to data or a command
   //Send the data
   //digitalWrite(pin_SCE, LOW);
-	spi_transfer(spibus, data);
+	spibus->transfer(data);
 //  shiftOut(PIN_SDIN, PIN_SCLK, SPI_MSBFIRST, data);
   //digitalWrite(pin_SCE, HIGH);
 }

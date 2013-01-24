@@ -16,20 +16,19 @@
 //#include <Arduino.h>
 //#include <avr/pgmspace.h>
 #include "armcore.h"
-#include "gpio.h"
+
 #include "spi.h"
 
 
 class SPIBus {
-	spi *spiport;
+	spi spiport;
 	GPIOPin sck, miso, mosi, nss;
 	
 public:
-	
 	SPIBus(SPI_TypeDef * SPIx, 
 		GPIOPin sckpin, GPIOPin misopin, GPIOPin mosipin, GPIOPin nsspin) : 
 		sck(sckpin), miso(misopin), mosi(mosipin), nss(nsspin)  {
-			spiport->SPIx = SPIx;
+			spiport.SPIx = SPIx;
 	}
 
   // SPI Configuration methods
@@ -41,12 +40,25 @@ public:
   void end();
 
 	inline uint16 transfer(uint16 _data) {
-		return spi_transfer(spiport, _data);
+		return spi_transfer(&spiport, _data);
 	}
 
-  void setBitOrder(uint16_t);
-  void setDataMode(uint16_t);
-  void setClockDivider(uint16_t);
+	inline void setBitOrder(uint16_t bitOrder) {
+		spi_setBitOrder(&spiport, bitOrder);
+	}
+
+	inline void setDataMode(uint16_t mode) {
+		spi_setDataMode(&spiport, mode);
+	}
+
+	inline void setClockDivider(uint16_t rate) {	
+		spi_setClockDivier(&spiport, rate);
+	}
+	
+	inline void setMode(uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst) {
+		spi_setMode(&spiport, clkdiv, cpol, cpha, msbfirst);
+	}
+	
 };
 
 //sextern SPI SPIBus1();

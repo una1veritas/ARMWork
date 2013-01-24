@@ -12,6 +12,7 @@
 extern "C" {
 #endif
 
+#include <stm32f4xx_SPI.h>
 #include "armcore.h"
 
 #define SPI_CLOCK_DIV2 SPI_BaudRatePrescaler_2
@@ -34,7 +35,7 @@ extern "C" {
 
 typedef struct {
 	SPI_TypeDef * SPIx;
-	GPIOPin sck, mosi, miso, defaultcs;
+//	GPIOPin sck, mosi, miso, defaultcs;
 	SPI_InitTypeDef modedef;
 //	uint8 xbuf[256];
 //	uint16 xindex;
@@ -43,7 +44,9 @@ typedef struct {
 void spi_init(spi * spiport, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss);
 void spi_disable(spi *);
 uint16 spi_transfer(spi * spiport, uint16 data);
-void spi_setDataMode(spi * spiport, uint16 modeid);
+void spi_setDataMode(spi * spiport, uint16 id);
+void spi_setClockDivier(spi * spiport, uint16 id);
+void spi_setBitOrder(spi * spiport, uint16 id);
 void spi_setMode(spi * spiport, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst);
 
 #ifdef __cplusplus

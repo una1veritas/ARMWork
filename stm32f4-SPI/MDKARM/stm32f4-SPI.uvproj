@@ -482,11 +482,6 @@
               <FilePath>..\..\STM32Libraries\cmcore\gpio.c</FilePath>
             </File>
             <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\i2c.c</FilePath>
-            </File>
-            <File>
               <FileName>spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\spi.c</FilePath>
@@ -511,16 +506,26 @@
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\armcore.h</FilePath>
             </File>
+            <File>
+              <FileName>SPIBus.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\SPIBus.h</FilePath>
+            </File>
+            <File>
+              <FileName>SPIBus.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\SPIBus.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>armcore.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\armcore.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>cmperiphlib</GroupName>
           <Files>
-            <File>
-              <FileName>stm32f4_discovery.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiphlib\Boards\stm32f4_discovery.h</FilePath>
-            </File>
             <File>
               <FileName>Nokia5110.cpp</FileName>
               <FileType>8</FileType>
