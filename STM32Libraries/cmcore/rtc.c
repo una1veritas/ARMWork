@@ -1,5 +1,7 @@
 #include "rtc.h"
 
+__IO uint32_t AsynchPrediv = 0, SynchPrediv = 0;
+
 /**
   * @brief  Configure the RTC peripheral by selecting the clock source.
   * @param  None

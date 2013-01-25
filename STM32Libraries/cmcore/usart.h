@@ -17,8 +17,6 @@
 extern "C" {
 #endif
 
-#define DEFAULTUSART USART6
-
 #include "armcore.h"
 
 #define USART_BUFFER_SIZE 128
@@ -73,8 +71,6 @@ void USART3_IRQHandler(void);
 void UART4_IRQHandler(void);
 void UART5_IRQHandler(void);
 void USART6_IRQHandler(void);
-
-extern usart stdserial;
 
 #ifdef __cplusplus
 }

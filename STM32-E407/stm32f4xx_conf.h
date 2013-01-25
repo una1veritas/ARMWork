@@ -1,9 +1,9 @@
 /**
   ******************************************************************************
-  * @file    stm32f4xx_conf.h  
+  * @file    Project/STM32F4xx_StdPeriph_Templates/stm32f4xx_conf.h  
   * @author  MCD Application Team
-  * @version V1.1.0
-  * @date    19-March-2012
+  * @version V1.0.1
+  * @date    13-April-2012
   * @brief   Library configuration file.
   ******************************************************************************
   * @attention
@@ -23,17 +23,11 @@
   * limitations under the License.
   *
   ******************************************************************************
-  */ 
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32F4xx_CONF_H
 #define __STM32F4xx_CONF_H
-
-#if defined  (HSE_VALUE)
-/* Redefine the HSE value; it's equal to 8 MHz on the STM32F4-DISCOVERY Kit */
- #undef HSE_VALUE
- #define HSE_VALUE    ((uint32_t)12000000) 
-#endif /* HSE_VALUE */
 
 /* Includes ------------------------------------------------------------------*/
 /* Uncomment the line below to enable peripheral header file inclusion */

@@ -15,8 +15,6 @@
 #include "armcore.h"
 #include "usart.h"
 
-usart stdserial;
-
 enum {
 	USART1Serial = 0,
 	USART2Serial,
