@@ -5,7 +5,10 @@
 extern "C" {
 #endif
 
-#define STDUSART3
+#define STDSERIAL USART3
+#define STDPORT 	GPIOB
+#define STDRXPIN  11
+#define STDTXPIN  10
 
 #ifdef __cplusplus
 }
