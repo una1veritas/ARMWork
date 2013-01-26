@@ -69,10 +69,10 @@ int main(void)
 //  SysTick_Config(RCC_Clocks.HCLK_Frequency / 100);
 	
 //	usart_init(&stdserial, USART3, PB11, PB10, 57600);
-	sprintf(tmp, "Hello, %ld\n", RCC_Clocks.SYSCLK_Frequency);
-	sprintf(tmp, "Hello, %ld\n", RCC_Clocks.HCLK_Frequency);
-	sprintf(tmp, "Hello, %ld\n", RCC_Clocks.PCLK1_Frequency);
-	sprintf(tmp, "Hello, %ld\n", RCC_Clocks.PCLK2_Frequency);
+	sprintf(tmp, "SYSCLK, %ld\n", RCC_Clocks.SYSCLK_Frequency);
+	sprintf(tmp, "HCLK, %ld\n", RCC_Clocks.HCLK_Frequency);
+	sprintf(tmp, "PCLK1, %ld\n", RCC_Clocks.PCLK1_Frequency);
+	sprintf(tmp, "PCLK2, %ld\n", RCC_Clocks.PCLK2_Frequency);
 //	usart_print(&stdserial, tmp);
 	
   /* Initialize LEDs and LCD available on STM324xG-EVAL board *****************/
