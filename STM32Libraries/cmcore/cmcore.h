@@ -1,12 +1,12 @@
 /*
- * armcore.h
+ * cmcore.h
  *
  *  Created on: 2012/10/23
  *      Author: sin
  */
 
-#ifndef ARMCORE_H_
-#define ARMCORE_H_
+#ifndef CMCORE_H_
+#define CMCORE_H_
 
 #include <stdio.h>
 #include <stdint.h>
@@ -59,7 +59,7 @@ typedef uint8_t boolean;
 #define UINT16(x)  ((uint16_t)(x))
 #define HIGHLOW(x, y)  (((uint16_t)(x))<< 8 | y)
 
-void armcore_init(void);
+void cmcore_init(void);
 //size_t strlen(const char * s);
 
 #ifdef __cplusplus

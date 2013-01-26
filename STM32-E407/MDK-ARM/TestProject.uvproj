@@ -211,7 +211,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <RoSelD>3</RoSelD>
@@ -348,7 +348,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER, STM32F4XX, OLIMEX_STM32_E407, HSECLK=12000000</Define>
+              <Define>USE_STDPERIPH_DRIVER, STM32F4XX, STM32_E407, HSE_VALUE=12000000, STDSERIAL=6</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32-E407;..\..\STM32Libraries\cmcore</IncludePath>
             </VariousControls>
@@ -407,11 +407,6 @@
               <FilePath>..\main.c</FilePath>
             </File>
             <File>
-              <FileName>olimex_stm32e407.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\olimex_stm32e407.h</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\stm32f4xx_conf.h</FilePath>
@@ -427,9 +422,14 @@
               <FilePath>..\stm32f4xx_it.h</FilePath>
             </File>
             <File>
-              <FileName>system_stm32f4xx_olimex-stm32e407.c</FileName>
+              <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\system_stm32f4xx_olimex-stm32e407.c</FilePath>
+              <FilePath>..\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>olimex_stm32e407.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\olimex_stm32e407.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -467,16 +467,6 @@
           <GroupName>cmcore</GroupName>
           <Files>
             <File>
-              <FileName>armcore.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\armcore.c</FilePath>
-            </File>
-            <File>
-              <FileName>armcore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\armcore.h</FilePath>
-            </File>
-            <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\delay.c</FilePath>
@@ -505,6 +495,16 @@
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmcore.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\cmcore.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmcore.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\cmcore.c</FilePath>
             </File>
           </Files>
         </Group>

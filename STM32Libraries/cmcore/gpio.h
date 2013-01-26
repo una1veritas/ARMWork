@@ -23,7 +23,7 @@ extern uint16_t Pin[];
 */
 
 enum PortNameDef {
-	NotAPort = 0,
+	Not_A_Port = 0,
 	PortA = 1,
 	PortB,
 	PortC,
@@ -32,7 +32,8 @@ enum PortNameDef {
 	PortF,
 	PortG,
 	PortH,
-	PortI
+	PortI,
+	PORT_NOT_DEFINED = 0xff
 };
 
 typedef enum _GPIOPin_Def {

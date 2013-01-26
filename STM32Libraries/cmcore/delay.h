@@ -15,7 +15,7 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h>
 #include "stm32f4xx.h"
-#include "armcore.h"
+#include "cmcore.h"
 
 extern volatile uint32_t __counter_micros;
 extern volatile uint32_t __counter_millis;
