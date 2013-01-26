@@ -12,7 +12,7 @@
 //#include <stm32f4xx_usart.h>
 //#include <misc.h>
 
-#include "armcore.h"
+#include "cmcore.h"
 #include "usart.h"
 
 enum {
@@ -23,6 +23,8 @@ enum {
 	UART5Serial,
 	USART6Serial
 };
+
+usart stdserial;
 
 // for irq handlers
 USARTRing * rxring[6], * txring[6];
@@ -69,25 +71,22 @@ uint16_t ring_peek(USARTRing * r) {
 	return r->buf[r->tail];
 }
 
-void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx, uint32_t baud) {
-	USART_InitTypeDef USART_InitStruct; // this is for the USART1 initilization
-	NVIC_InitTypeDef NVIC_InitStructure; // this is used to configure the NVIC (nested vector interrupt controller)
+void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx) {
 	//
 	uint8_t af = GPIO_AF_USART1;
-	IRQn_Type irq = USART1_IRQn;
 	usx->USARTx = USARTx;
 
 	if ( usx->USARTx == USART1) {
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
 		af = GPIO_AF_USART1;
-		irq = USART1_IRQn;
+		usx->irqn = USART1_IRQn;
 //		usx->usid = USART1Serial;
 		rxring[USART1Serial] = &usx->rxring;
 		txring[USART1Serial] = &usx->txring;
 	} else if (usx->USARTx == USART2) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
 		af = GPIO_AF_USART2;
-		irq = USART2_IRQn;
+		usx->irqn = USART2_IRQn;
 //		usx->usid = USART2Serial;
 //		usx->USARTx = USART2;
 		rxring[USART2Serial] = &usx->rxring;
@@ -95,7 +94,7 @@ void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx, uin
 	} else if (usx->USARTx == USART3) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
 		af = GPIO_AF_USART3;
-		irq = USART3_IRQn;
+		usx->irqn = USART3_IRQn;
 //		usx->usid = USART3Serial;
 //		usx->USARTx = USART3;
 		rxring[USART3Serial] = &usx->rxring;
@@ -103,7 +102,7 @@ void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx, uin
 	} else if (usx->USARTx == UART4) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);
 		af = GPIO_AF_UART4;
-		irq = UART4_IRQn;
+		usx->irqn = UART4_IRQn;
 //		usx->usid = UART4Serial;
 //		usx->USARTx = UART4;
 		rxring[UART4Serial] = &usx->rxring;
@@ -111,7 +110,7 @@ void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx, uin
 	} else if (usx->USARTx == UART5) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART5, ENABLE);
 		af = GPIO_AF_UART5;
-		irq = UART5_IRQn;
+		usx->irqn = UART5_IRQn;
 //		usx->usid = UART5Serial;
 //		usx->USARTx = UART5;
 		rxring[UART5Serial] = &usx->rxring;
@@ -119,7 +118,7 @@ void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx, uin
 	} else { // Serial6
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART6, ENABLE);
 		af = GPIO_AF_USART6;
-		irq = USART6_IRQn;
+		usx->irqn = USART6_IRQn;
 //		usx->usid = USART6Serial;
 //		usx->USARTx = USART6;
 		rxring[USART6Serial] = &usx->rxring;
@@ -127,12 +126,17 @@ void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx, uin
 	}
 
 	GPIOMode(PinPort(rx), PinBit(rx), GPIO_Mode_AF, GPIO_Speed_50MHz,
-			GPIO_OType_PP, GPIO_PuPd_NOPULL);
+						GPIO_OType_PP, GPIO_PuPd_NOPULL);
 	GPIOMode(PinPort(tx), PinBit(tx), GPIO_Mode_AF, GPIO_Speed_50MHz,
-			GPIO_OType_PP, GPIO_PuPd_NOPULL);
+						GPIO_OType_PP, GPIO_PuPd_NOPULL);
 
 	GPIO_PinAFConfig(PinPort(rx), PinSource(rx), af);
 	GPIO_PinAFConfig(PinPort(tx), PinSource(tx), af);
+}
+
+void usart_begin(usart * usx, uint32_t baud) {
+	USART_InitTypeDef USART_InitStruct; // this is for the USART1 initilization
+	NVIC_InitTypeDef NVIC_InitStructure; // this is used to configure the NVIC (nested vector interrupt controller)
 
 	USART_InitStruct.USART_BaudRate = baud;	// the baudrate is set to the value we passed into this init function
 	USART_InitStruct.USART_WordLength = USART_WordLength_8b;// we want the data frame size to be 8 bits (standard)
@@ -146,7 +150,7 @@ void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx, uin
 	USART_ITConfig(usx->USARTx, USART_IT_RXNE, ENABLE); // enable the USART3 receive interrupt
 	USART_ITConfig(usx->USARTx, USART_IT_TXE, DISABLE);
 
-	NVIC_InitStructure.NVIC_IRQChannel = irq;
+	NVIC_InitStructure.NVIC_IRQChannel = usx->irqn;
 	// we want to configure the USART3 interrupts
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; // this sets the priority group of the USART interrupts
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0; // this sets the subpriority inside the group
@@ -159,11 +163,12 @@ void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx, uin
 	USART_Cmd(usx->USARTx, ENABLE);
 }
 
-void usart_polling_write(usart * usx, const uint16_t w) {
+size_t usart_polling_write(usart * usx, const uint16_t w) {
 	while (USART_GetFlagStatus(usx->USARTx, USART_FLAG_TXE ) == RESET)
 		;
 	USART_SendData(usx->USARTx, w);
 //	while (USART_GetFlagStatus(USART3, USART_FLAG_TC ) == RESET) ;
+	return 1;
 }
 
 size_t usart_write(usart * usx, const uint16_t w) {
@@ -190,8 +195,17 @@ size_t usart_print(usart * usx, const char * s) {
 	return n;
 }
 
-uint16_t usart_polling_read(USART_TypeDef * USARTx /*usartx[usx]*/) {
-	return USART_ReceiveData(USARTx);
+size_t usart_polling_print(usart * usx, const char * s) {
+	size_t n = 0;
+	while (*s) {
+		usart_polling_write(usx, (uint16_t) *s++);
+		n++;
+	}
+	return n;
+}
+
+uint16_t usart_polling_read(usart * usx) {
+	return USART_ReceiveData(usx->USARTx);
 }
 
 uint16_t usart_read(usart * usx) {

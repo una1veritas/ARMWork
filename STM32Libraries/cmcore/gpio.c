@@ -67,8 +67,10 @@ uint8_t digitalRead(GPIOPin portpin) {
 void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
               GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd) {
 		GPIO_InitTypeDef GPIO_InitStructure;
-								
-	if ( port == GPIOB ) {
+		
+	if ( port == GPIOA ) {
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+	} else if ( port == GPIOB ) {
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 	} else if ( port == GPIOC ) {
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
@@ -84,9 +86,10 @@ void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOH, ENABLE);
 	} else if ( port == GPIOI ) {
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOI, ENABLE);
-	} else { //if ( port == GPIOA ) {
-		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
-	}
+	} else {
+	// else NOT_A_PORT
+		return;
+	}		
 	// assumes port is already waked up.
 
 	GPIO_InitStructure.GPIO_Pin = pinbit;
@@ -103,7 +106,7 @@ void GPIOWrite(GPIO_TypeDef * port, uint16_t bits) {
 	GPIO_Write(port, bits);
 }
 
-void togglePin(GPIOPin portpin) {
+void digitalToggle(GPIOPin portpin) {
 	GPIO_ToggleBits(PinPort(portpin), PinBit(portpin));
 }
 

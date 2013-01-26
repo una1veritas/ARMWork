@@ -36,7 +36,7 @@
 //#include "stm324xg_eval_lcd.h"
 #include <stdio.h>
 
-#include "armcore.h"
+#include "cmcore.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/

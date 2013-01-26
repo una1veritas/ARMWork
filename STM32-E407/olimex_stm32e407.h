@@ -5,11 +5,12 @@
 extern "C" {
 #endif
 
-#define STDSERIAL USART3
-#define STDPORT 	GPIOB
-#define STDRXPIN  11
-#define STDTXPIN  10
-
+//#define STM32_E407
+//#define USE_STDSERIAL3
+	
+#define LED1_PIN        PC13
+#define BUTTON1_PIN 		PA0					
+	
 #ifdef __cplusplus
 }
 #endif
