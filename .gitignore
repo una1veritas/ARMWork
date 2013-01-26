@@ -20,7 +20,6 @@
 *.__i
 *.htm
 *.uvgui.*
-*uvopt
 
 #Eclipse
 .metadata
