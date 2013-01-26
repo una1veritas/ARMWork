@@ -53,7 +53,7 @@
   */
 int main(void)
 {
-  RCC_ClocksTypeDef RCC_Clocks;
+	RCC_ClocksTypeDef RCC_Clocks;
 	char tmp[64];
 	
   /*!< At this stage the microcontroller clock setting is already configured, 
@@ -63,27 +63,34 @@ int main(void)
        system_stm32f4xx.c file
      */  
 
-	TIM2_delay_start();
+	cmcore_init();
+	//TIM2_delay_start();
+	//usart_init(&stdserial, USART3, PB11, PB10, 19200);
   /* SysTick end of count event each 10ms */
   RCC_GetClocksFreq(&RCC_Clocks);
 //  SysTick_Config(RCC_Clocks.HCLK_Frequency / 100);
 	
 //	usart_init(&stdserial, USART3, PB11, PB10, 57600);
-	sprintf(tmp, "SYSCLK, %ld\n", RCC_Clocks.SYSCLK_Frequency);
-	sprintf(tmp, "HCLK, %ld\n", RCC_Clocks.HCLK_Frequency);
-	sprintf(tmp, "PCLK1, %ld\n", RCC_Clocks.PCLK1_Frequency);
-	sprintf(tmp, "PCLK2, %ld\n", RCC_Clocks.PCLK2_Frequency);
+	sprintf(tmp, "SYSCLK = %ld\n", RCC_Clocks.SYSCLK_Frequency);
+	usart_print(&stdserial, tmp);
+	sprintf(tmp, "HCLK = %ld\n", RCC_Clocks.HCLK_Frequency);
+	usart_print(&stdserial, tmp);
+	sprintf(tmp, "PCLK1 = %ld\n", RCC_Clocks.PCLK1_Frequency);
+	usart_print(&stdserial, tmp);
+	sprintf(tmp, "PCLK2 = %ld\n", RCC_Clocks.PCLK2_Frequency);
+	usart_print(&stdserial, tmp);
 //	usart_print(&stdserial, tmp);
 	
   /* Initialize LEDs and LCD available on STM324xG-EVAL board *****************/
+	pinMode(LED1_PIN, OUTPUT);
 //  STM_EVAL_LEDInit(LED1);
 //  STM_EVAL_LEDInit(LED2);
 //  STM_EVAL_LEDInit(LED3);
 //  STM_EVAL_LEDInit(LED4);
 
   /* Initialize the LCD */
+	digitalWrite(LED1_PIN, HIGH); // Off
 //  STM324xG_LCD_Init();
-
   /* Display message on STM324xG-EVAL LCD *************************************/
   /* Clear the LCD */ 
 //  LCD_Clear(White);
@@ -97,6 +104,7 @@ int main(void)
 //  LCD_DisplayStringLine(LINE(2), (uint8_t *)MESSAGE3);
 
   /* Turn on LEDs available on STM324xG-EVAL **********************************/
+	digitalWrite(LED1_PIN, HIGH);
 //  STM_EVAL_LEDOn(LED1);
 //  STM_EVAL_LEDOn(LED2);
 //  STM_EVAL_LEDOn(LED3);
@@ -104,21 +112,30 @@ int main(void)
 
   /* Add your application code here
      */
+	pinMode(BUTTON1_PIN, INPUT);
 
   /* Infinite loop */
   while (1)
   {
     /* Toggle LD4 */
 //    STM_EVAL_LEDToggle(LED4);
-
+		digitalToggle(LED1_PIN);
     /* Insert 50 ms delay */
-    delay(50);
+    delay(500);
 
     /* Toggle LD2 */
 //    STM_EVAL_LEDToggle(LED2);
+		digitalToggle(LED1_PIN);
 
     /* Insert 50 ms delay */
-    delay(50);
+    delay(500);
+		
+		if ( digitalRead(BUTTON1_PIN) ) {
+			usart_print(&stdserial, "Wow! ");
+		} else {
+			sprintf(tmp, "%ld\n", millis());
+			usart_print(&stdserial, tmp);
+		}
   }
 }
 
