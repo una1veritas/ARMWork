@@ -7,18 +7,18 @@
 
   <Targets>
     <Target>
-      <TargetName>STM32_E407_Test</TargetName>
+      <TargetName>TestProject</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>STM32F407VG</Device>
+          <Device>STM32F407ZG</Device>
           <Vendor>STMicroelectronics</Vendor>
           <Cpu>IRAM(0x20000000-0x2001FFFF) IRAM2(0x10000000-0x1000FFFF) IROM(0x8000000-0x80FFFFF) CLOCK(25000000) CPUTYPE("Cortex-M4") FPU2</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile>"Startup\ST\STM32F4xx\startup_stm32f4xx.s" ("STM32F4xx Startup Code")</StartupFile>
           <FlashDriverDll>UL2CM3(-O207 -S0 -C0 -FO7 -FD20000000 -FC800 -FN1 -FF0STM32F4xx_1024 -FS08000000 -FL0100000)</FlashDriverDll>
-          <DeviceId>6103</DeviceId>
+          <DeviceId>6105</DeviceId>
           <RegisterFile>stm32f4xx.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
@@ -43,14 +43,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\</OutputDirectory>
-          <OutputName>STM32_E407_Test</OutputName>
+          <OutputDirectory>.\TestProject\</OutputDirectory>
+          <OutputName>TestProject</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\</ListingPath>
+          <ListingPath>.\TestProject\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -117,7 +117,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>0</UseSimulator>
+            <UseSimulator>1</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -128,7 +128,7 @@
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
           </Simulator>
           <Target>
-            <UseTarget>1</UseTarget>
+            <UseTarget>0</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -162,11 +162,11 @@
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>1</Capability>
-            <DriverSelection>4096</DriverSelection>
+            <Capability>0</Capability>
+            <DriverSelection>-1</DriverSelection>
           </Flash1>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>
@@ -337,7 +337,7 @@
             <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>0</OneElfS>
+            <OneElfS>1</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
@@ -348,9 +348,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>__CORE__=7</Define>
+              <Define>USE_STDPERIPH_DRIVER, STM32F4XX, OLIMEX_STM32_E407, HSECLK=12000000</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Test;..\..\..\board;..\..\..\..\stm32library\STM32F2xx_StdPeriph_Driver\inc;..\..\..\..\stm32library\CMSIS\STM32F2xx;..\..\..\modules;..\Ethernet\app;..\Ethernet\uip;..\Ethernet\uip\httpd;..\..\..\..\stm32library\STM32_ETH_Driver\inc;..\USB\app;..\..\..\..\stm32library\STM32_USB_Device_Library\Core\inc;..\..\..\..\stm32library\STM32_USB_OTG_Driver\inc;..\..\..\..\stm32library\STM32_USB_Device_Library\Class\hid\inc</IncludePath>
+              <IncludePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32-E407;..\..\STM32Libraries\cmcore</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -389,7 +389,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>user_main</GroupName>
+          <GroupName>Source Group Main</GroupName>
           <Files>
             <File>
               <FileName>startup_stm32f4xx.s</FileName>
@@ -397,99 +397,114 @@
               <FilePath>.\startup_stm32f4xx.s</FilePath>
             </File>
             <File>
+              <FileName>main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\main.h</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\main.c</FilePath>
             </File>
             <File>
-              <FileName>includes.h</FileName>
+              <FileName>olimex_stm32e407.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\includes.h</FilePath>
+              <FilePath>..\olimex_stm32e407.h</FilePath>
             </File>
             <File>
-              <FileName>stm32f2xx_conf.h</FileName>
+              <FileName>stm32f4xx_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\stm32f2xx_conf.h</FilePath>
+              <FilePath>..\stm32f4xx_conf.h</FilePath>
             </File>
             <File>
-              <FileName>stm32f2xx_it.c</FileName>
+              <FileName>stm32f4xx_it.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\stm32f2xx_it.c</FilePath>
+              <FilePath>..\stm32f4xx_it.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f2xx_it.h</FileName>
+              <FileName>stm32f4xx_it.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\stm32f2xx_it.h</FilePath>
+              <FilePath>..\stm32f4xx_it.h</FilePath>
             </File>
             <File>
-              <FileName>system_stm32f2xx.c</FileName>
+              <FileName>system_stm32f4xx_olimex-stm32e407.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\system_stm32f2xx.c</FilePath>
+              <FilePath>..\system_stm32f4xx_olimex-stm32e407.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
+          <GroupName>stdperiph_driver</GroupName>
           <Files>
             <File>
-              <FileName>arm_comm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\board\arm_comm.h</FilePath>
-            </File>
-            <File>
-              <FileName>iar_stm32f217ze_sk.c</FileName>
+              <FileName>misc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\board\iar_stm32f217ze_sk.c</FilePath>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c</FilePath>
             </File>
             <File>
-              <FileName>iar_stm32f217ze_sk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\board\iar_stm32f217ze_sk.h</FilePath>
+              <FileName>stm32f4xx_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>comm</GroupName>
+          <GroupName>cmcore</GroupName>
           <Files>
             <File>
-              <FileName>disk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\modules\disk.h</FilePath>
-            </File>
-            <File>
-              <FileName>i2c1_drv.c</FileName>
+              <FileName>armcore.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\modules\i2c1_drv.c</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\armcore.c</FilePath>
             </File>
             <File>
-              <FileName>i2c1_drv.h</FileName>
+              <FileName>armcore.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\..\modules\i2c1_drv.h</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\armcore.h</FilePath>
             </File>
             <File>
-              <FileName>sd_card_mode old.c</FileName>
+              <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\modules\sd_card_mode old.c</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\delay.c</FilePath>
             </File>
             <File>
-              <FileName>sd_card_mode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\modules\sd_card_mode.c</FilePath>
-            </File>
-            <File>
-              <FileName>sd_card_mode.h</FileName>
+              <FileName>delay.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\..\modules\sd_card_mode.h</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\delay.h</FilePath>
             </File>
             <File>
-              <FileName>Sin_Table.c</FileName>
+              <FileName>gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\modules\Sin_Table.c</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\gpio.c</FilePath>
             </File>
             <File>
-              <FileName>Sin_Table.h</FileName>
+              <FileName>gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\..\modules\Sin_Table.h</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\usart.h</FilePath>
             </File>
           </Files>
         </Group>

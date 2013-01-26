@@ -36,7 +36,7 @@ void delay_us(uint32_t);
 #define delayMicroseconds(x)  delay_us(x)
 //void delayMicroseconds(uint32 w);
 
-void TIM2_timer_start(void);
+void TIM2_delay_start(void);
 
 void TIM2_IRQHandler(void);
 

@@ -24,7 +24,7 @@ volatile uint32_t __counter_millis;
  * @param  none
  * @retval None
  */
-void TIM2_timer_start(void) {
+void TIM2_delay_start(void) {
 	// TIM_TimeBaseInitTypeDef's order is {uint16_t TIM_Prescaler, uint16_t TIM_CounterMode, uint16_t TIM_Period, uint16_t TIM_ClockDivision, uint8_t TIM_RepetitionCounter}
 	TIM_TimeBaseInitTypeDef TimeBaseStructure;
 //			= { 84, TIM_CounterMode_Up, 999, TIM_CKD_DIV1, 0 };
