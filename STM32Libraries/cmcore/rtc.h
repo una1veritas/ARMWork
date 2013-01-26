@@ -1,7 +1,7 @@
 #ifndef _RTC_H_
 #define _RTC_H_
 
-#include "armcore.h"
+#include "cmcore.h"
 
 #ifdef __cplusplus
 extern "C" {

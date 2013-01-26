@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 #include <stm32f4xx_SPI.h>
-#include "armcore.h"
+#include "cmcore.h"
 
 #define SPI_CLOCK_DIV2 SPI_BaudRatePrescaler_2
 #define SPI_CLOCK_DIV4 	SPI_BaudRatePrescaler_4
@@ -29,6 +29,11 @@ extern "C" {
 #define SPI_MODE1 1
 #define SPI_MODE2 2
 #define SPI_MODE3 3
+
+#define SPI_MODE_Low1Edge 0
+#define SPI_MODE_Low2Edge 1
+#define SPI_MODE_High1Edge 2
+#define SPI_MODE_High2Edge 3
 
 #define SPI_MSBFIRST 0
 #define SPI_LSBFIRST 1
@@ -47,7 +52,7 @@ uint16 spi_transfer(spi * spiport, uint16 data);
 void spi_setDataMode(spi * spiport, uint16 id);
 void spi_setClockDivier(spi * spiport, uint16 id);
 void spi_setBitOrder(spi * spiport, uint16 id);
-void spi_setMode(spi * spiport, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst);
+void spi_setMode(spi * spiport, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 firstbit);
 
 #ifdef __cplusplus
 }

@@ -26,6 +26,6 @@ void cmcore_init() {
 	usart_init(&stdserial, STDUSART, STDRX, STDTX);
 	usart_begin(&stdserial, STDBAUD);
 #else
-	#warning "no stdusart"
+	#warning "No STDSERIAL defined."
 #endif
 }
