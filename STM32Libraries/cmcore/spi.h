@@ -1,61 +1,56 @@
 /*
- * Copyright (c) 2010 by Cristian Maglie <c.maglie@bug.st>
- * SPI Master library for arduino.
+ * spi.h
  *
- * This file is free software; you can redistribute it and/or modify
- * it under the terms of either the GNU General Public License version 2
- * or the GNU Lesser General Public License version 2.1, both as
- * published by the Free Software Foundation.
+ *  Created on: 2012/11/18
+ *      Author: sin
  */
 
-#ifndef _SPI_H_INCLUDED
-#define _SPI_H_INCLUDED
+#ifndef _SPI_H_
+#define _SPI_H_
 
-#include <stdio.h>
-//#include <Arduino.h>
-//#include <avr/pgmspace.h>
-#include "armcore.h"
-#include "gpio.h"
-#include "spibus.h"
-
-
-
-class SPI {
-	SPI_TypeDef * SPIx;
-	SPIBus *spibus;
-	GPIOPin pin_sck, pin_miso, pin_mosi, pin_nss;
-	
-public:
-	
-	SPI() : SPIx(SPI1), pin_sck(PB3), pin_miso(PB4), pin_mosi(PB5), pin_nss(PA15) { }
-
-  // SPI Configuration methods
-
-//  inline static void attachInterrupt();
-//  inline static void detachInterrupt(); // Default
-
-  void begin(); // Default
-  void end();
-
-	inline uint16 transfer(uint16 _data) {
-		return spi_transfer(spibus, _data);
-	}
-
-  void setBitOrder(uint16_t);
-  void setDataMode(uint16_t);
-  void setClockDivider(uint16_t);
-};
-
-//sextern SPI SPIBus1();
-
-/*
-void SPIClass::attachInterrupt() {
-  SPCR |= _BV(SPIE);
-}
-
-void SPIClass::detachInterrupt() {
-  SPCR &= ~_BV(SPIE);
-}
-*/
-
+#ifdef __cplusplus
+extern "C" {
 #endif
+
+#include <stm32f4xx_SPI.h>
+#include "armcore.h"
+
+#define SPI_CLOCK_DIV2 SPI_BaudRatePrescaler_2
+#define SPI_CLOCK_DIV4 	SPI_BaudRatePrescaler_4
+#define SPI_CLOCK_DIV8 SPI_BaudRatePrescaler_8
+#define SPI_CLOCK_DIV16 SPI_BaudRatePrescaler_16
+#define SPI_CLOCK_DIV32 SPI_BaudRatePrescaler_32
+#define SPI_CLOCK_DIV64 SPI_BaudRatePrescaler_64
+#define SPI_CLOCK_DIV128 SPI_BaudRatePrescaler_128
+#define SPI_CLOCK_DIV256 SPI_BaudRatePrescaler_256
+
+// CPOL:CPHA
+#define SPI_MODE0 0
+#define SPI_MODE1 1
+#define SPI_MODE2 2
+#define SPI_MODE3 3
+
+#define SPI_MSBFIRST 0
+#define SPI_LSBFIRST 1
+
+typedef struct {
+	SPI_TypeDef * SPIx;
+//	GPIOPin sck, mosi, miso, defaultcs;
+	SPI_InitTypeDef modedef;
+//	uint8 xbuf[256];
+//	uint16 xindex;
+} spi;
+
+void spi_init(spi * spiport, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss);
+void spi_disable(spi *);
+uint16 spi_transfer(spi * spiport, uint16 data);
+void spi_setDataMode(spi * spiport, uint16 id);
+void spi_setClockDivier(spi * spiport, uint16 id);
+void spi_setBitOrder(spi * spiport, uint16 id);
+void spi_setMode(spi * spiport, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* _SPI_H_ */

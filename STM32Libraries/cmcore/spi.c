@@ -106,63 +106,64 @@
  */
 #include "stm32f4xx_spi.h"
 
-#include "gpio.h"
-#include "spibus.h"
+#include "spi.h"
 
-//SPI_TypeDef * spix[] = { SPI1, SPI2, SPI3 };
 
-void spi_init(SPIBus * spibx, SPI_TypeDef * SPIx, 
+void spi_init(spi * spiport, SPI_TypeDef * SPIx,
 							GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss) {
 	uint8_t af; // = GPIO_AF_SPI1;
-
+//	spiport->sck = sck;
+//	spiport->miso = miso;
+//	spiport->mosi = mosi;
+//	spiport->defaultcs = nss;
 	/* PCLK2 = HCLK/2 */
 	//RCC_PCLK2Config(RCC_HCLK_Div2);
 	if ( SPIx == SPI2 ) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
 		af = GPIO_AF_SPI2;
-		spibx->SPIx = SPI2;
+		spiport->SPIx = SPI2;
 		// PB12, 13, 14, 15
 	} else if ( SPIx == SPI3 ) {
 		// SPI3
-		RCC_APB1PeriphResetCmd(RCC_APB1Periph_SPI3, ENABLE);
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI3, ENABLE);
 		af = GPIO_AF_SPI3;
-		spibx->SPIx = SPI3;
+		spiport->SPIx = SPI3;
 	}	else { //if (SPIx == SPI1) {
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, ENABLE);
 		af = GPIO_AF_SPI1;
-		spibx->SPIx = SPI1;
+		spiport->SPIx = SPI1;
 		// sck = PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
 	} 
 
-	GPIOMode(PinPort(sck), PinBit(sck), GPIO_Mode_AF, GPIO_Speed_25MHz,
+	GPIOMode(PinPort(sck), PinBit(sck), GPIO_Mode_AF, GPIO_Speed_50MHz,
 			GPIO_OType_PP, GPIO_PuPd_UP);
-	GPIOMode(PinPort(miso), PinBit(miso), GPIO_Mode_AF, GPIO_Speed_25MHz,
+	GPIOMode(PinPort(miso), PinBit(miso), GPIO_Mode_AF, GPIO_Speed_50MHz,
 			GPIO_OType_PP, GPIO_PuPd_UP);
-	GPIOMode(PinPort(mosi), PinBit(mosi), GPIO_Mode_AF, GPIO_Speed_25MHz,
+	GPIOMode(PinPort(mosi), PinBit(mosi), GPIO_Mode_AF, GPIO_Speed_50MHz,
 			GPIO_OType_PP, GPIO_PuPd_UP);
 	GPIO_PinAFConfig(PinPort(sck), PinSource(sck), af);
 	GPIO_PinAFConfig(PinPort(miso), PinSource(miso), af);
 	GPIO_PinAFConfig(PinPort(mosi), PinSource(mosi), af);
 	// nSS by software
-	GPIOMode(PinPort(nss), PinBit(nss), GPIO_Mode_OUT, GPIO_Speed_25MHz,
+	GPIOMode(PinPort(nss), PinBit(nss), GPIO_Mode_OUT, GPIO_Speed_50MHz,
 			GPIO_OType_PP, GPIO_PuPd_UP);
 	digitalWrite(nss, HIGH);
 	//GPIO_PinAFConfig(PinPort(nss), PinSource(nss), af);
 
 	// set default parameters
-	spibx->modeStruct.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
-	spibx->modeStruct.SPI_Mode = SPI_Mode_Master;
-	spibx->modeStruct.SPI_DataSize = SPI_DataSize_8b;
-	spibx->modeStruct.SPI_CPOL = SPI_CPOL_Low;
-	spibx->modeStruct.SPI_CPHA = SPI_CPHA_1Edge;
-	spibx->modeStruct.SPI_NSS = SPI_NSS_Soft;
-	spibx->modeStruct.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
-	spibx->modeStruct.SPI_FirstBit = SPI_FirstBit_MSB;
-	spibx->modeStruct.SPI_CRCPolynomial = SPI_CRC_Rx;
+	spiport->modedef.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
+	spiport->modedef.SPI_Mode = SPI_Mode_Master;
+	spiport->modedef.SPI_DataSize = SPI_DataSize_8b;
+	spiport->modedef.SPI_CPOL = SPI_CPOL_Low;
+	spiport->modedef.SPI_CPHA = SPI_CPHA_1Edge;
+	spiport->modedef.SPI_NSS = SPI_NSS_Soft;
+	spiport->modedef.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
+	spiport->modedef.SPI_FirstBit = SPI_FirstBit_MSB;
+	spiport->modedef.SPI_CRCPolynomial = SPI_CRC_Rx;
 
-	SPI_Init(spibx->SPIx, &spibx->modeStruct);
+	SPI_Init(spiport->SPIx, &spiport->modedef);
 
-	SPI_Cmd(spibx->SPIx, ENABLE);
+	SPI_Cmd(spiport->SPIx, ENABLE);
 	/*          5. Enable the NVIC and the corresponding interrupt using the function
 	 *             SPI_ITConfig() if you need to use interrupt mode.
 	 *
@@ -192,7 +193,26 @@ void spi_init(SPIBus * spibx, SPI_TypeDef * SPIx,
 	 */
 }
 
-void spi_setMode(SPIBus * spib, uint16 prescaler, uint16_t cpol, uint16_t cpha,  uint16_t firstbit) {
+void spi_disable(spi * spiport) {
+	if ( spiport->SPIx == SPI2 ) {
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
+	} else if ( spiport->SPIx == SPI3 ) {
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI3, ENABLE);
+	} else {
+		RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, ENABLE);
+	}
+  /* DISABLE */ 
+  SPI_Cmd(spiport->SPIx, DISABLE);
+	if ( spiport->SPIx == SPI2 ) {
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, DISABLE);
+	} else if ( spiport->SPIx == SPI3 ) {
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI3, DISABLE);
+	} else {
+		RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, DISABLE);
+	}
+}
+
+void spi_setMode(spi * spiport, uint16 prescaler, uint16_t cpol, uint16_t cpha,  uint16_t firstbit) {
 	switch(prescaler) {
 		case SPI_BaudRatePrescaler_2:
 		case SPI_BaudRatePrescaler_4:
@@ -207,34 +227,58 @@ void spi_setMode(SPIBus * spib, uint16 prescaler, uint16_t cpol, uint16_t cpha, 
 			prescaler = SPI_BaudRatePrescaler_128;
 	}
 	
-//	spi->initStruct..SPI_Direction = SPI_Direction_2Lines_FullDuplex;
-//	spi->initStruct..SPI_Mode = SPI_Mode_Master;
-//	spi->initStruct..SPI_DataSize = SPI_DataSize_8b;
-	spib->modeStruct.SPI_CPOL = (cpol == SPI_CPOL_Low ? SPI_CPOL_Low : SPI_CPOL_High);
-	spib->modeStruct.SPI_CPHA = (cpha == SPI_CPHA_1Edge? SPI_CPHA_1Edge : SPI_CPHA_2Edge);
-//	spi->initStruct..SPI_NSS = SPI_NSS_Soft;
-	spib->modeStruct.SPI_BaudRatePrescaler = prescaler;
-	spib->modeStruct.SPI_FirstBit = (firstbit == SPI_FirstBit_MSB ? SPI_FirstBit_MSB : SPI_FirstBit_LSB);
-//	spi->initStruct..SPI_CRCPolynomial = SPI_CRC_Rx;
+//	spiport->initStruct..SPI_Direction = SPI_Direction_2Lines_FullDuplex;
+//	spiport->initStruct..SPI_Mode = SPI_Mode_Master;
+//	spiport->initStruct..SPI_DataSize = SPI_DataSize_8b;
+	spiport->modedef.SPI_CPOL = (cpol == SPI_CPOL_Low ? SPI_CPOL_Low : SPI_CPOL_High);
+	spiport->modedef.SPI_CPHA = (cpha == SPI_CPHA_1Edge? SPI_CPHA_1Edge : SPI_CPHA_2Edge);
+//	spiport->initStruct..SPI_NSS = SPI_NSS_Soft;
+	spiport->modedef.SPI_BaudRatePrescaler = prescaler;
+	spiport->modedef.SPI_FirstBit = (firstbit == SPI_FirstBit_MSB ? SPI_FirstBit_MSB : SPI_FirstBit_LSB);
+//	spiport->initStruct..SPI_CRCPolynomial = SPI_CRC_Rx;
 
-	SPI_Init(spib->SPIx, &spib->modeStruct);
+	SPI_Init(spiport->SPIx, &spiport->modedef);
 }
 
-void spi_setDataMode(SPIBus * spib, uint16 modeid) {
-	spib->modeStruct.SPI_CPOL = (modeid & 2 ? SPI_CPOL_High : SPI_CPOL_Low);
-	spib->modeStruct.SPI_CPHA = (modeid & 1 ? SPI_CPHA_2Edge : SPI_CPHA_1Edge );
-	SPI_Init(spib->SPIx, &spib->modeStruct);
+void spi_setDataMode(spi * spiport, uint16 modeid) {
+	spiport->modedef.SPI_CPOL = (modeid & 2 ? SPI_CPOL_High : SPI_CPOL_Low);
+	spiport->modedef.SPI_CPHA = (modeid & 1 ? SPI_CPHA_2Edge : SPI_CPHA_1Edge );
+	SPI_Init(spiport->SPIx, &spiport->modedef);
 }
 
-uint16 spi_transfer(SPIBus * spib, uint16 data) {
+void spi_setClockDivier(spi * spiport, uint16 id) {
+	switch(id) {
+		case SPI_BaudRatePrescaler_2:
+		case SPI_BaudRatePrescaler_4:
+		case SPI_BaudRatePrescaler_8:
+		case SPI_BaudRatePrescaler_16:
+		case SPI_BaudRatePrescaler_32:
+		case SPI_BaudRatePrescaler_64:
+		case SPI_BaudRatePrescaler_256:
+		break;
+		case SPI_BaudRatePrescaler_128:
+		default:
+			id = SPI_BaudRatePrescaler_128;
+	}
+	spiport->modedef.SPI_BaudRatePrescaler = id;
+	SPI_Init(spiport->SPIx, &spiport->modedef);
+}
+
+void spi_setBitOrder(spi * spiport, uint16 id) {
+	spiport->modedef.SPI_FirstBit = (id == SPI_FirstBit_MSB ? SPI_FirstBit_MSB : SPI_FirstBit_LSB);	
+	SPI_Init(spiport->SPIx, &spiport->modedef);
+}
+
+
+uint16 spi_transfer(spi * spiport, uint16 data) {
 	/* Wait for SPIx Tx buffer empty */
-	while (SPI_I2S_GetFlagStatus(spib->SPIx, SPI_I2S_FLAG_TXE ) == RESET) ;
+	while (SPI_I2S_GetFlagStatus(spiport->SPIx, SPI_I2S_FLAG_TXE ) == RESET) ;
 
-	SPI_I2S_SendData(spib->SPIx, data);
+	SPI_I2S_SendData(spiport->SPIx, data);
 	/* Wait for SPIx data reception */
 
-	while (SPI_I2S_GetFlagStatus(spib->SPIx, SPI_I2S_FLAG_RXNE ) == RESET) ;
+	while (SPI_I2S_GetFlagStatus(spiport->SPIx, SPI_I2S_FLAG_RXNE ) == RESET) ;
 	/* Read SPIy received data */
 
-	return SPI_I2S_ReceiveData(spib->SPIx);
+	return SPI_I2S_ReceiveData(spiport->SPIx);
 }

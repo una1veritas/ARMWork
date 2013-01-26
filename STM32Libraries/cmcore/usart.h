@@ -1,12 +1,12 @@
 /*
- * usart.h
+ * usartport.h
  *
  *  Created on: 2012/10/24
  *      Author: sin
  */
 
-#ifndef USART_H_
-#define USART_H_
+#ifndef _USARTPORT_H_
+#define _USARTPORT_H_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,7 +17,7 @@
 extern "C" {
 #endif
 
-#include "gpio.h"
+#include "armcore.h"
 
 #define USART_BUFFER_SIZE 128
 typedef struct {
@@ -26,10 +26,10 @@ typedef struct {
 	uint16_t count;
 } USARTRing;
 
-typedef struct _USART {
+typedef struct {
 	USART_TypeDef * USARTx;
 	USARTRing rxring, txring;
-} USART;
+} usart;
 
 
 /*
@@ -57,13 +57,13 @@ PC6 			USART6_TX
 PC7 			USART6_RX
 */
 
-void usart_init(USART * usx, USART_TypeDef * usartx, const GPIOPin rx, const GPIOPin tx, const uint32_t baud);
-size_t usart_write(USART * usx, const uint16_t w);
-size_t usart_print(USART * usx, const char * s);
-uint16_t usart_read(USART * usx);
-uint16_t usart_available(USART * usx);
-void usart_flush(USART * usx);
-uint16_t usart_peek(USART * usx);
+void usart_init(usart * usx, USART_TypeDef * usartx, const GPIOPin rx, const GPIOPin tx, const uint32_t baud);
+size_t usart_write(usart * usx, const uint16_t w);
+size_t usart_print(usart * usx, const char * s);
+uint16_t usart_read(usart * usx);
+uint16_t usart_available(usart * usx);
+void usart_flush(usart * usx);
+uint16_t usart_peek(usart * usx);
 
 void USART1_IRQHandler(void);
 void USART2_IRQHandler(void);

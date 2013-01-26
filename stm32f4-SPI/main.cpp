@@ -26,9 +26,10 @@
 
 #include "GLCD/Nokia5110.h"
 
-USART Serial6;
-SPI SPI1Struct;
-Nokia5110 nokiaLCD(&SPI1Struct, PA4, PA3, PA2);
+usart Serial6;
+spi spi1;
+SPIBus SPI1Bus(SPI1, PA5, PA6, PA7, PA4);
+Nokia5110 nokiaLCD(&SPI1Bus, PA4, PA3, PA2);
 
 int main(void) {
 	char tmp[256];
@@ -47,10 +48,10 @@ int main(void) {
 			"This blessed plot, this earth, this realm, this England,";
 	const uint16 messlen = strlen(message);
 	
-	TIM2_timer_start();
+	armcore_init();
 	usart_init(&Serial6, USART6, PC7, PC6, 57600);
-	spi_init(&SPI1Struct, SPI1, PA5, PA6, PA7, PA4); //  PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
-	
+	SPI1Bus.begin();
+
 	usart_print(&Serial6, "Basic initialization has been finished.\n");
 	
 	nokiaLCD.init();
@@ -74,7 +75,7 @@ int main(void) {
 		delay(1000);
 		
 	uint16 shift = 0;
-	nokiaLCD.selectFont(Nokia5110::PROPORTIONAL10x15);
+	nokiaLCD.selectFont(Nokia5110::CHICAGO10);
 	
 	while (1) {
 		nokiaLCD.clear();

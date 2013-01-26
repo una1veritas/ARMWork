@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?>
+
+<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537" moduleId="org.eclipse.cdt.core.settings" name="Default">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.GNU_ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactExtension="elf" artifactName="TouchPanel_XPT2046" buildArtefactType="org.eclipse.cdt.cross.arm.gnu.buildArtefactType.application" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.cross.arm.gnu.buildArtefactType.application" description="" id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537" name="Default" parent="org.eclipse.cdt.build.core.emptycfg">
+					<folderInfo id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537.1197140002" name="/" resourcePath="">
+						<toolChain id="org.eclipse.cdt.cross.arm.gnu.windows.toolchain.base.2075976137" name="ARM Windows GCC (GNUARM, WinARM)" superClass="org.eclipse.cdt.cross.arm.gnu.windows.toolchain.base">
+							<option id="org.eclipse.cdt.cross.arm.gnu.windows.option.target.processor.109522000" name="Processor" superClass="org.eclipse.cdt.cross.arm.gnu.windows.option.target.processor"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.windows.option.target.thumb.1094884932" name="Thumb (-mthumb)" superClass="org.eclipse.cdt.cross.arm.gnu.windows.option.target.thumb"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.windows.option.target.thumbinterwork.1288703734" name="Thumb interwork (-mthumb-interwork)" superClass="org.eclipse.cdt.cross.arm.gnu.windows.option.target.thumbinterwork"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.windows.option.target.endiannes.1927405264" name="Endiannes" superClass="org.eclipse.cdt.cross.arm.gnu.windows.option.target.endiannes"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.windows.option.target.fpu.abi.850058564" name="Float ABI" superClass="org.eclipse.cdt.cross.arm.gnu.windows.option.target.fpu.abi"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.windows.option.target.fpu.unit.1065790325" name="FPU Type" superClass="org.eclipse.cdt.cross.arm.gnu.windows.option.target.fpu.unit"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.windows.option.debugging.level.690574568" name="Debug level" superClass="org.eclipse.cdt.cross.arm.gnu.windows.option.debugging.level"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.windows.option.debugging.format.1759740243" name="Debug format" superClass="org.eclipse.cdt.cross.arm.gnu.windows.option.debugging.format"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.windows.option.debugging.other.1745920056" name="Other debugging flags" superClass="org.eclipse.cdt.cross.arm.gnu.windows.option.debugging.other"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.windows.option.debugging.prof.131636797" name="Generate prof information (-p)" superClass="org.eclipse.cdt.cross.arm.gnu.windows.option.debugging.prof"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.windows.option.debugging.gprof.1449335317" name="Generate gprof information (-pg)" superClass="org.eclipse.cdt.cross.arm.gnu.windows.option.debugging.gprof"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.windows.option.addtools.createflash.1723739770" name="Create Flash Image" superClass="org.eclipse.cdt.cross.arm.gnu.windows.option.addtools.createflash"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.windows.option.addtools.createlisting.202670346" name="Create Extended Listing" superClass="org.eclipse.cdt.cross.arm.gnu.windows.option.addtools.createlisting"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.windows.option.addtools.printsize.159301602" name="Print Size" superClass="org.eclipse.cdt.cross.arm.gnu.windows.option.addtools.printsize"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.GNU_ELF" id="org.eclipse.cdt.cross.arm.gnu.windows.platform.base.2091104950" isAbstract="false" name="Linux Platform" osList="win32" superClass="org.eclipse.cdt.cross.arm.gnu.windows.platform.base"/>
+							<builder buildPath="${workspace_loc:/TouchPanel_XPT2046/Default}" id="org.eclipse.cdt.cross.arm.gnu.windows.builder.base.696803464" name="ARM Windows GNU Make builder.Default" superClass="org.eclipse.cdt.cross.arm.gnu.windows.builder.base"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.windows.assembler.base.1422758532" name="ARM Windows GCC Assembler" superClass="org.eclipse.cdt.cross.arm.gnu.windows.assembler.base">
+								<option id="org.eclipse.cdt.cross.arm.gnu.assembler.option.include.paths.234508014" superClass="org.eclipse.cdt.cross.arm.gnu.assembler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Sin\Documents\ARMWork\STM32Libraries\cmperiphlib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Sin\Documents\ARMWork\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Sin\Documents\ARMWork\STM32Libraries\cmcore&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/TouchPanel_XPT2046}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Sin\Documents\ARMWork\STM32Libraries\CMSIS\Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Sin\Documents\ARMWork\STM32Libraries\CMSIS\STM32F4xx&quot;"/>
+								</option>
+								<option id="org.eclipse.cdt.cross.arm.gnu.assembler.option.preprocessor.def.1835003322" superClass="org.eclipse.cdt.cross.arm.gnu.assembler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>
+								</option>
+								<inputType id="org.eclipse.cdt.cross.arm.gnu.windows.assembler.base.input.1331837898" superClass="org.eclipse.cdt.cross.arm.gnu.windows.assembler.base.input"/>
+							</tool>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.windows.c.compiler.base.1999652538" name="ARM Windows GCC C Compiler" superClass="org.eclipse.cdt.cross.arm.gnu.windows.c.compiler.base">
+								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.include.paths.1291019067" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/TouchPanel_XPT2046}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Sin\Documents\ARMWork\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Sin\Documents\ARMWork\STM32Libraries\cmcore&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Sin\Documents\ARMWork\STM32Libraries\cmperiphlib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Sin\Documents\ARMWork\STM32Libraries\CMSIS\Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Sin\Documents\ARMWork\STM32Libraries\CMSIS\STM32F4xx&quot;"/>
+								</option>
+								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.preprocessor.def.1754903241" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>
+								</option>
+								<inputType id="org.eclipse.cdt.cross.arm.gnu.windows.c.compiler.base.input.355254384" superClass="org.eclipse.cdt.cross.arm.gnu.windows.c.compiler.base.input"/>
+							</tool>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.windows.cpp.compiler.base.1523026652" name="ARM Windows GCC C++ Compiler" superClass="org.eclipse.cdt.cross.arm.gnu.windows.cpp.compiler.base">
+								<option id="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.include.paths.1026031307" superClass="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Sin\Documents\ARMWork\STM32Libraries\cmperiphlib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Sin\Documents\ARMWork\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Sin\Documents\ARMWork\STM32Libraries\cmcore&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/TouchPanel_XPT2046}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Sin\Documents\ARMWork\STM32Libraries\CMSIS\Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Users\Sin\Documents\ARMWork\STM32Libraries\CMSIS\STM32F4xx&quot;"/>
+								</option>
+								<option id="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.preprocessor.def.1987635307" superClass="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>
+								</option>
+								<inputType id="org.eclipse.cdt.cross.arm.gnu.windows.cpp.compiler.base.input.594939897" superClass="org.eclipse.cdt.cross.arm.gnu.windows.cpp.compiler.base.input"/>
+							</tool>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.windows.c.linker.base.1395654857" name="ARM Windows GCC C Linker" superClass="org.eclipse.cdt.cross.arm.gnu.windows.c.linker.base"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.windows.cpp.linker.base.96965192" name="ARM Windows GCC C++ Linker" superClass="org.eclipse.cdt.cross.arm.gnu.windows.cpp.linker.base">
+								<inputType id="org.eclipse.cdt.cross.arm.gnu.cpp.linker.input.9690777" superClass="org.eclipse.cdt.cross.arm.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.windows.archiver.base.818974375" name="ARM Windows GCC Archiver" superClass="org.eclipse.cdt.cross.arm.gnu.windows.archiver.base"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.windows.createflash.base.1861811980" name="ARM Windows GNU Create Flash Image" superClass="org.eclipse.cdt.cross.arm.gnu.windows.createflash.base"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.windows.createlisting.base.1153812100" name="ARM Windows GNU Create Listing" superClass="org.eclipse.cdt.cross.arm.gnu.windows.createlisting.base"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.windows.printsize.base.680604516" name="ARM Windows GNU Print Size" superClass="org.eclipse.cdt.cross.arm.gnu.windows.printsize.base"/>
+						</toolChain>
+					</folderInfo>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="TouchPanel_XPT2046.null.1158518309" name="TouchPanel_XPT2046"/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Default">
+			<resource resourceType="PROJECT" workspacePath="/TouchPanel_XPT2046"/>
+		</configuration>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537.1197140002;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.2008854124;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input.2012865546">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.cross.arm.gnu.ARM_CS_GCCWinManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537.1197140002;org.eclipse.cdt.cross.arm.gnu.windows.c.compiler.base.1999652538;org.eclipse.cdt.cross.arm.gnu.windows.c.compiler.base.input.355254384">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.cross.arm.gnu.ARM_GCCWinManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537.1197140002;org.eclipse.cdt.cross.arm.gnu.windows.cpp.compiler.base.1523026652;org.eclipse.cdt.cross.arm.gnu.windows.cpp.compiler.base.input.594939897">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.cross.arm.gnu.ARM_GCCWinManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537.1197140002;org.eclipse.cdt.cross.arm.gnu.windows.assembler.base.1422758532;org.eclipse.cdt.cross.arm.gnu.windows.assembler.base.input.1331837898">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.cross.arm.gnu.ARM_GCCWinManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537.1197140002;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.2121663196;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input.1232376030">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.cross.arm.gnu.ARM_CS_GCCWinManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537.1197140002;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.1390412601;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input.1113612918">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.cross.arm.gnu.ARM_CS_GCCWinManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+	</storageModule>
+</cproject>

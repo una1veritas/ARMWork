@@ -7,8 +7,9 @@
 extern "C" {
 #endif
 
+extern __IO uint32_t AsynchPrediv, SynchPrediv;
 
-#define RTC_CLOCK_SOURCE_LSI  0x00
+//#define RTC_CLOCK_SOURCE_LSI  0x00
 	/* LSI used as RTC source clock. The RTC Clock */
 #define RTC_CLOCK_SOURCE_LSE  0x01
 	/* LSE used as RTC source clock */

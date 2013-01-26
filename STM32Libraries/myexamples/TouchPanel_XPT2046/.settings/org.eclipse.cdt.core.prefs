@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+environment/project/org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537/PATH/delimiter=;
+environment/project/org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537/PATH/operation=append
+environment/project/org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537/PATH/value=C\:\\Program Files (x86)\\Linaro\\4.6_2012q2\\bin;${Path}
+environment/project/org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537/append=true
+environment/project/org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.base.1214647537/appendContributed=true

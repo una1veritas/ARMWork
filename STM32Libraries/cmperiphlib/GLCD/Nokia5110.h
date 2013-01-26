@@ -1,8 +1,9 @@
 #ifndef _NOKIA5110_H_
 #define _NOKIA5110_H_
 
+#include <stm32f4xx.h>
 #include "armcore.h"
-#include "spibus.h"
+#include "SPIBus.h"
 
 class Nokia5110 {
 	GPIOPin pin_SCE;   // 7 //Pin 3 on LCD, ~CS
@@ -25,7 +26,7 @@ class Nokia5110 {
 	static const uint16 LCD_Y = 48;
 
 	inline void select() {
-		spi_setMode(spibus, 64, SPI_CPOL_High, SPI_CPHA_2Edge, SPI_MSBFIRST); // mode 3, msb first
+		spibus->setMode(SPI_BaudRatePrescaler_64, SPI_CPOL_High, SPI_CPHA_High, SPI_MSB_FIRST); // mode 3, msb first
 		digitalWrite(pin_SCE, LOW);
 	}
 	

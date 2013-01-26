@@ -348,9 +348,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER, STM32F4XX, F4DISCOVERRY</Define>
+              <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\GLCD_SSD1289;..\TouchScreen;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
+              <IncludePath>..\..\GLCD_SSD1289;..\TouchScreen;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -402,9 +402,9 @@
               <FilePath>..\main.c</FilePath>
             </File>
             <File>
-              <FileName>AsciiLib.c</FileName>
+              <FileName>Julija.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\AsciiLib.c</FilePath>
+              <FilePath>..\Julija.c</FilePath>
             </File>
             <File>
               <FileName>delay.c</FileName>
@@ -412,9 +412,9 @@
               <FilePath>..\delay.c</FilePath>
             </File>
             <File>
-              <FileName>SSD1289.c</FileName>
+              <FileName>touch_7846.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\SSD1289.c</FilePath>
+              <FilePath>..\TouchScreen\touch_7846.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_it.c</FileName>
@@ -427,26 +427,6 @@
               <FilePath>..\..\STM32Libraries\CMSIS\STM32F4xx\system_stm32f4xx.c</FilePath>
             </File>
             <File>
-              <FileName>Julija.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Julija.h</FilePath>
-            </File>
-            <File>
-              <FileName>SSD1289.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\SSD1289.h</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\stm32f4xx_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>AsciiLib.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\AsciiLib.h</FilePath>
-            </File>
-            <File>
               <FileName>delay.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\delay.h</FilePath>
@@ -454,22 +434,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Touch Screen</GroupName>
-          <Files>
-            <File>
-              <FileName>touch_7846.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\TouchScreen\touch_7846.c</FilePath>
-            </File>
-            <File>
-              <FileName>touch_7846.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\TouchScreen\touch_7846.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>stdperiph_driver</GroupName>
+          <GroupName>StdPeriph_Driver</GroupName>
           <Files>
             <File>
               <FileName>misc.c</FileName>
@@ -477,29 +442,9 @@
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_gpio.c</FileName>
+              <FileName>stm32f4xx_dma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_rcc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_fsmc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_fsmc.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_syscfg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_syscfg.c</FilePath>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_dma.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_exti.c</FileName>
@@ -507,9 +452,69 @@
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_exti.c</FilePath>
             </File>
             <File>
+              <FileName>stm32f4xx_fsmc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_fsmc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_pwr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_pwr.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32f4xx_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_syscfg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_syscfg.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cmperiphlib</GroupName>
+          <Files>
+            <File>
+              <FileName>AsciiLib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\AsciiLib.c</FilePath>
+            </File>
+            <File>
+              <FileName>AsciiLib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\AsciiLib.h</FilePath>
+            </File>
+            <File>
+              <FileName>SSD1289.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\SSD1289.c</FilePath>
+            </File>
+            <File>
+              <FileName>SSD1289.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\SSD1289.h</FilePath>
             </File>
           </Files>
         </Group>

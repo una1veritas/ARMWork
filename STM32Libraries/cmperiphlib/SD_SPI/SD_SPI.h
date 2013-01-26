@@ -58,7 +58,7 @@ public:
 
 class SDClass {
 public:
-	static SPIBus sdspi;
+	static spibus sdspi;
 
 private:
   // These are required for initialisation and use of sdfatlib

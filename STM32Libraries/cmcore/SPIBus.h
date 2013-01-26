@@ -1,52 +1,76 @@
 /*
- * spi.h
+ * Copyright (c) 2010 by Cristian Maglie <c.maglie@bug.st>
+ * SPI Master library for arduino.
  *
- *  Created on: 2012/11/18
- *      Author: sin
+ * This file is free software; you can redistribute it and/or modify
+ * it under the terms of either the GNU General Public License version 2
+ * or the GNU Lesser General Public License version 2.1, both as
+ * published by the Free Software Foundation.
  */
 
-#ifndef SPIBus_H_
-#define SPIBus_H_
+#ifndef _SPIBUS_H_
+#define _SPIBUS_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+#include <stdio.h>
+#include <stdint.h>
+//#include <Arduino.h>
+//#include <avr/pgmspace.h>
 #include "armcore.h"
-#include "gpio.h"
 
-#define SPI_CLOCK_DIV2 SPI_BaudRatePrescaler_2
-#define SPI_CLOCK_DIV4 	SPI_BaudRatePrescaler_4
-#define SPI_CLOCK_DIV8 SPI_BaudRatePrescaler_8
-#define SPI_CLOCK_DIV16 SPI_BaudRatePrescaler_16
-#define SPI_CLOCK_DIV32 SPI_BaudRatePrescaler_32
-#define SPI_CLOCK_DIV64 SPI_BaudRatePrescaler_64
-#define SPI_CLOCK_DIV128 SPI_BaudRatePrescaler_128
-#define SPI_CLOCK_DIV256 SPI_BaudRatePrescaler_256
+#include "spi.h"
 
-// CPOL:CPHA
-#define SPI_MODE0 0
-#define SPI_MODE1 1
-#define SPI_MODE2 2
-#define SPI_MODE3 3
 
-#define SPI_MSBFIRST 0
-#define SPI_LSBFIRST 1
+class SPIBus {
+	spi spiport;
+	GPIOPin sck, miso, mosi, nss;
+	
+public:
+	SPIBus(SPI_TypeDef * SPIx, 
+		GPIOPin sckpin, GPIOPin misopin, GPIOPin mosipin, GPIOPin nsspin) : 
+		sck(sckpin), miso(misopin), mosi(mosipin), nss(nsspin)  {
+			spiport.SPIx = SPIx;
+	}
 
-typedef struct _SPIBus {
-	SPI_TypeDef * SPIx;
-	SPI_InitTypeDef modeStruct;
-//	uint8 xbuf[256];
-//	uint16 xindex;
-} SPIBus;
+  // SPI Configuration methods
 
-void spi_init(SPIBus * spisx, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss);
-uint16 spi_transfer(SPIBus * spisx, uint16 data);
-void spi_setDataMode(SPIBus * spisx, uint16 modeid);
-void spi_setMode(SPIBus * spisx, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst);
+//  inline static void attachInterrupt();
+//  inline static void detachInterrupt(); // Default
 
-#ifdef __cplusplus
+  void begin(); // Default
+  void end();
+
+	inline uint16 transfer(uint16 _data) {
+		return spi_transfer(&spiport, _data);
+	}
+
+	inline void setBitOrder(uint16_t bitOrder) {
+		spi_setBitOrder(&spiport, bitOrder);
+	}
+
+	inline void setDataMode(uint16_t mode) {
+		spi_setDataMode(&spiport, mode);
+	}
+
+	inline void setClockDivider(uint16_t rate) {	
+		spi_setClockDivier(&spiport, rate);
+	}
+	
+	inline void setMode(uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst) {
+		spi_setMode(&spiport, clkdiv, cpol, cpha, msbfirst);
+	}
+	
+};
+
+//sextern SPI SPIBus1();
+
+/*
+void SPIClass::attachInterrupt() {
+  SPCR |= _BV(SPIE);
 }
-#endif
 
-#endif /* SPIBus_H_ */
+void SPIClass::detachInterrupt() {
+  SPCR &= ~_BV(SPIE);
+}
+*/
+
+#endif

@@ -1,5 +1,5 @@
 /*
- * i2c.c
+ * i2cstruct.c
  *
  *  Created on: 2012/11/03
  *      Author: sin
@@ -10,13 +10,12 @@
 #include "stm32f4xx_rcc.h"
 
 #include "gpio.h"
-#include "delay.h"
-#include "i2c.h"
+#include "i2cstruct.h"
 
-I2CBuffer I2C1Buffer, I2C2Buffer, I2C3Buffer;
+//I2CStruct I2C1Buffer, I2C2Buffer, I2C3Buffer;
 //uint32 swatch[8];
 
-boolean i2c_begin(I2CBuffer * wirebuf, I2C_TypeDef * i2cx, GPIOPin scl, GPIOPin sda, uint32_t clk) {
+boolean i2c_begin(I2CStruct * wirebuf, I2C_TypeDef * i2cx, GPIOPin scl, GPIOPin sda, uint32_t clk) {
 	I2C_InitTypeDef I2C_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure; 
 	uint8_t pinaf;// = GPIO_AF_I2C1;
@@ -87,7 +86,7 @@ boolean i2c_begin(I2CBuffer * wirebuf, I2C_TypeDef * i2cx, GPIOPin scl, GPIOPin 
 	return true;
 }
 
-void i2c_setup_comm(I2CBuffer * i2cbuff, I2C_Mode mode, uint8_t dstaddr, uint8_t * data, uint16_t length) {
+void i2c_setup_comm(I2CStruct * i2cbuff, I2C_Mode mode, uint8_t dstaddr, uint8_t * data, uint16_t length) {
 	i2cbuff->mode = mode;
 	i2cbuff->address = dstaddr;
 	i2cbuff->position = 0;
@@ -95,7 +94,7 @@ void i2c_setup_comm(I2CBuffer * i2cbuff, I2C_Mode mode, uint8_t dstaddr, uint8_t
 		memcpy(i2cbuff->buffer, data, i2cbuff->count);
 }
 
-boolean i2c_transmit(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t length) {
+boolean i2c_transmit(I2CStruct * wire, uint8_t addr, uint8_t * data, uint16_t length) {
 	// setup
 	wire->mode = I2C_MODE_MASTER_TX;
 	wire->address = addr;
@@ -111,7 +110,7 @@ boolean i2c_transmit(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t le
 	return false;
 }
 
-boolean i2c_request(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t length) {
+boolean i2c_request(I2CStruct * wire, uint8_t addr, uint8_t * data, uint16_t length) {
 	// setup
 	wire->mode = I2C_MODE_MASTER_RQ;
 	wire->address = addr;
@@ -129,7 +128,7 @@ boolean i2c_request(I2CBuffer * wire, uint8_t addr, uint8_t * data, uint16_t len
 	return false;
 }
 
-boolean i2c_receive(I2CBuffer * wire, uint8_t * data, uint16_t lim) {
+boolean i2c_receive(I2CStruct * wire, uint8_t * data, uint16_t lim) {
 	boolean t;
 	// setup
 	wire->mode = I2C_MODE_MASTER_RX;
@@ -150,7 +149,7 @@ boolean i2c_receive(I2CBuffer * wire, uint8_t * data, uint16_t lim) {
 }
 
 
-boolean i2c_start_send(I2CBuffer * wire) {
+boolean i2c_start_send(I2CStruct * wire) {
 //	uint16_t i;
 //	uint8 * sendp;
 	const uint32 wait = 100;
@@ -207,7 +206,7 @@ boolean i2c_start_send(I2CBuffer * wire) {
 	return true;
 }
 
-boolean i2c_start_receive(I2CBuffer * wire) {
+boolean i2c_start_receive(I2CStruct * wire) {
 //	uint16_t i;
 	const uint32 wait = 100;
 	wire->watch = millis();
@@ -330,7 +329,7 @@ void I2C1_EV_IRQHandler(void) {
  *
  *************************************************************************/
 void I2C1_ER_IRQHandler(void) {
-	I2CBuffer * wire = &I2C1Buffer;
+	I2CStruct * wire = &I2C1Buffer;
 	uint32 levt;
   if(I2C_EVENT_SLAVE_ACK_FAILURE & (levt = I2C_GetLastEvent(I2C1)) ) {
     // Generate Stop condition (return back to slave mode)

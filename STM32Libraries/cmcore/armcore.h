@@ -18,7 +18,7 @@ extern "C" {
 #include "binary.h"
 #include "gpio.h"
 #include "delay.h"
-
+#include "usart.h"
 
 #define HEX 16
 #define DEC 10
@@ -65,4 +65,5 @@ void armcore_init(void);
 #ifdef __cplusplus
 }
 #endif
+
 #endif /* ARMCORE_H_ */
