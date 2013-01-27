@@ -227,7 +227,8 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4_discovery_sdio_sd.h"
+#include "sdio.h"
+#include "sdio_sd.h"
 
 
 /** @addtogroup Utilities

@@ -48,17 +48,30 @@ void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode) {
 }
 
 void digitalWrite(GPIOPin portpin, uint8_t bit) {
-	if (bit) {
+	GPIO_InitTypeDef GPIO_InitStructure;
+	GPIO_TypeDef * port = Port[portpin>>8 & 0x0f];
+	uint8_t mode = (port->MODER) >> (PinSource(portpin) * 2);
+	if (mode == GPIO_Mode_OUT) {
+		if (bit) {
 		//? Bit_SET : Bit_RESET ));
-		GPIO_SetBits(Port[portpin >>8 & 0x0f], PinBit(portpin));
+			GPIO_SetBits(Port[portpin >>8 & 0x0f], PinBit(portpin));
+		} else {
+			GPIO_ResetBits(Port[portpin >>8 & 0x0f], PinBit(portpin));
+		}
 	} else {
-		GPIO_ResetBits(Port[portpin >>8 & 0x0f], PinBit(portpin));
+		GPIO_StructInit(&GPIO_InitStructure);
+	
+		GPIO_InitStructure.GPIO_Pin = PinBit(portpin);
+		GPIO_InitStructure.GPIO_Mode = (GPIOMode_TypeDef) (mode & 0x3);
+		GPIO_InitStructure.GPIO_PuPd = (GPIOPuPd_TypeDef)(bit & 0x3);
+	//
+		GPIO_Init(Port[portpin>>8 & 0x0f], &GPIO_InitStructure);
 	}
 }
 
 uint8_t digitalRead(GPIOPin portpin) {
 	GPIO_TypeDef * port = Port[portpin>>8 & 0x0f];
-	uint8_t mode = (port->MODER) >> (PinBit(portpin) * 2);
+	uint8_t mode = (port->MODER) >> (PinSource(portpin) * 2);
 	if (mode == GPIO_Mode_OUT)
 		return (GPIO_ReadOutputDataBit(port, PinBit(portpin)) ? SET : RESET);
 	return (GPIO_ReadInputDataBit(port, PinBit(portpin)) ? SET : RESET);

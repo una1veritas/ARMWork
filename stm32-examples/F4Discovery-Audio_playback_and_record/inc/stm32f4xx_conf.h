@@ -1,44 +1,32 @@
 /**
   ******************************************************************************
-  * @file    Project/STM32F4xx_StdPeriph_Templates/stm32f4xx_conf.h  
+  * @file    Audio_playback_and_record/inc/stm32f40x_conf.h   
   * @author  MCD Application Team
-  * @version V1.0.1
-  * @date    13-April-2012
+  * @version V1.0.0
+  * @date    28-October-2011
   * @brief   Library configuration file.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
+  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
+  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
+  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
+  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-  * You may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at:
-  *
-  *        http://www.st.com/software_license_agreement_liberty_v2
-  *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  *
+  * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
   ******************************************************************************
-  */
+  */ 
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32F4xx_CONF_H
-#define __STM32F4xx_CONF_H
+#ifndef __STM32F40x_CONF_H
+#define __STM32F40x_CONF_H
 
-
-#ifndef HSE_VALUE
-#if defined (F4DISCOVERY)
-#define HSE_VALUE    ((uint32_t)8000000) 
-#elif defined (OLIMEX_E407)
-#define HSE_VALUE    ((uint32_t)12000000) 
-#endif
-#ifndef HSE_VALUE
-#error "HSE_VALUE not defined."
-#endif
+#if defined  (HSE_VALUE)
+/* Redefine the HSE value; it's equal to 8 MHz on the STM32F4-DISCOVERY Kit */
+ #undef HSE_VALUE
+ #define HSE_VALUE    ((uint32_t)8000000) 
 #endif /* HSE_VALUE */
 
 /* Includes ------------------------------------------------------------------*/
@@ -101,6 +89,6 @@
   #define assert_param(expr) ((void)0)
 #endif /* USE_FULL_ASSERT */
 
-#endif /* __STM32F4xx_CONF_H */
+#endif /* __STM32F40x_CONF_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/

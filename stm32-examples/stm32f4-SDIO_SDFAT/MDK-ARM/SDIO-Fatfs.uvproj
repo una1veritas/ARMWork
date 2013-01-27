@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>3</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -348,7 +348,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER, HSE_VALUE=12000000</Define>
+              <Define>USE_STDPERIPH_DRIVER, OLIMEX_E407,  HSE_VALUE=12000000</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\stm32f4-SDIO_SDFAT;..\..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\..\STM32Libraries\cmcore</IncludePath>
             </VariousControls>
@@ -402,11 +402,6 @@
               <FilePath>..\main.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4_discovery_sdio_sd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\stm32f4_discovery_sdio_sd.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32fxxx_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\stm32fxxx_it.c</FilePath>
@@ -427,24 +422,34 @@
               <FilePath>..\system_stm32f4xx.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\stm32f4xx_conf.h</FilePath>
-            </File>
-            <File>
               <FileName>diskio.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\diskio.h</FilePath>
             </File>
             <File>
-              <FileName>stm32f4_discovery_sdio_sd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\stm32f4_discovery_sdio_sd.h</FilePath>
-            </File>
-            <File>
               <FileName>sdio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\sdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\stm32f4xx_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\sdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>sdio_sd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\sdio_sd.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdio_sd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\sdio_sd.h</FilePath>
             </File>
           </Files>
         </Group>

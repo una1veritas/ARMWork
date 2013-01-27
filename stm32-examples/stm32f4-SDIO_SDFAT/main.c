@@ -7,9 +7,10 @@
 #include <string.h>
 
 #include "stm32f4xx.h"
-#include "stm32f4_discovery_sdio_sd.h"
+#include "sdio_sd.h"
 
 #include "cmcore.h"
+#include "Boards/olimex_stm32-e407.h"
 
 #define DBG
 #define DBGIO
@@ -27,6 +28,7 @@ void NVIC_Configuration(void);
 #include "ff.h"
 #include "diskio.h"
 
+typedef struct _FatDisk {
 FRESULT res;
 FILINFO fno;
 FIL fil;
@@ -39,6 +41,8 @@ char* path;
     fno.lfname = lfn;
     fno.lfsize = sizeof lfn;
 #endif
+} FatDisk;
+FatDisk mSD;
 
 //******************************************************************************
 
@@ -70,8 +74,9 @@ int main(void)
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32f4xx.c file
      */
-		RCC_ClocksTypeDef RCC_Clocks;
+	RCC_ClocksTypeDef RCC_Clocks;
 	char tmp[64];
+	int i;
 
 	char fname_read[] = "MESSAGE.TXT";
 
@@ -98,46 +103,52 @@ int main(void)
 //  SysTick_Config(RCC_Clocks.HCLK_Frequency / 100);
 	
 //	usart_init(&stdserial, USART3, PB11, PB10, 57600);
-	sprintf(tmp, "SYSCLK = %ld\n", RCC_Clocks.SYSCLK_Frequency);
-	usart_print(&ser6, tmp);
-	sprintf(tmp, "HCLK = %ld\n", RCC_Clocks.HCLK_Frequency);
-	usart_print(&ser6, tmp);
-	sprintf(tmp, "PCLK1 = %ld\n", RCC_Clocks.PCLK1_Frequency);
-	usart_print(&ser6, tmp);
-	sprintf(tmp, "PCLK2 = %ld\n", RCC_Clocks.PCLK2_Frequency);
-	usart_print(&ser6, tmp);
+	printf("SYSCLK = %ld\n", RCC_Clocks.SYSCLK_Frequency);
+	printf("HCLK = %ld\n", RCC_Clocks.HCLK_Frequency);
+	printf("PCLK1 = %ld\n", RCC_Clocks.PCLK1_Frequency);
+	printf("PCLK2 = %ld\n", RCC_Clocks.PCLK2_Frequency);
 //	usart_print(&stdserial, tmp);
 	
+	pinMode(LED1_PIN, OUTPUT);
+	digitalWrite(LED1_PIN, HIGH);
 
-	usart_print(&ser6, "FatFs Testing\n");
+	printf("FatFs Testing\n");
 
-	memset(&fs32, 0, sizeof(FATFS));
-	memset(&fil, 0, sizeof(FIL));
+	memset(&mSD.fs32, 0, sizeof(FATFS));
+	memset(&mSD.fil, 0, sizeof(FIL));
 
-	res = f_mount(0, &fs32);
-	if (res != FR_OK)
-		printf("error: res = %d f_mount\n", res);	
+	digitalWrite(LED1_PIN, LOW);
+	mSD.res = f_mount(0, &mSD.fs32);
+	if (mSD.res != FR_OK) {
+		printf("error: res = %d f_mount\n", mSD.res);	
+//		goto _error;
+	}
 
-	res = f_open(&fil, fname_read, FA_READ);
-	if (res != FR_OK)
-		printf("error: res = %d f_open %s\n", res, fname_read);
+	mSD.res = f_open(&mSD.fil, fname_read, FA_READ);
+	if (mSD.res != FR_OK) {
+		printf("error: res = %d f_open %s\n", mSD.res, fname_read);
+		goto _error;
+	}
+	digitalWrite(LED1_PIN, HIGH);
 	
-	if (res == FR_OK) {
-		printf("\n>>> Mount, Open %s succeeded. <<<\n\n", fname_read);
-		
-		Total = 0;
+	printf("\n>>> Mount, Open %s succeeded. <<<\n\n", fname_read);
+
+	Total = 0;
 		while(1)
 		{
 			BYTE Buffer[512];
 			UINT BytesRead;
 			UINT i;
 
-			res = f_read(&fil, Buffer, sizeof(Buffer), &BytesRead);
-			if (res != FR_OK) {
-				printf("error: res = %d f_read %s\n", res, fname_read);
-				goto _error;
+			digitalWrite(LED1_PIN, LOW);
+			mSD.res = f_read(&mSD.fil, Buffer, sizeof(Buffer), &BytesRead);
+			if (mSD.res != FR_OK) {
+				printf("error: res = %d f_read %s\n", mSD.res, fname_read);
+			  goto _error;
 			}
-			printf("Buffer block %d bytes read.\n", BytesRead);
+			digitalWrite(LED1_PIN, HIGH);
+			
+			printf("\n--- Buffer block %d bytes ---\n", BytesRead);
 
 			Total += BytesRead;
 
@@ -148,60 +159,68 @@ int main(void)
 				break;
 		}
 
-		res = f_close(&fil); // MESSAGE.TXT		
-		if (res != FR_OK) {
-			printf("error: res = %d f_close%s\n", res, fname_read);
-			goto _error;
+		digitalWrite(LED1_PIN, LOW);
+		mSD.res = f_close(&mSD.fil); // MESSAGE.TXT		
+		if (mSD.res != FR_OK) {
+			printf("error: res = %d f_close%s\n", mSD.res, fname_read);
+		  goto _error;
 		}
-		
+		digitalWrite(LED1_PIN, HIGH);
+
 		printf("\n>>> Read operations for %dn bytes and file close %s succeeded. <<<\n\n", Total, fname_read);
+		delay(500);
 
-
-    res = f_open(&fil, "LENGTH.TXT", FA_CREATE_ALWAYS | FA_WRITE);
-		if (res != FR_OK)
-			printf("res = %d f_open LENGTH.TXT\n", res);
+		digitalWrite(LED1_PIN, LOW);
+    mSD.res = f_open(&mSD.fil, "LENGTH.TXT", FA_CREATE_ALWAYS | FA_WRITE);
+		if (mSD.res != FR_OK)
+			printf("res = %d f_open LENGTH.TXT\n", mSD.res);
+		digitalWrite(LED1_PIN, HIGH);
 	
-    if (res == FR_OK)
+    if (mSD.res == FR_OK)
     {
       UINT BytesWritten;
       char crlf[] = "\r\n";
       char *s = dec32(Total);
 
-      res = f_write(&fil, s, strlen(s), &BytesWritten);
+			digitalWrite(LED1_PIN, LOW);
 
-      res = f_write(&fil, crlf, strlen(crlf), &BytesWritten);
+      mSD.res = f_write(&mSD.fil, s, strlen(s), &BytesWritten);
 
-  		res = f_close(&fil); // LENGTH.TXT
+      mSD.res = f_write(&mSD.fil, crlf, strlen(crlf), &BytesWritten);
 
-  		if (res != FR_OK) {
-	  		printf("res = %d f_close LENGTH.TXT\n", res);
-				goto _error;
+  		mSD.res = f_close(&mSD.fil); // LENGTH.TXT
+
+			digitalWrite(LED1_PIN, HIGH);
+
+  		if (mSD.res != FR_OK) {
+	  		printf("res = %d f_close LENGTH.TXT\n", mSD.res);
+			  goto _error;
 			}		
 			printf("\n>>> Write operations file close LENGTH.TXT succeeded. <<<\n\n");
     }
-	}
 
-  res = f_open(&fil, "DIR.TXT", FA_CREATE_ALWAYS | FA_WRITE);
-
+	digitalWrite(LED1_PIN, LOW);
+  mSD.res = f_open(&mSD.fil, "DIR.TXT", FA_CREATE_ALWAYS | FA_WRITE);
 #ifdef DBG
-	if (res != FR_OK)
-		printf("res = %d f_open DIR.TXT\n", res);
+	if (mSD.res != FR_OK)
+		printf("res = %d f_open DIR.TXT\n", mSD.res);
 #endif
+	digitalWrite(LED1_PIN, HIGH);
 	
-  if (res == FR_OK)
+  if (mSD.res == FR_OK)
   {
     UINT BytesWritten;
 
-		path = "";
+		mSD.path = "";
 
-		res = f_opendir(&dir, path);
+		mSD.res = f_opendir(&mSD.dir, mSD.path);
 
 #ifdef DBG
-		if (res != FR_OK)
-			printf("res = %d f_opendir\n", res);
+		if (mSD.res != FR_OK)
+			printf("res = %d f_opendir\n", mSD.res);
 #endif
 	
-		if (res == FR_OK)
+		if (mSD.res == FR_OK)
 		{
 			while(1)
 			{
@@ -209,47 +228,47 @@ int main(void)
         char *s = str;
 				char *fn;
 
-				res = f_readdir(&dir, &fno);
+				mSD.res = f_readdir(&mSD.dir, &mSD.fno);
 
 #ifdef DBG
-				if (res != FR_OK)
-					printf("res = %d f_readdir\n", res);
+				if (mSD.res != FR_OK)
+					printf("res = %d f_readdir\n", mSD.res);
 #endif
 			
-				if ((res != FR_OK) || (fno.fname[0] == 0))
+				if ((mSD.res != FR_OK) || (mSD.fno.fname[0] == 0))
 					break;
 
 #if _USE_LFN
 				fn = *fno.lfname ? fno.lfname : fno.fname;
 #else
-				fn = fno.fname;
+				fn = mSD.fno.fname;
 #endif
 
 #ifdef DBG
 				printf("%c%c%c%c ",
-					((fno.fattrib & AM_DIR) ? 'D' : '-'),
-					((fno.fattrib & AM_RDO) ? 'R' : '-'),
-					((fno.fattrib & AM_SYS) ? 'S' : '-'),
-					((fno.fattrib & AM_HID) ? 'H' : '-') );
+					((mSD.fno.fattrib & AM_DIR) ? 'D' : '-'),
+					((mSD.fno.fattrib & AM_RDO) ? 'R' : '-'),
+					((mSD.fno.fattrib & AM_SYS) ? 'S' : '-'),
+					((mSD.fno.fattrib & AM_HID) ? 'H' : '-') );
 
-				printf("%10d ", fno.fsize);
+				printf("%10d ", mSD.fno.fsize);
 
-				printf("%s/%s\n", path, fn);
+				printf("%s/%s\n", mSD.path, fn);
 #endif
 				
-		  	*s++ = ((fno.fattrib & AM_DIR) ? 'D' : '-');
-				*s++ = ((fno.fattrib & AM_RDO) ? 'R' : '-');
-  			*s++ = ((fno.fattrib & AM_SYS) ? 'S' : '-');
-	  		*s++ = ((fno.fattrib & AM_HID) ? 'H' : '-');
+		  	*s++ = ((mSD.fno.fattrib & AM_DIR) ? 'D' : '-');
+				*s++ = ((mSD.fno.fattrib & AM_RDO) ? 'R' : '-');
+  			*s++ = ((mSD.fno.fattrib & AM_SYS) ? 'S' : '-');
+	  		*s++ = ((mSD.fno.fattrib & AM_HID) ? 'H' : '-');
 
         *s++ = ' ';
 
-        strcpy(s, dec32(fno.fsize));
+        strcpy(s, dec32(mSD.fno.fsize));
         s += strlen(s);
 
         *s++ = ' ';
 
-        strcpy(s, path);
+        strcpy(s, mSD.path);
         s += strlen(s);
 
         *s++ = '/';
@@ -261,15 +280,15 @@ int main(void)
         *s++ = 0x0A;
         *s++ = 0;
 
-        res = f_write(&fil, str, strlen(str), &BytesWritten);
+       mSD.res = f_write(&mSD.fil, str, strlen(str), &BytesWritten);
 			}
 		}
 
-  	res = f_close(&fil); // DIR.TXT
+  	mSD.res = f_close(&mSD.fil); // DIR.TXT
 
 #ifdef DBG		
- 		if (res != FR_OK)
-  		printf("res = %d f_close DIR.TXT\n", res);
+ 		if (mSD.res != FR_OK)
+  		printf("res = %d f_close DIR.TXT\n", mSD.res);
 #endif		
   }
 	

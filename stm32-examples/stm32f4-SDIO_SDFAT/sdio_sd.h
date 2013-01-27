@@ -37,7 +37,8 @@
 #define CARD_DETECT_DISABLE
 	 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4_discovery.h"
+//#include "stm32f4_discovery.h"
+#include <stm32f4xx.h>
 
 /** @addtogroup Utilities
   * @{
@@ -382,6 +383,7 @@ SD_Error SD_ProcessIRQSrc(void);
 void SD_ProcessDMAIRQ(void);
 SD_Error SD_WaitReadOperation(void);
 SD_Error SD_WaitWriteOperation(void);
+
 #ifdef __cplusplus
 }
 #endif
