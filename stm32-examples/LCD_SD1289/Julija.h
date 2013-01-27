@@ -1,7 +1,40 @@
-#include "Julija.h"
-#include "SSD1289.h"
+#define REAL_CONSTANT -0.35//0.285
+#define IMG_CONSTANT  0.61//0.01
+
+#define REAL_CONSTANT2 -0.4
+#define IMG_CONSTANT2  0.6
+
+#define REAL_CONSTANT3  -0.70176
+#define IMG_CONSTANT3   0.3842
+
+#define REAL_CONSTANT4  -0.835
+#define IMG_CONSTANT4    0.2321
+
+#define REAL_CONSTANT5 -0.8
+#define IMG_CONSTANT5   0.156
+
+#define REAL_CONSTANT6 -0.74543
+#define IMG_CONSTANT6   0.11301
+
+#define REAL_CONSTANT7 -0.75
+#define IMG_CONSTANT7  0.11
+
+#define REAL_CONSTANT8 -0.1
+#define IMG_CONSTANT8   0.651
+
+
+#define REAL_CONSTANT9 0.001643721971153
+#define IMG_CONSTANT9  0.822467633298876
 
 #define ITERATION    256
+
+
+
+
+
+typedef struct {
+    float x, y;
+} Complex; 
 
 Complex complexSquare(Complex c){
     Complex cSq;

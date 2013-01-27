@@ -1,4 +1,5 @@
 #include "stm32f4xx.h"
+
 #include "delay.h"
 #include "SSD1289.h"
 #include "touch_7846.h"
@@ -12,23 +13,14 @@ int xold,yold;
 
 int main(void)
 {
-  int i;
-	
-   Delay(0x3FFFFF);
+  Delay(0x3FFFFF);
   LCD_Init();
   Delay(0x3FFFFF);
   touch_init();
   LCD_Clear(BLACK);
-  LCD_SetTextColor(BLUE);
- 	
-  while(1)
-  {
-    Julia3(240,320,120,160,i);
-    i+=10;
-    if(i>1000)
-      i=0;
-  }
-	/*
+  //LCD_SetTextColor(BLUE);
+  
+  
 while(1)
  {
    Convert_Pos();
@@ -37,7 +29,4 @@ while(1)
   Pixel(Pen_Point.X0+1,Pen_Point.Y0,WHITE);
   Pixel(Pen_Point.X0+1,Pen_Point.Y0+1,WHITE);
  }
-	*/
 }
-
-
