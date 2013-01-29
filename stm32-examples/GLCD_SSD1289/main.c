@@ -25,7 +25,7 @@ int main(void)
 //	LCD_SetCursor(10, 10);
 	LCD_StringLine(10, 10, "This is a pen.");
   Delay(10000);
-	
+
   while(1)
   {
     Julia2(240,320,120,160,i);
@@ -33,15 +33,7 @@ int main(void)
     if(i>1000)
       i=0;
   }
-/*	while(1)
- {
-   Convert_Pos();
-  Pixel(Pen_Point.X0,Pen_Point.Y0,WHITE); 
-  Pixel(Pen_Point.X0,Pen_Point.Y0+1,WHITE);
-  Pixel(Pen_Point.X0+1,Pen_Point.Y0,WHITE);
-  Pixel(Pen_Point.X0+1,Pen_Point.Y0+1,WHITE);
- }
-	*/
+
 	/*
 	while(1) {
 		Convert_Pos();
