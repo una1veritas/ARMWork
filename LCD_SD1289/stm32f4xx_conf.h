@@ -23,6 +23,14 @@
 #ifndef __STM32F4xx_CONF_H
 #define __STM32F4xx_CONF_H
 
+#ifndef HSE_VALUE
+#if defined (OLIMEX_E407) 
+#define HSE_VALUE  12000000
+#elif defined (F4DISCOVERY)
+#define HSE_VALUE   8000000
+#endif
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 /* Uncomment the line below to enable peripheral header file inclusion */
 #include "stm32f4xx_adc.h"

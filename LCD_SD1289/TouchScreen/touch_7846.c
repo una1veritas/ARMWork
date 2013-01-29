@@ -71,7 +71,7 @@ u8 read_once(void)
  
 void NVIC_TOUCHConfiguration(void)
 {
-  /*
+  
 	NVIC_InitTypeDef NVIC_InitStructure;
     
 #ifdef  VECT_TAB_RAM  									   
@@ -85,7 +85,7 @@ void NVIC_TOUCHConfiguration(void)
   	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
   	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
   	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-  	NVIC_Init(&NVIC_InitStructure); 	*/								 
+  	NVIC_Init(&NVIC_InitStructure); 
 }
 
 void touch_init(void)
@@ -95,19 +95,21 @@ void touch_init(void)
   NVIC_InitTypeDef NVIC_InitStructure;
   EXTI_InitTypeDef EXTI_InitStructure;
  
-  RCC_AHB1PeriphClockCmd( RCC_AHB1Periph_GPIOB|RCC_AHB1Periph_GPIOD, ENABLE);
+  RCC_AHB1PeriphClockCmd( RCC_AHB1Periph_GPIOB|RCC_AHB1Periph_GPIOC|RCC_AHB1Periph_GPIOD, ENABLE);
   
   GPIO_InitStruct.GPIO_Mode=GPIO_Mode_AF;
   GPIO_InitStruct.GPIO_Speed=GPIO_Speed_25MHz;
   GPIO_InitStruct.GPIO_OType=GPIO_OType_PP;
   GPIO_InitStruct.GPIO_PuPd=GPIO_PuPd_UP;  
 
-  GPIO_InitStruct.GPIO_Pin=GPIO_Pin_15|GPIO_Pin_13|GPIO_Pin_14;			
+  GPIO_InitStruct.GPIO_Pin=GPIO_Pin_10;			
   GPIO_Init(GPIOB,&GPIO_InitStruct);			                      
+  GPIO_InitStruct.GPIO_Pin=GPIO_Pin_2|GPIO_Pin_3;			
+  GPIO_Init(GPIOC,&GPIO_InitStruct);			                      
    	  
-  GPIO_PinAFConfig(GPIOB, GPIO_PinSource13, GPIO_AF_SPI2);      //sclk	10	 13
-  GPIO_PinAFConfig(GPIOB, GPIO_PinSource14, GPIO_AF_SPI2);	//mýso	11	 14
-  GPIO_PinAFConfig(GPIOB, GPIO_PinSource15, GPIO_AF_SPI2);	//mosý	12	 15
+  GPIO_PinAFConfig(GPIOB, GPIO_PinSource10, GPIO_AF_SPI2);      //sclk	10	 13
+  GPIO_PinAFConfig(GPIOC, GPIO_PinSource2, GPIO_AF_SPI2);	//mýso	11	 14
+  GPIO_PinAFConfig(GPIOC, GPIO_PinSource3, GPIO_AF_SPI2);	//mosý	12	 15
   
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);	 
 												   

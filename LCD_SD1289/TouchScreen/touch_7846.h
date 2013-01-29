@@ -23,7 +23,7 @@ typedef struct
 }Pen_Holder;
 extern Pen_Holder Pen_Point;
 #define TOUCH_CS_PORT	 GPIOB
-#define TOUCH_CS_PIN	 GPIO_Pin_12
+#define TOUCH_CS_PIN	 GPIO_Pin_9 //12
 
 #define T_CS()   GPIO_ResetBits(TOUCH_CS_PORT, TOUCH_CS_PIN);
 #define T_DCS()  GPIO_SetBits(TOUCH_CS_PORT, TOUCH_CS_PIN);
@@ -52,21 +52,3 @@ void Touch_Adjust(void);
 #endif
 
 #endif 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
