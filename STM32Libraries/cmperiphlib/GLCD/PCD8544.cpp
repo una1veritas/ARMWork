@@ -50,7 +50,7 @@ void loop(void) {
   delay(1000);
 }
 */
-void Nokia5110::gotoXY(int x, int y) {
+void PCD8544::gotoXY(int x, int y) {
 	select();
   write(0, 0x80 | x);  // Column.
   write(0, 0x40 | y);  // Row.  ?
@@ -58,12 +58,12 @@ void Nokia5110::gotoXY(int x, int y) {
 	textcursor = x + y* 84 ;
 }
 
-void Nokia5110::cursor(int col) {
+void PCD8544::cursor(int col) {
 	textcursor = col;
 }
 
 //This takes a large array of bits and sends them to the LCD
-void Nokia5110::drawBitmap(const byte my_array[]){
+void PCD8544::drawBitmap(const byte my_array[]){
 	select();
   for (int index = 0 ; index < (LCD_X * LCD_Y / 8) ; index++)
     write(LCD_DATA, my_array[index]);
@@ -74,14 +74,14 @@ void Nokia5110::drawBitmap(const byte my_array[]){
 //And writes it to the screen
 //Each character is 8 bits tall and 5 bits wide. We pad one blank column of
 //pixels on each side of the character for readability.
-void Nokia5110::drawCharacter(const char ch) {
+void PCD8544::drawCharacter(const char ch) {
 	if ( fontid == CHICAGO10 )
 		drawProportionalFont(Chicago10x15, ch);
 	else
 		drawFixedFont(ascii8x5, ch);
 }
 
-void Nokia5110::drawFixedFont(const byte font[], char character) {
+void PCD8544::drawFixedFont(const byte font[], char character) {
 	uint16 width = font[0];
 //	uint16 height = font[1];
 	uint16 pixbytebase = 3;
@@ -101,7 +101,7 @@ void Nokia5110::drawFixedFont(const byte font[], char character) {
 //And writes it to the screen
 //Each character is 8 bits tall and 5 bits wide. We pad one blank column of
 //pixels on each side of the character for readability.
-void Nokia5110::drawProportionalFont(const byte font[], char character) {
+void PCD8544::drawProportionalFont(const byte font[], char character) {
 //	byte mxwidth = font[0];
 	byte height = font[1];
 //	byte proportional = font[2];
@@ -137,13 +137,13 @@ void Nokia5110::drawProportionalFont(const byte font[], char character) {
 }
 
 //Given a string of characters, one by one is passed to the LCD
-void Nokia5110::drawString(char *characters) {
+void PCD8544::drawString(char *characters) {
   while (*characters)
     drawCharacter(*characters++);
 }
 
 //Clears the LCD by writing zeros to the entire screen
-void Nokia5110::clear(void) {
+void PCD8544::clear(void) {
 	select();
   for (int index = 0 ; index < (LCD_X * LCD_Y / 8) ; index++)
     write(LCD_DATA, 0x00);
@@ -152,7 +152,7 @@ void Nokia5110::clear(void) {
 }
 
 //This sends the magical commands to the PCD8544
-void Nokia5110::init(void) {
+void PCD8544::init(void) {
 	
   //Configure control pins
   //pinMode(pin_SCE, OUTPUT);
@@ -179,13 +179,13 @@ void Nokia5110::init(void) {
 //There are two memory banks in the LCD, data/RAM and commands. This 
 //function sets the DC pin high or low depending, and then sends
 //the data byte
-void Nokia5110::write(byte data_or_command, byte data) {
+void PCD8544::write(byte data_or_command, byte data) {
 	//spi_setMode(SPIBx, 64, SPI_CPOL_High, SPI_CPHA_2Edge, SPI_MSBFIRST); // mode 3, msb first
 	
   digitalWrite(pin_DC, data_or_command); //Tell the LCD that we are writing either to data or a command
   //Send the data
   //digitalWrite(pin_SCE, LOW);
-	spibus->transfer(data);
+	spibus.transfer(data);
 //  shiftOut(PIN_SDIN, PIN_SCLK, SPI_MSBFIRST, data);
   //digitalWrite(pin_SCE, HIGH);
 }
@@ -193,7 +193,7 @@ void Nokia5110::write(byte data_or_command, byte data) {
 
 //This table contains the hex values that represent pixels
 //for a font that is 5 pixels wide and 8 pixels high
-const byte Nokia5110::ascii8x5[] = {
+const byte PCD8544::ascii8x5[] = {
 	 0x05, 0x08, 'F', // width, hright, proprtional
    0x00, 0x00, 0x00, 0x00, 0x00,  // 20  
    0x00, 0x00, 0x5f, 0x00, 0x00,  // 21 !
@@ -294,7 +294,7 @@ const byte Nokia5110::ascii8x5[] = {
 };
 
 //This is the SFE flame in bit form
-const byte Nokia5110::SFEFlame[] = {
+const byte PCD8544::SFEFlame[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
   0x00, 0x00, 0x00, 0xE0, 0xF0, 0xF8, 0xFC, 0xFC, 0xFE, 0xFE, 0xFE, 0xFE, 0x1E, 0x0E, 0x02, 0x00,
@@ -367,7 +367,7 @@ const byte Nokia5110::SFEFlameBubble [] = {
 };
 */
 
-const byte Nokia5110::Chicago10x15[] =	{
+const byte PCD8544::Chicago10x15[] =	{
 	0x0A, 0x0F, 'P', // maxwidth, height, proprtional
 	/* ' ' (20), width 06 from +2 byte */
 	0x04, 0x00, 0x00,  0x00, 0x00,  0x00, 0x00,  0x00, 0x00, // 0x00, 0x00,  0x00, 0x00,  

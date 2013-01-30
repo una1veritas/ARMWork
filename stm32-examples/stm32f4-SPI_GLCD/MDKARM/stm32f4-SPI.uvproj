@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>3</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -348,7 +348,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER, F4DISCOVERY</Define>
+              <Define>USE_STDPERIPH_DRIVER, F4DISCOVERY, STDSERIAL=6, HSE_VALUE=8000000</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\stm32f4-SPI_GLCD;..\..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\..\STM32Libraries\cmcore;..\..\..\STM32Libraries\cmperiphlib</IncludePath>
             </VariousControls>
@@ -447,11 +447,6 @@
               <FilePath>..\..\..\STM32Libraries\cmcore\cmcore.c</FilePath>
             </File>
             <File>
-              <FileName>i2cstruct.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\STM32Libraries\cmcore\i2cstruct.c</FilePath>
-            </File>
-            <File>
               <FileName>spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\STM32Libraries\cmcore\spi.c</FilePath>
@@ -470,6 +465,16 @@
               <FileName>spi.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\STM32Libraries\cmcore\spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>SPIBus.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\STM32Libraries\cmcore\SPIBus.h</FilePath>
+            </File>
+            <File>
+              <FileName>SPIBus.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\STM32Libraries\cmcore\SPIBus.cpp</FilePath>
             </File>
           </Files>
         </Group>
