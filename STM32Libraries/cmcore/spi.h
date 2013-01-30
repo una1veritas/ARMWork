@@ -11,9 +11,12 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+	
+#include <stdio.h>
+#include <stdint.h>
+#include "cmcore.h"
 
 #include <stm32f4xx_SPI.h>
-#include "cmcore.h"
 
 #define SPI_CLOCK_DIV2 SPI_BaudRatePrescaler_2
 #define SPI_CLOCK_DIV4 	SPI_BaudRatePrescaler_4

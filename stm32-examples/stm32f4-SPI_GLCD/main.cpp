@@ -15,7 +15,7 @@
 
 #include "stm32f4xx_it.h"
 
-#include "armcore.h"
+#include "cmcore.h"
 #include "gpio.h"
 #include "delay.h"
 
@@ -24,10 +24,10 @@
 
 #include "Boards/stm32f4_discovery.h"
 
-#include "GLCD/Nokia5110.h"
+#include "GLCD/PCD8544.h"
 
-USART Serial6;
-SPI SPI1Struct;
+usart Serial6;
+spi SPI1Struct;
 Nokia5110 nokiaLCD(&SPI1Struct, PA4, PA3, PA2);
 
 int main(void) {
@@ -47,10 +47,11 @@ int main(void) {
 			"This blessed plot, this earth, this realm, this England,";
 	const uint16 messlen = strlen(message);
 	
-	TIM2_timer_start();
-	usart_init(&Serial6, USART6, PC7, PC6, 57600);
+	TIM2_delay_start();
+	usart_init(&Serial6, USART6, PC7, PC6);
 	spi_init(&SPI1Struct, SPI1, PA5, PA6, PA7, PA4); //  PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
 	
+	usart_begin(&Serial6, 57600);
 	usart_print(&Serial6, "Basic initialization has been finished.\n");
 	
 	nokiaLCD.init();

@@ -15,7 +15,7 @@
 #include <stdint.h>
 //#include <Arduino.h>
 //#include <avr/pgmspace.h>
-#include "armcore.h"
+#include "cmcore.h"
 
 #include "spi.h"
 

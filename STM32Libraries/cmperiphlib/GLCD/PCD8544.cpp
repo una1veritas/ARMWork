@@ -25,7 +25,7 @@
 */
 #include <ctype.h>
 
-#include "Nokia5110.h"
+#include "PCD8544.h"
 
 /*
 void setup(void) {

@@ -16,9 +16,6 @@ extern "C" {
 #endif
 
 #include "binary.h"
-#include "gpio.h"
-#include "delay.h"
-#include "usart.h"
 
 #define HEX 16
 #define DEC 10
@@ -58,6 +55,11 @@ typedef uint8_t boolean;
 #define UINT8(x)  ((uint8_t)(x))
 #define UINT16(x)  ((uint16_t)(x))
 #define HIGHLOW(x, y)  (((uint16_t)(x))<< 8 | y)
+
+#include "gpio.h"
+#include "delay.h"
+#include "usart.h"
+#include "spi.h"
 
 void cmcore_init(void);
 //size_t strlen(const char * s);

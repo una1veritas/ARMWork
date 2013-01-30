@@ -1,4 +1,4 @@
-#include "Nokia5110.h"
+#include "PCD8544.h"
 
 //This table contains the hex values that represent pixels
 //for a font that is 5 pixels wide and 8 pixels high
