@@ -160,7 +160,9 @@ void PCD8544::init(void) {
   pinMode(pin_DC, OUTPUT);
   //pinMode(pin_SDIN, OUTPUT);
   //pinMode(pin_SCLK, OUTPUT);
-
+	digitalWrite(pin_RESET, HIGH);
+	delay(5);
+	
   //Reset the LCD to a known state
   digitalWrite(pin_RESET, LOW);
   digitalWrite(pin_RESET, HIGH);

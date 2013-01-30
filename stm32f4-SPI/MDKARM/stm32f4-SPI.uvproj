@@ -348,7 +348,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER</Define>
+              <Define>USE_STDPERIPH_DRIVER, F4DISCOVERY, HSE_VALUE=8000000</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\stm32f4-SPI;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmperiphlib</IncludePath>
             </VariousControls>
@@ -502,11 +502,6 @@
               <FilePath>..\..\STM32Libraries\cmcore\usart.h</FilePath>
             </File>
             <File>
-              <FileName>armcore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\armcore.h</FilePath>
-            </File>
-            <File>
               <FileName>SPIBus.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\SPIBus.h</FilePath>
@@ -517,9 +512,9 @@
               <FilePath>..\..\STM32Libraries\cmcore\SPIBus.cpp</FilePath>
             </File>
             <File>
-              <FileName>armcore.c</FileName>
+              <FileName>cmcore.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\armcore.c</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\cmcore.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -527,14 +522,14 @@
           <GroupName>cmperiphlib</GroupName>
           <Files>
             <File>
-              <FileName>Nokia5110.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\Nokia5110.cpp</FilePath>
+              <FileName>PCD8544.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\PCD8544.h</FilePath>
             </File>
             <File>
-              <FileName>Nokia5110.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\Nokia5110.h</FilePath>
+              <FileName>PCD8544.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\PCD8544.cpp</FilePath>
             </File>
           </Files>
         </Group>

@@ -16,19 +16,14 @@
 #include "stm32f4xx_it.h"
 
 #include "cmcore.h"
-#include "gpio.h"
-#include "delay.h"
-
-#include "usart.h"
-#include "spi.h"
-
+#include "SPIBus.h"
 #include "Boards/stm32f4_discovery.h"
-
 #include "GLCD/PCD8544.h"
 
-SPIBus SPI2Bus(SPI2, PB10, PC2, PC3, PB9);
+SPIBus SPI2Bus(SPI2, PB13, PB14, PB15, PB12);
+//	//spi_init(SPI1Bus, SPI1, PA5, PA6, PA7, PA4); //  PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
 
-PCD8544 nokiaLCD(SPI2Bus, PB9, PC1, PC0);
+PCD8544 nokiaLCD(SPI2Bus, PB12, PD8, PD9);
 
 int main(void) {
 	char tmp[256];
@@ -55,9 +50,9 @@ int main(void) {
 	RCC_ClocksTypeDef RCC_Clocks;
 	RCC_GetClocksFreq(&RCC_Clocks);
 	
-	usart_print(&stdserial, message);
-	usart_print(&stdserial, "\r\n\r\n");
-	usart_flush(&stdserial);
+	//usart_print(&stdserial, message);
+	//usart_print(&stdserial, "\r\n\r\n");
+	//usart_flush(&stdserial);
 
 	sprintf(tmp, "Clock frequencies: SYSCLK = %dl, HCLK = %dl, PCLK1 = %dl\r\n", 
 		RCC_Clocks.SYSCLK_Frequency, RCC_Clocks.HCLK_Frequency, RCC_Clocks.PCLK1_Frequency);
