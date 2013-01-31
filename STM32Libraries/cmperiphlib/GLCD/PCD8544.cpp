@@ -137,7 +137,7 @@ void PCD8544::drawProportionalFont(const byte font[], char character) {
 }
 
 //Given a string of characters, one by one is passed to the LCD
-void PCD8544::drawString(char *characters) {
+void PCD8544::drawString(const char *characters) {
   while (*characters)
     drawCharacter(*characters++);
 }
@@ -169,7 +169,7 @@ void PCD8544::init(void) {
 
 	select();
   write(LCD_COMMAND, 0x21); //Tell LCD that extended commands follow
-  write(LCD_COMMAND, 0xBC); //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
+  write(LCD_COMMAND, 0xB1); //Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark
   write(LCD_COMMAND, 0x04); //Set Temp coefficent
   write(LCD_COMMAND, 0x14); //LCD bias mode 1:48: Try 0x13 or 0x14
 
@@ -187,7 +187,7 @@ void PCD8544::write(byte data_or_command, byte data) {
   digitalWrite(pin_DC, data_or_command); //Tell the LCD that we are writing either to data or a command
   //Send the data
   //digitalWrite(pin_SCE, LOW);
-	spibus.transfer(data);
+	spi_transfer(&spibus,data);
 //  shiftOut(PIN_SDIN, PIN_SCLK, SPI_MSBFIRST, data);
   //digitalWrite(pin_SCE, HIGH);
 }
