@@ -43,8 +43,7 @@ extern "C" {
 
 typedef struct {
 	SPI_TypeDef * SPIx;
-//	GPIOPin sck, mosi, miso, defaultcs;
-	GPIOPin nsspin;
+	GPIOPin sckpin, mosipin, misopin, nsspin;
 	SPI_InitTypeDef modedef;
 //	uint8 xbuf[256];
 //	uint16 xindex;

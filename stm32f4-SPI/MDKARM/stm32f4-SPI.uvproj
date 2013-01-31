@@ -491,6 +491,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>libraries</GroupName>
+          <Files>
             <File>
               <FileName>PCD8544.cpp</FileName>
               <FileType>8</FileType>
@@ -500,6 +505,11 @@
               <FileName>PCD8544.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\PCD8544.h</FilePath>
+            </File>
+            <File>
+              <FileName>fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\fonts.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -17,7 +17,7 @@ class PCD8544 {
 	GPIOPin pin_SCLK;  //  3 //Pin 7 on LCD, SCK
 	
 	uint16 textcursor; // bit column position
-	uint8 fontid;
+	uint8 * font;
 	
 	//The DC pin tells the LCD if we are sending a command or data
 	static const byte LCD_COMMAND = 0; 
@@ -42,19 +42,12 @@ public:
 		pin_DC = dc;
 		pin_RESET = rst;
 		textcursor = 0;
-		fontid = FIXED8x5;
+		font = NULL;
 	}
-
-	enum {
-		FIXED8x5,
-		CHICAGO10
-	};
 	
 	static const byte SFEFlame[];
 //	static const byte SFEFlameBubble [];
 //	static const byte awesome[];
-	static const byte ascii8x5[];
-	static const byte Chicago10x15[];
 	
 	//
 	void gotoXY(int x, int y);
@@ -63,11 +56,13 @@ public:
 	void drawString(const char *characters);
 	void clear(void);
 	void init(void);
+
+	void setContrast(const uint8 val);
 	void begin(void) { init(); }
 	void write(byte data_or_command, byte data);
 	
 	void cursor(int col);
-	void selectFont(uint8 id) { fontid = id; }
+	void setFont(const uint8 f[]) { font = (uint8 *) f; }
 	void drawFixedFont(const byte font[], char c);
 	void drawProportionalFont(const byte font[], char c);
 //	void drawFontString(const byte font[], const byte hight, char *characters);

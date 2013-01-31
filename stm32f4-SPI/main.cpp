@@ -20,11 +20,12 @@
 #include "spi.h"
 #include "Boards/stm32f4_discovery.h"
 #include "GLCD/PCD8544.h"
+#include "GLCD/fonts.h"
 
-spi spi2bus;//(SPI2, PB13, PB14, PB15, PB12);
-//	//spi_init(SPI1Bus, SPI1, PA5, PA6, PA7, PA4); //  PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
+spi spi2bus = {SPI2, PB10, PC2, PC3, PB9};
+//spi_init(SPI1Bus, SPI1, PA5, PA6, PA7, PA4); //  PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
 
-PCD8544 nokiaLCD(spi2bus, PB12, PD8, PD9);
+PCD8544 nokiaLCD(spi2bus, PB9, PD13, PD12);
 
 int main(void) {
 	char tmp[256];
@@ -56,23 +57,21 @@ int main(void) {
 	//usart_flush(&stdserial);
 
 	sprintf(tmp, "Clock frequencies: SYSCLK = %dl, HCLK = %dl, PCLK1 = %dl\r\n", 
-		RCC_Clocks.SYSCLK_Frequency, RCC_Clocks.HCLK_Frequency, RCC_Clocks.PCLK1_Frequency);
+	RCC_Clocks.SYSCLK_Frequency, RCC_Clocks.HCLK_Frequency, RCC_Clocks.PCLK1_Frequency);
 	usart_print(&stdserial, tmp); 
 
-	spi_init(&spi2bus, SPI2, PB13, PB14, PB15, PB12);
+	spi_init(&spi2bus, SPI2, PB10, PC2, PC3, PB9);
 	spi_begin(&spi2bus);
 	//spi_init(SPI1Bus, SPI1, PA5, PA6, PA7, PA4); //  PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
 	nokiaLCD.init();	
-
-	GPIOMode(PinPort(LED1), (PinBit(LED1) | PinBit(LED2) | PinBit(LED3) | PinBit(LED4)), 
-					OUTPUT, FASTSPEED, PUSHPULL, NOPULL);
-					
-		nokiaLCD.clear();
-		nokiaLCD.drawBitmap(PCD8544::SFEFlame);
-		delay(1000);
+	nokiaLCD.setContrast(0xb5);
+	
+	nokiaLCD.clear();
+	nokiaLCD.drawBitmap(PCD8544::SFEFlame);
+	delay(1000);
 		
 	uint16 shift = 0;
-	nokiaLCD.selectFont(PCD8544::CHICAGO10);
+	nokiaLCD.setFont(Fixed_12x8);
 	
 	while (1) {
 		nokiaLCD.clear();
