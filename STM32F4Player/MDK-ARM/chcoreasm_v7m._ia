@@ -1,0 +1,5 @@
+--cpu Cortex-M4.fp -g --apcs=interwork 
+-I C:\Keil\ARM\RV31\INC 
+-I C:\Users\Sin\Documents\ARMWork\STM32Libraries\CMSIS\Include 
+-I C:\Keil\ARM\Inc\ST\STM32F4xx 
+--list ".\chcoreasm_v7m.lst" --xref -o ".\chcoreasm_v7m.o" --depend ".\chcoreasm_v7m.d" "..\..\ChibiOS_2.4.3\os\ports\RVCT\ARMCMx\chcoreasm_v7m.s"
