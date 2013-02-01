@@ -8,10 +8,9 @@
 #ifndef _I2CSTRUCT_H_
 #define _I2CSTRUCT_H_
 
-#include "armcore.h"
+#include "cmcore.h"
 #include <stm32f4xx_i2c.h>
 
-#include "armcore.h"
 
 #ifdef __cplusplus
 extern "C" {

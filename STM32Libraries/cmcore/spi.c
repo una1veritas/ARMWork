@@ -115,7 +115,7 @@ void spi_init(spi * spiport, SPI_TypeDef * SPIx,
 //	spiport->sck = sck;
 //	spiport->miso = miso;
 //	spiport->mosi = mosi;
-//	spiport->defaultcs = nss;
+	spiport->nsspin = nss;
 	/* PCLK2 = HCLK/2 */
 	//RCC_PCLK2Config(RCC_HCLK_Div2);
 	if ( SPIx == SPI2 ) {
@@ -147,10 +147,16 @@ void spi_init(spi * spiport, SPI_TypeDef * SPIx,
 	// nSS by software
 	GPIOMode(PinPort(nss), PinBit(nss), GPIO_Mode_OUT, GPIO_Speed_50MHz,
 			GPIO_OType_PP, GPIO_PuPd_UP);
-	digitalWrite(nss, HIGH);
 	//GPIO_PinAFConfig(PinPort(nss), PinSource(nss), af);
+	
+	// setup has completed
+}
 
-	// set default parameters
+void spi_begin(spi * spiport) {
+	
+	digitalWrite(spiport->nsspin, HIGH);
+	
+	// set default mode
 	spiport->modedef.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
 	spiport->modedef.SPI_Mode = SPI_Mode_Master;
 	spiport->modedef.SPI_DataSize = SPI_DataSize_8b;

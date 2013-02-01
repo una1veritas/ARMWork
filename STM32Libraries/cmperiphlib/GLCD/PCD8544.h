@@ -1,21 +1,23 @@
-#ifndef _NOKIA5110_H_
-#define _NOKIA5110_H_
+#ifndef _PCD8544_H_
+#define _PCD8544_H_
 
 #include <stm32f4xx.h>
-#include "armcore.h"
-#include "SPIBus.h"
+#include <stm32f4xx_spi.h>
 
-class Nokia5110 {
+#include "cmcore.h"
+#include "spi.h"
+
+class PCD8544 {
+	spi & spibus;
 	GPIOPin pin_SCE;   // 7 //Pin 3 on LCD, ~CS
 	GPIOPin pin_RESET; // 6 //Pin 4 on LCD, initiate reset
 	GPIOPin pin_DC;    //5 //Pin 5 on LCD, Data/Command
 	GPIOPin pin_SDO;  //  4 //Pin 6 on LCD, MOSI
 	GPIOPin pin_SDIN;  //  4 //Pin 6 on LCD, MOSI
 	GPIOPin pin_SCLK;  //  3 //Pin 7 on LCD, SCK
-
-	SPIBus * spibus;
+	
 	uint16 textcursor; // bit column position
-	uint8 fontid;
+	uint8 * font;
 	
 	//The DC pin tells the LCD if we are sending a command or data
 	static const byte LCD_COMMAND = 0; 
@@ -26,7 +28,7 @@ class Nokia5110 {
 	static const uint16 LCD_Y = 48;
 
 	inline void select() {
-		spibus->setMode(SPI_BaudRatePrescaler_64, SPI_CPOL_High, SPI_CPHA_High, SPI_MSB_FIRST); // mode 3, msb first
+		spi_setMode(&spibus, SPI_BaudRatePrescaler_32, SPI_CPOL_High, SPI_CPHA_2Edge, SPI_FirstBit_MSB); // mode 3, msb first
 		digitalWrite(pin_SCE, LOW);
 	}
 	
@@ -35,38 +37,32 @@ class Nokia5110 {
 	}
 	
 public:
-	Nokia5110(SPIBus * spix, GPIOPin sce, GPIOPin dc, GPIOPin rst) {
-		spibus = spix;
+	PCD8544(spi & bus, GPIOPin sce, GPIOPin dc, GPIOPin rst) : spibus(bus) {
 		pin_SCE = sce;   // 7 //Pin 3 on LCD, ~CS
 		pin_DC = dc;
 		pin_RESET = rst;
 		textcursor = 0;
-		fontid = FIXED8x5;
+		font = NULL;
 	}
-
-	enum {
-		FIXED8x5,
-		CHICAGO10
-	};
 	
 	static const byte SFEFlame[];
 //	static const byte SFEFlameBubble [];
 //	static const byte awesome[];
-	static const byte ascii8x5[];
-	static const byte Chicago10x15[];
 	
 	//
 	void gotoXY(int x, int y);
 	void drawBitmap(const byte my_array[]);
-	void drawCharacter(char character);
-	void drawString(char *characters);
+	void drawCharacter(const char character);
+	void drawString(const char *characters);
 	void clear(void);
 	void init(void);
+
+	void setContrast(const uint8 val);
 	void begin(void) { init(); }
 	void write(byte data_or_command, byte data);
 	
 	void cursor(int col);
-	void selectFont(uint8 id) { fontid = id; }
+	void setFont(const uint8 f[]) { font = (uint8 *) f; }
 	void drawFixedFont(const byte font[], char c);
 	void drawProportionalFont(const byte font[], char c);
 //	void drawFontString(const byte font[], const byte hight, char *characters);

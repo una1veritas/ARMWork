@@ -13,7 +13,6 @@
 //#include <misc.h>
 
 #include "cmcore.h"
-#include "usart.h"
 
 enum {
 	USART1Serial = 0,

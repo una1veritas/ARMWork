@@ -11,9 +11,12 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+	
+#include <stdio.h>
+#include <stdint.h>
+#include "cmcore.h"
 
 #include <stm32f4xx_SPI.h>
-#include "cmcore.h"
 
 #define SPI_CLOCK_DIV2 SPI_BaudRatePrescaler_2
 #define SPI_CLOCK_DIV4 	SPI_BaudRatePrescaler_4
@@ -40,13 +43,14 @@ extern "C" {
 
 typedef struct {
 	SPI_TypeDef * SPIx;
-//	GPIOPin sck, mosi, miso, defaultcs;
+	GPIOPin sckpin, mosipin, misopin, nsspin;
 	SPI_InitTypeDef modedef;
 //	uint8 xbuf[256];
 //	uint16 xindex;
 } spi;
 
 void spi_init(spi * spiport, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss);
+void spi_begin(spi * spiport);
 void spi_disable(spi *);
 uint16 spi_transfer(spi * spiport, uint16 data);
 void spi_setDataMode(spi * spiport, uint16 id);
