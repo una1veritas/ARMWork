@@ -3,47 +3,20 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\Users\Sin\Documents\github\ARMWork\stm32f4-usart\Keil\stm32f4-usart.uvproj
-Project File Date:  01/06/2013
+C:\Users\Sin\Documents\ARMWork\stm32f4-usart\Keil\stm32f4-usart.uvproj
+Project File Date:  01/27/2013
 
 <h2>Output:</h2>
 Build target 'Target 1'
-linking...
-Program Size: Code=14340 RO-data=424 RW-data=176 ZI-data=4800  
-"stm32f4-usart.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=14340 RO-data=424 RW-data=176 ZI-data=4800  
-"stm32f4-usart.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-usart\\Keil\\stm32f4-usart.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-linking...
-Program Size: Code=14340 RO-data=424 RW-data=176 ZI-data=4800  
-"stm32f4-usart.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-usart\\Keil\\stm32f4-usart.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
+assembling startup_stm32f4xx.s...
+compiling i2c.c...
+..\i2c.c(8): error:  #5: cannot open source input file "stm32f4xx_rcc.h": No such file or directory
 compiling main.c...
-linking...
-Program Size: Code=14340 RO-data=424 RW-data=176 ZI-data=4800  
-"stm32f4-usart.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=14340 RO-data=424 RW-data=176 ZI-data=4800  
-"stm32f4-usart.axf" - 0 Error(s), 0 Warning(s).
-Load "C:\\Users\\Sin\\Documents\\github\\ARMWork\\stm32f4-usart\\Keil\\stm32f4-usart.AXF" 
-Erase Done.
-Programming Done.
-Verify OK.
-Application running ...
-Build target 'Target 1'
-linking...
-Program Size: Code=14340 RO-data=424 RW-data=176 ZI-data=4800  
-"stm32f4-usart.axf" - 0 Error(s), 0 Warning(s).
+..\..\stm32f4-usart\stm32f4xx_conf.h(34): error:  #5: cannot open source input file "stm32f4xx_adc.h": No such file or directory
+compiling stm32f4xx_it.c...
+..\..\stm32f4-usart\stm32f4xx_conf.h(34): error:  #5: cannot open source input file "stm32f4xx_adc.h": No such file or directory
+compiling system_stm32f4xx.c...
+..\..\stm32f4-usart\stm32f4xx_conf.h(34): error:  #5: cannot open source input file "stm32f4xx_adc.h": No such file or directory
+compiling usart.c...
+usart.c: Error:  #5: cannot open source input file "..\..\stm32library\armcore\usart.c": No such file or directory
+Target not created

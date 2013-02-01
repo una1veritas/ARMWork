@@ -50,7 +50,7 @@ void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode) {
 void digitalWrite(GPIOPin portpin, uint8_t bit) {
 	GPIO_InitTypeDef GPIO_InitStructure;
 	GPIO_TypeDef * port = Port[portpin>>8 & 0x0f];
-	uint8_t mode = (port->MODER) >> (PinSource(portpin) * 2);
+	uint8_t mode = (port->MODER) >> (PinSource(portpin) * 2) & 0x03;
 	if (mode == GPIO_Mode_OUT) {
 		if (bit) {
 		//? Bit_SET : Bit_RESET ));

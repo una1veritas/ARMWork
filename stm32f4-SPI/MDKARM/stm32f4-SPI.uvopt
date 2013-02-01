@@ -76,23 +76,6 @@
         <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
       <CpuCode>255</CpuCode>
-      <Books>
-        <Book>
-          <Number>0</Number>
-          <Title>Reference Manual</Title>
-          <Path>DATASHTS\ST\STM32F4xx.PDF</Path>
-        </Book>
-        <Book>
-          <Number>1</Number>
-          <Title>Technical Reference Manual</Title>
-          <Path>datashts\arm\cortex_m4\r0p1\DDI0439C_CORTEX_M4_R0P1_TRM.PDF</Path>
-        </Book>
-        <Book>
-          <Number>2</Number>
-          <Title>Generic User Guide</Title>
-          <Path>datashts\arm\cortex_m4\r0p1\DUI0553A_CORTEX_M4_DGUG.PDF</Path>
-        </Book>
-      </Books>
       <DllOpt>
         <SimDllName>SARMCM3.DLL</SimDllName>
         <SimDllArguments>-MPU -REMAP</SimDllArguments>
@@ -155,82 +138,13 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>ST-LINKIII-KEIL_SWO</Key>
-          <Name>-U-O206 -O206 -S3 -C0 -N00("ARM CoreSight SW-DP") -D00(2BA01477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8004 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC800 -FN1 -FF0STM32F4xx_1024 -FS08000000 -FL0100000</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>UL2CM3</Key>
-          <Name>-O207 -S0 -C0 -FO7 -FD20000000 -FC800 -FN1 -FF0STM32F4xx_1024 -FS08000000 -FL0100000)</Name>
+          <Name>-U-O206 -O206 -S3 -C0 -N00("ARM CoreSight SW-DP") -D00(2BA01477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC800 -FN1 -FF0STM32F4xx_1024 -FS08000000 -FL0100000</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint>
-        <Bp>
-          <Number>0</Number>
-          <Type>0</Type>
-          <LineNumber>53</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>C:\Users\Sin\Documents\ARMWork\stm32f4-SPI\main.cpp</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-      </Breakpoint>
-      <WatchWindow1>
-        <Ww>
-          <count>0</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>spiport</ItemText>
-        </Ww>
-        <Ww>
-          <count>1</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>spiport</ItemText>
-        </Ww>
-        <Ww>
-          <count>2</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>proportional</ItemText>
-        </Ww>
-        <Ww>
-          <count>3</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>percolbytes</ItemText>
-        </Ww>
-        <Ww>
-          <count>4</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>idx</ItemText>
-        </Ww>
-        <Ww>
-          <count>5</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>ch</ItemText>
-        </Ww>
-        <Ww>
-          <count>6</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>fontwidth</ItemText>
-        </Ww>
-        <Ww>
-          <count>7</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Chicago10x15</ItemText>
-        </Ww>
-        <Ww>
-          <count>8</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>character</ItemText>
-        </Ww>
-      </WatchWindow1>
+      <Breakpoint/>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>1</periodic>
+        <periodic>0</periodic>
         <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
@@ -259,6 +173,20 @@
       </Tracepoint>
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
+      <SystemViewers>
+        <Entry>
+          <Name>System Viewer\GPIOB</Name>
+          <WinId>35904</WinId>
+        </Entry>
+        <Entry>
+          <Name>System Viewer\GPIOC</Name>
+          <WinId>35905</WinId>
+        </Entry>
+        <Entry>
+          <Name>System Viewer\SPI2</Name>
+          <WinId>35903</WinId>
+        </Entry>
+      </SystemViewers>
     </TargetOption>
   </Target>
 
@@ -276,7 +204,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>167</TopLine>
+      <TopLine>166</TopLine>
       <CurrentLine>175</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\startup_stm32f4xx.s</PathWithFileName>
@@ -290,10 +218,10 @@
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>2</ColumnNumber>
+      <ColumnNumber>29</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>45</TopLine>
-      <CurrentLine>56</CurrentLine>
+      <TopLine>51</TopLine>
+      <CurrentLine>74</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\main.cpp</PathWithFileName>
       <FilenameWithoutPath>main.cpp</FilenameWithoutPath>
@@ -351,29 +279,21 @@
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>6</FileNumber>
-      <FileType>1</FileType>
+      <FileType>5</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>20</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\system_stm32f4xx.c</PathWithFileName>
-      <FilenameWithoutPath>system_stm32f4xx.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\STM32Libraries\cmcore\Boards\stm32f4_discovery.h</PathWithFileName>
+      <FilenameWithoutPath>stm32f4_discovery.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
-  </Group>
-
-  <Group>
-    <GroupName>StdPeriph_Driver</GroupName>
-    <tvExp>1</tvExp>
-    <tvExpOptDlg>0</tvExpOptDlg>
-    <cbSel>0</cbSel>
-    <RteFlg>0</RteFlg>
     <File>
-      <GroupNumber>2</GroupNumber>
+      <GroupNumber>1</GroupNumber>
       <FileNumber>7</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
@@ -383,11 +303,19 @@
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c</PathWithFileName>
-      <FilenameWithoutPath>misc.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\STM32Libraries\cmcore\Boards\system_stm32f4xx.c</PathWithFileName>
+      <FilenameWithoutPath>system_stm32f4xx.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
+  </Group>
+
+  <Group>
+    <GroupName>cmcore</GroupName>
+    <tvExp>1</tvExp>
+    <tvExpOptDlg>0</tvExpOptDlg>
+    <cbSel>0</cbSel>
+    <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>2</GroupNumber>
       <FileNumber>8</FileNumber>
@@ -399,8 +327,8 @@
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</PathWithFileName>
-      <FilenameWithoutPath>stm32f4xx_gpio.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\STM32Libraries\cmcore\cmcore.c</PathWithFileName>
+      <FilenameWithoutPath>cmcore.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -412,11 +340,11 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>54</TopLine>
+      <CurrentLine>86</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c</PathWithFileName>
-      <FilenameWithoutPath>stm32f4xx_rcc.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\STM32Libraries\cmcore\delay.c</PathWithFileName>
+      <FilenameWithoutPath>delay.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -431,8 +359,8 @@
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_i2c.c</PathWithFileName>
-      <FilenameWithoutPath>stm32f4xx_i2c.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\STM32Libraries\cmcore\gpio.c</PathWithFileName>
+      <FilenameWithoutPath>gpio.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -444,11 +372,11 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>281</TopLine>
-      <CurrentLine>1</CurrentLine>
+      <TopLine>237</TopLine>
+      <CurrentLine>286</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_spi.c</PathWithFileName>
-      <FilenameWithoutPath>stm32f4xx_spi.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\STM32Libraries\cmcore\spi.c</PathWithFileName>
+      <FilenameWithoutPath>spi.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -463,14 +391,86 @@
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rtc.c</PathWithFileName>
-      <FilenameWithoutPath>stm32f4xx_rtc.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\STM32Libraries\cmcore\usart.c</PathWithFileName>
+      <FilenameWithoutPath>usart.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+  </Group>
+
+  <Group>
+    <GroupName>stdperiph</GroupName>
+    <tvExp>1</tvExp>
+    <tvExpOptDlg>0</tvExpOptDlg>
+    <cbSel>0</cbSel>
+    <RteFlg>0</RteFlg>
+    <File>
+      <GroupNumber>3</GroupNumber>
+      <FileNumber>13</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\misc.c</PathWithFileName>
+      <FilenameWithoutPath>misc.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>13</FileNumber>
+      <GroupNumber>3</GroupNumber>
+      <FileNumber>14</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_gpio.c</PathWithFileName>
+      <FilenameWithoutPath>stm32f4xx_gpio.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>3</GroupNumber>
+      <FileNumber>15</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_rcc.c</PathWithFileName>
+      <FilenameWithoutPath>stm32f4xx_rcc.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>3</GroupNumber>
+      <FileNumber>16</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>0</TopLine>
+      <CurrentLine>0</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_spi.c</PathWithFileName>
+      <FilenameWithoutPath>stm32f4xx_spi.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>3</GroupNumber>
+      <FileNumber>17</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -485,8 +485,8 @@
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>14</FileNumber>
+      <GroupNumber>3</GroupNumber>
+      <FileNumber>18</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
@@ -503,93 +503,29 @@
   </Group>
 
   <Group>
-    <GroupName>cmcore</GroupName>
-    <tvExp>0</tvExp>
+    <GroupName>libraries</GroupName>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
     <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>15</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>66</TopLine>
-      <CurrentLine>67</CurrentLine>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\cmcore\delay.c</PathWithFileName>
-      <FilenameWithoutPath>delay.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>16</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <ColumnNumber>48</ColumnNumber>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>20</TopLine>
-      <CurrentLine>44</CurrentLine>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\cmcore\gpio.c</PathWithFileName>
-      <FilenameWithoutPath>gpio.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>17</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <ColumnNumber>29</ColumnNumber>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>2</CurrentLine>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\cmcore\spi.c</PathWithFileName>
-      <FilenameWithoutPath>spi.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>18</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>159</TopLine>
-      <CurrentLine>1</CurrentLine>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\cmcore\usart.c</PathWithFileName>
-      <FilenameWithoutPath>usart.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
+      <GroupNumber>4</GroupNumber>
       <FileNumber>19</FileNumber>
-      <FileType>5</FileType>
+      <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>24</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
+      <TopLine>73</TopLine>
+      <CurrentLine>92</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\cmcore\spi.h</PathWithFileName>
-      <FilenameWithoutPath>spi.h</FilenameWithoutPath>
+      <PathWithFileName>..\..\STM32Libraries\cmperiphlib\GLCD\PCD8544.cpp</PathWithFileName>
+      <FilenameWithoutPath>PCD8544.cpp</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>3</GroupNumber>
+      <GroupNumber>4</GroupNumber>
       <FileNumber>20</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
@@ -599,112 +535,24 @@
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\cmcore\usart.h</PathWithFileName>
-      <FilenameWithoutPath>usart.h</FilenameWithoutPath>
+      <PathWithFileName>..\..\STM32Libraries\cmperiphlib\GLCD\PCD8544.h</PathWithFileName>
+      <FilenameWithoutPath>PCD8544.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>3</GroupNumber>
+      <GroupNumber>4</GroupNumber>
       <FileNumber>21</FileNumber>
-      <FileType>5</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\cmcore\armcore.h</PathWithFileName>
-      <FilenameWithoutPath>armcore.h</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>22</FileNumber>
-      <FileType>5</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\cmcore\SPIBus.h</PathWithFileName>
-      <FilenameWithoutPath>SPIBus.h</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>23</FileNumber>
-      <FileType>8</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>19</CurrentLine>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\cmcore\SPIBus.cpp</PathWithFileName>
-      <FilenameWithoutPath>SPIBus.cpp</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>24</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>6</ColumnNumber>
+      <ColumnNumber>12</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>9</CurrentLine>
+      <TopLine>290</TopLine>
+      <CurrentLine>302</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\cmcore\armcore.c</PathWithFileName>
-      <FilenameWithoutPath>armcore.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-  </Group>
-
-  <Group>
-    <GroupName>cmperiphlib</GroupName>
-    <tvExp>1</tvExp>
-    <tvExpOptDlg>0</tvExpOptDlg>
-    <cbSel>0</cbSel>
-    <RteFlg>0</RteFlg>
-    <File>
-      <GroupNumber>4</GroupNumber>
-      <FileNumber>25</FileNumber>
-      <FileType>8</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>171</TopLine>
-      <CurrentLine>172</CurrentLine>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\cmperiphlib\GLCD\Nokia5110.cpp</PathWithFileName>
-      <FilenameWithoutPath>Nokia5110.cpp</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>4</GroupNumber>
-      <FileNumber>26</FileNumber>
-      <FileType>5</FileType>
-      <tvExp>0</tvExp>
-      <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\STM32Libraries\cmperiphlib\GLCD\Nokia5110.h</PathWithFileName>
-      <FilenameWithoutPath>Nokia5110.h</FilenameWithoutPath>
+      <PathWithFileName>..\..\STM32Libraries\cmperiphlib\GLCD\fonts.c</PathWithFileName>
+      <FilenameWithoutPath>fonts.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

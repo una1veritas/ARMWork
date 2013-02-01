@@ -6,7 +6,7 @@
  extern "C" {
 #endif
 
-#include "armcore.h"
+#include "cmcore.h"
 	 
 #define LED1 	PD12
 #define LED2 	PD13
