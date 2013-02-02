@@ -59,7 +59,7 @@ void PendSV_Handler(void)
 
 void SysTick_Handler(void)
 {
-  TimingDelay_Decrement();
+//  TimingDelay_Decrement();
 }
 
 
@@ -79,6 +79,7 @@ void TIM3_IRQHandler(void)
 {
   
 }
+/*
  void TIM2_IRQHandler(void)
 {
   if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
@@ -86,3 +87,4 @@ void TIM3_IRQHandler(void)
     TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
   }		   
 }
+*/

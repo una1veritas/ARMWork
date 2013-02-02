@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "gpio.h"
+
 Pen_Holder Pen_Point;
 
 unsigned int xxx;
@@ -34,9 +36,14 @@ u16 TPReadX(void)
 { 
    u16 x=0;
    T_CS();
-   SpiDelay(10);
+	
+	digitalWrite(PB0, LOW);
+   SpiDelay(10); // 0.75 usec
+	digitalWrite(PB0, HIGH);
    SPI_WriteByte(0x90);
-   SpiDelay(10);  
+	digitalWrite(PB0, LOW);
+   SpiDelay(10);  // 0.875 usec
+	digitalWrite(PB0, HIGH);
    x=SPI_WriteByte(0xFF);
    x<<=8;
    x+=SPI_WriteByte(0x0);	
@@ -276,7 +283,7 @@ void Touch_Adjust(void)
 				pos_temp[cnt][0]=Pen_Point.X;
 				pos_temp[cnt][1]=Pen_Point.Y;
 				cnt++;
-                                Delay(0xFFFF);
+        delay_us(6300); //   Delay(0xFFFF);
 			}			 
 			switch(cnt)
 			{			   
@@ -305,7 +312,7 @@ void Touch_Adjust(void)
 					tem2*=tem2;
 					d2=sqrt(tem1+tem2);
 					fac=(float)d1/d2;
-					if(fac<0.75||fac>1.25||d1==0||d2==0)
+					if(fac<0.75f ||fac>1.25f ||d1==0||d2==0)
 					{
 						cnt=0;
 						LCD_Clear(WHITE);
@@ -324,7 +331,7 @@ void Touch_Adjust(void)
 					tem2*=tem2;
 					d2=sqrt(tem1+tem2);
 					fac=(float)d1/d2;
-					if(fac<0.75||fac>1.25)
+					if(fac<0.75f ||fac>1.25f)
 					{
 						cnt=0;
 						LCD_Clear(WHITE);
@@ -343,7 +350,7 @@ void Touch_Adjust(void)
 					tem2*=tem2;
 					d2=sqrt(tem1+tem2);
 					fac=(float)d1/d2;
-					if(fac<0.75||fac>1.25)
+					if(fac<0.75f ||fac>1.25f)
 					{
 						cnt=0;
 						LCD_Clear(WHITE);

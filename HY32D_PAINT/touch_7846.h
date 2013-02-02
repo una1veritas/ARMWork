@@ -40,6 +40,7 @@ u16 TPReadX(void);
 u16 TPReadY(void);	   
 u8 read_once(void);	
 u8 Read_Ads7846(void); 
+void Convert_Pos(void);
 
 void EXTI9_5_IRQHandler(void);
 void NVIC_TOUCHConfiguration(void);

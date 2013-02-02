@@ -1,8 +1,11 @@
 #include "stm32f4xx.h"
-#include "delay.h"
 #include "SSD1289.h"
 #include "touch_7846.h"
-#include "Julija.h"
+
+#include "cmcore.h"
+#include "delay.h"
+
+#define Delay(x)  delay_us((x)/10)
 
 extern unsigned char flag;
 
@@ -11,7 +14,10 @@ int xold,yold;
 
 
 int main(void)
-{int i;
+{
+	int i;
+	cmcore_init();
+	
   Delay(0x3FFFFF);
   LCD_Init();
   Delay(0x3FFFFF);
@@ -22,6 +28,7 @@ int main(void)
   LCD_SetBackColor(BLACK);
 //	LCD_SetCursor(10, 10);
 	LCD_StringLine(10, 10, "This is a pen.");
+	LCD_StringLine(10, 24, "Gosh its freezin cold.");
   
 
 while(1)

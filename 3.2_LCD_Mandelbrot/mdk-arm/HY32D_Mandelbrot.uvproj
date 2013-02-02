@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>3</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -405,16 +405,6 @@
               <FileName>AsciiLib.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\AsciiLib.h</FilePath>
-            </File>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>delay.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\delay.h</FilePath>
             </File>
             <File>
               <FileName>Julija.h</FileName>
@@ -540,6 +530,21 @@
               <FileName>delay.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\delay.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmcore.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\cmcore.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmcore.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\cmcore.h</FilePath>
+            </File>
+            <File>
+              <FileName>binary.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\binary.h</FilePath>
             </File>
           </Files>
         </Group>

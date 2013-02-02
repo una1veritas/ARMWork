@@ -3,7 +3,10 @@
 
 #include "stm32f4xx.h"
 #include "AsciiLib.h"
+
+// cmcore delay
 #include "delay.h"
+#define Delay(x)  delay_us((x)/10)
 
 typedef struct 
 {

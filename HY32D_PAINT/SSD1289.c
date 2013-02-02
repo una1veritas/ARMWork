@@ -1,5 +1,6 @@
 #include "SSD1289.h"
 
+
 #define LCD_REG      (*((volatile unsigned short *) 0x60000000)) 
 #define LCD_RAM      (*((volatile unsigned short *) 0x60020000)) 
 

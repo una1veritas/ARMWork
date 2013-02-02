@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>2</Optim>
+            <Optim>3</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER F4DISCOVERY HSE_VALUE=8000000</Define>
               <Undefine></Undefine>
-              <IncludePath>..\;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
+              <IncludePath>..\;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\cmcore</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -405,21 +405,6 @@
               <FileName>AsciiLib.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\AsciiLib.h</FilePath>
-            </File>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>delay.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\delay.h</FilePath>
-            </File>
-            <File>
-              <FileName>Julija.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Julija.h</FilePath>
             </File>
             <File>
               <FileName>SSD1289.c</FileName>
@@ -525,6 +510,41 @@
               <FileName>stm32f4xx_exti.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_exti.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cmcore</GroupName>
+          <Files>
+            <File>
+              <FileName>cmcore.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\cmcore.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmcore.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\cmcore.h</FilePath>
+            </File>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>delay.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\delay.h</FilePath>
+            </File>
+            <File>
+              <FileName>binary.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\binary.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4_discovery.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\Boards\stm32f4_discovery.h</FilePath>
             </File>
           </Files>
         </Group>

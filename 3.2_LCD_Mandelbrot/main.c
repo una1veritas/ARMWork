@@ -1,9 +1,9 @@
 #include "stm32f4xx.h"
-#include "delay.h"
 #include "SSD1289.h"
 #include "touch_7846.h"
 #include "Julija.h"
 
+#include "delay.h"
 #include "gpio.h"
 
 extern unsigned int xxx,yyy;
@@ -14,9 +14,11 @@ int main(void)
 {
   int i = 1;
 	
+	cmcore_init();
 	pinMode(PB0, OUTPUT);
 	digitalWrite(PB0, HIGH);
-	Delay(0x3FFFFF);		// 6242 usec
+	delay_us(6000); // Delay(0x3FFFFF);		// 6242 usec
+	/*
 	digitalWrite(PB0, LOW);
   Delay(90);	//	9.125 usec
 	digitalWrite(PB0, HIGH);
@@ -24,8 +26,9 @@ int main(void)
 	digitalWrite(PB0, LOW);
   Delay(50);	//	5.375 usec
 	digitalWrite(PB0, HIGH);
+	*/
   LCD_Init();
-  Delay(0x3FFFFF);
+	delay_us(6000); // Delay(0x3FFFFF);
   LCD_Clear(WHITE);
   while(1)
   {
