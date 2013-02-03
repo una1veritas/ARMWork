@@ -412,11 +412,6 @@
               <FilePath>..\SSD1289.c</FilePath>
             </File>
             <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\main.c</FilePath>
-            </File>
-            <File>
               <FileName>SSD1289.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\SSD1289.h</FilePath>
@@ -437,16 +432,6 @@
               <FilePath>..\stm32f4xx_it.h</FilePath>
             </File>
             <File>
-              <FileName>touch_7846.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\touch_7846.c</FilePath>
-            </File>
-            <File>
-              <FileName>touch_7846.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\touch_7846.h</FilePath>
-            </File>
-            <File>
               <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\Boards\system_stm32f4xx.c</FilePath>
@@ -465,6 +450,11 @@
               <FileName>XPT2046.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\XPT2046.h</FilePath>
+            </File>
+            <File>
+              <FileName>main.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\main.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -555,6 +545,21 @@
               <FileName>stm32f4_discovery.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\Boards\stm32f4_discovery.h</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\spi.c</FilePath>
             </File>
           </Files>
         </Group>

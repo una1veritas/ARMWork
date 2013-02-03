@@ -6,6 +6,11 @@
 
 // cmcore delay
 #include "delay.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define Delay(x)  delay_us((x)/10)
 
 typedef struct 
@@ -202,5 +207,9 @@ void LCD_WriteReg(uint8_t LCD_Reg, uint16_t LCD_RegValue);
 void LCD_DisplayOn(void);
 void LCD_DisplayOff(void);
 void LCD_BackLight(int procentai);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif 
