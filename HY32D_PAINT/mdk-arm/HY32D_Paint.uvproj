@@ -456,6 +456,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\Boards\stm32f4_discovery.h</FilePath>
             </File>
+            <File>
+              <FileName>XPT2046.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\XPT2046.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>XPT2046.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\XPT2046.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
