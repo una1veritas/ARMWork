@@ -71,8 +71,12 @@ int main(void) {
 	delay(1000);
 		
 	uint16 shift = 0;
-	nokiaLCD.setFont(Fixed_12x8);
-	
+	nokiaLCD.setFont(Chicago_15);
+
+	nokiaLCD.clear();
+	nokiaLCD.drawString("Gnu is not Nuke!");
+
+	while(1);
 	while (1) {
 		nokiaLCD.clear();
 		nokiaLCD.cursor(252 - shift );

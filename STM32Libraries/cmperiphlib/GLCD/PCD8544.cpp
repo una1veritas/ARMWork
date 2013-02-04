@@ -83,18 +83,28 @@ void PCD8544::drawCharacter(const char ch) {
 
 void PCD8544::drawFixedFont(const byte font[], char character) {
 	uint16 width = font[0];
-//	uint16 height = font[1];
-	uint16 pixbytebase = 3;
+	uint16 bytespercolumn = font[1]/8 + (font[1]%8 ? 1 : 0);
+
+	uint16 idx = 3 + (character - ' ') * width * bytespercolumn;
 	
+	if ( (textcursor % 84) + width+2 >= 84 )
+		textcursor = (textcursor/84 + 1)*84;
+	if ( character == 0x20 && textcursor%84 == 0 )
+		return;
 	select();
-  write(LCD_DATA, 0x00); //Blank vertical line padding
-  for (int index = 0 ; index < width ; index++)
-    write(LCD_DATA, font[pixbytebase + (character - 0x20)*width + index]);
-    //0x20 is the ASCII character for Space (' '). The font table starts with this character
-  write(LCD_DATA, 0x00); //Blank vertical line padding
+	for(int bytepos = 0; bytepos < bytespercolumn; bytepos++) {
+		write(0, 0x80 | textcursor % 84);  // Column.
+		write(0, 0x40 | bytespercolumn*(textcursor/84) + bytepos ); //0+bytepos+(textcursor/84)*percolbytes);  // Row.  ?
+		write(LCD_DATA, 0x00); //Blank vertical line padding
+		for (int i = 0 ; i < width ; i++) {
+			write(LCD_DATA, font[idx + bytepos + i*bytespercolumn]);
+		}
+		write(LCD_DATA, 0x00); //Blank vertical line padding
+	}
 	deselect();
-	
-	textcursor += 2 + width;
+	//
+	textcursor += width + 2;
+
 }
 
 //This function takes in a character, looks it up in the font table/array
