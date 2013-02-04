@@ -1,0 +1,5 @@
+--cpu Cortex-M4.fp -g --apcs=interwork 
+-I C:\Keil\ARM\RV31\INC 
+-I C:\Users\Sin\Documents\ARMWork\STM32Libraries\CMSIS\Include 
+-I C:\Keil\ARM\Inc\ST\STM32F4xx 
+--list ".\cstartup.lst" --xref -o ".\cstartup.o" --depend ".\cstartup.d" "..\..\ChibiOS_2.4.3\os\ports\RVCT\ARMCMx\cstartup.s"
