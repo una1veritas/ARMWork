@@ -109,67 +109,68 @@
 #include "spi.h"
 
 
-void spi_init(spi * spiport, SPI_TypeDef * SPIx,
-							GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss) {
+void spi_init(spi * port, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss) {
+	port->SPIx = SPIx;
+	port->sck = sck;
+	port->miso = miso;
+	port->mosi = mosi;
+	port->nss = nss;
+}
+							
+void spi_begin(spi * port) {	
 	uint8_t af; // = GPIO_AF_SPI1;
-//	spiport->sck = sck;
-//	spiport->miso = miso;
-//	spiport->mosi = mosi;
-	spiport->nsspin = nss;
+
 	/* PCLK2 = HCLK/2 */
 	//RCC_PCLK2Config(RCC_HCLK_Div2);
-	if ( SPIx == SPI2 ) {
+	if ( port->SPIx == SPI2 ) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
 		af = GPIO_AF_SPI2;
-		spiport->SPIx = SPI2;
+		port->SPIx = SPI2;
 		// PB12, 13, 14, 15
-	} else if ( SPIx == SPI3 ) {
+	} else if ( port->SPIx == SPI3 ) {
 		// SPI3
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI3, ENABLE);
 		af = GPIO_AF_SPI3;
-		spiport->SPIx = SPI3;
+		port->SPIx = SPI3;
 	}	else { //if (SPIx == SPI1) {
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, ENABLE);
 		af = GPIO_AF_SPI1;
-		spiport->SPIx = SPI1;
+		port->SPIx = SPI1;
 		// sck = PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
 	} 
 
-	GPIOMode(PinPort(sck), PinBit(sck), GPIO_Mode_AF, GPIO_Speed_50MHz,
+	GPIOMode(PinPort(port->sck), PinBit(port->sck), GPIO_Mode_AF, GPIO_Speed_50MHz,
 			GPIO_OType_PP, GPIO_PuPd_UP);
-	GPIOMode(PinPort(miso), PinBit(miso), GPIO_Mode_AF, GPIO_Speed_50MHz,
+	GPIOMode(PinPort(port->miso), PinBit(port->miso), GPIO_Mode_AF, GPIO_Speed_50MHz,
 			GPIO_OType_PP, GPIO_PuPd_UP);
-	GPIOMode(PinPort(mosi), PinBit(mosi), GPIO_Mode_AF, GPIO_Speed_50MHz,
+	GPIOMode(PinPort(port->mosi), PinBit(port->mosi), GPIO_Mode_AF, GPIO_Speed_50MHz,
 			GPIO_OType_PP, GPIO_PuPd_UP);
-	GPIO_PinAFConfig(PinPort(sck), PinSource(sck), af);
-	GPIO_PinAFConfig(PinPort(miso), PinSource(miso), af);
-	GPIO_PinAFConfig(PinPort(mosi), PinSource(mosi), af);
+	GPIO_PinAFConfig(PinPort(port->sck), PinSource(port->sck), af);
+	GPIO_PinAFConfig(PinPort(port->miso), PinSource(port->miso), af);
+	GPIO_PinAFConfig(PinPort(port->mosi), PinSource(port->mosi), af);
 	// nSS by software
-	GPIOMode(PinPort(nss), PinBit(nss), GPIO_Mode_OUT, GPIO_Speed_50MHz,
+	GPIOMode(PinPort(port->nss), PinBit(port->nss), GPIO_Mode_OUT, GPIO_Speed_50MHz,
 			GPIO_OType_PP, GPIO_PuPd_UP);
 	//GPIO_PinAFConfig(PinPort(nss), PinSource(nss), af);
 	
 	// setup has completed
-}
 
-void spi_begin(spi * spiport) {
-	
-	digitalWrite(spiport->nsspin, HIGH);
+	digitalWrite(port->nss, HIGH);
 	
 	// set default mode
-	spiport->modedef.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
-	spiport->modedef.SPI_Mode = SPI_Mode_Master;
-	spiport->modedef.SPI_DataSize = SPI_DataSize_8b;
-	spiport->modedef.SPI_CPOL = SPI_CPOL_Low;
-	spiport->modedef.SPI_CPHA = SPI_CPHA_1Edge;
-	spiport->modedef.SPI_NSS = SPI_NSS_Soft;
-	spiport->modedef.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
-	spiport->modedef.SPI_FirstBit = SPI_FirstBit_MSB;
-	spiport->modedef.SPI_CRCPolynomial = SPI_CRC_Rx;
+	port->modedef.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
+	port->modedef.SPI_Mode = SPI_Mode_Master;
+	port->modedef.SPI_DataSize = SPI_DataSize_8b;
+	port->modedef.SPI_CPOL = SPI_CPOL_Low;
+	port->modedef.SPI_CPHA = SPI_CPHA_1Edge;
+	port->modedef.SPI_NSS = SPI_NSS_Soft;
+	port->modedef.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
+	port->modedef.SPI_FirstBit = SPI_FirstBit_MSB;
+	port->modedef.SPI_CRCPolynomial = SPI_CRC_Rx;
 
-	SPI_Init(spiport->SPIx, &spiport->modedef);
+	SPI_Init(port->SPIx, &port->modedef);
 
-	SPI_Cmd(spiport->SPIx, ENABLE);
+	SPI_Cmd(port->SPIx, ENABLE);
 	/*          5. Enable the NVIC and the corresponding interrupt using the function
 	 *             SPI_ITConfig() if you need to use interrupt mode.
 	 *

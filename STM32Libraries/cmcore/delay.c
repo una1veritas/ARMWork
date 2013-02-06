@@ -15,7 +15,7 @@
 /* Private define ------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 
-volatile uint32_t __counter_micros;
+//volatile uint32_t __counter_micros;
 volatile uint32_t __counter_millis;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -25,7 +25,7 @@ volatile uint32_t __counter_millis;
  * @param  none
  * @retval None
  */
-void TIM2_delay_start(void) {
+void TIM2_delaytimer_start(void) {
 	// TIM_TimeBaseInitTypeDef's order is {uint16_t TIM_Prescaler, uint16_t TIM_CounterMode, uint16_t TIM_Period, uint16_t TIM_ClockDivision, uint8_t TIM_RepetitionCounter}
 	TIM_TimeBaseInitTypeDef TimeBaseStructure;
 //			= { 84, TIM_CounterMode_Up, 999, TIM_CKD_DIV1, 0 };
@@ -41,11 +41,9 @@ void TIM2_delay_start(void) {
 
 	//Supply APB1 Clock
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
-
 	/* Time base configuration */
 	TIM_TimeBaseInit(TIM2, &TimeBaseStructure);
 //  TIM_SelectOnePulseMode(TIM2, TIM_OPMode_Repetitive);
-	TIM_SetCounter(TIM2, 0);
 	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
 
 	/* Enable the TIM2 gloabal Interrupt */
@@ -55,15 +53,17 @@ void TIM2_delay_start(void) {
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
+	// reset time-passed counters
+//	__counter_micros = 0;
+	__counter_millis = 0;
+	TIM_SetCounter(TIM2, 0);
+	
 	/* TIM enable counter */
 	TIM_Cmd(TIM2, ENABLE);
-
-	__counter_micros = 0;
-	__counter_millis = 0;
 }
 
 uint32_t micros(void) {
-	return __counter_micros + TIM_GetCounter(TIM2 );
+	return TIM_GetCounter(TIM2);
 }
 
 uint32_t millis(void) {
@@ -71,11 +71,9 @@ uint32_t millis(void) {
 }
 
 
-void reset_millis() {
-	uint32 current = __counter_micros;
-	while (current == __counter_micros );
-	__counter_micros = 0;
+void reset_delaytimer() {
 	__counter_millis = 0;
+	TIM_SetCounter(TIM2, 0);
 }
 
 
@@ -87,21 +85,22 @@ void delay_ms(uint32_t w) {
 	while (millis() < wtill) ;
 }
 
+// 1,000,000,000 usec timer 
 void delay_us(uint32_t w) {
-	uint32_t wtill = micros() + w;
-	if ( wtill < micros() ) {
-		// overflow
-		while ( micros() >= wtill );
-	}
-	while (micros() < wtill)
-		;
+	uint32 usec = micros();
+	w &= 0x7fffffff;  // ensure the limit
+	w += usec; // set destination time 
+	if ( (usec & 0x80000000) != 0 && (w & 0x80000000) == 0 ) {
+		while ( micros() & 0x80000000 );
+	} 
+	while ( micros() < w );
 }
 
 void TIM2_IRQHandler(void) {
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update ) == SET) {
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update );
 		
-		__counter_micros += 1000;
+//		__counter_micros += 1000;
 		__counter_millis += 1;
 	}
 }

@@ -43,20 +43,20 @@ extern "C" {
 
 typedef struct {
 	SPI_TypeDef * SPIx;
-	GPIOPin sckpin, mosipin, misopin, nsspin;
+	GPIOPin sck, mosi, miso, nss;
 	SPI_InitTypeDef modedef;
 //	uint8 xbuf[256];
 //	uint16 xindex;
 } spi;
 
-void spi_init(spi * spiport, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss);
-void spi_begin(spi * spiport);
+void spi_init(spi * port, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nss);
+void spi_begin(spi * port);
 void spi_disable(spi *);
-uint16 spi_transfer(spi * spiport, uint16 data);
-void spi_setDataMode(spi * spiport, uint16 id);
-void spi_setClockDivier(spi * spiport, uint16 id);
-void spi_setBitOrder(spi * spiport, uint16 id);
-void spi_setMode(spi * spiport, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 firstbit);
+uint16 spi_transfer(spi * port, uint16 data);
+void spi_setDataMode(spi * port, uint16 id);
+void spi_setClockDivier(spi * port, uint16 id);
+void spi_setBitOrder(spi * port, uint16 id);
+void spi_setMode(spi * port, uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 firstbit);
 
 #ifdef __cplusplus
 }
