@@ -6,6 +6,7 @@
 #include "cmcore.h"
 #include "delay.h"
 
+
 #define Delay(x)  delay_us((x)/10)
 
 
@@ -14,42 +15,78 @@ int xold,yold;
 
 spi spi2bus; // = {SPI2, PB13, PB14, PB15, PB12};
 TouchScreen tp(spi2bus, PB12, PD6);
+SSD1289 lcd;
 
 int main(void)
 {
-	int i;
+//	int i;
 	char tmp[64];
 	
 	cmcore_init();
 	
 	spi_init(&spi2bus, SPI2,  PB13, PB14, PB15, PB12);
 	spi_begin(&spi2bus);
-	tp.begin(tp.ReverseY);
+	tp.begin(tp.Portrait | tp.ReverseY);
 
   Delay(0x3FFFFF);
-  LCD_Init();
+  lcd.init();
   Delay(0x3FFFFF);
   //touch_init();
-  LCD_Clear(BLACK);
+  lcd.clear(BLACK);
 
-  LCD_SetTextColor(WHITE);
-  LCD_SetBackColor(BLACK);
+	lcd.CharSize(16);
+  lcd.SetTextColor(WHITE);
+  lcd.SetBackColor(BLACK);
 //	LCD_SetCursor(10, 10);
-	LCD_StringLine(0, 10, (uint8 *) "Resistive touch screen driver.");
+	lcd.StringLine((uint8 *) "Resistive touch screen driver.");
   
 
 while(1)
  {
   tp.convertPos();
-  Pixel(tp.X0, tp.Y0,WHITE); 
-  Pixel(tp.X0, tp.Y0+1,WHITE);
-  Pixel(tp.X0+1, tp.Y0,WHITE);
-  Pixel(tp.X0+1, tp.Y0+1,WHITE);
+  lcd.Pixel(tp.x, tp.y,WHITE); 
+  lcd.Pixel(tp.x, tp.y+1,WHITE);
+  lcd.Pixel(tp.x+1, tp.y,WHITE);
+  lcd.Pixel(tp.x+1, tp.y+1,WHITE);
 	 //
-	 sprintf(tmp, "x =% 5d, y =% 5d", tp.X0, tp.Y0);
-	 LCD_StringLine(0, 24, (uint8 *) tmp);
+	 sprintf(tmp, "x =% 5d, y =% 5d", tp.x, tp.y);
+	 lcd.setTextCursor(0, 48);
+	 lcd.StringLine((uint8 *) tmp);
  }
-
 }
 
 
+/*******************************************************************************
+* Function Name  : TouchPanel_Calibrate
+* Description    : 
+* Input          : None
+* Output         : None
+* Return         : None
+* Attention		 : None
+*******************************************************************************/
+/*
+void TouchPanel_Calibrate(void) {
+	static Point sample[3];
+  Point * pt;
+	uint8_t i;
+
+  for(i=0; i < 3 ; i++) {
+   LCD_Clear(CYAN);
+   GUI_Text(44,10,"Touch crosshair to calibrate", RED,WHITE);
+   delay_ms(500);
+   DrawCross(DisplaySample[i].x,DisplaySample[i].y);
+   do {
+     pt = readAds7846();
+   }
+   while( ptr == (void*)0 );
+   sample[i].X= pt->X; 
+	 sample[i].Y= pt->Y;
+  }
+  setCalibrationMatrix( &DisplaySample[0],&ScreenSample[0],&matrix );
+  LCD_Clear(RGB565CONVERT(200,200,120));
+} 
+*/
+
+/*********************************************************************************************************
+      END FILE
+*********************************************************************************************************/

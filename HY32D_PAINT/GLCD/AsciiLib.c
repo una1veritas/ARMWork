@@ -1064,7 +1064,7 @@ void GetASCIICode2(unsigned char* pBuffer,unsigned char ASCII)
 {  
    memcpy(pBuffer,ASCII8x12[(ASCII - 32)] ,12);
 }
-void GetASCIICode3(short int * pBuffer,unsigned char ASCII)
+void GetASCIICode3(uint16 * pBuffer,unsigned char ASCII)
 {  
 
    memcpy(pBuffer, ASCII12x12[ASCII-32], 12 * sizeof(uint16_t));
@@ -1073,7 +1073,7 @@ void GetASCIICode4(unsigned char* pBuffer,unsigned char ASCII)
 {  
    memcpy(pBuffer,ASCII8x16[(ASCII - 32)] ,16);
 }
-void GetASCIICode5(short int * pBuffer,unsigned char ASCII)
+void GetASCIICode5(uint16 * pBuffer,unsigned char ASCII)
 {  
    memcpy(pBuffer, ASCII16x24[ASCII-32], 24 * sizeof(uint16_t));
 }

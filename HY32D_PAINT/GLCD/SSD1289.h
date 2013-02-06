@@ -7,10 +7,6 @@
 // cmcore delay
 #include "delay.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #define Delay(x)  delay_us((x)/10)
 
 typedef struct 
@@ -19,6 +15,8 @@ typedef struct
   int16_t Y;
 } Point, * pPoint;   
 
+class SSD1289 {
+	
 #define LCD_REG_0             0x00
 #define LCD_REG_1             0x01
 #define LCD_REG_2             0x02
@@ -165,51 +163,64 @@ typedef struct
 #define LCD_PIXEL_WIDTH         0x00F0
 
 #define ASSEMBLE_RGB(R ,G, B)    ((((R)& 0xF8) << 8) | (((G) & 0xFC) << 3) | (((B) & 0xF8) >> 3)) 
+private:
+	uint16 textCursorX, textCursorY;
 
-void LCD_Init(void);
-void TIM_Config(void);
-void LCD_CtrlLinesConfig(void);
-void LCD_FSMCConfig(void);
+private:
+	void TIM_Config(void);
+	void CtrlLinesConfig(void);
+	void FSMCConfig(void);
 
-void PutPixel(int16_t x, int16_t y);
+	void WriteRAM_Prepare(void);
+	void WriteRAM(uint16_t RGB_Code);
+	void WriteReg(uint8_t Reg, uint16_t RegValue);	
+	void WriteBMP(uint8_t Xpos, uint16_t Ypos, uint8_t Height, uint16_t Width, uint8_t *bitmap);
 
-void LCD_SetColors(__IO uint16_t _TextColor, __IO uint16_t _BackColor); 
-void LCD_GetColors(__IO uint16_t *_TextColor, __IO uint16_t *_BackColor);
-void LCD_SetTextColor(__IO uint16_t Color);
-void LCD_SetBackColor(__IO uint16_t Color);
-void LCD_Clear(uint16_t Color);
-void LCD_SetCursor(uint16_t Xpos, uint16_t Ypos);
-void LCD_CharSize(__IO uint16_t size);
-void Pixel(int16_t x, int16_t y,int16_t c);
+	void PolyLineRelativeClosed(pPoint Points, uint16_t PointCount, uint16_t Closed);
 
-void LCD_PutChar(int16_t PosX, int16_t PosY, char c);
-void LCD_StringLine(uint16_t PosX, uint16_t PosY, uint8_t *str);
-void LCD_DrawLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length, uint8_t Direction);
-void LCD_DrawRect(uint16_t Xpos, uint16_t Ypos, uint8_t Height, uint16_t Width);
-void LCD_DrawSquare(uint16_t Xpos, uint16_t Ypos, uint16_t a);
-void LCD_DrawCircle(uint16_t Xpos, uint16_t Ypos, uint16_t Radius);;
-void LCD_DrawUniLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
-void LCD_DrawFullRect(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height);
-void LCD_DrawFullCircle(uint16_t Xpos, uint16_t Ypos, uint16_t Radius);
-void LCD_PolyLine(pPoint Points, uint16_t PointCount);
-void LCD_PolyLineRelative(pPoint Points, uint16_t PointCount);
-void LCD_ClosedPolyLine(pPoint Points, uint16_t PointCount);
-void LCD_ClosedPolyLineRelative(pPoint Points, uint16_t PointCount);
-void LCD_FillPolyLine(pPoint Points, uint16_t PointCount);
-void LCD_SetDisplayWindow(uint8_t Xpos, uint16_t Ypos, uint8_t Height, uint16_t Width);
-void LCD_WriteBMP(uint8_t Xpos, uint16_t Ypos, uint8_t Height, uint16_t Width, uint8_t *bitmap);
-void LCD_DrawFullSquare(uint16_t Xpos, uint16_t Ypos, uint16_t a);
+public:
+	SSD1289() {
+		textCursorX = 0;
+		textCursorY = 0;
+	}
+		
+	void init(void);
+	void DisplayOn(void);
+	void DisplayOff(void);
+	void BackLight(int procentai);
 
+	void SetColors(__IO uint16_t _TextColor, __IO uint16_t _BackColor); 
+	void GetColors(__IO uint16_t *_TextColor, __IO uint16_t *_BackColor);
+	void SetTextColor(__IO uint16_t Color);
+	void SetBackColor(__IO uint16_t Color);
+	void clear(uint16_t Color);
+	void SetCursor(uint16_t Xpos, uint16_t Ypos);
+	void CharSize(__IO uint16_t size);
+	void setTextCursor(uint16 x, uint16 y) { textCursorX = x; textCursorY = y; }
 
-void LCD_WriteRAM_Prepare(void);
-void LCD_WriteRAM(uint16_t RGB_Code);
-void LCD_WriteReg(uint8_t LCD_Reg, uint16_t LCD_RegValue);
-void LCD_DisplayOn(void);
-void LCD_DisplayOff(void);
-void LCD_BackLight(int procentai);
+	void PutPixel(int16_t x, int16_t y);
+	void Pixel(int16_t x, int16_t y,int16_t c);
 
-#ifdef __cplusplus
-}
-#endif
+	void PutChar(int16_t PosX, int16_t PosY, char c);
+	void PutChar(char c);
+	void StringLine(uint16_t PosX, uint16_t PosY, uint8_t *str);
+	void StringLine(uint8_t *str);
+
+	void DrawLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length, uint8_t Direction);
+	void DrawRect(uint16_t Xpos, uint16_t Ypos, uint8_t Height, uint16_t Width);
+	void DrawSquare(uint16_t Xpos, uint16_t Ypos, uint16_t a);
+	void DrawCircle(uint16_t Xpos, uint16_t Ypos, uint16_t Radius);
+	void DrawUniLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
+	void DrawFullRect(uint16_t Xpos, uint16_t Ypos, uint16_t Width, uint16_t Height);
+	void DrawFullCircle(uint16_t Xpos, uint16_t Ypos, uint16_t Radius);
+	void PolyLine(pPoint Points, uint16_t PointCount);
+	void PolyLineRelative(pPoint Points, uint16_t PointCount);
+	void ClosedPolyLine(pPoint Points, uint16_t PointCount);
+	void ClosedPolyLineRelative(pPoint Points, uint16_t PointCount);
+	void FillPolyLine(pPoint Points, uint16_t PointCount);
+	void SetDisplayWindow(uint8_t Xpos, uint16_t Ypos, uint8_t Height, uint16_t Width);
+	void DrawFullSquare(uint16_t Xpos, uint16_t Ypos, uint16_t a);
+
+};
 
 #endif 

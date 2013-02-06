@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>2</Optim>
+            <Optim>4</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -437,11 +437,6 @@
               <FilePath>..\GLCD\AsciiLib.h</FilePath>
             </File>
             <File>
-              <FileName>SSD1289.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\GLCD\SSD1289.c</FilePath>
-            </File>
-            <File>
               <FileName>SSD1289.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\GLCD\SSD1289.h</FilePath>
@@ -455,6 +450,11 @@
               <FileName>ads7864.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\TouchScreenController\ads7864.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>SSD1289.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\GLCD\SSD1289.cpp</FilePath>
             </File>
           </Files>
         </Group>

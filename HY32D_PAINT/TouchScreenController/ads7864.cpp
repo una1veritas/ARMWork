@@ -9,41 +9,33 @@
 #include <stdlib.h>
 
 //Pen_Holder Pen_Point;
-
 //unsigned char flag=0;
 
 uint16 TouchScreen::readX(void) {
 	uint16 x = 0;
 	select();
 	delay_us(1);
-	//SpiDelay(10);
 	spi_transfer(&bus, CMD_RDX);
-	//SpiDelay(10);  
 	delay_us(1);
 	x = spi_transfer(&bus, 0);
 	x <<= 8;
-	x += spi_transfer(&bus, 0);
+	x |= spi_transfer(&bus, 0);
 	deselect();
-	//SpiDelay(10);
 	x >>= 4;
-	//x = x&0xFFF; //fff
 	return x;
 }
 
-u16 TouchScreen::readY(void) {
+uint16 TouchScreen::readY(void) {
 	uint16 y = 0;
 	select();
-//  SpiDelay(10);
 	delay_us(1);
 	spi_transfer(&bus, CMD_RDY);
-	//SpiDelay(10);	 
 	delay_us(1);
 	y = spi_transfer(&bus, 0);
 	y <<= 8;
-	y += spi_transfer(&bus, 0);
+	y |= spi_transfer(&bus, 0);
 	deselect();
 	y >>= 4;
-	//y = y & 0xFFF;	 //fff
 	return y;
 }
 
@@ -154,13 +146,15 @@ uint8 TouchScreen::readAds7846(void) {
 	u16 temp = 0;
 
 //	if (GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_4) == 0) {
-		readOnce();
+			Xraw = readX();
+			Yraw = readY();
 		while (count < 10) {
 
-			readOnce();
+			Xraw = readX();
+			Yraw = readY();
 
-			databuffer[0][count] = X;
-			databuffer[1][count] = Y;
+			databuffer[0][count] = Xraw;
+			databuffer[1][count] = Yraw;
 			count++;
 
 		}
@@ -189,14 +183,16 @@ uint8 TouchScreen::readAds7846(void) {
 				}
 			} while (t1);
 
-			X = 2047
+			Xraw = 2047
 					- ((databuffer[0][3] + databuffer[0][4] + databuffer[0][5])
 							/ 3);
-			Y = ((databuffer[1][3] + databuffer[1][4] + databuffer[1][5]) / 3);
-			flag = 1;
+			Yraw = ((databuffer[1][3] + databuffer[1][4] + databuffer[1][5]) / 3);
+//			flag = 1;
 			return 1;
 		}
-		flag = 0;
+//	flag = 0;
+		Xraw = 0xffff;
+		Yraw = 0xffff;
 //	}
 	return 0;
 
@@ -211,25 +207,35 @@ void EXTI9_5_IRQHandler(void) {
 }
 
 void TouchScreen::convertPos(void) {
+	uint16 t;
+	
 	readAds7846();
-	X0 = (int) ((Y - 103) / 7.7);
-	Y0 = (int) ((X - 104) / 5.56);
-	if (X0 > 240) {
-		X0 = 240;
-	} else if ( X0 < 0 ) {
-		X0 = 0;
+	if ( direction & Portrait ) {
+		t = Xraw;
+		Xraw = Yraw;
+		Yraw = t;
 	}
-	if (Y0 > 320) {
-		Y0 = 320;
-	} else if ( Y0 < 0 ) {
-		Y0 = 0;
+
+	x = (int) ((Xraw - xoffset) / xfact);
+	y = (int) ((Yraw - yoffset) / yfact);
+
+	if (x > 240) {
+		x = 240;
+	} else if ( x < 0 ) {
+		x = 0;
+	}
+	if (y > 320) {
+		y = 320;
+	} else if ( y < 0 ) {
+		y = 0;
 	}
 	if ( direction & ReverseX ) {
-		X0 = 240 - X0;
+		x = 240 - x;
 	}
 	if ( direction & ReverseY ) {
-		Y0 = 320 - Y0;
+		y = 320 - y;
 	}
+
 }
 
 /*

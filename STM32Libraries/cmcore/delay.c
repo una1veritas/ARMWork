@@ -15,7 +15,7 @@
 /* Private define ------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 
-//volatile uint32_t __counter_micros;
+volatile uint32_t __counter_micros;
 volatile uint32_t __counter_millis;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -54,7 +54,7 @@ void TIM2_delaytimer_start(void) {
 	NVIC_Init(&NVIC_InitStructure);
 
 	// reset time-passed counters
-//	__counter_micros = 0;
+	__counter_micros = 0;
 	__counter_millis = 0;
 	TIM_SetCounter(TIM2, 0);
 	
@@ -63,7 +63,7 @@ void TIM2_delaytimer_start(void) {
 }
 
 uint32_t micros(void) {
-	return TIM_GetCounter(TIM2);
+	return __counter_micros + TIM_GetCounter(TIM2);
 }
 
 uint32_t millis(void) {
@@ -73,6 +73,7 @@ uint32_t millis(void) {
 
 void reset_delaytimer() {
 	__counter_millis = 0;
+	__counter_micros = 0;
 	TIM_SetCounter(TIM2, 0);
 }
 
@@ -85,22 +86,21 @@ void delay_ms(uint32_t w) {
 	while (millis() < wtill) ;
 }
 
-// 1,000,000,000 usec timer 
+// max approximately 2,000,000,000 usec delay 
 void delay_us(uint32_t w) {
-	uint32 usec = micros();
-	w &= 0x7fffffff;  // ensure the limit
-	w += usec; // set destination time 
-	if ( (usec & 0x80000000) != 0 && (w & 0x80000000) == 0 ) {
-		while ( micros() & 0x80000000 );
-	} 
-	while ( micros() < w );
+	uint32 from = micros();
+	uint32 till = from + (w & 0x7fffffff);
+	if ( from > till ) {
+		while ( micros() > 0x80000000 );
+	}
+	while ( micros() < till );
 }
 
 void TIM2_IRQHandler(void) {
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update ) == SET) {
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update );
 		
-//		__counter_micros += 1000;
+		__counter_micros += 1000;
 		__counter_millis += 1;
 	}
 }

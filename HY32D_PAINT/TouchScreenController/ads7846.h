@@ -39,25 +39,27 @@ class TouchScreen {
 //	static const uint16 NPEN = !(0x0080&PEN);      //!PEN
 
 public:
-	int16 X0, Y0;
-	uint16 X, Y;
-	u8 Key_Sta;
-	u8 Key_LSta;
-	uint8 flag;
-	float xfac, yfac;
-	int16 xoff, yoff;
+	int16 x, y;
+	uint16 Xraw, Yraw;
+//	u8 Key_Sta;
+//	u8 Key_LSta;
+//	uint8 flag;
+	float xfact, yfact;
+	int16 xoffset, yoffset;
 
 	enum {
 		Normal = 0,
-		Transpose = 1,
+		Landscape = 0,
+		Portrait = 1,
 		ReverseX = 2,
 		ReverseY = 4
 	};
 
 	TouchScreen(spi & spix, GPIOPin ncs, GPIOPin irq) :
 			bus(spix), ncspin(ncs), irqpin(irq) {
-		flag = 0;
 				direction = 0;
+				xoffset = 103; xfact = 7.7f;
+				yoffset = 104; yfact = 5.56f;
 	}
 
 	void init(void);
@@ -74,10 +76,6 @@ public:
 
 	uint16 readX(void);
 	uint16 readY(void);
-	void readOnce(void) {
-		X = readX();
-		Y = readY();
-	}
 	uint8 readAds7846(void);
 	void convertPos(void);
 
