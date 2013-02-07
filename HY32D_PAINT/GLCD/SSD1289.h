@@ -165,6 +165,7 @@ class SSD1289 {
 #define ASSEMBLE_RGB(R ,G, B)    ((((R)& 0xF8) << 8) | (((G) & 0xFC) << 3) | (((B) & 0xF8) >> 3)) 
 private:
 	uint16 textCursorX, textCursorY;
+	uint16 deviceID;
   /* Global variables to set the written text color */
 	uint16_t TextColor ;
 	uint16_t BackColor ;
@@ -180,6 +181,7 @@ private:
 	void WriteRAM_Prepare(void);
 	void WriteRAM(uint16_t RGB_Code);
 	void WriteReg(uint8_t Reg, uint16_t RegValue);	
+	uint16 ReadReg(uint8_t LCD_Reg);
 	void WriteBMP(uint8_t Xpos, uint16_t Ypos, uint8_t Height, uint16_t Width, uint8_t *bitmap);
 
 	void PolyLineRelativeClosed(pPoint Points, uint16_t PointCount, uint16_t Closed);
@@ -189,6 +191,8 @@ public:
 	SSD1289() {
 		textCursorX = 0;
 		textCursorY = 0;
+		deviceID = 0;
+		//
 		uint16_t TextColor = 0x0000;
 		uint16_t BackColor = 0xFFFF;
 		uint16_t charsize = 12;

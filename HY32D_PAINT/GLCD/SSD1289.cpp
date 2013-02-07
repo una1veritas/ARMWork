@@ -3,6 +3,7 @@
 
 #define LCD_REG      (*((volatile unsigned short *) 0x60000000)) 
 #define LCD_RAM      (*((volatile unsigned short *) 0x60020000)) 
+#define LCD_A16      (*((volatile unsigned short *) 0x60010000)) 
 
 #define MAX_POLY_CORNERS   200
 #define POLY_Y(Z)          ((int32_t)((Points + Z)->X))
@@ -17,6 +18,8 @@ TIM_OCInitTypeDef  TIM_OCInitStructure;
 //****************************************************************************//
 void SSD1289::start(void)
 { 
+	deviceID = ReadReg(0x0000);		/* Read LCD ID	*/	
+
   WriteReg(0x0007,0x0021);    Delay(50);
   WriteReg(0x0000,0x0001);    Delay(50);
   WriteReg(0x0007,0x0023);    Delay(50);
@@ -78,6 +81,13 @@ void SSD1289::WriteReg(uint8_t LCD_Reg, uint16_t LCD_RegValue)
 {
   LCD_REG = LCD_Reg;
   LCD_RAM = LCD_RegValue;
+}
+
+uint16 SSD1289::ReadReg(uint8_t LCD_Reg)
+{
+  LCD_REG = LCD_Reg;
+  volatile uint16 t = LCD_A16;
+	return t;
 }
 
 void SSD1289::DisplayOn(void)
@@ -538,61 +548,17 @@ void SSD1289::DrawUniLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 
 void SSD1289::init(void) {
   // CtrlLinesConfig();
-  GPIO_InitTypeDef GPIO_InitStructure;
-  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOG | 
-						   RCC_AHB1Periph_GPIOE | RCC_AHB1Periph_GPIOF, 
-						   ENABLE);
-/*
-  GPIO_PinAFConfig(GPIOD, GPIO_PinSource0, GPIO_AF_FSMC);		// D2
-  GPIO_PinAFConfig(GPIOD, GPIO_PinSource1, GPIO_AF_FSMC);		// D3
-  GPIO_PinAFConfig(GPIOD, GPIO_PinSource4, GPIO_AF_FSMC);		// NOE -> RD
-  GPIO_PinAFConfig(GPIOD, GPIO_PinSource5, GPIO_AF_FSMC);		// NWE -> WR
-  GPIO_PinAFConfig(GPIOD, GPIO_PinSource7, GPIO_AF_FSMC);		// NE1 -> CS
-  GPIO_PinAFConfig(GPIOD, GPIO_PinSource8, GPIO_AF_FSMC);		// D13
-  GPIO_PinAFConfig(GPIOD, GPIO_PinSource9, GPIO_AF_FSMC);		// D14
-  GPIO_PinAFConfig(GPIOD, GPIO_PinSource10, GPIO_AF_FSMC);		// D15
-  GPIO_PinAFConfig(GPIOD, GPIO_PinSource11, GPIO_AF_FSMC);		// A16 -> RS
-  GPIO_PinAFConfig(GPIOD, GPIO_PinSource14, GPIO_AF_FSMC);		// D0
-  GPIO_PinAFConfig(GPIOD, GPIO_PinSource15, GPIO_AF_FSMC);		// D1
-
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_4 | GPIO_Pin_5 |
-                                  GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 |
-                                  GPIO_Pin_11 | GPIO_Pin_14 | GPIO_Pin_15;
-  
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-  GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
-  GPIO_Init(GPIOD, &GPIO_InitStructure);
-  */
 	GPIOMode(PinPort(PD0), PinBit(PD0) | PinBit(PD1) | PinBit(PD4) | PinBit(PD5) | PinBit(PD7) | PinBit(PD8)
 												 | PinBit(PD9) | PinBit(PD10) | PinBit(PD11) | PinBit(PD14) | PinBit(PD15), 
 												 ALTFUNC, HIGHSPEED, PUSHPULL, NOPULL);
 	GPIOAltFunc(PinPort(PD0), PinBit(PD0) | PinBit(PD1) | PinBit(PD4) | PinBit(PD5) | PinBit(PD7) | PinBit(PD8)
 												 | PinBit(PD9) | PinBit(PD10) | PinBit(PD11) | PinBit(PD14) | PinBit(PD15), GPIO_AF_FSMC);
 	
-	
-  GPIO_PinAFConfig(GPIOE, GPIO_PinSource7, GPIO_AF_FSMC);		// D4
-  GPIO_PinAFConfig(GPIOE, GPIO_PinSource8, GPIO_AF_FSMC);		// D5
-  GPIO_PinAFConfig(GPIOE, GPIO_PinSource9, GPIO_AF_FSMC);		// D6
-  GPIO_PinAFConfig(GPIOE, GPIO_PinSource10, GPIO_AF_FSMC);		// D7
-  GPIO_PinAFConfig(GPIOE, GPIO_PinSource11, GPIO_AF_FSMC);		// D8
-  GPIO_PinAFConfig(GPIOE, GPIO_PinSource12, GPIO_AF_FSMC);		// D9
-  GPIO_PinAFConfig(GPIOE, GPIO_PinSource13, GPIO_AF_FSMC);		// D10
-  GPIO_PinAFConfig(GPIOE, GPIO_PinSource14, GPIO_AF_FSMC);		// D11
-  GPIO_PinAFConfig(GPIOE, GPIO_PinSource15, GPIO_AF_FSMC);		// D12
-  
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 |
-                                  GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 |
-                                  GPIO_Pin_15;
-  
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-  GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
-
-  GPIO_Init(GPIOE, &GPIO_InitStructure);
-	
+	GPIOMode(PinPort(PE0), PinBit(PE7) | PinBit(PE8) | PinBit(PE9) | PinBit(PE10) | PinBit(PE11) | PinBit(PE12)
+												 | PinBit(PE13) | PinBit(PE14) | PinBit(PE15), 
+												 ALTFUNC, HIGHSPEED, PUSHPULL, NOPULL);
+	GPIOAltFunc(PinPort(PE0), PinBit(PE7) | PinBit(PE8) | PinBit(PE9) | PinBit(PE10) | PinBit(PE11)| PinBit(PE12)
+												 | PinBit(PE13) | PinBit(PE14) | PinBit(PE15), GPIO_AF_FSMC);
  	//
 	//  delay_us(300);
 //  FSMCConfig();
@@ -600,15 +566,8 @@ void SSD1289::init(void) {
 
   FSMC_NORSRAMInitTypeDef  FSMC_NORSRAMInitStructure;
   FSMC_NORSRAMTimingInitTypeDef FSMC_NORSRAMTimingInitStructure;
-  FSMC_NORSRAMTimingInitStructure.FSMC_AddressSetupTime = 0;  //0
-  FSMC_NORSRAMTimingInitStructure.FSMC_AddressHoldTime = 0;   //0   
-  FSMC_NORSRAMTimingInitStructure.FSMC_DataSetupTime = 2;     //3   
-  FSMC_NORSRAMTimingInitStructure.FSMC_BusTurnAroundDuration = 0;
-  FSMC_NORSRAMTimingInitStructure.FSMC_CLKDivision = 1;//1
-  FSMC_NORSRAMTimingInitStructure.FSMC_DataLatency = 0;
-  FSMC_NORSRAMTimingInitStructure.FSMC_AccessMode = FSMC_AccessMode_A;
-  
-  FSMC_NORSRAMInitStructure.FSMC_Bank = FSMC_Bank1_NORSRAM1;
+
+	FSMC_NORSRAMInitStructure.FSMC_Bank = FSMC_Bank1_NORSRAM1;
   FSMC_NORSRAMInitStructure.FSMC_DataAddressMux = FSMC_DataAddressMux_Disable;
   FSMC_NORSRAMInitStructure.FSMC_MemoryType = FSMC_MemoryType_SRAM;
   FSMC_NORSRAMInitStructure.FSMC_MemoryDataWidth = FSMC_MemoryDataWidth_16b;
@@ -622,8 +581,7 @@ void SSD1289::init(void) {
   FSMC_NORSRAMInitStructure.FSMC_ExtendedMode = FSMC_ExtendedMode_Disable;
   FSMC_NORSRAMInitStructure.FSMC_WriteBurst = FSMC_WriteBurst_Enable;//disable
   FSMC_NORSRAMInitStructure.FSMC_ReadWriteTimingStruct = &FSMC_NORSRAMTimingInitStructure;
-  
-  FSMC_NORSRAMInit(&FSMC_NORSRAMInitStructure);
+  	
   FSMC_NORSRAMTimingInitStructure.FSMC_AddressSetupTime = 0;    //0  
   FSMC_NORSRAMTimingInitStructure.FSMC_AddressHoldTime = 0;	//0   
   FSMC_NORSRAMTimingInitStructure.FSMC_DataSetupTime = 4;	//3   
@@ -632,22 +590,19 @@ void SSD1289::init(void) {
   FSMC_NORSRAMTimingInitStructure.FSMC_DataLatency = 0;
   FSMC_NORSRAMTimingInitStructure.FSMC_AccessMode = FSMC_AccessMode_A;	
   FSMC_NORSRAMInitStructure.FSMC_WriteTimingStruct = &FSMC_NORSRAMTimingInitStructure;
+	
   FSMC_NORSRAMInit(&FSMC_NORSRAMInitStructure);
-
   FSMC_NORSRAMCmd(FSMC_Bank1_NORSRAM1, ENABLE);
 //
 //  delay_us(300);
   TIM_Config();
-  BackLight(30);
-  
+  BackLight(33);
 }
 
 void SSD1289::CtrlLinesConfig(void)
 {
   GPIO_InitTypeDef GPIO_InitStructure;
-  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOG | 
-						   RCC_AHB1Periph_GPIOE | RCC_AHB1Periph_GPIOF, 
-						   ENABLE);
+  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOG | RCC_AHB1Periph_GPIOE | RCC_AHB1Periph_GPIOF, ENABLE);
   RCC_AHB3PeriphClockCmd(RCC_AHB3Periph_FSMC, ENABLE);
 
   GPIO_PinAFConfig(GPIOD, GPIO_PinSource0, GPIO_AF_FSMC);		// D2

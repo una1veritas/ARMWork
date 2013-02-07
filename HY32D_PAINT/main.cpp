@@ -10,8 +10,8 @@
 #define Delay(x)  delay_us((x)/10)
 
 
-char stringas[8];
-int xold,yold;
+//char stringas[8];
+//int xold,yold;
 
 spi spi2bus; // = {SPI2, PB13, PB14, PB15, PB12};
 TouchScreen tp(spi2bus, PB12, PD6);
@@ -28,10 +28,10 @@ int main(void)
 	spi_begin(&spi2bus);
 	tp.begin(tp.Portrait | tp.ReverseY);
 
-  Delay(0x3FFFFF);
+//  Delay(0x3FFFFF);
   lcd.init();
 	lcd.start();
-  Delay(0x3FFFFF);
+//  Delay(0x3FFFFF);
   //touch_init();
   lcd.clear(BLACK);
 
@@ -51,7 +51,7 @@ while(1)
   lcd.Pixel(tp.x+1, tp.y+1,WHITE);
 	 //
 	 sprintf(tmp, "x =% 5d, y =% 5d", tp.x, tp.y);
-	 lcd.textCursor(0, 4);
+	 lcd.textCursor(0, 3);
 	 lcd.print(tmp);
  }
 }
