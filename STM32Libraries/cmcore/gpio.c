@@ -115,6 +115,14 @@ void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
 }
 
 
+void GPIOAltFunc(GPIO_TypeDef * port, uint16_t pinbits, uint8_t pinaf) {
+	int i;
+	for(i = 0; (pinbits>>i) != 0 ; i++) {
+		if ( pinbits>>i & 1)
+			GPIO_PinAFConfig(port, PinSource(i), pinaf);
+	}
+}
+
 void GPIOWrite(GPIO_TypeDef * port, uint16_t bits) {
 	GPIO_Write(port, bits);
 }

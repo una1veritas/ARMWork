@@ -9,27 +9,14 @@
 #define POLY_X(Z)          ((int32_t)((Points + Z)->Y))
 #define ABS(X)  ((X) > 0 ? (X) : -(X))     
 
-  /* Global variables to set the written text color */
-__IO uint16_t TextColor = 0x0000;
-__IO uint16_t BackColor = 0xFFFF;
-__IO uint16_t asciisize = 16;
-uint16_t TimerPeriod    = 0;
-uint16_t Channel3Pulse  = 0;
 //****************************************************************************//
 //static void LCD_PolyLineRelativeClosed(pPoint Points, uint16_t PointCount, uint16_t Closed);
 //****************************************************************************//
 TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 TIM_OCInitTypeDef  TIM_OCInitStructure;
 //****************************************************************************//
-void SSD1289::init(void)
+void SSD1289::start(void)
 { 
-  CtrlLinesConfig();
-  Delay(3000);
-  FSMCConfig();
-  Delay(3000);
-  TIM_Config();
-  BackLight(100);
-  
   WriteReg(0x0007,0x0021);    Delay(50);
   WriteReg(0x0000,0x0001);    Delay(50);
   WriteReg(0x0007,0x0023);    Delay(50);
@@ -103,31 +90,31 @@ void SSD1289::DisplayOff(void)
   WriteReg(LCD_REG_7, 0x0000); 
 }
 
-void SSD1289::SetColors(__IO uint16_t _TextColor, __IO uint16_t _BackColor)
+void SSD1289::SetColors(uint16_t _TextColor, uint16_t _BackColor)
 {
   TextColor = _TextColor; 
   BackColor = _BackColor;
 }
 
-void SSD1289::GetColors(__IO uint16_t *_TextColor, __IO uint16_t *_BackColor)
+void SSD1289::GetColors(uint16_t *_TextColor, uint16_t *_BackColor)
 {
   *_TextColor = TextColor; *_BackColor = BackColor;
 }
 
-void SSD1289::SetTextColor(__IO uint16_t Color)
+void SSD1289::SetTextColor(uint16_t Color)
 {
   TextColor = Color;
 }
 
-void SSD1289::SetBackColor(__IO uint16_t Color)
+void SSD1289::SetBackColor(uint16_t Color)
 {
   BackColor = Color;
 }
 
 /* 8x8=8 12x12=12 8x16=16 12x12=14 16x24=24 */
-void SSD1289::CharSize(__IO uint16_t size)
+void SSD1289::textSize(uint16_t size)
 {
-  asciisize= size;
+  charsize= size;
 }
 
 void SSD1289::clear(uint16_t Color)
@@ -167,10 +154,10 @@ void SSD1289::Pixel(int16_t x, int16_t y,int16_t c)
 void SSD1289::PutChar(int16_t PosX, int16_t PosY, char c) {
 	textCursorX = PosX;
 	textCursorY = PosY;
-	PutChar(c);
+	print(c);
 }
 
-void SSD1289::PutChar(char c) 
+void SSD1289::print(char c) 
 {
 	uint8 width = 0;
 	uint8 height = 0;
@@ -182,7 +169,7 @@ void SSD1289::PutChar(char c)
   uint16  Buffer[24];
   uint16 TmpChar = 0;
 	
-  if(asciisize==8) {		
+  if(charsize==8) {		
 		width = 8;
 		height = 8;
 		GetASCIICode1(Buffer8,c);
@@ -198,7 +185,7 @@ void SSD1289::PutChar(char c)
 		}
   }
   //----------------------------------------------------------------------------
-    if(asciisize==12)
+    if(charsize==12)
   {
 //  uint8_t Buffer[12];
 //  uint8_t TmpChar = 0;
@@ -223,7 +210,7 @@ void SSD1289::PutChar(char c)
 		}
   }
   //----------------------------------------------------------------------------
-    if(asciisize==16)
+    if(charsize==16)
   {
 //  unsigned char Buffer[16];
 //  uint8_t TmpChar = 0;
@@ -248,7 +235,7 @@ void SSD1289::PutChar(char c)
 		}
   }
   //----------------------------------------------------------------------------
-      if(asciisize==14)
+      if(charsize==14)
   {
 //  short int  Buffer[12];
 //  uint16_t TmpChar = 0;
@@ -273,7 +260,7 @@ void SSD1289::PutChar(char c)
 	}
   }
   //----------------------------------------------------------------------------
-  if(asciisize==24) {
+  if(charsize==24) {
 //  short int  Buffer[24];
 //  uint16_t TmpChar = 0;
 		width = 16;
@@ -298,7 +285,7 @@ void SSD1289::PutChar(char c)
   //----------------------------------------------------------------------------
 
 	textCursorX += width;
-	if ( textCursorX > 240 - width ) {
+	if ( textCursorX > 240 - width or c == 0x0d or c == 0x0a) {
 		textCursorX = 0;
 		textCursorY += height + 1;
 	}
@@ -307,22 +294,16 @@ void SSD1289::PutChar(char c)
 	}
 }
 
-void SSD1289::StringLine(uint16_t PosX, uint16_t PosY, uint8_t *str) {
+void SSD1289::StringLine(uint16_t PosX, uint16_t PosY, const char *str) {
 	textCursorX = PosX;
 	textCursorY = PosY;	
-	StringLine(str);
+	print(str);
 }
 
-void SSD1289::StringLine(uint8_t *str)
-{
-	uint8_t TempChar;
-
-	do
-	{
-		TempChar = *str++;
-		PutChar(textCursorX, textCursorY, TempChar);
+void SSD1289::print(const char *str) {
+	while (*str != 0)	{
+		print(*str++);
 	}
-	while (*str != 0);
 }
 
 
@@ -555,6 +536,111 @@ void SSD1289::DrawUniLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
   }
 }
 
+void SSD1289::init(void) {
+  // CtrlLinesConfig();
+  GPIO_InitTypeDef GPIO_InitStructure;
+  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOG | 
+						   RCC_AHB1Periph_GPIOE | RCC_AHB1Periph_GPIOF, 
+						   ENABLE);
+/*
+  GPIO_PinAFConfig(GPIOD, GPIO_PinSource0, GPIO_AF_FSMC);		// D2
+  GPIO_PinAFConfig(GPIOD, GPIO_PinSource1, GPIO_AF_FSMC);		// D3
+  GPIO_PinAFConfig(GPIOD, GPIO_PinSource4, GPIO_AF_FSMC);		// NOE -> RD
+  GPIO_PinAFConfig(GPIOD, GPIO_PinSource5, GPIO_AF_FSMC);		// NWE -> WR
+  GPIO_PinAFConfig(GPIOD, GPIO_PinSource7, GPIO_AF_FSMC);		// NE1 -> CS
+  GPIO_PinAFConfig(GPIOD, GPIO_PinSource8, GPIO_AF_FSMC);		// D13
+  GPIO_PinAFConfig(GPIOD, GPIO_PinSource9, GPIO_AF_FSMC);		// D14
+  GPIO_PinAFConfig(GPIOD, GPIO_PinSource10, GPIO_AF_FSMC);		// D15
+  GPIO_PinAFConfig(GPIOD, GPIO_PinSource11, GPIO_AF_FSMC);		// A16 -> RS
+  GPIO_PinAFConfig(GPIOD, GPIO_PinSource14, GPIO_AF_FSMC);		// D0
+  GPIO_PinAFConfig(GPIOD, GPIO_PinSource15, GPIO_AF_FSMC);		// D1
+
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_4 | GPIO_Pin_5 |
+                                  GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 |
+                                  GPIO_Pin_11 | GPIO_Pin_14 | GPIO_Pin_15;
+  
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+  GPIO_Init(GPIOD, &GPIO_InitStructure);
+  */
+	GPIOMode(PinPort(PD0), PinBit(PD0) | PinBit(PD1) | PinBit(PD4) | PinBit(PD5) | PinBit(PD7) | PinBit(PD8)
+												 | PinBit(PD9) | PinBit(PD10) | PinBit(PD11) | PinBit(PD14) | PinBit(PD15), 
+												 ALTFUNC, HIGHSPEED, PUSHPULL, NOPULL);
+	GPIOAltFunc(PinPort(PD0), PinBit(PD0) | PinBit(PD1) | PinBit(PD4) | PinBit(PD5) | PinBit(PD7) | PinBit(PD8)
+												 | PinBit(PD9) | PinBit(PD10) | PinBit(PD11) | PinBit(PD14) | PinBit(PD15), GPIO_AF_FSMC);
+	
+	
+  GPIO_PinAFConfig(GPIOE, GPIO_PinSource7, GPIO_AF_FSMC);		// D4
+  GPIO_PinAFConfig(GPIOE, GPIO_PinSource8, GPIO_AF_FSMC);		// D5
+  GPIO_PinAFConfig(GPIOE, GPIO_PinSource9, GPIO_AF_FSMC);		// D6
+  GPIO_PinAFConfig(GPIOE, GPIO_PinSource10, GPIO_AF_FSMC);		// D7
+  GPIO_PinAFConfig(GPIOE, GPIO_PinSource11, GPIO_AF_FSMC);		// D8
+  GPIO_PinAFConfig(GPIOE, GPIO_PinSource12, GPIO_AF_FSMC);		// D9
+  GPIO_PinAFConfig(GPIOE, GPIO_PinSource13, GPIO_AF_FSMC);		// D10
+  GPIO_PinAFConfig(GPIOE, GPIO_PinSource14, GPIO_AF_FSMC);		// D11
+  GPIO_PinAFConfig(GPIOE, GPIO_PinSource15, GPIO_AF_FSMC);		// D12
+  
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 |
+                                  GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 |
+                                  GPIO_Pin_15;
+  
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+
+  GPIO_Init(GPIOE, &GPIO_InitStructure);
+	
+ 	//
+	//  delay_us(300);
+//  FSMCConfig();
+  RCC_AHB3PeriphClockCmd(RCC_AHB3Periph_FSMC, ENABLE);
+
+  FSMC_NORSRAMInitTypeDef  FSMC_NORSRAMInitStructure;
+  FSMC_NORSRAMTimingInitTypeDef FSMC_NORSRAMTimingInitStructure;
+  FSMC_NORSRAMTimingInitStructure.FSMC_AddressSetupTime = 0;  //0
+  FSMC_NORSRAMTimingInitStructure.FSMC_AddressHoldTime = 0;   //0   
+  FSMC_NORSRAMTimingInitStructure.FSMC_DataSetupTime = 2;     //3   
+  FSMC_NORSRAMTimingInitStructure.FSMC_BusTurnAroundDuration = 0;
+  FSMC_NORSRAMTimingInitStructure.FSMC_CLKDivision = 1;//1
+  FSMC_NORSRAMTimingInitStructure.FSMC_DataLatency = 0;
+  FSMC_NORSRAMTimingInitStructure.FSMC_AccessMode = FSMC_AccessMode_A;
+  
+  FSMC_NORSRAMInitStructure.FSMC_Bank = FSMC_Bank1_NORSRAM1;
+  FSMC_NORSRAMInitStructure.FSMC_DataAddressMux = FSMC_DataAddressMux_Disable;
+  FSMC_NORSRAMInitStructure.FSMC_MemoryType = FSMC_MemoryType_SRAM;
+  FSMC_NORSRAMInitStructure.FSMC_MemoryDataWidth = FSMC_MemoryDataWidth_16b;
+  FSMC_NORSRAMInitStructure.FSMC_BurstAccessMode = FSMC_BurstAccessMode_Disable;
+  FSMC_NORSRAMInitStructure.FSMC_WaitSignalPolarity = FSMC_WaitSignalPolarity_Low;
+  FSMC_NORSRAMInitStructure.FSMC_WrapMode = FSMC_WrapMode_Disable;
+  FSMC_NORSRAMInitStructure.FSMC_WaitSignalActive = FSMC_WaitSignalActive_BeforeWaitState;
+  FSMC_NORSRAMInitStructure.FSMC_WriteOperation = FSMC_WriteOperation_Enable;
+  FSMC_NORSRAMInitStructure.FSMC_WaitSignal = FSMC_WaitSignal_Disable;
+  FSMC_NORSRAMInitStructure.FSMC_AsynchronousWait = FSMC_AsynchronousWait_Disable;
+  FSMC_NORSRAMInitStructure.FSMC_ExtendedMode = FSMC_ExtendedMode_Disable;
+  FSMC_NORSRAMInitStructure.FSMC_WriteBurst = FSMC_WriteBurst_Enable;//disable
+  FSMC_NORSRAMInitStructure.FSMC_ReadWriteTimingStruct = &FSMC_NORSRAMTimingInitStructure;
+  
+  FSMC_NORSRAMInit(&FSMC_NORSRAMInitStructure);
+  FSMC_NORSRAMTimingInitStructure.FSMC_AddressSetupTime = 0;    //0  
+  FSMC_NORSRAMTimingInitStructure.FSMC_AddressHoldTime = 0;	//0   
+  FSMC_NORSRAMTimingInitStructure.FSMC_DataSetupTime = 4;	//3   
+  FSMC_NORSRAMTimingInitStructure.FSMC_BusTurnAroundDuration = 0;
+  FSMC_NORSRAMTimingInitStructure.FSMC_CLKDivision = 1;//1
+  FSMC_NORSRAMTimingInitStructure.FSMC_DataLatency = 0;
+  FSMC_NORSRAMTimingInitStructure.FSMC_AccessMode = FSMC_AccessMode_A;	
+  FSMC_NORSRAMInitStructure.FSMC_WriteTimingStruct = &FSMC_NORSRAMTimingInitStructure;
+  FSMC_NORSRAMInit(&FSMC_NORSRAMInitStructure);
+
+  FSMC_NORSRAMCmd(FSMC_Bank1_NORSRAM1, ENABLE);
+//
+//  delay_us(300);
+  TIM_Config();
+  BackLight(30);
+  
+}
 
 void SSD1289::CtrlLinesConfig(void)
 {

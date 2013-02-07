@@ -30,15 +30,16 @@ int main(void)
 
   Delay(0x3FFFFF);
   lcd.init();
+	lcd.start();
   Delay(0x3FFFFF);
   //touch_init();
   lcd.clear(BLACK);
 
-	lcd.CharSize(16);
+	lcd.textSize(16);
   lcd.SetTextColor(WHITE);
   lcd.SetBackColor(BLACK);
-//	LCD_SetCursor(10, 10);
-	lcd.StringLine((uint8 *) "Resistive touch screen driver.");
+	lcd.print("Hi.\n");
+	lcd.print("Resistive touch screen driver.");
   
 
 while(1)
@@ -50,8 +51,8 @@ while(1)
   lcd.Pixel(tp.x+1, tp.y+1,WHITE);
 	 //
 	 sprintf(tmp, "x =% 5d, y =% 5d", tp.x, tp.y);
-	 lcd.setTextCursor(0, 48);
-	 lcd.StringLine((uint8 *) tmp);
+	 lcd.textCursor(0, 4);
+	 lcd.print(tmp);
  }
 }
 

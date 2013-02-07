@@ -165,6 +165,12 @@ class SSD1289 {
 #define ASSEMBLE_RGB(R ,G, B)    ((((R)& 0xF8) << 8) | (((G) & 0xFC) << 3) | (((B) & 0xF8) >> 3)) 
 private:
 	uint16 textCursorX, textCursorY;
+  /* Global variables to set the written text color */
+	uint16_t TextColor ;
+	uint16_t BackColor ;
+	uint16_t charsize ;
+	uint16_t TimerPeriod  ;
+	uint16_t Channel3Pulse ;
 
 private:
 	void TIM_Config(void);
@@ -178,33 +184,40 @@ private:
 
 	void PolyLineRelativeClosed(pPoint Points, uint16_t PointCount, uint16_t Closed);
 
+
 public:
 	SSD1289() {
 		textCursorX = 0;
 		textCursorY = 0;
+		uint16_t TextColor = 0x0000;
+		uint16_t BackColor = 0xFFFF;
+		uint16_t charsize = 12;
+		uint16_t TimerPeriod    = 0;
+		uint16_t Channel3Pulse  = 0;
 	}
 		
-	void init(void);
+	void init();
+	void start(void);
 	void DisplayOn(void);
 	void DisplayOff(void);
 	void BackLight(int procentai);
 
-	void SetColors(__IO uint16_t _TextColor, __IO uint16_t _BackColor); 
-	void GetColors(__IO uint16_t *_TextColor, __IO uint16_t *_BackColor);
-	void SetTextColor(__IO uint16_t Color);
-	void SetBackColor(__IO uint16_t Color);
+	void SetColors(uint16_t _TextColor, uint16_t _BackColor); 
+	void GetColors(uint16_t *_TextColor, uint16_t *_BackColor);
+	void SetTextColor(uint16_t Color);
+	void SetBackColor(uint16_t Color);
 	void clear(uint16_t Color);
 	void SetCursor(uint16_t Xpos, uint16_t Ypos);
-	void CharSize(__IO uint16_t size);
-	void setTextCursor(uint16 x, uint16 y) { textCursorX = x; textCursorY = y; }
+
+	void textSize(uint16_t size);
+	void textCursor(uint16 c, uint16 r) { textCursorX = c*charsize; textCursorY = r*charsize; }
+	void PutChar(int16_t PosX, int16_t PosY, char c);
+	void print(char c);
+	void StringLine(uint16_t PosX, uint16_t PosY, const char *str);
+	void print(const char *str);
 
 	void PutPixel(int16_t x, int16_t y);
 	void Pixel(int16_t x, int16_t y,int16_t c);
-
-	void PutChar(int16_t PosX, int16_t PosY, char c);
-	void PutChar(char c);
-	void StringLine(uint16_t PosX, uint16_t PosY, uint8_t *str);
-	void StringLine(uint8_t *str);
 
 	void DrawLine(uint16_t Xpos, uint16_t Ypos, uint16_t Length, uint8_t Direction);
 	void DrawRect(uint16_t Xpos, uint16_t Ypos, uint8_t Height, uint16_t Width);
