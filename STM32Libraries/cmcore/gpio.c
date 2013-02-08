@@ -22,7 +22,7 @@ uint16_t Pin[] = { GPIO_Pin_0, GPIO_Pin_1, GPIO_Pin_2, GPIO_Pin_3,
 		GPIO_Pin_15, GPIO_Pin_All };
 
 GPIO_TypeDef * PinPort(GPIOPin portpin) {
-	return Port[portpin >> 8 & 0x0f];
+	return Port[portpin >> 4 & 0x0f];
 }
 
 uint16_t PinBit(GPIOPin portpin) {
@@ -37,26 +37,26 @@ void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode) {
 
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	RCC_AHB1PeriphClockCmd(PortPeriph[portpin>>8 & 0x0f], ENABLE);
+	RCC_AHB1PeriphClockCmd(PortPeriph[portpin>>4 & 0x0f], ENABLE);
 	
 	GPIO_StructInit(&GPIO_InitStructure);
 	
 	GPIO_InitStructure.GPIO_Pin = PinBit(portpin);
 	GPIO_InitStructure.GPIO_Mode = mode;
 	//
-	GPIO_Init(Port[portpin>>8 & 0x0f], &GPIO_InitStructure);
+	GPIO_Init(Port[portpin>>4 & 0x0f], &GPIO_InitStructure);
 }
 
 void digitalWrite(GPIOPin portpin, uint8_t bit) {
 	GPIO_InitTypeDef GPIO_InitStructure;
-	GPIO_TypeDef * port = Port[portpin>>8 & 0x0f];
+	GPIO_TypeDef * port = Port[portpin>>4 & 0x0f];
 	uint8_t mode = (port->MODER) >> (PinSource(portpin) * 2) & 0x03;
 	if (mode == GPIO_Mode_OUT) {
 		if (bit) {
 		//? Bit_SET : Bit_RESET ));
-			GPIO_SetBits(Port[portpin >>8 & 0x0f], PinBit(portpin));
+			GPIO_SetBits(port, PinBit(portpin));
 		} else {
-			GPIO_ResetBits(Port[portpin >>8 & 0x0f], PinBit(portpin));
+			GPIO_ResetBits(port, PinBit(portpin));
 		}
 	} else {
 		GPIO_StructInit(&GPIO_InitStructure);
@@ -65,12 +65,12 @@ void digitalWrite(GPIOPin portpin, uint8_t bit) {
 		GPIO_InitStructure.GPIO_Mode = (GPIOMode_TypeDef) (mode & 0x3);
 		GPIO_InitStructure.GPIO_PuPd = (GPIOPuPd_TypeDef)(bit & 0x3);
 	//
-		GPIO_Init(Port[portpin>>8 & 0x0f], &GPIO_InitStructure);
+		GPIO_Init(port, &GPIO_InitStructure);
 	}
 }
 
 uint8_t digitalRead(GPIOPin portpin) {
-	GPIO_TypeDef * port = Port[portpin>>8 & 0x0f];
+	GPIO_TypeDef * port = Port[portpin>>4 & 0x0f];
 	uint8_t mode = (port->MODER) >> (PinSource(portpin) * 2);
 	if (mode == GPIO_Mode_OUT)
 		return (GPIO_ReadOutputDataBit(port, PinBit(portpin)) ? SET : RESET);
@@ -114,6 +114,14 @@ void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
 	GPIO_Init(port, &GPIO_InitStructure);
 }
 
+
+void GPIOAltFunc(GPIO_TypeDef * port, uint16_t pinbits, uint8_t pinaf) {
+	int i;
+	for(i = 0; (pinbits>>i) != 0 ; i++) {
+		if ( pinbits>>i & 1)
+			GPIO_PinAFConfig(port, PinSource(i), pinaf);
+	}
+}
 
 void GPIOWrite(GPIO_TypeDef * port, uint16_t bits) {
 	GPIO_Write(port, bits);
