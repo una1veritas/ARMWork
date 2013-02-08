@@ -36,7 +36,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm324xg_eval.h"
-#include "../Common/fonts.h"
+#include "./fonts.h"
 
 /** @addtogroup Utilities
   * @{

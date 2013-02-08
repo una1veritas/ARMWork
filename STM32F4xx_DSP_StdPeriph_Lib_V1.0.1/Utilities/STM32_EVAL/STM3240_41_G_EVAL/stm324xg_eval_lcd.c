@@ -136,8 +136,8 @@ void LCD_DeInit(void)
    
 /*-- GPIO Configuration ------------------------------------------------------*/
   /* SRAM Data lines configuration */
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14 | GPIO_Pin_15 | GPIO_Pin_0 | GPIO_Pin_1 |
-                                GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10 ;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_8 | GPIO_Pin_9 |
+                                GPIO_Pin_10 | GPIO_Pin_14 | GPIO_Pin_15;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
   GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
   GPIO_Init(GPIOD, &GPIO_InitStructure);
@@ -167,7 +167,7 @@ void LCD_DeInit(void)
   GPIO_PinAFConfig(GPIOE, GPIO_PinSource14 , GPIO_AF_MCO);
   GPIO_PinAFConfig(GPIOE, GPIO_PinSource15 , GPIO_AF_MCO);
 
-  /* SRAM Address lines configuration *//*
+  /* SRAM Address lines configuration */
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | 
                                 GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_12 | GPIO_Pin_13 | 
                                 GPIO_Pin_14 | GPIO_Pin_15;
@@ -182,7 +182,7 @@ void LCD_DeInit(void)
   GPIO_PinAFConfig(GPIOF,GPIO_PinSource13, GPIO_AF_MCO);
   GPIO_PinAFConfig(GPIOF,GPIO_PinSource14, GPIO_AF_MCO);
   GPIO_PinAFConfig(GPIOF,GPIO_PinSource15, GPIO_AF_MCO);
-	
+
 
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | 
                                 GPIO_Pin_4 | GPIO_Pin_5;
@@ -195,14 +195,14 @@ void LCD_DeInit(void)
   GPIO_PinAFConfig(GPIOG,GPIO_PinSource3, GPIO_AF_MCO);
   GPIO_PinAFConfig(GPIOG,GPIO_PinSource4, GPIO_AF_MCO);
   GPIO_PinAFConfig(GPIOG,GPIO_PinSource5, GPIO_AF_MCO);
-*/
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11 ;/*| GPIO_Pin_12 | GPIO_Pin_13; */
+
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13; 
 
   GPIO_Init(GPIOD, &GPIO_InitStructure);
 
   GPIO_PinAFConfig(GPIOD,GPIO_PinSource11, GPIO_AF_MCO);
-//  GPIO_PinAFConfig(GPIOD,GPIO_PinSource12, GPIO_AF_MCO);
-//  GPIO_PinAFConfig(GPIOD,GPIO_PinSource13, GPIO_AF_MCO);
+  GPIO_PinAFConfig(GPIOD,GPIO_PinSource12, GPIO_AF_MCO);
+  GPIO_PinAFConfig(GPIOD,GPIO_PinSource13, GPIO_AF_MCO);
 
   /* NOE and NWE configuration */  
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 |GPIO_Pin_5;
