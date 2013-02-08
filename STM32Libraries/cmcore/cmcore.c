@@ -21,7 +21,7 @@
 
 void cmcore_init() {
 	// starting delay/millis system by timer2
-	TIM2_delay_start();
+	TIM2_delaytimer_start();
 #ifdef STDSERIAL
 	usart_init(&stdserial, STDUSART, STDRX, STDTX);
 	usart_begin(&stdserial, STDBAUD);
