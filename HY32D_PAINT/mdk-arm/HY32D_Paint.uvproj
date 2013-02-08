@@ -389,7 +389,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Source Group 1</GroupName>
+          <GroupName>main Source Group</GroupName>
           <Files>
             <File>
               <FileName>startup_stm32f4xx.s</FileName>
@@ -427,16 +427,6 @@
               <FilePath>..\main.cpp</FilePath>
             </File>
             <File>
-              <FileName>AsciiLib.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\GLCD\AsciiLib.c</FilePath>
-            </File>
-            <File>
-              <FileName>AsciiLib.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\GLCD\AsciiLib.h</FilePath>
-            </File>
-            <File>
               <FileName>SSD1289.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\GLCD\SSD1289.h</FilePath>
@@ -455,6 +445,41 @@
               <FileName>SSD1289.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\GLCD\SSD1289.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\GLCD\fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm324xg_eval.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\GLCD\stm324xg_eval.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm324xg_eval_lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\GLCD\stm324xg_eval_lcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>fonts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\GLCD\fonts.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm324xg_eval.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\GLCD\stm324xg_eval.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm324xg_eval_lcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\GLCD\stm324xg_eval_lcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_eval_legacy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\GLCD\stm32_eval_legacy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -510,6 +535,11 @@
               <FileName>stm32f4xx_exti.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_fsmc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h</FilePath>
             </File>
           </Files>
         </Group>
