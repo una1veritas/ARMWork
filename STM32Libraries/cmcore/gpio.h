@@ -163,7 +163,8 @@ GPIO_TypeDef * PinPort(GPIOPin portpin);
 uint16_t PinBit(GPIOPin portpin);
 uint8_t PinSource(GPIOPin portpin);
 
-void GPIOWrite(GPIO_TypeDef * port, uint16_t pinbits);
+//void GPIOWrite(GPIO_TypeDef * port, uint16_t pinbits);
+void GPIOWrite(GPIO_TypeDef * port, uint16_t maskbits, uint16_t bits);
 void GPIOMode(GPIO_TypeDef * port, uint16_t pinbits, GPIOMode_TypeDef mode,
               GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd);
 void GPIOAltFunc(GPIO_TypeDef * port, uint16_t pinbits, uint8_t GPIOType_AF);
