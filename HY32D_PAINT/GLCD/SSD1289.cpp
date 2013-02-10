@@ -3,7 +3,7 @@
 
 #define LCD_REG      (*((volatile unsigned short *) 0x60000000)) 
 #define LCD_RAM      (*((volatile unsigned short *) 0x60020000)) 
-#define LCD_A16      (*((volatile unsigned short *) 0x60010000)) 
+#define LCD_REG_READ      (*((volatile unsigned short *) (0x60000000 | (1<<16)))) 
 
 #define MAX_POLY_CORNERS   200
 #define POLY_Y(Z)          ((int32_t)((Points + Z)->X))
@@ -18,7 +18,7 @@ TIM_OCInitTypeDef  TIM_OCInitStructure;
 //****************************************************************************//
 void SSD1289::start(void)
 { 
-	deviceID = ReadReg(0x0000);		/* Read LCD ID	*/	
+	deviceCode = ReadReg(0x0000);		/* Read LCD ID	*/	
 
   WriteReg(0x0007,0x0021);    Delay(50);
   WriteReg(0x0000,0x0001);    Delay(50);
@@ -86,7 +86,7 @@ void SSD1289::WriteReg(uint8_t LCD_Reg, uint16_t LCD_RegValue)
 uint16 SSD1289::ReadReg(uint8_t LCD_Reg)
 {
   LCD_REG = LCD_Reg;
-  volatile uint16 t = LCD_A16;
+  volatile uint16 t = LCD_REG_READ;
 	return t;
 }
 
@@ -547,7 +547,16 @@ void SSD1289::DrawUniLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 }
 
 void SSD1289::init(void) {
-  // CtrlLinesConfig();
+  CtrlLinesConfig();
+	//  delay_us(300);
+  FSMCConfig();
+//  delay_us(300);
+  TIM_Config();
+  BackLight(33);
+}
+
+void SSD1289::CtrlLinesConfig(void)
+{
 	GPIOMode(PinPort(PD0), PinBit(PD0) | PinBit(PD1) | PinBit(PD4) | PinBit(PD5) | PinBit(PD7) | PinBit(PD8)
 												 | PinBit(PD9) | PinBit(PD10) | PinBit(PD11) | PinBit(PD14) | PinBit(PD15), 
 												 ALTFUNC, HIGHSPEED, PUSHPULL, NOPULL);
@@ -559,51 +568,10 @@ void SSD1289::init(void) {
 												 ALTFUNC, HIGHSPEED, PUSHPULL, NOPULL);
 	GPIOAltFunc(PinPort(PE0), PinBit(PE7) | PinBit(PE8) | PinBit(PE9) | PinBit(PE10) | PinBit(PE11)| PinBit(PE12)
 												 | PinBit(PE13) | PinBit(PE14) | PinBit(PE15), GPIO_AF_FSMC);
- 	//
-	//  delay_us(300);
-//  FSMCConfig();
-  RCC_AHB3PeriphClockCmd(RCC_AHB3Periph_FSMC, ENABLE);
-
-  FSMC_NORSRAMInitTypeDef  FSMC_NORSRAMInitStructure;
-  FSMC_NORSRAMTimingInitTypeDef FSMC_NORSRAMTimingInitStructure;
-
-	FSMC_NORSRAMInitStructure.FSMC_Bank = FSMC_Bank1_NORSRAM1;
-  FSMC_NORSRAMInitStructure.FSMC_DataAddressMux = FSMC_DataAddressMux_Disable;
-  FSMC_NORSRAMInitStructure.FSMC_MemoryType = FSMC_MemoryType_SRAM;
-  FSMC_NORSRAMInitStructure.FSMC_MemoryDataWidth = FSMC_MemoryDataWidth_16b;
-  FSMC_NORSRAMInitStructure.FSMC_BurstAccessMode = FSMC_BurstAccessMode_Disable;
-  FSMC_NORSRAMInitStructure.FSMC_WaitSignalPolarity = FSMC_WaitSignalPolarity_Low;
-  FSMC_NORSRAMInitStructure.FSMC_WrapMode = FSMC_WrapMode_Disable;
-  FSMC_NORSRAMInitStructure.FSMC_WaitSignalActive = FSMC_WaitSignalActive_BeforeWaitState;
-  FSMC_NORSRAMInitStructure.FSMC_WriteOperation = FSMC_WriteOperation_Enable;
-  FSMC_NORSRAMInitStructure.FSMC_WaitSignal = FSMC_WaitSignal_Disable;
-  FSMC_NORSRAMInitStructure.FSMC_AsynchronousWait = FSMC_AsynchronousWait_Disable;
-  FSMC_NORSRAMInitStructure.FSMC_ExtendedMode = FSMC_ExtendedMode_Disable;
-  FSMC_NORSRAMInitStructure.FSMC_WriteBurst = FSMC_WriteBurst_Enable;//disable
-  FSMC_NORSRAMInitStructure.FSMC_ReadWriteTimingStruct = &FSMC_NORSRAMTimingInitStructure;
-  	
-  FSMC_NORSRAMTimingInitStructure.FSMC_AddressSetupTime = 0;    //0  
-  FSMC_NORSRAMTimingInitStructure.FSMC_AddressHoldTime = 0;	//0   
-  FSMC_NORSRAMTimingInitStructure.FSMC_DataSetupTime = 4;	//3   
-  FSMC_NORSRAMTimingInitStructure.FSMC_BusTurnAroundDuration = 0;
-  FSMC_NORSRAMTimingInitStructure.FSMC_CLKDivision = 1;//1
-  FSMC_NORSRAMTimingInitStructure.FSMC_DataLatency = 0;
-  FSMC_NORSRAMTimingInitStructure.FSMC_AccessMode = FSMC_AccessMode_A;	
-  FSMC_NORSRAMInitStructure.FSMC_WriteTimingStruct = &FSMC_NORSRAMTimingInitStructure;
-	
-  FSMC_NORSRAMInit(&FSMC_NORSRAMInitStructure);
-  FSMC_NORSRAMCmd(FSMC_Bank1_NORSRAM1, ENABLE);
-//
-//  delay_us(300);
-  TIM_Config();
-  BackLight(33);
-}
-
-void SSD1289::CtrlLinesConfig(void)
-{
+/*
   GPIO_InitTypeDef GPIO_InitStructure;
   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOG | RCC_AHB1Periph_GPIOE | RCC_AHB1Periph_GPIOF, ENABLE);
-  RCC_AHB3PeriphClockCmd(RCC_AHB3Periph_FSMC, ENABLE);
+ // RCC_AHB3PeriphClockCmd(RCC_AHB3Periph_FSMC, ENABLE);
 
   GPIO_PinAFConfig(GPIOD, GPIO_PinSource0, GPIO_AF_FSMC);		// D2
   GPIO_PinAFConfig(GPIOD, GPIO_PinSource1, GPIO_AF_FSMC);		// D3
@@ -647,49 +615,60 @@ void SSD1289::CtrlLinesConfig(void)
   GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
 
   GPIO_Init(GPIOE, &GPIO_InitStructure);
-  
+*/  
 }
 
 
 void SSD1289::FSMCConfig(void)
 {
-  FSMC_NORSRAMInitTypeDef  FSMC_NORSRAMInitStructure;
-  FSMC_NORSRAMTimingInitTypeDef FSMC_NORSRAMTimingInitStructure;
-  FSMC_NORSRAMTimingInitStructure.FSMC_AddressSetupTime = 0;  //0
-  FSMC_NORSRAMTimingInitStructure.FSMC_AddressHoldTime = 0;   //0   
-  FSMC_NORSRAMTimingInitStructure.FSMC_DataSetupTime = 2;     //3   
-  FSMC_NORSRAMTimingInitStructure.FSMC_BusTurnAroundDuration = 0;
-  FSMC_NORSRAMTimingInitStructure.FSMC_CLKDivision = 1;//1
-  FSMC_NORSRAMTimingInitStructure.FSMC_DataLatency = 0;
-  FSMC_NORSRAMTimingInitStructure.FSMC_AccessMode = FSMC_AccessMode_A;
-  
-  FSMC_NORSRAMInitStructure.FSMC_Bank = FSMC_Bank1_NORSRAM1;
-  FSMC_NORSRAMInitStructure.FSMC_DataAddressMux = FSMC_DataAddressMux_Disable;
-  FSMC_NORSRAMInitStructure.FSMC_MemoryType = FSMC_MemoryType_SRAM;
-  FSMC_NORSRAMInitStructure.FSMC_MemoryDataWidth = FSMC_MemoryDataWidth_16b;
-  FSMC_NORSRAMInitStructure.FSMC_BurstAccessMode = FSMC_BurstAccessMode_Disable;
-  FSMC_NORSRAMInitStructure.FSMC_WaitSignalPolarity = FSMC_WaitSignalPolarity_Low;
-  FSMC_NORSRAMInitStructure.FSMC_WrapMode = FSMC_WrapMode_Disable;
-  FSMC_NORSRAMInitStructure.FSMC_WaitSignalActive = FSMC_WaitSignalActive_BeforeWaitState;
-  FSMC_NORSRAMInitStructure.FSMC_WriteOperation = FSMC_WriteOperation_Enable;
-  FSMC_NORSRAMInitStructure.FSMC_WaitSignal = FSMC_WaitSignal_Disable;
-  FSMC_NORSRAMInitStructure.FSMC_AsynchronousWait = FSMC_AsynchronousWait_Disable;
-  FSMC_NORSRAMInitStructure.FSMC_ExtendedMode = FSMC_ExtendedMode_Disable;
-  FSMC_NORSRAMInitStructure.FSMC_WriteBurst = FSMC_WriteBurst_Enable;//disable
-  FSMC_NORSRAMInitStructure.FSMC_ReadWriteTimingStruct = &FSMC_NORSRAMTimingInitStructure;
-  
-  FSMC_NORSRAMInit(&FSMC_NORSRAMInitStructure);
-  FSMC_NORSRAMTimingInitStructure.FSMC_AddressSetupTime = 0;    //0  
-  FSMC_NORSRAMTimingInitStructure.FSMC_AddressHoldTime = 0;	//0   
-  FSMC_NORSRAMTimingInitStructure.FSMC_DataSetupTime = 4;	//3   
-  FSMC_NORSRAMTimingInitStructure.FSMC_BusTurnAroundDuration = 0;
-  FSMC_NORSRAMTimingInitStructure.FSMC_CLKDivision = 1;//1
-  FSMC_NORSRAMTimingInitStructure.FSMC_DataLatency = 0;
-  FSMC_NORSRAMTimingInitStructure.FSMC_AccessMode = FSMC_AccessMode_A;	
-  FSMC_NORSRAMInitStructure.FSMC_WriteTimingStruct = &FSMC_NORSRAMTimingInitStructure;
-  FSMC_NORSRAMInit(&FSMC_NORSRAMInitStructure);
+	FSMC_NORSRAMInitTypeDef  FSMC_NORSRAMInitStructure;
+	FSMC_NORSRAMTimingInitTypeDef FSMC_NORSRAMTimingInitStructure;
+	
+  RCC_AHB3PeriphClockCmd(RCC_AHB3Periph_FSMC, ENABLE);
 
-  FSMC_NORSRAMCmd(FSMC_Bank1_NORSRAM1, ENABLE);
+	/* FSMC Read/Write Timing */
+	FSMC_NORSRAMTimingInitStructure.FSMC_AddressSetupTime = 5;  /* Address Setup Time  */
+	FSMC_NORSRAMTimingInitStructure.FSMC_AddressHoldTime = 0;	   
+	FSMC_NORSRAMTimingInitStructure.FSMC_DataSetupTime = 5;     /* Data Setup Time */
+	FSMC_NORSRAMTimingInitStructure.FSMC_BusTurnAroundDuration = 0x00;
+	FSMC_NORSRAMTimingInitStructure.FSMC_CLKDivision = 0x00;
+	FSMC_NORSRAMTimingInitStructure.FSMC_DataLatency = 0x00;
+	FSMC_NORSRAMTimingInitStructure.FSMC_AccessMode = FSMC_AccessMode_A;	/* FSMC Access Mode */
+	
+	FSMC_NORSRAMInitStructure.FSMC_Bank = FSMC_Bank1_NORSRAM4;
+	FSMC_NORSRAMInitStructure.FSMC_DataAddressMux = FSMC_DataAddressMux_Disable;
+	FSMC_NORSRAMInitStructure.FSMC_MemoryType = FSMC_MemoryType_SRAM;
+	FSMC_NORSRAMInitStructure.FSMC_MemoryDataWidth = FSMC_MemoryDataWidth_16b;
+	FSMC_NORSRAMInitStructure.FSMC_BurstAccessMode = FSMC_BurstAccessMode_Disable;
+	FSMC_NORSRAMInitStructure.FSMC_WaitSignalPolarity = FSMC_WaitSignalPolarity_Low;
+	FSMC_NORSRAMInitStructure.FSMC_WrapMode = FSMC_WrapMode_Disable;
+	FSMC_NORSRAMInitStructure.FSMC_WaitSignalActive = FSMC_WaitSignalActive_BeforeWaitState;
+	FSMC_NORSRAMInitStructure.FSMC_WriteOperation = FSMC_WriteOperation_Enable;
+	FSMC_NORSRAMInitStructure.FSMC_WaitSignal = FSMC_WaitSignal_Disable;
+	FSMC_NORSRAMInitStructure.FSMC_AsynchronousWait = FSMC_AsynchronousWait_Disable;
+	FSMC_NORSRAMInitStructure.FSMC_ExtendedMode = FSMC_ExtendedMode_Disable;
+	FSMC_NORSRAMInitStructure.FSMC_WriteBurst = FSMC_WriteBurst_Disable;
+	
+	FSMC_NORSRAMInitStructure.FSMC_ReadWriteTimingStruct = &FSMC_NORSRAMTimingInitStructure;
+	
+	FSMC_NORSRAMInit(&FSMC_NORSRAMInitStructure); 
+	
+	/* FSMC Write Timing */
+	FSMC_NORSRAMTimingInitStructure.FSMC_AddressSetupTime = 15;//2;//1;   /* Address Setup Time */
+	FSMC_NORSRAMTimingInitStructure.FSMC_AddressHoldTime = 0;	   
+	FSMC_NORSRAMTimingInitStructure.FSMC_DataSetupTime = 15;//2;//1;	     /* Data Setup Time */
+	FSMC_NORSRAMTimingInitStructure.FSMC_BusTurnAroundDuration = 0x00;
+	FSMC_NORSRAMTimingInitStructure.FSMC_CLKDivision = 0x00;
+	FSMC_NORSRAMTimingInitStructure.FSMC_DataLatency = 0x00;
+	FSMC_NORSRAMTimingInitStructure.FSMC_AccessMode = FSMC_AccessMode_A;	/* FSMC Access Mode */
+	
+	FSMC_NORSRAMInitStructure.FSMC_WriteTimingStruct = &FSMC_NORSRAMTimingInitStructure;	  
+	
+	FSMC_NORSRAMInit(&FSMC_NORSRAMInitStructure); 
+	
+	/* Enable FSMC Bank4_SRAM Bank */
+	FSMC_NORSRAMCmd(FSMC_Bank1_NORSRAM4, ENABLE);  
+
 }
 
 

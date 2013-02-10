@@ -77,6 +77,11 @@ void reset_delaytimer() {
 	TIM_SetCounter(TIM2, 0);
 }
 
+void timer2_up(void) {
+	uint32 tim2 = TIM_GetCounter(TIM2);
+	while( tim2 == TIM_GetCounter(TIM2) );
+}
+
 
 void delay_ms(uint32_t w) {
 	uint32_t wtill = millis() + w;
