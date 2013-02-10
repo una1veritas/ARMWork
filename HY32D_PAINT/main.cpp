@@ -33,6 +33,7 @@ int main(void)
 	lcd.start();
 //  Delay(0x3FFFFF);
   //touch_init();
+	delay_ms(5);
   lcd.clear(BLACK);
 
 	lcd.textSize(16);
@@ -40,7 +41,11 @@ int main(void)
   lcd.SetBackColor(BLACK);
 	lcd.print("Hi.\n");
 	lcd.print("Resistive touch screen driver.");
-  
+	
+  sprintf(tmp, "device code %04x", lcd.device());
+	lcd.textCursor(0, 2);
+	lcd.print(tmp);
+
 
 while(1)
  {

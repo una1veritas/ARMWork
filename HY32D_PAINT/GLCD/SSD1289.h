@@ -165,7 +165,7 @@ class SSD1289 {
 #define ASSEMBLE_RGB(R ,G, B)    ((((R)& 0xF8) << 8) | (((G) & 0xFC) << 3) | (((B) & 0xF8) >> 3)) 
 private:
 	uint16 textCursorX, textCursorY;
-	uint16 deviceID;
+	uint16 deviceCode;
   /* Global variables to set the written text color */
 	uint16_t TextColor ;
 	uint16_t BackColor ;
@@ -191,7 +191,7 @@ public:
 	SSD1289() {
 		textCursorX = 0;
 		textCursorY = 0;
-		deviceID = 0;
+		deviceCode = 0;
 		//
 		uint16_t TextColor = 0x0000;
 		uint16_t BackColor = 0xFFFF;
@@ -206,6 +206,8 @@ public:
 	void DisplayOff(void);
 	void BackLight(int procentai);
 
+	uint16 device(void) { return deviceCode; }
+	
 	void SetColors(uint16_t _TextColor, uint16_t _BackColor); 
 	void GetColors(uint16_t *_TextColor, uint16_t *_BackColor);
 	void SetTextColor(uint16_t Color);
