@@ -31,6 +31,7 @@ void reset_millis(void);
 	
 void delay_ms(uint32_t);
 void delay_us(uint32_t);
+void timer2_up(void);
 
 #define delay(x)  delay_ms(x)
 #define delayMicroseconds(x)  delay_us(x)

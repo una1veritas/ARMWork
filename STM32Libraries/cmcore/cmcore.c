@@ -9,13 +9,13 @@
 #define STDRX 		PB11
 #define STDTX 		PB10
 #define STDBAUD 	57600
-#warning "using SERIAL 3"
+#warning "using STDSERIAL USART3"
 #elif (STDSERIAL == 6)
 #define STDUSART 	USART6
 #define STDRX 		PC7
 #define STDTX 		PC6
 #define STDBAUD 	57600
-#warning "using SERIAL 6"
+#warning "using STDSERIAL USART6"
 #endif
 #endif
 

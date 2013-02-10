@@ -26,7 +26,25 @@ GPIO_TypeDef * PinPort(GPIOPin portpin) {
 }
 
 uint16_t PinBit(GPIOPin portpin) {
-	return ((uint16_t)1)<<(portpin &0x0f);
+	static uint16_t bits[] = {
+		(uint16_t)1<<0,
+		(uint16_t)1<<1,
+		(uint16_t)1<<2,
+		(uint16_t)1<<3,
+		(uint16_t)1<<4,
+		(uint16_t)1<<5,
+		(uint16_t)1<<6,
+		(uint16_t)1<<7,
+		(uint16_t)1<<8,
+		(uint16_t)1<<9,
+		(uint16_t)1<<10,
+		(uint16_t)1<<11,
+		(uint16_t)1<<12,
+		(uint16_t)1<<13,
+		(uint16_t)1<<14,
+		(uint16_t)1<<15
+	};
+	return bits[portpin &0x0f];
 }
 
 uint8_t PinSource(GPIOPin portpin) {
@@ -34,11 +52,9 @@ uint8_t PinSource(GPIOPin portpin) {
 }
 
 void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode) {
-
 	GPIO_InitTypeDef GPIO_InitStructure;
 
 	RCC_AHB1PeriphClockCmd(PortPeriph[portpin>>4 & 0x0f], ENABLE);
-	
 	GPIO_StructInit(&GPIO_InitStructure);
 	
 	GPIO_InitStructure.GPIO_Pin = PinBit(portpin);
@@ -48,16 +64,19 @@ void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode) {
 }
 
 void digitalWrite(GPIOPin portpin, uint8_t bit) {
-	GPIO_InitTypeDef GPIO_InitStructure;
 	GPIO_TypeDef * port = Port[portpin>>4 & 0x0f];
+#ifdef USE_DIGITALWRITE_PULLUP
+	GPIO_InitTypeDef GPIO_InitStructure;
 	uint8_t mode = (port->MODER) >> (PinSource(portpin) * 2) & 0x03;
 	if (mode == GPIO_Mode_OUT) {
+#endif
 		if (bit) {
 		//? Bit_SET : Bit_RESET ));
 			GPIO_SetBits(port, PinBit(portpin));
 		} else {
 			GPIO_ResetBits(port, PinBit(portpin));
 		}
+#ifdef USE_DIGITALWRITE_PULLUP
 	} else {
 		GPIO_StructInit(&GPIO_InitStructure);
 	
@@ -67,6 +86,7 @@ void digitalWrite(GPIOPin portpin, uint8_t bit) {
 	//
 		GPIO_Init(port, &GPIO_InitStructure);
 	}
+#endif
 }
 
 uint8_t digitalRead(GPIOPin portpin) {
@@ -123,8 +143,9 @@ void GPIOAltFunc(GPIO_TypeDef * port, uint16_t pinbits, uint8_t pinaf) {
 	}
 }
 
-void GPIOWrite(GPIO_TypeDef * port, uint16_t bits) {
-	GPIO_Write(port, bits);
+void GPIOWrite(GPIO_TypeDef * port, uint16_t maskbits, uint16_t bits) {
+	uint16_t data = GPIO_ReadOutputDataBit(port, 0xffff);
+	GPIO_Write(port, (data & ~maskbits) | (bits & maskbits) );
 }
 
 void digitalToggle(GPIOPin portpin) {
