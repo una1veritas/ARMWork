@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>3</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -348,7 +348,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER</Define>
+              <Define>USE_STDPERIPH_DRIVER F4DISCOVERY HSE_VALUE=8000000 STDSERIAL=6</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\stm32f4-SPI;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmperiphlib</IncludePath>
             </VariousControls>
@@ -419,7 +419,22 @@
             <File>
               <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\system_stm32f4xx.c</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\utility\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4_discovery.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\utility\stm32f4_discovery.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdiodef.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\utility\stdiodef.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdiodef.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\utility\stdiodef.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -482,11 +497,6 @@
               <FilePath>..\..\STM32Libraries\cmcore\gpio.c</FilePath>
             </File>
             <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\i2c.c</FilePath>
-            </File>
-            <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\usart.c</FilePath>
@@ -497,14 +507,19 @@
               <FilePath>..\..\STM32Libraries\cmcore\usart.h</FilePath>
             </File>
             <File>
-              <FileName>armcore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\armcore.h</FilePath>
-            </File>
-            <File>
               <FileName>I2CWire.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\I2CWire.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>cmcore.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\cmcore.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\spi.c</FilePath>
             </File>
             <File>
               <FileName>I2CWire.h</FileName>
@@ -512,65 +527,35 @@
               <FilePath>..\..\STM32Libraries\cmcore\I2CWire.h</FilePath>
             </File>
             <File>
-              <FileName>Print.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\Print.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Print.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\Print.h</FilePath>
-            </File>
-            <File>
               <FileName>Stream.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\Stream.cpp</FilePath>
             </File>
             <File>
-              <FileName>USARTSerial.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\USARTSerial.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>USARTSerial.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\USARTSerial.h</FilePath>
-            </File>
-            <File>
-              <FileName>spibus.c</FileName>
+              <FileName>i2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\spibus.c</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\i2c.c</FilePath>
             </File>
             <File>
-              <FileName>spibus.h</FileName>
+              <FileName>i2c.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\spibus.h</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\i2c.h</FilePath>
             </File>
             <File>
-              <FileName>SPI.cpp</FileName>
+              <FileName>Print.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\SPI.cpp</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\Print.cpp</FilePath>
             </File>
             <File>
-              <FileName>SPI.h</FileName>
+              <FileName>gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\SPI.h</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\gpio.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>cmperiphlib</GroupName>
           <Files>
-            <File>
-              <FileName>Nokia5110.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\Nokia5110.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Nokia5110.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\Nokia5110.h</FilePath>
-            </File>
             <File>
               <FileName>ISO14443.h</FileName>
               <FileType>5</FileType>
@@ -597,9 +582,24 @@
               <FilePath>..\..\STM32Libraries\cmperiphlib\RTC\DS1307.h</FilePath>
             </File>
             <File>
-              <FileName>stm32f4_discovery.h</FileName>
+              <FileName>PCD8544.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\PCD8544.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>PCD8544.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiphlib\Boards\stm32f4_discovery.h</FilePath>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\PCD8544.h</FilePath>
+            </File>
+            <File>
+              <FileName>fonts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\fonts.c</FilePath>
+            </File>
+            <File>
+              <FileName>fonts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\fonts.h</FilePath>
             </File>
           </Files>
         </Group>

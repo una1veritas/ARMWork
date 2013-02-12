@@ -13,8 +13,8 @@
 
 #include <stm32f4xx_usart.h>
 
-#include "armcore.h"
-#include "usartport.h"
+#include "cmcore.h"
+#include "usart.h"
 #include "Stream.h"
 
 class USARTSerial : public Stream {

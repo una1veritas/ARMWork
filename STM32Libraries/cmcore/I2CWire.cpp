@@ -22,7 +22,8 @@ extern "C" {
 
 void I2CWire::begin(uint32_t clkHz)
 {
-	i2c_begin(&I2C1Buffer, I2C1, pinscl, pinsda, clkHz);
+	i2c_init(&i2cbuf, i2cx, sclpin, sdapin);
+	i2c_begin(&i2cbuf, clkHz);
 }
 
 void I2CWire::beginTransmission(uint8_t address) {
@@ -37,7 +38,7 @@ uint8_t I2CWire::receiveFrom(uint8_t address, uint16 quantity)
   if(quantity > BUFFER_LENGTH)
     quantity = BUFFER_LENGTH;
 	rxposition = 0;
- 	if ( i2c_receive(i2cbuf, rxbuffer, quantity) ) {
+ 	if ( i2c_receive(&i2cbuf, rxbuffer, quantity) ) {
 		return (rxlength = quantity);
 	}
 	return 0;
@@ -61,11 +62,11 @@ uint8_t I2CWire::endTransmission(uint8_t sendStop)
 	//  int8_t ret = 0;
   // transmit buffer (blocking)
 	if ( sendStop ) {
-		if ( i2c_transmit(i2cbuf, dstaddress, txbuffer, txlength) ) {
+		if ( i2c_transmit(&i2cbuf, dstaddress, txbuffer, txlength) ) {
 			return txlength;
 		}
 	} else {
-		if ( i2c_request(i2cbuf, dstaddress, txbuffer, txlength) ) {
+		if ( i2c_request(&i2cbuf, dstaddress, txbuffer, txlength) ) {
 			return txlength;
 		}
 	}

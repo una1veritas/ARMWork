@@ -16,60 +16,129 @@
 TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 TIM_OCInitTypeDef  TIM_OCInitStructure;
 //****************************************************************************//
+#define  LCD_ILI9320    0x9320
+#define  LCD_ILI9325    0x9325
+#define  LCD_ILI9328    0x9328
+#define  LCD_ILI9331    0x9331
+#define  LCD_SSD1298    0x8999
+#define  LCD_SSD1289    0x8989
+#define  LCD_ST7781     0x7783
+#define  LCD_LGDP4531   7  /* 0x4531 */
+#define  LCD_SPFD5408B  8  /* 0x5408 */
+#define  LCD_R61505U    9  /* 0x1505 0x0505 */	   
+#define  LCD_HX8347D    10 /* 0x0047 */
+#define  LCD_HX8347A    11 /* 0x0047 */	
+#define  LCD_LGDP4535   12 /* 0x4535 */  
+#define  LCD_SSD2119    13 /* 3.5 LCD 0x9919 */
+
 void SSD1289::start(void)
 { 
+	// assumes already high
+	digitalWrite(PC5, LOW);
+	delay_ms(5);
+	digitalWrite(PC5, HIGH);
+	
 	deviceCode = ReadReg(0x0000);		/* Read LCD ID	*/	
 
-  WriteReg(0x0007,0x0021);    Delay(50);
-  WriteReg(0x0000,0x0001);    Delay(50);
-  WriteReg(0x0007,0x0023);    Delay(50);
-  WriteReg(0x0010,0x0000);    Delay(90);
-  WriteReg(0x0007,0x0033);    Delay(50);
-  WriteReg(0x0011,0x6830);    Delay(50);
-  WriteReg(0x0002,0x0600);    Delay(50);
-  WriteReg(0x0012,0x6CEB);    Delay(50);
-  WriteReg(0x0003,0xA8A4);    Delay(50);                       
-  WriteReg(0x000C,0x0000);    Delay(50);
-  WriteReg(0x000D,0x080C);    Delay(50);
-  WriteReg(0x000E,0x2B00);    Delay(50);
-  WriteReg(0x001E,0x00B0);    Delay(50);
-  WriteReg(0x0001,0x2b3F);    Delay(50);  //RGB
-  WriteReg(0x0005,0x0000);    Delay(50);
-  WriteReg(0x0006,0x0000);    Delay(50);
-  WriteReg(0x0016,0xEF1C);    Delay(50);
-  WriteReg(0x0017,0x0103);    Delay(50);
-  WriteReg(0x000B,0x0000);    Delay(50);
-  WriteReg(0x000F,0x0000);    Delay(50);  
-  WriteReg(0x0041,0x0000);    Delay(50);
-  WriteReg(0x0042,0x0000);    Delay(50);
-  WriteReg(0x0048,0x0000);    Delay(50);
-  WriteReg(0x0049,0x013F);    Delay(50);
-  WriteReg(0x004A,0x0000);    Delay(50);
-  WriteReg(0x004B,0x0000);    Delay(50);
-  WriteReg(0x0044,0xEF00);    Delay(50);
-  WriteReg(0x0045,0x0000);    Delay(50);
-  WriteReg(0x0046,0x013F);    Delay(50);
-  WriteReg(0x0030,0x0707);    Delay(50);
-  WriteReg(0x0031,0x0204);    Delay(50);
-  WriteReg(0x0032,0x0204);    Delay(50);
-  WriteReg(0x0033,0x0502);    Delay(50);
-  WriteReg(0x0034,0x0507);    Delay(50);
-  WriteReg(0x0035,0x0204);    Delay(50);
-  WriteReg(0x0036,0x0204);    Delay(50);
-  WriteReg(0x0037,0x0502);    Delay(50);
-  WriteReg(0x003A,0x0302);    Delay(50);
-  WriteReg(0x002F,0x12BE);    Delay(50);           
-  WriteReg(0x003B,0x0302);    Delay(50);
-  WriteReg(0x0023,0x0000);    Delay(50);
-  WriteReg(0x0024,0x0000);    Delay(50);
-  WriteReg(0x0025,0x8000);    Delay(50);
-  WriteReg(0x004f,0x0000);    Delay(50);
-  WriteReg(0x004e,0x0000);    Delay(50);
+	switch(deviceCode) {
+	    case LCD_SSD1289:
+	    WriteReg(0x0000,0x0001);    delay_us(50);   // Enable LCD Oscillator
+	    WriteReg(0x0003,0xA8A4);    delay_us(50);   
+	    WriteReg(0x000C,0x0000);    delay_us(50);   
+	    WriteReg(0x000D,0x080C);    delay_us(50);   
+	    WriteReg(0x000E,0x2B00);    delay_us(50);   
+	    WriteReg(0x001E,0x00B0);    delay_us(50);   
+	    WriteReg(0x0001,0x2B3F);    delay_us(50);   // 320*240 0x2B3F 
+	    WriteReg(0x0002,0x0600);    delay_us(50);
+	    WriteReg(0x0010,0x0000);    delay_us(50);
+	    WriteReg(0x0011,0x6070);    delay_us(50);
+	    WriteReg(0x0005,0x0000);    delay_us(50);
+	    WriteReg(0x0006,0x0000);    delay_us(50);
+	    WriteReg(0x0016,0xEF1C);    delay_us(50);
+	    WriteReg(0x0017,0x0003);    delay_us(50);
+	    WriteReg(0x0007,0x0133);    delay_us(50);         
+	    WriteReg(0x000B,0x0000);    delay_us(50);
+	    WriteReg(0x000F,0x0000);    delay_us(50);
+	    WriteReg(0x0041,0x0000);    delay_us(50);
+	    WriteReg(0x0042,0x0000);    delay_us(50);
+	    WriteReg(0x0048,0x0000);    delay_us(50);
+	    WriteReg(0x0049,0x013F);    delay_us(50);
+	    WriteReg(0x004A,0x0000);    delay_us(50);
+	    WriteReg(0x004B,0x0000);    delay_us(50);
+	    WriteReg(0x0044,0xEF00);    delay_us(50);
+	    WriteReg(0x0045,0x0000);    delay_us(50);
+	    WriteReg(0x0046,0x013F);    delay_us(50);
+	    WriteReg(0x0030,0x0707);    delay_us(50);
+	    WriteReg(0x0031,0x0204);    delay_us(50);
+	    WriteReg(0x0032,0x0204);    delay_us(50);
+	    WriteReg(0x0033,0x0502);    delay_us(50);
+	    WriteReg(0x0034,0x0507);    delay_us(50);
+	    WriteReg(0x0035,0x0204);    delay_us(50);
+	    WriteReg(0x0036,0x0204);    delay_us(50);
+	    WriteReg(0x0037,0x0502);    delay_us(50);
+	    WriteReg(0x003A,0x0302);    delay_us(50);
+	    WriteReg(0x003B,0x0302);    delay_us(50);
+	    WriteReg(0x0023,0x0000);    delay_us(50);
+	    WriteReg(0x0024,0x0000);    delay_us(50);
+	    WriteReg(0x0025,0x8000);    delay_us(50);
+	    WriteReg(0x004f,0);
+	    WriteReg(0x004e,0);
+		break;
+		default: // SSD1289
+			WriteReg(0x0007,0x0021);    Delay(50);
+			WriteReg(0x0000,0x0001);    Delay(50);		// osc enable
+			WriteReg(0x0007,0x0023);    Delay(50);
+			WriteReg(0x0010,0x0000);    Delay(90);
+			WriteReg(0x0007,0x0033);    Delay(50);
+			WriteReg(0x0011,0x6830);    Delay(50);
+			WriteReg(0x0002,0x0600);    Delay(50);
+			WriteReg(0x0012,0x6CEB);    Delay(50);
+			WriteReg(0x0003,0xA8A4);    Delay(50);                       
+			WriteReg(0x000C,0x0000);    Delay(50);
+			WriteReg(0x000D,0x080C);    Delay(50);
+			WriteReg(0x000E,0x2B00);    Delay(50);
+			WriteReg(0x001E,0x00B0);    Delay(50);
+			WriteReg(0x0001,0x2b3F);    Delay(50);  //RGB
+			WriteReg(0x0005,0x0000);    Delay(50);
+			WriteReg(0x0006,0x0000);    Delay(50);
+			WriteReg(0x0016,0xEF1C);    Delay(50);
+			WriteReg(0x0017,0x0103);    Delay(50);
+			WriteReg(0x000B,0x0000);    Delay(50);
+			WriteReg(0x000F,0x0000);    Delay(50);  
+			WriteReg(0x0041,0x0000);    Delay(50);
+			WriteReg(0x0042,0x0000);    Delay(50);
+			WriteReg(0x0048,0x0000);    Delay(50);
+			WriteReg(0x0049,0x013F);    Delay(50);
+			WriteReg(0x004A,0x0000);    Delay(50);
+			WriteReg(0x004B,0x0000);    Delay(50);
+			WriteReg(0x0044,0xEF00);    Delay(50);
+			WriteReg(0x0045,0x0000);    Delay(50);
+			WriteReg(0x0046,0x013F);    Delay(50);
+			WriteReg(0x0030,0x0707);    Delay(50);
+			WriteReg(0x0031,0x0204);    Delay(50);
+			WriteReg(0x0032,0x0204);    Delay(50);
+			WriteReg(0x0033,0x0502);    Delay(50);
+			WriteReg(0x0034,0x0507);    Delay(50);
+			WriteReg(0x0035,0x0204);    Delay(50);
+			WriteReg(0x0036,0x0204);    Delay(50);
+			WriteReg(0x0037,0x0502);    Delay(50);
+			WriteReg(0x003A,0x0302);    Delay(50);
+			WriteReg(0x002F,0x12BE);    Delay(50);           
+			WriteReg(0x003B,0x0302);    Delay(50);
+			WriteReg(0x0023,0x0000);    Delay(50);
+			WriteReg(0x0024,0x0000);    Delay(50);
+			WriteReg(0x0025,0x8000);    Delay(50);
+			WriteReg(0x004f,0x0000);    Delay(50);
+			WriteReg(0x004e,0x0000);    Delay(50);
+			break;
+	}
+	
+
 }
 
 void SSD1289::WriteRAM_Prepare(void)
 {
-  LCD_REG = LCD_REG_34;
+  LCD_REG = REG_RAM_DATA;
 }
 
 void SSD1289::WriteRAM(uint16_t RGB_Code)
@@ -90,14 +159,43 @@ uint16 SSD1289::ReadReg(uint8_t LCD_Reg)
 	return t;
 }
 
+void SSD1289::displayOrientation(uint8 d) {
+	switch(d) {	
+		case 0:
+			WriteReg(0x0001, 0x2B3F);
+		/* ID = 11 AM = 0 */
+			WriteReg(0x0011, 0x6070);
+		height = LCD_PIXEL_HEIGHT;	
+		width = LCD_PIXEL_WIDTH;
+		break;
+		case 1:
+			WriteReg(0x0001, 0x293F);
+		/* ID = 11 AM = 1 */
+		WriteReg(0x0011, 0x6078);	
+		break;
+		case 2:
+				WriteReg(0x0001, 0x2B3F);	
+		/* ID = 01 AM = 0 */		
+		WriteReg(0x0011, 0x6040);	
+			break;
+			case 3:
+			WriteReg(0x0001, 0x293F);
+				/* ID = 01 AM = 1 */	
+			WriteReg(0x0011, 0x6048);
+			break;
+			default:				
+			return;	
+		}
+}
+
 void SSD1289::DisplayOn(void)
 {
-  WriteReg(LCD_REG_7, 0x0173); 
+  WriteReg(REG_DISPLAY_CONTROL, 0x0173); 
 }
 
 void SSD1289::DisplayOff(void)
 {
-  WriteReg(LCD_REG_7, 0x0000); 
+  WriteReg(REG_DISPLAY_CONTROL, 0x0000); 
 }
 
 void SSD1289::SetColors(uint16_t _TextColor, uint16_t _BackColor)
@@ -141,8 +239,8 @@ void SSD1289::clear(uint16_t Color)
 
 void SSD1289::SetCursor(uint16_t Xpos, uint16_t Ypos)
 {
-  WriteReg(LCD_REG_78, Xpos);
-  WriteReg(LCD_REG_79, Ypos);
+  WriteReg(REG_SET_GDDRAM_X, Xpos);
+  WriteReg(REG_SET_GDDRAM_Y, Ypos);
 }
 
 void SSD1289::PutPixel(int16_t x, int16_t y)
@@ -568,6 +666,10 @@ void SSD1289::CtrlLinesConfig(void)
 												 ALTFUNC, HIGHSPEED, PUSHPULL, NOPULL);
 	GPIOAltFunc(PinPort(PE0), PinBit(PE7) | PinBit(PE8) | PinBit(PE9) | PinBit(PE10) | PinBit(PE11)| PinBit(PE12)
 												 | PinBit(PE13) | PinBit(PE14) | PinBit(PE15), GPIO_AF_FSMC);
+	
+	// Reset
+	GPIOMode(PinPort(NRSTpin), PinBit(NRSTpin), OUTPUT, MEDSPEED, PUSHPULL, PULLUP);
+	digitalWrite(NRSTpin, HIGH);
 /*
   GPIO_InitTypeDef GPIO_InitStructure;
   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOG | RCC_AHB1Periph_GPIOE | RCC_AHB1Periph_GPIOF, ENABLE);
@@ -916,7 +1018,7 @@ void SSD1289::WriteBMP(uint8_t Xpos, uint16_t Ypos, uint8_t Height, uint16_t Wid
   size=(Height * Width);
   SetDisplayWindow(Xpos, Ypos,Height, Width);
 
-  WriteReg(LCD_REG_17, 0x6048);
+  WriteReg(REG_ENTRY_MODE, 0x6048);
  
   WriteRAM_Prepare();
  
@@ -925,6 +1027,6 @@ void SSD1289::WriteBMP(uint8_t Xpos, uint16_t Ypos, uint8_t Height, uint16_t Wid
 	WriteRAM(*bitmap_ptr++);
 		//for(i=0;i<2;i++);
   }
-  WriteReg(LCD_REG_17, 0x6028);
+  WriteReg(REG_ENTRY_MODE, 0x6028);
   SetDisplayWindow(0, 0, 239, 319);
 }

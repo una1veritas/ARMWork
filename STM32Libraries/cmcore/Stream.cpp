@@ -20,7 +20,7 @@
  parsing functions based on TextFinder library by Michael Margolis
  */
 
-#include "armcore.h"
+#include "cmcore.h"
 #include "delay.h"
 //#include "Arduino.h"
 #include "Stream.h"

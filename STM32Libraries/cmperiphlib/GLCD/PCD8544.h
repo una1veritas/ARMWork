@@ -17,8 +17,8 @@ class PCD8544 {
 	GPIOPin pin_SCLK;  //  3 //Pin 7 on LCD, SCK
 	
 	uint16 textcursor; // bit column position
-	uint8 * font;
-	
+	const uint8 * font;
+		
 	//The DC pin tells the LCD if we are sending a command or data
 	static const byte LCD_COMMAND = 0; 
 	static const byte LCD_DATA  	= 1;
@@ -42,9 +42,10 @@ public:
 		pin_DC = dc;
 		pin_RESET = rst;
 		textcursor = 0;
-		font = NULL;
+		font = Fixed_8w5;
 	}
 	
+	static const byte Fixed_8w5[];
 	static const byte SFEFlame[];
 //	static const byte SFEFlameBubble [];
 //	static const byte awesome[];

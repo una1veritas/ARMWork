@@ -19,7 +19,7 @@
 #else
 
 #include "delay.h"
-#include "armcore.h"
+#include "cmcore.h"
 #include <I2CWire.h>
 
 #endif

@@ -24,9 +24,14 @@
 #include <stdio.h> // for size_t
 #include <string.h>
 
-//#include "WString.h"
-//#include "Printable.h"
-
+#if defined (STM32F4XX)
+#include "cmcore.h"
+#else
+#ifdef ARDUINO
+#include "WString.h"
+#include "Printable.h"
+#endif
+#endif
 #define DEC 10
 #define HEX 16
 #define OCT 8
@@ -63,7 +68,7 @@ class Print
     size_t print(uint16, uint8 = DEC);
     size_t print(int32, uint8 = DEC);
     size_t print(uint32, uint8 = DEC);
-    size_t print(double, uint8 = 2);
+    size_t print(double, uint8 = BIN);
 //    size_t print(const Printable&);
 		size_t printByte(uint8 * array, uint8 length, char sep = ' ');
 		size_t printByte(uint8 val);
