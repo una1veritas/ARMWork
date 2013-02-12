@@ -447,7 +447,6 @@
               <FilePath>..\GLCD\SSD1289.cpp</FilePath>
             </File>
             <File>
-<<<<<<< HEAD
               <FileName>stdiodef.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\stdiodef.h</FilePath>
@@ -456,41 +455,6 @@
               <FileName>stdiodef.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\stdiodef.c</FilePath>
-=======
-              <FileName>fonts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\GLCD\fonts.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm324xg_eval.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\GLCD\stm324xg_eval.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm324xg_eval_lcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\GLCD\stm324xg_eval_lcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>fonts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\GLCD\fonts.h</FilePath>
-            </File>
-            <File>
-              <FileName>stm324xg_eval.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\GLCD\stm324xg_eval.h</FilePath>
-            </File>
-            <File>
-              <FileName>stm324xg_eval_lcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\GLCD\stm324xg_eval_lcd.h</FilePath>
-            </File>
-            <File>
-              <FileName>stm32_eval_legacy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\GLCD\stm32_eval_legacy.h</FilePath>
->>>>>>> origin/master
             </File>
           </Files>
         </Group>
