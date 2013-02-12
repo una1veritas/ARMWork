@@ -419,12 +419,22 @@
             <File>
               <FileName>stm32f4_discovery.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\Boards\stm32f4_discovery.h</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\utility\stm32f4_discovery.h</FilePath>
             </File>
             <File>
               <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\Boards\system_stm32f4xx.c</FilePath>
+              <FilePath>..\..\STM32Libraries\cmcore\utility\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>stdiodef.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\utility\stdiodef.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdiodef.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\utility\stdiodef.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>3</Optim>
+            <Optim>4</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -348,7 +348,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER F4DISCOVERY HSE_VALUE=8000000</Define>
+              <Define>USE_STDPERIPH_DRIVER F4DISCOVERY HSE_VALUE=8000000  STDSERIAL=6</Define>
               <Undefine></Undefine>
               <IncludePath>..\;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\cmcore;..\GLCD;..\TouchScreenController</IncludePath>
             </VariousControls>
@@ -455,6 +455,16 @@
               <FileName>SSD1289.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\GLCD\SSD1289.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>stdiodef.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\stdiodef.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdiodef.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\stdiodef.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -565,6 +575,16 @@
               <FileName>spi.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\usart.h</FilePath>
             </File>
           </Files>
         </Group>

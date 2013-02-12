@@ -20,11 +20,11 @@ PN532::PN532(I2CWire & wirex, byte addr, GPIOPin irq, GPIOPin rst) :
 	i2c_addr = addr;
 	pin_irq = irq;
 	pin_rst = rst;
-	if (pin_irq != 0xff) {
+	if (pin_irq != PIN_NOT_DEFINED) {
 		pinMode(pin_irq, INPUT);
 		digitalWrite(pin_irq, HIGH); // pull-up
 	}
-	if (pin_rst != 0xff) {
+	if (pin_rst != PIN_NOT_DEFINED) {
 		pinMode(pin_rst, OUTPUT);
 		digitalWrite(pin_rst, HIGH);
 	}

@@ -37,6 +37,8 @@ class TouchScreen {
 	static const uint8 CMD_RDX = 0x90;  //0B10010000
 	static const uint8 CMD_RDY = 0xD0;  //0B11010000
 //	static const uint16 NPEN = !(0x0080&PEN);      //!PEN
+	
+	void getRawXY(void);
 
 public:
 	int16 x, y;

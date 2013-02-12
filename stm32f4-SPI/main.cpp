@@ -18,7 +18,7 @@
 #include "cmcore.h"
 //#include "SPIBus.h"
 #include "spi.h"
-#include "Boards/stm32f4_discovery.h"
+#include "utility/stm32f4_discovery.h"
 #include "GLCD/PCD8544.h"
 #include "GLCD/fonts.h"
 
@@ -76,7 +76,6 @@ int main(void) {
 	nokiaLCD.clear();
 	nokiaLCD.drawString("Gnu is not Nuke!");
 
-	while(1);
 	while (1) {
 		nokiaLCD.clear();
 		nokiaLCD.cursor(252 - shift );

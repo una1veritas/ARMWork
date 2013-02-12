@@ -17,6 +17,7 @@ typedef struct
 
 class SSD1289 {
 	
+	/*
 #define LCD_REG_0             0x00
 #define LCD_REG_1             0x01
 #define LCD_REG_2             0x02
@@ -126,6 +127,14 @@ class SSD1289 {
 #define LCD_REG_192           0xC0
 #define LCD_REG_193           0xC1
 #define LCD_REG_229           0xE5
+*/
+
+#define REG_DISPLAY_CONTROL 	0x07
+#define REG_ENTRY_MODE 				0x11
+#define REG_RAM_DATA			 		0x22
+#define REG_SET_GDDRAM_X  		0x4E
+#define REG_SET_GDDRAM_Y  		0x4F
+
 
 #define LCD_COLOR_WHITE          0xFFFF
 #define LCD_COLOR_BLACK          0x0000
@@ -164,19 +173,25 @@ class SSD1289 {
 
 #define ASSEMBLE_RGB(R ,G, B)    ((((R)& 0xF8) << 8) | (((G) & 0xFC) << 3) | (((B) & 0xF8) >> 3)) 
 private:
+	GPIOPin NRSTpin;
 	uint16 textCursorX, textCursorY;
 	uint16 deviceCode;
+
+	uint16 width, height;
+	uint8 orientation;
+
+private:
+	void TIM_Config(void);
+	void CtrlLinesConfig(void);
+	void FSMCConfig(void);
+
+public:
   /* Global variables to set the written text color */
 	uint16_t TextColor ;
 	uint16_t BackColor ;
 	uint16_t charsize ;
 	uint16_t TimerPeriod  ;
 	uint16_t Channel3Pulse ;
-
-private:
-	void TIM_Config(void);
-	void CtrlLinesConfig(void);
-	void FSMCConfig(void);
 
 	void WriteRAM_Prepare(void);
 	void WriteRAM(uint16_t RGB_Code);
@@ -189,6 +204,8 @@ private:
 
 public:
 	SSD1289() {
+		NRSTpin = PC5;
+		
 		textCursorX = 0;
 		textCursorY = 0;
 		deviceCode = 0;
@@ -205,7 +222,8 @@ public:
 	void DisplayOn(void);
 	void DisplayOff(void);
 	void BackLight(int procentai);
-
+	void displayOrientation(uint8 d);
+	
 	uint16 device(void) { return deviceCode; }
 	
 	void SetColors(uint16_t _TextColor, uint16_t _BackColor); 

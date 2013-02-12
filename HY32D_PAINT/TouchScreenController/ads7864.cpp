@@ -58,67 +58,16 @@ void NVIC_TOUCHConfiguration(void) {
 }
 
 void TouchScreen::init(void) {
-//  SPI_InitTypeDef  SPI_InitStructure;
-//  GPIO_InitTypeDef GPIO_InitStruct;  
 	NVIC_InitTypeDef NVIC_InitStructure;
 	EXTI_InitTypeDef EXTI_InitStructure;
 
 // void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
 //              GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd) {
 
-	GPIOMode(PinPort(ncspin), PinBit(ncspin), OUTPUT, MEDSPEED, PUSHPULL,
-			PULLUP);
-
-	/*
-	 RCC_AHB1PeriphClockCmd( RCC_AHB1Periph_GPIOB|RCC_AHB1Periph_GPIOD, ENABLE);
-	 
-	 GPIO_InitStruct.GPIO_Mode=GPIO_Mode_AF;
-	 GPIO_InitStruct.GPIO_Speed=GPIO_Speed_25MHz;
-	 GPIO_InitStruct.GPIO_OType=GPIO_OType_PP;
-	 GPIO_InitStruct.GPIO_PuPd=GPIO_PuPd_UP;  
-
-	 GPIO_InitStruct.GPIO_Pin=GPIO_Pin_15|GPIO_Pin_13|GPIO_Pin_14;			
-	 GPIO_Init(GPIOB,&GPIO_InitStruct);			                      
-	 
-	 GPIO_PinAFConfig(GPIOB, GPIO_PinSource13, GPIO_AF_SPI2);      //sclk	10	 13
-	 GPIO_PinAFConfig(GPIOB, GPIO_PinSource14, GPIO_AF_SPI2);	//miso	11	 14
-	 GPIO_PinAFConfig(GPIOB, GPIO_PinSource15, GPIO_AF_SPI2);	//mosi12	 15
-	 
-	 RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);	 
-	 
-	 SPI_I2S_DeInit(SPI2);	    
-	 SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex; 
-	 SPI_InitStructure.SPI_Mode = SPI_Mode_Master; 
-	 SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b; 
-	 SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;//SPI_CPOL_Low 	 SPI_CPOL_High
-	 SPI_InitStructure.SPI_CPHA = SPI_CPHA_2Edge; 
-	 SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;   //SPI_NSS_Hard	 //SPI_NSS_Soft
-	 SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_256; 	//16
-	 SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB; 
-	 SPI_InitStructure.SPI_CRCPolynomial = 7; 
-	 SPI_Init(SPI2,&SPI_InitStructure); 
-	 SPI_Cmd(SPI2,ENABLE); 
-	 //CS
-	 GPIO_InitStruct.GPIO_Mode=GPIO_Mode_OUT;
-	 GPIO_InitStruct.GPIO_Speed=GPIO_Speed_50MHz;
-	 GPIO_InitStruct.GPIO_OType=GPIO_OType_PP;
-	 GPIO_InitStruct.GPIO_PuPd=GPIO_PuPd_UP;  
-	 GPIO_InitStruct.GPIO_Pin=GPIO_Pin_12; // 3
-	 GPIO_Init(GPIOB,&GPIO_InitStruct);    // d  	    			
-	 */
-	 deselect(); //T_DCS(); 				 
-	 //T_PEN				
-	 /*
-	 GPIO_InitStruct.GPIO_Mode=GPIO_Mode_IN;
-	 GPIO_InitStruct.GPIO_Speed=GPIO_Speed_50MHz;
-	 GPIO_InitStruct.GPIO_OType=GPIO_OType_PP;
-	 GPIO_InitStruct.GPIO_PuPd=GPIO_PuPd_UP;  
-	 GPIO_InitStruct.GPIO_Pin=GPIO_Pin_6;
-	 GPIO_Init(GPIOD,&GPIO_InitStruct);     
-	 */
-	GPIOMode(PinPort(irqpin), PinBit(irqpin), INPUT, FASTSPEED, PUSHPULL,
-			PULLUP);
-			
+	GPIOMode(PinPort(ncspin), PinBit(ncspin), OUTPUT, MEDSPEED, PUSHPULL, PULLUP);
+	deselect(); 
+	GPIOMode(PinPort(irqpin), PinBit(irqpin), INPUT, FASTSPEED, PUSHPULL, PULLUP);
+	
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
 
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOD, EXTI_PinSource6);
@@ -140,62 +89,55 @@ void TouchScreen::begin(uint8 dir) {
 	init();
 }
 
+
+void TouchScreen::getRawXY(void) {
+	select();
+	delay_us(1);
+	spi_transfer(&bus, CMD_RDX);
+	delay_us(1);
+	Xraw = spi_transfer(&bus, 0);
+	Xraw <<= 8;
+	Xraw |= spi_transfer(&bus, 0);
+
+	spi_transfer(&bus, CMD_RDY);
+	delay_us(1);
+	Yraw = spi_transfer(&bus, 0);
+	Yraw <<= 8;
+	Yraw |= spi_transfer(&bus, 0);
+	deselect();
+	Xraw >>= 4;
+	Yraw >>= 4;
+}
+
 uint8 TouchScreen::readAds7846(void) {
-	u8 t, t1, count = 0;
-	u16 databuffer[2][10];
-	u16 temp = 0;
+	uint8 count;
+	uint16 rx[10], ry[10];
+	uint16 tx, ty, ptx, pty;
 
-//	if (GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_4) == 0) {
-			Xraw = readX();
-			Yraw = readY();
-		while (count < 10) {
-
-			Xraw = readX();
-			Yraw = readY();
-
-			databuffer[0][count] = Xraw;
-			databuffer[1][count] = Yraw;
-			count++;
-
+	getRawXY();
+	tx = rx[0] = Xraw;
+	ty = ry[0] = Yraw;
+	count = 1;
+	while (count < 10) {
+		getRawXY();
+		rx[count] = Xraw;
+		ry[count] = Yraw;
+		count++;
+		ptx = tx + Xraw;
+		pty = ty + Yraw;
+		ptx >>= 1;
+		pty >>= 1;
+		if ( abs(tx - ptx) <= 1 and abs(ty - pty) <= 1 ) {
+			tx = ptx;
+			ty = pty;
+			break;
 		}
-
-		if (count == 10) {
-			do {
-				t1 = 0;
-				for (t = 0; t < count - 1; t++) {
-					if (databuffer[0][t] > databuffer[0][t + 1]) {
-						temp = databuffer[0][t + 1];
-						databuffer[0][t + 1] = databuffer[0][t];
-						databuffer[0][t] = temp;
-						t1 = 1;
-					}
-				}
-			} while (t1);
-			do {
-				t1 = 0;
-				for (t = 0; t < count - 1; t++) {
-					if (databuffer[1][t] > databuffer[1][t + 1]) {
-						temp = databuffer[1][t + 1];
-						databuffer[1][t + 1] = databuffer[1][t];
-						databuffer[1][t] = temp;
-						t1 = 1;
-					}
-				}
-			} while (t1);
-
-			Xraw = 2047
-					- ((databuffer[0][3] + databuffer[0][4] + databuffer[0][5])
-							/ 3);
-			Yraw = ((databuffer[1][3] + databuffer[1][4] + databuffer[1][5]) / 3);
-//			flag = 1;
-			return 1;
-		}
-//	flag = 0;
-		Xraw = 0xffff;
-		Yraw = 0xffff;
-//	}
+		tx = ptx;
+		ty = pty;
+	}
+	Xraw = tx;
+	Yraw = ty;
 	return 0;
-
 }
 
 void EXTI9_5_IRQHandler(void) {

@@ -1,6 +1,9 @@
 #ifndef Binary_h
 #define Binary_h
 
+#define _BV(n)  (1<<(n))
+
+
 #define B0 0
 #define B00 0
 #define B000 0

@@ -21,12 +21,16 @@ int main(void)
 {
 //	int i;
 	char tmp[64];
+		RCC_ClocksTypeDef RCC_Clocks;
 	
 	cmcore_init();
-	
+	RCC_GetClocksFreq(&RCC_Clocks);
+
+	printf( "SYSCLK = %dl\n", RCC_Clocks.SYSCLK_Frequency);
+
 	spi_init(&spi2bus, SPI2,  PB13, PB14, PB15, PB12);
 	spi_begin(&spi2bus);
-	tp.begin(tp.Portrait | tp.ReverseY);
+	tp.begin(tp.Portrait );
 
 //  Delay(0x3FFFFF);
   lcd.init();
@@ -36,6 +40,7 @@ int main(void)
 	delay_ms(5);
   lcd.clear(BLACK);
 
+//	lcd.displayOrientation(0);
 	lcd.textSize(16);
   lcd.SetTextColor(WHITE);
   lcd.SetBackColor(BLACK);
@@ -45,7 +50,8 @@ int main(void)
   sprintf(tmp, "device code %04x", lcd.device());
 	lcd.textCursor(0, 2);
 	lcd.print(tmp);
-
+	printf(tmp);
+ printf("\n");
 
 while(1)
  {
@@ -58,6 +64,12 @@ while(1)
 	 sprintf(tmp, "x =% 5d, y =% 5d", tp.x, tp.y);
 	 lcd.textCursor(0, 3);
 	 lcd.print(tmp);
+	 /*
+	 if ( tp.x != 0 and tp.y != 0 ) {
+	 printf(tmp);
+	 printf("\n");
+		 }
+	 */
  }
 }
 

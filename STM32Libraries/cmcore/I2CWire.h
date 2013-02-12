@@ -13,8 +13,8 @@ class I2CWire : public Stream
 {
   private:
 		I2C_TypeDef * i2cx;
-		I2CBuffer * i2cbuf;
-		GPIOPin pinscl, pinsda;
+		i2c i2cbuf;
+		GPIOPin sclpin, sdapin;
 
 		uint8 dstaddress;
 		uint8 rxbuffer[I2C_BUFFER_SIZE];
@@ -23,8 +23,7 @@ class I2CWire : public Stream
 		int16 rxlength, txlength;
 	
   public:
-    I2CWire(I2C_TypeDef * i2c, GPIOPin scl, GPIOPin sda) : i2cx(i2c), pinscl(scl), pinsda(sda) {
-			i2cbuf = &I2C1Buffer;
+    I2CWire(I2C_TypeDef * I2Cx, GPIOPin scl, GPIOPin sda) : i2cx(I2Cx), sclpin(scl), sdapin(sda) {
 		}
     void begin(uint32_t clk = 100000);
 	
