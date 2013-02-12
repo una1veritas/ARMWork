@@ -29,7 +29,7 @@
 
 void PN532_init();
 void setup_peripherals(void);
-void readcard(ISO14443 & card);
+char * readcard(ISO14443 & card);
 
 spi spi2bus = {SPI2, PB10, PC2, PC3, PB9};
 PCD8544 nokiaLCD(spi2bus, PB9, PD13, PB0);
@@ -55,8 +55,10 @@ byte polling[] = {
 };
 
 int main(void) {
-	char mess[128];
+	char mess[128], *res;
 	byte readerbuf[128];
+	ISO14443 cardtmp;
+	uint32 lastread = 0;
 	enum STATUS {
 		S_IDLE,
 		S_CARD_DETECT
@@ -75,9 +77,18 @@ int main(void) {
 					&& nfc.getAutoPollResponse((byte*) readerbuf) ) {
 				digitalWrite(LED1, HIGH);
 				// NbTg, type1, length1, [Tg, ...]
-				card.set(readerbuf[1], readerbuf+3);
-				readcard(card);
+				cardtmp.clear();
+				cardtmp.set(readerbuf[1], readerbuf+3);
+				if ( cardtmp != card || lastread + 1000 < millis() ) {
+					card = cardtmp;
+					res = readcard(card);
+					nokiaLCD.cursor(84);
+					printf(res);
+					nokiaLCD.drawString(res);
+					lastread = millis();
+				}
 				digitalWrite(LED1, LOW);
+				
 				continue;
 			}
 			if ( ds3231.updateTime() ) {
@@ -87,7 +98,7 @@ int main(void) {
 				nokiaLCD.cursor(0);
 				nokiaLCD.drawString(mess);
 			}
-		}
+		} 
 	}
 	
 }
@@ -106,7 +117,7 @@ void setup_peripherals(void) {
 
 	printf("Nokia LCD w/ PCD8544...");	
 	nokiaLCD.init();	
-	nokiaLCD.setContrast(0xb5);
+	nokiaLCD.setContrast(0xb0);
 	nokiaLCD.clear();
 //	nokiaLCD.drawBitmap(PCD8544::SFEFlame);
 //	delay(500);
@@ -172,19 +183,29 @@ void PN532_init() {
   printf("SAM Configured...");
 }
 
-void readcard(ISO14443 & card) {
-//	char tmp[128];
+char * readcard(ISO14443 & card) {
+static char msg[256];
+	char tmp[128];
+	int length = 0;
+	msg[0] = 0;
 	if ( card.type == 0x11 ) {
-		printf("FeliCa IDm: ");
+		length += sprintf(tmp, "FeliCa IDm: ");
+		strcat(msg, tmp);
 		for(int i = 0; i < 8; i++) {
-			printf("%02x ", (uint8)card.IDm[i]);
+			length += sprintf(tmp, "%02x ", (uint8)card.IDm[i]);
+			strcat(msg, tmp);
 		}
-		printf(" detected.\n");
+		length += sprintf(tmp, " detected.\n");
+		strcat(msg, tmp);
 	} else if ( card.type == 0x10 ) {
-		printf("Mifare  ID: ");
+		length += sprintf(tmp, "Mifare  ID: ");
+		strcat(msg, tmp);
 		for(int i = 0; i < card.IDLength; i++) {
-			printf("%02x ", card.UID[i]);
+			length += sprintf(tmp, "%02x ", card.UID[i]);
+			strcat(msg, tmp);
 		}
-		printf("\n");
+		length += sprintf(tmp, " detected.\n");
+		strcat(msg, tmp);
 	}
+	return msg;
 }
