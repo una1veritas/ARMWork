@@ -91,10 +91,15 @@ void digitalWrite(GPIOPin portpin, uint8_t bit) {
 
 uint8_t digitalRead(GPIOPin portpin) {
 	GPIO_TypeDef * port = Port[portpin>>4 & 0x0f];
-	uint8_t mode = (port->MODER) >> (PinSource(portpin) * 2);
+	uint8_t mode = (port->MODER) >> (PinSource(portpin) * 2) & 0x03;
 	if (mode == GPIO_Mode_OUT)
 		return (GPIO_ReadOutputDataBit(port, PinBit(portpin)) ? SET : RESET);
 	return (GPIO_ReadInputDataBit(port, PinBit(portpin)) ? SET : RESET);
+}
+
+uint16_t GPIORead(GPIO_TypeDef * port, uint16_t bitmasks) {
+	uint16_t data = GPIO_ReadInputDataBit(port, bitmasks);
+	return data;
 }
 
 void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,

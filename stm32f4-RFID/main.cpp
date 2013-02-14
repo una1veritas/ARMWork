@@ -48,7 +48,7 @@ PN532 nfc(Wire1, PN532::I2C_ADDRESS, PN532_REQ, PN532_RST);
 DS1307 ds3231(Wire1);
 
 ISO14443 card;
-byte polling[] = {
+byte pollingOrder[] = {
   2,
   TypeA,
   TypeF
@@ -69,27 +69,27 @@ int main(void) {
 	
 	nokiaLCD.clear();
 	
-  card.clear();
-	
 	while (1) {
 		if ( status == S_IDLE ) {
-			if ( nfc.InAutoPoll(1, 1, polling+1, polling[0]) 
+			if ( nfc.InAutoPoll(1, 1, pollingOrder+1, pollingOrder[0]) 
 					&& nfc.getAutoPollResponse((byte*) readerbuf) ) {
 				digitalWrite(LED1, HIGH);
 				// NbTg, type1, length1, [Tg, ...]
-				cardtmp.clear();
 				cardtmp.set(readerbuf[1], readerbuf+3);
-				if ( cardtmp != card || lastread + 1000 < millis() ) {
-					card = cardtmp;
-					res = readcard(card);
-					nokiaLCD.cursor(84);
-					printf(res);
-					nokiaLCD.drawString(res);
-					lastread = millis();
+				if ( cardtmp == card ) {
+						cardtmp.clear();
 				}
+			}
+			if ( !cardtmp.isEmpty() && lastread + 500 <= millis() ) {
+				card = cardtmp;
+				res = readcard(card);
+				nokiaLCD.cursor(84);
+				printf(res);
+				nokiaLCD.drawString(res);
+				lastread = millis();
+			}
+			if ( digitalRead(LED1) && millis() > lastread + 500 ) {
 				digitalWrite(LED1, LOW);
-				
-				continue;
 			}
 			if ( ds3231.updateTime() ) {
 				ds3231.updateCalendar();

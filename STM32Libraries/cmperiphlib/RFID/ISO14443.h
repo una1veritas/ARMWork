@@ -132,6 +132,10 @@ struct ISO14443 {
 		memset(ID, 0, 8);
 	}
 
+	boolean isEmpty(void) {
+		return type == Type_Empty || IDLength == 0;
+	}
+	
 	boolean operator==(const ISO14443 & c) const {
 		if (type == c.type && IDLength == c.IDLength) {
 			return memcmp(ID, c.ID, IDLength) == 0;
