@@ -166,7 +166,7 @@
             <DriverSelection>4096</DriverSelection>
           </Flash1>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>
@@ -348,9 +348,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER, STM32F4XX</Define>
+              <Define>USE_STDPERIPH_DRIVER STM32F4DISCOVERY HSE_VALUE=8000000</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\stm32f4-RTCINTERNAL;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\cmcore</IncludePath>
+              <IncludePath>..\..\stm32f4-RTCINTERNAL;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\cmcore</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -502,11 +502,6 @@
               <FilePath>..\..\STM32Libraries\cmcore\usart.c</FilePath>
             </File>
             <File>
-              <FileName>armcore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\armcore.h</FilePath>
-            </File>
-            <File>
               <FileName>rtc.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\rtc.h</FilePath>
@@ -517,14 +512,14 @@
               <FilePath>..\..\STM32Libraries\cmcore\rtc.c</FilePath>
             </File>
             <File>
-              <FileName>armcore.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\armcore.c</FilePath>
-            </File>
-            <File>
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmcore.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\cmcore\cmcore.c</FilePath>
             </File>
           </Files>
         </Group>

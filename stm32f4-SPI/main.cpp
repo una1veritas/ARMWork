@@ -25,7 +25,7 @@
 spi spi2bus = {SPI2, PB10, PC2, PC3, PB9};
 //spi_init(SPI1Bus, SPI1, PA5, PA6, PA7, PA4); //  PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
 
-PCD8544 nokiaLCD(spi2bus, PB9, PD13, PD12);
+PCD8544 nokiaLCD(spi2bus, PB9, PD13, PB0);
 
 int main(void) {
 	char tmp[256];
