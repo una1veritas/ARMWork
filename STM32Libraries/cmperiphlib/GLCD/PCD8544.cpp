@@ -63,10 +63,13 @@ void PCD8544::cursor(int col) {
 }
 
 //This takes a large array of bits and sends them to the LCD
-void PCD8544::drawBitmap(const byte my_array[]){
+void PCD8544::drawBitmap(const byte my_array[], const byte width, const byte height){
+	int ix;
 	select();
-  for (int index = 0 ; index < (LCD_X * LCD_Y / 8) ; index++)
-    write(LCD_DATA, my_array[index]);
+	ix = 0;
+  for (int r = 0 ; r < height/8 + ( height%8 ? 1 : 0 ); r++)
+		for (int c = 0 ; c < width; c++)
+			write(LCD_DATA, my_array[ix++]);
 	deselect();
 }
 
@@ -84,9 +87,9 @@ void PCD8544::drawCharacter(const char ch) {
 void PCD8544::drawFixedFont(const byte font[], char character) {
 	uint16 width = font[0];
 	uint16 percolumn = (font[1]&0x7f)/8 + ((font[1]&0x7f)%8 ? 1 : 0);
-	boolean transpo = (font[1] & 0x80 ? 1 : 0);
+//	boolean transpo = (font[1] & 0x80 ? 1 : 0);
 	uint16 idx = 3 + (character - ' ') * width * percolumn;
-	byte t;
+//	byte t;
 	
 	if ( (textcursor % 84) + width+2 >= 84 )
 		textcursor = (textcursor/84 + 1)*84;

@@ -188,7 +188,12 @@ public:
 
 	boolean GetFirmwareVersion();
 	boolean GetGeneralStatus();
-	boolean SAMConfiguration(byte mode = 0x01, byte timeout = 0x14, byte use_irq =
+	enum { SAMMODE_NORMAL = 0x01,
+		SAMMODE_VIRTUAL_CARD,
+		SAMMODE_WIRED_CARD,
+		SAMMODE_DUYAL_CARD
+	};
+	boolean SAMConfiguration(byte mode = SAMMODE_NORMAL, byte timeout = 0x14, byte use_irq =
 			0x01);
 	boolean PowerDown(byte wkup, byte genirq = 0x01);
 	boolean WriteRegister(word addr, byte value);

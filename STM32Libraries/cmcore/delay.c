@@ -17,6 +17,7 @@
 
 volatile uint32_t __counter_micros;
 volatile uint32_t __counter_millis;
+volatile uint32_t __countdown_millis;
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -57,6 +58,7 @@ void TIM2_delaytimer_start(void) {
 	__counter_micros = 0;
 	__counter_millis = 0;
 	TIM_SetCounter(TIM2, 0);
+	__countdown_millis = 0;
 	
 	/* TIM enable counter */
 	TIM_Cmd(TIM2, ENABLE);
@@ -71,13 +73,13 @@ uint32_t millis(void) {
 }
 
 
-void reset_delaytimer() {
+void TIM2_delaytimer_reset() {
 	__counter_millis = 0;
 	__counter_micros = 0;
 	TIM_SetCounter(TIM2, 0);
 }
 
-void timer2_up(void) {
+void TIM2_delaytimer_up(void) {
 	uint32 tim2 = TIM_GetCounter(TIM2);
 	while( tim2 == TIM_GetCounter(TIM2) );
 }
@@ -101,10 +103,19 @@ void delay_us(uint32_t w) {
 	while ( micros() < till );
 }
 
+void countdown_start(uint32_t t) {
+	__countdown_millis = t;
+}
+
+uint8_t countdown(void) {
+	return __countdown_millis != 0;
+}
+
 void TIM2_IRQHandler(void) {
+	TIM_ClearITPendingBit(TIM2, TIM_IT_Update );
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update ) == SET) {
-		TIM_ClearITPendingBit(TIM2, TIM_IT_Update );
-		
+		if ( __countdown_millis )
+			__countdown_millis--;
 		__counter_micros += 1000;
 		__counter_millis += 1;
 	}

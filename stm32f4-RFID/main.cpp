@@ -55,6 +55,7 @@ byte pollingOrder[] = {
 };
 
 int main(void) {
+	byte bmap[] = { 0, 0, 0, 0 };
 	char mess[128], *res;
 	byte readerbuf[128];
 	ISO14443 cardtmp;
@@ -83,18 +84,21 @@ int main(void) {
 			if ( !cardtmp.isEmpty() && lastread + 500 <= millis() ) {
 				card = cardtmp;
 				res = readcard(card);
-				nokiaLCD.cursor(84);
-				printf(res);
-				nokiaLCD.drawString(res);
 				lastread = millis();
+				nokiaLCD.cursor(84);
+				nokiaLCD.drawString(res);
+				printf(res);
+				printf("\n");
 			}
-			if ( digitalRead(LED1) && millis() > lastread + 500 ) {
+			if ( digitalRead(LED1) && millis() > lastread + 1500 ) {
 				digitalWrite(LED1, LOW);
+				nokiaLCD.gotoXY(0,1);
+				for(int i = 0; i < 3*84/4; i++)
+					nokiaLCD.drawBitmap(bmap, 4, 8);
 			}
 			if ( ds3231.updateTime() ) {
 				ds3231.updateCalendar();
 				sprintf(mess, "%02x:%02x:%02x  ", ds3231.time>>16, ds3231.time>>8&0x7f, ds3231.time&0x7f);
-				//printf(mess);
 				nokiaLCD.cursor(0);
 				nokiaLCD.drawString(mess);
 			}
@@ -189,22 +193,22 @@ static char msg[256];
 	int length = 0;
 	msg[0] = 0;
 	if ( card.type == 0x11 ) {
-		length += sprintf(tmp, "FeliCa IDm: ");
+		length += sprintf(tmp, "FeliCa [");
 		strcat(msg, tmp);
 		for(int i = 0; i < 8; i++) {
 			length += sprintf(tmp, "%02x ", (uint8)card.IDm[i]);
 			strcat(msg, tmp);
 		}
-		length += sprintf(tmp, " detected.\n");
+		length += sprintf(tmp, "]");
 		strcat(msg, tmp);
 	} else if ( card.type == 0x10 ) {
-		length += sprintf(tmp, "Mifare  ID: ");
+		length += sprintf(tmp, "Mifare [");
 		strcat(msg, tmp);
 		for(int i = 0; i < card.IDLength; i++) {
 			length += sprintf(tmp, "%02x ", card.UID[i]);
 			strcat(msg, tmp);
 		}
-		length += sprintf(tmp, " detected.\n");
+		length += sprintf(tmp, "]");
 		strcat(msg, tmp);
 	}
 	return msg;

@@ -27,19 +27,20 @@ extern volatile uint32_t __counter_millis;
 
 uint32_t micros(void);
 uint32_t millis(void);
-void reset_millis(void);
 	
+void TIM2_delaytimer_start(void);
+void TIM2_delaytimer_up(void);
+void TIM2_delaytimer_reset(void);
+void TIM2_IRQHandler(void);
+
 void delay_ms(uint32_t);
 void delay_us(uint32_t);
-void timer2_up(void);
+void countdown_start(uint32_t t);
+uint8_t countdown(void);
 
 #define delay(x)  delay_ms(x)
 #define delayMicroseconds(x)  delay_us(x)
-//void delayMicroseconds(uint32 w);
 
-void TIM2_delaytimer_start(void);
-
-void TIM2_IRQHandler(void);
 
 #ifdef __cplusplus
 }

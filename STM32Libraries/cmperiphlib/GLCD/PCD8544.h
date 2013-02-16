@@ -52,7 +52,7 @@ public:
 	
 	//
 	void gotoXY(int x, int y);
-	void drawBitmap(const byte my_array[]);
+	void drawBitmap(const byte my_array[], const byte width = LCD_X, const byte height = LCD_Y);
 	void drawCharacter(const char character);
 	void drawString(const char *characters);
 	void clear(void);
