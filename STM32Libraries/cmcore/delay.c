@@ -107,8 +107,8 @@ void countdown_start(uint32_t t) {
 	__countdown_millis = t;
 }
 
-uint8_t countdown(void) {
-	return __countdown_millis != 0;
+uint8_t countdown_check(void) {
+	return __countdown_millis == 0;
 }
 
 void TIM2_IRQHandler(void) {

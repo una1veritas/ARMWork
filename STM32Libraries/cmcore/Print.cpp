@@ -68,34 +68,40 @@ size_t Print::print(const char str[])
   return write(str);
 }
 
-size_t Print::print(const char c)
+size_t Print::print(char c)
 {
   return write(c);
 }
 
-size_t Print::print(uint8 b, uint8 base)
+size_t Print::print(unsigned char b, int base)
 {
   return print((uint32) b, base);
 }
 
-size_t Print::print(int16 n, uint8 base)
+size_t Print::print(int n, int base)
 {
   return print((int32) n, base);
 }
 
-size_t Print::print(uint16 n, uint8 base)
+size_t Print::print(unsigned int n, int base)
 {
   return print((uint32) n, base);
 }
 
-size_t Print::print(int32 n, uint8 base)
+size_t Print::print(unsigned long n, int base)
+{
+  if (base == 0) return write(n);
+  else return printNumber(n, base);
+}
+
+size_t Print::print(long n, int base)
 {
   if (base == 0) {
     return write(n);
   } else if (base == 10) {
     if (n < 0) {
       int t = print('-');
-      n = -n;
+      n = ( n > 0 ? n : -n);
       return printNumber(n, 10) + t;
     }
     return printNumber(n, 10);
@@ -104,13 +110,7 @@ size_t Print::print(int32 n, uint8 base)
   }
 }
 
-size_t Print::print(uint32 n, uint8 base)
-{
-  if (base == 0) return write(n);
-  else return printNumber(n, base);
-}
-
-size_t Print::print(double n, uint8 digits)
+size_t Print::print(const float n, const int digits)
 {
   return printFloat(n, digits);
 }
@@ -140,8 +140,8 @@ size_t Print::printByte(uint8 * p, uint8 length, char sep) {
 
 size_t Print::printByte(uint8 val) {
 	size_t n = 0;
-	n += print(val>>4, HEX);
-	n += print(val&0x0f, HEX);
+	n += print(long(val>>4), HEX);
+	n += print(long(val&0x0f), HEX);
 	return n;
 }
 
@@ -177,49 +177,49 @@ size_t Print::println(const char c[])
   return n;
 }
 
-size_t Print::println(const char c)
+size_t Print::println(char c)
 {
   size_t n = print(c);
   n += println();
   return n;
 }
 
-size_t Print::println(uint8 b, uint8 base)
+size_t Print::println(unsigned char b, int base)
 {
   size_t n = print(b, base);
   n += println();
   return n;
 }
 
-size_t Print::println(int16 num, uint8 base)
+size_t Print::println(int num, int base)
 {
   size_t n = print(num, base);
   n += println();
   return n;
 }
 
-size_t Print::println(uint16 num, uint8 base)
+size_t Print::println(unsigned int num, int base)
 {
   size_t n = print(num, base);
   n += println();
   return n;
 }
 
-size_t Print::println(int32 num, uint8 base)
+size_t Print::println(long num, int base)
 {
   size_t n = print(num, base);
   n += println();
   return n;
 }
 
-size_t Print::println(uint32 num, uint8 base)
+size_t Print::println(unsigned long num, int base)
 {
   size_t n = print(num, base);
   n += println();
   return n;
 }
 
-size_t Print::println(double num, uint8 digits)
+size_t Print::println(float num, int digits)
 {
   size_t n = print(num, digits);
   n += println();
@@ -236,7 +236,7 @@ size_t Print::println(const Printable& x)
 */
 // Private Methods /////////////////////////////////////////////////////////////
 
-size_t Print::printNumber(uint32 n, uint8_t base) {
+size_t Print::printNumber(unsigned long n, uint8_t base) {
   char buf[8 * sizeof(long) + 1]; // Assumes 8-bit chars plus zero byte.
   char *str = &buf[sizeof(buf) - 1];
 
@@ -255,32 +255,32 @@ size_t Print::printNumber(uint32 n, uint8_t base) {
   return write(str);
 }
 
-size_t Print::printFloat(double number, uint8_t digits) 
+size_t Print::printFloat(float number, uint8 digits) 
 { 
   size_t n = 0;
   
   if (isnan(number)) return print("nan");
   if (isinf(number)) return print("inf");
-  if (number > 4294967040.0) return print ("ovf");  // constant determined empirically
-  if (number <-4294967040.0) return print ("ovf");  // constant determined empirically
+  if (number > 4294967040.0f) return print ("ovf");  // constant determined empirically
+  if (number <-4294967040.0f) return print ("ovf");  // constant determined empirically
   
   // Handle negative numbers
-  if (number < 0.0)
+  if (number < 0.0f)
   {
      n += print('-');
      number = -number;
   }
 
   // Round correctly so that print(1.999, 2) prints as "2.00"
-  double rounding = 0.5;
+  float rounding = 0.5;
   for (uint8_t i=0; i<digits; ++i)
-    rounding /= 10.0;
+    rounding /= 10.0f;
   
   number += rounding;
 
   // Extract the integer part of the number and print it
-  uint32 int_part = (unsigned long)number;
-  double remainder = number - (double)int_part;
+  long int_part = (long)number;
+  float remainder = number - (float)int_part;
   n += print(int_part);
 
   // Print the decimal point, but only if there are digits beyond
@@ -291,9 +291,9 @@ size_t Print::printFloat(double number, uint8_t digits)
   // Extract digits from the remainder one at a time
   while (digits-- > 0)
   {
-    remainder *= 10.0;
+    remainder *= 10.0f;
     int toPrint = int(remainder);
-    n += print(toPrint);
+    n += print((long)toPrint);
     remainder -= toPrint; 
   } 
   
