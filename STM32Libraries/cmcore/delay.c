@@ -112,8 +112,8 @@ uint8_t countdown(void) {
 }
 
 void TIM2_IRQHandler(void) {
-	TIM_ClearITPendingBit(TIM2, TIM_IT_Update );
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update ) == SET) {
+		TIM_ClearITPendingBit(TIM2, TIM_IT_Update );
 		if ( __countdown_millis )
 			__countdown_millis--;
 		__counter_micros += 1000;

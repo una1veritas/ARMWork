@@ -28,12 +28,12 @@
 		<link>
 			<name>STM32F4xx_StdPeriph_Driver</name>
 			<type>2</type>
-			<location>C:/Users/Sin/Documents/github/ARMWork/STM32Libraries/STM32F4xx_StdPeriph_Driver</location>
+			<location>C:/Users/sin/Documents/GitHub/ARMWork/STM32Libraries/STM32F4xx_StdPeriph_Driver</location>
 		</link>
 		<link>
 			<name>armcore</name>
 			<type>2</type>
-			<location>C:/Users/Sin/Documents/github/ARMWork/STM32Libraries/armcore</location>
+			<location>C:/Users/sin/Documents/GitHub/ARMWork/STM32Libraries/armcore</location>
 		</link>
 	</linkedResources>
 </projectDescription>

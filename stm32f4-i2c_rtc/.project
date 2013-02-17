@@ -28,12 +28,12 @@
 		<link>
 			<name>StdPeriph_Driver</name>
 			<type>2</type>
-			<location>C:/Users/Sin/Documents/eclipse/Workspace/STM32library/STM32F4xx_StdPeriph_Driver/src</location>
+			<location>C:/Users/sin/Documents/eclipse/Workspace/STM32library/STM32F4xx_StdPeriph_Driver/src</location>
 		</link>
 		<link>
 			<name>armcore</name>
 			<type>2</type>
-			<location>C:/Users/Sin/Documents/eclipse/Workspace/STM32library/armcore</location>
+			<location>C:/Users/sin/Documents/eclipse/Workspace/STM32library/armcore</location>
 		</link>
 	</linkedResources>
 </projectDescription>

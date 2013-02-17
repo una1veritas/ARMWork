@@ -139,15 +139,15 @@ typedef uint8_t 	GPIOPin;
 //#define analogInputToDigitalPin(p)  ((p < 8) ? (p) + 24 : -1)
 
 #define OUTPUT		GPIO_Mode_OUT // 1
-#define INPUT			GPIO_Mode_IN  // 0
+#define INPUT		GPIO_Mode_IN  // 0
 #define ALTFUNC		GPIO_Mode_AF  // 2  AN 3
 #define PUSHPULL 	GPIO_OType_PP
 #define ODRAIN 		GPIO_OType_OD
 #define NOPULL		GPIO_PuPd_NOPULL
 #define PULLUP		GPIO_PuPd_UP
 #define PULLDOWN	GPIO_PuPd_DOWN
-#define LOWSPEED 		GPIO_Speed_2MHz
-#define MEDSPEED 		GPIO_Speed_25MHz
+#define LOWSPEED 	GPIO_Speed_2MHz
+#define MEDSPEED 	GPIO_Speed_25MHz
 #define FASTSPEED 	GPIO_Speed_50MHz
 #define HIGHSPEED 	GPIO_Speed_100MHz
 

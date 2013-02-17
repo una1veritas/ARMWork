@@ -28,7 +28,7 @@
 		<link>
 			<name>stm32f4xx_stdperiph_src</name>
 			<type>2</type>
-			<location>C:/Users/Sin/Documents/eclipse/ARMWork/STM32Libraries/STM32F4xx_StdPeriph_Driver/src</location>
+			<location>C:/Users/sin/Documents/eclipse/ARMWork/STM32Libraries/STM32F4xx_StdPeriph_Driver/src</location>
 		</link>
 	</linkedResources>
 </projectDescription>
