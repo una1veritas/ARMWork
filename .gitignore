@@ -21,6 +21,7 @@
 *.htm
 *.uvgui.*
 *.uvopt
+*.axf
 
 #Eclipse
 .metadata
