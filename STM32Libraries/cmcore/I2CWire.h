@@ -35,8 +35,8 @@ class I2CWire : public Stream
 		uint8_t receiveFrom(uint8, uint16);
 		uint8_t requestFrom(uint8 addr, uint16 qtty) { return receiveFrom(addr, qtty); } 
 	
-    virtual size_t write(uint8_t);
-		virtual inline size_t write(int8 v) { return write((uint8) v); }
+    virtual size_t write(uint8);
+		virtual inline size_t write(int v) { return write((uint8) v); }
 		virtual size_t available(void) {
 		uint16 d = (rxlength - rxposition);
 			return (d>0? (size_t)d: 0);

@@ -15,7 +15,7 @@
 #endif
 #include "CharacterLCD.h"
 #else
-#include <armcore.h>
+#include <cmcore.h>
 #include <gpio.h>
 
 #include <Print.h>

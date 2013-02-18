@@ -49,8 +49,8 @@
 
 /// @cond hide_from_doxygen
 typedef struct {
-	uint8_t x;
-	uint8_t y;
+	int16 x;
+	int16 y;
 	struct {
 #ifdef GLCD_XCOL_SUPPORT
 		uint8_t col;

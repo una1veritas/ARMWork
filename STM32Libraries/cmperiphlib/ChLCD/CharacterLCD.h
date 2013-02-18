@@ -9,7 +9,7 @@
 #include "Wiring.h"
 #endif
 #else
-#include <armcore.h>
+#include <cmcore.h>
 #include <delay.h>
 #endif
 #include <Print.h>

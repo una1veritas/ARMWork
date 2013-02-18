@@ -14,7 +14,7 @@
 
 #include "stm32f4xx_it.h"
 
-#include "armcore.h"
+#include "cmcore.h"
 #include "gpio.h"
 #include "delay.h"
 #include "I2CWire.h"
@@ -38,7 +38,7 @@ int main(void) {
 	char tmp[128];
 	uint16_t i = 0;
 	
-	TIM2_timer_start();
+	cmcore_init();
 
 	Serial6.begin(19200);
 

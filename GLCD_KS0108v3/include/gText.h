@@ -253,7 +253,7 @@ class gText : public glcd_Device
 	void write(uint8_t c);  // character output for print base class
 #else
 	virtual size_t write(uint8_t c);  // character output for print base class
-	using Print::write;
+//	using Print::write;
 #endif
 
 	void CursorTo( uint8_t column, uint8_t row); // 0 based coordinates for character columns and rows

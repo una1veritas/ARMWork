@@ -16,11 +16,13 @@ extern "C" {
 #include "stm32f4xx_gpio.h"
 #include "stm32f4xx_rcc.h"
 
-/*
-extern uint32_t PortPeriph[];
-extern GPIO_TypeDef * Port[];
-extern uint16_t Pin[];
-*/
+static GPIO_TypeDef * Port[] =
+		{ 0, GPIOA, GPIOB, GPIOC, GPIOD, GPIOE, GPIOF, GPIOG, GPIOH, GPIOI };
+
+#define PinSource(p) 		((p) & 0x0f)
+#define PinPort(p) 			(Port[(p) >> 4 & 0x0f])
+#define PinBit(p) 			((uint16_t)1<<((p) & 0x0f))
+
 
 enum PortNameDef {
 	Not_A_Port = 0,
@@ -159,12 +161,13 @@ void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode);
 void digitalWrite(GPIOPin portpin, uint8_t bit);
 uint8_t digitalRead(GPIOPin portpin);
 
+/*
 GPIO_TypeDef * PinPort(GPIOPin portpin);
 uint16_t PinBit(GPIOPin portpin);
 uint8_t PinSource(GPIOPin portpin);
+*/
 
-//void GPIOWrite(GPIO_TypeDef * port, uint16_t pinbits);
-void GPIOWrite(GPIO_TypeDef * port, uint16_t maskbits, uint16_t bits);
+//void GPIOWrite(GPIO_TypeDef * port, uint16_t maskbits, uint16_t bits);
 void GPIOMode(GPIO_TypeDef * port, uint16_t pinbits, GPIOMode_TypeDef mode,
               GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd);
 void GPIOAltFunc(GPIO_TypeDef * port, uint16_t pinbits, uint8_t GPIOType_AF);

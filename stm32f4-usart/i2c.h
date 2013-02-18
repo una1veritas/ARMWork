@@ -8,7 +8,7 @@
 #ifndef I2C_H_
 #define I2C_H_
 
-#include "armcore.h"
+#include "cmcore.h"
 
 #ifdef __cplusplus
 extern "C" {

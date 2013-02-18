@@ -30,7 +30,7 @@ void DS1307::readRegisters(uint8_t addr, uint8_t * regvals, uint8_t num) {
 	wire.beginTransmission(DS1307_CTRL_ID);
 //#if ARDUINO >= 100
 //    WIRE_WRITE(addr); //Wire.send(addr);
- 	wire.write(addr);
+ 	wire.write(addr+chipID);
 //#else
  //	Wire.send(addr);
 //#endif
@@ -55,7 +55,7 @@ void DS1307::writeRegisters(uint8_t addr, uint8_t *regvals, uint8_t num)
 {
 	wire.beginTransmission(DS1307_CTRL_ID);
 //#if ARDUINO >= 100
-	wire.write(addr); // reset register pointer
+	wire.write(addr+chipID); // reset register pointer
 //#else
 //	Wire.send(addr); // reset register pointer
 //#endif

@@ -3,7 +3,7 @@
 #include "stm32f4xx.h"
 #include <stm32f4xx_rtc.h>
 
-#include "armcore.h"
+#include "cmcore.h"
 #include "delay.h"
 #include "usart.h"
 
@@ -22,18 +22,18 @@ void RTC_Config(void);
 void RTC_AlarmConfig(void);
 Table_TypeDef RTC_Get_Time(uint32_t Secondfraction , RTC_TimeTypeDef* RTC_TimeStructure );
 
-//
- USART Serial6;
+usart Serial6;
  
 int main(void) {
 	char printbuf[64];
 //	uint32_t tmp32;
 
-	RTC_Config();
-	
-	TIM2_timer_start();
+	RTC_Config();	
 
-	usart_begin(&Serial6, USART6, PC7, PC6, 19200); // 7 6
+	cmcore_init();
+
+	usart_init(&Serial6, USART6, PC7, PC6); // 7 6
+	usart_begin(&Serial6, 57600); // 7 6
 	usart_print(&Serial6, "\r\nWelcome to USART.\r\n\r\n");
 
 	delay_ms(500);
@@ -54,6 +54,8 @@ int main(void) {
     
     /* Display the curent time and the sub second on the LCD */
     RTC_Get_Time(Secondfraction , &RTC_TimeStruct);
+		sprintf(printbuf, "second fraction = %d ", Secondfraction),
+		usart_print(&Serial6, printbuf);
 		
 		usart_print(&Serial6, ".");
 		sprintf(printbuf, "millis = %dl\r\n", millis()),
@@ -62,51 +64,6 @@ int main(void) {
 		delay_ms(250);
 	}
 }
-
-/**
-  * @brief  Configures the RTC peripheral by selecting the clock source.
-  * @param  None
-  * @retval None
-  */
-void RTC_Config(void)
-{
-  RTC_TimeTypeDef  RTC_TimeStructure;
-  
-  /* Enable the PWR clock */
-  RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
-
-  /* Allow access to RTC */
-  PWR_BackupAccessCmd(ENABLE);
-  
-  /* Reset RTC Domain */
-  RCC_BackupResetCmd(ENABLE);
-  RCC_BackupResetCmd(DISABLE);
-  
-  /* Enable the LSE OSC */
-  RCC_LSEConfig(RCC_LSE_ON);
-
-  /* Wait till LSE is ready */  
-  while(RCC_GetFlagStatus(RCC_FLAG_LSERDY) == RESET)
-  {
-  }
-
-  /* Select the RTC Clock Source */
-  RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);
-  
-  /* Configure the RTC data register and RTC prescaler */
-  RTC_InitStructure.RTC_AsynchPrediv = 0x1F;
-  RTC_InitStructure.RTC_SynchPrediv  = 0x3FF;
-  RTC_InitStructure.RTC_HourFormat   = RTC_HourFormat_24;
-  RTC_Init(&RTC_InitStructure);
-  
-  /* Set the time to 00h 00mn 00s AM */
-  RTC_TimeStructure.RTC_H12     = RTC_H12_AM;
-  RTC_TimeStructure.RTC_Hours   = 0x00;
-  RTC_TimeStructure.RTC_Minutes = 0x00;
-  RTC_TimeStructure.RTC_Seconds = 0x00;  
-  RTC_SetTime(RTC_Format_BCD, &RTC_TimeStructure);
-}
-
 
 /**
   * @brief  Configures the RTC Alarm.

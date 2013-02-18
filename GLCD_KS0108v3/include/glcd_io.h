@@ -46,7 +46,7 @@
 #define AVRIO_NO4BIT // for now disable nibble mode
 #endif
 
-#include "include/stm32f4xx_io.h"         // these macros do direct port io    
+//#include "include/stm32f4xx_io.h"         // these macros do direct port io    
 
  
 /*
@@ -62,7 +62,7 @@
 #ifdef  _AVRIO_AVRIO_
 
 // lcdfastWrite Macro may be replaced by Paul's new Arduino macro 
-#define lcdfastWrite(pin, pinval) avrio_WritePin(pin, pinval)
+//#define lcdfastWrite(pin, pinval) avrio_WritePin(pin, pinval)
 
 #ifndef OUTPUT
 #define OUTPUT 1
@@ -76,52 +76,64 @@
 #define HIGH 1
 #endif
 
-#define lcdPinMode(pin, mode)  avrio_PinMode(pin, mode) 
+//#define lcdPinMode(pin, mode)  avrio_PinMode(pin, mode) 
 
 
 /*
  * Set up the configured LCD data lines 
  */
-
+/*
 #define lcd_avrWriteByte(data) 					\
 	avrio_Write8Bits(AVRIO_PORTREG,				\
 			glcdData0Pin, glcdData1Pin,		\
 			glcdData2Pin, glcdData3Pin,		\
 			glcdData4Pin, glcdData5Pin,		\
 			glcdData6Pin, glcdData7Pin, data)
-
-
+*/
+	void lcd_WriteByte(uint8 data) {
+		GPIOPin pins[] = {
+			glcdData0Pin, glcdData1Pin,	
+			glcdData2Pin, glcdData3Pin,	
+			glcdData4Pin, glcdData5Pin,	
+			glcdData6Pin, glcdData7Pin
+		};
+		for(int i = 0; i < 8; i++) {
+			dirbits>>i & 1 ? digitalWrite(pins[i], HIGH) : digitalWrite(pins[i], LOW);
+		}
+	}
 /*
  * Read the configured LCD data lines and return data as 8 bit byte
  */
-#define lcd_avrReadByte() 					\
-	avrio_Read8Bits(AVRIO_PINREG,				\
-			glcdData0Pin, glcdData1Pin,		\
-			glcdData2Pin, glcdData3Pin,		\
-			glcdData4Pin, glcdData5Pin,		\
-			glcdData6Pin, glcdData7Pin)
+#define lcd_ReadByte() 					\
+		( digitalRead(glcdData0Pin) | digitalRead(glcdData1Pin)<<1	| digitalRead(glcdData2Pin)<<2 | digitalRead(glcdData3Pin)<<3 	\
+		| digitalRead(glcdData4Pin)<<4 | digitalRead(glcdData5Pin)<<5	| digitalRead(glcdData6Pin)<<6 | digitalRead(glcdData7Pin)<<7 )
 
 
 /*
  * Configure the direction of the data pins.
  *	0x00 is for input and 0xff is for output.
  */
-#define lcdDataDir(dirbits)					\
-	avrio_Write8Bits(AVRIO_DDRREG, 				\
-			glcdData0Pin, glcdData1Pin,		\
-			glcdData2Pin, glcdData3Pin,		\
-			glcdData4Pin, glcdData5Pin,		\
-			glcdData6Pin, glcdData7Pin, dirbits)
+	void lcdDataDir(uint8 dirbits) {
+		GPIOPin pins[] = {
+			glcdData0Pin, glcdData1Pin,	
+			glcdData2Pin, glcdData3Pin,	
+			glcdData4Pin, glcdData5Pin,	
+			glcdData6Pin, glcdData7Pin
+		};
+		for(int i = 0; i < 8; i++) {
+			dirbits>>i & 1 ? pinMode(pins[i], OUTPUT) : pinMode(pins[i], INPUT);
+		}
+	}
 
 /*
  * alias to setup LCD data lines.
  */
-#define lcdDataOut(data)	lcd_avrWriteByte(data)
+#define lcdDataOut(data)	lcd_WriteByte(data)
 
 /*
  * alias to Read LCD data lines.
  */
-#define lcdDataIn()		lcd_avrReadByte()
+#define lcdDataIn()		lcd_ReadByte()
 
 /*
  * alias to read status bits
@@ -166,9 +178,9 @@
  */
 //#include "include/delay.h" // Hans' Heirichs delay macros
 
-#define lcdDelayNanoseconds(__ns) _delay_cycles( (double)(F_CPU)*((double)__ns)/1.0e9 + 0.5 ) // Hans Heinrichs delay cycle routine
+//#define lcdDelayNanoseconds(__ns) _delay_cycles( (double)(F_CPU)*((double)__ns)/1.0e9 + 0.5 ) // Hans Heinrichs delay cycle routine
 
-#define lcdDelayMilliseconds(__ms) delay(__ms)	// Arduino delay function
+//#define lcdDelayMilliseconds(__ms) delay(__ms)	// Arduino delay function
 
 
 /*
@@ -211,7 +223,7 @@
 #define lcdChipSelect(cselstr) lcdChipSelect1(cselstr)
 #endif
 
-#define lcdChipSelect1(p,v) lcdfastWrite(p,v)
+#define lcdChipSelect1(p,v) digitalWrite(p,v)
 
 #define lcdChipSelect2(p1,v1, p2,v2) \
  do {lcdChipSelect1(p1, v1); lcdChipSelect1(p2,v2);} while(0)

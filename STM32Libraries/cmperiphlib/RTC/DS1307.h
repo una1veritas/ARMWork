@@ -23,13 +23,14 @@
 class DS1307 {
 	// library-accessible "private" interface
 private:
-//	I2CBuffer & i2cx;
 	I2CWire & wire;
-
+	uint8 chipID;
+	
 	void readRegisters(byte reg, uint8_t *, byte);
 	void writeRegisters(byte reg, uint8_t *, byte);
 
 	enum {
+		M41T62_HUNDREDTHSEC = 0,
 		DS1307_SEC = 0,
 		DS1307_MIN,
 		DS1307_HR,
@@ -68,11 +69,18 @@ public:
 		NA = 0, SUN = 1, MON, TUE, WED, THU, FRI, SAT,
 	};
 
+	enum {
+		CHIP_DS1307 = 0,
+		CHIP_M41T62 = 1
+	};
+
 public:
 	uint32 time, cal;
 
-//	DS1307(I2CBuffer & wire) : i2cx(wire), time(0), cal(0) {}
-	DS1307(I2CWire & i2cwire) : wire(i2cwire), time(0), cal(0) {}
+	DS1307(I2CWire & w, uint8 chip = CHIP_DS1307) : wire(w), chipID(chip) {
+		time = 0;
+		cal = 0; 
+	}
 
 	void init() {
 		start();

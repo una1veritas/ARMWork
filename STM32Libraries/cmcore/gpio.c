@@ -13,14 +13,17 @@ uint32_t PortPeriph[] = {
 		RCC_AHB1Periph_GPIOD, RCC_AHB1Periph_GPIOE, RCC_AHB1Periph_GPIOF,
 		RCC_AHB1Periph_GPIOG, RCC_AHB1Periph_GPIOH, RCC_AHB1Periph_GPIOI };
 
+/*
 GPIO_TypeDef * Port[] =
 		{ 0, GPIOA, GPIOB, GPIOC, GPIOD, GPIOE, GPIOF, GPIOG, GPIOH, GPIOI };
+*/
 
 uint16_t Pin[] = { GPIO_Pin_0, GPIO_Pin_1, GPIO_Pin_2, GPIO_Pin_3,
 		GPIO_Pin_4, GPIO_Pin_5, GPIO_Pin_6, GPIO_Pin_7, GPIO_Pin_8, GPIO_Pin_9,
 		GPIO_Pin_10, GPIO_Pin_11, GPIO_Pin_12, GPIO_Pin_13, GPIO_Pin_14,
 		GPIO_Pin_15, GPIO_Pin_All };
 
+/*
 GPIO_TypeDef * PinPort(GPIOPin portpin) {
 	return Port[portpin >> 4 & 0x0f];
 }
@@ -50,6 +53,7 @@ uint16_t PinBit(GPIOPin portpin) {
 uint8_t PinSource(GPIOPin portpin) {
 	return portpin & 0x0f;
 }
+*/
 
 void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode) {
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -60,11 +64,11 @@ void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode) {
 	GPIO_InitStructure.GPIO_Pin = PinBit(portpin);
 	GPIO_InitStructure.GPIO_Mode = mode;
 	//
-	GPIO_Init(Port[portpin>>4 & 0x0f], &GPIO_InitStructure);
+	GPIO_Init(PinPort(portpin), &GPIO_InitStructure);
 }
 
 void digitalWrite(GPIOPin portpin, uint8_t bit) {
-	GPIO_TypeDef * port = Port[portpin>>4 & 0x0f];
+	GPIO_TypeDef * port = PinPort(portpin); //[portpin>>4 & 0x0f];
 #ifdef USE_DIGITALWRITE_PULLUP
 	GPIO_InitTypeDef GPIO_InitStructure;
 	uint8_t mode = (port->MODER) >> (PinSource(portpin) * 2) & 0x03;
@@ -90,7 +94,7 @@ void digitalWrite(GPIOPin portpin, uint8_t bit) {
 }
 
 uint8_t digitalRead(GPIOPin portpin) {
-	GPIO_TypeDef * port = Port[portpin>>4 & 0x0f];
+	GPIO_TypeDef * port = PinPort(portpin); //[portpin>>4 & 0x0f];
 	uint8_t mode = (port->MODER) >> (PinSource(portpin) * 2) & 0x03;
 	if (mode == GPIO_Mode_OUT)
 		return (GPIO_ReadOutputDataBit(port, PinBit(portpin)) ? SET : RESET);
@@ -147,12 +151,12 @@ void GPIOAltFunc(GPIO_TypeDef * port, uint16_t pinbits, uint8_t pinaf) {
 			GPIO_PinAFConfig(port, PinSource(i), pinaf);
 	}
 }
-
+/*
 void GPIOWrite(GPIO_TypeDef * port, uint16_t maskbits, uint16_t bits) {
 	uint16_t data = GPIO_ReadOutputDataBit(port, 0xffff);
 	GPIO_Write(port, (data & ~maskbits) | (bits & maskbits) );
 }
-
+*/
 void digitalToggle(GPIOPin portpin) {
 	GPIO_ToggleBits(PinPort(portpin), PinBit(portpin));
 }

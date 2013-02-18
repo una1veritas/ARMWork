@@ -249,10 +249,10 @@
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>21</ColumnNumber>
+      <ColumnNumber>32</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>43</TopLine>
-      <CurrentLine>41</CurrentLine>
+      <TopLine>109</TopLine>
+      <CurrentLine>145</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\main.cpp</PathWithFileName>
       <FilenameWithoutPath>main.cpp</FilenameWithoutPath>
