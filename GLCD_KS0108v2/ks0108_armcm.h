@@ -26,21 +26,16 @@
 #define LCD_D7	PE10
 
 
-static GPIOPin LCD_DATA_PIN[] = {
-	LCD_D0, LCD_D1, LCD_D2, LCD_D3, LCD_D4, LCD_D5, LCD_D6, LCD_D7
-};
-
-
 #define LCD_DATABITS_PD  (PinBit(PD14) | PinBit(PD15) | PinBit(PD0) | PinBit(PD1))
 #define LCD_DATABITS_PE  (PinBit(PE7) | PinBit(PE8) | PinBit(PE9) | PinBit(PE19))
 
 
 // Command pins assignments:
+#define D_I					PD11 // A16 		// RS D/I Bit 
+#define R_W					PD5  // nWR 		// RW Bit
+#define EN					PD4  // nOE 		// E Bit
 #define CSEL1				PE11 // AD8 		// CS1 Bit   // swap pin assignments with CSEL2 if left/right image is reversed
 #define CSEL2				PE12 // AD9 		// CS2 Bit
-#define R_W					PD5  // nWR 		// R/W Bit
-#define D_I					PE13 // AD10 		// D/I Bit 
-#define EN					PD4  // nOE 		// EN Bit
 
 //all command pins are on the same port for slight speed & code size improvement
 //#define LCD_CMD_PORT		PORTC		// Command Output Register for pins 16-23

@@ -28,9 +28,9 @@
      
 */
 
-#include <inttypes.h>
-typedef uint8_t boolean;
-typedef uint8_t byte;
+#include <stdio.h>
+#include <stdint.h>
+#include "cmcore.h"
 //#include <avr/pgmspace.h>
 
 #ifndef	KS0108_H
@@ -54,7 +54,7 @@ typedef uint8_t byte;
 #include "ks0108_armcm.h"
 
 #else
-#error "MPU Architecture mus be specified."
+#error "MPU Architecture must be specified."
 
 #endif
 
@@ -115,7 +115,7 @@ typedef uint8_t byte;
 #define BLACK				0xFF
 #define WHITE				0x00
 
-// useful user contants
+// useful user constants
 #define NON_INVERTED false
 #define INVERTED     true
 
@@ -150,47 +150,58 @@ uint8_t ReadRamData(const uint8_t* ptr);	//Standard Read Callback
 
 class ks0108  // shell class for ks0108 glcd code
 {
-  private:
-    lcdCoord			Coord;
-    boolean				Inverted; 
-    FontCallback	    FontRead;
-    uint8_t				FontColor;
-    const uint8_t*		Font;
-	uint8_t ReadData(void); 
+private:
+	lcdCoord Coord;
+	boolean Inverted;
+	FontCallback FontRead;
+	uint8_t FontColor;
+	const uint8_t* Font;
+
+	static const GPIOPin databus[];
+
+	uint8_t ReadData(void);
 	uint8_t DoReadData(uint8_t first);
 	void WriteCommand(uint8_t cmd, uint8_t chip);
 	void WriteData(uint8_t data); // experts can make this public but the functionality is not documented
 	inline void Enable(void);
-	inline void SelectChip(uint8_t chip); 
-	void WaitReady( uint8_t chip);
-  public:
-    ks0108();
+	inline void SelectChip(uint8_t chip);
+	void WaitReady(uint8_t chip);
+
+public:
+	uint8_t CharWidth(char c);
+	uint16_t StringWidth(char* str);
+//    uint16_t StringWidth_P(PGM_P str);
+	
+	ks0108();
 	// Control functions
 	void Init(boolean invert);
-    void GotoXY(uint8_t x, uint8_t y);
+	void GotoXY(uint8_t x, uint8_t y);
 	// Graphic Functions
 	void ClearPage(uint8_t page, uint8_t color);
 	void ClearScreen(uint8_t color = WHITE);
-    void DrawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t color);
-    void DrawRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t color);
-	void DrawRoundRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t radius, uint8_t color);
-    void FillRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t color);
-    void InvertRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height);
-    void SetInverted(boolean invert);
-    void SetDot(uint8_t x, uint8_t y, uint8_t color);
-	void DrawBitmap(const uint8_t * bitmap, uint8_t x, uint8_t y, uint8_t color);
-	
-    // Font Functions
-    void SelectFont(const uint8_t* font, uint8_t color=BLACK, FontCallback callback=ReadRamData); // defualt arguments added, callback now last arg
-    int PutChar(char c);
-    void Puts(char* str);
+	void DrawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2,
+			uint8_t color);
+	void DrawRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height,
+			uint8_t color);
+	void DrawRoundRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height,
+			uint8_t radius, uint8_t color);
+	void FillRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height,
+			uint8_t color);
+	void InvertRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height);
+	void SetInverted(boolean invert);
+	void SetDot(uint8_t x, uint8_t y, uint8_t color);
+	void DrawBitmap(const uint8_t * bitmap, uint8_t x, uint8_t y,
+			uint8_t color);
+
+	// Font Functions
+	void SelectFont(const uint8_t* font, uint8_t color = BLACK,
+			FontCallback callback = ReadRamData); // defualt arguments added, callback now last arg
+	int PutChar(char c);
+	void Puts(char* str);
 //    void Puts_P(PGM_P str);
 	void PrintNumber(long n);
-	void CursorTo( uint8_t x, uint8_t y); // 0 based coordinates for fixed width fonts (i.e. systemFont5x7)
+	void CursorTo(uint8_t x, uint8_t y); // 0 based coordinates for fixed width fonts (i.e. systemFont5x7)
 
-    uint8_t CharWidth(char c);
-    uint16_t StringWidth(char* str);
-//    uint16_t StringWidth_P(PGM_P str);
 };
 
 extern ks0108 GLCD;    
