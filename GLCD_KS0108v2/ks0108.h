@@ -39,6 +39,8 @@ typedef uint8_t byte;
 #define GLCD_VERSION 2 // software version of this library
 
 // Chip specific includes
+#if defined ARDUINO
+
 #if defined(__AVR_ATmega1280__)
 #include "ks0108_Mega.h"  // include this for the Arduino Mega other ATmega1280 boards
 #elif defined (__AVR_ATmega644__)  // TODO - check this define 
@@ -47,9 +49,18 @@ typedef uint8_t byte;
 #include "ks0108_Arduino.h"  // include this for the Arduino or other ATmega168 boards
 #endif
 
+#elif defined (__arm__)
+
+#include "ks0108_armcm.h"
+
+#else
+#error "MPU Architecture mus be specified."
+
+#endif
+
 #include "ks0108_Panel.h"      // this contains LCD panel specific configuration
 
-
+/*
 // macros for pasting port defines
 #define GLUE(a, b)     a##b 
 #define PORT(x)        GLUE(PORT, x)
@@ -64,10 +75,13 @@ typedef uint8_t byte;
 #define LCD_DATA_IN_HIGH	PIN(LCD_DATA_HIGH_NBL)	// Data Input Register  high nibble
 #define LCD_DATA_OUT_HIGH	PORT(LCD_DATA_HIGH_NBL)	// Data Output Register - high nibble
 #define LCD_DATA_DIR_HIGH	DDR(LCD_DATA_HIGH_NBL)	// Data Direction Register for Data Port, high nibble
+*/
 
-#define lcdDataOut(_val_) LCD_DATA_OUT(_val_) 
-#define lcdDataDir(_val_) LCD_DATA_DIR(_val_) 
+//#define lcdDataOut(_val_) LCD_DATA_OUT(_val_) 
+//#define lcdDataDir(_val_) LCD_DATA_DIR(_val_) 
 
+
+/*
 // macros to handle data output
 #ifdef LCD_DATA_NIBBLES  // data is split over two ports 
 #define LCD_DATA_OUT(_val_) \
@@ -79,7 +93,7 @@ typedef uint8_t byte;
 #define LCD_DATA_OUT(_val_) LCD_DATA_OUT_LOW = (_val_);		
 #define LCD_DATA_DIR(_val_) LCD_DATA_DIR_LOW = (_val_);
 #endif
-
+*/
 
 // Commands
 #ifdef HD44102 
@@ -125,7 +139,8 @@ typedef struct {
 
 typedef uint8_t (*FontCallback)(const uint8_t*);
 
-uint8_t ReadPgmData(const uint8_t* ptr);	//Standard Read Callback
+//uint8_t ReadPgmData(const uint8_t* ptr);	//Standard Read Callback
+uint8_t ReadRamData(const uint8_t* ptr);	//Standard Read Callback
 
 #define DrawVertLine(x, y, length, color) FillRect(x, y, 0, length, color)
 #define DrawHoriLine(x, y, length, color) FillRect(x, y, length, 0, color)
@@ -166,7 +181,7 @@ class ks0108  // shell class for ks0108 glcd code
 	void DrawBitmap(const uint8_t * bitmap, uint8_t x, uint8_t y, uint8_t color);
 	
     // Font Functions
-    void SelectFont(const uint8_t* font, uint8_t color=BLACK, FontCallback callback=ReadPgmData); // defualt arguments added, callback now last arg
+    void SelectFont(const uint8_t* font, uint8_t color=BLACK, FontCallback callback=ReadRamData); // defualt arguments added, callback now last arg
     int PutChar(char c);
     void Puts(char* str);
 //    void Puts_P(PGM_P str);

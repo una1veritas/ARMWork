@@ -117,7 +117,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>1</UseSimulator>
+            <UseSimulator>0</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -128,9 +128,9 @@
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
           </Simulator>
           <Target>
-            <UseTarget>0</UseTarget>
+            <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>0</RunToMain>
+            <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
@@ -139,7 +139,7 @@
             <RestoreTracepoints>1</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>1</TargetSelection>
+          <TargetSelection>13</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -153,7 +153,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver>BIN\UL2CM3.DLL</Driver>
+            <Driver>STLink\ST-LINKIII-KEIL_SWO.dll</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -162,11 +162,11 @@
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>0</Capability>
-            <DriverSelection>-1</DriverSelection>
+            <Capability>1</Capability>
+            <DriverSelection>4104</DriverSelection>
           </Flash1>
-          <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>
@@ -348,7 +348,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>STM32F4 USE_STDPERIPH_DRIVER HSE_VALUE=8000000</Define>
+              <Define>STM32F4  STM32F4_DISCOVERY USE_STDPERIPH_DRIVER HSE_VALUE=8000000</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\GLCD_KS0108v2;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmcore\utility;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
             </VariousControls>
@@ -431,6 +431,26 @@
               <FileType>8</FileType>
               <FilePath>..\ks0108.cpp</FilePath>
             </File>
+            <File>
+              <FileName>ks0108.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\ks0108.h</FilePath>
+            </File>
+            <File>
+              <FileName>Arial14.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Arial14.h</FilePath>
+            </File>
+            <File>
+              <FileName>ArduinoIcon.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\ArduinoIcon.h</FilePath>
+            </File>
+            <File>
+              <FileName>SystemFont5x7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SystemFont5x7.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -485,16 +505,6 @@
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\usart.h</FilePath>
-            </File>
-            <File>
-              <FileName>stdiodef.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\utility\stdiodef.c</FilePath>
-            </File>
-            <File>
-              <FileName>stdiodef.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\utility\stdiodef.h</FilePath>
             </File>
           </Files>
         </Group>

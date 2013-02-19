@@ -141,7 +141,7 @@ typedef uint8_t 	GPIOPin;
 //#define analogInputToDigitalPin(p)  ((p < 8) ? (p) + 24 : -1)
 
 #define OUTPUT		GPIO_Mode_OUT // 1
-#define INPUT		GPIO_Mode_IN  // 0
+#define INPUT			GPIO_Mode_IN  // 0
 #define ALTFUNC		GPIO_Mode_AF  // 2  AN 3
 #define PUSHPULL 	GPIO_OType_PP
 #define ODRAIN 		GPIO_OType_OD

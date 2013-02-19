@@ -38,7 +38,38 @@ extern "C" {
 #include "ks0108.h"
 
 
-#define EN_DELAY() asm volatile( "ldi r24, %0 \n\t" "subi r24, 0x1 \n\t" "and r24, r24 \n\t" "brne .-6 \n\t" ::"M" (EN_DELAY_VALUE) : "r24" )
+void lcdDataOut(uint8 val) {
+	for(int i = 0; i < 8; i++) {
+		digitalWrite(LCD_DATA_PIN[i], (val>>i&1 ? HIGH : LOW) );
+	}
+}
+
+uint8 lcdDataIn() {
+	uint8 data = 0;
+	for(int i = 0; i < 8; i++) {
+		if ( digitalRead(LCD_DATA_PIN[i]) ) 
+			data |= (1<<i);
+	}
+	return data;
+}
+
+#define LCD_DATA_IN_HIGH 	(lcdDataIn())
+#define LCD_DATA_IN_LOW 	(lcdDataIn())
+
+void lcdDataDir(uint8 val) {
+	for(int i = 0; i < 8; i++) {
+		if ( val>>i&1 == OUTPUT ) {
+			pinMode(LCD_DATA_PIN[i], OUTPUT);
+		} else {
+			pinMode(LCD_DATA_PIN[i], INPUT);
+		}
+	}
+}
+
+
+
+#define EN_DELAY() 	delay_us(6)
+//#define EN_DELAY() asm volatile( "ldi r24, %0 \n\t" "subi r24, 0x1 \n\t" "and r24, r24 \n\t" "brne .-6 \n\t" ::"M" (EN_DELAY_VALUE) : "r24" )
 // the (EN_DELAY_VALUE) argument for the above delay is in ks-0108_panel.h
 
 //#define GLCD_DEBUG  // uncomment this if you want to slow down drawing to see how pixels are set
@@ -333,6 +364,10 @@ uint8_t ReadPgmData(const uint8_t* ptr) {  // note this is a static function
 	return pgm_read_byte(ptr);
 }
 */
+uint8_t ReadRamData(const uint8_t* ptr) {  // note this is a static function
+	return *ptr;
+}
+
 void ks0108::SelectFont(const uint8_t* font,uint8_t color, FontCallback callback) {
 	this->Font = font;
 	this->FontRead = callback;
@@ -532,7 +567,8 @@ void ks0108::Init(boolean invert) {
 	this->GotoXY(0,0);
 }
 
-__inline__ void ks0108::SelectChip(uint8_t chip) {  
+//__inline__ 
+void ks0108::SelectChip(uint8_t chip) {  
 //static uint8_t prevchip; 
 	if(chipSelect[chip] & 1)
        fastWriteHigh(CSEL1);
@@ -562,7 +598,8 @@ void ks0108::WaitReady( uint8_t chip){
 	
 }
 
- __inline__ void ks0108::Enable(void) {  
+// __inline__ 
+void ks0108::Enable(void) {  
    EN_DELAY();
    fastWriteHigh(EN);					// EN high level width min 450 ns
    EN_DELAY();
@@ -711,12 +748,12 @@ void ks0108::DrawBitmap(const uint8_t * bitmap, uint8_t x, uint8_t y, uint8_t co
 uint8_t width, height;
 uint8_t i, j;
 
-  width = ReadPgmData(bitmap++); 
-  height = ReadPgmData(bitmap++);
+  width = ReadRamData(bitmap++); 
+  height = ReadRamData(bitmap++);
   for(j = 0; j < height / 8; j++) {
      this->GotoXY(x, y + (j*8) );
 	 for(i = 0; i < width; i++) {
-		 uint8_t displayData = ReadPgmData(bitmap++);
+		 uint8_t displayData = ReadRamData(bitmap++);
 	   	 if(color == BLACK)
 			this->WriteData(displayData);
 		 else
@@ -733,4 +770,4 @@ ks0108::ks0108(){
 
 // Make one instance for the user
 ks0108 GLCD = ks0108();
- 
+

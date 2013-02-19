@@ -19,6 +19,7 @@ unsigned long startMillis;
 unsigned int loops = 0;
 unsigned int iter = 0;
 
+void init();
 void setup();
 void loop();
 void countdown(int);
@@ -26,10 +27,16 @@ void introScreen();
 void showCharacters();
 
 int main() {
+	
+	init();
 	setup();
 	
 	for(;;)
 		loop();
+}
+
+void init() {
+	cmcore_init();
 }
 
 void setup(){
