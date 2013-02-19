@@ -173,7 +173,7 @@
               = ((25 MHz / 25) * 240 ) / 2 = 120 MHz
    */
 #elif defined (STM32F4_DISCOVERY)
-#warning "PLL params for F4 Discovery is chosen."
+#warning "PLL params for STM32F4 Discovery is chosen."
 
 //F4 Discovery
 #define PLL_M      8

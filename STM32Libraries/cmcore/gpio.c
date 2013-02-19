@@ -106,6 +106,23 @@ uint16_t GPIORead(GPIO_TypeDef * port, uint16_t bitmasks) {
 	return data;
 }
 
+/*
+#define OUTPUT		GPIO_Mode_OUT // 1
+#define INPUT			GPIO_Mode_IN  // 0
+#define ALTFUNC		GPIO_Mode_AF  // 2  AN 3
+#define PUSHPULL 	GPIO_OType_PP
+#define ODRAIN 		GPIO_OType_OD
+#define NOPULL		GPIO_PuPd_NOPULL
+#define PULLUP		GPIO_PuPd_UP
+#define PULLDOWN	GPIO_PuPd_DOWN
+#define LOWSPEED 	GPIO_Speed_2MHz
+#define MEDSPEED 	GPIO_Speed_25MHz
+#define FASTSPEED 	GPIO_Speed_50MHz
+#define HIGHSPEED 	GPIO_Speed_100MHz
+
+#define HIGH		SET
+#define LOW			RESET
+*/
 void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
               GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd) {
 		GPIO_InitTypeDef GPIO_InitStructure;

@@ -16,30 +16,20 @@
 /* Sanguino/ ATmega644 defines                                                             */
 /*******************************************************************************************/
 
-#define LCD_D0	PD14
-#define LCD_D1	PD15
-#define LCD_D2	PD0
-#define LCD_D3	PD1
-#define LCD_D4	PE7
-#define LCD_D5	PE8
-#define LCD_D6	PE9
-#define LCD_D7	PE10
-
-
-#define LCD_DATABITS_PD  (PinBit(PD14) | PinBit(PD15) | PinBit(PD0) | PinBit(PD1))
-#define LCD_DATABITS_PE  (PinBit(PE7) | PinBit(PE8) | PinBit(PE9) | PinBit(PE19))
+//#define LCD_DATABITS_PD  (PinBit(PD14) | PinBit(PD15) | PinBit(PD0) | PinBit(PD1))
+//#define LCD_DATABITS_PE  (PinBit(PE7) | PinBit(PE8) | PinBit(PE9) | PinBit(PE19))
 
 
 // Command pins assignments:
-#define D_I					PD11 // A16 		// RS D/I Bit 
-#define R_W					PD5  // nWR 		// RW Bit
-#define EN					PD4  // nOE 		// E Bit
-#define CSEL1				PE11 // AD8 		// CS1 Bit   // swap pin assignments with CSEL2 if left/right image is reversed
-#define CSEL2				PE12 // AD9 		// CS2 Bit
+#define D_I					PB11 // A16 		// RS D/I Bit 
+#define R_W					PB12  // nWR 		// RW Bit
+#define EN					PB13  // nOE 		// E Bit
+#define CSEL1				PB14 // AD8 		// CS1 Bit   // swap pin assignments with CSEL2 if left/right image is reversed
+#define CSEL2				PB15 // AD9 		// CS2 Bit
 
 //all command pins are on the same port for slight speed & code size improvement
 //#define LCD_CMD_PORT		PORTC		// Command Output Register for pins 16-23
-#define LCD_CNTRL_PORT 		PinPort(PD4)
+//#define LCD_CNTRL_PORT 		PinPort(PD4)
 
 // data pin assignments- on ATmega644 all data pins are assigned to the same port
 //#define dataPins0to7    // bits 0-7 assigned to sanguino pins 0-7

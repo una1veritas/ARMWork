@@ -35,9 +35,13 @@
 #define GLCD_H
 
 #include <inttypes.h>
-// #include <avr/pgmspace.h>
+#ifdef ARDUINO
+#include <avr/pgmspace.h>
+#endif
 
+#ifdef GLCD_TEXT
 #include "include/gText.h" 
+#endif
 
 #define GLCD_VERSION 3 // software version of this library
 

@@ -43,14 +43,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\</OutputDirectory>
+          <OutputDirectory>.\out\</OutputDirectory>
           <OutputName>GLCD_KS0108</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\</ListingPath>
+          <ListingPath>.\out\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -348,9 +348,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>STM32F4 USE_STDPERIPH_DRIVER HSE_VALUE=8000000</Define>
+              <Define>STM32F4XX STM32F4_DISCOVERY USE_STDPERIPH_DRIVER HSE_VALUE=8000000 STDSERIAL=6</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\GLCD_KS0108;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmcore\utility;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
+              <IncludePath>..\..\GLCD_KS0108v3;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmcore\utility;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -397,21 +397,6 @@
               <FilePath>.\startup_stm32f4xx.s</FilePath>
             </File>
             <File>
-              <FileName>glcd.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\glcd.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>glcd_Device.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\glcd_Device.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>gText.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\gText.cpp</FilePath>
-            </File>
-            <File>
               <FileName>main.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\main.cpp</FilePath>
@@ -427,11 +412,6 @@
               <FilePath>..\..\STM32Libraries\cmcore\utility\system_stm32f4xx.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_it.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\utility\stm32f4xx_it.h</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\cmcore\utility\stm32f4xx_conf.h</FilePath>
@@ -442,29 +422,14 @@
               <FilePath>..\..\STM32Libraries\cmcore\utility\stm32f4_discovery.h</FilePath>
             </File>
             <File>
-              <FileName>avrio_.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\include\avrio_.h</FilePath>
-            </File>
-            <File>
-              <FileName>glcd_io.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\include\glcd_io.h</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_io_.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\include\stm32f4xx_io_.h</FilePath>
+              <FileName>glcd.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\glcd.cpp</FilePath>
             </File>
             <File>
               <FileName>glcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\glcd.h</FilePath>
-            </File>
-            <File>
-              <FileName>glcd_Device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\include\glcd_Device.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -103,18 +103,18 @@ void delay_us(uint32_t w) {
 	while ( micros() < till );
 }
 
-void countdown_start(uint32_t t) {
+void TIM2_countdown_start(uint32_t t) {
 	__countdown_millis = t;
 }
 
-uint8_t countdown_check(void) {
+uint8_t TIM2_countdown(void) {
 	return __countdown_millis == 0;
 }
 
 void TIM2_IRQHandler(void) {
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update ) == SET) {
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update );
-		if ( __countdown_millis )
+		if ( __countdown_millis > 0 )
 			__countdown_millis--;
 		__counter_micros += 1000;
 		__counter_millis += 1;

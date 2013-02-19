@@ -36,37 +36,28 @@ extern "C" {
 
 #define ksSOURCE
 #include "ks0108.h"
-
-
-	const GPIOPin databus[] = {
-		LCD_D0, LCD_D1, LCD_D2, LCD_D3, LCD_D4, LCD_D5, LCD_D6, LCD_D7
-	};
 	
 void lcdDataOut(uint8 val) {
-	for (int i = 0; i < 8; i++) {
-		digitalWrite(databus[i], (val >> i & 1 ? HIGH : LOW));
-	}
+	uint16 t = GPIO_ReadOutputData(GPIOE);
+	GPIO_Write(GPIOE, ((uint16)val)<<8 & (t & 0x00ff));
 }
 
 uint8 lcdDataIn() {
-	uint8 data = 0;
-	for (int i = 0; i < 8; i++) {
-		if (digitalRead(databus[i]))
-			data |= (1 << i);
-	}
-	return data;
+	uint16 t = 0;
+	t = GPIO_ReadInputData(GPIOE);
+	return (uint8)(t>>8);
 }
 
 #define LCD_DATA_IN_HIGH 	(lcdDataIn())
 #define LCD_DATA_IN_LOW 	(lcdDataIn())
 
 void lcdDataDir(uint8 val) {
+	static GPIOPin pins[] = { PE8, PE9, PE10, PE11, PE12, PE13, PE14, PE15 };
 	for (int i = 0; i < 8; i++) {
-		if ( (val >> i) & 1 ) {
-			pinMode(databus[i], OUTPUT);
-		} else {
-			pinMode(databus[i], INPUT);
-		}
+		if (val>>i & 1) 
+			pinMode(pins[i], OUTPUT);
+		else
+			pinMode(pins[i], INPUT);
 	}
 }
 

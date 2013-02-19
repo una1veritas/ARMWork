@@ -25,52 +25,8 @@
 */
 
 #include "include/glcd_Device.h"
-//#include "include/glcd_io.h"
+#include "include/glcd_io.h"
 #include "include/glcd_errno.h"
-
-	void lcd_WriteByte(uint8 data) {
-		GPIOPin pins[] = {
-			glcdData0Pin, glcdData1Pin,	
-			glcdData2Pin, glcdData3Pin,	
-			glcdData4Pin, glcdData5Pin,	
-			glcdData6Pin, glcdData7Pin
-		};
-		for(int i = 0; i < 8; i++) {
-			data>>i & 1 ? digitalWrite(pins[i], HIGH) : digitalWrite(pins[i], LOW);
-		}
-	}
-
-	uint8 lcd_ReadByte() {
-		uint8 t = 0;
-		t |= ( digitalRead(glcdData0Pin) ? 1 : 0 );
-		t |= ( digitalRead(glcdData1Pin) ? 2 : 0 );
-		t |= ( digitalRead(glcdData2Pin) ? 4 : 0 );
-		t |= ( digitalRead(glcdData3Pin) ? 8 : 0 );
-		t |= ( digitalRead(glcdData4Pin) ? 16 : 0 );
-		t |= ( digitalRead(glcdData5Pin) ? 32 : 0 );
-		t |= ( digitalRead(glcdData6Pin) ? 64 : 0 );
-		t |= ( digitalRead(glcdData7Pin) ? 128 : 0 );
-		return t;
-	}
-
-	void lcdDataDir(uint8 dirbits) {
-		GPIOPin pins[] = {
-			glcdData0Pin, glcdData1Pin,	
-			glcdData2Pin, glcdData3Pin,	
-			glcdData4Pin, glcdData5Pin,	
-			glcdData6Pin, glcdData7Pin
-		};
-		for(int i = 0; i < 8; i++) {
-			dirbits>>i & 1 ? pinMode(pins[i], OUTPUT) : pinMode(pins[i], INPUT);
-		}
-	}
-
-#define lcdDataOut(data)	lcd_WriteByte(data)
-#define lcdDataIn()		lcd_ReadByte()
-#define lcdIsBusyStatus(status) (status & LCD_BUSY_FLAG)
-#define lcdIsResetStatus(status) (status & LCD_RESET_FLAG)
-
-#define lcdChipSelect(p) digitalWrite(p, HIGH)
 
 
 /*
@@ -362,53 +318,53 @@ int glcd_Device::Init(uint8_t invert)
 	 * The data lines will be configured as necessary when needed.
 	 */
 
-	pinMode(glcdDI,OUTPUT);	
-	pinMode(glcdRW,OUTPUT);	
+	lcdPinMode(glcdDI,OUTPUT);	
+	lcdPinMode(glcdRW,OUTPUT);	
 
 #ifdef glcdE1
-	pinMode(glcdE1,OUTPUT);	
-	digitalWrite(glcdE1,LOW); 	
+	lcdPinMode(glcdE1,OUTPUT);	
+	lcdfastWrite(glcdE1,LOW); 	
 #endif
 #ifdef glcdE2
-	pinMode(glcdE2,OUTPUT);	
-	digitalWrite(glcdE2,LOW); 	
+	lcdPinMode(glcdE2,OUTPUT);	
+	lcdfastWrite(glcdE2,LOW); 	
 #endif
 
 #ifdef glcdEN
-	pinMode(glcdEN,OUTPUT);	
-	digitalWrite(glcdEN, LOW);
+	lcdPinMode(glcdEN,OUTPUT);	
+	lcdfastWrite(glcdEN, LOW);
 #endif
 
 #ifdef glcdCSEL1
-	pinMode(glcdCSEL1,OUTPUT);
-	digitalWrite(glcdCSEL1, LOW);
+	lcdPinMode(glcdCSEL1,OUTPUT);
+	lcdfastWrite(glcdCSEL1, LOW);
 #endif
 
 #ifdef glcdCSEL2
-	pinMode(glcdCSEL2,OUTPUT);
-	digitalWrite(glcdCSEL2, LOW);
+	lcdPinMode(glcdCSEL2,OUTPUT);
+	lcdfastWrite(glcdCSEL2, LOW);
 #endif
 
 #ifdef glcdCSEL3
-	pinMode(glcdCSEL3,OUTPUT);
-	digitalWrite(glcdCSEL3, LOW);
+	lcdPinMode(glcdCSEL3,OUTPUT);
+	lcdfastWrite(glcdCSEL3, LOW);
 #endif
 
 #ifdef glcdCSEL4
-	pinMode(glcdCSEL4,OUTPUT);
-	digitalWrite(glcdCSEL4, LOW);
+	lcdPinMode(glcdCSEL4,OUTPUT);
+	lcdfastWrite(glcdCSEL4, LOW);
 #endif
 
 	/*
 	 * If reset control
 	 */
 #ifdef glcdRES
-	pinMode(glcdRES,OUTPUT);
+	lcdPinMode(glcdRES,OUTPUT);
 #endif
 
 
-	digitalWrite(glcdDI, LOW);
-	digitalWrite(glcdRW, LOW);
+	lcdfastWrite(glcdDI, LOW);
+	lcdfastWrite(glcdRW, LOW);
 
 	this->Coord.x = -1;  // invalidate the s/w coordinates so the first GotoXY() works
 	this->Coord.y = -1;  // invalidate the s/w coordinates so the first GotoXY() works
@@ -428,7 +384,7 @@ int glcd_Device::Init(uint8_t invert)
 	 *  extra blind delay for slow rising external reset signals
 	 *  and to give time for glcd to get up and running
 	 */
-	delay_ms(50); //lcdDelayMilliseconds(50); 
+	lcdDelayMilliseconds(50); 
 
 #if defined(GLCD_TEENSY_PCB_RESET_WAIT) && defined(CORE_TEENSY)
 	/*
@@ -436,7 +392,7 @@ int glcd_Device::Init(uint8_t invert)
 	 * Reset polling is not realiable by itself so this is easier and much less code
 	 * - see long comment above where GLCD_POLL_RESET is defined
 	 */
-	delay_ms(250); //lcdDelayMilliseconds(250);
+	lcdDelayMilliseconds(250);
 #endif
 
 
@@ -501,9 +457,8 @@ int glcd_Device::Init(uint8_t invert)
 	return(GLCD_ENOERR);
 }
 
-//#ifdef glcd_CHIP0  // if at least one chip select string
-//__inline__ 
-void glcd_Device::SelectChip(uint8_t chip)
+#ifdef glcd_CHIP0  // if at least one chip select string
+__inline__ void glcd_Device::SelectChip(uint8_t chip)
 {  
 
 #ifdef glcd_CHIP3
@@ -527,11 +482,11 @@ uint8_t status;
 	glcd_DevSelectChip(chip);
 	lcdDataDir(0x00);			// input mode
 	lcdDataOut(0xff);			// turn on pullups
-	digitalWrite(glcdDI, LOW);	
-	digitalWrite(glcdRW, HIGH);	
+	lcdfastWrite(glcdDI, LOW);	
+	lcdfastWrite(glcdRW, HIGH);	
 //	lcdDelayNanoseconds(GLCD_tAS);
 	glcd_DevENstrobeHi(chip);
-	delay_us(GLCD_tDDR); //lcdDelayNanoseconds(GLCD_tDDR);
+	lcdDelayNanoseconds(GLCD_tDDR);
 
 	status = lcdDataIn();	// Read status bits
 
@@ -545,11 +500,11 @@ void glcd_Device::WaitReady( uint8_t chip)
 {
 	glcd_DevSelectChip(chip);
 	lcdDataDir(0x00);
-	digitalWrite(glcdDI, LOW);	
-	digitalWrite(glcdRW, HIGH);	
+	lcdfastWrite(glcdDI, LOW);	
+	lcdfastWrite(glcdRW, HIGH);	
 //	lcdDelayNanoseconds(GLCD_tAS);
 	glcd_DevENstrobeHi(chip);
-	delay_us(GLCD_tDDR); //lcdDelayNanoseconds(GLCD_tDDR);
+	lcdDelayNanoseconds(GLCD_tDDR);
 
 	while(lcdRdBusystatus())
 	{
@@ -568,12 +523,12 @@ uint8_t glcd_Device::DoReadData()
 	chip = glcd_DevXYval2Chip(this->Coord.x, this->Coord.y);
 
 	this->WaitReady(chip);
-	digitalWrite(glcdDI, HIGH);		// D/I = 1
-	digitalWrite(glcdRW, HIGH);		// R/W = 1
+	lcdfastWrite(glcdDI, HIGH);		// D/I = 1
+	lcdfastWrite(glcdRW, HIGH);		// R/W = 1
 	
-	delay_us(GLCD_tAS); //lcdDelayNanoseconds(GLCD_tAS);
+	lcdDelayNanoseconds(GLCD_tAS);
 	glcd_DevENstrobeHi(chip);
-	delay_us(GLCD_tDDR); //lcdDelayNanoseconds(GLCD_tDDR);
+	lcdDelayNanoseconds(GLCD_tDDR);
 
 	data = lcdDataIn();	// Read the data bits from the LCD
 
@@ -645,14 +600,14 @@ uint8_t x, data;
 void glcd_Device::WriteCommand(uint8_t cmd, uint8_t chip)
 {
 	this->WaitReady(chip);
-	digitalWrite(glcdDI, LOW);					// D/I = 0
-	digitalWrite(glcdRW, LOW);					// R/W = 0	
+	lcdfastWrite(glcdDI, LOW);					// D/I = 0
+	lcdfastWrite(glcdRW, LOW);					// R/W = 0	
 	lcdDataDir(0xFF);
 
 	lcdDataOut(cmd);		/* This could be done before or after raising E */
-	delay_us(GLCD_tAS); //lcdDelayNanoseconds(GLCD_tAS);
+	lcdDelayNanoseconds(GLCD_tAS);
 	glcd_DevENstrobeHi(chip);
-	delay_us(GLCD_tWH); //lcdDelayNanoseconds(GLCD_tWH);
+	lcdDelayNanoseconds(GLCD_tWH);
 	glcd_DevENstrobeLo(chip);
 }
 
@@ -695,7 +650,7 @@ void glcd_Device::WriteData(uint8_t data) {
 		return;
 	}
 
-    chip = glcd_DevXYval2Chip(this->Coord.x, this->Coord.y);
+  chip = glcd_DevXYval2Chip(this->Coord.x, this->Coord.y);
 	
 	yOffset = this->Coord.y%8;
 
@@ -703,10 +658,10 @@ void glcd_Device::WriteData(uint8_t data) {
 		// first page
 		displayData = this->ReadData();
 		this->WaitReady(chip);
-   	    digitalWrite(glcdDI, HIGH);				// D/I = 1
-	    digitalWrite(glcdRW, LOW);				// R/W = 0
+   	lcdfastWrite(glcdDI, HIGH);				// D/I = 1
+	  lcdfastWrite(glcdRW, LOW);				// R/W = 0
 		lcdDataDir(0xFF);						// data port is output
-		delay_us(GLCD_tAS); //lcdDelayNanoseconds(GLCD_tAS);
+		lcdDelayNanoseconds(GLCD_tAS);
 		glcd_DevENstrobeHi(chip);
 		
 #ifdef TRUE_WRITE
@@ -722,7 +677,7 @@ void glcd_Device::WriteData(uint8_t data) {
 			displayData = ~displayData;
 		}
 		lcdDataOut( displayData);					// write data
-		delay_us(GLCD_tWH); //lcdDelayNanoseconds(GLCD_tWH);
+		lcdDelayNanoseconds(GLCD_tWH);
 		glcd_DevENstrobeLo(chip);
 #ifdef GLCD_READ_CACHE
 		glcd_rdcache[this->Coord.y/8][this->Coord.x] = displayData; // save to read cache
@@ -746,10 +701,10 @@ void glcd_Device::WriteData(uint8_t data) {
 		displayData = this->ReadData();
 		this->WaitReady(chip);
 
-   	    digitalWrite(glcdDI, HIGH);					// D/I = 1
-	    digitalWrite(glcdRW, LOW); 					// R/W = 0	
+   	lcdfastWrite(glcdDI, HIGH);					// D/I = 1
+	  lcdfastWrite(glcdRW, LOW); 					// R/W = 0	
 		lcdDataDir(0xFF);				// data port is output
-		delay_us(GLCD_tAS); //lcdDelayNanoseconds(GLCD_tAS);
+		lcdDelayNanoseconds(GLCD_tAS);
 		glcd_DevENstrobeHi(chip);
 
 #ifdef TRUE_WRITE
@@ -764,7 +719,7 @@ void glcd_Device::WriteData(uint8_t data) {
 			displayData = ~displayData;
 		}
 		lcdDataOut(displayData);		// write data
-		delay_us(GLCD_tWH); //lcdDelayNanoseconds(GLCD_tWH);
+		lcdDelayNanoseconds(GLCD_tWH);
 		glcd_DevENstrobeLo(chip);
 #ifdef GLCD_READ_CACHE
 		glcd_rdcache[this->Coord.y/8][this->Coord.x] = displayData; // save to read cache
@@ -774,20 +729,20 @@ void glcd_Device::WriteData(uint8_t data) {
 	{
     	this->WaitReady(chip);
 
-		digitalWrite(glcdDI, HIGH);				// D/I = 1
-		digitalWrite(glcdRW, LOW);  				// R/W = 0	
+		lcdfastWrite(glcdDI, HIGH);				// D/I = 1
+		lcdfastWrite(glcdRW, LOW);  				// R/W = 0	
 		lcdDataDir(0xFF);						// data port is output
 
 		// just this code gets executed if the write is on a single page
 		if(this->Inverted)
 			data = ~data;	  
 
-		delay_us(GLCD_tAS); //lcdDelayNanoseconds(GLCD_tAS);
+		lcdDelayNanoseconds(GLCD_tAS);
 		glcd_DevENstrobeHi(chip);
 	
 		lcdDataOut(data);				// write data
 
-		delay_us(GLCD_tWH); //lcdDelayNanoseconds(GLCD_tWH);
+		lcdDelayNanoseconds(GLCD_tWH);
 
 		glcd_DevENstrobeLo(chip);
 #ifdef GLCD_READ_CACHE
@@ -838,7 +793,7 @@ void glcd_Device::WriteData(uint8_t data) {
 /*
  * needed to resolve virtual print functions
  */
-#if defined(ARDUINO) && (ARDUINO < 100)
+#if ARDUINO < 100
 void glcd_Device::write(uint8_t) // for Print base class
 {}
 #else

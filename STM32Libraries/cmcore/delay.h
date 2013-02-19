@@ -35,8 +35,8 @@ void TIM2_IRQHandler(void);
 
 void delay_ms(uint32_t);
 void delay_us(uint32_t);
-void countdown_start(uint32_t t);
-uint8_t countdown_check(void);
+void TIM2_countdown_start(uint32_t t);
+uint8_t TIM2_countdown(void);
 
 #define delay(x)  delay_ms(x)
 #define delayMicroseconds(x)  delay_us(x)
