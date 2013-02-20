@@ -30,7 +30,7 @@
   
 */
 
-#ifdef ARDUINO
+#ifdef __AVR_GCC__
 #include <avr/pgmspace.h>
 #endif
 #include "glcd.h"
@@ -728,11 +728,12 @@ uint8_t y = radius;
 // Font Functions
 //
 
+#ifdef ARDUINO
 uint8_t ReadPgmData(const uint8_t* ptr)  // note this is a static function
 {  // note this is a static function
 	return pgm_read_byte(ptr);
 }
-
+#endif
 /*
  * Below here are text wrapper functions
  */

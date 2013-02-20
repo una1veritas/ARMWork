@@ -8,7 +8,7 @@
  *  number of frames drawn per second.  
  */
 
-#include "cmcore.h"
+#include "armcmx.h"
 
 #include <ks0108.h>
 #include "Arial14.h"         // proportional font
@@ -36,7 +36,7 @@ int main() {
 }
 
 void init() {
-	cmcore_init();
+	armcmx_init();
 }
 
 void setup(){

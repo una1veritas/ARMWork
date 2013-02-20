@@ -35,13 +35,10 @@
 #define GLCD_H
 
 #include <inttypes.h>
-#ifdef ARDUINO
+#ifdef __AVR_GCC__
 #include <avr/pgmspace.h>
 #endif
-
-#ifdef GLCD_TEXT
 #include "include/gText.h" 
-#endif
 
 #define GLCD_VERSION 3 // software version of this library
 
@@ -107,7 +104,7 @@ class glcd : public gText
 	void SetDot(uint8_t x, uint8_t y, uint8_t color);
 	void SetPixels(uint8_t x, uint8_t y,uint8_t x1, uint8_t y1, uint8_t color);
 	uint8_t ReadData(void);        // now public
-    void WriteData(uint8_t data); 
+	void WriteData(uint8_t data); 
 #else
 	using glcd_Device::SetDot;
 	using glcd_Device::SetPixels;

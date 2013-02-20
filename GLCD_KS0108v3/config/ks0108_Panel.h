@@ -134,8 +134,7 @@
   * WARNING: When adding new board types it is not as simple as just editing these lines.
   * There is also a dependency on the file glcd/include/arduino_io.h which does the arduino pin mappings
   */
-#ifdef ARDUINO
-
+ 
 #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
 #include "config/ks0108_Mega.h"      // config for mega 1280/2560 board
 #elif defined(__AVR_ATmega644P__)  || defined(__AVR_ATmega644__)           
@@ -144,13 +143,6 @@
 #include "config/ks0108_Teensy.h"    // config for Teensy and Teensy++  
 #else
 #include "config/ks0108_Arduino.h"   // config file for standard Arduino using documented wiring 
-#endif
-
-#endif
-
-#ifdef STM32F4XX
-
-#include "config/ks0108_stm32f4xx.h"
 #endif
 
 #include "device/ks0108_Device.h"

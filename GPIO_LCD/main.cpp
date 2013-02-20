@@ -1,5 +1,5 @@
 
-#include "cmcore.h"
+#include "armcmx.h"
 
 GPIOPin RS = PB11, RW = PB12, EN = PB13;
 GPIOPin CS1 = PB14, CS2 = PB15;
@@ -24,11 +24,11 @@ GPIOPin CS1 = PB14, CS2 = PB15;
 
 void WriteCommand(uint8 cmd, uint8 chip);
 void WriteData(uint8 data, uint8 chip);
-void gotoXYByte(uint16, uint16);
+void Cursor(uint8 ch, uint8 pg, uint8 bt);
 void ChipSelect(uint8 chip);
 
 int main(void) {
-	cmcore_init();
+	armcmx_init();
 	
 	printf("Hello!\n");
 	
@@ -43,8 +43,7 @@ int main(void) {
 	digitalWrite(CS1, HIGH);
 	digitalWrite(CS2, HIGH);
 
-	delay_ms(10);
-	
+	delay_ms(300);	
 	for (uint8_t chip = 0; chip < 2; chip++) {
 		delay_ms(10);
 		WriteCommand(LCD_ON, chip);				// power on
@@ -56,14 +55,15 @@ int main(void) {
 	uint8 x = 0, y = 0;
 	for(x = 0; x < 128; x++) {
 		for(y = 0; y < 64; y+=8) {
-			gotoXYByte(x, y);
-			WriteData(0x00, x/CHIP_WIDTH);
+			Cursor(x/CHIP_WIDTH, y/8, x%CHIP_WIDTH);
+			WriteData(0xff, x/CHIP_WIDTH);
 		}
 	}
-	x = 40;
+	delay(10);
+	x = 30;
 	for(y = 0; y < 64; y++) {
-		gotoXYByte(x, y);
-		WriteData((uint8)0x01<<(x%8), x/CHIP_WIDTH);
+		Cursor(x/CHIP_WIDTH, y/8, x%CHIP_WIDTH);
+		WriteData((uint8)0x1<<(y%8), x/CHIP_WIDTH);
 		x++;
 	}
 
@@ -81,7 +81,7 @@ void ChipSelect(uint8 chip) {
 		digitalWrite(CS1, LOW);
 	} else if ( csbit & 2 )
 		digitalWrite(CS2, LOW);
-	delay_us(2);
+	delay_nop(100);
 }
 
 void WriteCommand(uint8 cmd, uint8 chip) {
@@ -92,14 +92,18 @@ void WriteCommand(uint8 cmd, uint8 chip) {
 	digitalWrite(EN, LOW);
 //	lcdDataDir(0xFF);
 //	EN_DELAY();
-	delay_us(2);
+	delay_us(1);
 	GPIO_Write(GPIOE, ((uint16)cmd)<<7);
+	delay_us(1);
 	digitalWrite(EN, HIGH);
 	delay_us(1);
 	digitalWrite(EN, LOW);
 	delay_us(2);
 	digitalWrite(RS, HIGH);
 	digitalWrite(RW, HIGH);
+	digitalWrite(CS1, HIGH);
+	digitalWrite(CS2, HIGH);
+	delay_us(2);
 }
 
 void WriteData(uint8 data, uint8 chip) {
@@ -108,23 +112,23 @@ void WriteData(uint8 data, uint8 chip) {
 	digitalWrite(RS, HIGH);
 	digitalWrite(RW, LOW);
 	digitalWrite(EN, LOW);
-	delay_us(2);
+	delay_us(1);
 	GPIO_Write(GPIOE, ((uint16)data)<<7);
+	delay_us(1);
 	digitalWrite(EN, HIGH);
 	delay_us(1);
 	digitalWrite(EN, LOW);
 	delay_us(2);
 	digitalWrite(RW, HIGH);
+	digitalWrite(CS1, HIGH);
+	digitalWrite(CS2, HIGH);
+	delay_us(2);
 }
 
-void gotoXYByte(uint16 x, uint16 y) {
-	uint8 cmd, chip;
-	cmd = LCD_SET_PAGE | (y/8);
-	for (chip = 0; chip < DISPLAY_WIDTH/CHIP_WIDTH; chip++) {
-		WriteCommand(cmd, chip);
-	}
-	chip = x / CHIP_WIDTH;
-	x = x % CHIP_WIDTH;
-	cmd = LCD_SET_ADD | x;
+void Cursor(uint8 chip, uint8 page, uint8 bp) {
+	uint8 cmd;
+	cmd = LCD_SET_PAGE | page;
+	WriteCommand(cmd, chip);
+	cmd = LCD_SET_ADD | bp;
 	WriteCommand(cmd, chip);				// set x address on active chip
 }

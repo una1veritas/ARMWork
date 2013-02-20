@@ -10,7 +10,7 @@
 
 #define ARMCM
 
-#include "cmcore.h"
+#include "armcmx.h"
 
 /*******************************************************************************************/
 /* Sanguino/ ATmega644 defines                                                             */

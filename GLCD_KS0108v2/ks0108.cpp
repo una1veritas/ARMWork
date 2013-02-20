@@ -31,7 +31,7 @@ extern "C" {
 //#include <avr/io.h>
 //#include <avr/pgmspace.h>
 //#include <wiring.h> // added 18 Sept 2008 for Arduino release 0012
-#include "cmcore.h"
+#include "armcmx.h"
 }
 
 #define ksSOURCE
@@ -39,7 +39,7 @@ extern "C" {
 	
 void lcdDataOut(uint8 val) {
 	uint16 t = GPIO_ReadOutputData(GPIOE);
-	GPIO_Write(GPIOE, ((uint16)val)<<8 & (t & 0x00ff));
+	GPIO_Write(GPIOE, (((uint16)val)<<8) & (t & 0x00ff));
 }
 
 uint8 lcdDataIn() {
@@ -54,14 +54,14 @@ uint8 lcdDataIn() {
 void lcdDataDir(uint8 val) {
 	static GPIOPin pins[] = { PE8, PE9, PE10, PE11, PE12, PE13, PE14, PE15 };
 	for (int i = 0; i < 8; i++) {
-		if (val>>i & 1) 
+		if (val == OUTPUT) 
 			pinMode(pins[i], OUTPUT);
 		else
 			pinMode(pins[i], INPUT);
 	}
 }
 
-#define EN_DELAY() 	delay_us(6)
+#define EN_DELAY() 	delay_nop(100)
 //#define EN_DELAY() asm volatile( "ldi r24, %0 \n\t" "subi r24, 0x1 \n\t" "and r24, r24 \n\t" "brne .-6 \n\t" ::"M" (EN_DELAY_VALUE) : "r24" )
 // the (EN_DELAY_VALUE) argument for the above delay is in ks-0108_panel.h
 
@@ -549,7 +549,7 @@ void ks0108::Init(boolean invert) {
 	pinMode(CSEL1, OUTPUT);
 	pinMode(CSEL2, OUTPUT);
 
-	delay(10);
+	delay(300);
 
 	fastWriteLow(D_I);
 	fastWriteLow(R_W);
@@ -567,6 +567,7 @@ void ks0108::Init(boolean invert) {
 		this->WriteCommand(LCD_DISP_START, chip);	// display start line = 0
 	}
 	delay(50);
+	invert = true;
 	this->ClearScreen(invert ? BLACK : WHITE);			// display clear
 	this->GotoXY(0, 0);
 }
@@ -589,7 +590,7 @@ void ks0108::WaitReady(uint8_t chip) {
 	// wait until LCD busy bit goes to zero
 
 	SelectChip(chip);
-	lcdDataDir(0x00);
+	lcdDataDir(INPUT);
 	fastWriteLow(D_I);
 	fastWriteHigh(R_W);
 	fastWriteHigh(EN);
@@ -600,7 +601,7 @@ void ks0108::WaitReady(uint8_t chip) {
 
 }
 
-// __inline__ 
+//__inline__ 
 void ks0108::Enable(void) {
 	EN_DELAY();
 	fastWriteHigh(EN);
@@ -654,11 +655,12 @@ void ks0108::WriteCommand(uint8_t cmd, uint8_t chip) {
 		EN_DELAY();
 	}
 	this->WaitReady(chip);
+
 	fastWriteLow(D_I);
 	// D/I = 0
 	fastWriteLow(R_W);
 	// R/W = 0
-	lcdDataDir(0xFF);
+	lcdDataDir(OUTPUT);
 
 	EN_DELAY();
 	lcdDataOut(cmd);
@@ -695,7 +697,7 @@ void ks0108::WriteData(uint8_t data) {
 	// D/I = 1
 	fastWriteLow(R_W);
 	// R/W = 0
-	lcdDataDir(0xFF);					// data port is output
+	lcdDataDir(OUTPUT);					// data port is output
 
 	yOffset = this->Coord.y % 8;
 
@@ -714,7 +716,7 @@ void ks0108::WriteData(uint8_t data) {
 		// R/W = 0
 		SelectChip(chip);
 #endif
-		lcdDataDir(0xFF);						// data port is output
+		lcdDataDir(OUTPUT);						// data port is output
 
 		displayData |= data << yOffset;
 		if (this->Inverted)
@@ -736,7 +738,7 @@ void ks0108::WriteData(uint8_t data) {
 		// R/W = 0
 		SelectChip(chip);
 #endif
-		lcdDataDir(0xFF);				// data port is output
+		lcdDataDir(OUTPUT);				// data port is output
 
 		displayData |= data >> (8 - yOffset);
 		if (this->Inverted)

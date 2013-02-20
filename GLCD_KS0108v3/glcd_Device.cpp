@@ -25,7 +25,33 @@
 */
 
 #include "include/glcd_Device.h"
+#if defined (ARDUINO)
 #include "include/glcd_io.h"
+#elif defined (ARMCMX)
+//#include "glcd_stm32f4xx_io.h"
+
+#include "armcmx.h"
+
+#define lcdPinMode(p, m)  				pinMode(p, m)
+#define lcdfastWrite(p, v) 				digitalWrite(p, v)
+#define lcdDelayMilliseconds(t) 	delay_ms(t)
+#define lcdDelayNanoseconds(t)  	delay_us(t)
+/*
+#define lcdDataDir(v) 					GPIOMode(GPIOE, GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_10|GPIO_Pin_11|GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15, (v), MEDSPEED, PUSHPULL, PULLUP)
+#define	lcdDataOut(v)  					GPIO_Write(GPIOE, (v)<<8)
+#define lcdDataIn() 						GPIO_ReadInputData(GPIOE)
+
+#define lcdRdBusystatus()		(avrio_ReadPin(GLCD_STATUS_BIT2PIN(LCD_BUSY_BIT)))
+#define lcdRdResetstatus()		(avrio_ReadPin(GLCD_STATUS_BIT2PIN(LCD_RESET_BIT)))
+
+#define lcdIsBusyStatus(status) (status & LCD_BUSY_FLAG)
+#define lcdIsResetStatus(status) (status & LCD_RESET_FLAG)
+
+#define lcdIsResetStatus(v) 		((v) & 0x80)
+#define lcdIsBusyStatus(v) 			((v) & 0x01)
+#define lcdRdBusystatus() 			(GPIO_ReadInputData(GPIOE) & 0x01)
+*/
+#endif
 #include "include/glcd_errno.h"
 
 
@@ -458,7 +484,8 @@ int glcd_Device::Init(uint8_t invert)
 }
 
 #ifdef glcd_CHIP0  // if at least one chip select string
-__inline__ void glcd_Device::SelectChip(uint8_t chip)
+//__inline__ 
+void glcd_Device::SelectChip(uint8_t chip)
 {  
 
 #ifdef glcd_CHIP3
@@ -650,7 +677,7 @@ void glcd_Device::WriteData(uint8_t data) {
 		return;
 	}
 
-  chip = glcd_DevXYval2Chip(this->Coord.x, this->Coord.y);
+    chip = glcd_DevXYval2Chip(this->Coord.x, this->Coord.y);
 	
 	yOffset = this->Coord.y%8;
 
@@ -658,8 +685,8 @@ void glcd_Device::WriteData(uint8_t data) {
 		// first page
 		displayData = this->ReadData();
 		this->WaitReady(chip);
-   	lcdfastWrite(glcdDI, HIGH);				// D/I = 1
-	  lcdfastWrite(glcdRW, LOW);				// R/W = 0
+   	    lcdfastWrite(glcdDI, HIGH);				// D/I = 1
+	    lcdfastWrite(glcdRW, LOW);				// R/W = 0
 		lcdDataDir(0xFF);						// data port is output
 		lcdDelayNanoseconds(GLCD_tAS);
 		glcd_DevENstrobeHi(chip);
@@ -701,8 +728,8 @@ void glcd_Device::WriteData(uint8_t data) {
 		displayData = this->ReadData();
 		this->WaitReady(chip);
 
-   	lcdfastWrite(glcdDI, HIGH);					// D/I = 1
-	  lcdfastWrite(glcdRW, LOW); 					// R/W = 0	
+   	    lcdfastWrite(glcdDI, HIGH);					// D/I = 1
+	    lcdfastWrite(glcdRW, LOW); 					// R/W = 0	
 		lcdDataDir(0xFF);				// data port is output
 		lcdDelayNanoseconds(GLCD_tAS);
 		glcd_DevENstrobeHi(chip);
@@ -793,7 +820,7 @@ void glcd_Device::WriteData(uint8_t data) {
 /*
  * needed to resolve virtual print functions
  */
-#if ARDUINO < 100
+#if defined (ARDUINO) && ARDUINO < 100
 void glcd_Device::write(uint8_t) // for Print base class
 {}
 #else

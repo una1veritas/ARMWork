@@ -30,7 +30,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
-#include "cmcore.h"
+#include "armcmx.h"
 //#include <avr/pgmspace.h>
 
 #ifndef	KS0108_H
