@@ -130,7 +130,7 @@
           <Target>
             <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>0</RunToMain>
+            <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -456,6 +456,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_fsmc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_fsmc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -500,6 +505,21 @@
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\armcmx\usart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>GLCD_KS0108_compat</GroupName>
+          <Files>
+            <File>
+              <FileName>GLCD_KS0108.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\GLCD\GLCD_KS0108.h</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_KS0108.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\GLCD\GLCD_KS0108.cpp</FilePath>
             </File>
           </Files>
         </Group>

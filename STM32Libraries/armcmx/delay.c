@@ -110,7 +110,7 @@ void delay_nop(uint32_t w) {
 	}
 }
 
-void countdown_set(uint32_t t) {
+void countdown_start(uint32_t t) {
 	__countdown_millis = t;
 }
 

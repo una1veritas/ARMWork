@@ -36,7 +36,7 @@ void TIM2_IRQHandler(void);
 
 void delay_ms(uint32_t);
 void delay_us(uint32_t);
-void countdown_set(uint32_t t);
+void countdown_start(uint32_t t);
 uint8_t countdown_expired(void);
 void delay_nop(uint32_t);
 
