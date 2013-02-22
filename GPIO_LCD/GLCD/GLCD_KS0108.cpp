@@ -1,29 +1,37 @@
 #include "GLCD_KS0108.h"
 
+// initialize constant values
+const GPIOPin FSMCBus::DB[] = {
+		PD14, PD15, PD0, PD1, 
+		PE7, PE8, PE9, PE10,
+		PE11, PE12, PE13, PE14, PE15,
+		PD8, PD9, PD10
+};
+
 void FSMCBus::init8bus(void)
 {
 //	GPIOPin RS = PE11, RW = PD5, EN = PD4; // FSMC_D8, _NWE, _NOE
 // GPIOPin CS1 = PD11, CS2 = PD12, RST = PD6;  // FSMC_A16, _A17, FSMC_NWAIT
-	GPIOMode(PinPort(PE11), PinBit(PE11), //ALTFUNC, 
-	OUTPUT, HIGHSPEED, PUSHPULL, NOPULL);
-//	GPIOAltFunc(PinPort(PE11), PinBit(PE11), GPIO_AF_FSMC);
-	GPIOMode(PinPort(PD5), PinBit(PD4) | PinBit(PD5) | PinBit(PD11) | PinBit(PD12), 
-					//	ALTFUNC, 
-					OUTPUT, HIGHSPEED, PUSHPULL, NOPULL);
-//	GPIOAltFunc(PinPort(PD4), PinBit(PD4) | PinBit(PD5) | PinBit(PD11) | PinBit(PD12), 
-//						GPIO_AF_FSMC);
+#ifdef USE_FSMC
+	GPIOMode(PinPort(PE11), PinBit(PE11), ALTFUNC, HIGHSPEED, PUSHPULL, NOPULL);
+	GPIOMode(PinPort(PD5), PinBit(PD4) | PinBit(PD5) | PinBit(PD11) | PinBit(PD12), ALTFUNC, HIGHSPEED, PUSHPULL, NOPULL);
+	GPIOAltFunc(PinPort(PE11), PinBit(PE11), GPIO_AF_FSMC);
+	GPIOAltFunc(PinPort(PE11), PinBit(PE11), GPIO_AF_FSMC);
+#else
+	GPIOMode(PinPort(PE11), PinBit(PE11), OUTPUT, HIGHSPEED, PUSHPULL, NOPULL); 
+	GPIOMode(PinPort(PD5), PinBit(PD4) | PinBit(PD5) | PinBit(PD11) | PinBit(PD12), OUTPUT, HIGHSPEED, PUSHPULL, NOPULL);
+#endif
 
 	//GPIOPin DB[] = { PD14, PD15, PD0, PD1, PE7, PE8, PE9, PE10 }; // FSMC_D0 --- _D7
-	GPIOMode(PinPort(DB[0]), PinBit(DB[0]) | PinBit(DB[1]) | PinBit(DB[2]) | PinBit(DB[3]), 
-										//		 ALTFUNC, 
-												OUTPUT, 
-	HIGHSPEED, PUSHPULL, NOPULL);
-//	GPIOAltFunc(PinPort(DB[0]), PinBit(DB[0]) | PinBit(DB[1]) | PinBit(DB[2]) | PinBit(DB[3]), GPIO_AF_FSMC);	
-	GPIOMode(PinPort(DB[4]), PinBit(DB[4]) | PinBit(DB[5]) | PinBit(DB[6]) | PinBit(DB[7]), 
-										//		 ALTFUNC, 
-	 OUTPUT, 
-	HIGHSPEED, PUSHPULL, NOPULL);
-//	GPIOAltFunc(PinPort(DB[4]), PinBit(DB[4]) | PinBit(DB[5]) | PinBit(DB[6]) | PinBit(DB[7]), GPIO_AF_FSMC);
+#ifdef USE_FSMC_DATABUS
+	GPIOMode(PinPort(DB[0]), PinBit(DB[0]) | PinBit(DB[1]) | PinBit(DB[2]) | PinBit(DB[3]), ALTFUNC, HIGHSPEED, PUSHPULL, NOPULL);
+	GPIOMode(PinPort(DB[4]), PinBit(DB[4]) | PinBit(DB[5]) | PinBit(DB[6]) | PinBit(DB[7]), ALTFUNC,	HIGHSPEED, PUSHPULL, NOPULL);
+	GPIOAltFunc(PinPort(DB[0]), PinBit(DB[0]) | PinBit(DB[1]) | PinBit(DB[2]) | PinBit(DB[3]), GPIO_AF_FSMC);	
+	GPIOAltFunc(PinPort(DB[4]), PinBit(DB[4]) | PinBit(DB[5]) | PinBit(DB[6]) | PinBit(DB[7]), GPIO_AF_FSMC);
+#else
+	GPIOMode(PinPort(DB[0]), PinBit(DB[0]) | PinBit(DB[1]) | PinBit(DB[2]) | PinBit(DB[3]), OUTPUT, HIGHSPEED, PUSHPULL, NOPULL);
+	GPIOMode(PinPort(DB[4]), PinBit(DB[4]) | PinBit(DB[5]) | PinBit(DB[6]) | PinBit(DB[7]), OUTPUT, HIGHSPEED, PUSHPULL, NOPULL);
+#endif
 	
 	// Reset
 	GPIOMode(PinPort(NRST), PinBit(NRST), OUTPUT, MEDSPEED, PUSHPULL, PULLUP);
@@ -84,20 +92,18 @@ void FSMCBus::modeConfig(void)
 }
 
 uint16 FSMCBus::write(uint16 w) {
+#ifdef USE_FSMC_DATABUS
+	
+#else
 	for(int i = 0; i < 8; i++) {
-		digitalWrite(DB[i], w&1 ? HIGH : LOW );
+		digitalWrite(DB[i], w & 1 ? HIGH : LOW );
 		w >>= 1;
 	}
+#endif
 	return w;
 }
 
-void KS0108::init(void) {
-	digitalWrite(fsmcbus.NRST, HIGH);
-	delay(100);
-	digitalWrite(fsmcbus.NRST, LOW);
-	delay_ms(10);
-	digitalWrite(fsmcbus.NRST, HIGH);
-	
+void KS0108::init(void) {	
 	fsmcbus.init8bus();
 	fsmcbus.modeConfig();
 	
@@ -109,6 +115,12 @@ void KS0108::init(void) {
 }
 
 void KS0108::start(void) {
+	digitalWrite(fsmcbus.NRST, HIGH);
+	delay(100);
+	digitalWrite(fsmcbus.NRST, LOW);
+	delay_ms(10);
+	digitalWrite(fsmcbus.NRST, HIGH);
+
 	delay_ms(300);
 	for (uint8_t chip = 0; chip < 2; chip++) {
 		WriteCommand(LCD_ON, chip);				// power on
@@ -148,7 +160,7 @@ void KS0108::WriteCommand(uint8 cmd, uint8 chip) {
 //	digitalWrite(fsmcbus.EN, HIGH);
 //	digitalWrite(CS1, HIGH);
 //	digitalWrite(CS2, HIGH);
-	delay_us(10);
+	delay_us(1);
 }
 
 void KS0108::WriteData(uint8 data, uint8 chip) {
@@ -168,13 +180,10 @@ void KS0108::WriteData(uint8 data, uint8 chip) {
 //	digitalWrite(fsmcbus.EN, HIGH);
 //	digitalWrite(CS1, HIGH);
 //	digitalWrite(CS2, HIGH);
-	delay_us(10);
+	delay_us(1);
 }
 
-void KS0108::SetAddress(uint8 chip, uint8 page, uint8 bp) {
-	uint8 cmd;
-	cmd = LCD_SET_PAGE | page;
-	WriteCommand(cmd, chip);
-	cmd = LCD_SET_ADD | bp;
-	WriteCommand(cmd, chip);				// set x address on active chip
+void KS0108::SetAddress(uint8 chip, uint8 page, uint8 column) {
+	WriteCommand(LCD_SET_PAGE | page, chip);
+	WriteCommand(LCD_SET_ADD | column, chip);				// set x address on active chip
 }

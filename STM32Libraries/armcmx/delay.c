@@ -94,12 +94,12 @@ void delay_ms(uint32_t w) {
 	while (millis() < wtill) ;
 }
 
-// max approximately 2,000,000,000 usec delay 
 void delay_us(uint32_t w) {
-	uint32 tim2;
-	while ( w > 0 ) {
+	uint32 tim2 = TIM_GetCounter(TIM2);
+	for ( ; w > 0 ; ) {
+		if (tim2 == TIM_GetCounter(TIM2)) 
+			continue;
 		tim2 = TIM_GetCounter(TIM2);
-		while (tim2 == TIM_GetCounter(TIM2));
 		w--;
 	}
 }
