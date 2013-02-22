@@ -84,12 +84,19 @@ void FSMCBus::modeConfig(void)
 }
 
 uint16 FSMCBus::write(uint16 w) {
-	for(int i = 0; i < 8; i++)
-		digitalWrite(DB[i], (w>>i&1 ? HIGH : LOW) );
+	for(int i = 0; i < 8; i++) {
+		digitalWrite(DB[i], w&1 ? HIGH : LOW );
+		w >>= 1;
+	}
 	return w;
 }
 
 void KS0108::init(void) {
+	digitalWrite(fsmcbus.NRST, HIGH);
+	delay(100);
+	digitalWrite(fsmcbus.NRST, LOW);
+	delay_ms(10);
+	digitalWrite(fsmcbus.NRST, HIGH);
 	
 	fsmcbus.init8bus();
 	fsmcbus.modeConfig();
@@ -109,20 +116,17 @@ void KS0108::start(void) {
 		delay_ms(5);
 	}
 	delay(300);
-	
+	/*
 	WriteCommand(0xc0, 0);
 	WriteCommand(0xc0, 1);
+	*/
 }
 
 void KS0108::ChipSelect(uint8 chip) {
-	if ( chip == 1 ) {
-		digitalWrite(fsmcbus.CS1, LOW);
-		digitalWrite(fsmcbus.CS2, HIGH);
-	} else if ( chip == 0 ) {
-		digitalWrite(fsmcbus.CS1, HIGH);
-		digitalWrite(fsmcbus.CS2, LOW);
-	}
-	delay_nop(50);
+	uint8 csbit = 1<<chip;
+	digitalWrite(fsmcbus.CS1, csbit & 1 ? HIGH : LOW);
+	digitalWrite(fsmcbus.CS2, csbit & 2 ? HIGH : LOW);
+	//delay_us(1);
 }
 
 void KS0108::WriteCommand(uint8 cmd, uint8 chip) {
@@ -133,18 +137,18 @@ void KS0108::WriteCommand(uint8 cmd, uint8 chip) {
 	digitalWrite(fsmcbus.RW, LOW);
 //	lcdDataDir(0xFF);
 //	EN_DELAY();
-	delay_nop(50);
+	delay_us(1);
 	digitalWrite(fsmcbus.EN, HIGH);
 	fsmcbus.write(cmd);
-	delay_nop(50);
+	delay_us(1);
 	digitalWrite(fsmcbus.EN, LOW);
-	delay_nop(20);
+	delay_us(1);
 	digitalWrite(fsmcbus.RS, HIGH);
 	digitalWrite(fsmcbus.RW, HIGH);
-//	digitalWrite(EN, HIGH);
+//	digitalWrite(fsmcbus.EN, HIGH);
 //	digitalWrite(CS1, HIGH);
 //	digitalWrite(CS2, HIGH);
-	delay_nop(20);
+	delay_us(10);
 }
 
 void KS0108::WriteData(uint8 data, uint8 chip) {
@@ -153,18 +157,18 @@ void KS0108::WriteData(uint8 data, uint8 chip) {
 	digitalWrite(fsmcbus.EN, LOW);
 	digitalWrite(fsmcbus.RS, HIGH);
 	digitalWrite(fsmcbus.RW, LOW);
-	delay_nop(50);
+	delay_us(1);
 	digitalWrite(fsmcbus.EN, HIGH);
 	fsmcbus.write(data);
-	delay_nop(50);
+	delay_us(1);
 	digitalWrite(fsmcbus.EN, LOW);
-	delay_nop(20);
+	delay_us(1);
 	digitalWrite(fsmcbus.RS, HIGH);
 	digitalWrite(fsmcbus.RW, HIGH);
-//	digitalWrite(EN, HIGH);
+//	digitalWrite(fsmcbus.EN, HIGH);
 //	digitalWrite(CS1, HIGH);
 //	digitalWrite(CS2, HIGH);
-	delay_nop(20);
+	delay_us(10);
 }
 
 void KS0108::SetAddress(uint8 chip, uint8 page, uint8 bp) {

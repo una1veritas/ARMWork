@@ -10,6 +10,7 @@ int main(void) {
 	
 	printf("Hello!\n");
 	
+	pinMode(PD15, OUTPUT);
 	lcd.start();
 	
 	printf("done 1.\n");
@@ -17,7 +18,7 @@ int main(void) {
 	for(x = 0; x < 128; x++) {
 		for(y = 0; y < 64; y+=8) {
 			lcd.SetAddress(x/CHIP_WIDTH, y>>3, x%CHIP_WIDTH);
-			lcd.WriteData(0x00, x/CHIP_WIDTH);
+			lcd.WriteData(0xff, x/CHIP_WIDTH);
 		}
 	}
 	delay(10);
@@ -26,10 +27,11 @@ int main(void) {
 	uint8 color = 0x01;
 	countdown_start(500);
 	while (1) {
+		/*
 		if ( countdown_expired() ) {
-			digitalToggle(PD12);
+			digitalToggle(PD15);
 			countdown_start(500);
-		}
+		} */
 
 		lcd.SetAddress(x/CHIP_WIDTH, y>>3, x%CHIP_WIDTH);
 		lcd.WriteData(color<<(y&0x07), x/CHIP_WIDTH);
