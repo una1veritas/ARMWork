@@ -20,46 +20,25 @@
 #define DISPLAY_WIDTH 	128
 #define DISPLAY_HEIGHT 	64
 
-class GPIOBus {
-public:
-	GPIOPin EN; // Enable
-	static GPIOPin CS[2];
-	static GPIOPin DB[8];
-
-public:
-	GPIOBus() {
-		EN = PD6;
-	}
-	void start(void);
-	void address(uint8);
-	void write(uint8);
-		
-};
+#define CMD 	LOW
+#define DATA  HIGH
+#define READ 	LOW
+#define WRITE HIGH
 
 class KS0108 {
-	GPIOBus gpiobus;
-	GPIOPin RS, RW, NRST;
-	
-	void init(void);
+	GPIOPin RS, RW, EN;
+	GPIOPin CS1, CS2;
 public:
 	KS0108(void) {
 		RS = PD4;
 		RW = PD5;
-		NRST = PD7;
-		init();
+		EN = PD6;
+		CS1 = PD0;
+		CS2 = PD1;
 	}
-
-	static const uint8 CMD = LOW;
-	static const uint8 DATA = HIGH;
-	static const uint8 READ = LOW;
-	static const uint8 WRITE = HIGH;
 	
 	void start(void);
-	void ChipSelect(uint8 chip);
-	void WriteCommand(uint8 cmd, uint8 chip);
-	void WriteData(uint8 data, uint8 chip);
-	void SetAddress(uint8 chip, uint8 page, uint8 column) ;
-
+	
 };
 
 #endif // _GLCD_KS0108_H_
