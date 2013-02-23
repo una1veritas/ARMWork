@@ -1,7 +1,5 @@
-#ifndef _GLCD_KS0108_H_
-#define _GLCD_KS0108_H_
-
-#include "armcmx.h"
+#ifndef _KS0108_COMPAT_H_
+#define _KS0108_COMPAT_H_
 	
 #define LCD_ON				0x3F
 #define LCD_OFF				0x3E
@@ -24,21 +22,5 @@
 #define DATA  HIGH
 #define READ 	LOW
 #define WRITE HIGH
-
-class KS0108 {
-	GPIOPin RS, RW, EN;
-	GPIOPin CS1, CS2;
-public:
-	KS0108(void) {
-		RS = PD4;
-		RW = PD5;
-		EN = PD6;
-		CS1 = PD0;
-		CS2 = PD1;
-	}
-	
-	void start(void);
-	
-};
 
 #endif // _GLCD_KS0108_H_

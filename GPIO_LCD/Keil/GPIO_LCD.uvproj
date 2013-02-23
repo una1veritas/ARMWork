@@ -509,17 +509,22 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>GLCD_KS0108_compat</GroupName>
+          <GroupName>GLCD</GroupName>
           <Files>
             <File>
-              <FileName>GLCD_KS0108.h</FileName>
+              <FileName>KS0108_compat.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\GLCD\GLCD_KS0108.h</FilePath>
+              <FilePath>..\GLCD\KS0108_compat.h</FilePath>
             </File>
             <File>
-              <FileName>GLCD_KS0108.cpp</FileName>
+              <FileName>GLCD.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\GLCD\GLCD_KS0108.cpp</FilePath>
+              <FilePath>..\GLCD\GLCD.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\GLCD\GLCD.h</FilePath>
             </File>
           </Files>
         </Group>
