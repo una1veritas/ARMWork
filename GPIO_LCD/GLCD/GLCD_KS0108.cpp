@@ -1,5 +1,6 @@
 #include "GLCD_KS0108.h"
 
+<<<<<<< HEAD
 // initialize constant values
 const GPIOPin FSMCBus::DB[] = {
 //		PD14, PD15, PD0, PD1, 
@@ -45,71 +46,37 @@ void FSMCBus::init8bus(void)
 	// Reset
 	GPIOMode(PinPort(NRST), PinBit(NRST), OUTPUT, MEDSPEED, PUSHPULL, PULLUP);
 	digitalWrite(NRST, HIGH);
+=======
+void GPIOBus::start(void) {
+	portMode(DB, OUTPUT);
+	portMode(AB, OUTPUT);
+	pinMode(CLK, OUTPUT);
+>>>>>>> origin/macbook
 }
 
-
-void FSMCBus::modeConfig(void)
-{
-	FSMC_NORSRAMInitTypeDef  FSMC_NORSRAMInitStructure;
-	FSMC_NORSRAMTimingInitTypeDef FSMC_NORSRAMTimingInitStructure;
-	
-  RCC_AHB3PeriphClockCmd(RCC_AHB3Periph_FSMC, ENABLE);
-
-	/* FSMC Read/Write Timing */
-	FSMC_NORSRAMTimingInitStructure.FSMC_AddressSetupTime = 5;  /* Address Setup Time  */
-	FSMC_NORSRAMTimingInitStructure.FSMC_AddressHoldTime = 0;	   
-	FSMC_NORSRAMTimingInitStructure.FSMC_DataSetupTime = 5;     /* Data Setup Time */
-	FSMC_NORSRAMTimingInitStructure.FSMC_BusTurnAroundDuration = 0x00;
-	FSMC_NORSRAMTimingInitStructure.FSMC_CLKDivision = 0x00;
-	FSMC_NORSRAMTimingInitStructure.FSMC_DataLatency = 0x00;
-	FSMC_NORSRAMTimingInitStructure.FSMC_AccessMode = FSMC_AccessMode_A;	/* FSMC Access Mode */
-	
-	FSMC_NORSRAMInitStructure.FSMC_Bank = FSMC_Bank1_NORSRAM4;
-	FSMC_NORSRAMInitStructure.FSMC_DataAddressMux = FSMC_DataAddressMux_Disable;
-	FSMC_NORSRAMInitStructure.FSMC_MemoryType = FSMC_MemoryType_SRAM;
-	FSMC_NORSRAMInitStructure.FSMC_MemoryDataWidth = FSMC_MemoryDataWidth_16b;
-	FSMC_NORSRAMInitStructure.FSMC_BurstAccessMode = FSMC_BurstAccessMode_Disable;
-	FSMC_NORSRAMInitStructure.FSMC_WaitSignalPolarity = FSMC_WaitSignalPolarity_Low;
-	FSMC_NORSRAMInitStructure.FSMC_WrapMode = FSMC_WrapMode_Disable;
-	FSMC_NORSRAMInitStructure.FSMC_WaitSignalActive = FSMC_WaitSignalActive_BeforeWaitState;
-	FSMC_NORSRAMInitStructure.FSMC_WriteOperation = FSMC_WriteOperation_Enable;
-	FSMC_NORSRAMInitStructure.FSMC_WaitSignal = FSMC_WaitSignal_Disable;
-	FSMC_NORSRAMInitStructure.FSMC_AsynchronousWait = FSMC_AsynchronousWait_Disable;
-	FSMC_NORSRAMInitStructure.FSMC_ExtendedMode = FSMC_ExtendedMode_Disable;
-	FSMC_NORSRAMInitStructure.FSMC_WriteBurst = FSMC_WriteBurst_Disable;
-	
-	FSMC_NORSRAMInitStructure.FSMC_ReadWriteTimingStruct = &FSMC_NORSRAMTimingInitStructure;
-	
-	FSMC_NORSRAMInit(&FSMC_NORSRAMInitStructure); 
-	
-	/* FSMC Write Timing */
-	FSMC_NORSRAMTimingInitStructure.FSMC_AddressSetupTime = 15;//2;//1;   /* Address Setup Time */
-	FSMC_NORSRAMTimingInitStructure.FSMC_AddressHoldTime = 0;	   
-	FSMC_NORSRAMTimingInitStructure.FSMC_DataSetupTime = 15;//2;//1;	     /* Data Setup Time */
-	FSMC_NORSRAMTimingInitStructure.FSMC_BusTurnAroundDuration = 0x00;
-	FSMC_NORSRAMTimingInitStructure.FSMC_CLKDivision = 0x00;
-	FSMC_NORSRAMTimingInitStructure.FSMC_DataLatency = 0x00;
-	FSMC_NORSRAMTimingInitStructure.FSMC_AccessMode = FSMC_AccessMode_A;	/* FSMC Access Mode */
-	
-	FSMC_NORSRAMInitStructure.FSMC_WriteTimingStruct = &FSMC_NORSRAMTimingInitStructure;	  
-	
-	FSMC_NORSRAMInit(&FSMC_NORSRAMInitStructure); 
-	
-	/* Enable FSMC Bank4_SRAM Bank */
-	FSMC_NORSRAMCmd(FSMC_Bank1_NORSRAM4, ENABLE);  
-
+void GPIOBus::address(uint8 a) {
+	for(int i = 0; i < 4; i++) {
+		digitalWrite(AB[i], a & 1 ? HIGH : LOW );
+		a >>= 1;
+	}
 }
 
+<<<<<<< HEAD
 uint16 FSMCBus::write(uint16 w) {
 /*
 	uint16 val = GPIO_ReadOutputData(GPIOE);
 	val &= ~(0x00ff<<7);
 	GPIO_Write(GPIOE, val | (w<<7));
 	*/
+=======
+void GPIOBus::write(uint8 w) {
+	digitalWrite(CLK, HIGH);
+>>>>>>> origin/macbook
 	for(int i = 0; i < 8; i++) {
 		digitalWrite(DB[i], w & 1 ? HIGH : LOW );
 		w >>= 1;
 	}
+<<<<<<< HEAD
 	
 	return w;
 }
@@ -117,20 +84,25 @@ uint16 FSMCBus::write(uint16 w) {
 void KS0108::init(void) {	
 	fsmcbus.init8bus();
 //	fsmcbus.modeConfig();
+=======
+	digitalWrite(CLK, LOW);
+	delay_us(1);
+}
+
+void KS0108::init(void) {	
+	gpiobus.start();
+>>>>>>> origin/macbook
 	
-	digitalWrite(fsmcbus.RS, HIGH);
-	digitalWrite(fsmcbus.RW, HIGH);
-	digitalWrite(fsmcbus.EN, LOW);
-	digitalWrite(fsmcbus.CS1, HIGH);
-	digitalWrite(fsmcbus.CS2, HIGH);
+	gpiobus.address(0x0f);
+	digitalWrite(gpiobus.CLK, LOW);
 }
 
 void KS0108::start(void) {
-	digitalWrite(fsmcbus.NRST, HIGH);
+	digitalWrite(nRST, HIGH);
 	delay(100);
-	digitalWrite(fsmcbus.NRST, LOW);
+	digitalWrite(nRST, LOW);
 	delay_ms(10);
-	digitalWrite(fsmcbus.NRST, HIGH);
+	digitalWrite(nRST, HIGH);
 
 	delay_ms(300);
 	for (uint8_t chip = 0; chip < 2; chip++) {
@@ -147,14 +119,15 @@ void KS0108::start(void) {
 
 void KS0108::ChipSelect(uint8 chip) {
 	uint8 csbit = 1<<chip;
-	digitalWrite(fsmcbus.CS1, csbit & 1 ? HIGH : LOW);
-	digitalWrite(fsmcbus.CS2, csbit & 2 ? HIGH : LOW);
+	gpiobus.address(csbit);
 	//delay_us(1);
 }
 
 void KS0108::WriteCommand(uint8 cmd, uint8 chip) {
-	ChipSelect(chip);
+	const uint8 CS1High = 1<<2;
+	gpiobus.address(CS1High<<chip | 0x00);
 	
+<<<<<<< HEAD
 	digitalWrite(fsmcbus.EN, LOW);
 	digitalWrite(fsmcbus.RS, LOW);
 	digitalWrite(fsmcbus.RW, LOW);
@@ -171,10 +144,17 @@ void KS0108::WriteCommand(uint8 cmd, uint8 chip) {
 //	digitalWrite(fsmcbus.EN, HIGH);
 //	digitalWrite(CS1, HIGH);
 //	digitalWrite(CS2, HIGH);
+=======
+	digitalWrite(gpiobus.CLK, LOW);
+	delay_us(1);
+	gpiobus.write(cmd);
+	gpiobus.address(0x0f);
+>>>>>>> origin/macbook
 	delay_us(2);
 }
 
 void KS0108::WriteData(uint8 data, uint8 chip) {
+<<<<<<< HEAD
 	ChipSelect(chip);
 	
 	digitalWrite(fsmcbus.EN, LOW);
@@ -191,6 +171,15 @@ void KS0108::WriteData(uint8 data, uint8 chip) {
 //	digitalWrite(fsmcbus.EN, HIGH);
 //	digitalWrite(CS1, HIGH);
 //	digitalWrite(CS2, HIGH);
+=======
+	const uint8 CS1High = 1<<2;
+	gpiobus.address(CS1High<<chip | 0x01);
+
+	digitalWrite(gpiobus.CLK, LOW);
+	delay_us(1);
+	gpiobus.write(data);
+	gpiobus.address(0x0f);
+>>>>>>> origin/macbook
 	delay_us(2);
 }
 

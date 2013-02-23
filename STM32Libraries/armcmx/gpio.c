@@ -23,48 +23,35 @@ uint16_t Pin[] = { GPIO_Pin_0, GPIO_Pin_1, GPIO_Pin_2, GPIO_Pin_3,
 		GPIO_Pin_10, GPIO_Pin_11, GPIO_Pin_12, GPIO_Pin_13, GPIO_Pin_14,
 		GPIO_Pin_15, GPIO_Pin_All };
 
-/*
-GPIO_TypeDef * PinPort(GPIOPin portpin) {
-	return Port[portpin >> 4 & 0x0f];
-}
-
-uint16_t PinBit(GPIOPin portpin) {
-	static uint16_t bits[] = {
-		(uint16_t)1<<0,
-		(uint16_t)1<<1,
-		(uint16_t)1<<2,
-		(uint16_t)1<<3,
-		(uint16_t)1<<4,
-		(uint16_t)1<<5,
-		(uint16_t)1<<6,
-		(uint16_t)1<<7,
-		(uint16_t)1<<8,
-		(uint16_t)1<<9,
-		(uint16_t)1<<10,
-		(uint16_t)1<<11,
-		(uint16_t)1<<12,
-		(uint16_t)1<<13,
-		(uint16_t)1<<14,
-		(uint16_t)1<<15
-	};
-	return bits[portpin &0x0f];
-}
-
-uint8_t PinSource(GPIOPin portpin) {
-	return portpin & 0x0f;
-}
-*/
 
 void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode) {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
 	RCC_AHB1PeriphClockCmd(PortPeriph[portpin>>4 & 0x0f], ENABLE);
 	GPIO_StructInit(&GPIO_InitStructure);
-	
 	GPIO_InitStructure.GPIO_Pin = PinBit(portpin);
 	GPIO_InitStructure.GPIO_Mode = mode;
 	//
 	GPIO_Init(PinPort(portpin), &GPIO_InitStructure);
+}
+
+void portMode(GPIOPin portpins[], GPIOMode_TypeDef mode) {
+	GPIO_InitTypeDef GPIO_InitStructure;
+	uint16_t bits = 0;
+	int i;
+	
+	if ( portpins[0] == NOT_A_PIN )
+		return;
+	RCC_AHB1PeriphClockCmd(PortPeriph[(portpins[0])>>4 & 0x0f], ENABLE);
+	GPIO_StructInit(&GPIO_InitStructure);
+	for(i = 0; portpins[i] != NOT_A_PIN; i++) {
+		if ( PinPort(portpins[0]) == PinPort(portpins[i]) )
+			bits |= PinBit(portpins[i]);
+	}
+	GPIO_InitStructure.GPIO_Pin = bits;
+	GPIO_InitStructure.GPIO_Mode = mode;
+	//
+	GPIO_Init(PinPort(portpins[0]), &GPIO_InitStructure);
 }
 
 void digitalWrite(GPIOPin portpin, uint8_t bit) {
@@ -123,10 +110,12 @@ uint16_t GPIORead(GPIO_TypeDef * port, uint16_t bitmasks) {
 #define HIGH		SET
 #define LOW			RESET
 */
+
 void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
               GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd) {
 		GPIO_InitTypeDef GPIO_InitStructure;
-		
+	
+								
 	if ( port == GPIOA ) {
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 	} else if ( port == GPIOB ) {

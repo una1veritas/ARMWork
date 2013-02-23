@@ -20,12 +20,13 @@
 #define DISPLAY_WIDTH 	128
 #define DISPLAY_HEIGHT 	64
 
-class FSMCBus {
+class GPIOBus {
 public:
-	GPIOPin RS, RW, EN; // FSMC_D8, _NWE, _NOE
-	GPIOPin CS1, CS2, NRST;  // FSMC_A16, _A17, FSMC_NWAIT
-	static const GPIOPin DB[16]; // FSMC_D0 --- _D7
+	GPIOPin CLK; // FSMC_D8, _NWE, _NOE
+	GPIOPin AB[4];  // FSMC_A16, _A17, FSMC_NWAIT
+	GPIOPin DB[8]; // FSMC_D0 --- _D7
 public:
+<<<<<<< HEAD
 	FSMCBus(void) {
 		RS = PE15;
 		RW = PD5;
@@ -33,20 +34,36 @@ public:
 		CS1 = PD8;
 		CS2 = PD9;
 		NRST = PD6;  // FSMC_A16, _A17, FSMC_NWAIT
+=======
+	GPIOBus() {}
+	GPIOBus(GPIOPin data[], GPIOPin addr[], GPIOPin en) {
+		init(data, addr, en);
+>>>>>>> origin/macbook
 	}
-	void init8bus(void);
-	void modeConfig(void);
-	uint16 write(uint16 w);
+	void init(GPIOPin data[], GPIOPin addr[], GPIOPin en) {
+		CLK = en; //PD4; // FSMC_D8, _NWE, _NOE
+		for(int i = 0; i < 4; i++)
+			AB[i] = addr[i]; //0 => D/I, 1 => R/nW, 2 -- => CS1, CS2, 
+		for(int i = 0; i < 8; i++)
+			DB[i] = data[i]; //0 -- 7 => data
+	}
+	void start(void);
+	void address(uint8);
+	void write(uint8);
 		
 };
 
 class KS0108 {
-	FSMCBus fsmcbus;
+	GPIOBus gpiobus;
+	GPIOPin nRST;
 	
 	void init(void);
 public:
 	KS0108(void) {
-		init();
+		GPIOPin data[] = { PE7, PE8, PE9, PE10, PE11, PE12, PE13, PE14 };
+		GPIOPin address[] = { PD4, PD5, PD0, PD1 };
+		gpiobus.init(data, address, PD6);
+		nRST = PD8;
 	}
 		
 	void start(void);

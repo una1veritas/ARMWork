@@ -19,6 +19,22 @@ extern "C" {
 static GPIO_TypeDef * Port[] =
 		{ 0, GPIOA, GPIOB, GPIOC, GPIOD, GPIOE, GPIOF, GPIOG, GPIOH, GPIOI };
 
+#define OUTPUT		GPIO_Mode_OUT // 1
+#define INPUT			GPIO_Mode_IN  // 0
+#define ALTFUNC		GPIO_Mode_AF  // 2  AN 3
+#define PUSHPULL 	GPIO_OType_PP
+#define ODRAIN 		GPIO_OType_OD
+#define NOPULL		GPIO_PuPd_NOPULL
+#define PULLUP		GPIO_PuPd_UP
+#define PULLDOWN	GPIO_PuPd_DOWN
+#define LOWSPEED 	GPIO_Speed_2MHz
+#define MEDSPEED 	GPIO_Speed_25MHz
+#define FASTSPEED 	GPIO_Speed_50MHz
+#define HIGHSPEED 	GPIO_Speed_100MHz
+
+#define HIGH		SET
+#define LOW			RESET
+
 #define PinSource(p) 		((p) & 0x0f)
 #define PinPort(p) 			(Port[(p) >> 4 & 0x0f])
 #define PinBit(p) 			((uint16_t)1<<((p) & 0x0f))
@@ -134,30 +150,9 @@ typedef enum _GPIOPin_Def {
 } GPIOPin_Def;
 typedef uint8_t 	GPIOPin;
 
-//#define digitalPinHasPWM(p)         ((p) == 4 || (p) == 5 || (p) == 6 || (p) == 7 || (p) == 9 || (p) == 10)
-
-//#define NUM_DIGITAL_PINS            32
-//#define NUM_ANALOG_INPUTS           8
-//#define analogInputToDigitalPin(p)  ((p < 8) ? (p) + 24 : -1)
-
-#define OUTPUT		GPIO_Mode_OUT // 1
-#define INPUT			GPIO_Mode_IN  // 0
-#define ALTFUNC		GPIO_Mode_AF  // 2  AN 3
-#define PUSHPULL 	GPIO_OType_PP
-#define ODRAIN 		GPIO_OType_OD
-#define NOPULL		GPIO_PuPd_NOPULL
-#define PULLUP		GPIO_PuPd_UP
-#define PULLDOWN	GPIO_PuPd_DOWN
-#define LOWSPEED 	GPIO_Speed_2MHz
-#define MEDSPEED 	GPIO_Speed_25MHz
-#define FASTSPEED 	GPIO_Speed_50MHz
-#define HIGHSPEED 	GPIO_Speed_100MHz
-
-#define HIGH		SET
-#define LOW			RESET
-
 
 void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode);
+void portMode(GPIOPin portpins[], GPIOMode_TypeDef mode);
 void digitalWrite(GPIOPin portpin, uint8_t bit);
 uint8_t digitalRead(GPIOPin portpin);
 
