@@ -2,11 +2,19 @@
 
 // initialize constant values
 const GPIOPin FSMCBus::DB[] = {
-		PD14, PD15, PD0, PD1, 
+//		PD14, PD15, PD0, PD1, 
 		PE7, PE8, PE9, PE10,
 		PE11, PE12, PE13, PE14, PE15,
-		PD8, PD9, PD10
+//		PD8, PD9, PD10
 };
+
+/*
+#define LCD_REG      (*((volatile unsigned short *) 0x60000000)) 
+#define LCD_RAM      (*((volatile unsigned short *) 0x60020000)) 
+#define LCD_REG_READ      (*((volatile unsigned short *) (0x60000000 | (1<<16)))) 
+#define USE_FSMC
+#define USE_FSMC_DATABUS
+*/
 
 void FSMCBus::init8bus(void)
 {
@@ -18,8 +26,8 @@ void FSMCBus::init8bus(void)
 	GPIOAltFunc(PinPort(PE11), PinBit(PE11), GPIO_AF_FSMC);
 	GPIOAltFunc(PinPort(PE11), PinBit(PE11), GPIO_AF_FSMC);
 #else
-	GPIOMode(PinPort(PE11), PinBit(PE11), OUTPUT, HIGHSPEED, PUSHPULL, NOPULL); 
-	GPIOMode(PinPort(PD5), PinBit(PD4) | PinBit(PD5) | PinBit(PD11) | PinBit(PD12), OUTPUT, HIGHSPEED, PUSHPULL, NOPULL);
+//	GPIOMode(PinPort(PE11), PinBit(PE11), OUTPUT, HIGHSPEED, PUSHPULL, NOPULL); 
+	GPIOMode(PinPort(PD5), PinBit(PD4) | PinBit(PD5) | PinBit(PD8) | PinBit(PD9), OUTPUT, HIGHSPEED, PUSHPULL, NOPULL);
 #endif
 
 	//GPIOPin DB[] = { PD14, PD15, PD0, PD1, PE7, PE8, PE9, PE10 }; // FSMC_D0 --- _D7
@@ -30,7 +38,8 @@ void FSMCBus::init8bus(void)
 	GPIOAltFunc(PinPort(DB[4]), PinBit(DB[4]) | PinBit(DB[5]) | PinBit(DB[6]) | PinBit(DB[7]), GPIO_AF_FSMC);
 #else
 	GPIOMode(PinPort(DB[0]), PinBit(DB[0]) | PinBit(DB[1]) | PinBit(DB[2]) | PinBit(DB[3]), OUTPUT, HIGHSPEED, PUSHPULL, NOPULL);
-	GPIOMode(PinPort(DB[4]), PinBit(DB[4]) | PinBit(DB[5]) | PinBit(DB[6]) | PinBit(DB[7]), OUTPUT, HIGHSPEED, PUSHPULL, NOPULL);
+	GPIOMode(PinPort(DB[4]), PinBit(DB[4]) | PinBit(DB[5]) | PinBit(DB[6]) | PinBit(DB[7]) | PinBit(DB[8]), OUTPUT, HIGHSPEED, PUSHPULL, NOPULL);
+//	GPIOMode(PinPort(DB[13]), PinBit(DB[13]) | PinBit(DB[14]) | PinBit(DB[15]) , OUTPUT, HIGHSPEED, PUSHPULL, NOPULL);
 #endif
 	
 	// Reset
@@ -92,20 +101,22 @@ void FSMCBus::modeConfig(void)
 }
 
 uint16 FSMCBus::write(uint16 w) {
-#ifdef USE_FSMC_DATABUS
-	
-#else
+/*
+	uint16 val = GPIO_ReadOutputData(GPIOE);
+	val &= ~(0x00ff<<7);
+	GPIO_Write(GPIOE, val | (w<<7));
+	*/
 	for(int i = 0; i < 8; i++) {
 		digitalWrite(DB[i], w & 1 ? HIGH : LOW );
 		w >>= 1;
 	}
-#endif
+	
 	return w;
 }
 
 void KS0108::init(void) {	
 	fsmcbus.init8bus();
-	fsmcbus.modeConfig();
+//	fsmcbus.modeConfig();
 	
 	digitalWrite(fsmcbus.RS, HIGH);
 	digitalWrite(fsmcbus.RW, HIGH);
@@ -160,7 +171,7 @@ void KS0108::WriteCommand(uint8 cmd, uint8 chip) {
 //	digitalWrite(fsmcbus.EN, HIGH);
 //	digitalWrite(CS1, HIGH);
 //	digitalWrite(CS2, HIGH);
-	delay_us(1);
+	delay_us(2);
 }
 
 void KS0108::WriteData(uint8 data, uint8 chip) {
@@ -180,7 +191,7 @@ void KS0108::WriteData(uint8 data, uint8 chip) {
 //	digitalWrite(fsmcbus.EN, HIGH);
 //	digitalWrite(CS1, HIGH);
 //	digitalWrite(CS2, HIGH);
-	delay_us(1);
+	delay_us(2);
 }
 
 void KS0108::SetAddress(uint8 chip, uint8 page, uint8 column) {

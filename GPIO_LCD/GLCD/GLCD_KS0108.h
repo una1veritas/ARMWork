@@ -27,11 +27,11 @@ public:
 	static const GPIOPin DB[16]; // FSMC_D0 --- _D7
 public:
 	FSMCBus(void) {
-		RS = PE11;
+		RS = PE15;
 		RW = PD5;
 		EN = PD4; // FSMC_D8, _NWE, _NOE
-		CS1 = PD11;
-		CS2 = PD12;
+		CS1 = PD8;
+		CS2 = PD9;
 		NRST = PD6;  // FSMC_A16, _A17, FSMC_NWAIT
 	}
 	void init8bus(void);
