@@ -152,7 +152,6 @@ typedef uint8_t 	GPIOPin;
 
 
 void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode);
-void portMode(GPIOPin portpins[], GPIOMode_TypeDef mode);
 void digitalWrite(GPIOPin portpin, uint8_t bit);
 uint8_t digitalRead(GPIOPin portpin);
 

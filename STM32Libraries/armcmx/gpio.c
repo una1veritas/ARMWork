@@ -35,24 +35,6 @@ void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode) {
 	GPIO_Init(PinPort(portpin), &GPIO_InitStructure);
 }
 
-void portMode(GPIOPin portpins[], GPIOMode_TypeDef mode) {
-	GPIO_InitTypeDef GPIO_InitStructure;
-	uint16_t bits = 0;
-	int i;
-	
-	if ( portpins[0] == NOT_A_PIN )
-		return;
-	RCC_AHB1PeriphClockCmd(PortPeriph[(portpins[0])>>4 & 0x0f], ENABLE);
-	GPIO_StructInit(&GPIO_InitStructure);
-	for(i = 0; portpins[i] != NOT_A_PIN; i++) {
-		if ( PinPort(portpins[0]) == PinPort(portpins[i]) )
-			bits |= PinBit(portpins[i]);
-	}
-	GPIO_InitStructure.GPIO_Pin = bits;
-	GPIO_InitStructure.GPIO_Mode = mode;
-	//
-	GPIO_Init(PinPort(portpins[0]), &GPIO_InitStructure);
-}
 
 void digitalWrite(GPIOPin portpin, uint8_t bit) {
 	GPIO_TypeDef * port = PinPort(portpin); //[portpin>>4 & 0x0f];

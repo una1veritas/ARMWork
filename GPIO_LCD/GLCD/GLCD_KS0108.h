@@ -22,30 +22,13 @@
 
 class GPIOBus {
 public:
-	GPIOPin CLK; // FSMC_D8, _NWE, _NOE
-	GPIOPin AB[4];  // FSMC_A16, _A17, FSMC_NWAIT
-	GPIOPin DB[8]; // FSMC_D0 --- _D7
+	GPIOPin EN; // Enable
+	static GPIOPin CS[2];
+	static GPIOPin DB[8];
+
 public:
-<<<<<<< HEAD
-	FSMCBus(void) {
-		RS = PE15;
-		RW = PD5;
-		EN = PD4; // FSMC_D8, _NWE, _NOE
-		CS1 = PD8;
-		CS2 = PD9;
-		NRST = PD6;  // FSMC_A16, _A17, FSMC_NWAIT
-=======
-	GPIOBus() {}
-	GPIOBus(GPIOPin data[], GPIOPin addr[], GPIOPin en) {
-		init(data, addr, en);
->>>>>>> origin/macbook
-	}
-	void init(GPIOPin data[], GPIOPin addr[], GPIOPin en) {
-		CLK = en; //PD4; // FSMC_D8, _NWE, _NOE
-		for(int i = 0; i < 4; i++)
-			AB[i] = addr[i]; //0 => D/I, 1 => R/nW, 2 -- => CS1, CS2, 
-		for(int i = 0; i < 8; i++)
-			DB[i] = data[i]; //0 -- 7 => data
+	GPIOBus() {
+		EN = PD6;
 	}
 	void start(void);
 	void address(uint8);
@@ -55,17 +38,22 @@ public:
 
 class KS0108 {
 	GPIOBus gpiobus;
-	GPIOPin nRST;
+	GPIOPin RS, RW, NRST;
 	
 	void init(void);
 public:
 	KS0108(void) {
-		GPIOPin data[] = { PE7, PE8, PE9, PE10, PE11, PE12, PE13, PE14 };
-		GPIOPin address[] = { PD4, PD5, PD0, PD1 };
-		gpiobus.init(data, address, PD6);
-		nRST = PD8;
+		RS = PD4;
+		RW = PD5;
+		NRST = PD7;
+		init();
 	}
-		
+
+	static const uint8 CMD = LOW;
+	static const uint8 DATA = HIGH;
+	static const uint8 READ = LOW;
+	static const uint8 WRITE = HIGH;
+	
 	void start(void);
 	void ChipSelect(uint8 chip);
 	void WriteCommand(uint8 cmd, uint8 chip);
