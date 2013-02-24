@@ -2,7 +2,8 @@
 #define _GLCD_H_
 
 #include "armcmx.h"
-	
+#include "KS0108_compat.h"
+
 class GLCD {
 	GPIOPin DNI, RNW;
 	GPIOPin ENCLK;
@@ -25,24 +26,30 @@ public:
 		buswidth = 8;
 	}
 	
-	void start(void);
-	void high(GPIOPin pin) { GPIO_SetBits(PinPort(pin), PinBit(pin)); }
-	void low(GPIOPin pin) { GPIO_ResetBits(PinPort(pin), PinBit(pin)); }
-	void out(uint16 data) {
+	void begin(void);
+	inline void high(GPIOPin pin) { GPIO_SetBits(PinPort(pin), PinBit(pin)); }
+	inline void low(GPIOPin pin) { GPIO_ResetBits(PinPort(pin), PinBit(pin)); }
+	inline void digitout(GPIOPin pin, uint8 bval) { GPIO_WriteBit(PinPort(pin), PinBit(pin), bval? Bit_SET : Bit_RESET ); }
+	inline void out(uint16 data) {
 		uint16 mask = GPIO_ReadOutputData(PinPort(D0));
 		mask &= ~(0x00ff << (D0 & 0x0f));
 		GPIO_Write(PinPort(D0), mask | (data<< (D0 & 0x0f))); 
 	}
-	uint16 in(void) {
+	inline uint16 in(void) {
 		uint16 val = GPIO_ReadInputData(PinPort(D0));
 		return (val >> (D0 & 0x0f)) & 0xff;
 	}
 	void ChipSelect(uint8 chip) {
-		high(CS[0]);
-		high(CS[1]);
-		low(CS[chip]);
+		chip & 1 ? low(CS[0]) : high(CS[0]);
+		chip & 2 ? low(CS[1]) : high(CS[1]);
 	}
 	
+	void write(uint8 chip, uint8 di, uint8 val);
+	void WriteCommand(uint8 cmd, uint8 cs) { write(cs, COMMAND, cmd); }
+	void WriteData(uint8 data, uint8 cs) { write(cs, DATA, data); }
+	void on(void);
+	void locate(uint8 chip, uint8 page, uint8 column);
+	void ClearScreen(uint16 color);
 };
 
 #endif // _GLCD_H_
