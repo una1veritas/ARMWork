@@ -47,9 +47,9 @@ public:
 	void write(uint8 chip, uint8 di, uint8 val);
 	void WriteCommand(uint8 cmd, uint8 cs) { write(cs, COMMAND, cmd); }
 	void WriteData(uint8 data, uint8 cs) { write(cs, DATA, data); }
-	void on(void);
-	void locate(uint8 chip, uint8 page, uint8 column);
-	void ClearScreen(uint16 color);
+	void On(void);
+	void Address(uint8 chip, uint8 page, uint8 column);
+	void ClearScreen(uint16 color = 0x00);
 };
 
 #endif // _GLCD_H_
