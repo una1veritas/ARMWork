@@ -47,19 +47,22 @@ public:
 	void ChipSelect(uint8 chip);
 	
 	void write(uint8 chip, uint8 di, uint8 val);
-	void WriteCommand(uint8 cmd, uint8 cs) { write(cs, COMMAND, cmd); }
-	void WriteData(uint8 data, uint8 cs) { write(cs, DATA, data); }
-	void WriteData(uint8 data) { write(lastcs, DATA, data); }
-	uint8 read(uint8 chip);
-	inline uint8 ReadData(uint8 cs) { delay_us(8); return read(cs); }
-	inline uint8 ReadData() { delay_us(8); return read(lastcs); }
+	uint8 read(uint8 chip, uint8 di);
+	void WriteCommand(uint8 cmd, uint8 cs);
+	inline void WriteCommand(uint8 cmd) { WriteCommand(cmd, lastcs); }
+	void WriteData(uint8 data, uint8 cs);
+	inline void WriteData(uint8 data) { WriteData(data, lastcs); }
+	uint8 ReadStatus(uint8 cs);
+	inline uint8 ReadStatus() { return ReadStatus(lastcs); }
+	uint8 ReadData(uint8 cs);
+	inline uint8 ReadData() { return ReadData(lastcs); }
 	
 	void On(void);
 	void Address(uint8 chip, uint8 page, uint8 column);
-	uint8 GotoXY(int16 x, int16 y) {
+	void GotoXY(int16 x, int16 y) {
 		Address(1<<(x/CHIP_WIDTH),y/PAGE_HEIGHT, x%CHIP_WIDTH);
-		return y % PAGE_HEIGHT;
 	}
+	void PointXY(int16 x, int16 y, uint8 bw);
 	void ClearScreen(uint16 color = 0x00);
 };
 

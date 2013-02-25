@@ -8,43 +8,59 @@
 
 	void GLCD::write(uint8 chip, uint8 di, uint8 val) {
 		ChipSelect(chip);
-		delay_us(1);
 		digitout(DNI, di);
-//	low(RNW);
-		high(ENCLK);
+		low(RNW);
 		delay_us(1);
+		high(ENCLK);
+//	delay_us(1);
 		out(val);
 		delay_us(1);
 		low(ENCLK);
-		delay_us(2);
+		delay_us(1);
 //	high(ENCLK);
-		low(RNW);
-//	ChipSelect(0);
-		delay_us(8);
+//		low(RNW);
+		ChipSelect(0);
+		delay_us(1);
 		lastcs = chip;
 	}
 
-	uint8 GLCD::read(uint8 chip) {
+	uint8 GLCD::read(uint8 chip, uint8 di) {
 		uint8 val;
 		ChipSelect(chip);
-		DBMode(INPUT);
-		delay_us(6);
-		digitout(DNI, DATA);
+		digitout(DNI, di);
 		high(RNW);
+		delay_us(1);
 		high(ENCLK);
-		delay_us(4);
-		val = in();
-		delay_us(4);
+		delay_us(1);
 		low(ENCLK);
-		delay_us(2);
-//	high(ENCLK);
-		low(RNW);
-//	ChipSelect(0);
-		delay_us(2);
-		DBMode(OUTPUT);
-		delay_us(8);
+		val = in();
+		delay_us(1);
+//		low(RNW);
+		ChipSelect(0);
+		delay_us(1);
 		lastcs = chip;
 		return val;
+	}
+
+	void GLCD::WriteCommand(uint8 cmd, uint8 cs) {
+		DBMode(INPUT);
+		while ( (ReadStatus(cs) & 0x80) != 0 );
+		DBMode(OUTPUT);
+		write(cs, COMMAND, cmd); 
+	}
+	void GLCD::WriteData(uint8 data, uint8 cs) { 
+		DBMode(INPUT);
+		while ( (ReadStatus(cs) & 0x80) != 0 );
+		DBMode(OUTPUT);
+		write(cs, DATA, data); 
+	}
+	uint8 GLCD::ReadStatus(uint8 cs) {
+		return read(cs, COMMAND); 
+	}
+	uint8 GLCD::ReadData(uint8 cs) {
+		DBMode(INPUT);
+		while ( (ReadStatus(cs) & 0x80) != 0 );
+		return read(cs, DATA); 
 	}
 
 	
@@ -82,10 +98,22 @@
 }
 
 	void GLCD::Address(uint8 chip, uint8 page, uint8 column){
-		WriteCommand(LCD_SET_PAGE | page, 1);
-		WriteCommand(LCD_SET_PAGE | page, 2);
+		WriteCommand(LCD_SET_PAGE | page, chip);
+//		WriteCommand(LCD_SET_PAGE | page, 2);
 		WriteCommand(LCD_SET_ADD | column, chip);
 	}
+	
+	void GLCD::PointXY(int16 x, int16 y, uint8 bw) {
+		uint8 d;
+		Address(1<<(x/CHIP_WIDTH),y/PAGE_HEIGHT, x%CHIP_WIDTH);
+		d = ReadData();
+		Address(1<<(x/CHIP_WIDTH),y/PAGE_HEIGHT, x%CHIP_WIDTH);
+		if ( bw ) 
+			WriteData(d | (1<<(y%8)) );
+		else
+			WriteData(d & ~(1<<(y%8)) );
+	}
+
 	
 	void GLCD::ClearScreen(uint16 color) {
 		for(int p = 0; p < CHIP_PAGES; p++) {
