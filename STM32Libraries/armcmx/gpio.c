@@ -30,6 +30,7 @@ void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode) {
 	RCC_AHB1PeriphClockCmd(PortPeriph[portpin>>4 & 0x0f], ENABLE);
 	GPIO_StructInit(&GPIO_InitStructure);
 	GPIO_InitStructure.GPIO_Pin = PinBit(portpin);
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_25MHz;
 	GPIO_InitStructure.GPIO_Mode = mode;
 	//
 	GPIO_Init(PinPort(portpin), &GPIO_InitStructure);

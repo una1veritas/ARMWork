@@ -18,7 +18,8 @@
 #define DISPLAY_WIDTH 	128
 #define DISPLAY_HEIGHT 	64
 #define CHIP_PAGES 	8
-#define PAGE_COLUMNS 	64
+#define PAGE_WIDTH	 	64
+#define PAGE_HEIGHT 	8
 
 #define COMMAND 	LOW
 #define DATA  HIGH
