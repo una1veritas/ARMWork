@@ -13,12 +13,18 @@ class GLCD {
 	GPIOMode_TypeDef busmode;
 	uint8 lastcs;
 	
+	uint8 backColor;
+	uint8 foreColor;
+	
+	uint16 textcursor; // bit column position
+	uint8 * font;
+
 public:
 	enum LCDType {
 		KS0108
 	} lcdtype;
 	
-	GLCD(LCDType id) : lcdtype(id) {
+	GLCD(LCDType id = KS0108) : lcdtype(id) {
 		DNI = PE7;
 		RNW = PD5;
 		ENCLK = PD4;
@@ -28,6 +34,7 @@ public:
 		buswidth = 8;
 		busmode = OUTPUT;
 		lastcs = 0;
+		backColor = 0x00;
 	}
 	
 	void begin(void);
@@ -62,8 +69,19 @@ public:
 	void GotoXY(int16 x, int16 y) {
 		Address(1<<(x/CHIP_WIDTH),y/PAGE_HEIGHT, x%CHIP_WIDTH);
 	}
-	void PointXY(int16 x, int16 y, uint8 bw);
-	void ClearScreen(uint16 color = 0x00);
+	void SetDot(int16 x, int16 y, uint8 bw);
+	void ClearScreen();
+	void DrawLine(int16 x1, int16 y1, int16 x2, int16 y2, uint8 bw = BLACK);
+	void DrawVLine(uint8_t x, uint8_t y, uint8_t height, uint8_t color= BLACK);
+	void DrawHLine(uint8_t x, uint8_t y, uint8_t width, uint8_t color= BLACK);
+	void SetPixels(uint8_t x, uint8_t y,uint8_t x2, uint8_t y2, uint8_t color);
+	
+	void drawCharacter(const char character);
+	void drawString(const char *characters);
+	void setFont(const uint8 f[]) { font = (uint8 *) f; }
+	void drawFixedFont(const byte font[], char c);
+	void drawProportionalFont(const byte font[], char c);
+	int PutChar(uint8_t c);
 };
 
 #endif // _GLCD_H_
