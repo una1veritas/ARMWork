@@ -270,17 +270,14 @@ void GLCD::drawFixedFont(const byte font[], char character) {
 		textcursor = (textcursor/84 + 1)*84;
 	if ( character == 0x20 && textcursor%84 == 0 )
 		return;
-	select();
 	for(int bytepos = 0; bytepos < percolumn; bytepos++) {
-		write(0, 0x80 | textcursor % 84);  // Column.
-		write(0, 0x40 | percolumn*(textcursor/84) + bytepos ); //0+bytepos+(textcursor/84)*percolbytes);  // Row.  ?
-		write(LCD_DATA, 0x00); //Blank vertical line padding
+		Address(1+(textcursor%128)/64, textcursor/128, textcursor%64);
+		WriteData(0x00); //Blank vertical line padding
 		for (int i = 0 ; i < width ; i++) {
-			write(LCD_DATA, font[idx + bytepos + i*percolumn]);
+			WriteData(font[idx + bytepos + i*percolumn]);
 		}
-		write(LCD_DATA, 0x00); //Blank vertical line padding
+		WriteData(0x00); //Blank vertical line padding
 	}
-	deselect();
 	//
 	textcursor += width + 2;
 
@@ -310,17 +307,14 @@ void GLCD::drawProportionalFont(const byte font[], char character) {
 		textcursor = (textcursor/84 + 1)*84;
 	if ( character == 0x20 && textcursor%84 == 0 )
 		return;
-	select();
 	for(int bytepos = 0; bytepos < percolbytes; bytepos++) {
-		write(0, 0x80 | textcursor % 84);  // Column.
-		write(0, 0x40 | percolbytes*(textcursor/84) + bytepos ); //0+bytepos+(textcursor/84)*percolbytes);  // Row.  ?
-		write(LCD_DATA, 0x00); //Blank vertical line padding
+		Address(1+(textcursor%128)/64, textcursor/128, textcursor%64);
+		WriteData(0x00); //Blank vertical line padding
 		for (int i = 0 ; i < fontwidth ; i++) {
-			write(LCD_DATA, font[idx + bytepos + i*percolbytes]);
+			WriteData(font[idx + bytepos + i*percolbytes]);
 		}
-		write(LCD_DATA, 0x00); //Blank vertical line padding
+		WriteData(0x00); //Blank vertical line padding
 	}
-	deselect();
 	//
 	textcursor += fontwidth + 2;
 }

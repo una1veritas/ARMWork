@@ -10,11 +10,11 @@ int main(void) {
 	printf("Hello!\n");
 	
 	lcd.begin();
-	lcd.ClearScreen(0xff);
+	lcd.ClearScreen();
 	delay(500);
-	lcd.ClearScreen(0xaa);
+	lcd.ClearScreen();
 	delay(500);
-	lcd.ClearScreen(0x00);
+	lcd.ClearScreen();
 	delay(500);
 
 	srand(23);
@@ -24,7 +24,7 @@ int main(void) {
 	while (1) {
 		delay_ms(20);
 		lcd.GotoXY(x, y);
-		lcd.PointXY(x, y, 1);
+		lcd.SetDot(x, y, 1);
 		x = ++x % 128;
 		if (x == 0) 
 			y = ++y % 64;
