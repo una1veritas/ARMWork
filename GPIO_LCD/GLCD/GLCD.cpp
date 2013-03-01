@@ -103,11 +103,11 @@
 		WriteCommand(LCD_SET_ADD | column, chip);
 	}
 	
-	void GLCD::SetDot(int16 x, int16 y, uint8 bw) {
+	void GLCD::SetDot(uint16 x, uint16 y, uint8 bw) {
 		uint8 d;
-		Address(1<<(x/CHIP_WIDTH),y/PAGE_HEIGHT, x%CHIP_WIDTH);
+		GotoXY(x,y);
 		d = ReadData();
-		Address(1<<(x/CHIP_WIDTH),y/PAGE_HEIGHT, x%CHIP_WIDTH);
+		GotoXY(x,y);
 		if ( bw ) 
 			WriteData(d | (1<<(y%8)) );
 		else
@@ -115,13 +115,13 @@
 	}
 
 	
-	void GLCD::ClearScreen() {
+	void GLCD::ClearScreen(uint8 color) {
 		for(int p = 0; p < CHIP_PAGES; p++) {
 			for(int chip = 1; chip <= 2; chip++)
 				Address(chip, p, 0);
 			for(int c = 0; c < PAGE_WIDTH; c++) {
 				for(int chip = 1; chip <= 2; chip++) {
-					WriteData(backColor, chip);
+					WriteData(color, chip);
 				}
 			}
 		}
@@ -166,7 +166,7 @@ uint16 tmp;
 }
 
 
-void GLCD::DrawVLine(uint8_t x, uint8_t y, uint8_t height, uint8_t color){
+void GLCD::DrawVLine(int16 x, int16 y, int16 height, uint8 color){
   // this->FillRect(x, y, 0, length, color);
    SetPixels(x,y,x,y+height,color);
 }
@@ -189,12 +189,12 @@ void GLCD::DrawVLine(uint8_t x, uint8_t y, uint8_t height, uint8_t color){
  * @see DrawVLine()
  */
 
-void GLCD::DrawHLine(uint8_t x, uint8_t y, uint8_t width, uint8_t color){
+void GLCD::DrawHLine(int16 x, int16 y, int16 width, uint8 color){
    // this->FillRect(x, y, length, 0, color);
     SetPixels(x,y, x+width, y, color);
 }
 
-void GLCD::SetPixels(uint8_t x, uint8_t y,uint8_t x2, uint8_t y2, uint8_t color) {
+void GLCD::SetPixels(int16 x, int16 y, int16 x2, int16 y2, uint8 color) {
 uint8_t mask, pageOffset, h, i, data;
 uint8_t height = y2-y+1;
 uint8_t width = x2-x+1;

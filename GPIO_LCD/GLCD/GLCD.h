@@ -69,19 +69,33 @@ public:
 	void GotoXY(int16 x, int16 y) {
 		Address(1<<(x/CHIP_WIDTH),y/PAGE_HEIGHT, x%CHIP_WIDTH);
 	}
-	void SetDot(int16 x, int16 y, uint8 bw);
-	void ClearScreen();
-	void DrawLine(int16 x1, int16 y1, int16 x2, int16 y2, uint8 bw = BLACK);
-	void DrawVLine(uint8_t x, uint8_t y, uint8_t height, uint8_t color= BLACK);
-	void DrawHLine(uint8_t x, uint8_t y, uint8_t width, uint8_t color= BLACK);
-	void SetPixels(uint8_t x, uint8_t y,uint8_t x2, uint8_t y2, uint8_t color);
+//	void SetDot(int16 x, int16 y, uint8 bw);
+//	void ClearScreen();
+//	void DrawLine(int16 x1, int16 y1, int16 x2, int16 y2, uint8 bw = BLACK);
+//	void DrawVLine(uint8_t x, uint8_t y, uint8_t height, uint8_t color= BLACK);
+//	void DrawHLine(uint8_t x, uint8_t y, uint8_t width, uint8_t color= BLACK);
+//	void SetPixels(uint8_t x, uint8_t y,uint8_t x2, uint8_t y2, uint8_t color);
 	
-	void drawCharacter(const char character);
-	void drawString(const char *characters);
-	void setFont(const uint8 f[]) { font = (uint8 *) f; }
-	void drawFixedFont(const byte font[], char c);
-	void drawProportionalFont(const byte font[], char c);
-	int PutChar(uint8_t c);
+	void ClearScreen(uint8 color = WHITE);
+	void DrawVLine(int16 x, int16 y, int16 height, uint8 color= BLACK);
+	void DrawHLine(int16 x, int16 y, int16 width, uint8 color= BLACK);
+	void DrawLine(int16 x1, int16 y1, int16 x2, int16 y2, uint8 color= BLACK);
+	void DrawRect(int16 x, int16 y, int16 width, int16 height, uint8 color= BLACK);
+	void DrawRoundRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t radius, uint8_t color= BLACK);
+	void FillRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t color= BLACK);
+	void InvertRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height);
+	void DrawCircle(uint8_t xCenter, uint8_t yCenter, uint8_t radius, uint8_t color= BLACK);	
+	void FillCircle(uint8_t xCenter, uint8_t yCenter, uint8_t radius, uint8_t color= BLACK);	
+	void DrawBitmap(const uint8* bitmap, uint8_t x, uint8_t y, uint8_t color= BLACK);
+
+	void DrawBitmapXBM(const uint8 * bitmapxbm, uint8_t x, uint8_t y, uint8_t color= BLACK);
+//	void DrawBitmapXBM_P(uint8_t width, uint8_t height, uint8_t *xbmbits, uint8_t x, uint8_t y, uint8_t fg_color, uint8_t bg_color);
+
+	void SetDot(int16 x, int16 y, uint8 bw);
+	void SetPixels(int16 x, int16 y, int16 x1, int16 y1, uint8 bw);
+//	uint8_t ReadData(void);        // now public
+//  void WriteData(uint8_t data); 
+
 };
 
 #endif // _GLCD_H_
