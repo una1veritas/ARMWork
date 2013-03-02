@@ -75,17 +75,17 @@ size_t Print::print(char c)
 
 size_t Print::print(unsigned char b, int base)
 {
-  return print((uint32) b, base);
+  return print((unsigned long) b, base);
 }
 
 size_t Print::print(int n, int base)
 {
-  return print((int32) n, base);
+  return print((long) n, base);
 }
 
 size_t Print::print(unsigned int n, int base)
 {
-  return print((uint32) n, base);
+  return print((unsigned long) n, base);
 }
 
 size_t Print::print(unsigned long n, int base)

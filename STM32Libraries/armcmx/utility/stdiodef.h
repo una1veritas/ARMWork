@@ -7,7 +7,7 @@
 
 #include "stm32f4xx.h"
 
-#include "cmcore.h"
+#include "armcmx.h"
 #include "usart.h"
 
 #ifdef __cplusplus

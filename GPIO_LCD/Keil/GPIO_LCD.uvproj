@@ -211,7 +211,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <RoSelD>3</RoSelD>
@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER STM32F4_DISCOVERY HSE_VALUE=8000000 STDSERIAL=6</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\GPIO_LCD;..\..\STM32Libraries\armcmx;..\..\STM32Libraries\armcmx\utility;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
+              <IncludePath>..\..\GPIO_LCD;..\..\STM32Libraries\armcmx;..\..\STM32Libraries\armcmx\utility;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\GPIO_LCD\GLCD</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -506,25 +506,65 @@
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\armcmx\usart.h</FilePath>
             </File>
+            <File>
+              <FileName>Print.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\armcmx\Print.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Stream.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\armcmx\Stream.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Print.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmx\Print.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>GLCD</GroupName>
           <Files>
             <File>
-              <FileName>KS0108_compat.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\GLCD\KS0108_compat.h</FilePath>
-            </File>
-            <File>
-              <FileName>GLCD.cpp</FileName>
+              <FileName>KS0108.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\GLCD\GLCD.cpp</FilePath>
+              <FilePath>..\GLCD\KS0108.cpp</FilePath>
             </File>
             <File>
-              <FileName>GLCD.h</FileName>
+              <FileName>KS0108.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\GLCD\GLCD.h</FilePath>
+              <FilePath>..\GLCD\KS0108.h</FilePath>
+            </File>
+            <File>
+              <FileName>KS0108_params.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\GLCD\KS0108_params.h</FilePath>
+            </File>
+            <File>
+              <FileName>gText.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\GLCD\gText.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>glcd_Buildinfo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\GLCD\glcd_Buildinfo.h</FilePath>
+            </File>
+            <File>
+              <FileName>glcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\GLCD\glcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>glcd.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\GLCD\glcd.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>gText.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\GLCD\include\gText.h</FilePath>
             </File>
           </Files>
         </Group>
