@@ -22,8 +22,8 @@ static GPIO_TypeDef * Port[] =
 #define OUTPUT		GPIO_Mode_OUT // 1
 #define INPUT			GPIO_Mode_IN  // 0
 #define ALTFUNC		GPIO_Mode_AF  // 2  AN 3
-#define PUSHPULL 	GPIO_OType_PP
-#define ODRAIN 		GPIO_OType_OD
+#define PUSHPULL 		GPIO_OType_PP
+#define OPENDRAIN 	GPIO_OType_OD
 #define NOPULL		GPIO_PuPd_NOPULL
 #define PULLUP		GPIO_PuPd_UP
 #define PULLDOWN	GPIO_PuPd_DOWN

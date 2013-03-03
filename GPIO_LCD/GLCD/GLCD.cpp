@@ -240,16 +240,18 @@ void glcd::DrawRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t
  */
 
 void glcd::DrawRoundRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t radius, uint8_t color) {
-  	int16_t tSwitch; 
-	uint8_t x1 = 0, y1 = radius;
-  	tSwitch = 3 - 2 * radius;
+ 	int16 tSwitch = 3 - 2 * radius; 
+	int16 x1 = 0, y1 = radius;
 	
 	while (x1 <= y1) {
+//		printf("roundrect x=%d, y=%d, radius=%d, tswitch=%d \n", x1, y1, radius, tSwitch);
 	    this->SetDot(x+radius - x1, y+radius - y1, color);
 	    this->SetDot(x+radius - y1, y+radius - x1, color);
 
 	    this->SetDot(x+width-radius + x1, y+radius - y1, color);
 	    this->SetDot(x+width-radius + y1, y+radius - x1, color);
+//		printf(" setdot %d, %d, ", x+width-radius + x1, y+radius - y1);
+//		printf(" setdot %d, %d, \n", x+width-radius + y1, y+radius - x1);
 	    
 	    this->SetDot(x+width-radius + x1, y+height-radius + y1, color);
 	    this->SetDot(x+width-radius + y1, y+height-radius + x1, color);
@@ -257,6 +259,13 @@ void glcd::DrawRoundRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, ui
 	    this->SetDot(x+radius - x1, y+height-radius + y1, color);
 	    this->SetDot(x+radius - y1, y+height-radius + x1, color);
 
+		if ( tSwitch >= 0 ) {
+			y1--;
+			tSwitch -= 4*y1;
+		}
+		x1++;
+		tSwitch += 4*x1+2;
+		/*
 	    if (tSwitch < 0) {
 	    	tSwitch += (4 * x1 + 6);
 	    } else {
@@ -264,6 +273,7 @@ void glcd::DrawRoundRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, ui
 	    	y1--;
 	    }
 	    x1++;
+			*/
 	}
 	  	
 	this->DrawHLine(x+radius, y, width-(2*radius), color);			// top
@@ -351,9 +361,10 @@ void glcd::InvertRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height) {
 	/*
 	 * First do the fractional pages at the top of the region
 	 */
-	GotoXY(x, y);
 	for(i=0; i<=width; i++) {
+		GotoXY(x+i, y);		
 		data = this->ReadData();
+		BackPageAddress();
 		tmpData = ~data;
 		data = (tmpData & mask) | (data & ~mask);
 		this->WriteData(data);
@@ -364,11 +375,11 @@ void glcd::InvertRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height) {
 	 */
 	while(h+8 <= height) {
 		h += 8;
-		y += 8;
-		GotoXY(x, y);
-		
+		y += 8;		
 		for(i=0; i<=width; i++) {
+			GotoXY(x+i, y);
 			data = this->ReadData();
+			BackPageAddress();
 			this->WriteData(~data);
 		}
 	}
@@ -378,10 +389,11 @@ void glcd::InvertRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height) {
 	 */
 	if(h < height) {
 		mask = ~(0xFF << (height-h));
-		GotoXY(x, y+8);
 		
 		for(i=0; i<=width; i++) {
+			GotoXY(x+i, y+8);
 			data = this->ReadData();
+			BackPageAddress();
 			tmpData = ~data;
 			data = (tmpData & mask) | (data & ~mask);
 			this->WriteData(data);
@@ -463,6 +475,8 @@ uint8_t i, j;
   for(j = 0; j < height / 8; j++) {
 		GotoXY(x, y + (j*8) );
 		for(i = 0; i < width; i++) {
+			if ( (x+i)%64 == 0)
+				GotoXY(x+i,y+j*8);
 			uint8_t displayData = FontRead(bitmap++); //ReadPgmData(bitmap++);
 	   	if(color == BLACK)
 				this->WriteData(displayData);
@@ -743,7 +757,7 @@ uint8_t ReadPgmData(const uint8_t* ptr)  // note this is a static function
 void glcd::GotoXY(uint8_t x, uint8_t y)
 {
 	KS0108::GotoXY(x, y);
-  	CursorToXY(x,y); 
+  CursorToXY(x,y); 
 } 
 
 // Make one instance for the user

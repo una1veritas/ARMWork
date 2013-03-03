@@ -3,7 +3,33 @@
 
 #include "armcmx.h"
 #include "Print.h"
-#include "KS0108_params.h"
+
+//#include "KS0108_params.h"
+#define LCD_ON				0x3F
+#define LCD_OFF				0x3E
+#define LCD_DISP_START		0xC0
+
+#define LCD_SET_ADDRESS			0x40
+#define LCD_SET_PAGE		0xB8
+#define LCD_BUSY_FLAG		0x80 
+
+// Colors
+#define BLACK				0xFF
+#define WHITE				0x00
+#define NON_INVERTED true
+
+#define CHIP_WIDTH 	64
+#define CHIP_HEIGHT 	64
+#define DISPLAY_WIDTH 	128
+#define DISPLAY_HEIGHT 	64
+#define CHIP_PAGES 	8
+#define PAGE_WIDTH	 	64
+#define PAGE_HEIGHT 	8
+
+#define COMMAND 	LOW
+#define DATA  HIGH
+#define READ 	LOW
+#define WRITE HIGH
 
 class KS0108 : public Print {
 	GPIOPin DNI, RNW;
@@ -16,7 +42,7 @@ class KS0108 : public Print {
 	uint8 backColor;
 	uint8 foreColor;
 	//uint8 page, column;
-	uint16 xyaddress;
+	uint16 pageaddress;
 	
 	uint16 textcursor; // bit column position
 	uint8 * font;
@@ -73,38 +99,22 @@ public:
 	uint8 ReadData();
 	
 	void On(void);
-	void StartAddress(uint8 pos = 0x00);
-	void XYAddress(uint8 chip, uint8 page, uint8 column);	
+	void StartAddress(uint8 pos, uint8 chip);
+//	void SetAddress(uint8, uint8);
+//	void SetPage(uint8, uint8);
+	void SetPageAddress(uint8 chip, uint8 page, uint8 column);
+	void SetPageAddress(void);
 	void GotoXY(int16 x, int16 y) {
-		XYAddress(x/CHIP_WIDTH,y/PAGE_HEIGHT, x%CHIP_WIDTH);
+		SetPageAddress(x/CHIP_WIDTH,y/PAGE_HEIGHT, x%CHIP_WIDTH);
+		//printf("GotoXY(%d, %d) [%d, %d, %d] \n", x, y, x/CHIP_WIDTH, y/PAGE_HEIGHT, x%CHIP_WIDTH);
 	}
-//	void SetDot(int16 x, int16 y, uint8 bw);
-//	void ClearScreen();
-//	void DrawLine(int16 x1, int16 y1, int16 x2, int16 y2, uint8 bw = BLACK);
-//	void DrawVLine(uint8_t x, uint8_t y, uint8_t height, uint8_t color= BLACK);
-//	void DrawHLine(uint8_t x, uint8_t y, uint8_t width, uint8_t color= BLACK);
-//	void SetPixels(uint8_t x, uint8_t y,uint8_t x2, uint8_t y2, uint8_t color);
-	
-//	void ClearScreen(uint8 color = WHITE);
-//	void DrawVLine(int16 x, int16 y, int16 height, uint8 color= BLACK);
-//	void DrawHLine(int16 x, int16 y, int16 width, uint8 color= BLACK);
-//	void DrawLine(int16 x1, int16 y1, int16 x2, int16 y2, uint8 color= BLACK);
-//	void DrawRect(int16 x, int16 y, int16 width, int16 height, uint8 color= BLACK);
-//	void DrawRoundRect(int16 x, int16 y, int16 width, int16 height, int16 radius, uint8_t color= BLACK);
-//	void FillRect(int16 x, int16 y, int16 width, int16 height, uint8_t color= BLACK);
-//	void InvertRect(int16 x, int16 y, int16 width, int16 height);
-//	void DrawCircle(int16 xCenter, int16 yCenter, int16 radius, uint8_t color= BLACK);	
-//	void FillCircle(int16 xCenter, int16 yCenter, int16 radius, uint8_t color= BLACK);	
+	void BackPageAddress(uint8 val = 1);
 	void DrawBitmap(const uint8* bitmap, int16 x, int16 y, uint8_t color= BLACK);
-
 	void DrawBitmapXBM(const uint8 * bitmapxbm, int16 x, int16 y, uint8_t color= BLACK);
-//	void DrawBitmapXBM_P(uint8_t width, uint8_t height, uint8_t *xbmbits, uint8_t x, uint8_t y, uint8_t fg_color, uint8_t bg_color);
 
 	void SetDot(int16 x, int16 y, uint8 bw);
 	void SetPixels(int16 x, int16 y, int16 x1, int16 y1, uint8 bw);
-//	uint8_t ReadData(void);        // now public
-//  void WriteData(uint8_t data); 
-
+	void Clear(uint8 bw = WHITE);
 };
 
 #endif // _GLCD_H_

@@ -397,11 +397,6 @@
               <FilePath>.\startup_stm32f4xx.s</FilePath>
             </File>
             <File>
-              <FileName>main.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\main.cpp</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4_discovery.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\armcmx\utility\stm32f4_discovery.h</FilePath>
@@ -425,6 +420,11 @@
               <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\armcmx\utility\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>main.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\main.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -535,11 +535,6 @@
               <FileName>KS0108.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\GLCD\KS0108.h</FilePath>
-            </File>
-            <File>
-              <FileName>KS0108_params.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\GLCD\KS0108_params.h</FilePath>
             </File>
             <File>
               <FileName>gText.cpp</FileName>
