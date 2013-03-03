@@ -36,13 +36,12 @@ class KS0108 : public Print {
 	GPIOPin ENCLK;
 	GPIOPin CS[2];
 	GPIOPin D0;
-	uint8 buswidth;
+//	uint8 buswidth;
 	GPIOMode_TypeDef busmode;
 		
 	uint8 backColor;
 	uint8 foreColor;
-	//uint8 page, column;
-	uint16 pageaddress;
+	uint16 xyaddress;
 	
 	uint16 textcursor; // bit column position
 	uint8 * font;
@@ -62,10 +61,9 @@ public:
 		CS[1] = PD6;  // with resp. to the column byte direction
 		CS[0] = PD7;
 		D0 = PE8;
-		buswidth = 8;
+//		buswidth = 8;
 		busmode = OUTPUT;
 		backColor = 0x00;
-		
 		Inverted = true;
 	}
 	
@@ -89,26 +87,18 @@ public:
 	void writebus(uint8 chip, uint8 di, uint8 val);
 	uint8 readbus(uint8 chip, uint8 di);
 	
-	void WriteCommand(uint8 cmd, uint8 cs);
-	uint8 ReadStatus(uint8 cs);
-//	void WriteCommand(uint8 cmd);
-//	void WriteData(uint8 data, uint8 cs);
+	void WriteCommand(uint8 cmd);
+	uint8 ReadStatus(void);
 	void WriteData(uint8 data);
-//	uint8 ReadStatus();
-//	uint8 ReadData(uint8 cs);
 	uint8 ReadData();
 	
 	void On(void);
-	void StartAddress(uint8 pos, uint8 chip);
-//	void SetAddress(uint8, uint8);
-//	void SetPage(uint8, uint8);
-	void SetPageAddress(uint8 chip, uint8 page, uint8 column);
-	void SetPageAddress(void);
+	void StartAddress(uint8 pos);
+	void SetAddress(uint8 pg, uint8 col);
 	void GotoXY(int16 x, int16 y) {
-		SetPageAddress(x/CHIP_WIDTH,y/PAGE_HEIGHT, x%CHIP_WIDTH);
+		SetAddress(y/PAGE_HEIGHT, x);
 		//printf("GotoXY(%d, %d) [%d, %d, %d] \n", x, y, x/CHIP_WIDTH, y/PAGE_HEIGHT, x%CHIP_WIDTH);
 	}
-	void BackPageAddress(uint8 val = 1);
 	void DrawBitmap(const uint8* bitmap, int16 x, int16 y, uint8_t color= BLACK);
 	void DrawBitmapXBM(const uint8 * bitmapxbm, int16 x, int16 y, uint8_t color= BLACK);
 

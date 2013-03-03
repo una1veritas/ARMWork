@@ -364,7 +364,6 @@ void glcd::InvertRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height) {
 	for(i=0; i<=width; i++) {
 		GotoXY(x+i, y);		
 		data = this->ReadData();
-		BackPageAddress();
 		tmpData = ~data;
 		data = (tmpData & mask) | (data & ~mask);
 		this->WriteData(data);
@@ -379,7 +378,6 @@ void glcd::InvertRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height) {
 		for(i=0; i<=width; i++) {
 			GotoXY(x+i, y);
 			data = this->ReadData();
-			BackPageAddress();
 			this->WriteData(~data);
 		}
 	}
@@ -393,7 +391,6 @@ void glcd::InvertRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height) {
 		for(i=0; i<=width; i++) {
 			GotoXY(x+i, y+8);
 			data = this->ReadData();
-			BackPageAddress();
 			tmpData = ~data;
 			data = (tmpData & mask) | (data & ~mask);
 			this->WriteData(data);
@@ -475,8 +472,8 @@ uint8_t i, j;
   for(j = 0; j < height / 8; j++) {
 		GotoXY(x, y + (j*8) );
 		for(i = 0; i < width; i++) {
-			if ( (x+i)%64 == 0)
-				GotoXY(x+i,y+j*8);
+		//	if ( (x+i)%64 == 0)
+		//		GotoXY(x+i,y+j*8);
 			uint8_t displayData = FontRead(bitmap++); //ReadPgmData(bitmap++);
 	   	if(color == BLACK)
 				this->WriteData(displayData);

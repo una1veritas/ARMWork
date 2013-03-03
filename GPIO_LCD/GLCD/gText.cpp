@@ -296,7 +296,6 @@ uint8_t col;
 		dy = y1;
 		GotoXY(col, dy & ~7);
 		dbyte = ReadData();
-		BackPageAddress();
 
 		/*
 		 * preserve bits outside/above scroll region
@@ -307,7 +306,6 @@ uint8_t col;
 		sy = dy + pixels;
 		GotoXY(col, sy & ~7);
 		sbyte = ReadData();
-		BackPageAddress();
 
 		while(sy <= y2)
 		{
@@ -326,7 +324,6 @@ uint8_t col;
 				{
 					GotoXY(col, sy & ~7);
 					sbyte = ReadData();
-					BackPageAddress();
 				}
 			}
 
@@ -374,7 +371,6 @@ uint8_t col;
 
 			GotoXY(col, dy & ~7);
 			sbyte = ReadData();
-			BackPageAddress();
 			/*
 			 * Preserver bits outside/below region
 			 */
@@ -421,7 +417,6 @@ uint8_t col;
 		dy = y2;
 		GotoXY(col, dy & ~7);
 		dbyte = ReadData();
-		BackPageAddress();
 
 		/*
 		 * preserve bits outside/below scroll region
@@ -431,7 +426,6 @@ uint8_t col;
 		sy = dy - pixels;
 		GotoXY(col, sy & ~7);
 		sbyte = ReadData();
-		BackPageAddress();
 
 		while(sy >= y1)
 		{
@@ -454,7 +448,6 @@ uint8_t col;
 			{
 				GotoXY(col, sy & ~7);
 				sbyte = ReadData();
-				BackPageAddress();
 			}
 
 		}
@@ -493,7 +486,6 @@ uint8_t col;
 		{
 			GotoXY(col, dy & ~7);
 			sbyte = ReadData();
-			BackPageAddress();
 			/*
 			 * Preserve bits outside/above region
 			 */
@@ -958,7 +950,6 @@ int gText::PutChar(uint8_t c)
 					 * No, so must fetch byte from LCD memory.
 					 */
 					dbyte = ReadData();
-				BackPageAddress();
 			}
 
 			/*
@@ -1044,7 +1035,6 @@ int gText::PutChar(uint8_t c)
 		uint8_t mask = 0;
 
 			dbyte = ReadData();
-			BackPageAddress();
 
 			if(dy & 7)
 				mask |= _BV(dy & 7) -1;

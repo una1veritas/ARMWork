@@ -41,36 +41,40 @@
 		return val;
 	}
 
-	void KS0108::WriteCommand(uint8 cmd, uint8 cs) {
+	void KS0108::WriteCommand(uint8 cmd) {
 		DBMode(INPUT);
-		while ( (ReadStatus(cs) & 0x80) != 0 );
+		while ( (ReadStatus() & 0x80) != 0 );
 		DBMode(OUTPUT);
-		writebus(cs, COMMAND, cmd);
+		writebus(0, COMMAND, cmd);
+		writebus(1, COMMAND, cmd);
 	}
 
-	uint8 KS0108::ReadStatus(uint8 cs) {
-		return readbus(cs, COMMAND); 
+	uint8 KS0108::ReadStatus() {
+		return readbus(0, COMMAND) || readbus(1, COMMAND); 
 	}
 
 	void KS0108::WriteData(uint8 data) {
-		uint8 chip = pageaddress>>9 & 1;
+		uint8 chip = xyaddress>>6&1;
+		//WriteCommand(LCD_SET_PAGE | (xyaddress>>7&0x07), chip);
+		WriteCommand(LCD_SET_ADDRESS | (xyaddress&0x3f));
 		DBMode(INPUT);
 		delay_us(1);
-		while ( (ReadStatus(chip) & 0x80) != 0 );
+		while ( (ReadStatus() & 0x80) != 0 );
 		DBMode(OUTPUT);
 		delay_us(1);
 		writebus(chip, DATA, data);
 		//
-		pageaddress++;
+		xyaddress++;
 	}
 
 	uint8 KS0108::ReadData(void) {
-		uint8 chip = pageaddress>>9 & 1;
+		uint8 chip = xyaddress>>6&1;
 		DBMode(INPUT);
 		delay_us(1);
-		while ( (ReadStatus(chip) & 0x80) != 0 );
-		uint8 res = readbus(chip, DATA); 
-		pageaddress++;
+		while ( (ReadStatus() & 0x80) != 0 );
+		uint8 res = readbus(chip, DATA);
+		//WriteCommand(LCD_SET_PAGE | (xyaddress>>7&0x07), chip);
+		WriteCommand(LCD_SET_ADDRESS | (xyaddress&0x3f));
 		return res;
 	}
 	
@@ -84,7 +88,7 @@
 		GPIO_InitStructure.GPIO_Mode = mode;
 		if ( mode == INPUT ) {
 			GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-			GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
+			GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 		} else {
 			GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 			GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
@@ -105,56 +109,35 @@
 		}*/
 		Inverted = inv;
 		On();
-		Clear();
+		//Clear();
 		// ClearScreen(Inverted ? 0x00 : 0xff);
 	}
 
 	void KS0108::On(void) {
-		WriteCommand(LCD_DISP_START, 0);
-		WriteCommand(LCD_DISP_START, 1);
+		WriteCommand(LCD_DISP_START);
 		delay(10);
-		WriteCommand(LCD_ON, 0);
-		WriteCommand(LCD_ON, 1);
+		WriteCommand(LCD_ON);
 		delay(300);
 }
 
-	void KS0108::StartAddress(uint8 pos, uint8 chip) {
-		WriteCommand(LCD_DISP_START, chip);
+	void KS0108::StartAddress(uint8 pos) {
+		WriteCommand(LCD_DISP_START | (pos&B00111111));
 	}
 
-	void KS0108::SetPageAddress(uint8 chip, uint8 page, uint8 column){	
-		page &= B111;
-		column &= B111111;
-		pageaddress = (uint16(chip)<<9) | (uint16(page)<<6) | column;
-	//printf("A[%04x: %01x, %01x, %02x], ", xyaddress, xyaddress>>6&1, xyaddress>>7&0x07, xyaddress&0x3f);
-		WriteCommand(LCD_SET_PAGE | page, chip);
-		WriteCommand(LCD_SET_ADDRESS | column, chip);
+	void KS0108::SetAddress(uint8 pg, uint8 col){
+		xyaddress = (pg<<7) | col;
+		WriteCommand(LCD_SET_PAGE | (xyaddress>>7&0x07));
+		WriteCommand(LCD_SET_ADDRESS | (xyaddress&0x3f));
 	}
-	
-	void KS0108::SetPageAddress(void) {
-		WriteCommand(LCD_SET_PAGE | (pageaddress>>6 & 0x7), pageaddress>>9 & 1);
-		WriteCommand(LCD_SET_ADDRESS | (pageaddress & 0x3f), pageaddress>>9 & 1);
-	}
-	
-	void KS0108::BackPageAddress(uint8 val) { 
-		pageaddress -= val;
-		SetPageAddress();
-	}
-		
+				
 	void KS0108::SetDot(int16 x, int16 y, uint8 bw) {
-		uint8 d, t;
+		uint8 d;
 		if ( x < 0 || x >= DISPLAY_WIDTH 
 			|| y < 0 || y >= DISPLAY_HEIGHT )
 			return;
 		
 		GotoXY(x,y);
-		t = ReadData();
-		BackPageAddress();
-		do {
-			d = t;
-			t = ReadData();
-			BackPageAddress();
-		} while ( d != t );
+		d = ReadData();
 		if ( bw ) 
 			d |= (1<<(y%PAGE_HEIGHT));
 		else
@@ -186,10 +169,9 @@ uint8_t width = x2-x+1;
 	
 	GotoXY(x, y);
 	for(i=0; i < width; i++) {
-		if ( ((x+i) % 64) == 0 )
-			GotoXY(x+i, y);
+//		if ( ((x+i) % 64) == 0 )
+//			GotoXY(x+i, y);
 		data = ReadData();
-		BackPageAddress();
 		if(color == BLACK) {
 			data |= mask;
 		} else {
@@ -205,8 +187,8 @@ uint8_t width = x2-x+1;
 		y += 8;
 		GotoXY(x, y);
 		for(i=0; i <width; i++) {
-		if ( ((x+i) % 64) == 0 )
-			GotoXY(x+i, y);
+//		if ( ((x+i) % 64) == 0 )
+//			GotoXY(x+i, y);
 			WriteData(color);
 //		delay(50);
 //			printf("(%d, %d) \n", x+i, y);
@@ -217,10 +199,9 @@ uint8_t width = x2-x+1;
 		mask = ~(0xFF << (height-h));
 		GotoXY(x, y+8);
 		for(i=0; i < width; i++) {
-		if ( ((x+i) % 64) == 0 )
-				GotoXY(x+i, y+8);
+//		if ( ((x+i) % 64) == 0 )
+//				GotoXY(x+i, y+8);
 			data = ReadData();
-			BackPageAddress();
 		
 			if(color == BLACK) {
 				data |= mask;
@@ -234,10 +215,11 @@ uint8_t width = x2-x+1;
 }
 
 void KS0108::Clear(uint8 bw) {
-	pageaddress = 0;
-	for(int cp = 0; cp < 8*2; cp++) {
-		SetPageAddress();
-		for(int col = 0; col < 64; col++) 
+	for(int p = 0; p < 8; p++) {
+		SetAddress(p, 0);
+		for(int col = 0; col < 128; col++) {
 			WriteData(bw);
+			//delay(10);
+		}
 	}
 }
