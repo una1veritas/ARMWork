@@ -43,14 +43,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\</OutputDirectory>
+          <OutputDirectory>.\artifact\</OutputDirectory>
           <OutputName>GPIO_LCD</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\</ListingPath>
+          <ListingPath>.\artifact\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>2</Optim>
+            <Optim>3</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -388,6 +388,36 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>main src</GroupName>
+          <Files>
+            <File>
+              <FileName>stm32f4xx_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmx\utility\stm32f4xx_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\armcmx\utility\stm32f4xx_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_stm32f4xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\armcmx\utility\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>startup_stm32f4xx.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\startup_stm32f4xx.s</FilePath>
+            </File>
+            <File>
+              <FileName>main.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\main.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>stdperiph</GroupName>
           <Files>
@@ -519,32 +549,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>main src</GroupName>
+          <GroupName>armcmxlib</GroupName>
           <Files>
             <File>
-              <FileName>stm32f4xx_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmx\utility\stm32f4xx_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4xx_it.c</FileName>
+              <FileName>AsciiLib.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcmx\utility\stm32f4xx_it.c</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\AsciiLib.c</FilePath>
             </File>
             <File>
-              <FileName>system_stm32f4xx.c</FileName>
+              <FileName>SSD1289.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcmx\utility\system_stm32f4xx.c</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\SSD1289.c</FilePath>
             </File>
             <File>
-              <FileName>startup_stm32f4xx.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\startup_stm32f4xx.s</FilePath>
-            </File>
-            <File>
-              <FileName>main.cpp</FileName>
+              <FileName>PCD8544.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\main.cpp</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\PCD8544.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>PCD8544.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\PCD8544.h</FilePath>
+            </File>
+            <File>
+              <FileName>AsciiLib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\AsciiLib.h</FilePath>
+            </File>
+            <File>
+              <FileName>GLCDController.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\GLCDController.h</FilePath>
+            </File>
+            <File>
+              <FileName>KS0108.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108.h</FilePath>
+            </File>
+            <File>
+              <FileName>GLCDController.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\GLCDController.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>KS0108.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108.cpp</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,4 +1,4 @@
-#include "armcore.h"
+#include "armcmx.h"
 #include "SSD1289.h"
 
 #define LCD_REG      (*((volatile unsigned short *) 0x60000000)) 

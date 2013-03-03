@@ -1,4 +1,4 @@
-#include "cmcore.h"
+#include "armcmx.h"
 
 
 byte Chicago_15[] =	{

@@ -4,7 +4,7 @@
 #include <stm32f4xx.h>
 #include <stm32f4xx_spi.h>
 
-#include "cmcore.h"
+#include "armcmx.h"
 #include "spi.h"
 
 class PCD8544 {
