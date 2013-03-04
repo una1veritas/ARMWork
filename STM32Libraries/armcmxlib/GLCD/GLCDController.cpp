@@ -41,7 +41,7 @@ uint8_t width = x2-x+1;
 	GotoXY(x, y);
 	for(i=0; i < width; i++) {
 		data = ReadData();
-		if(foreColor) {
+		if(color == BLACK) {
 			data |= mask;
 		} else {
 			data &= ~mask;

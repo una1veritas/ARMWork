@@ -22,7 +22,7 @@
 */
 
 // arm #include <avr/pgmspace.h>
-#include "include/gText.h"
+#include "GLCD/gText.h"
 //arm #include "glcd_Config.h" 
 
 #ifndef GLCD_NO_PRINTF

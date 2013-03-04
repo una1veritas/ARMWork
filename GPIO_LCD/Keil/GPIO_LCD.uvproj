@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>3</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER STM32F4_DISCOVERY HSE_VALUE=8000000 STDSERIAL=6</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\GPIO_LCD;..\..\STM32Libraries\armcmx;..\..\STM32Libraries\armcmx\utility;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\GPIO_LCD\GLCD</IncludePath>
+              <IncludePath>..\..\GPIO_LCD;..\..\STM32Libraries\armcmx;..\..\STM32Libraries\armcmx\utility;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\armcmxlib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -446,11 +446,6 @@
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_usart.c</FilePath>
             </File>
-            <File>
-              <FileName>stm32f4xx_fsmc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\src\stm32f4xx_fsmc.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -514,68 +509,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>GLCD</GroupName>
-          <Files>
-            <File>
-              <FileName>KS0108.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\GLCD\KS0108.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>KS0108.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\GLCD\KS0108.h</FilePath>
-            </File>
-            <File>
-              <FileName>gText.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\GLCD\gText.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>glcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\GLCD\glcd.h</FilePath>
-            </File>
-            <File>
-              <FileName>glcd.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\GLCD\glcd.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>gText.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\GLCD\include\gText.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>armcmxlib</GroupName>
           <Files>
-            <File>
-              <FileName>AsciiLib.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\AsciiLib.c</FilePath>
-            </File>
-            <File>
-              <FileName>SSD1289.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\SSD1289.c</FilePath>
-            </File>
-            <File>
-              <FileName>PCD8544.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\PCD8544.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>PCD8544.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\PCD8544.h</FilePath>
-            </File>
-            <File>
-              <FileName>AsciiLib.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\AsciiLib.h</FilePath>
-            </File>
             <File>
               <FileName>GLCDController.h</FileName>
               <FileType>5</FileType>
@@ -595,6 +530,16 @@
               <FileName>KS0108.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>glcd.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\glcd.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>gText.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\gText.cpp</FilePath>
             </File>
           </Files>
         </Group>

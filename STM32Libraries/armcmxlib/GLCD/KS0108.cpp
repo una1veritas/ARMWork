@@ -1,6 +1,9 @@
 #include "armcmx.h"
 #include "KS0108.h"
-#include "KS0108_params.h"
+//#include "KS0108_params.h"
+
+	uint16 GLCDController::Width = DISPLAY_WIDTH;
+	uint16 GLCDController::Height = DISPLAY_HEIGHT;
 
 	void KS0108::chipselect(uint8 id) {
 		digitout(CS[0], id == 0 ? LOW : HIGH);
@@ -43,7 +46,7 @@
 
 	void KS0108::WriteCommand(uint8 cmd) {
 		DBMode(INPUT);
-		while ( (ReadStatus() & 0x80) != 0 );
+		while ( IsBusy() );
 		DBMode(OUTPUT);
 		writebus(0, COMMAND, cmd);
 		writebus(1, COMMAND, cmd);
@@ -54,12 +57,12 @@
 	}
 
 	void KS0108::WriteData(uint8 data) {
-		uint8 chip = xyaddress>>6&1;
-		//WriteCommand(LCD_SET_PAGE | (xyaddress>>7&0x07), chip);
+		uint8 chip = xyaddress >> 6 & 1;
+		WriteCommand(LCD_SET_PAGE | (xyaddress>>7&0x07));
 		WriteCommand(LCD_SET_ADDRESS | (xyaddress&0x3f));
 		DBMode(INPUT);
 		delay_us(1);
-		while ( (ReadStatus() & 0x80) != 0 );
+		while ( IsBusy() );
 		DBMode(OUTPUT);
 		delay_us(1);
 		writebus(chip, DATA, data);
@@ -69,12 +72,14 @@
 
 	uint8 KS0108::ReadData(void) {
 		uint8 chip = xyaddress>>6&1;
+		WriteCommand(LCD_SET_PAGE | (xyaddress>>7&0x07));
+		WriteCommand(LCD_SET_ADDRESS | (xyaddress&0x3f));
 		DBMode(INPUT);
 		delay_us(1);
-		while ( (ReadStatus() & 0x80) != 0 );
+		while ( IsBusy() );
 		uint8 res = readbus(chip, DATA);
 		//WriteCommand(LCD_SET_PAGE | (xyaddress>>7&0x07), chip);
-		WriteCommand(LCD_SET_ADDRESS | (xyaddress&0x3f));
+//		WriteCommand(LCD_SET_ADDRESS | (xyaddress&0x3f));
 		return res;
 	}
 	
@@ -84,8 +89,9 @@
 			return;
 		GPIO_StructInit(&GPIO_InitStructure);
 		GPIO_InitStructure.GPIO_Pin = 0x00ff<<(D0 & 0x0f);
-		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_25MHz;
+//		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_25MHz;
 		GPIO_InitStructure.GPIO_Mode = mode;
+/*
 		if ( mode == INPUT ) {
 			GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 			GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
@@ -93,13 +99,12 @@
 			GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 			GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 		}
+*/
 		GPIO_Init(PinPort(D0), &GPIO_InitStructure);
 		busmode = mode;
 	}
 	
 	void KS0108::init(void) {
-		Width = 128;
-		Height = 64;
 		foreColor = 1;
 		backColor = 0;
 		
@@ -108,12 +113,8 @@
 		pinMode(ENCLK, OUTPUT);
 		pinMode(CS[0], OUTPUT);
 		pinMode(CS[1], OUTPUT);
-		DBMode(OUTPUT);/*
-		for(int i = 0; i < buswidth; i++) {
-			pinMode(D0+i, OUTPUT);
-		}*/
+		GPIOMode(PinPort(D0), 0x00ff<<(D0 & 0x0f), OUTPUT, MEDSPEED, PUSHPULL, PULLUP);//DBMode(OUTPUT);
 		displayOn();
-		//Clear();
 		// ClearScreen(Inverted ? 0x00 : 0xff);
 	}
 
@@ -124,17 +125,20 @@
 		delay(300);
 }
 
+/*
 	void KS0108::StartAddress(uint8 pos) {
 		WriteCommand(LCD_DISP_START | (pos&B00111111));
 	}
-
+*/
 	void KS0108::SetAddress(uint8 pg, uint8 col){
+		pg &= 0x07;
+		col &= 0x7f;
 		xyaddress = (pg<<7) | col;
-		WriteCommand(LCD_SET_PAGE | (xyaddress>>7&0x07));
-		WriteCommand(LCD_SET_ADDRESS | (xyaddress&0x3f));
+//		WriteCommand(LCD_SET_PAGE | pg);
+//		WriteCommand(LCD_SET_ADDRESS | (col & 0x3f));
 	}
 	
-
+/*
 void KS0108::Clear(uint8 bw) {
 	for(int p = 0; p < 8; p++) {
 		SetAddress(p, 0);
@@ -144,3 +148,4 @@ void KS0108::Clear(uint8 bw) {
 		}
 	}
 }
+*/

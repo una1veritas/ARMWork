@@ -29,15 +29,15 @@
 
 //arm #include "WString.h"
 #include "String.h"
-#include "include/Streaming.h" 
+#include "Streaming.h" 
 //arm #include "include/glcd_Device.h"
 #include "KS0108.h"
 
 #define GTEXT_VERSION 1 // software version of this code
 
-#ifndef USE_ARDUINO_FLASHSTR
+#ifdef USE_ARDUINO_FLASHSTR
 // these should be replaced when Arduino supports FLASH strings in the base print class
-//arm #include <avr/pgmspace.h>
+#include <avr/pgmspace.h>
 typedef class _FlashString {} *FLASHSTRING;
 #define flashStr(x) ((FLASHSTRING)(PSTR((x))))
 #endif
@@ -195,9 +195,9 @@ struct tarea
  */
   
  // graphical device text routines
-class gText : public KS0108
-{
+class gText : public KS0108, public Print {
   private:
+		//GLCDController & controller;
     //FontCallback	FontRead;     // now static, move back here if each instance needs its own callback
 	uint8_t			FontColor;
 	Font_t			Font;

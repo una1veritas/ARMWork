@@ -37,7 +37,7 @@
 #include <inttypes.h>
 //arm #include <avr/pgmspace.h>
 
-#include "include/gText.h" 
+#include "GLCD/gText.h" 
 
 #define GLCD_VERSION 3 // software version of this library
 
@@ -69,7 +69,7 @@ class glcd : public gText
  */
 /*@{*/
 	// Control functions
-	int Init(uint8_t invert = NON_INVERTED);
+	virtual void init(); //uint8_t invert = NON_INVERTED);
 	void SetDisplayMode(uint8_t mode); //NON_INVERTED or INVERTED,   was SetInverted(uint8_t invert);
 /*@}*/
 	
@@ -102,10 +102,10 @@ class glcd : public gText
 	 * Define functions to get them to show up properly
 	 * in doxygen
 	 */
-	void SetDot(uint8_t x, uint8_t y, uint8_t color) { gText::SetDot(x,y,color); }
-	void SetPixels(uint8_t x, uint8_t y,uint8_t x1, uint8_t y1, uint8_t color) { gText::SetPixels(x,y,x1,y1, color); }
-	uint8_t ReadData(void) { return gText::ReadData(); }        // now public
-  void WriteData(uint8_t data) { gText::WriteData(data); } 
+	virtual void SetDot(uint8_t x, uint8_t y, uint8_t color) { gText::SetDot(x,y,color); }
+	virtual void SetPixels(uint8_t x, uint8_t y,uint8_t x1, uint8_t y1, uint8_t color) { gText::SetPixels(x,y,x1,y1, color); }
+	virtual uint8_t ReadData(void) { return gText::ReadData(); }        // now public
+  virtual void WriteData(uint8_t data) { gText::WriteData(data); } 
 		/*
 #else
 	using glcd_Device::SetDot;
@@ -116,7 +116,7 @@ class glcd : public gText
 */
 
 
-	void GotoXY(uint8_t x, uint8_t y);  // overrride for GotoXY in device class
+	virtual void GotoXY(uint8_t x, uint8_t y);  // overrride for GotoXY in device class
 
 
 /*@}*/

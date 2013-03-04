@@ -64,9 +64,8 @@ glcd::glcd(){
 
  
 
-int glcd::Init(uint8_t invert){
-	KS0108::init(invert);
-	return 0;
+void glcd::init() { //uint8_t invert){
+	KS0108::init(); //invert);
 }		
 
 /**
@@ -87,7 +86,7 @@ int glcd::Init(uint8_t invert){
  */
 
 void glcd::ClearScreen(uint8_t color){
-	this->SetPixels(0,0,GLCD.Width-1,GLCD.Height-1, color);
+	this->SetPixels(0,0,Width-1,Height-1, color);
  	CursorToXY(0,0);  // home text position
 }
 

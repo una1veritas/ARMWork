@@ -12,15 +12,10 @@
 #define LCD_SET_PAGE		0xB8
 #define LCD_BUSY_FLAG		0x80 
 
-// Colors
-#define BLACK				0xFF
-#define WHITE				0x00
-#define NON_INVERTED true
-
-#define CHIP_WIDTH 	64
-#define CHIP_HEIGHT 	64
 #define DISPLAY_WIDTH 	128
 #define DISPLAY_HEIGHT 	64
+#define CHIP_WIDTH 	64
+#define CHIP_HEIGHT 	64
 #define CHIP_PAGES 	8
 #define PAGE_WIDTH	 	64
 #define PAGE_HEIGHT 	8
@@ -29,6 +24,9 @@
 #define DATA  HIGH
 #define READ 	LOW
 #define WRITE HIGH
+
+// Colors
+#define NON_INVERTED true
 
 class KS0108 : public GLCDController {
 	GPIOPin DNI, RNW;
@@ -82,25 +80,26 @@ public:
 	void chipselect(uint8 chip);
 	void writebus(uint8 chip, uint8 di, uint8 val);
 	uint8 readbus(uint8 chip, uint8 di);
-	
-	void WriteCommand(uint8 cmd);
-	uint8 ReadStatus(void);
-	void WriteData(uint8 data);
-	uint8 ReadData();
-	
+
+	virtual uint8 IsBusy(void) { return ReadStatus() & 0x80; }
+	virtual void WriteCommand(uint8 cmd);
+	virtual uint8 ReadStatus(void);
+	virtual void WriteData(uint8 data);
+	virtual uint8 ReadData();
+
 	virtual void displayOn(void);
-	void StartAddress(uint8 pos);
-	void SetAddress(uint8 pg, uint8 col);
-	void GotoXY(int16 x, int16 y) {
+//	void StartAddress(uint8 pos);
+	virtual void SetAddress(uint8 pg, uint8 col);
+	virtual void GotoXY(int16 x, int16 y) {
 		SetAddress(y/PAGE_HEIGHT, x);
 		//printf("GotoXY(%d, %d) [%d, %d, %d] \n", x, y, x/CHIP_WIDTH, y/PAGE_HEIGHT, x%CHIP_WIDTH);
 	}
 	void DrawBitmap(const uint8* bitmap, int16 x, int16 y, uint8_t color= BLACK);
 	void DrawBitmapXBM(const uint8 * bitmapxbm, int16 x, int16 y, uint8_t color= BLACK);
 
-	void SetDot(int16 x, int16 y, uint8 bw);
-	void SetPixels(int16 x, int16 y, int16 x1, int16 y1, uint8 bw);
-	void Clear(uint8 bw = WHITE);
+	//void SetDot(int16 x, int16 y, uint8 bw);
+	//void SetPixels(int16 x, int16 y, int16 x1, int16 y1, uint8 bw);
+	//void Clear(uint8 bw = WHITE);
 };
 
 #endif // _GLCD_H_
