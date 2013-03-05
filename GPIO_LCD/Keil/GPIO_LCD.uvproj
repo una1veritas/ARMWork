@@ -50,7 +50,7 @@
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\artifact\</ListingPath>
+          <ListingPath>.\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -512,19 +512,9 @@
           <GroupName>armcmxlib</GroupName>
           <Files>
             <File>
-              <FileName>GLCDController.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\GLCDController.h</FilePath>
-            </File>
-            <File>
               <FileName>KS0108.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108.h</FilePath>
-            </File>
-            <File>
-              <FileName>GLCDController.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\GLCDController.cpp</FilePath>
             </File>
             <File>
               <FileName>KS0108.cpp</FileName>
@@ -540,6 +530,16 @@
               <FileName>gText.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\gText.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Controller.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\Controller.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Controller.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\Controller.h</FilePath>
             </File>
           </Files>
         </Group>

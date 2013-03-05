@@ -2,8 +2,8 @@
 #include "KS0108.h"
 //#include "KS0108_params.h"
 
-	uint16 GLCDController::Width = DISPLAY_WIDTH;
-	uint16 GLCDController::Height = DISPLAY_HEIGHT;
+	uint16 Controller::Width = DISPLAY_WIDTH;
+	uint16 Controller::Height = DISPLAY_HEIGHT;
 
 	void KS0108::chipselect(uint8 id) {
 		digitout(CS[0], id == 0 ? LOW : HIGH);

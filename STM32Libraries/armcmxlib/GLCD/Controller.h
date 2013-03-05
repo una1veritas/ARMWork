@@ -1,5 +1,5 @@
-#ifndef _GLCDCONTROLLER_H_
-#define _GLCDCONTROLLER_H_
+#ifndef _CONTROLLER_H_
+#define _CONTROLLER_H_
 
 #include "armcmx.h"
 
@@ -7,7 +7,7 @@
 #define WHITE				0x00
 #define BLACK				0xff
 
-class GLCDController {
+class Controller {
 
 	static const uint8 COMMAND = 0;
 	
@@ -20,22 +20,20 @@ public:
 
 public:
 	
-	void begin(void) { init(); }
 	virtual void init(void) = 0;
 		
 	virtual uint8 IsBusy(void) = 0;
-	virtual void WriteCommand(uint8 cmd) = 0;
-	virtual uint8 ReadStatus(void) = 0;
 	virtual void WriteData(uint8 cmd) = 0;
 	virtual uint8 ReadData(void) = 0;
 	
-	virtual void displayOn(void) = 0;
-	virtual void displayOff(void) {}
+	virtual void DisplayOn(void) = 0;
+	virtual void DisplayOff(void) {}
 	virtual void SetAddress(uint8 pg, uint8 col) = 0;
 	virtual void GotoXY(int16 x, int16 y) = 0;
-	void DrawBitmap(const uint8* bitmap, int16 x, int16 y, uint8_t color);
 	void SetDot(int16 x, int16 y, uint8 bw);
 	void SetPixels(int16 x, int16 y, int16 x1, int16 y1, uint8 bw);
+//	void SetColumnByte(int16 x, int16 y uint8 bits);
+	void SetBitmap(const uint8* bitmap, int16 x, int16 y, uint8_t bw);
 		
 };
 
