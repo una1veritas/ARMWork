@@ -8,7 +8,8 @@
 #include "GLCD/fonts/allFonts.h"         // system and arial14 fonts are used
 #include "GLCD/bitmaps/allBitmaps.h"       // all images in the bitmap dir 
 
-//glcd GLCD;  // w/ init()
+KS0108 lcd;
+glcd GLCD(lcd);  // w/ init()
 
 int main(void) {
 	armcmx_init();
@@ -51,9 +52,9 @@ int main(void) {
 		if ( line >= 8 ) {
 			for(int pg = 0; pg < CHIP_PAGES-1; pg++) {
 				for(int col = 0; col < 128; col++) {
-					GLCD.SetAddress(pg+1, col);
+					GLCD.GotoXY((pg+1)<<3, col);
 					d = GLCD.ReadData();
-					GLCD.SetAddress(pg, col);
+					GLCD.GotoXY(pg<<3, col);
 					GLCD.WriteData(d);
 				}
 			}

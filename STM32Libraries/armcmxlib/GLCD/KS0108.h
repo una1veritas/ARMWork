@@ -2,7 +2,7 @@
 #define _KS0108_H_
 
 #include "armcmx.h"
-#include "Controller.h"
+#include "DisplayController.h"
 
 #define LCD_ON				0x3F
 #define LCD_OFF				0x3E
@@ -28,7 +28,7 @@
 // Colors
 #define NON_INVERTED true
 
-class KS0108 : public Controller {
+class KS0108 : public DisplayController {
 	GPIOPin DNI, RNW;
 	GPIOPin ENCLK;
 	GPIOPin CS[2];
@@ -36,16 +36,11 @@ class KS0108 : public Controller {
 //	uint8 buswidth;
 	GPIOMode_TypeDef busmode;
 		
+	uint16 xyaddress;
 	uint8 backColor;
 	uint8 foreColor;
-	uint16 xyaddress;
 	
-	uint16 textcursor; // bit column position
-	uint8 * font;
-
 public:
-
-	uint8 Inverted;
 
 	void DBMode(GPIOMode_TypeDef mode);
 	inline void high(GPIOPin pin) { GPIO_SetBits(PinPort(pin), PinBit(pin)); }
@@ -60,9 +55,10 @@ public:
 		uint16 val = GPIO_ReadInputData(PinPort(D0));
 		return (val >> (D0 & 0x0f)) & 0xff;
 	}
-	void chip(uint8 chip);
+	void select(uint8 chip);
 	void writebus(uint8 chip, uint8 di, uint8 val);
 	uint8 readbus(uint8 chip, uint8 di);
+	void setXY(uint8 x, uint8 y);
 
 	void WriteCommand(uint8 cmd);
 	uint8 ReadStatus(void);
@@ -81,18 +77,13 @@ public:
 		Inverted = true;
 	}
 	
-	void SetAddress(uint8 row, uint8 col);
-
 	virtual void init(void);
-	
+	virtual void GotoXY(uint8 x, uint8 y);
 	virtual uint8 IsBusy(void) { return ReadStatus() & 0x80; }
 	virtual void WriteData(uint8 data);
 	virtual uint8 ReadData();
 
 	virtual void DisplayOn(void);
-	virtual void GotoXY(int16 x, int16 y) {
-		SetAddress(y/PAGE_HEIGHT, x);
-	}
 	//void SetBitmap(const uint8* bitmap, int16 x, int16 y, uint8_t color= BLACK);
 	//void SetDot(int16 x, int16 y, uint8 bw);
 	//void SetPixels(int16 x, int16 y, int16 x1, int16 y1, uint8 bw);

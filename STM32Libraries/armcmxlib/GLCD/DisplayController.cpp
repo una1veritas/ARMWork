@@ -1,16 +1,16 @@
 #include "armcmx.h"
-#include "Controller.h"
+#include "DisplayController.h"
 
 
-	void Controller::init() {
-		foreColor = BLACK;
-		backColor = WHITE;
-
+	void DisplayController::init() {
+		FgColor = BLACK;
+		BkgColor = WHITE;
+		Inverted = true;
 		DisplayOn();
 		// ClearScreen(Inverted ? 0x00 : 0xff);
 	}
 
-	void Controller::SetDot(int16 x, int16 y, uint8 bw) {
+	void DisplayController::SetDot(int16 x, int16 y, uint8 bw) {
 		uint8 d;
 		if ( x < 0 || x >= Width 
 			|| y < 0 || y >= Height )
@@ -27,7 +27,7 @@
 	
 	
 
-void Controller::SetPixels(int16 x, int16 y, int16 x2, int16 y2, uint8 color) {
+void DisplayController::SetPixels(int16 x, int16 y, int16 x2, int16 y2, uint8 color) {
 uint8_t mask, pageOffset, h, i, data;
 //	x = min(max(x, 0), DISPLAY_WIDTH-1);
 //	y = min(max(y, 0), DISPLAY_HEIGHT-1);
@@ -73,7 +73,7 @@ uint8_t width = x2-x+1;
 		for(i=0; i < width; i++) {
 			data = ReadData();
 		
-			if( foreColor ) {
+			if( FgColor ) {
 				data |= mask;
 			} else {
 				data &= ~mask;

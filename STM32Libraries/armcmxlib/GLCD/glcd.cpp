@@ -38,8 +38,8 @@
 #define BITMAP_FIX // enables a bitmap rendering fix/patch
 
 
-glcd::glcd(){
-   Inverted = NON_INVERTED; 
+glcd::glcd(DisplayController & dispcont) : lcdc(dispcont){
+   lcdc.Inverted = NON_INVERTED; 
 }
 
 /**
@@ -65,7 +65,7 @@ glcd::glcd(){
  
 
 void glcd::init() { //uint8_t invert){
-	KS0108::init(); //invert);
+	lcdc.init(); //invert);
 }		
 
 /**
@@ -86,7 +86,7 @@ void glcd::init() { //uint8_t invert){
  */
 
 void glcd::ClearScreen(uint8_t color){
-	this->SetPixels(0,0,Width-1,Height-1, color);
+	lcdc.SetPixels(0,0,lcdc.Width-1, lcdc.Height-1, color);
  	CursorToXY(0,0);  // home text position
 }
 
@@ -409,9 +409,9 @@ void glcd::InvertRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height) {
 
 void glcd::SetDisplayMode(uint8_t invert) {  // was named SetInverted
 
-	if(this->Inverted != invert) {
-		this->InvertRect(0,0,DISPLAY_WIDTH-1,DISPLAY_HEIGHT-1);
-		this->Inverted = invert;
+	if(lcdc.Inverted != invert) {
+		InvertRect(0,0,lcdc.Width-1, lcdc.Height-1);
+		lcdc.Inverted = invert;
 	}
 }
 
@@ -437,8 +437,8 @@ void glcd::DrawBitmap(Image_t bitmap, uint8_t x, uint8_t y, uint8_t color){
 uint8_t width, height;
 uint8_t i, j;
 
-  width = FontRead(bitmap++); //arm ReadPgmData(bitmap++); 
-  height = FontRead(bitmap++); //ReadPgmData(bitmap++);
+  width = *bitmap++; //arm ReadPgmData(bitmap++); 
+  height = *bitmap++; //ReadPgmData(bitmap++);
 
 #ifdef BITMAP_FIX // temporary ifdef just to show what changes if a new 
 				// bit rendering routine is written.
@@ -473,7 +473,7 @@ uint8_t i, j;
 		for(i = 0; i < width; i++) {
 		//	if ( (x+i)%64 == 0)
 		//		GotoXY(x+i,y+j*8);
-			uint8_t displayData = FontRead(bitmap++); //ReadPgmData(bitmap++);
+			uint8_t displayData = *bitmap++; //ReadPgmData(bitmap++);
 	   	if(color == BLACK)
 				this->WriteData(displayData);
 			else
@@ -752,10 +752,10 @@ uint8_t ReadPgmData(const uint8_t* ptr)  // note this is a static function
 // (older library didn't have seperate x & y for hardware/graphics vs text )
 void glcd::GotoXY(uint8_t x, uint8_t y)
 {
-	KS0108::GotoXY(x, y);
+	lcdc.GotoXY(x, y);
   CursorToXY(x,y); 
 } 
 
 // Make one instance for the user
-glcd GLCD = glcd();
+//glcd GLCD = glcd();
  

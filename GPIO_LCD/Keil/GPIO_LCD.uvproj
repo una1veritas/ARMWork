@@ -50,7 +50,7 @@
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\</ListingPath>
+          <ListingPath>.\artifact\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -527,19 +527,29 @@
               <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\glcd.cpp</FilePath>
             </File>
             <File>
+              <FileName>DisplayController.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\DisplayController.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>DisplayController.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\DisplayController.h</FilePath>
+            </File>
+            <File>
               <FileName>gText.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\gText.cpp</FilePath>
             </File>
             <File>
-              <FileName>Controller.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\Controller.cpp</FilePath>
+              <FileName>gText.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\gText.h</FilePath>
             </File>
             <File>
-              <FileName>Controller.h</FileName>
+              <FileName>glcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\Controller.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\glcd.h</FilePath>
             </File>
           </Files>
         </Group>

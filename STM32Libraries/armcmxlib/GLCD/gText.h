@@ -195,7 +195,7 @@ struct tarea
  */
   
  // graphical device text routines
-class gText : public KS0108, public Print {
+class gText : public Print, public KS0108 {
   private:
 		//GLCDController & controller;
     //FontCallback	FontRead;     // now static, move back here if each instance needs its own callback
