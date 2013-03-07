@@ -87,14 +87,15 @@ typedef union
         
  uint32_t token; // swap byte order above for big endian
         
-}TareaToken;
+} TareaToken;
 /// @endcond
 
-typedef uint8_t textMode;  // type holding mode for scrolling and future attributes like padding etc.
+typedef int8_t textMode;  // type holding mode for scrolling and future attributes like padding etc.
 // the only textMode supported in the current release is scrolling
 
-const textMode SCROLL_UP = 0;
-const textMode SCROLL_DOWN = 1; // this was changed from -1 so it can used in a bitmask 
+const textMode SCROLL_UP = 1;
+const textMode SCROLL_DOWN = -1; // this was changed from -1 so it can used in a bitmask 
+const textMode SCROLL_DISABLED = 0;
 const textMode DEFAULT_SCROLLDIR = SCROLL_UP;
 
 /**
@@ -175,6 +176,7 @@ typedef const uint8_t* Font_t;
 #define FontRead(p)  (*(p))
 
 /// @cond hide_from_doxygen
+/*
 struct tarea
 {
 	uint8_t x1;
@@ -183,6 +185,7 @@ struct tarea
 	uint8_t y2;
 	int8_t  mode;
 };
+	*/
 /// @endcond
 
 /**
@@ -196,33 +199,35 @@ struct tarea
   
  // graphical device text routines
 class gText : public Print {
-  private:
-		GLCDController & gc;
-    //FontCallback	FontRead;     // now static, move back here if each instance needs its own callback
-	uint8_t			FontColor;
+private:
+// instance variables
+   GLCDController & gc;
+   uint8_t			FontColor;
 	Font_t			Font;
-	struct tarea tarea;
-	uint8_t			x;
-	uint8_t			y;
-#ifndef GLCD_NODEFER_SCROLL
-	uint8_t			need_scroll; // set when text scroll has been defered
-#endif
 
+	struct {
+      uint8 top, left, right, bottom;
+      int8 scrollmode;
+	} txarea;
+
+	uint8 cx;
+	uint8 cy;
+
+// private functinos
 	void SpecialChar(uint8_t c);
 
-	// Scroll routines are private for now
 	void ScrollUp(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t pixels, uint8_t color);
 	void ScrollDown(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t pixels, uint8_t color);
 
-  public:
-	gText(GLCDController & cont); // default - uses the entire display
+public:
+   gText(GLCDController & cont); // default - uses the entire display
 	/*
 	gText(GLCDController & cont, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, textMode mode=DEFAULT_SCROLLDIR);
 	// 4 Feb - added two constuctors (and SetFontColor below) 
 	gText(GLCDController & cont, predefinedArea selection, textMode mode=DEFAULT_SCROLLDIR);
 	gText(GLCDController & cont, uint8_t x1, uint8_t y1, uint8_t columns, uint8_t rows, Font_t font, textMode mode=DEFAULT_SCROLLDIR);
 */
-	//void Init(glcd_Device* _device); // no longer used
+	void init(void); // no longer used
 
 /** @name TEXT FUNCTIONS
  * The following text functions are available
@@ -231,7 +236,7 @@ class gText : public Print {
 	// Text area functions
 
 	uint8_t DefineArea(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, textMode mode=DEFAULT_SCROLLDIR);
-	uint8_t DefineArea(uint8_t x1, uint8_t y1, uint8_t columns, uint8_t rows, Font_t font, textMode mode=DEFAULT_SCROLLDIR);
+//	uint8_t DefineArea(uint8_t x1, uint8_t y1, uint8_t columns, uint8_t rows, Font_t font, textMode mode=DEFAULT_SCROLLDIR);
 //	uint8_t DefineArea(predefinedArea selection, textMode mode=DEFAULT_SCROLLDIR);
 	
 	void SetTextMode(textMode mode); // change to the given text mode

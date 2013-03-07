@@ -39,7 +39,7 @@
 
 
 glcd::glcd(GLCDController & dcont)  : gc(dcont) , tx(dcont){
-   gc.Inverted = NON_INVERTED; 
+   gc.Inverted = NON_INVERTED;
 }
 
 /**
@@ -66,6 +66,7 @@ glcd::glcd(GLCDController & dcont)  : gc(dcont) , tx(dcont){
 
 void glcd::init() { //uint8_t invert){
 	gc.init(); //invert);
+   tx.init();
 }		
 
 /**

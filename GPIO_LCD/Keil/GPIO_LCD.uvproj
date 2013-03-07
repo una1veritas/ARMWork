@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -348,7 +348,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER STM32F4_DISCOVERY HSE_VALUE=8000000 STDSERIAL=6</Define>
+              <Define>USE_STDPERIPH_DRIVER STM32F4_DISCOVERY HSE_VALUE=8000000 STDSERIAL=6 ARMCMX</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\GPIO_LCD;..\..\STM32Libraries\armcmx;..\..\STM32Libraries\armcmx\utility;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\armcmxlib</IncludePath>
             </VariousControls>
@@ -527,16 +527,6 @@
               <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\glcd.cpp</FilePath>
             </File>
             <File>
-              <FileName>DisplayController.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\DisplayController.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>DisplayController.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\DisplayController.h</FilePath>
-            </File>
-            <File>
               <FileName>gText.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\gText.cpp</FilePath>
@@ -550,6 +540,16 @@
               <FileName>glcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\glcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>GLCDController.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\GLCDController.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>GLCDController.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\GLCDController.h</FilePath>
             </File>
           </Files>
         </Group>
