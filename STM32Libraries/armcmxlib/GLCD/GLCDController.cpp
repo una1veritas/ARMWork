@@ -1,8 +1,8 @@
 #include "armcmx.h"
-#include "DisplayController.h"
+#include "GLCDController.h"
 
 
-	void DisplayController::init() {
+	void GLCDController::init() {
 		FgColor = BLACK;
 		BkgColor = WHITE;
 		Inverted = true;
@@ -10,7 +10,7 @@
 		// ClearScreen(Inverted ? 0x00 : 0xff);
 	}
 
-	void DisplayController::SetDot(int16 x, int16 y, uint8 bw) {
+	void GLCDController::SetDot(int16 x, int16 y, uint8 bw) {
 		uint8 d;
 		if ( x < 0 || x >= Width 
 			|| y < 0 || y >= Height )
@@ -27,7 +27,7 @@
 	
 	
 
-void DisplayController::SetPixels(int16 x, int16 y, int16 x2, int16 y2, uint8 color) {
+void GLCDController::SetPixels(int16 x, int16 y, int16 x2, int16 y2, uint8 color) {
 uint8_t mask, pageOffset, h, i, data;
 //	x = min(max(x, 0), DISPLAY_WIDTH-1);
 //	y = min(max(y, 0), DISPLAY_HEIGHT-1);

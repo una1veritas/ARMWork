@@ -1,5 +1,5 @@
-#ifndef _DISPLAYCONTROLLER_H_
-#define _DISPLAYCONTROLLER_H_
+#ifndef _GLCDController_H_
+#define _GLCDController_H_
 
 #include "armcmx.h"
 
@@ -7,7 +7,7 @@
 #define WHITE				0x00
 #define BLACK				0xff
 
-class DisplayController {
+class GLCDController {
 
 	static const uint8 COMMAND = 0;
 	
@@ -22,14 +22,14 @@ public:
 public:
 	
 	virtual void init(void);
+	virtual void DisplayOn(void) = 0;
+	virtual void DisplayOff(void) {}
 		
 	virtual uint8 IsBusy(void) = 0;
 	virtual void WriteData(uint8 cmd) = 0;
 	virtual uint8 ReadData(void) = 0;
-	
-	virtual void DisplayOn(void) = 0;
-	virtual void DisplayOff(void) {}
 	virtual void GotoXY(uint8 x, uint8 y) = 0;
+	
 	void SetDot(int16 x, int16 y, uint8 bw);
 	void SetPixels(int16 x, int16 y, int16 x1, int16 y1, uint8 bw);
 //	void SetColumnByte(int16 x, int16 y uint8 bits);
@@ -37,4 +37,4 @@ public:
 		
 };
 
-#endif // _GLCD_H_
+#endif // _GLCDController_H_

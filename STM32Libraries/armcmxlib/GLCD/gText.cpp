@@ -45,22 +45,23 @@ extern "C"
 // The device pointer is initialized using the global GLCD instance
 // New constuctors can be added to take an exlicit glcd instance pointer
 // if multiple glcd instances need to be supported
-gText::gText()
+gText::gText(GLCDController & cont) : gc(cont)
 {
    // device = (glcd_Device*)&GLCD; 
     this->DefineArea(0,0,DISPLAY_WIDTH -1,DISPLAY_HEIGHT -1, DEFAULT_SCROLLDIR); // this should never fail
 }
 
+/*
 // This constructor creates a text area with the given coordinates
 // full display area is used if any coordinate is invalid
-gText::gText(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, textMode mode) 
+gText::gText(GLCDController & cont, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, textMode mode)  : gc(cont)
 {
    //device = (glcd_Device*)&GLCD; 
    if( ! this->DefineArea(x1,y1,x2,y2,mode))
        this->DefineArea(0,0,DISPLAY_WIDTH -1,DISPLAY_HEIGHT -1,mode); // this should never fail
 }
 
-gText::gText(predefinedArea selection, textMode mode)
+gText::gText(GLCDController & cont, predefinedArea selection, textMode mode) : gc(cont)
 {
    //device = (glcd_Device*)&GLCD; 
    if( ! this->DefineArea(selection,mode))
@@ -68,7 +69,7 @@ gText::gText(predefinedArea selection, textMode mode)
 
 }
 
-gText::gText(uint8_t x1, uint8_t y1, uint8_t columns, uint8_t rows, Font_t font, textMode mode)
+gText::gText(GLCDController & cont, uint8_t x1, uint8_t y1, uint8_t columns, uint8_t rows, Font_t font, textMode mode) : gc(cont)
 {
    //device = (glcd_Device*)&GLCD; 
    if( ! this->DefineArea(x1,y1,columns,rows,font, mode))
@@ -77,7 +78,7 @@ gText::gText(uint8_t x1, uint8_t y1, uint8_t columns, uint8_t rows, Font_t font,
 	  this->SelectFont(font);
    }
 }
-
+*/
 /**
  * Clear text area with the current font background color
  * and home the cursor to upper left corner of the text area.
@@ -90,7 +91,7 @@ void gText::ClearArea(void)
 	 * fill the area with font background color
 	 */
 
-	SetPixels(tarea.x1, tarea.y1, tarea.x2, tarea.y2, FontColor == BLACK ? WHITE : BLACK);
+	gc.SetPixels(tarea.x1, tarea.y1, tarea.x2, tarea.y2, FontColor == BLACK ? WHITE : BLACK);
 	/*
 	 * put cursor at home position of text area to ensure we are always inside area.
 	 */
@@ -240,7 +241,7 @@ uint8_t ret = false;
  * @see predefinedArea
  *
  */
-
+/*
 uint8_t
 gText::DefineArea(predefinedArea selection, textMode mode)
 {
@@ -256,7 +257,7 @@ TareaToken tok;
 
 	return this->DefineArea(x1,y1,x2,y2, mode);
 }
-
+*/
 /*
  * Scroll a pixel region up.
  * 	Area scrolled is defined by x1,y1 through x2,y2 inclusive.
@@ -287,15 +288,15 @@ uint8_t col;
 		 * fill the region with "whitespace" because
 		 * it is being totally scrolled out.
 		 */
-		SetPixels(x1, y1, x2, y2, color);
+		gc.SetPixels(x1, y1, x2, y2, color);
 		return;
 	}
 
 	for(col = x1; col <= x2; col++)
 	{
 		dy = y1;
-		GotoXY(col, dy & ~7);
-		dbyte = ReadData();
+		gc.GotoXY(col, dy & ~7);
+		dbyte = gc.ReadData();
 
 		/*
 		 * preserve bits outside/above scroll region
@@ -304,8 +305,8 @@ uint8_t col;
 		dbyte &= (_BV((dy & 7)) - 1);
 
 		sy = dy + pixels;
-		GotoXY(col, sy & ~7);
-		sbyte = ReadData();
+		gc.GotoXY(col, sy & ~7);
+		sbyte = gc.ReadData();
 
 		while(sy <= y2)
 		{
@@ -322,15 +323,15 @@ uint8_t col;
 				 */
 				if(sy < DISPLAY_HEIGHT)
 				{
-					GotoXY(col, sy & ~7);
-					sbyte = ReadData();
+					gc.GotoXY(col, sy & ~7);
+					sbyte = gc.ReadData();
 				}
 			}
 
 			if((dy & 7) == 7)
 			{
-				GotoXY(col, dy & ~7);	// Should be able to remove this
-				WriteData(dbyte);
+				gc.GotoXY(col, dy & ~7);	// Should be able to remove this
+				gc.WriteData(dbyte);
 				dbyte = 0;
 			}
 			dy++;
@@ -353,8 +354,8 @@ uint8_t col;
 
 			if((dy & 7) == 7)
 			{
-				GotoXY(col, dy & ~7); // should be able to remove this.
-				WriteData(dbyte);
+				gc.GotoXY(col, dy & ~7); // should be able to remove this.
+				gc.WriteData(dbyte);
 				dbyte = 0;
 			}
 			dy++;
@@ -369,8 +370,8 @@ uint8_t col;
 		{
 			dy--;
 
-			GotoXY(col, dy & ~7);
-			sbyte = ReadData();
+			gc.GotoXY(col, dy & ~7);
+			sbyte = gc.ReadData();
 			/*
 			 * Preserver bits outside/below region
 			 */
@@ -379,7 +380,7 @@ uint8_t col;
 			sbyte &= ~(_BV((dy & 7)) - 1);
 			dbyte |= sbyte;
 
-			WriteData(dbyte);
+			gc.WriteData(dbyte);
 		}
 	}
 
@@ -405,7 +406,7 @@ uint8_t col;
 		 * fill the region with "whitespace" because
 		 * it is being totally scrolled out.
 		 */
-		SetPixels(x1, y1, x2, y2, color);
+		gc.SetPixels(x1, y1, x2, y2, color);
 		return;
 	}
 
@@ -415,8 +416,8 @@ uint8_t col;
 	for(col = x1; col <= x2; col++)
 	{
 		dy = y2;
-		GotoXY(col, dy & ~7);
-		dbyte = ReadData();
+		gc.GotoXY(col, dy & ~7);
+		dbyte = gc.ReadData();
 
 		/*
 		 * preserve bits outside/below scroll region
@@ -424,8 +425,8 @@ uint8_t col;
 
 		dbyte &= ~(_BV(((dy & 7)+1)) - 1);
 		sy = dy - pixels;
-		GotoXY(col, sy & ~7);
-		sbyte = ReadData();
+		gc.GotoXY(col, sy & ~7);
+		sbyte = gc.ReadData();
 
 		while(sy >= y1)
 		{
@@ -435,8 +436,8 @@ uint8_t col;
 			}
 			if((dy & 7) == 0)
 			{
-				GotoXY(col, dy & ~7);	// Should be able to remove this
-				WriteData(dbyte);
+				gc.GotoXY(col, dy & ~7);	// Should be able to remove this
+				gc.WriteData(dbyte);
 				dbyte = 0;
 			}
 			dy--;
@@ -446,8 +447,8 @@ uint8_t col;
 			sy--;
 			if((sy & 7) == 7)
 			{
-				GotoXY(col, sy & ~7);
-				sbyte = ReadData();
+				gc.GotoXY(col, sy & ~7);
+				sbyte = gc.ReadData();
 			}
 
 		}
@@ -469,8 +470,8 @@ uint8_t col;
 
 			if((dy & 7) == 0)
 			{
-				GotoXY(col, dy & ~7); // should be able to remove this.
-				WriteData(dbyte);
+				gc.GotoXY(col, dy & ~7); // should be able to remove this.
+				gc.WriteData(dbyte);
 				dbyte = 0;
 			}
 			dy--;
@@ -484,15 +485,15 @@ uint8_t col;
 
 		if(dy & 7)
 		{
-			GotoXY(col, dy & ~7);
-			sbyte = ReadData();
+			gc.GotoXY(col, dy & ~7);
+			sbyte = gc.ReadData();
 			/*
 			 * Preserve bits outside/above region
 			 */
 
 			sbyte &= (_BV((dy & 7)) - 1);
 			dbyte |= sbyte;
-			WriteData(dbyte);
+			gc.WriteData(dbyte);
 		}
 
 	}
@@ -521,7 +522,7 @@ void gText::SpecialChar(uint8_t c)
 
 
 		if(this->x < this->tarea.x2)
-			SetPixels(this->x, this->y, this->tarea.x2, this->y+height, this->FontColor == BLACK ? WHITE : BLACK);
+			gc.SetPixels(this->x, this->y, this->tarea.x2, this->y+height, this->FontColor == BLACK ? WHITE : BLACK);
 
 		/*
 		 * Check for scroll up vs scroll down (scrollup is normal)
@@ -876,7 +877,7 @@ int gText::PutChar(uint8_t c)
 		 * Align to proper Column and page in LCD memory
 		 */
 
-		GotoXY(this->x, (dy & ~7));
+		gc.GotoXY(this->x, (dy & ~7));
 
 		uint16_t page = p/8 * width; // page must be 16 bit to prevent overflow
 
@@ -941,7 +942,7 @@ int gText::PutChar(uint8_t c)
 				 * to paint so a full byte write can be done.
 				 */
 					
-					WriteData(fdata);
+					gc.WriteData(fdata);
 					continue;
 			}
 			else
@@ -949,7 +950,7 @@ int gText::PutChar(uint8_t c)
 					/*
 					 * No, so must fetch byte from LCD memory.
 					 */
-					dbyte = ReadData();
+					dbyte = gc.ReadData();
 			}
 
 			/*
@@ -1006,7 +1007,7 @@ int gText::PutChar(uint8_t c)
 			/*
 			 * Now flush out the painted byte.
 			 */
-			WriteData(dbyte);
+			gc.WriteData(dbyte);
 		}
 
 		/*
@@ -1034,7 +1035,7 @@ int gText::PutChar(uint8_t c)
 		{
 		uint8_t mask = 0;
 
-			dbyte = ReadData();
+			dbyte = gc.ReadData();
 
 			if(dy & 7)
 				mask |= _BV(dy & 7) -1;
@@ -1057,7 +1058,7 @@ int gText::PutChar(uint8_t c)
 				dbyte = 0;
 		}
 
-		WriteData(dbyte);
+		gc.WriteData(dbyte);
 
 		/*
 		 * advance the font pixel for the pixels
@@ -1400,13 +1401,13 @@ void gText::EraseTextLine( eraseLine_t type)
 	switch(type)
 	{
 		case eraseTO_EOL:
-				SetPixels(x, y, this->tarea.x2, y+height, color);
+				gc.SetPixels(x, y, this->tarea.x2, y+height, color);
 				break;
 		case eraseFROM_BOL:
-				SetPixels(this->tarea.x1, y, x, y+height, color);
+				gc.SetPixels(this->tarea.x1, y, x, y+height, color);
 				break;
 		case eraseFULL_LINE:
-				SetPixels(this->tarea.x1, y, this->tarea.x2, y+height, color);
+				gc.SetPixels(this->tarea.x1, y, this->tarea.x2, y+height, color);
 				break;
 	}
 

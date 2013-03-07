@@ -48,17 +48,6 @@ int main(void) {
 	uint8 d;
 	while (1) {
 		GLCD.println(millis());
-		line++;
-		if ( line >= 8 ) {
-			for(int pg = 0; pg < CHIP_PAGES-1; pg++) {
-				for(int col = 0; col < 128; col++) {
-					GLCD.GotoXY((pg+1)<<3, col);
-					d = GLCD.ReadData();
-					GLCD.GotoXY(pg<<3, col);
-					GLCD.WriteData(d);
-				}
-			}
-		}
 		delay(200);
 	}
 }

@@ -2,7 +2,7 @@
 #define _KS0108_H_
 
 #include "armcmx.h"
-#include "DisplayController.h"
+#include "GLCDController.h"
 
 #define LCD_ON				0x3F
 #define LCD_OFF				0x3E
@@ -28,7 +28,7 @@
 // Colors
 #define NON_INVERTED true
 
-class KS0108 : public DisplayController {
+class KS0108 : public GLCDController {
 	GPIOPin DNI, RNW;
 	GPIOPin ENCLK;
 	GPIOPin CS[2];

@@ -7,7 +7,7 @@
 #include "Print.h"
 
 #include "gText.h"
-#include "DisplayController.h"
+#include "GLCDController.h"
 
 #define GLCD_VERSION 3 // software version of this library
 
@@ -29,13 +29,13 @@ typedef const uint8_t* Font_t;
  * @class glcd
  * @brief Functions for GLCD
  */
-class glcd {
+class glcd : public Print {
   private:
-		DisplayController & lcdc;
-	gText & textarea;
+		GLCDController & gc;
+		gText tx;
 	
   public:
-		glcd(DisplayController & dispcont);
+		glcd(GLCDController & dcont);
 	
 /** @name CONTROL FUNCTIONS
  * The following control functions are available
@@ -43,6 +43,11 @@ class glcd {
 /*@{*/
 	// Control functions
 	virtual void init(); //uint8_t invert = NON_INVERTED);
+
+	virtual void GotoXY(uint8_t x, uint8_t y);  // overrride for GotoXY in device class
+	inline virtual void WriteData(uint8 cmd) { gc.WriteData(cmd); }
+	inline virtual uint8 ReadData(void) { return gc.ReadData(); }
+
 	void SetDisplayMode(uint8_t mode); //NON_INVERTED or INVERTED,   was SetInverted(uint8_t invert);
 /*@}*/
 	
@@ -62,6 +67,14 @@ class glcd {
 	void DrawCircle(uint8_t xCenter, uint8_t yCenter, uint8_t radius, uint8_t color= BLACK);	
 	void FillCircle(uint8_t xCenter, uint8_t yCenter, uint8_t radius, uint8_t color= BLACK);	
 	void DrawBitmap(Image_t bitmap, uint8_t x, uint8_t y, uint8_t color= BLACK);
+
+	// Font Functions
+	void SelectFont(Font_t font, uint8_t color=BLACK) { tx.SelectFont(font, color); }  //, FontCallback callback=ReadPgmData); // default arguments added, callback now last arg
+	void SetFontColor(uint8_t color) { tx.SetFontColor(color); } // new method
+//	int PutChar(uint8_t c);
+	// text functions
+	virtual size_t write(uint8_t c) { return tx.write(c); }  // character output for print base class
+	using Print::write;
 
 /*
 #ifdef DOXYGEN
@@ -84,10 +97,6 @@ class glcd {
 	using glcd_Device::WriteData; 
 #endif
 */
-
-
-	virtual void GotoXY(uint8_t x, uint8_t y);  // overrride for GotoXY in device class
-
 
 /*@}*/
 

@@ -38,8 +38,8 @@
 #define BITMAP_FIX // enables a bitmap rendering fix/patch
 
 
-glcd::glcd(DisplayController & dispcont) : lcdc(dispcont){
-   lcdc.Inverted = NON_INVERTED; 
+glcd::glcd(GLCDController & dcont)  : gc(dcont) , tx(dcont){
+   gc.Inverted = NON_INVERTED; 
 }
 
 /**
@@ -65,7 +65,7 @@ glcd::glcd(DisplayController & dispcont) : lcdc(dispcont){
  
 
 void glcd::init() { //uint8_t invert){
-	lcdc.init(); //invert);
+	gc.init(); //invert);
 }		
 
 /**
@@ -86,8 +86,8 @@ void glcd::init() { //uint8_t invert){
  */
 
 void glcd::ClearScreen(uint8_t color){
-	lcdc.SetPixels(0,0,lcdc.Width-1, lcdc.Height-1, color);
- 	CursorToXY(0,0);  // home text position
+	gc.SetPixels(0, 0, gc.Width-1, gc.Height-1, color);
+ 	tx.CursorToXY(0,0);  // home text position
 }
 
 /*
@@ -177,7 +177,10 @@ int8_t error, ystep;
 
 	for(x = x1; x <= x2; x++)
 	{
-		if (steep) this->SetDot(y,x, color); else this->SetDot(x,y, color);
+		if (steep) 
+			gc.SetDot(y,x, color); 
+		else 
+			gc.SetDot(x,y, color);
    		error = error - deltay;
 		if (error < 0)
 		{
@@ -244,19 +247,19 @@ void glcd::DrawRoundRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, ui
 	
 	while (x1 <= y1) {
 //		printf("roundrect x=%d, y=%d, radius=%d, tswitch=%d \n", x1, y1, radius, tSwitch);
-	    this->SetDot(x+radius - x1, y+radius - y1, color);
-	    this->SetDot(x+radius - y1, y+radius - x1, color);
+	    gc.SetDot(x+radius - x1, y+radius - y1, color);
+	    gc.SetDot(x+radius - y1, y+radius - x1, color);
 
-	    this->SetDot(x+width-radius + x1, y+radius - y1, color);
-	    this->SetDot(x+width-radius + y1, y+radius - x1, color);
+	    gc.SetDot(x+width-radius + x1, y+radius - y1, color);
+	    gc.SetDot(x+width-radius + y1, y+radius - x1, color);
 //		printf(" setdot %d, %d, ", x+width-radius + x1, y+radius - y1);
 //		printf(" setdot %d, %d, \n", x+width-radius + y1, y+radius - x1);
 	    
-	    this->SetDot(x+width-radius + x1, y+height-radius + y1, color);
-	    this->SetDot(x+width-radius + y1, y+height-radius + x1, color);
+	    gc.SetDot(x+width-radius + x1, y+height-radius + y1, color);
+	    gc.SetDot(x+width-radius + y1, y+height-radius + x1, color);
 
-	    this->SetDot(x+radius - x1, y+height-radius + y1, color);
-	    this->SetDot(x+radius - y1, y+height-radius + x1, color);
+	    gc.SetDot(x+radius - x1, y+height-radius + y1, color);
+	    gc.SetDot(x+radius - y1, y+height-radius + x1, color);
 
 		if ( tSwitch >= 0 ) {
 			y1--;
@@ -316,7 +319,7 @@ void glcd::DrawRoundRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, ui
  */
 
 void glcd::FillRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t color) {
-    this->SetPixels(x,y,x+width,y+height,color);
+    gc.SetPixels(x, y, x+width, y+height, color);
 }
 
 /**
@@ -409,9 +412,9 @@ void glcd::InvertRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height) {
 
 void glcd::SetDisplayMode(uint8_t invert) {  // was named SetInverted
 
-	if(lcdc.Inverted != invert) {
-		InvertRect(0,0,lcdc.Width-1, lcdc.Height-1);
-		lcdc.Inverted = invert;
+	if(gc.Inverted != invert) {
+		InvertRect(0,0, gc.Width-1, gc.Height-1);
+		gc.Inverted = invert;
 	}
 }
 
@@ -594,7 +597,7 @@ uint8_t xbmdata;
 
 void glcd::DrawVLine(uint8_t x, uint8_t y, uint8_t height, uint8_t color){
   // this->FillRect(x, y, 0, length, color);
-   this->SetPixels(x,y,x,y+height,color);
+   gc.SetPixels(x,y,x,y+height,color);
 }
 	
 /**
@@ -617,7 +620,7 @@ void glcd::DrawVLine(uint8_t x, uint8_t y, uint8_t height, uint8_t color){
 
 void glcd::DrawHLine(uint8_t x, uint8_t y, uint8_t width, uint8_t color){
    // this->FillRect(x, y, length, 0, color);
-    this->SetPixels(x,y, x+width, y, color);
+    gc.SetPixels(x,y, x+width, y, color);
 }
 
 /**
@@ -752,8 +755,8 @@ uint8_t ReadPgmData(const uint8_t* ptr)  // note this is a static function
 // (older library didn't have seperate x & y for hardware/graphics vs text )
 void glcd::GotoXY(uint8_t x, uint8_t y)
 {
-	lcdc.GotoXY(x, y);
-  CursorToXY(x,y); 
+	gc.GotoXY(x, y);
+  tx.CursorToXY(x,y); 
 } 
 
 // Make one instance for the user

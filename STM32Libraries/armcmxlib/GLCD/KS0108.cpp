@@ -2,8 +2,8 @@
 #include "KS0108.h"
 //#include "KS0108_params.h"
 
-	uint16 DisplayController::Width = DISPLAY_WIDTH;
-	uint16 DisplayController::Height = DISPLAY_HEIGHT;
+	uint16 GLCDController::Width = DISPLAY_WIDTH;
+	uint16 GLCDController::Height = DISPLAY_HEIGHT;
 
 	void KS0108::select(uint8 id) {
 		digitout(CS[0], id == 0 ? LOW : HIGH);
@@ -100,7 +100,7 @@
 		pinMode(CS[1], OUTPUT);
 		GPIOMode(PinPort(D0), 0x00ff<<(D0 & 0x0f), OUTPUT, MEDSPEED, PUSHPULL, PULLUP);//DBMode(OUTPUT);
 
-		DisplayController::init();
+		GLCDController::init();
 	}
 
 	void KS0108::DisplayOn(void) {

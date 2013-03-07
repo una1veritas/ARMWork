@@ -20,10 +20,18 @@
 #ifndef Print_h
 #define Print_h
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <inttypes.h>
 #include <stdio.h> // for size_t
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef __cplusplus
+}
+#endif
 
 #if defined (ARMCMX)
 #include "armcmx.h"
@@ -33,6 +41,7 @@
 #include "Printable.h"
 #endif
 #endif
+
 #define DEC 10
 #define HEX 16
 #define OCT 8
@@ -57,8 +66,8 @@ public:
     size_t write(const char *str) { return write((const uint8_t *)str, strlen(str)); }
     virtual size_t write(const uint8_t *buffer, size_t size);
     
-//    size_t print(const __FlashStringHelper *);
-//    size_t print(const String &);
+//  size_t print(const __FlashStringHelper *);
+//  size_t print(const String &);
     size_t print(const char[]);
 
     size_t print(char);

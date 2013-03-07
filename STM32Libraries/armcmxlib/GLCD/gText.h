@@ -195,9 +195,9 @@ struct tarea
  */
   
  // graphical device text routines
-class gText : public Print, public KS0108 {
+class gText : public Print {
   private:
-		//GLCDController & controller;
+		GLCDController & gc;
     //FontCallback	FontRead;     // now static, move back here if each instance needs its own callback
 	uint8_t			FontColor;
 	Font_t			Font;
@@ -215,12 +215,13 @@ class gText : public Print, public KS0108 {
 	void ScrollDown(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t pixels, uint8_t color);
 
   public:
-	gText(); // default - uses the entire display
-	gText(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, textMode mode=DEFAULT_SCROLLDIR);
+	gText(GLCDController & cont); // default - uses the entire display
+	/*
+	gText(GLCDController & cont, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, textMode mode=DEFAULT_SCROLLDIR);
 	// 4 Feb - added two constuctors (and SetFontColor below) 
-	gText(predefinedArea selection, textMode mode=DEFAULT_SCROLLDIR);
-	gText(uint8_t x1, uint8_t y1, uint8_t columns, uint8_t rows, Font_t font, textMode mode=DEFAULT_SCROLLDIR);
-
+	gText(GLCDController & cont, predefinedArea selection, textMode mode=DEFAULT_SCROLLDIR);
+	gText(GLCDController & cont, uint8_t x1, uint8_t y1, uint8_t columns, uint8_t rows, Font_t font, textMode mode=DEFAULT_SCROLLDIR);
+*/
 	//void Init(glcd_Device* _device); // no longer used
 
 /** @name TEXT FUNCTIONS
@@ -231,7 +232,8 @@ class gText : public Print, public KS0108 {
 
 	uint8_t DefineArea(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, textMode mode=DEFAULT_SCROLLDIR);
 	uint8_t DefineArea(uint8_t x1, uint8_t y1, uint8_t columns, uint8_t rows, Font_t font, textMode mode=DEFAULT_SCROLLDIR);
-	uint8_t DefineArea(predefinedArea selection, textMode mode=DEFAULT_SCROLLDIR);
+//	uint8_t DefineArea(predefinedArea selection, textMode mode=DEFAULT_SCROLLDIR);
+	
 	void SetTextMode(textMode mode); // change to the given text mode
 	void ClearArea(void);
 
