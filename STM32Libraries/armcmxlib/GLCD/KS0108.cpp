@@ -71,7 +71,7 @@
 	}
 
 	uint8 KS0108::ReadData(void) {
-		uint8 chip = xyaddress>>6&1;
+		uint8 chip = xyaddress >> 6 & 1;
 		WriteCommand(LCD_SET_PAGE | (xyaddress>>10&0x07));
 		WriteCommand(LCD_SET_ADDRESS | (xyaddress&0x3f));
 		DBMode(INPUT);
@@ -123,8 +123,8 @@
 	
 	void KS0108::GotoXY(uint8 x, uint8 y) {
 		setXY(x, y);
-		WriteCommand(LCD_SET_PAGE | (y>>3 & 0x07));
-		WriteCommand(LCD_SET_ADDRESS | (x & 0x3f));
+//		WriteCommand(LCD_SET_PAGE | (y>>3 & 0x07));
+//		WriteCommand(LCD_SET_ADDRESS | (x & 0x3f));
 	}
 	
 /*

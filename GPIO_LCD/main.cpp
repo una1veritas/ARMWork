@@ -48,7 +48,7 @@ int main(void) {
 	uint8 d;
 	while (1) {
 		GLCD.println(millis());
-		delay(200);
+		delay(1000);
 	}
 }
 

@@ -52,7 +52,7 @@ typedef class _FlashString {} *FLASHSTRING;
 
 // the following returns true if the given font is fixed width
 // zero length is flag indicating fixed width font (array does not contain width data entries)
-#define isFixedWidthFont(font)  (FontRead(font+FONT_LENGTH) == 0 && FontRead(font+FONT_LENGTH+1) == 0))
+#define isFixedWidthFont(font)  (FontRead(font+FONT_LENGTH) == 0 && FontRead(font+FONT_LENGTH+1) == 0)
 
 /*
  * Coodinates for predefined areas are compressed into a single 32 bit token.
