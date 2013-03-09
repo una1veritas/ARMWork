@@ -452,7 +452,7 @@ void glcd::DrawBitmap(Image bitmap, uint8 x, uint8 y, uint8 color){
   for(j = 0; j < height / 8; j++) {
 		GotoXY(x, y + (j*8) );
 		for(i = 0; i < width; i++) {
-	   	if( color != BkgColor )
+	   	if( color != gc.BkgColor )
 				WriteData(*bitmap++);
 			else
 		    WriteData(~(*bitmap++));

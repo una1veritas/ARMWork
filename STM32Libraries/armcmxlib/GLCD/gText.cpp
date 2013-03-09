@@ -49,7 +49,7 @@ gText::gText(GLCDController & cont) : gc(cont)
 }
 
 void gText::init() {
-   DefineArea(0,0,DISPLAY_WIDTH -1,DISPLAY_HEIGHT -1, DEFAULT_SCROLLDIR); // this should never fail
+   DefineArea(0,0, KS0108::DISPLAY_WIDTH -1, KS0108::DISPLAY_HEIGHT -1, DEFAULT_SCROLLDIR); // this should never fail
 }
 
 /**
@@ -140,8 +140,8 @@ gText::DefineArea(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, textMode mode)
    
    uint8_t ret = false;
    
-	x1 = min(max(0, x1), DISPLAY_WIDTH-1);    x2 = min(max(0, x2), DISPLAY_WIDTH-1);
-	y1 = min(max(0, y1), DISPLAY_HEIGHT-1);   y2 = min(max(0, y2), DISPLAY_HEIGHT-1);
+	x1 = min(max(0, x1), KS0108::DISPLAY_WIDTH-1);    x2 = min(max(0, x2), KS0108::DISPLAY_WIDTH-1);
+	y1 = min(max(0, y1), KS0108::DISPLAY_HEIGHT-1);   y2 = min(max(0, y2), KS0108::DISPLAY_HEIGHT-1);
    
     // failed sanity check so set defaults and return false 
 	txarea.left = min(x1, x2); txarea.right = max(x1, x2);
@@ -242,7 +242,7 @@ uint8_t col;
 				/*
 				 * If we just crossed over, then we should be done.
 				 */
-				if(sy < DISPLAY_HEIGHT)
+				if(sy < KS0108::DISPLAY_HEIGHT)
 				{
 					gc.GotoXY(col, sy & ~7);
 					sbyte = gc.ReadData();

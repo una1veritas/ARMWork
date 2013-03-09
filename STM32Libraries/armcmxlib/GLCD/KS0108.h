@@ -12,8 +12,6 @@
 #define LCD_SET_PAGE		0xB8
 #define LCD_BUSY_FLAG		0x80 
 
-#define DISPLAY_WIDTH 	128
-#define DISPLAY_HEIGHT 	64
 #define CHIP_WIDTH 	64
 #define CHIP_HEIGHT 	64
 #define CHIP_PAGES 	8
@@ -38,7 +36,10 @@ class KS0108 : public GLCDController {
 		
 	uint16 xyaddress;
 	
-public:
+  public:
+  // constant definitions 
+  const static uint8 DISPLAY_WIDTH = 128;
+  const static uint8 DISPLAY_HEIGHT = 64;
 
 	void busMode(GPIOMode_TypeDef mode);
 	inline void high(GPIOPin pin) { GPIO_SetBits(PinPort(pin), PinBit(pin)); }

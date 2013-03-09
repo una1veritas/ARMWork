@@ -31,7 +31,7 @@
 #include "String.h"
 #include "Streaming.h" 
 //arm #include "include/glcd_Device.h"
-#include "KS0108.h"
+#include "GLCDController.h"
 
 #define GTEXT_VERSION 1 // software version of this code
 
@@ -112,38 +112,39 @@ const textMode DEFAULT_SCROLLDIR = SCROLL_UP;
  * They are used with the
  * \ref gText::DefineArea(predefinedArea selection, textMode mode) "DefineArea()" function call.
  */
+ /*
 typedef enum  {
 
-	textAreaFULL         = MK_TareaToken( 0,               0,                DISPLAY_WIDTH -1,   DISPLAY_HEIGHT -1   ),
-	/**<Entire GLCD display */
+	textAreaFULL         = MK_TareaToken( 0,               0,                KS0108::DISPLAY_WIDTH -1,   KS0108::DISPLAY_HEIGHT -1   ),
+	**<Entire GLCD display *
 
-	textAreaTOP          = MK_TareaToken( 0,               0,                DISPLAY_WIDTH -1,   DISPLAY_HEIGHT/2 -1 ),
-	/**<Top half of GLCD display */
+	textAreaTOP          = MK_TareaToken( 0,               0,                KS0108::DISPLAY_WIDTH -1,   KS0108::DISPLAY_HEIGHT/2 -1 ),
+	**<Top half of GLCD display *
 
-	textAreaBOTTOM       = MK_TareaToken( 0,               DISPLAY_HEIGHT/2, DISPLAY_WIDTH -1,   DISPLAY_HEIGHT -1   ),
-	/**<Bottom half of GLCD display */
+	textAreaBOTTOM       = MK_TareaToken( 0,               KS0108::DISPLAY_HEIGHT/2, KS0108::DISPLAY_WIDTH -1,   KS0108::DISPLAY_HEIGHT -1   ),
+	**<Bottom half of GLCD display *
 
-	textAreaLEFT         = MK_TareaToken( 0,               0,                DISPLAY_WIDTH/2 -1, DISPLAY_HEIGHT -1   ),
-	/**<Left side of GLCD display */
+	textAreaLEFT         = MK_TareaToken( 0,               0,                KS0108::DISPLAY_WIDTH/2 -1, KS0108::DISPLAY_HEIGHT -1   ),
+	**<Left side of GLCD display *
 
-	textAreaRIGHT        = MK_TareaToken( DISPLAY_WIDTH/2, 0,                DISPLAY_WIDTH -1,   DISPLAY_HEIGHT -1   ),
-	/**<Right side of GLCD display */
+	textAreaRIGHT        = MK_TareaToken( KS0108::DISPLAY_WIDTH/2, 0,                KS0108::DISPLAY_WIDTH -1,   KS0108::DISPLAY_HEIGHT -1   ),
+	**<Right side of GLCD display *
 
-	textAreaTOPLEFT      = MK_TareaToken( 0,               0,                DISPLAY_WIDTH/2 -1, DISPLAY_HEIGHT/2 -1 ),
-	/**<Upper left quarter of GLCD display */
+	textAreaTOPLEFT      = MK_TareaToken( 0,               0,                KS0108::DISPLAY_WIDTH/2 -1, KS0108::DISPLAY_HEIGHT/2 -1 ),
+	**<Upper left quarter of GLCD display *
 
-	textAreaTOPRIGHT     = MK_TareaToken( DISPLAY_WIDTH/2, 0,                DISPLAY_WIDTH -1,   DISPLAY_HEIGHT/2 -1 ),
-	/**<Upper right quarter of GLCD display */
+	textAreaTOPRIGHT     = MK_TareaToken( KS0108::DISPLAY_WIDTH/2, 0,                KS0108::DISPLAY_WIDTH -1,   KS0108::DISPLAY_HEIGHT/2 -1 ),
+	**<Upper right quarter of GLCD display *
 
-	textAreaBOTTOMLEFT   = MK_TareaToken( 0,               DISPLAY_HEIGHT/2, DISPLAY_WIDTH/2 -1, DISPLAY_HEIGHT -1   ),
-	/**<Buttom left quarter of GLCD display */
+	textAreaBOTTOMLEFT   = MK_TareaToken( 0,               KS0108::DISPLAY_HEIGHT/2, KS0108::DISPLAY_WIDTH/2 -1, KS0108::DISPLAY_HEIGHT -1   ),
+	**<Buttom left quarter of GLCD display *
 
-	textAreaBOTTOMRIGHT  = MK_TareaToken( DISPLAY_WIDTH/2, DISPLAY_HEIGHT/2, DISPLAY_WIDTH -1,   DISPLAY_HEIGHT -1   )
-	/**<Bottom right quarter of GLCD display */
+	textAreaBOTTOMRIGHT  = MK_TareaToken( KS0108::DISPLAY_WIDTH/2, KS0108::DISPLAY_HEIGHT/2, KS0108::DISPLAY_WIDTH -1,   KS0108::DISPLAY_HEIGHT -1   )
+	**<Bottom right quarter of GLCD display *
 
 } predefinedArea;
 
-
+*/
 
 /*
   * enums for ansi style erase function
