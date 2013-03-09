@@ -12,8 +12,8 @@ class GLCDController {
 	static const uint8 COMMAND = 0;
 	
 public:
-	static uint16 Width;
-	static uint16 Height;
+	uint16 Width;
+	uint16 Height;
 	
 	uint8 BkgColor;
 	uint8 FgColor;

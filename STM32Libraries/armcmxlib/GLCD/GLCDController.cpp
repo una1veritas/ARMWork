@@ -28,15 +28,15 @@
 	
 
 void GLCDController::SetPixels(int16 x, int16 y, int16 x2, int16 y2, uint8 color) {
-   uint8_t mask, pageOffset, h, i, data;
-   //	x = min(max(x, 0), DISPLAY_WIDTH-1);
-   //	y = min(max(y, 0), DISPLAY_HEIGHT-1);
-   //	x2 = min(max(x2, 0), DISPLAY_WIDTH-1);
-   //	y2 = min(max(y2, 0), DISPLAY_HEIGHT-1);
-   uint8_t height = y2-y+1;
-   uint8_t width = x2-x+1;
+  uint8 mask, pageOffset, h, i, data;
+  //	x = min(max(x, 0), DISPLAY_WIDTH-1);
+  //	y = min(max(y, 0), DISPLAY_HEIGHT-1);
+  //	x2 = min(max(x2, 0), DISPLAY_WIDTH-1);
+  //	y2 = min(max(y2, 0), DISPLAY_HEIGHT-1);
+  uint8 height = y2-y+1;
+  uint8 width = x2-x+1;
 	
-	pageOffset = y%8;
+	pageOffset = y % 8;
 	y -= pageOffset;
 	mask = 0xFF;
 	if(height < 8-pageOffset) {
@@ -46,7 +46,8 @@ void GLCDController::SetPixels(int16 x, int16 y, int16 x2, int16 y2, uint8 color
 		h = 8-pageOffset;
 	}
 	mask <<= pageOffset;
-	
+
+  // top fractional region	
 	GotoXY(x, y);
 	for(i=0; i < width; i++) {
 		data = ReadData();
@@ -67,6 +68,7 @@ void GLCDController::SetPixels(int16 x, int16 y, int16 x2, int16 y2, uint8 color
 		}
 	}
 	
+  // bottom fractional region
 	if(h < height) {
 		mask = ~(0xFF << (height-h));
 		GotoXY(x, y+8);

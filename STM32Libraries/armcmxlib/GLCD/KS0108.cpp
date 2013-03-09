@@ -2,8 +2,6 @@
 #include "KS0108.h"
 //#include "KS0108_params.h"
 
-	uint16 GLCDController::Width = DISPLAY_WIDTH;
-	uint16 GLCDController::Height = DISPLAY_HEIGHT;
 
 	void KS0108::select(uint8 id) {
 		digitout(CS[0], id == 0 ? LOW : HIGH);
@@ -45,9 +43,9 @@
 	}
 
 	void KS0108::WriteCommand(uint8 cmd) {
-		DBMode(INPUT);
+		busMode(INPUT);
 		while ( IsBusy() );
-		DBMode(OUTPUT);
+		busMode(OUTPUT);
 		writebus(0, COMMAND, cmd);
 		writebus(1, COMMAND, cmd);
 	}
@@ -60,10 +58,10 @@
 		uint8 chip = xyaddress >> 6 & 1;
 		WriteCommand(LCD_SET_PAGE | (xyaddress>>10&0x07));
 		WriteCommand(LCD_SET_ADDRESS | (xyaddress&0x3f));
-		DBMode(INPUT);
+		busMode(INPUT);
 		delay_us(1);
 		while ( IsBusy() );
-		DBMode(OUTPUT);
+		busMode(OUTPUT);
 		delay_us(1);
 		writebus(chip, DATA, data);
 		//
@@ -74,14 +72,14 @@
 		uint8 chip = xyaddress >> 6 & 1;
 		WriteCommand(LCD_SET_PAGE | (xyaddress>>10&0x07));
 		WriteCommand(LCD_SET_ADDRESS | (xyaddress&0x3f));
-		DBMode(INPUT);
+		busMode(INPUT);
 		delay_us(1);
 		while ( IsBusy() );
 		uint8 res = readbus(chip, DATA);
 		return res;
 	}
 	
-	void KS0108::DBMode(GPIOMode_TypeDef mode){
+	void KS0108::busMode(GPIOMode_TypeDef mode){
 		GPIO_InitTypeDef GPIO_InitStructure;
 		if ( busmode == mode )
 			return;

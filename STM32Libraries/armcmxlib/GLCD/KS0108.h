@@ -37,12 +37,10 @@ class KS0108 : public GLCDController {
 	GPIOMode_TypeDef busmode;
 		
 	uint16 xyaddress;
-	uint8 backColor;
-	uint8 foreColor;
 	
 public:
 
-	void DBMode(GPIOMode_TypeDef mode);
+	void busMode(GPIOMode_TypeDef mode);
 	inline void high(GPIOPin pin) { GPIO_SetBits(PinPort(pin), PinBit(pin)); }
 	inline void low(GPIOPin pin) { GPIO_ResetBits(PinPort(pin), PinBit(pin)); }
 	inline void digitout(GPIOPin pin, uint8 bval) { GPIO_WriteBit(PinPort(pin), PinBit(pin), bval? Bit_SET : Bit_RESET ); }
@@ -71,9 +69,12 @@ public:
 		CS[1] = PD6;  // with resp. to the column byte direction
 		CS[0] = PD7;
 		D0 = PE8;
-//		buswidth = 8;
 		busmode = OUTPUT;
-		backColor = 0x00;
+    
+    Width = DISPLAY_WIDTH;
+    Height = DISPLAY_HEIGHT;
+		BkgColor = WHITE;
+		FgColor = BLACK;
 		Inverted = true;
 	}
 	

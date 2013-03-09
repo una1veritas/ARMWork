@@ -386,17 +386,17 @@ void glcd::InvertRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height) {
 	}
 	
 	/*
-	 * Now do the fractional pages aat the bottom of the region
+	 * Now do the fractional pages at the bottom of the region
 	 */
 	if(h < height) {
 		mask = ~(0xFF << (height-h));
 		
 		for(i=0; i<=width; i++) {
 			GotoXY(x+i, y+8);
-			data = this->ReadData();
+			data = ReadData();
 			tmpData = ~data;
 			data = (tmpData & mask) | (data & ~mask);
-			this->WriteData(data);
+			WriteData(data);
 		}
 	}
 }
@@ -437,145 +437,28 @@ void glcd::SetDisplayMode(uint8_t invert) {  // was named SetInverted
 #endif
  */
 
-void glcd::DrawBitmap(Image_t bitmap, uint8_t x, uint8_t y, uint8_t color){
-uint8_t width, height;
-uint8_t i, j;
+void glcd::DrawBitmap(Image bitmap, uint8 x, uint8 y, uint8 color){
+  uint8 width, height;
+  uint8 i, j;
 
   width = *bitmap++; //arm ReadPgmData(bitmap++); 
   height = *bitmap++; //ReadPgmData(bitmap++);
 
-#ifdef BITMAP_FIX // temporary ifdef just to show what changes if a new 
-				// bit rendering routine is written.
-							
   /*
-   * In the absence of a new/better/proper bitmap rendering routine,
-   * this routine will provide a temporary fix for drawing bitmaps that are
-   * are non multiples of 8 pixels in height and start on non LCD page Y addresses.
-   *
-   * Note: nomally a routine like this should not have knowledge of how
-   *	   how the lower level write routine works. But in this case it does.
-   *
-   *	Currently, the low level WriteData() routine ORs in the pixels when data spans
-   *	a LCD memory page. So.....
-   *
-   * In order to ensure that the bitmap data is written to the pixels *exactly* as it
-   * it defined in the bitmap data, i.e every black pixels is black and every white
-   * pixel is white,...
-   *
-   * If height or y coordinate is not on a page boundary, clear the background first
-   *	Techincally, this could be done all the time and it wouldn't hurt, it
-   *	would just suck up a few more cycles.
-   */
-  if( (y & 7) || (height & 7))
-  {
+  if( (y & 7) || (height & 7)) {
   	this->FillRect(x, y, width, height, WHITE);
   }
-#endif
-
+  */
   for(j = 0; j < height / 8; j++) {
 		GotoXY(x, y + (j*8) );
 		for(i = 0; i < width; i++) {
-		//	if ( (x+i)%64 == 0)
-		//		GotoXY(x+i,y+j*8);
-			uint8_t displayData = *bitmap++; //ReadPgmData(bitmap++);
-	   	if(color == BLACK)
-				this->WriteData(displayData);
+	   	if( color != BkgColor )
+				WriteData(*bitmap++);
 			else
-		    this->WriteData(~displayData);
+		    WriteData(~(*bitmap++));
 		}
   }
 }
-
-#ifdef NOTYET
-
-/**
- * Draw a glcd bitmap image in x11 XBM bitmap data format
- *
- * @param bitmapxbm a ponter to the glcd XBM bitmap data
- * @param x the x coordinate of the upper left corner of the bitmap
- * @param y the y coordinate of the upper left corner of the bitmap
- * @param color BLACK or WHITE
- *
- * Draws a x11 XBM bitmap image with the upper left corner at location x,y
- * The glcd xbm bitmap data format consists of 1 byte of width followed by 1 byte of height followed
- * by the x11 xbm pixel data bytes.
- * The bitmap data is assumed to be in program memory.
- *
- * Color is optional and defaults to BLACK.
- *
- * @see DrawBitmapXBM_P()
- * @see DrawBitmap()
- */
-
-void glcd::DrawBitmapXBM(ImageXBM_t bitmapxbm, uint8_t x, uint8_t y, uint8_t color)
-{
-uint8_t width, height;
-uint8_t bg_color;
-uint8_t *xbmbits;
-
-	
-	xbmbits = (uint8_t *) bitmapxbm;
-
-	width = ReadPgmData(xbmbits++); 
-	height = ReadPgmData(xbmbits++);
-
-	if(color == BLACK)
-		bg_color = WHITE;
-	else
-		bg_color = BLACK;
-	DrawBitmapXBM_P(width, height, xbmbits, x, y, color, bg_color);
-}
-
-/**
- * Draw a x11 XBM bitmap image
- *
- * @param width pixel width of the image
- * @param height pixel height of the image
- * @param xbmbits a ponter to the XBM bitmap pixel data
- * @param x the x coordinate of the upper left corner of the bitmap
- * @param y the y coordinate of the upper left corner of the bitmap
- * @param fg_color foreground color
- * @param bg_color background color
- *
- * Draws a x11 XBM bitmap image with the upper left corner at location x,y
- * The xbm bitmap pixel data format is the same as the X11 bitmap pixel data.
- * The bitmap data is assumed to be in program memory.
- *
- * @note All parameters are mandatory
- *
- * @see DrawBitmapXBM_P()
- * @see DrawBitmap()
- */
-
-
-void glcd::DrawBitmapXBM_P(uint8_t width, uint8_t height, uint8_t *xbmbits, 
-			uint8_t x, uint8_t y, uint8_t fg_color, uint8_t bg_color)
-{
-uint8_t xbmx, xbmy;
-uint8_t xbmdata;
-
-	/*
-	 * Traverse through the XBM data byte by byte and plot pixel by pixel
-	 */
-	for(xbmy = 0; xbmy < height; xbmy++)
-	{
-		for(xbmx = 0; xbmx < width; xbmx++)
-		{
-			if(!(xbmx & 7))	// read the flash data only once per byte
-				xbmdata = ReadPgmData(xbmbits++);
-
-			if(xbmdata & _BV((xbmx & 7)))
-				this->SetDot(x+xbmx, y+xbmy, fg_color); // XBM 1 bits are fg color
-			else
-				this->SetDot(x+xbmx, y+xbmy, bg_color); // XBM 0 bits are bg color
-		}
-	}
-
-}
-
-#endif // NOTYET
-
-// the following inline functions were added 2 Dec 2009 to replace macros
 
 /**
  * Draw a Vertical Line
@@ -596,9 +479,9 @@ uint8_t xbmdata;
  */
  
 
-void glcd::DrawVLine(uint8_t x, uint8_t y, uint8_t height, uint8_t color){
+void glcd::DrawVLine(uint8 x, uint8 y, uint8 height, uint8 color) {
   // this->FillRect(x, y, 0, length, color);
-   gc.SetPixels(x,y,x,y+height,color);
+  gc.SetPixels(x,y,x,y+height,color);
 }
 	
 /**
@@ -620,8 +503,8 @@ void glcd::DrawVLine(uint8_t x, uint8_t y, uint8_t height, uint8_t color){
  */
 
 void glcd::DrawHLine(uint8_t x, uint8_t y, uint8_t width, uint8_t color){
-   // this->FillRect(x, y, length, 0, color);
-    gc.SetPixels(x,y, x+width, y, color);
+  // this->FillRect(x, y, length, 0, color);
+  gc.SetPixels(x,y, x+width, y, color);
 }
 
 /**
@@ -644,8 +527,8 @@ void glcd::DrawHLine(uint8_t x, uint8_t y, uint8_t width, uint8_t color){
  *
  * @see FillCircle()
  */
-void glcd::DrawCircle(uint8_t xCenter, uint8_t yCenter, uint8_t radius, uint8_t color){
-   this->DrawRoundRect(xCenter-radius, yCenter-radius, 2*radius, 2*radius, radius, color);
+void glcd::DrawCircle(uint8_t xCenter, uint8_t yCenter, uint8_t radius, uint8_t color){ 
+  DrawRoundRect(xCenter-radius, yCenter-radius, 2*radius, 2*radius, radius, color);
 }
 
 /**
@@ -667,8 +550,7 @@ void glcd::DrawCircle(uint8_t xCenter, uint8_t yCenter, uint8_t radius, uint8_t 
  *
  */
 
-void glcd::FillCircle(uint8_t xCenter, uint8_t yCenter, uint8_t radius, uint8_t color)
-{
+void glcd::FillCircle(uint8_t xCenter, uint8_t yCenter, uint8_t radius, uint8_t color) {
 /*
  * Circle fill Code is merely a modification of the midpoint
  * circle algorithem which is an adaption of Bresenham's line algorithm
@@ -697,24 +579,22 @@ void glcd::FillCircle(uint8_t xCenter, uint8_t yCenter, uint8_t radius, uint8_t 
  * 			--- bperrybap
  */
 
-int f = 1 - radius;
-int ddF_x = 1;
-int ddF_y = -2 * radius;
-uint8_t x = 0;
-uint8_t y = radius;
+  int f = 1 - radius;
+  int ddF_x = 1;
+  int ddF_y = -2 * radius;
+  uint8_t x = 0;
+  uint8_t y = radius;
  
 	/*
 	 * Fill in the center between the two halves
 	 */
 	DrawLine(xCenter, yCenter-radius, xCenter, yCenter+radius, color);
  
-	while(x < y)
-	{
+	while(x < y) {
     // ddF_x == 2 * x + 1;
     // ddF_y == -2 * y;
     // f == x*x + y*y - radius*radius + 2*x - y + 1;
-		if(f >= 0) 
-		{
+		if(f >= 0) {
 			y--;
 			ddF_y += 2;
 			f += ddF_y;
@@ -732,21 +612,10 @@ uint8_t y = radius;
 		DrawLine(xCenter+x, yCenter+y, xCenter+x, yCenter-y, color);
 		DrawLine(xCenter-x, yCenter+y, xCenter-x, yCenter-y, color);
 		DrawLine(xCenter+y, yCenter+x, y+xCenter, yCenter-x, color);
-		DrawLine(xCenter-y, yCenter+x, xCenter-y, yCenter-x, color);
-  	}
+    DrawLine(xCenter-y, yCenter+x, xCenter-y, yCenter-x, color);
+  }
 }
 
-	
-
-//
-// Font Functions
-//
-/*
-uint8_t ReadPgmData(const uint8_t* ptr)  // note this is a static function
-{  // note this is a static function
-	return pgm_read_byte(ptr);
-}
-*/
 /*
  * Below here are text wrapper functions
  */
@@ -754,11 +623,10 @@ uint8_t ReadPgmData(const uint8_t* ptr)  // note this is a static function
 // override GotoXY to also call CursorToxy for backward compability 
 // with older v2 ks0108 library
 // (older library didn't have seperate x & y for hardware/graphics vs text )
-void glcd::GotoXY(uint8_t x, uint8_t y)
-{
-	gc.GotoXY(x, y);
+void glcd::GotoXY(uint8 x, uint8 y) {
+  gc.GotoXY(x, y);
   tx.CursorToXY(x,y); 
-} 
+}
 
 // Make one instance for the user
 //glcd GLCD = glcd();

@@ -16,14 +16,14 @@
  * Note that while for now all these typedefs are the same they
  * may not be in the future since each is used to point to a different type of data
  */
-typedef const uint8_t* Image_t; // a glcd format bitmap (includes width & height)
+typedef const uint8* Image; // a glcd format bitmap (includes width & height)
 //typedef const uint8_t* ImageXBM_t; // a "xbm" format bitmap (includes width & height)
 
 // the first two bytes of bitmap data are the width and height
 #define ImageWidth(bitmap)  (*bitmap)  
 #define ImageHeight(bitmap)  (*(bitmap+1))  
 
-typedef const uint8_t* Font_t;  	
+typedef const uint8* Font;  	
 
 /**
  * @class glcd
@@ -66,7 +66,7 @@ class glcd : public Print {
 	void InvertRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height);
 	void DrawCircle(uint8_t xCenter, uint8_t yCenter, uint8_t radius, uint8_t color= BLACK);	
 	void FillCircle(uint8_t xCenter, uint8_t yCenter, uint8_t radius, uint8_t color= BLACK);	
-	void DrawBitmap(Image_t bitmap, uint8_t x, uint8_t y, uint8_t color= BLACK);
+	void DrawBitmap(Image bitmap, uint8_t x, uint8_t y, uint8_t color = BLACK);
 
 	// Font Functions
 	void SelectFont(Font_t font, uint8_t color=BLACK) { tx.SelectFont(font, color); }  //, FontCallback callback=ReadPgmData); // default arguments added, callback now last arg
