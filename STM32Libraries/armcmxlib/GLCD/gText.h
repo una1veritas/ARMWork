@@ -70,11 +70,12 @@ typedef class _FlashString {} *FLASHSTRING;
  *	This is non portable code in that it will only work on little endian processors.
  *	If you use big endian you have to switch the byte ordering in the union.
  */
-
+/*
 #define MK_TareaToken(x1, y1, x2, y2) \
 	(uint32_t) (((uint32_t) (x1) << 24) | ((uint32_t)(y1) << 16) | ((uint32_t)(x2) << 8) | (uint32_t)(y2))
-        
+  */      
 /// @cond hide_from_doxygen
+/*
 typedef union
 {       
  struct
@@ -84,10 +85,11 @@ typedef union
         uint8_t y1;
         uint8_t x1;
  }coord;
-        
+      
  uint32_t token; // swap byte order above for big endian
         
 } TareaToken;
+*/
 /// @endcond
 
 typedef int8_t textMode;  // type holding mode for scrolling and future attributes like padding etc.
@@ -202,15 +204,15 @@ struct tarea
 class gText : public Print {
 private:
 // instance variables
-   GLCDController & gc;
-   uint8_t			FontColor;
+  GLCDController & gc;
+  uint8_t			FontColor;
 	Font_t			Font;
 
 	struct {
-      uint8 top, left, right, bottom;
-      int8 scrollmode;
+    uint8 top, left, right, bottom;
 	} txarea;
-
+  uint8 lineHeight;
+  int8 scrollmode;
 	uint8 cx;
 	uint8 cy;
 
@@ -218,6 +220,7 @@ private:
 	void SpecialChar(uint8_t c);
 
 	void ScrollUp(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t pixels, uint8_t color);
+	void buggyScrollUp(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t pixels, uint8_t color);
 	void ScrollDown(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t pixels, uint8_t color);
 
 public:

@@ -21,12 +21,12 @@ int main(void) {
 	delay(500);
   GLCD.ClearScreen(WHITE); 
 
-  GLCD.SelectFont(System5x7, BLACK); // font for the default text area
-	GLCD.println();
-	GLCD.println();
-  GLCD.println("  GLCD version ");
-  GLCD.println("    armcmx ");		
   GLCD.DrawRect(8,8,110,32);  // rounded rectangle around text area   
+
+  GLCD.SelectFont(System5x7, BLACK); // font for the default text area
+	GLCD.CursorTo(2, 2);
+  GLCD.println("  GLCD version ");
+  GLCD.println("    armcmx ");
 
 	delay(500);
 	/*

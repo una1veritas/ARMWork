@@ -42,16 +42,16 @@
 		return val;
 	}
 
-	void KS0108::WriteCommand(uint8 cmd) {
+	void KS0108::WriteCommand(const uint8 cmd) {
 		busMode(INPUT);
-		while ( IsBusy() );
+		while ( IsBusy() != 0);
 		busMode(OUTPUT);
 		writebus(0, COMMAND, cmd);
 		writebus(1, COMMAND, cmd);
 	}
 
-	uint8 KS0108::ReadStatus() {
-		return readbus(0, COMMAND) || readbus(1, COMMAND); 
+	uint8 KS0108::IsBusy(void) {
+		return (readbus(0, COMMAND) | readbus(1, COMMAND)) & LCD_BUSY_FLAG; 
 	}
 
 	void KS0108::WriteData(uint8 data) {

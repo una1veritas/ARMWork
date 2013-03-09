@@ -49,7 +49,7 @@ gText::gText(GLCDController & cont) : gc(cont)
 }
 
 void gText::init() {
-   DefineArea(0,0, KS0108::DISPLAY_WIDTH -1, KS0108::DISPLAY_HEIGHT -1, DEFAULT_SCROLLDIR); // this should never fail
+   DefineArea(0,0, gc.Width -1, gc.Height -1, DEFAULT_SCROLLDIR); // this should never fail
 }
 
 /**
@@ -140,8 +140,8 @@ gText::DefineArea(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, textMode mode)
    
    uint8_t ret = false;
    
-	x1 = min(max(0, x1), KS0108::DISPLAY_WIDTH-1);    x2 = min(max(0, x2), KS0108::DISPLAY_WIDTH-1);
-	y1 = min(max(0, y1), KS0108::DISPLAY_HEIGHT-1);   y2 = min(max(0, y2), KS0108::DISPLAY_HEIGHT-1);
+	x1 = min(max(0, x1), gc.Width-1);    x2 = min(max(0, x2), gc.Width-1);
+	y1 = min(max(0, y1), gc.Height-1);   y2 = min(max(0, y2), gc.Height-1);
    
     // failed sanity check so set defaults and return false 
 	txarea.left = min(x1, x2); txarea.right = max(x1, x2);
@@ -190,8 +190,22 @@ gText::DefineArea(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, textMode mode)
  *	pixels is the *exact* pixels to scroll. 1 is 1 and 9 is 9 it is
  *  not 1 less or 1 more than what you want. It is *exact*.
  */
+ 
+void gText::ScrollUp(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t pixels, uint8_t color) {
+  uint8 x, y;
+  uint8 bits;
+  for (y = 0; y < 64; y += 8) {
+    for(x = 0; x < 128; x++) {
+      gc.GotoXY(x, 8 + y );
+      bits = gc.ReadData();
+      gc.GotoXY(x, y );
+      gc.WriteData(bits);
+    }
+  }
+  gc.SetPixels(txarea.left, txarea.bottom - 8, txarea.right, txarea.bottom, gc.BkgColor);
+}
 
-void gText::ScrollUp(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, 
+void gText::buggyScrollUp(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, 
 	uint8_t pixels, uint8_t color)
 {
 uint8_t dy;
@@ -242,7 +256,7 @@ uint8_t col;
 				/*
 				 * If we just crossed over, then we should be done.
 				 */
-				if(sy < KS0108::DISPLAY_HEIGHT)
+				if(sy < gc.Height)
 				{
 					gc.GotoXY(col, sy & ~7);
 					sbyte = gc.ReadData();
@@ -1066,7 +1080,7 @@ void gText::CursorTo( uint8_t column, uint8_t row)
 	 */
 
 	cx = column * (FontRead(this->Font+FONT_FIXED_WIDTH)+1) + txarea.left;
-	cy = row * (FontRead(this->Font+FONT_HEIGHT)+1) + txarea.bottom;
+	cy = row * (FontRead(this->Font+FONT_HEIGHT)+1) + txarea.top;
 
 	/*
 	 * Make sure to clear a deferred scroll operation when repositioning

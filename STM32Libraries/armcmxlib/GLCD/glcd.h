@@ -75,6 +75,9 @@ class glcd : public Print {
 	// text functions
 	virtual size_t write(uint8_t c) { return tx.write(c); }  // character output for print base class
 	using Print::write;
+	inline void CursorTo( uint8_t column, uint8_t row) { tx.CursorTo(column, row); } // 0 based coordinates for character columns and rows
+	inline void CursorTo( int8_t column) { tx.CursorTo(column); } // move cursor on the current row
+	inline void CursorToXY( uint8_t x, uint8_t y) { tx.CursorToXY(x, y); } // coordinates relative to active text area
 
 /*
 #ifdef DOXYGEN

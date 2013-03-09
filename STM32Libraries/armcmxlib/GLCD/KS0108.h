@@ -59,8 +59,8 @@ class KS0108 : public GLCDController {
 	uint8 readbus(uint8 chip, uint8 di);
 	void setXY(uint8 x, uint8 y);
 
-	void WriteCommand(uint8 cmd);
-	uint8 ReadStatus(void);
+	void WriteCommand(const uint8 cmd);
+//	uint8 ReadStatus(const uint8 chip);
 
 public:
 	KS0108() {
@@ -81,7 +81,7 @@ public:
 	
 	virtual void init(void);
 	virtual void GotoXY(uint8 x, uint8 y);
-	virtual uint8 IsBusy(void) { return ReadStatus() & 0x80; }
+	virtual uint8 IsBusy(void);
 	virtual void WriteData(uint8 data);
 	virtual uint8 ReadData();
 

@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>2</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -348,7 +348,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER STM32F4_DISCOVERY HSE_VALUE=8000000 STDSERIAL=6 ARMCMX</Define>
+              <Define>USE_STDPERIPH_DRIVER STM32F4_DISCOVERY HSE_VALUE=8000000 STDSERIAL=3 ARMCMX</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\GPIO_LCD;..\..\STM32Libraries\armcmx;..\..\STM32Libraries\armcmx\utility;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\armcmxlib</IncludePath>
             </VariousControls>
