@@ -194,7 +194,7 @@ gText::DefineArea(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, textMode mode)
 void gText::ScrollUp(void) {
 	uint8 scrollheight = FontRead(this->Font+FONT_HEIGHT)+1;
   gc.MovePixels(txarea.left, txarea.top + scrollheight, txarea.right, txarea.bottom, 0, -scrollheight);
-  gc.SetPixels(txarea.left, txarea.bottom - scrollheight, txarea.right, txarea.bottom, gc.BkgColor);
+  gc.SetPixels(txarea.left, txarea.bottom - scrollheight + 1, txarea.right, txarea.bottom, gc.BkgColor);
 }
 
 void gText::buggyScrollUp(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, 
