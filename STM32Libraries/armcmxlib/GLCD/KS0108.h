@@ -71,12 +71,6 @@ public:
 		CS[0] = PD7;
 		D0 = PE8;
 		busmode = OUTPUT;
-    
-    Width = DISPLAY_WIDTH;
-    Height = DISPLAY_HEIGHT;
-		BkgColor = WHITE;
-		FgColor = BLACK;
-		Inverted = true;
 	}
 	
 	virtual void init(void);
@@ -84,6 +78,9 @@ public:
 	virtual uint8 IsBusy(void);
 	virtual void WriteData(uint8 data);
 	virtual uint8 ReadData();
+  
+  virtual inline uint16 Width(void) { return DISPLAY_WIDTH; }
+  virtual inline uint16 Height(void) { return DISPLAY_HEIGHT; }
 
 	virtual void DisplayOn(void);
 	//void SetBitmap(const uint8* bitmap, int16 x, int16 y, uint8_t color= BLACK);

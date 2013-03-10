@@ -49,7 +49,7 @@ gText::gText(GLCDController & cont) : gc(cont)
 }
 
 void gText::init() {
-   DefineArea(0,0, gc.Width -1, gc.Height -1, DEFAULT_SCROLLDIR); // this should never fail
+   DefineArea(0,0, gc.Width() -1, gc.Height() -1, DEFAULT_SCROLLDIR); // this should never fail
 }
 
 /**
@@ -140,13 +140,13 @@ gText::DefineArea(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, textMode mode)
    
    uint8_t ret = false;
    
-	x1 = min(max(0, x1), gc.Width-1);    x2 = min(max(0, x2), gc.Width-1);
-	y1 = min(max(0, y1), gc.Height-1);   y2 = min(max(0, y2), gc.Height-1);
+	x1 = min(max(0, x1), gc.Width()-1);    x2 = min(max(0, x2), gc.Width()-1);
+	y1 = min(max(0, y1), gc.Height()-1);   y2 = min(max(0, y2), gc.Height()-1);
    
     // failed sanity check so set defaults and return false 
 	txarea.left = min(x1, x2); txarea.right = max(x1, x2);
 	txarea.top = min(y1, y2);  txarea.bottom = max(y1, y2);
-	txarea.scrollmode = DEFAULT_SCROLLDIR;
+	scrollmode = DEFAULT_SCROLLDIR;
 	/*
 	 * set cursor position for the area
 	 */
@@ -191,18 +191,10 @@ gText::DefineArea(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, textMode mode)
  *  not 1 less or 1 more than what you want. It is *exact*.
  */
  
-void gText::ScrollUp(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t pixels, uint8_t color) {
-  uint8 x, y;
-  uint8 bits;
-  for (y = 0; y < 64; y += 8) {
-    for(x = 0; x < 128; x++) {
-      gc.GotoXY(x, 8 + y );
-      bits = gc.ReadData();
-      gc.GotoXY(x, y );
-      gc.WriteData(bits);
-    }
-  }
-  gc.SetPixels(txarea.left, txarea.bottom - 8, txarea.right, txarea.bottom, gc.BkgColor);
+void gText::ScrollUp(void) {
+	uint8 scrollheight = FontRead(this->Font+FONT_HEIGHT)+1;
+  gc.MovePixels(txarea.left, txarea.top + scrollheight, txarea.right, txarea.bottom, 0, -scrollheight);
+  gc.SetPixels(txarea.left, txarea.bottom - scrollheight, txarea.right, txarea.bottom, gc.BkgColor);
 }
 
 void gText::buggyScrollUp(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, 
@@ -256,7 +248,7 @@ uint8_t col;
 				/*
 				 * If we just crossed over, then we should be done.
 				 */
-				if(sy < gc.Height)
+				if(sy < gc.Height())
 				{
 					gc.GotoXY(col, sy & ~7);
 					sbyte = gc.ReadData();
@@ -458,7 +450,7 @@ void gText::SpecialChar(uint8_t c)
 		/*
 		 * Check for scroll up vs scroll down (scrollup is normal)
 		 */
-		if(txarea.scrollmode == SCROLL_UP)
+		if (scrollmode == SCROLL_UP)
 		{
 
 			/*
@@ -472,8 +464,8 @@ void gText::SpecialChar(uint8_t c)
 			 * This extra pixel is along the bottom for a "gap" between the character below.
 			 */
 			if(cy + 2*height >= txarea.bottom) {
-					if(txarea.scrollmode == SCROLL_DISABLED) {
-						txarea.scrollmode = SCROLL_UP;
+					if(scrollmode == SCROLL_DISABLED) {
+						scrollmode = SCROLL_UP;
 						return;
 					}
 
@@ -514,8 +506,8 @@ void gText::SpecialChar(uint8_t c)
 				 * 
 				 * 
 				 */
-				this->ScrollUp(txarea.left, txarea.top, 
-					txarea.right, txarea.bottom, pixels, this->FontColor == BLACK ? WHITE : BLACK);
+				this->ScrollUp(); //txarea.left, txarea.top, 
+				//	txarea.right, txarea.bottom, pixels, this->FontColor == BLACK ? WHITE : BLACK);
 
 				cx = txarea.left;
 				cy = txarea.bottom - height;
@@ -549,9 +541,9 @@ void gText::SpecialChar(uint8_t c)
 			}
 			else
 			{
-					if(!txarea.scrollmode)
+					if (!scrollmode)
 					{
-						txarea.scrollmode = SCROLL_UP;
+						scrollmode = SCROLL_UP;
 						return;
 					}
 
@@ -658,7 +650,7 @@ int gText::PutChar(uint8_t c)
 	   width = FontRead(this->Font+FONT_WIDTH_TABLE+c);
     }
 
-	if(txarea.scrollmode == SCROLL_DISABLED) {
+	if(scrollmode == SCROLL_DISABLED) {
 		this->PutChar('\n'); // fake a newline to cause wrap/scroll
 //		txarea.scrollmode = SCROLL_DISABLED;
 	}
@@ -676,9 +668,9 @@ int gText::PutChar(uint8_t c)
 		 * We can't defer a scroll at this point since we need to ouput
 		 * a character right now.
 		 */
-		if ( txarea.scrollmode != SCROLL_DISABLED ) {
+		if ( scrollmode != SCROLL_DISABLED ) {
 			this->PutChar('\n'); // fake a newline to cause wrap/scroll
-			txarea.scrollmode = SCROLL_DISABLED;
+			scrollmode = SCROLL_DISABLED;
 		}
 	}
 
@@ -1300,7 +1292,7 @@ void gText::SetTextMode(textMode mode)
 /*
  * when other modes are added the tarea.mode variable will hold a bitmask or enum for the modde and should be renamed
  */
-   txarea.scrollmode = mode; 
+   scrollmode = mode; 
 } 
 	
 /**

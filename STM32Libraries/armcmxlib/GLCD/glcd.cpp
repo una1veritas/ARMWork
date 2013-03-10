@@ -66,7 +66,7 @@ glcd::glcd(GLCDController & dcont)  : gc(dcont) , tx(dcont){
 
 void glcd::init() { //uint8_t invert){
 	gc.init(); //invert);
-   tx.init();
+  tx.init();
 }		
 
 /**
@@ -87,7 +87,7 @@ void glcd::init() { //uint8_t invert){
  */
 
 void glcd::ClearScreen(uint8_t color){
-	gc.SetPixels(0, 0, gc.Width-1, gc.Height-1, color);
+	gc.SetPixels(0, 0, gc.Width()-1, gc.Height()-1, color);
  	tx.CursorToXY(0,0);  // home text position
 }
 
@@ -414,7 +414,7 @@ void glcd::InvertRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height) {
 void glcd::SetDisplayMode(uint8_t invert) {  // was named SetInverted
 
 	if(gc.Inverted != invert) {
-		InvertRect(0,0, gc.Width-1, gc.Height-1);
+		InvertRect(0,0, gc.Width()-1, gc.Height()-1);
 		gc.Inverted = invert;
 	}
 }

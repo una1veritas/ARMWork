@@ -5,8 +5,10 @@
  *      Author: sin
  */
 
-#ifndef CMCORE_H_
-#define CMCORE_H_
+#ifndef _ARMCMX_H_
+#define _ARMCMX_H_
+
+#define ARMCMX
 
 #include <stdio.h>
 #include <stdint.h>

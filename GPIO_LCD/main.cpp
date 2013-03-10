@@ -44,11 +44,15 @@ int main(void) {
 //			y = ++y % 64;
 	}
 	*/
-	uint8 line = 0;
-	uint8 d;
+	uint32 t;
 	while (1) {
-		GLCD.println(millis());
-		delay(1000);
+    t = millis();
+    GLCD.print(float(t)/1000, 2);
+    GLCD.println(", ");
+    t = millis() - t;
+    GLCD.print(t);
+    GLCD.print(". ");
+    delay(1000);
 	}
 }
 
