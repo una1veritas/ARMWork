@@ -18,11 +18,11 @@
 		out(val);
 		delay_us(1);
 		low(ENCLK);
-//		delay_us(1);
-//	high(ENCLK);
-//		low(RNW);
-//		chipselect(0xff);
 		delay_us(1);
+//	high(ENCLK);
+//		high(RNW);
+//		select(0xff);
+//		delay_us(1);
 	}
 
 	uint8 KS0108::readbus(uint8 chip, uint8 di) {
@@ -37,7 +37,7 @@
 		val = in();
 //		delay_us(1);
 //		low(RNW);
-//		chipselect(0xff);
+//		select(0xff);
 		delay_us(1);
 		return val;
 	}
@@ -51,7 +51,7 @@
 	}
 
 	uint8 KS0108::IsBusy(void) {
-		return (readbus(0, COMMAND) | readbus(1, COMMAND)) & LCD_BUSY_FLAG; 
+		return (readbus(0, COMMAND) & LCD_BUSY_FLAG) != 0 || (readbus(1, COMMAND) & LCD_BUSY_FLAG) != 0; 
 	}
 
 	void KS0108::WriteData(uint8 data) {

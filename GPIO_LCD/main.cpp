@@ -44,14 +44,14 @@ int main(void) {
 //			y = ++y % 64;
 	}
 	*/
+  char a[] = {'a', 'b', 'c', 'd', 'e', 'f'};
 	uint32 t;
 	while (1) {
     t = millis();
-    GLCD.print(float(t)/1000, 2);
-    GLCD.println(", ");
-    t = millis() - t;
+    GLCD.print(a[t%6]);
     GLCD.print(t);
-    GLCD.print(". ");
+    GLCD.print(" -- ");
+    GLCD.println(~t, HEX);
     delay(1000);
 	}
 }

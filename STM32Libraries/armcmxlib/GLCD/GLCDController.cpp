@@ -88,36 +88,53 @@ void GLCDController::MovePixels(const int16 left, const int16 top, const int16 r
   int16 yt = max(0, min(top, bottom)), yb = min(max(top, bottom), Height()-1);
   int16 dx = xtransf % Width();
   int16 dy = ytransf % Height();
+
+  printf("xl:xr = %d:%d, yt:yb = %d:%d, ", xl, xr, yt, yb );
+  printf("dx = %d, dy = %d\n", dx, dy);
   
-  if (dx <= 0 && dy < 0) {
-    // xl and yt are the dest sides
-    printf("src y = %d to %d, dst y = %d to %d, ", yt, yb, yt+dy, dy+yb );
-    printf("dx = %d, dy = %d\n", dx, dy);
-    uint16 x = xl;
-    uint8 offset;
-    uint16 ydst;
+  uint16 x = xl;
+  uint16 y = yt % 8 > 0 ? yt & 0xfff8 : yt;
+  uint16 ydst;
+  uint8 offset = ((y % 8) + 8 - ((y + dy) % 8)) % 8;
+  printf("y = %d, offset = %d, ydst = %d.\n", y, offset, y + dy);
+  for (uint16 ysrc = y ; ysrc <= yb; ysrc += 8) {
+    for (x = xl ; x <= xr; x++) {
+      ydst = ysrc + dy;
+      GotoXY(x, ysrc);//      GotoXY(x, ysrc);
+      // replace ysrc above makes the routine failure. why? 
+      //data = 
+      ReadData();
+//      data <<= 8;
+      GotoXY(x, ysrc+ 8);
+      data = ReadData(); //data |= ReadData();
+//      data = data>>offset;    
+      GotoXY(x, ydst);
+      WriteData(data);
+    }
+  }
+
+  /*
     for ( ; x <= xr; x++) {
-      for (uint16 ysrc = yt ; ysrc <= yb; ysrc += (8 - (ysrc % 8))) {
-        ydst = ysrc + dy;
-        GotoXY(x, ysrc);
-        data = ReadData();
-        data <<= 8;
-        GotoXY(x, ysrc+ 8);
-        data |= ReadData();
-        if ( ysrc == yt && (ysrc % 8) != 0 ) {
-          offset = yt % 8;
-          data = (((data<<offset)>>8)&0xff)>>(ydst%8);
-          GotoXY(x, ydst);
-          WriteData(data&0xff);
-        } else {
-          offset = ((yt % 8) + 8 - (ydst % 8)) % 8;
-          data = ((data<<offset)>>8)&0xff;
-          GotoXY(x, ydst);
-          WriteData(data);
-        }
+    for (uint16 ysrc = y ; ysrc <= yb; ysrc += 8) {
+      ydst = ysrc + dy;
+      GotoXY(x, ysrc);
+      data = ReadData();
+      data <<= 8;
+      GotoXY(x, ysrc+ 8);
+      data |= ReadData();
+      if ( ysrc == yt && (ysrc % 8) != 0 ) {
+        offset = yt % 8;
+        data = (((data<<offset)>>8)&0xff)>>(ydst%8);
+        GotoXY(x, ydst);
+        WriteData(data&0xff);
+      } else {
+        offset = ((yt % 8) + 8 - (ydst % 8)) % 8;
+        data = ((data<<offset)>>8)&0xff;
+        GotoXY(x, ydst);
+        WriteData(data);
       }
     }
-    printf("xr = %d\n", xr);
   }
+*/
   printf("\n");
 }
