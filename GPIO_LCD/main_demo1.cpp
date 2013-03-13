@@ -1,14 +1,13 @@
-#include "armcmx.h"
 #include <stdlib.h>
+#include "armcmx.h"
 #include "GLCD/glcd.h"
-#include <glcd.h>
 
 #include <math.h>
 
-#include "fonts/allFonts.h"         // system and arial14 fonts are used
-#include "bitmaps/allBitmaps.h"       // all images in the bitmap dir 
+#include "GLCD/fonts/allFonts.h"         // system and arial14 fonts are used
+#include "GLCD/bitmaps/allBitmaps.h"       // all images in the bitmap dir 
 
-Image_t icon;
+Image icon;
 gText textArea;              // a text area to be defined later in the sketch
 gText textAreaArray[3];      // an array of text areas  
 gText countdownArea =  gText(GLCD.CenterX, GLCD.CenterY,1,1,Arial_14); // text area for countdown digits
