@@ -28,12 +28,17 @@
 #ifndef	GLCD_IO_H
 #define GLCD_IO_H
 
+#if defined ARDUINO
 #if ARDUINO < 100
 #include "wiring.h"
 #else
 #include "Arduino.h"
 #endif
 #include "include/arduino_io.h"    // these macros map arduino pins
+#elif defined ARMCMX
+#include "armcmx.h"
+#include "glcd/include/arm_io.h"
+#endif
 
 /*
  * Must set AVRIO modes before including avrio
@@ -43,8 +48,9 @@
 #define AVRIO_NO4BIT // for now disable nibble mode
 #endif
 
+#if defined ARDUINO
 #include "include/avrio.h"         // these macros do direct port io    
-
+#endif
  
 /*
  * Map a Busy status bit to a pin.
@@ -161,12 +167,13 @@
  * is sometimes smaller and doesn't use loops which require a
  * a register when the number cycles is less than 12.
  */
-#include "include/delay.h" // Hans' Heirichs delay macros
+#if defined ARDUINO
+#include "glcd/include/delay.h" // Hans' Heirichs delay macros
 
 #define lcdDelayNanoseconds(__ns) _delay_cycles( (double)(F_CPU)*((double)__ns)/1.0e9 + 0.5 ) // Hans Heinrichs delay cycle routine
 
 #define lcdDelayMilliseconds(__ms) delay(__ms)	// Arduino delay function
-
+#endif
 
 /*
  * functions to perform chip selects on panel configurations

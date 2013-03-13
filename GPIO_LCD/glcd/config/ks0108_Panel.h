@@ -135,6 +135,7 @@
   * There is also a dependency on the file glcd/include/arduino_io.h which does the arduino pin mappings
   */
  
+#if defined ARDUINO
 #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
 #include "config/ks0108_Mega.h"      // config for mega 1280/2560 board
 #elif defined(__AVR_ATmega644P__)  || defined(__AVR_ATmega644__)           
@@ -144,6 +145,9 @@
 #else
 #include "config/ks0108_Arduino.h"   // config file for standard Arduino using documented wiring 
 #endif
+#elif defined ARMCMX
+#include "glcd/config/ks0108_arm.h"   // config file for standard Arduino using documented wiring 
+#endif
 
-#include "device/ks0108_Device.h"
+#include "glcd/device/ks0108_Device.h"
 #endif //GLCD_PANEL_CONFIG_H

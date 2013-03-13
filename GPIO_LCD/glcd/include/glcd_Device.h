@@ -27,14 +27,18 @@
 #ifndef	GLCD_DEVICE_H
 #define GLCD_DEVICE_H
 
-#include "glcd_Config.h"
+#include "glcd/glcd_Config.h"
 
+#if defined ARDUINO
 #if defined WIRING
 #include <WPrint.h> // used when deriving this class in Wiring
 #else
 #include "Print.h" // used when deriving this class in Arduino 
 #endif
-
+#elif defined ARMCMX
+#include "armcmx.h"
+#include "Print.h"
+#endif
 
 #define GLCD_Device 1 // software version of this class
 
@@ -82,12 +86,18 @@ class glcd_Device : public Print
 	inline void SelectChip(uint8_t chip); 
 	void WaitReady(uint8_t chip);
 	uint8_t GetStatus(uint8_t chip);
+#if defined ARDUINO
 #if ARDUINO < 100
 	void write(uint8_t); // for Print base class
 #else
 	size_t write(uint8_t); // for Print base class
 #endif
-	
+#elif defined ARMCMX
+  protected:
+	virtual size_t write(uint8_t); // for Print base class
+  using Print::write;
+#endif
+
   public:
     glcd_Device();
 	protected: 

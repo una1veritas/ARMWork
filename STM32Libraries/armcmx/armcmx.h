@@ -8,7 +8,9 @@
 #ifndef _ARMCMX_H_
 #define _ARMCMX_H_
 
+#ifndef ARMCMX
 #define ARMCMX
+#endif
 
 #include <stdio.h>
 #include <stdint.h>
