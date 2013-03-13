@@ -18,6 +18,7 @@
 			d |= (1<<(y % Height()));
 		else
 			d &= ~(1<<(y % Height() ));
+		GotoXY(x,y);
 		WriteData(d);
 	}
 	

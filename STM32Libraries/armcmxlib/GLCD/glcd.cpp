@@ -138,24 +138,6 @@ void glcd::DrawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t colo
 uint8_t deltax, deltay, x,y, steep;
 int8_t error, ystep;
 
-#ifdef XXX
-	/*
-	 * Rather than fudge up coordinates that are outside of range,
-	 * It is better to allow the algorithm to run with them "as is"
-	 * so that any pixels on the line that land inside the valid display 
-	 * coordinates will be drawn properly.
-	 *
-	 * If the coordinates are patched, then the line drawn will not
-	 * be anything close to the original slope as the endpoint coordinates
-	 * will have been altered.
-	 */
-
-	if(x1>=DISPLAY_WIDTH) x1=0;
-	if(x2>=DISPLAY_WIDTH) x2=0;
-	if(y1>=DISPLAY_HEIGHT) y1=0;
-	if(y2>=DISPLAY_HEIGHT) y2=0;
-#endif
-
 	steep = _GLCD_absDiff(y1,y2) > _GLCD_absDiff(x1,x2);  
 
 	if ( steep )

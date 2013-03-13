@@ -73,43 +73,26 @@ int main(void) {
 //			y = ++y % 64;
 	}
 	*/
-  long iter, startMillis, loops = 0;
-  while (1) {
-    iter = 0;
-  startMillis = millis();
-  while( millis() - startMillis < 1000){ // loop for one second
-    GLCD.DrawRect(0, 0, 64, 61, BLACK); // rectangle in left side of screen
-    GLCD.DrawRoundRect(68, 0, 58, 61, 5, BLACK);  // rounded rectangle around text area   
-    for(int i=0; i < 62; i += 4)
-      GLCD.DrawLine(1,1,63,i, BLACK);  // draw lines from upper left down right side of rectangle  
-    GLCD.DrawCircle(32,31,30,BLACK);   // draw circle centered in the left side of screen  
-    GLCD.FillRect(92,40,16,16, WHITE); // clear previous spinner position  
-    drawSpinner(loops++,100,48);       // draw new spinner position
-    //GLCD.FillRect(24,txtLINE3,14,14, WHITE);  // clear text area that will be drawn below 
-    GLCD.CursorTo(5,5);               // locate curser for printing text
-    GLCD.print(++iter);         // print current iteration at the current cursor position 
-  } 
-  // display number of iterations in one second
-  GLCD.ClearScreen();               // clear the screen  
-  GLCD.CursorTo(14,2);              // positon cursor  
-  GLCD.print("FPS= ");               // print a text string
-  GLCD.print(iter);           // print a number 
-}  
+  GLCD.DrawRect(0, 0, 64, 61, BLACK); // rectangle in left side of screen
+//  GLCD.DrawRoundRect(68, 0, 58, 61, 5, BLACK);  // rounded rectangle around text area   
+  GLCD.DrawLine(1,1,63,60, BLACK);  // draw lines from upper left down right side of rectangle  
+//  GLCD.DrawCircle(32,31,30,BLACK);   // draw circle centered in the left side of screen  
+//  GLCD.FillRect(92,40,16,16, WHITE); // clear previous spinner position  
 //  char a[] = {'a', 'b', 'c', 'd', 'e', 'f'};
-/*
+
 	uint32 t = 0;
 	while (1) {
-    char c = message[t % messlen];
-    if ( c == '\n' || c == '\r' ) {
-      GLCD.print(' ');
+//    char c = message[t % messlen];
+//    if ( c == '\n' || c == '\r' ) {
+//      GLCD.print(' ');
       GLCD.print(millis());
-      GLCD.print(' ');
-    } else {
-      GLCD.print(c);
-    }
-    delay(200);
+//      GLCD.print(' ');
+//    } else {
+//      GLCD.print(c);
+//    }
+    delay(500);
     t++;
 	}
-*/
+
 }
 
