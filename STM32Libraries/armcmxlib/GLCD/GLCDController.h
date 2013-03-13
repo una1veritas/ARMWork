@@ -25,7 +25,7 @@ public:
 	virtual uint16 Width(void) = 0;
   virtual uint16 Height(void) = 0;
   
-	virtual uint8 IsBusy(void) = 0;
+	//virtual uint8 IsBusy(void) = 0;
 	virtual void WriteData(uint8 cmd) = 0;
 	virtual uint8 ReadData(void) = 0;
 	virtual void GotoXY(uint8 x, uint8 y) = 0;
@@ -34,7 +34,7 @@ public:
 	void SetPixels(int16 x, int16 y, int16 x1, int16 y1, uint8 bw);
 //	void SetColumnByte(int16 x, int16 y uint8 bits);
 	void SetBitmap(const uint8* bitmap, int16 x, int16 y, uint8_t bw);
-  void MovePixels(const int16 left, const int16 top, const int16 right, const int16 bottom, const int16 xtransf, const int16 ytransf);
+  void MovePixels(int16 left, int16 top, int16 right, int16 bottom, int16 xtransf, int16 ytransf);
     
 };
 

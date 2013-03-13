@@ -44,38 +44,34 @@
 
 	void KS0108::WriteCommand(const uint8 cmd) {
 		busMode(INPUT);
-		while ( IsBusy() != 0);
+		while ( isbusy() != 0);
 		busMode(OUTPUT);
 		writebus(0, COMMAND, cmd);
 		writebus(1, COMMAND, cmd);
 	}
 
-	uint8 KS0108::IsBusy(void) {
+	uint8 KS0108::isbusy(void) {
 		return (readbus(0, COMMAND) & LCD_BUSY_FLAG) != 0 || (readbus(1, COMMAND) & LCD_BUSY_FLAG) != 0; 
 	}
 
 	void KS0108::WriteData(uint8 data) {
-		uint8 chip = xyaddress >> 6 & 1;
-		WriteCommand(LCD_SET_PAGE | (xyaddress>>10&0x07));
-		WriteCommand(LCD_SET_ADDRESS | (xyaddress&0x3f));
+		uint8 chip = (yxaddress % DISPLAY_WIDTH)/ CHIP_WIDTH;
 		busMode(INPUT);
 		delay_us(1);
-		while ( IsBusy() );
+		while ( isbusy() );
 		busMode(OUTPUT);
 		delay_us(1);
 		writebus(chip, DATA, data);
-		//
-		xyaddress++;
+    yxaddress++;
 	}
 
 	uint8 KS0108::ReadData(void) {
-		uint8 chip = xyaddress >> 6 & 1;
-		WriteCommand(LCD_SET_PAGE | (xyaddress>>10&0x07));
-		WriteCommand(LCD_SET_ADDRESS | (xyaddress&0x3f));
+		uint8 chip = (yxaddress % DISPLAY_WIDTH)/ CHIP_WIDTH;
 		busMode(INPUT);
 		delay_us(1);
-		while ( IsBusy() );
+		while ( isbusy() );
 		uint8 res = readbus(chip, DATA);
+    yxaddress++;
 		return res;
 	}
 	
@@ -114,15 +110,13 @@
 	}
 */
 	void KS0108::setXY(uint8 x, uint8 y){
-		xyaddress = y & 0x3f;
-		xyaddress <<= 7;
-		xyaddress |= (x & 0x7f);
+    yxaddress = (uint16(y&(DISPLAY_HEIGHT-1))<<7) | uint16(x & (DISPLAY_WIDTH-1));
 	}
 	
 	void KS0108::GotoXY(uint8 x, uint8 y) {
 		setXY(x, y);
-//		WriteCommand(LCD_SET_PAGE | (y>>3 & 0x07));
-//		WriteCommand(LCD_SET_ADDRESS | (x & 0x3f));
+		WriteCommand(LCD_SET_PAGE | (yxaddress<<1)>>(8+3));
+		WriteCommand(LCD_SET_ADDRESS | (yxaddress&(CHIP_WIDTH-1)));
 	}
 	
 /*

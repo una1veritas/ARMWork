@@ -25,10 +25,6 @@
 
 void GLCDController::SetPixels(int16 x, int16 y, int16 x2, int16 y2, uint8 color) {
   uint8 mask, pageOffset, h, i, data;
-  //	x = min(max(x, 0), DISPLAY_WIDTH-1);
-  //	y = min(max(y, 0), DISPLAY_HEIGHT-1);
-  //	x2 = min(max(x2, 0), DISPLAY_WIDTH-1);
-  //	y2 = min(max(y2, 0), DISPLAY_HEIGHT-1);
   uint8 height = y2-y+1;
   uint8 width = x2-x+1;
 	
@@ -44,22 +40,23 @@ void GLCDController::SetPixels(int16 x, int16 y, int16 x2, int16 y2, uint8 color
 	mask <<= pageOffset;
 
   // top fractional region	
-	GotoXY(x, y);
 	for(i=0; i < width; i++) {
+    GotoXY(x+i, y);
 		data = ReadData();
 		if(color == BLACK) {
 			data |= mask;
 		} else {
 			data &= ~mask;
 		}
+    GotoXY(x+i, y);
 		WriteData(data);
 	}
 	
 	while(h+8 <= height) {
 		h += 8;
 		y += 8;
-		GotoXY(x, y);
 		for(i=0; i <width; i++) {
+      GotoXY(x+i, y);
 			WriteData(color);
 		}
 	}
@@ -67,8 +64,8 @@ void GLCDController::SetPixels(int16 x, int16 y, int16 x2, int16 y2, uint8 color
   // bottom fractional region
 	if(h < height) {
 		mask = ~(0xFF << (height-h));
-		GotoXY(x, y+8);
 		for(i=0; i < width; i++) {
+      GotoXY(x+i, y+8);
 			data = ReadData();
 		
 			if( FgColor ) {
@@ -76,65 +73,88 @@ void GLCDController::SetPixels(int16 x, int16 y, int16 x2, int16 y2, uint8 color
 			} else {
 				data &= ~mask;
 			}
-	
+			GotoXY(x+i, y+8);
 			WriteData(data);
 		}
 	}
 }
 
-void GLCDController::MovePixels(const int16 left, const int16 top, const int16 right, const int16 bottom, const int16 xtransf, const int16 ytransf) {
-  uint16 data;
+void GLCDController::MovePixels(int16 x, int16 y, int16 x2, int16 y2, int16 dx, int16 dy) {
+  uint8 mask, pageOffset, h, i, data;
+  uint8 height = y2-y+1;
+  uint8 width = x2-x+1;
+  uint16 data16;/*
   int16 xl = max(0, min(left, right)), xr = min(max(left, right), Width()-1);
   int16 yt = max(0, min(top, bottom)), yb = min(max(top, bottom), Height()-1);
   int16 dx = xtransf % Width();
-  int16 dy = ytransf % Height();
+  int16 dy = ytransf % Height();*/
 
-  printf("xl:xr = %d:%d, yt:yb = %d:%d, ", xl, xr, yt, yb );
-  printf("dx = %d, dy = %d\n", dx, dy);
-  
-  uint16 x = xl;
-  uint16 y = yt % 8 > 0 ? yt & 0xfff8 : yt;
-  uint16 ydst;
-  uint8 offset = ((y % 8) + 8 - ((y + dy) % 8)) % 8;
-  printf("y = %d, offset = %d, ydst = %d.\n", y, offset, y + dy);
-  for (uint16 ysrc = y ; ysrc <= yb; ysrc += 8) {
-    for (x = xl ; x <= xr; x++) {
-      ydst = ysrc + dy;
-      GotoXY(x, ysrc);//      GotoXY(x, ysrc);
-      // replace ysrc above makes the routine failure. why? 
-      //data = 
-      ReadData();
-//      data <<= 8;
-      GotoXY(x, ysrc+ 8);
-      data = ReadData(); //data |= ReadData();
-//      data = data>>offset;    
-      GotoXY(x, ydst);
-      WriteData(data);
-    }
-  }
+	pageOffset = y % 8;
+	y -= pageOffset;
+	mask = 0xFF;
+	if(height < 8-pageOffset) {
+		mask >>= (8-height);
+		h = height;
+	} else {
+		h = 8-pageOffset;
+	}
+	mask <<= pageOffset;
 
-  /*
-    for ( ; x <= xr; x++) {
-    for (uint16 ysrc = y ; ysrc <= yb; ysrc += 8) {
-      ydst = ysrc + dy;
-      GotoXY(x, ysrc);
+  // top fractional region	
+	for(i=0; i < width; i++) {
+    GotoXY(x+i, y);
+		data16 = ReadData();
+    data16 <<= 8;
+    GotoXY(x+i, y+8);
+		data16 |= ReadData();
+    data16 >>= (y%8);
+    data16 <<= (y+dy)%8;
+    GotoXY(x+i+dx, y+dy);
+		data = ReadData();
+    data16 = (data16 & mask) | (data & ~mask);
+    GotoXY(x+i+dx, y+dy);
+		WriteData(data16);
+	}
+
+  uint8 th = h;
+  uint8 ty = y;
+		for(i=0; i <width; i++) {
+      h = th;
+      y = ty;
+      GotoXY(x+i, y+8);
+      data16 = ReadData();
+	while(h+8 <= height) {
+		h += 8;
+		y += 8;
+//      GotoXY(x+i, y);
+//      data16 = ReadData();
+      data16 <<= 8;
+      GotoXY(x+i, y+8);
+      data16 |= ReadData();
+      data16 >>= (y%8);
+      GotoXY(x+i+dx, y+dy);
+			WriteData(data16);
+		}
+	}
+  h = th;
+  y = ty;
+	
+  // bottom fractional region
+	if(h < height) {
+		mask = ~(0xFF << (height-h));
+		for(i=0; i < width; i++) {
+      GotoXY(x+i, y);
+      data16 = ReadData();
+      data16 <<= 8;
+      GotoXY(x+i, y+8);
+      data16 |= ReadData();
+      data16 >>= (y%8);
+		
+			GotoXY(x+i, y+8);
       data = ReadData();
-      data <<= 8;
-      GotoXY(x, ysrc+ 8);
-      data |= ReadData();
-      if ( ysrc == yt && (ysrc % 8) != 0 ) {
-        offset = yt % 8;
-        data = (((data<<offset)>>8)&0xff)>>(ydst%8);
-        GotoXY(x, ydst);
-        WriteData(data&0xff);
-      } else {
-        offset = ((yt % 8) + 8 - (ydst % 8)) % 8;
-        data = ((data<<offset)>>8)&0xff;
-        GotoXY(x, ydst);
-        WriteData(data);
-      }
-    }
-  }
-*/
-  printf("\n");
+      data16 = (data16 & mask) | (data & ~mask);      
+			GotoXY(x+i, y+8);
+			WriteData(data);
+		}
+	}
 }

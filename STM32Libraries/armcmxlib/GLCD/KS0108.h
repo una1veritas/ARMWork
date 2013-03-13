@@ -34,7 +34,7 @@ class KS0108 : public GLCDController {
 //	uint8 buswidth;
 	GPIOMode_TypeDef busmode;
 		
-	uint16 xyaddress;
+  uint16 yxaddress;
 	
   public:
   // constant definitions 
@@ -59,6 +59,7 @@ class KS0108 : public GLCDController {
 	uint8 readbus(uint8 chip, uint8 di);
 	void setXY(uint8 x, uint8 y);
 
+  uint8 isbusy(void);
 	void WriteCommand(const uint8 cmd);
 //	uint8 ReadStatus(const uint8 chip);
 
@@ -75,7 +76,6 @@ public:
 	
 	virtual void init(void);
 	virtual void GotoXY(uint8 x, uint8 y);
-	virtual uint8 IsBusy(void);
 	virtual void WriteData(uint8 data);
 	virtual uint8 ReadData();
   
