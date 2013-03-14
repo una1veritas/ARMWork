@@ -480,8 +480,8 @@ uint8_t glcd_Device::GetStatus(uint8_t chip)
 uint8_t status;
 
 	glcd_DevSelectChip(chip);
-	lcdDataDir(0x00);			// input mode
-	lcdDataOut(0xff);			// turn on pullups
+	lcdDataDir(INPUT);			// input mode 0x00
+	//lcdDataOut(0xff);			// turn on pullups
 	lcdfastWrite(glcdDI, LOW);	
 	lcdfastWrite(glcdRW, HIGH);	
 //	lcdDelayNanoseconds(GLCD_tAS);
@@ -499,7 +499,7 @@ uint8_t status;
 void glcd_Device::WaitReady( uint8_t chip)
 {
 	glcd_DevSelectChip(chip);
-	lcdDataDir(0x00);
+	lcdDataDir(INPUT); //0x00);
 	lcdfastWrite(glcdDI, LOW);	
 	lcdfastWrite(glcdRW, HIGH);	
 //	lcdDelayNanoseconds(GLCD_tAS);
@@ -602,7 +602,7 @@ void glcd_Device::WriteCommand(uint8_t cmd, uint8_t chip)
 	this->WaitReady(chip);
 	lcdfastWrite(glcdDI, LOW);					// D/I = 0
 	lcdfastWrite(glcdRW, LOW);					// R/W = 0	
-	lcdDataDir(0xFF);
+	lcdDataDir(OUTPUT); //0xFF);
 
 	lcdDataOut(cmd);		/* This could be done before or after raising E */
 	lcdDelayNanoseconds(GLCD_tAS);
@@ -660,7 +660,7 @@ void glcd_Device::WriteData(uint8_t data) {
 		this->WaitReady(chip);
    	    lcdfastWrite(glcdDI, HIGH);				// D/I = 1
 	    lcdfastWrite(glcdRW, LOW);				// R/W = 0
-		lcdDataDir(0xFF);						// data port is output
+		lcdDataDir(OUTPUT); //0xFF);						// data port is output
 		lcdDelayNanoseconds(GLCD_tAS);
 		glcd_DevENstrobeHi(chip);
 		
@@ -703,7 +703,7 @@ void glcd_Device::WriteData(uint8_t data) {
 
    	    lcdfastWrite(glcdDI, HIGH);					// D/I = 1
 	    lcdfastWrite(glcdRW, LOW); 					// R/W = 0	
-		lcdDataDir(0xFF);				// data port is output
+		lcdDataDir(OUTPUT); //0xFF);				// data port is output
 		lcdDelayNanoseconds(GLCD_tAS);
 		glcd_DevENstrobeHi(chip);
 
@@ -731,7 +731,7 @@ void glcd_Device::WriteData(uint8_t data) {
 
 		lcdfastWrite(glcdDI, HIGH);				// D/I = 1
 		lcdfastWrite(glcdRW, LOW);  				// R/W = 0	
-		lcdDataDir(0xFF);						// data port is output
+		lcdDataDir(OUTPUT); //0xFF);						// data port is output
 
 		// just this code gets executed if the write is on a single page
 		if(this->Inverted)
@@ -793,10 +793,15 @@ void glcd_Device::WriteData(uint8_t data) {
 /*
  * needed to resolve virtual print functions
  */
+#if defined ARDUINO
 #if ARDUINO < 100
 void glcd_Device::write(uint8_t) // for Print base class
 {}
 #else
+size_t glcd_Device::write(uint8_t) // for Print base class
+{ return(0); }
+#endif
+#elif defined ARMCMX
 size_t glcd_Device::write(uint8_t) // for Print base class
 { return(0); }
 #endif
