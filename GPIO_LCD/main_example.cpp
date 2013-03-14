@@ -13,6 +13,7 @@ void loop(void);
 
 int main(void) {
   
+  armcmx_init();
   setup();
   while (1)
     loop();

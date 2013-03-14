@@ -2,6 +2,7 @@
 #define _ARM_IO_H_
 
 #include "glcd/config/ks0108_arm.h"
+#include "armcmx.h"
 
 #define __inline__  inline
 
@@ -18,9 +19,12 @@
     | PinBit(glcdData4Pin) | PinBit(glcdData5Pin) | PinBit(glcdData6Pin) | PinBit(glcdData7Pin), \
     dir, MEDSPEED, PUSHPULL, PULLUP)
 
-#define lcdDataOut(val) \
-		GPIO_Write(PinPort(glcdData0Pin), GPIO_ReadOutputData(PinPort(glcdData0Pin)) & ~(PinBit(glcdData0Pin) | PinBit(glcdData1Pin) | PinBit(glcdData2Pin) | PinBit(glcdData3Pin) \
-            | PinBit(glcdData4Pin) | PinBit(glcdData5Pin) | PinBit(glcdData6Pin) | PinBit(glcdData7Pin))) 
+void lcdDataOut(uint8 val) {
+  uint8 mask = PinBit(glcdData0Pin) | PinBit(glcdData1Pin) | PinBit(glcdData2Pin) | PinBit(glcdData3Pin) 
+              | PinBit(glcdData4Pin) | PinBit(glcdData5Pin) | PinBit(glcdData6Pin) | PinBit(glcdData7Pin);
+  uint8 data = GPIO_ReadOutputData(PinPort(glcdData0Pin)) & ~mask;
+  GPIO_Write(PinPort(glcdData0Pin), data | val<<PinSource(glcdData0Pin));
+}
 // Read status bits
 #define lcdDataIn()	 GPIO_ReadInputData(PinPort(glcdData0Pin))
 
