@@ -1659,7 +1659,7 @@ void gText::PrintNumber(long n)
  * @see PutChar()
  */
 
-#if ARDUINO < 100
+#if defined (ARDUINO) && ARDUINO < 100
 void gText::write(uint8_t c) 
 {
 	this->PutChar(c);

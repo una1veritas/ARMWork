@@ -1,6 +1,8 @@
 #ifndef _ARM_IO_H_
 #define _ARM_IO_H_
 
+#include "glcd/config/ks0108_arm.h"
+
 #define __inline__  inline
 
 #define lcdPinMode(pin,mode)  pinMode(pin, mode)
@@ -25,8 +27,18 @@
 #define lcdDelayNanoseconds(t) \
   for(long i = t; i > 0; i--) __nop();
 
-#define lcdIsResetStatus(s)  ((s)& 0x40)
-#define lcdIsBusyStatus(s)   ((s)&0x80)
-lcdRdBusystatus
+/*
+ * alias to read status bits
+ */
+#define lcdRdBusystatus()		(GPIO_ReadInputDataBit(PinPort(glcdData7Pin), LCD_BUSY_BIT))
+#define lcdRdResetstatus()		(GPIO_ReadInputDataBit(PinPort(glcdData7Pin), LCD_RESET_BIT))
+
+/*
+ * alias to check status bits
+ */
+
+#define lcdIsBusyStatus(status) (status & LCD_BUSY_FLAG)
+#define lcdIsResetStatus(status) (status & LCD_RESET_FLAG)
+
 
 #endif

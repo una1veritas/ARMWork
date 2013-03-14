@@ -15,19 +15,21 @@
  */
 #define glcd_PinConfigName "ks0108-Arduino"
 
+#include "armcmx.h"
+
 /*********************************************************/
 /*  Configuration for assigning LCD bits to Arduino Pins */
 /*********************************************************/
 /* Data pin definitions
  */
-#define glcdData0Pin        8
-#define glcdData1Pin        9
-#define glcdData2Pin        10
-#define glcdData3Pin        11
-#define glcdData4Pin        4
-#define glcdData5Pin        5
-#define glcdData6Pin        6
-#define glcdData7Pin        7
+#define glcdData0Pin        PE8
+#define glcdData1Pin        PE9
+#define glcdData2Pin        PE10
+#define glcdData3Pin        PE11
+#define glcdData4Pin        PE12
+#define glcdData5Pin        PE13
+#define glcdData6Pin        PE14
+#define glcdData7Pin        PE15
 
 /* Arduino pins used for Commands
  * default assignment uses the first five analog pins
