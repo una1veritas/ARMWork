@@ -20,7 +20,6 @@
   along with GLCD.  If not, see <http://www.gnu.org/licenses/>.
 
   the glcd_Device class impliments the protocol for sending and receiving data and commands to a GLCD device.
-
   
 */
 
@@ -79,37 +78,37 @@ typedef struct {
 class glcd_Device : public Print   
 {
   private:
-  // Control functions
-	uint8_t DoReadData(void);
-	void WriteCommand(uint8_t cmd, uint8_t chip);
-	inline void Enable(void);
-	inline void SelectChip(uint8_t chip); 
-	void WaitReady(uint8_t chip);
-	uint8_t GetStatus(uint8_t chip);
+    // Control functions
+    uint8_t DoReadData(void);
+    void WriteCommand(uint8_t cmd, uint8_t chip);
+    inline void Enable(void);
+    inline void SelectChip(uint8_t chip); 
+    void WaitReady(uint8_t chip);
+    uint8_t GetStatus(uint8_t chip);
 #if defined ARDUINO
 #if ARDUINO < 100
-	void write(uint8_t); // for Print base class
+    void write(uint8_t); // for Print base class
 #else
-	size_t write(uint8_t); // for Print base class
+    size_t write(uint8_t); // for Print base class
 #endif
 #elif defined ARMCMX
   protected:
-	virtual size_t write(uint8_t); // for Print base class
-  using Print::write;
+    virtual size_t write(uint8_t); // for Print base class
+    using Print::write;
 #endif
 
   public:
     glcd_Device();
-	protected: 
+	protected:
     int Init(uint8_t invert = false);      // now public, default is non-inverted
-	void SetDot(uint8_t x, uint8_t y, uint8_t color);
-	void SetPixels(uint8_t x, uint8_t y,uint8_t x1, uint8_t y1, uint8_t color);
+    void SetDot(uint8_t x, uint8_t y, uint8_t color);
+    void SetPixels(uint8_t x, uint8_t y,uint8_t x1, uint8_t y1, uint8_t color);
     uint8_t ReadData(void);        // now public
     void WriteData(uint8_t data); 
 
   	void GotoXY(uint8_t x, uint8_t y);   
     static lcdCoord	  	Coord;  
-	static uint8_t	 	Inverted; 
+    static uint8_t	 	Inverted; 
 };
   
 #endif

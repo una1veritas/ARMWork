@@ -546,6 +546,31 @@
               <FileType>8</FileType>
               <FilePath>..\glcd\gText.cpp</FilePath>
             </File>
+            <File>
+              <FileName>glcd_Device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\glcd\include\glcd_Device.h</FilePath>
+            </File>
+            <File>
+              <FileName>gText.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\glcd\include\gText.h</FilePath>
+            </File>
+            <File>
+              <FileName>ks0108_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\glcd\config\ks0108_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_io.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\glcd\include\arm_io.h</FilePath>
+            </File>
+            <File>
+              <FileName>glcd_io.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\glcd\include\glcd_io.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

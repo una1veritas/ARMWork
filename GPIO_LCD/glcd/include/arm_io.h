@@ -25,7 +25,7 @@
 #define lcdDataIn()	 GPIO_ReadInputData(PinPort(glcdData0Pin))
 
 #define lcdDelayNanoseconds(t) \
-  for(long i = t; i > 0; i--) __nop();
+  for(long i = t; i > 0; i--) { __nop(); }
 
 /*
  * alias to read status bits

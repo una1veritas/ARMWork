@@ -35,7 +35,6 @@
 #include "glcd/include/Streaming.h" 
 #include "glcd/include/glcd_Device.h"
 
-
 #define GTEXT_VERSION 1 // software version of this code
 
 #ifdef ARDUINO
@@ -46,6 +45,8 @@ typedef class _FlashString {} *FLASHSTRING;
 #define flashStr(x) ((FLASHSTRING)(PSTR((x))))
 #endif
 #endif
+
+#define GLCD_NO_PRINTF
   
 // Font Indices
 #define FONT_LENGTH			0

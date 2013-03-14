@@ -104,7 +104,7 @@ class glcd : public gText
 	void SetDot(uint8_t x, uint8_t y, uint8_t color);
 	void SetPixels(uint8_t x, uint8_t y,uint8_t x1, uint8_t y1, uint8_t color);
 	uint8_t ReadData(void);        // now public
-    void WriteData(uint8_t data); 
+  void WriteData(uint8_t data); 
 #else
 	using glcd_Device::SetDot;
 	using glcd_Device::SetPixels;
@@ -112,10 +112,7 @@ class glcd : public gText
 	using glcd_Device::WriteData; 
 #endif
 
-
-
 	void GotoXY(uint8_t x, uint8_t y);  // overrride for GotoXY in device class
-
 
 /*@}*/
 
