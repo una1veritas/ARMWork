@@ -11,8 +11,7 @@
 #include <string.h>
 
 #include <stm32f4xx.h>
-
-#include "stm32f4xx_it.h"
+#include <stm32f4xx_it.h>
 
 #include "cmcore.h"
 
@@ -29,7 +28,7 @@
 
 void PN532_init();
 void setup_peripherals(void);
-void readcard(ISO14443 & card);
+char * readcard(ISO14443 & card);
 
 spi spi2bus = {SPI2, PB10, PC2, PC3, PB9};
 PCD8544 nokiaLCD(spi2bus, PB9, PD13, PB0);
@@ -45,18 +44,21 @@ const byte factory_a[] = {
 I2CWire Wire1(I2C1, PB8, PB7);
 PN532 nfc(Wire1, PN532::I2C_ADDRESS, PN532_REQ, PN532_RST);
 
-DS1307 ds3231(Wire1);
+DS1307 ds3231(Wire1, DS1307::CHIP_M41T62);
 
 ISO14443 card;
-byte polling[] = {
+byte pollingOrder[] = {
   2,
   TypeA,
   TypeF
 };
 
 int main(void) {
-	char mess[128];
+	byte bmap[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+	char mess[128], *res;
 	byte readerbuf[128];
+	ISO14443 cardtmp;
+	uint32 lastread = 0;
 	enum STATUS {
 		S_IDLE,
 		S_CARD_DETECT
@@ -67,27 +69,39 @@ int main(void) {
 	
 	nokiaLCD.clear();
 	
-  card.clear();
-	
 	while (1) {
 		if ( status == S_IDLE ) {
-			if ( nfc.InAutoPoll(1, 1, polling+1, polling[0]) 
+			if ( nfc.InAutoPoll(1, 1, pollingOrder+1, pollingOrder[0]) 
 					&& nfc.getAutoPollResponse((byte*) readerbuf) ) {
 				digitalWrite(LED1, HIGH);
 				// NbTg, type1, length1, [Tg, ...]
-				card.set(readerbuf[1], readerbuf+3);
-				readcard(card);
+				cardtmp.set(readerbuf[1], readerbuf+3);
+				if ( cardtmp == card ) {
+						cardtmp.clear();
+				}
+			}
+			if ( !cardtmp.isEmpty() && lastread + 500 <= millis() ) {
+				card = cardtmp;
+				res = readcard(card);
+				lastread = millis();
+				nokiaLCD.cursor(84);
+				nokiaLCD.drawString(res);
+				printf(res);
+				printf("\n");
+			}
+			if ( digitalRead(LED1) && millis() > lastread + 1500 ) {
 				digitalWrite(LED1, LOW);
-				continue;
+				nokiaLCD.gotoXY(0,1);
+				for(int i = 0; i < 4*84/8; i++)
+					nokiaLCD.drawBitmap(bmap, 8, 8);
 			}
 			if ( ds3231.updateTime() ) {
 				ds3231.updateCalendar();
 				sprintf(mess, "%02x:%02x:%02x  ", ds3231.time>>16, ds3231.time>>8&0x7f, ds3231.time&0x7f);
-				//printf(mess);
 				nokiaLCD.cursor(0);
 				nokiaLCD.drawString(mess);
 			}
-		}
+		} 
 	}
 	
 }
@@ -106,12 +120,12 @@ void setup_peripherals(void) {
 
 	printf("Nokia LCD w/ PCD8544...");	
 	nokiaLCD.init();	
-	nokiaLCD.setContrast(0xb5);
+	nokiaLCD.setContrast(0xaa);
 	nokiaLCD.clear();
 //	nokiaLCD.drawBitmap(PCD8544::SFEFlame);
 //	delay(500);
 	nokiaLCD.setFont(Fixed_8w8);
-	printf("Ok.  ");
+	printf("done.  ");
 	printf("\r\n");
 
 	printf("Initializing I2C1 bus...");
@@ -172,19 +186,29 @@ void PN532_init() {
   printf("SAM Configured...");
 }
 
-void readcard(ISO14443 & card) {
-//	char tmp[128];
+char * readcard(ISO14443 & card) {
+static char msg[256];
+	char tmp[128];
+	int length = 0;
+	msg[0] = 0;
 	if ( card.type == 0x11 ) {
-		printf("FeliCa IDm: ");
-		for(int i = 0; i < 8; i++) {
-			printf("%02x ", (uint8)card.IDm[i]);
+		length += sprintf(tmp, "FeliCa %02x", (uint8)card.IDm[0]);
+		strcat(msg, tmp);
+		for(int i = 1; i < 8; i++) {
+			length += sprintf(tmp, "-%02x", (uint8)card.IDm[i]);
+			strcat(msg, tmp);
 		}
-		printf(" detected.\n");
+		//length += sprintf(tmp, "]");
+		//strcat(msg, tmp);
 	} else if ( card.type == 0x10 ) {
-		printf("Mifare  ID: ");
-		for(int i = 0; i < card.IDLength; i++) {
-			printf("%02x ", card.UID[i]);
+		length += sprintf(tmp, "Mifare %02x", card.UID[0]);
+		strcat(msg, tmp);
+		for(int i = 1; i < card.IDLength; i++) {
+			length += sprintf(tmp, "-%02x", card.UID[i]);
+			strcat(msg, tmp);
 		}
-		printf("\n");
+		//length += sprintf(tmp, "]");
+		//strcat(msg, tmp);
 	}
+	return msg;
 }

@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\stm32libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\stm32librarIes\CMSIS\Include;..\..\stm32libraries\CMSIS\STM32F4xx;..\..\stm32f4-stdperiph;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmperiph</IncludePath>
+              <IncludePath>..\..\stm32libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\stm32librarIes\CMSIS\Include;..\..\stm32libraries\CMSIS\STM32F4xx;..\..\stm32f4-stdperiph;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmperiph;..\..\..\STM32Libraries\cmcore\utility</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

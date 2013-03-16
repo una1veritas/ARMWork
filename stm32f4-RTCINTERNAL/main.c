@@ -9,11 +9,12 @@
 #include "stm32f4xx.h"
 //#include "stm32f4_discovery_sdio_sd.h"
 
-#include "armcore.h"
+#include "cmcore.h"
 //#include "usart.h"
 
 //#include "stdiodef.h"
 
+#include "stm32f4xx_rtc.h"
 #include "rtc.h"
 
 /* Exported functions ------------------------------------------------------- */
@@ -56,7 +57,7 @@ int main(void)
      */
 	RCC_ClocksTypeDef RCC_Clocks;
 
-	armcore_init();
+	cmcore_init();
 
 	puts("RTC Test.\n");
 	
