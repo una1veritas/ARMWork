@@ -20,8 +20,11 @@
 #define FIXEDNUMS8x16_H
 
 #include <inttypes.h>
-//arm #include <avr/pgmspace.h>
-#define PROGMEM
+#if defined ARDUINO
+#include <avr/pgmspace.h>
+#elif defined ARMCMX
+#include "pgm.h"
+#endif
 
 
 static uint8_t fixednums8x16[] PROGMEM = {

@@ -12,10 +12,10 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "GLCD/KS0108/glcd.h"
-#include "GLCD/fonts/Arial14.h"         // proportional font
-#include "GLCD/fonts/SystemFont5x7.h"   // system font
-#include "GLCD/bitmaps/ArduinoIcon.h"     // bitmap 
+#include "glcd/glcd.h"
+#include "glcd/fonts/Arial14.h"         // proportional font
+#include "glcd/fonts/SystemFont5x7.h"   // system font
+#include "glcd/bitmaps/ArduinoIcon.h"     // bitmap 
 //#include "include/glcd_Deprecated.h"
 
 void countdown(int count);

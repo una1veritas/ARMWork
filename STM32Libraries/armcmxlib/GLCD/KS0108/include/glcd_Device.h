@@ -26,7 +26,7 @@
 #ifndef	GLCD_DEVICE_H
 #define GLCD_DEVICE_H
 
-#include "glcd/glcd_Config.h"
+#include "GLCD/KS0108/glcd_Config.h"
 
 #if defined ARDUINO
 #if defined WIRING
@@ -52,13 +52,15 @@
 
 /// @cond hide_from_doxygen
 typedef struct {
-	uint8_t x;
-	uint8_t y;
+//	uint8_t x;
+//	uint8_t y;
+  int16 x, y;
 	struct {
 #ifdef GLCD_XCOL_SUPPORT
 		uint8_t col;
 #endif
-		uint8_t page;
+		//uint8_t page;
+    int16 page;
 	} chip[glcd_CHIP_COUNT];
 } lcdCoord;
 /// @endcond

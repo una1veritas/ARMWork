@@ -38,8 +38,11 @@ row
  */
 
 #include <inttypes.h>
-//arm #include <avr/pgmspace.h>
-#define PROGMEM
+#if defined ARDUINO
+#include <avr/pgmspace.h>
+#elif defined ARMCMX
+#include "pgm.h"
+#endif
 
 #ifndef VERDANA24_H
 #define VERDANA24_H

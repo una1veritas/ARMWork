@@ -8,8 +8,11 @@
  */
 
 #include <inttypes.h>
-//arm #include <avr/pgmspace.h>
-#define PROGMEM
+#if defined ARDUINO
+#include <avr/pgmspace.h>
+#elif defined ARMCMX
+#include "pgm.h"
+#endif
 
 #ifndef ArduinoIcon96x32_H
 #define ArduinoIcon96x32_H

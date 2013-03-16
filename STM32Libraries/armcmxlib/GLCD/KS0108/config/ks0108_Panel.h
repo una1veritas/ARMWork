@@ -146,8 +146,8 @@
 #include "config/ks0108_Arduino.h"   // config file for standard Arduino using documented wiring 
 #endif
 #elif defined ARMCMX
-#include "glcd/config/ks0108_arm.h"   // config file for standard Arduino using documented wiring 
+#include "GLCD/KS0108/config/ks0108_arm.h"   // config file for standard Arduino using documented wiring 
 #endif
 
-#include "glcd/device/ks0108_Device.h"
+#include "GLCD/KS0108/device/ks0108_Device.h"
 #endif //GLCD_PANEL_CONFIG_H

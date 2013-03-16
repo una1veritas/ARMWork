@@ -5,8 +5,11 @@
 /* Image Bytes  = 136     */
 
 #include <inttypes.h>
-//arm #include <avr/pgmspace.h>
-#define PROGMEM
+#if defined ARDUINO
+#include <avr/pgmspace.h>
+#elif defined ARMCMX
+#include "pgm.h"
+#endif
 
 #ifndef ArduinoIcon32_H
 #define ArduinoIcon32_H

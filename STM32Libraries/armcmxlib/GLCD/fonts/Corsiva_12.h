@@ -37,8 +37,11 @@
  */
 
 #include <inttypes.h>
-//arm #include <avr/pgmspace.h>
-#define PROGMEM
+#if defined ARDUINO
+#include <avr/pgmspace.h>
+#elif defined ARMCMX
+#include "pgm.h"
+#endif
 
 #ifndef CORSIVA_12_H
 #define CORSIVA_12_H

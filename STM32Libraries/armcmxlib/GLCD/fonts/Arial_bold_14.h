@@ -37,8 +37,11 @@
  */
 
 #include <inttypes.h>
-//arm #include <avr/pgmspace.h>
-#define PROGMEM
+#if defined ARDUINO
+#include <avr/pgmspace.h>
+#elif defined ARMCMX
+#include "pgm.h"
+#endif
 
 #ifndef ARIAL_BOLD_14_H
 #define ARIAL_BOLD_14_H

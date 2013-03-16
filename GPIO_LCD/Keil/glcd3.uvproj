@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>4</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -420,11 +420,6 @@
               <FileName>ks0108example.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\ks0108example.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>pgm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\pgm.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -519,57 +514,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>glcd</GroupName>
+          <GroupName>GLCD</GroupName>
           <Files>
             <File>
               <FileName>glcd.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\glcd\glcd.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>glcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\glcd\glcd.h</FilePath>
-            </File>
-            <File>
-              <FileName>glcd_Config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\glcd\glcd_Config.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\glcd.cpp</FilePath>
             </File>
             <File>
               <FileName>glcd_Device.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\glcd\glcd_Device.cpp</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\glcd_Device.cpp</FilePath>
             </File>
             <File>
               <FileName>gText.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\glcd\gText.cpp</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\gText.cpp</FilePath>
             </File>
             <File>
               <FileName>glcd_Device.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\glcd\include\glcd_Device.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\include\glcd_Device.h</FilePath>
             </File>
             <File>
               <FileName>gText.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\glcd\include\gText.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\include\gText.h</FilePath>
             </File>
             <File>
-              <FileName>ks0108_arm.h</FileName>
+              <FileName>glcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\glcd\config\ks0108_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_io.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\glcd\include\arm_io.h</FilePath>
-            </File>
-            <File>
-              <FileName>glcd_io.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\glcd\include\glcd_io.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\glcd.h</FilePath>
             </File>
           </Files>
         </Group>

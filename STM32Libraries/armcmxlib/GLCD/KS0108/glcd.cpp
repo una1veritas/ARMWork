@@ -36,8 +36,8 @@
 #include "armcmx.h"
 #include "pgm.h"
 #endif
-#include "glcd/glcd.h"
-#include "glcd/glcd_Config.h" 
+#include "GLCD/KS0108/glcd.h"
+#include "GLCD/KS0108/glcd_Config.h" 
 
 #define BITMAP_FIX // enables a bitmap rendering fix/patch
 

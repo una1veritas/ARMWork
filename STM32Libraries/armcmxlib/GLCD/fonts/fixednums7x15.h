@@ -15,8 +15,11 @@
 #define FIXEDNUMS7x15_H
 
 #include <inttypes.h>
-//arm #include <avr/pgmspace.h>
-#define PROGMEM
+#if defined ARDUINO
+#include <avr/pgmspace.h>
+#elif defined ARMCMX
+#include "pgm.h"
+#endif
 
 
 static uint8_t fixednums7x15[] PROGMEM = {

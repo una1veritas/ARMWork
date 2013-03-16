@@ -20,8 +20,11 @@
 #define _ArduinoIcon64x32_H 
 
 #include <inttypes.h>
-//arm #include <avr/pgmspace.h>
-#define PROGMEM
+#if defined ARDUINO
+#include <avr/pgmspace.h>
+#elif defined ARMCMX
+#include "pgm.h"
+#endif
 
 static unsigned char ArduinoIcon64x32[] PROGMEM ={
 64,	// bitmap width  (arduino glcdlib format)

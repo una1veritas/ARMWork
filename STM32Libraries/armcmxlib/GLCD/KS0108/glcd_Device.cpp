@@ -538,6 +538,8 @@ uint8_t glcd_Device::DoReadData()
 #endif
 	return data;
 }
+
+	
 /**
  * read a data byte from display device memory
  *
@@ -593,7 +595,7 @@ uint8_t x, data;
 	this->Coord.x = -1;	// force a set column on GotoXY
 
 	this->GotoXY(x, this->Coord.y);	
-	return(data);
+	return data;
 }
 #endif
 

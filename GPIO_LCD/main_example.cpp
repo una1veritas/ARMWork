@@ -1,12 +1,11 @@
 #include "armcmx.h"
 #include <stdlib.h>
-#include "glcd/glcd.h"
-//#include <glcd.h>
+#include "GLCD/KS0108/glcd.h"
 
 #include <math.h>
 
-#include "glcd/fonts/allFonts.h"         // system and arial14 fonts are used
-#include "glcd/bitmaps/allBitmaps.h"       // all images in the bitmap dir 
+#include "GLCD/fonts/allFonts.h"         // system and arial14 fonts are used
+#include "GLCD/bitmaps/allBitmaps.h"       // all images in the bitmap dir 
 
 void setup(void);
 void loop(void);

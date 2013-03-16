@@ -32,8 +32,8 @@
 #include "String.h"
 #include "pgm.h"
 #endif
-#include "glcd/include/Streaming.h" 
-#include "glcd/include/glcd_Device.h"
+#include "GLCD/KS0108/include/Streaming.h" 
+#include "GLCD/KS0108/include/glcd_Device.h"
 
 #define GTEXT_VERSION 1 // software version of this code
 
@@ -243,7 +243,7 @@ class gText : public glcd_Device
 	void SelectFont(Font_t font, uint8_t color=BLACK, FontCallback callback=ReadPgmData); // default arguments added, callback now last arg
 	void SetFontColor(uint8_t color); // new method
 	int PutChar(uint8_t c);
-	void Puts(char *str);
+	void Puts(const char *str);
 	void Puts(const String &str); // for Arduino String Class
 	void Puts_P(PGM_P str);
 	void DrawString(char *str, uint8_t x, uint8_t y);
