@@ -17,8 +17,8 @@
 
 //#include "spi.h"
 #include "utility/stm32f4_discovery.h"
-#include "GLCD/KS0108/glcd.h"
-#include "GLCD/fonts/SystemFont5x7.h"   // system font
+#include "KS0108/glcd.h"
+#include "fonts/allFonts.h"
 //#include "GLCD/fonts.h"
 
 #include "i2c.h"
@@ -57,6 +57,8 @@ byte pollingOrder[] = {
 int main(void) {
 	byte bmap[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 	char mess[128], *res;
+  char tmp[64], c;
+  int strpos = 0;
 	byte readerbuf[128];
 	ISO14443 cardtmp;
 	uint32 lastread = 0;
@@ -67,10 +69,6 @@ int main(void) {
 	
 	armcmx_init();
 	setup_peripherals();
-	
-  GLCD.CursorTo(0);
-  GLCD.print("This is a pen.");
-  delay(1000);
 	
 	while (1) {
 		if ( status == S_IDLE ) {
@@ -100,15 +98,42 @@ int main(void) {
 			}
 			if ( ds3231.updateTime() ) {
 				ds3231.updateCalendar();
-				sprintf(mess, "%02x:%02x:%02x  ", ds3231.time>>16, ds3231.time>>8&0x7f, ds3231.time&0x7f);
+				sprintf(mess, "%02x:%02x:%02x %02x/%02x", ds3231.time>>16, ds3231.time>>8&0x7f, ds3231.time&0x7f, 
+                ds3231.cal>>8&0x1f, ds3231.cal&0x3f);
 				GLCD.CursorTo(0);
 				GLCD.print(mess);
-        printf(mess);
-//				sprintf(mess, "%02x/%02x/%02x  ", ds3231.cal>>16, ds3231.cal>>8&0x7f, ds3231.cal&0x7f);
-//				GLCD.CursorTo(64);
-//				GLCD.print(mess);
 			}
-		} 
+      
+      if ( usart_available(&stdserial) > 0 ) {
+        c = 0;
+        while ( usart_available(&stdserial) > 0 ) {
+          c = usart_read(&stdserial);
+          if ( c == '\n' || strpos > 61 ) {
+            tmp[strpos] = 0;
+            strpos = 0;
+            break;
+          }
+          if ( c == '\r' )
+            continue;
+          tmp[strpos++] = c;
+        }
+        //
+        if ( c == '\n' ) {
+          ds3231.updateTime();
+          printf("mess = %s, time = %06x\n", tmp, ds3231.time);
+          if ( tmp[0] == 't' ) {
+            ds3231.time = strtol(tmp+1,NULL, 16);
+            ds3231.setTime(ds3231.time);
+            printf("time %06x\n", ds3231.time);
+          } else
+          if ( tmp[0] == 'c' ) {
+            ds3231.cal = strtol(tmp+1,NULL, 16);
+            ds3231.setCalendar(ds3231.cal);
+            printf("cal %06x, %d\n", ds3231.cal, ds3231.dayOfWeek());
+          }
+        }
+      }
+		}
 	}
 	
 }
@@ -129,7 +154,7 @@ void setup_peripherals(void) {
 	GLCD.ClearScreen();
 //	nokiaLCD.drawBitmap(PCD8544::SFEFlame);
 //	delay(500);
-	GLCD.SelectFont(System5x7);
+	GLCD.SelectFont(Fixed7x8);
 	printf("done.  ");
 	printf("\r\n");
 
@@ -227,3 +252,4 @@ static char msg[256];
 	}
 	return msg;
 }
+  

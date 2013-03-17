@@ -1,7 +1,7 @@
 #ifndef _ARM_IO_H_
 #define _ARM_IO_H_
 
-#include "GLCD/KS0108/config/ks0108_arm.h"
+#include "KS0108/config/ks0108_arm.h"
 #include "armcmx.h"
 
 #define __inline__  inline

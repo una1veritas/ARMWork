@@ -16,3 +16,5 @@
 #include "fixednums7x15.h"       // fixed width font - numerals only 
 #include "fixednums8x16.h"       // fixed width font - numerals only 
 #include "fixednums15x31.h"      // fixed width font - numerals only 
+
+#include "fixed7x8.h"

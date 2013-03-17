@@ -27,8 +27,8 @@
 #include "pgm.h"
 #endif
 
-#include "GLCD/KS0108/include/gText.h"
-#include "GLCD/KS0108/glcd_Config.h" 
+#include "KS0108/include/gText.h"
+#include "KS0108/glcd_Config.h" 
 
 #ifndef GLCD_NO_PRINTF
 extern "C"

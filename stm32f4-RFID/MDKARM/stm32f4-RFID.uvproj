@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER ARMCMX STM32F4_DISCOVERY HSE_VALUE=8000000 STDSERIAL=6</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\stm32f4-SPI;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\armcmx;..\..\STM32Libraries\armcmxlib;..\..\STM32Libraries\armcmx\utility</IncludePath>
+              <IncludePath>..\..\stm32f4-SPI;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\armcmx;..\..\STM32Libraries\armcmxlib\GLCD;..\..\STM32Libraries\armcmx\utility;..\..\STM32Libraries\armcmxlib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -575,6 +575,16 @@
               <FileName>glcd_Device.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\include\glcd_Device.h</FilePath>
+            </File>
+            <File>
+              <FileName>Corsiva_12.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\fonts\Corsiva_12.h</FilePath>
+            </File>
+            <File>
+              <FileName>SystemFont5x7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\fonts\SystemFont5x7.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>ARMCMX USE_STDPERIPH_DRIVER STM32F4_DISCOVERY HSE_VALUE=8000000 STDSERIAL=6</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\GPIO_LCD;..\..\STM32Libraries\armcmx;..\..\STM32Libraries\armcmx\utility;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\armcmxlib</IncludePath>
+              <IncludePath>..\..\GPIO_LCD;..\..\STM32Libraries\armcmx;..\..\STM32Libraries\armcmx\utility;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\armcmxlib\GLCD</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -417,9 +417,9 @@
               <FilePath>..\main_example.cpp</FilePath>
             </File>
             <File>
-              <FileName>ks0108example.cpp</FileName>
+              <FileName>GLCDDemo_pde.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\ks0108example.cpp</FilePath>
+              <FilePath>..\GLCDDemo_pde.cpp</FilePath>
             </File>
           </Files>
         </Group>
