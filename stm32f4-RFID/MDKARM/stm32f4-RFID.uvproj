@@ -348,7 +348,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER ARMCMX F4DISCOVERY HSE_VALUE=8000000 STDSERIAL=6</Define>
+              <Define>USE_STDPERIPH_DRIVER ARMCMX STM32F4_DISCOVERY HSE_VALUE=8000000 STDSERIAL=6</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\stm32f4-SPI;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\armcmx;..\..\STM32Libraries\armcmxlib;..\..\STM32Libraries\armcmx\utility</IncludePath>
             </VariousControls>
