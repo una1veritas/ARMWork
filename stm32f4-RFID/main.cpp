@@ -13,12 +13,13 @@
 #include <stm32f4xx.h>
 #include <stm32f4xx_it.h>
 
-#include "cmcore.h"
+#include "armcmx.h"
 
-#include "spi.h"
+//#include "spi.h"
 #include "utility/stm32f4_discovery.h"
-#include "GLCD/PCD8544.h"
-#include "GLCD/fonts.h"
+#include "GLCD/KS0108/glcd.h"
+#include "GLCD/fonts/SystemFont5x7.h"   // system font
+//#include "GLCD/fonts.h"
 
 #include "i2c.h"
 #include "RTC/DS1307.h"
@@ -30,15 +31,15 @@ void PN532_init();
 void setup_peripherals(void);
 char * readcard(ISO14443 & card);
 
-spi spi2bus = {SPI2, PB10, PC2, PC3, PB9};
-PCD8544 nokiaLCD(spi2bus, PB9, PD13, PB0);
+//spi spi2bus = {SPI2, PB10, PC2, PC3, PB9};
+
 
 const byte IizukaKey_b[] = {
   0xBB, 0x63, 0x45, 0x74, 0x55, 0x79, 0x4B };
 const byte factory_a[] = {
   0xaa, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
 
-#define PN532_REQ   PB11
+#define PN532_REQ   PB9
 #define PN532_RST 	0xff
 // Not connected by default on the NFC Shield
 I2CWire Wire1(I2C1, PB8, PB7);
@@ -64,10 +65,12 @@ int main(void) {
 		S_CARD_DETECT
 	} status = S_IDLE;
 	
-	cmcore_init();
+	armcmx_init();
 	setup_peripherals();
 	
-	nokiaLCD.clear();
+  GLCD.CursorTo(0);
+  GLCD.print("This is a pen.");
+  delay(1000);
 	
 	while (1) {
 		if ( status == S_IDLE ) {
@@ -84,29 +87,35 @@ int main(void) {
 				card = cardtmp;
 				res = readcard(card);
 				lastread = millis();
-				nokiaLCD.cursor(84);
-				nokiaLCD.drawString(res);
+				GLCD.CursorTo(84);
+				GLCD.print(res);
 				printf(res);
 				printf("\n");
 			}
 			if ( digitalRead(LED1) && millis() > lastread + 1500 ) {
 				digitalWrite(LED1, LOW);
-				nokiaLCD.gotoXY(0,1);
+        GLCD.GotoXY(0,1);
 				for(int i = 0; i < 4*84/8; i++)
-					nokiaLCD.drawBitmap(bmap, 8, 8);
+					GLCD.DrawBitmap(bmap, 8, 8);
 			}
 			if ( ds3231.updateTime() ) {
 				ds3231.updateCalendar();
 				sprintf(mess, "%02x:%02x:%02x  ", ds3231.time>>16, ds3231.time>>8&0x7f, ds3231.time&0x7f);
-				nokiaLCD.cursor(0);
-				nokiaLCD.drawString(mess);
+				GLCD.CursorTo(0);
+				GLCD.print(mess);
+        printf(mess);
+//				sprintf(mess, "%02x/%02x/%02x  ", ds3231.cal>>16, ds3231.cal>>8&0x7f, ds3231.cal&0x7f);
+//				GLCD.CursorTo(64);
+//				GLCD.print(mess);
 			}
 		} 
 	}
 	
 }
 
+
 void setup_peripherals(void) {
+  
 	char tmp[64];
 	RCC_ClocksTypeDef RCC_Clocks;
 	RCC_GetClocksFreq(&RCC_Clocks);
@@ -114,19 +123,25 @@ void setup_peripherals(void) {
 	printf("\r\nSTM32F4 Discovery handmade proto-sys started w/ clock freqs: SYSCLK = %dl, HCLK = %dl, PCLK1 = %dl.\r\n", 
 				RCC_Clocks.SYSCLK_Frequency, RCC_Clocks.HCLK_Frequency, RCC_Clocks.PCLK1_Frequency);
 
-	printf("Initializing SPI2 bus...");
-	spi_init(&spi2bus, SPI2, PB10, PC2, PC3, PB9);
-	spi_begin(&spi2bus);
-
-	printf("Nokia LCD w/ PCD8544...");	
-	nokiaLCD.init();	
-	nokiaLCD.setContrast(0xaa);
-	nokiaLCD.clear();
+  printf("GPIO Bus LCD controller...");	
+	GLCD.begin(); //NON_INVERTED);	
+//	nokiaLCD.setContrast(0xaa);
+	GLCD.ClearScreen();
 //	nokiaLCD.drawBitmap(PCD8544::SFEFlame);
 //	delay(500);
-	nokiaLCD.setFont(Fixed_8w8);
+	GLCD.SelectFont(System5x7);
 	printf("done.  ");
 	printf("\r\n");
+
+//	printf("Initializing SPI2 bus...");
+//	spi_init(&spi2bus, SPI2, PB10, PC2, PC3, PB9);
+//	spi_begin(&spi2bus);
+
+//	nokiaLCD.setContrast(0xaa);
+//	nokiaLCD.drawBitmap(PCD8544::SFEFlame);
+//	delay(500);
+//	printf("done.  ");
+//	printf("\r\n");
 
 	printf("Initializing I2C1 bus...");
 	//  sck = PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15

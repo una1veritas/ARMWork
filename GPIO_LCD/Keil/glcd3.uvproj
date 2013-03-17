@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -545,6 +545,11 @@
               <FileName>glcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\glcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>ks0108_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\config\ks0108_arm.h</FilePath>
             </File>
           </Files>
         </Group>

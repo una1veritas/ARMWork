@@ -213,7 +213,7 @@
       <Focus>0</Focus>
       <ColumnNumber>18</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>3</TopLine>
+      <TopLine>96</TopLine>
       <CurrentLine>20</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\main.c</PathWithFileName>
@@ -309,7 +309,7 @@
       <Focus>0</Focus>
       <ColumnNumber>29</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>513</TopLine>
+      <TopLine>514</TopLine>
       <CurrentLine>530</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\st7032i.c</PathWithFileName>

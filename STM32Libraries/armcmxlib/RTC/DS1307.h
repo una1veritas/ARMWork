@@ -16,7 +16,7 @@
 #endif
 #include <Wire.h>
 */
-#include "cmcore.h"
+#include "armcmx.h"
 #include "I2CWire.h"
 
 // library interface description

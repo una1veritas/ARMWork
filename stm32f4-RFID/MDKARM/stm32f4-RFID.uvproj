@@ -348,9 +348,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER F4DISCOVERY HSE_VALUE=8000000 STDSERIAL=6</Define>
+              <Define>USE_STDPERIPH_DRIVER ARMCMX F4DISCOVERY HSE_VALUE=8000000 STDSERIAL=6</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\stm32f4-SPI;..\..\STM32Libraries\CMSIS\Include;..\..\STM32Libraries\CMSIS\STM32F4xx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\cmperiphlib</IncludePath>
+              <IncludePath>..\..\stm32f4-SPI;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\armcmx;..\..\STM32Libraries\armcmxlib;..\..\STM32Libraries\armcmx\utility</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -419,22 +419,7 @@
             <File>
               <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\utility\system_stm32f4xx.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4_discovery.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\utility\stm32f4_discovery.h</FilePath>
-            </File>
-            <File>
-              <FileName>stdiodef.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\utility\stdiodef.h</FilePath>
-            </File>
-            <File>
-              <FileName>stdiodef.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\utility\stdiodef.c</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmx\utility\system_stm32f4xx.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -484,127 +469,112 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>cmcore</GroupName>
+          <GroupName>armcmx</GroupName>
           <Files>
             <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\delay.c</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmx\delay.c</FilePath>
             </File>
             <File>
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\gpio.c</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmx\gpio.c</FilePath>
             </File>
             <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\usart.c</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmx\usart.c</FilePath>
             </File>
             <File>
-              <FileName>usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\usart.h</FilePath>
-            </File>
-            <File>
-              <FileName>I2CWire.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\I2CWire.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>cmcore.c</FileName>
+              <FileName>armcmx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\cmcore.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>I2CWire.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\I2CWire.h</FilePath>
-            </File>
-            <File>
-              <FileName>Stream.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\Stream.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\i2c.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmx\armcmx.c</FilePath>
             </File>
             <File>
               <FileName>Print.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\Print.cpp</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmx\Print.cpp</FilePath>
             </File>
             <File>
-              <FileName>gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\gpio.h</FilePath>
+              <FileName>Stream.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\armcmx\Stream.cpp</FilePath>
             </File>
             <File>
-              <FileName>delay.h</FileName>
+              <FileName>I2CWire.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\armcmx\I2CWire.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>I2CWire.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\delay.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmx\I2CWire.h</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\armcmx\i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmx\i2c.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>cmperiphlib</GroupName>
+          <GroupName>armcmxlib</GroupName>
           <Files>
-            <File>
-              <FileName>ISO14443.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiphlib\RFID\ISO14443.h</FilePath>
-            </File>
             <File>
               <FileName>PN532_I2C.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiphlib\RFID\PN532_I2C.cpp</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\RFID\PN532_I2C.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>ISO14443.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\RFID\ISO14443.h</FilePath>
             </File>
             <File>
               <FileName>PN532_I2C.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiphlib\RFID\PN532_I2C.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\RFID\PN532_I2C.h</FilePath>
             </File>
             <File>
               <FileName>DS1307.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiphlib\RTC\DS1307.cpp</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\RTC\DS1307.cpp</FilePath>
             </File>
             <File>
               <FileName>DS1307.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiphlib\RTC\DS1307.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\RTC\DS1307.h</FilePath>
             </File>
             <File>
-              <FileName>PCD8544.cpp</FileName>
+              <FileName>gText.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\PCD8544.cpp</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\gText.cpp</FilePath>
             </File>
             <File>
-              <FileName>PCD8544.h</FileName>
+              <FileName>glcd_Device.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\glcd_Device.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>glcd.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\glcd.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>glcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\PCD8544.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\glcd.h</FilePath>
             </File>
             <File>
-              <FileName>fonts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\fonts.c</FilePath>
-            </File>
-            <File>
-              <FileName>fonts.h</FileName>
+              <FileName>glcd_Device.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmperiphlib\GLCD\fonts.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\include\glcd_Device.h</FilePath>
             </File>
           </Files>
         </Group>
