@@ -23,16 +23,17 @@ struct FCFStruct {
   }
 };
 
-  static uint32 asctoDate(char asc[]) {
+  static uint32 asctoDate(char asc[8]) {
     return dtoi(asc[0])<<28 | dtoi(asc[1])<<24 | dtoi(asc[2])<< 20 | dtoi(asc[3])<< 16 
           | dtoi(asc[4])<< 12 | dtoi(asc[5])<<8 | dtoi(asc[6])<<4 | dtoi(asc[7]);
   }
   
-  static uint32 asctoBCD(char asc[], uint8 maxlen) { // returns bcd
+  static uint32 asctoBCD(char asc[8], uint8 maxlen) { // returns bcd
     uint32 res = 0;
     for(int i = 0; i < maxlen; i++) {
       if ( asc[i] == ' ' ) break;
-      res = (res<<4) | (dtoi(asc[i]) & 0x0f);
+      res <<= 4;
+      res |= dtoi(asc[i]) & 0x0f;
     }
     return res;
   }

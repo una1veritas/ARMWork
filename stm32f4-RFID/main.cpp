@@ -86,19 +86,24 @@ int main(void) {
 				if ( cardtmp == card ) {
 						cardtmp.clear();
 				}
-			}
-			if ( !cardtmp.isEmpty() && lastread + 500 <= millis() ) {
-				card = cardtmp;
-				readcard(card, idd);
-				lastread = millis();
-				GLCD.CursorTo(0, 2);
-        GLCD.print(asctoBCD((char*)idd.pid, 12), HEX);
-        GLCD.print('-');
-        GLCD.print(dtoi(idd.reissue));
-        //for(int i = 0; i < 12; i++) 
-        //  printf("%c",idd.id[i]);
-				//printf("\n");
-			}
+        if ( !cardtmp.isEmpty() && lastread + 500 <= millis() ) {
+          card = cardtmp;
+          readcard(card, idd);
+          lastread = millis();
+          //
+          GLCD.CursorTo(0, 2);
+          GLCD.print("ID ");
+          GLCD.print(asctoBCD((char*)idd.pid, 8), HEX);
+          GLCD.print('-');
+          GLCD.print(dtoi(idd.reissue));
+          GLCD.CursorTo(0,3);
+          GLCD.print("Thru: ");
+          GLCD.print(asctoBCD((char*)idd.goodthru, 8), HEX);
+          //for(int i = 0; i < 12; i++) 
+          //  printf("%c",idd.id[i]);
+          //printf("\n");
+        }
+      }
 			if ( digitalRead(LED1) && millis() > lastread + 1500 ) {
 				digitalWrite(LED1, LOW);
         card.clear();
