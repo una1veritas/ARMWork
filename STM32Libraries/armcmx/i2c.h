@@ -8,7 +8,7 @@
 #ifndef _I2C_H_
 #define _I2C_H_
 
-#include "cmcore.h"
+#include "armcmx.h"
 //#include <stm32f4xx_i2c.h>
 #include <stm32f4xx_i2c.h>
 

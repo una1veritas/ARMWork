@@ -18,8 +18,7 @@
 
 #else
 
-#include "delay.h"
-#include "cmcore.h"
+#include "armcmx.h"
 #include <I2CWire.h>
 
 #endif

@@ -13,12 +13,13 @@
 #include <stm32f4xx.h>
 #include <stm32f4xx_it.h>
 
-#include "cmcore.h"
+#include "armcmx.h"
 
-#include "spi.h"
+//#include "spi.h"
 #include "utility/stm32f4_discovery.h"
-#include "GLCD/PCD8544.h"
-#include "GLCD/fonts.h"
+#include "KS0108/glcd.h"
+#include "fonts/allFonts.h"
+//#include "GLCD/fonts.h"
 
 #include "i2c.h"
 #include "RTC/DS1307.h"
@@ -26,19 +27,23 @@
 #include "RFID/PN532_I2C.h"
 #include "RFID/ISO14443.h"
 
+#include "fcf.h"
+
+FCFStruct idd;
+
 void PN532_init();
 void setup_peripherals(void);
-char * readcard(ISO14443 & card);
+void readcard(ISO14443 & card, FCFStruct & fcf);
+uint8 read_FCFBlock(FCFStruct & idd);
 
-spi spi2bus = {SPI2, PB10, PC2, PC3, PB9};
-PCD8544 nokiaLCD(spi2bus, PB9, PD13, PB0);
+//spi spi2bus = {SPI2, PB10, PC2, PC3, PB9};
 
-const byte IizukaKey_b[] = {
+const static byte IizukaKey_b[] = {
   0xBB, 0x63, 0x45, 0x74, 0x55, 0x79, 0x4B };
-const byte factory_a[] = {
+const static byte factory_a[] = {
   0xaa, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
 
-#define PN532_REQ   PB11
+#define PN532_REQ   PB9
 #define PN532_RST 	0xff
 // Not connected by default on the NFC Shield
 I2CWire Wire1(I2C1, PB8, PB7);
@@ -53,10 +58,13 @@ byte pollingOrder[] = {
   TypeF
 };
 
+char rbuf[32];
+
 int main(void) {
-	byte bmap[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-	char mess[128], *res;
-	byte readerbuf[128];
+	char mess[64], c;
+//  uint8 *resptr;
+  int strpos = 0;
+	byte readerbuf[64];
 	ISO14443 cardtmp;
 	uint32 lastread = 0;
 	enum STATUS {
@@ -64,49 +72,88 @@ int main(void) {
 		S_CARD_DETECT
 	} status = S_IDLE;
 	
-	cmcore_init();
+	armcmx_init();
 	setup_peripherals();
-	
-	nokiaLCD.clear();
 	
 	while (1) {
 		if ( status == S_IDLE ) {
+      cardtmp.clear();
 			if ( nfc.InAutoPoll(1, 1, pollingOrder+1, pollingOrder[0]) 
-					&& nfc.getAutoPollResponse((byte*) readerbuf) ) {
+        && nfc.getAutoPollResponse((byte*) readerbuf) ) {
 				digitalWrite(LED1, HIGH);
 				// NbTg, type1, length1, [Tg, ...]
 				cardtmp.set(readerbuf[1], readerbuf+3);
 				if ( cardtmp == card ) {
 						cardtmp.clear();
 				}
-			}
-			if ( !cardtmp.isEmpty() && lastread + 500 <= millis() ) {
-				card = cardtmp;
-				res = readcard(card);
-				lastread = millis();
-				nokiaLCD.cursor(84);
-				nokiaLCD.drawString(res);
-				printf(res);
-				printf("\n");
-			}
+        if ( !cardtmp.isEmpty() && lastread + 500 <= millis() ) {
+          card = cardtmp;
+          readcard(card, idd);
+          lastread = millis();
+          //
+          GLCD.CursorTo(0, 2);
+          GLCD.print("ID ");
+          GLCD.print(asctoBCD((char*)idd.pid, 8), HEX);
+          GLCD.print('-');
+          GLCD.print(dtoi(idd.reissue));
+          GLCD.CursorTo(0,3);
+          GLCD.print("Thru: ");
+          GLCD.print(asctoBCD((char*)idd.goodthru, 8), HEX);
+          //for(int i = 0; i < 12; i++) 
+          //  printf("%c",idd.id[i]);
+          //printf("\n");
+        }
+      }
 			if ( digitalRead(LED1) && millis() > lastread + 1500 ) {
 				digitalWrite(LED1, LOW);
-				nokiaLCD.gotoXY(0,1);
-				for(int i = 0; i < 4*84/8; i++)
-					nokiaLCD.drawBitmap(bmap, 8, 8);
+        card.clear();
 			}
 			if ( ds3231.updateTime() ) {
 				ds3231.updateCalendar();
-				sprintf(mess, "%02x:%02x:%02x  ", ds3231.time>>16, ds3231.time>>8&0x7f, ds3231.time&0x7f);
-				nokiaLCD.cursor(0);
-				nokiaLCD.drawString(mess);
+				sprintf(mess, "%02x:%02x:%02x %02x/%02x", ds3231.time>>16, ds3231.time>>8&0x7f, ds3231.time&0x7f, 
+                ds3231.cal>>8&0x1f, ds3231.cal&0x3f);
+        GLCD.ClearRect(0,0,127,8);
+				GLCD.CursorTo(0, 0);
+				GLCD.print(mess);
 			}
-		} 
+      
+      if ( usart_available(&stdserial) > 0 ) {
+        c = 0;
+        while ( usart_available(&stdserial) > 0 ) {
+          c = usart_read(&stdserial);
+          if ( c == '\n' || strpos > 61 ) {
+            rbuf[strpos] = 0;
+            strpos = 0;
+            break;
+          }
+          if ( c == '\r' )
+            continue;
+          rbuf[strpos++] = c;
+        }
+        //
+        if ( c == '\n' ) {
+          ds3231.updateTime();
+          printf("mess = %s, time = %06x\n", rbuf, ds3231.time);
+          if ( rbuf[0] == 't' ) {
+            ds3231.time = strtol(rbuf+1,NULL, 16);
+            ds3231.setTime(ds3231.time);
+            printf("time %06x\n", ds3231.time);
+          } else
+          if ( rbuf[0] == 'c' ) {
+            ds3231.cal = strtol(rbuf+1,NULL, 16);
+            ds3231.setCalendar(ds3231.cal);
+            printf("cal %06x, %d\n", ds3231.cal, ds3231.dayOfWeek());
+          }
+        }
+      }
+		}
 	}
 	
 }
 
+
 void setup_peripherals(void) {
+  
 	char tmp[64];
 	RCC_ClocksTypeDef RCC_Clocks;
 	RCC_GetClocksFreq(&RCC_Clocks);
@@ -114,19 +161,25 @@ void setup_peripherals(void) {
 	printf("\r\nSTM32F4 Discovery handmade proto-sys started w/ clock freqs: SYSCLK = %dl, HCLK = %dl, PCLK1 = %dl.\r\n", 
 				RCC_Clocks.SYSCLK_Frequency, RCC_Clocks.HCLK_Frequency, RCC_Clocks.PCLK1_Frequency);
 
-	printf("Initializing SPI2 bus...");
-	spi_init(&spi2bus, SPI2, PB10, PC2, PC3, PB9);
-	spi_begin(&spi2bus);
-
-	printf("Nokia LCD w/ PCD8544...");	
-	nokiaLCD.init();	
-	nokiaLCD.setContrast(0xaa);
-	nokiaLCD.clear();
+  printf("GPIO Bus LCD controller...");	
+	GLCD.begin(); //NON_INVERTED);	
+//	nokiaLCD.setContrast(0xaa);
+	GLCD.ClearScreen();
 //	nokiaLCD.drawBitmap(PCD8544::SFEFlame);
 //	delay(500);
-	nokiaLCD.setFont(Fixed_8w8);
+	GLCD.SelectFont(Fixed7x8);
 	printf("done.  ");
 	printf("\r\n");
+
+//	printf("Initializing SPI2 bus...");
+//	spi_init(&spi2bus, SPI2, PB10, PC2, PC3, PB9);
+//	spi_begin(&spi2bus);
+
+//	nokiaLCD.setContrast(0xaa);
+//	nokiaLCD.drawBitmap(PCD8544::SFEFlame);
+//	delay(500);
+//	printf("done.  ");
+//	printf("\r\n");
 
 	printf("Initializing I2C1 bus...");
 	//  sck = PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
@@ -186,9 +239,9 @@ void PN532_init() {
   printf("SAM Configured...");
 }
 
-char * readcard(ISO14443 & card) {
-static char msg[256];
-	char tmp[128];
+void readcard(ISO14443 & card, FCFStruct & fcf) {
+  static char msg[128];
+  char tmp[64];
 	int length = 0;
 	msg[0] = 0;
 	if ( card.type == 0x11 ) {
@@ -200,6 +253,12 @@ static char msg[256];
 		}
 		//length += sprintf(tmp, "]");
 		//strcat(msg, tmp);
+    if ( read_FCFBlock(fcf) == 0 ) {
+      printf("\n");
+//      tone(4, 1200, 100);
+      card.clear();
+    }
+
 	} else if ( card.type == 0x10 ) {
 		length += sprintf(tmp, "Mifare %02x", card.UID[0]);
 		strcat(msg, tmp);
@@ -210,5 +269,62 @@ static char msg[256];
 		//length += sprintf(tmp, "]");
 		//strcat(msg, tmp);
 	}
-	return msg;
+	return;
+}
+  
+byte read_FCFBlock(FCFStruct & idd) {
+  word syscode = 0x00FE;
+  int len;
+  byte c;
+  uint8 buf[128];
+
+  // Polling command, with system code request.
+  len = nfc.felica_Polling(buf, syscode);
+  if ( len == 0 )
+    return 0;
+  printf("Sys. code %02x, ", syscode);
+  printf(" IDm ");
+  for(int i = 0; i < 8; i++) {
+    printf("%02x", buf[i+1]);
+    if ( i+1 < 8 )
+      printf("-");
+  }
+  printf("\n");
+  // low-byte first service code.
+  // Suica, Nimoca, etc. 0x090f system 0x0300
+  // Edy service 0x170f (0x1317), system 0x00FE // 8280
+  // FCF 1a8b
+  printf("Request Service code: ");
+  word servcode = 0x1a8b;
+  word scver = nfc.felica_RequestService(servcode);
+  printf("%04x ver %04x.\n", servcode, scver);
+
+  if ( scver == 0xffff ) 
+    return 0;
+  
+  word blist[] = { 0, 1, 2, 3};
+  c = nfc.felica_ReadBlocksWithoutEncryption(buf, servcode, (byte) 4, blist);
+  if ( c == 0 ) {
+    printf("\nfailed. \n");
+    return 0;
+  }
+  for(int blk = 0; blk < 4; blk++) {
+    printf("%02d: ", blk);
+    for(int i = 0; i < 16; i++) {
+      printf("%02x ",buf[i+blk*16]);
+    }
+    printf("\n");
+    printf("  : ");
+    for(int i = 0; i < 16; i++) {
+      if ( isprint(buf[i]) ) {
+        printf(" %c ", (char) buf[i+blk*16]);
+      } else {
+        printf("   ");
+      }
+    }
+    printf("\n");
+  }
+  memcpy(&idd, buf, 64);
+//  printf("\n--- End of FCF reading ---\n\n");
+  return 1;
 }
