@@ -69,7 +69,7 @@ glcd::glcd(){
  
 
 int glcd::Init(uint8_t invert){
-	return(glcd_Device::Init(invert));  
+	return(glcd_Device::Init(invert));
 }		
 
 /**

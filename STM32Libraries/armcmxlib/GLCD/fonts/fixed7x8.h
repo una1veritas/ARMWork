@@ -9,7 +9,7 @@
 #include "pgm.h"
 #endif
 
-#define Fixed8x8_WIDTH 8
+#define Fixed8x8_WIDTH 7
 #define Fixed8x8_HEIGHT 8
 
 

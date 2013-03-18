@@ -27,16 +27,20 @@
 #include "RFID/PN532_I2C.h"
 #include "RFID/ISO14443.h"
 
+#include "fcf.h"
+
+FCFStruct idd;
+
 void PN532_init();
 void setup_peripherals(void);
-char * readcard(ISO14443 & card);
+void readcard(ISO14443 & card, FCFStruct & fcf);
+uint8 read_FCFBlock(FCFStruct & idd);
 
 //spi spi2bus = {SPI2, PB10, PC2, PC3, PB9};
 
-
-const byte IizukaKey_b[] = {
+const static byte IizukaKey_b[] = {
   0xBB, 0x63, 0x45, 0x74, 0x55, 0x79, 0x4B };
-const byte factory_a[] = {
+const static byte factory_a[] = {
   0xaa, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
 
 #define PN532_REQ   PB9
@@ -54,12 +58,13 @@ byte pollingOrder[] = {
   TypeF
 };
 
+char rbuf[32];
+
 int main(void) {
-	byte bmap[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-	char mess[128], *res;
-  char tmp[64], c;
+	char mess[64], c;
+//  uint8 *resptr;
   int strpos = 0;
-	byte readerbuf[128];
+	byte readerbuf[64];
 	ISO14443 cardtmp;
 	uint32 lastread = 0;
 	enum STATUS {
@@ -72,8 +77,9 @@ int main(void) {
 	
 	while (1) {
 		if ( status == S_IDLE ) {
+      cardtmp.clear();
 			if ( nfc.InAutoPoll(1, 1, pollingOrder+1, pollingOrder[0]) 
-					&& nfc.getAutoPollResponse((byte*) readerbuf) ) {
+        && nfc.getAutoPollResponse((byte*) readerbuf) ) {
 				digitalWrite(LED1, HIGH);
 				// NbTg, type1, length1, [Tg, ...]
 				cardtmp.set(readerbuf[1], readerbuf+3);
@@ -83,24 +89,26 @@ int main(void) {
 			}
 			if ( !cardtmp.isEmpty() && lastread + 500 <= millis() ) {
 				card = cardtmp;
-				res = readcard(card);
+				readcard(card, idd);
 				lastread = millis();
-				GLCD.CursorTo(84);
-				GLCD.print(res);
-				printf(res);
-				printf("\n");
+				GLCD.CursorTo(0, 2);
+        GLCD.print(asctoBCD((char*)idd.pid, 12), HEX);
+        GLCD.print('-');
+        GLCD.print(dtoi(idd.reissue));
+        //for(int i = 0; i < 12; i++) 
+        //  printf("%c",idd.id[i]);
+				//printf("\n");
 			}
 			if ( digitalRead(LED1) && millis() > lastread + 1500 ) {
 				digitalWrite(LED1, LOW);
-        GLCD.GotoXY(0,1);
-				for(int i = 0; i < 4*84/8; i++)
-					GLCD.DrawBitmap(bmap, 8, 8);
+        card.clear();
 			}
 			if ( ds3231.updateTime() ) {
 				ds3231.updateCalendar();
 				sprintf(mess, "%02x:%02x:%02x %02x/%02x", ds3231.time>>16, ds3231.time>>8&0x7f, ds3231.time&0x7f, 
                 ds3231.cal>>8&0x1f, ds3231.cal&0x3f);
-				GLCD.CursorTo(0);
+        GLCD.ClearRect(0,0,127,8);
+				GLCD.CursorTo(0, 0);
 				GLCD.print(mess);
 			}
       
@@ -109,25 +117,25 @@ int main(void) {
         while ( usart_available(&stdserial) > 0 ) {
           c = usart_read(&stdserial);
           if ( c == '\n' || strpos > 61 ) {
-            tmp[strpos] = 0;
+            rbuf[strpos] = 0;
             strpos = 0;
             break;
           }
           if ( c == '\r' )
             continue;
-          tmp[strpos++] = c;
+          rbuf[strpos++] = c;
         }
         //
         if ( c == '\n' ) {
           ds3231.updateTime();
-          printf("mess = %s, time = %06x\n", tmp, ds3231.time);
-          if ( tmp[0] == 't' ) {
-            ds3231.time = strtol(tmp+1,NULL, 16);
+          printf("mess = %s, time = %06x\n", rbuf, ds3231.time);
+          if ( rbuf[0] == 't' ) {
+            ds3231.time = strtol(rbuf+1,NULL, 16);
             ds3231.setTime(ds3231.time);
             printf("time %06x\n", ds3231.time);
           } else
-          if ( tmp[0] == 'c' ) {
-            ds3231.cal = strtol(tmp+1,NULL, 16);
+          if ( rbuf[0] == 'c' ) {
+            ds3231.cal = strtol(rbuf+1,NULL, 16);
             ds3231.setCalendar(ds3231.cal);
             printf("cal %06x, %d\n", ds3231.cal, ds3231.dayOfWeek());
           }
@@ -226,9 +234,9 @@ void PN532_init() {
   printf("SAM Configured...");
 }
 
-char * readcard(ISO14443 & card) {
-static char msg[256];
-	char tmp[128];
+void readcard(ISO14443 & card, FCFStruct & fcf) {
+  static char msg[128];
+  char tmp[64];
 	int length = 0;
 	msg[0] = 0;
 	if ( card.type == 0x11 ) {
@@ -240,6 +248,12 @@ static char msg[256];
 		}
 		//length += sprintf(tmp, "]");
 		//strcat(msg, tmp);
+    if ( read_FCFBlock(fcf) == 0 ) {
+      printf("\n");
+//      tone(4, 1200, 100);
+      card.clear();
+    }
+
 	} else if ( card.type == 0x10 ) {
 		length += sprintf(tmp, "Mifare %02x", card.UID[0]);
 		strcat(msg, tmp);
@@ -250,6 +264,62 @@ static char msg[256];
 		//length += sprintf(tmp, "]");
 		//strcat(msg, tmp);
 	}
-	return msg;
+	return;
 }
   
+byte read_FCFBlock(FCFStruct & idd) {
+  word syscode = 0x00FE;
+  int len;
+  byte c;
+  uint8 buf[128];
+
+  // Polling command, with system code request.
+  len = nfc.felica_Polling(buf, syscode);
+  if ( len == 0 )
+    return 0;
+  printf("Sys. code %02x, ", syscode);
+  printf(" IDm ");
+  for(int i = 0; i < 8; i++) {
+    printf("%02x", buf[i+1]);
+    if ( i+1 < 8 )
+      printf("-");
+  }
+  printf("\n");
+  // low-byte first service code.
+  // Suica, Nimoca, etc. 0x090f system 0x0300
+  // Edy service 0x170f (0x1317), system 0x00FE // 8280
+  // FCF 1a8b
+  printf("Request Service code: ");
+  word servcode = 0x1a8b;
+  word scver = nfc.felica_RequestService(servcode);
+  printf("%04x ver %04x.\n", servcode, scver);
+
+  if ( scver == 0xffff ) 
+    return 0;
+  
+  word blist[] = { 0, 1, 2, 3};
+  c = nfc.felica_ReadBlocksWithoutEncryption(buf, servcode, (byte) 4, blist);
+  if ( c == 0 ) {
+    printf("\nfailed. \n");
+    return 0;
+  }
+  for(int blk = 0; blk < 4; blk++) {
+    printf("%02d: ", blk);
+    for(int i = 0; i < 16; i++) {
+      printf("%02x ",buf[i+blk*16]);
+    }
+    printf("\n");
+    printf("  : ");
+    for(int i = 0; i < 16; i++) {
+      if ( isprint(buf[i]) ) {
+        printf(" %c ", (char) buf[i+blk*16]);
+      } else {
+        printf("   ");
+      }
+    }
+    printf("\n");
+  }
+  memcpy(&idd, buf, 64);
+//  printf("\n--- End of FCF reading ---\n\n");
+  return 1;
+}
