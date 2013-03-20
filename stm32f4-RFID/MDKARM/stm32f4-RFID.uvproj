@@ -577,14 +577,9 @@
               <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\include\glcd_Device.h</FilePath>
             </File>
             <File>
-              <FileName>Corsiva_12.h</FileName>
+              <FileName>allFonts.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\fonts\Corsiva_12.h</FilePath>
-            </File>
-            <File>
-              <FileName>SystemFont5x7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\fonts\SystemFont5x7.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\fonts\allFonts.h</FilePath>
             </File>
           </Files>
         </Group>

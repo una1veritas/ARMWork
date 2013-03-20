@@ -16,7 +16,7 @@
 static const uint8_t Fixed7x8[] PROGMEM = {
     0x0, 0x0, // size of zero indicates fixed width font, actual length is width * height
     0x07, // width
-    0x08, // height
+    0x07, // height
     0x20, // first char
     0x60, // char count
     
