@@ -514,7 +514,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>GLCD</GroupName>
+          <GroupName>glcd</GroupName>
           <Files>
             <File>
               <FileName>glcd.cpp</FileName>
