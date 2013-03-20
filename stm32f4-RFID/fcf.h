@@ -6,21 +6,30 @@
 
 #define dtoi(c) ( isdigit(c) ? (c) - '0' : (c) )
 
-struct FCFStruct {
-  uint8 division[2];
-  uint8 pid[12];
-  uint8 reissue;
-  uint8 gender;
-  uint8 namekana[16];
-  const uint8 orgid[8];
-  uint8 dofissue[8];
-  uint8 goodthru[8];
-  const uint8 issuerdata[8];
+struct IDCardStruct {
+  union CardData {
+    struct FCFStruct {
+      uint8 division[2];
+      uint8 pid[12];
+      uint8 reissue;
+      uint8 gender;
+      uint8 namekana[16];
+      uint8 orgid[8];
+      uint8 dofissue[8];
+      uint8 goodthru[8];
+      uint8 issuerdata[8];
+    } fcf;
+    struct KTechIDStruct {
+      uint8 blk[3][16];
+    } ktech;
+    uint8 rawdata[64];
+  } card;
+  uint8 cardtype;
+  uint64 CID;
+  uint64 MID;
   
-  FCFStruct() : 
-    division(""), pid("00000000"), namekana("outis"), orgid(""), issuerdata("") {
-    
-  }
+  IDCardStruct() : cardtype(0xff) {}
+
 };
 
   static uint32 asctoDate(char asc[8]) {
