@@ -46,9 +46,9 @@
 #define glcdCSEL4         2   // fourth chip select if needed
 #endif
 
-#define glcdRW           PD5
 #define glcdDI           PE7
-#define glcdEN           PD4
+#define glcdRW           PD4
+#define glcdEN           PD5
 // Reset Bit  - uncomment the next line if reset is connected to an output pin
 //#define glcdRES          19    // Reset Bit
 

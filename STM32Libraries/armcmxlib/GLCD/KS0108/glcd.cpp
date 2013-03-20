@@ -36,8 +36,8 @@
 #include "armcmx.h"
 #include "pgm.h"
 #endif
-#include "GLCD/KS0108/glcd.h"
-#include "GLCD/KS0108/glcd_Config.h" 
+#include "KS0108/glcd.h"
+#include "KS0108/glcd_Config.h" 
 
 #define BITMAP_FIX // enables a bitmap rendering fix/patch
 
@@ -69,7 +69,7 @@ glcd::glcd(){
  
 
 int glcd::Init(uint8_t invert){
-	return(glcd_Device::Init(invert));  
+	return(glcd_Device::Init(invert));
 }		
 
 /**

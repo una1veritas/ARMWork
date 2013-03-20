@@ -26,7 +26,7 @@
 #ifndef	GLCD_DEVICE_H
 #define GLCD_DEVICE_H
 
-#include "GLCD/KS0108/glcd_Config.h"
+#include "KS0108/glcd_Config.h"
 
 #if defined ARDUINO
 #if defined WIRING

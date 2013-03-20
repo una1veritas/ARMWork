@@ -62,15 +62,19 @@ typedef const uint8_t* ImageXBM_t; // a "xbm" format bitmap (includes width & he
 class glcd : public gText  
 {
   private:
+
   public:
-	glcd();
+    glcd();
 	
+  static const uint8 fgcolor = 0xff;
+  static const uint8 bgcolor = 0x00;
 /** @name CONTROL FUNCTIONS
  * The following control functions are available
  */
 /*@{*/
 	// Control functions
 	int Init(uint8_t invert = NON_INVERTED);
+  inline void begin(void) { Init(); }
 	void SetDisplayMode(uint8_t mode); //NON_INVERTED or INVERTED,   was SetInverted(uint8_t invert);
 /*@}*/
 	
@@ -85,7 +89,10 @@ class glcd : public gText
 	void DrawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t color= BLACK);
 	void DrawRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t color= BLACK);
 	void DrawRoundRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t radius, uint8_t color= BLACK);
-	void FillRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t color= BLACK);
+	void FillRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t color = fgcolor);
+	void ClearRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t color = bgcolor) {
+    FillRect(x,y,width,height,color);
+  }
 	void InvertRect(uint8_t x, uint8_t y, uint8_t width, uint8_t height);
 	void DrawCircle(uint8_t xCenter, uint8_t yCenter, uint8_t radius, uint8_t color= BLACK);	
 	void FillCircle(uint8_t xCenter, uint8_t yCenter, uint8_t radius, uint8_t color= BLACK);	

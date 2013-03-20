@@ -10,6 +10,6 @@
 #define ArduinoIcon_H
 
 #define ArduinoIcon ArduinoIcon64x64
-#include "glcd/bitmaps/ArduinoIcon64x64.h"
+#include "bitmaps/ArduinoIcon64x64.h"
 
 #endif
