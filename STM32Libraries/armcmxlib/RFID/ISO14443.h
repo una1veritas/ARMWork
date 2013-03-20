@@ -8,6 +8,7 @@
 #ifndef ISO14443_H_
 #define ISO14443_H_
 
+#include <string.h>
 //#include <Print.h>
 
 //#include "PN532_I2C.h"
