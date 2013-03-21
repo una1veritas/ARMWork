@@ -24,9 +24,9 @@
 
 */
 
-#include "include/glcd_Device.h"
-#include "include/glcd_io.h"
-#include "include/glcd_errno.h"
+#include "glcd_Device.h"
+#include "glcd_io.h"
+#include "glcd_errno.h"
 
 
 /*

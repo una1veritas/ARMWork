@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>2</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -580,6 +580,16 @@
               <FileName>allFonts.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\fonts\allFonts.h</FilePath>
+            </File>
+            <File>
+              <FileName>fixed7x8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\fonts\fixed7x8.h</FilePath>
+            </File>
+            <File>
+              <FileName>SystemFont5x7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\fonts\SystemFont5x7.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -32,8 +32,8 @@
 #include "String.h"
 #include "pgm.h"
 #endif
-#include "KS0108/include/Streaming.h" 
-#include "KS0108/include/glcd_Device.h"
+#include "KS0108/Streaming.h" 
+#include "KS0108/glcd_Device.h"
 
 #define GTEXT_VERSION 1 // software version of this code
 

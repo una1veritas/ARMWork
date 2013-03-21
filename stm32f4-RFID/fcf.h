@@ -3,6 +3,7 @@
 
 #include "armcmx.h"
 #include <ctype.h>
+#include "RFID/ISO14443.h"
 
 #define dtoi(c) ( isdigit(c) ? (c) - '0' : (c) )
 
@@ -20,7 +21,15 @@ struct IDCardStruct {
       uint8 issuerdata[8];
     } fcf;
     struct KTechIDStruct {
-      uint8 blk[3][16];
+      uint8 division[2];
+      uint8 pid[8];
+      uint8 reissue;
+      uint8 reserved1[5];
+      uint8 namesjis[16];
+      uint8 dofbirth[7];
+      uint8 gender;
+      uint8 dofissue[7];
+      uint8 reserved2;
     } ktech;
     uint8 rawdata[64];
   } card;
@@ -28,8 +37,10 @@ struct IDCardStruct {
   uint64 CID;
   uint64 MID;
   
-  IDCardStruct() : cardtype(0xff) {}
-
+  IDCardStruct() : cardtype(Type_Empty) {}
+  void clear() { cardtype = Type_Empty; }
+  boolean isEmpty(void) { return cardtype != Type_Empty; }
+  
 };
 
   static uint32 asctoDate(char asc[8]) {
