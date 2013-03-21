@@ -79,19 +79,16 @@ int main(void) {
   
 	while (1) {
 		if ( status == S_IDLE ) {
-      cardtmp.clear();
 			if ( nfc.InAutoPoll(1, 1, pollingOrder+1, pollingOrder[0]) 
         && nfc.getAutoPollResponse((byte*) readerbuf) ) {
 				digitalWrite(LED1, HIGH);
 				// NbTg, type1, length1, [Tg, ...]
 				cardtmp.set(readerbuf[1], readerbuf+3);
-				if ( cardtmp == card ) {
-						cardtmp.clear();
-				} else if ( !cardtmp.isEmpty() && lastread + 500 <= millis() ) {
+				if ( cardtmp != card && millis() > lastread + 500 ) {
           card = cardtmp;
           readcard(card, idtag);
-          lastread = millis();
           if ( !idtag.isEmpty() ) {
+            lastread = millis();
             //
             GLCD.SelectFont(fixed6x11);
             GLCD.CursorTo(0, 1);

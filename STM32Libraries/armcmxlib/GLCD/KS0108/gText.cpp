@@ -700,12 +700,13 @@ int gText::PutChar(uint8_t c)
 		return 1;
 	}
 	   
-	uint8_t width = 0;
-	uint8_t height = FontRead(this->Font+FONT_HEIGHT);
-	uint8_t bytes = (height+7)/8; /* calculates height in rounded up bytes */
+	uint16_t width = 0;
+	uint16_t height = FontRead(this->Font+FONT_HEIGHT);
+	uint16_t bytes = (height+7)/8; /* calculates height in rounded up bytes */
+//  uint8_t xxx = height + 7;
 	
-	uint8_t firstChar = FontRead(this->Font+FONT_FIRST_CHAR);
-	uint8_t charCount = FontRead(this->Font+FONT_CHAR_COUNT);
+	uint16_t firstChar = FontRead(this->Font+FONT_FIRST_CHAR);
+	uint16_t charCount = FontRead(this->Font+FONT_CHAR_COUNT);
 	
 	uint16_t index = 0;
 	uint8_t thielefont;
