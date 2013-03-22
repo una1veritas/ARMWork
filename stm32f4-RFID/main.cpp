@@ -77,6 +77,10 @@ int main(void) {
 	armcmx_init();
 	setup_peripherals();
   
+  GLCD.SelectFont(Chicago_12);
+  GLCD.CursorTo(0,0);
+  GLCD.println("!\"#0123 This is a pen!");
+  while(1);
 	while (1) {
 		if ( status == S_IDLE ) {
 			if ( nfc.InAutoPoll(1, 1, pollingOrder+1, pollingOrder[0]) 
