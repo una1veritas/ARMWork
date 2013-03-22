@@ -9,8 +9,12 @@ EN  PD5
 CS1 PD6
 CS2 PD7
 
+Font drawing routine will be modified, since font data structure is
+complicated, for me.
 
-LICENCE
+It is still just a private oirting test.
+LICENCE, Term of use inherits the original's:
+
 The Arduino GLCD library files are either licensed under the terms of the
 GNU Lesser General Public License or are compatible with this license when
 the GLCD library code is used in the Arduino software environment.
