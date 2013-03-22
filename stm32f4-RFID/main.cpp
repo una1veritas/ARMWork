@@ -79,7 +79,7 @@ int main(void) {
   
   GLCD.SelectFont(Chicago_12);
   GLCD.CursorTo(0,0);
-  GLCD.println("!\"#0123 This is a pen!");
+  GLCD.println("!\"#0123456789 A Quick brown fox jumped over the lazy dog0|.");
   while(1);
 	while (1) {
 		if ( status == S_IDLE ) {

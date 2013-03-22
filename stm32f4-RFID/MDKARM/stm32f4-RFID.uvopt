@@ -305,7 +305,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>166</TopLine>
+      <TopLine>167</TopLine>
       <CurrentLine>175</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\startup_stm32f4xx.s</PathWithFileName>
@@ -319,10 +319,10 @@
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>28</ColumnNumber>
+      <ColumnNumber>75</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>74</TopLine>
-      <CurrentLine>80</CurrentLine>
+      <TopLine>42</TopLine>
+      <CurrentLine>82</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\main.cpp</PathWithFileName>
       <FilenameWithoutPath>main.cpp</FilenameWithoutPath>
@@ -609,7 +609,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>36</TopLine>
+      <TopLine>37</TopLine>
       <CurrentLine>38</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\STM32Libraries\armcmx\Print.cpp</PathWithFileName>
@@ -793,7 +793,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>743</TopLine>
+      <TopLine>744</TopLine>
       <CurrentLine>749</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\gText.cpp</PathWithFileName>
@@ -809,7 +809,7 @@
       <Focus>0</Focus>
       <ColumnNumber>10</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>14</TopLine>
+      <TopLine>15</TopLine>
       <CurrentLine>29</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\glcd_Device.cpp</PathWithFileName>
@@ -825,7 +825,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>719</TopLine>
+      <TopLine>720</TopLine>
       <CurrentLine>737</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\glcd.cpp</PathWithFileName>
