@@ -10,9 +10,9 @@ CS1 PD6
 CS2 PD7
 
 Font drawing routine will be modified, since font data structure is
-complicated, for me.
+not general and complicated to transform from others, for me.
 
-It is still just a private oirting test.
+It is still just a private trial.
 LICENCE, Term of use inherits the original's:
 
 The Arduino GLCD library files are either licensed under the terms of the
