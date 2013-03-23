@@ -2,15 +2,16 @@
 #define CharacterLCD_h
 
 #include <inttypes.h>
-#ifdef ARDUINO
+#if defined ARDUINO
 #if ARDUINO >= 100
 #include "Arduino.h"
 #else
 #include "Wiring.h"
 #endif
-#else
-#include <cmcore.h>
+#elif defined ARMCMX
+#include <armcmx.h>
 #include <delay.h>
+#include <gpio.h>
 #endif
 #include <Print.h>
 

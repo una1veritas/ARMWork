@@ -77,10 +77,10 @@ int main(void) {
 	armcmx_init();
 	setup_peripherals();
   
-  GLCD.SelectFont(Chicago_12);
-  GLCD.CursorTo(0,0);
-  GLCD.println("!\"#0123456789 A Quick brown fox jumped over the lazy dog0|.");
-  while(1);
+//  GLCD.SelectFont(Chicago_12);
+//  GLCD.CursorTo(0,0);
+//  GLCD.println("!\"#0123456789 A Quick brown fox jumped over the lazy dog0|.");
+
 	while (1) {
 		if ( status == S_IDLE ) {
 			if ( nfc.InAutoPoll(1, 1, pollingOrder+1, pollingOrder[0]) 
@@ -200,8 +200,10 @@ void setup_peripherals(void) {
 	GLCD.begin(); //NON_INVERTED);	
 //	nokiaLCD.setContrast(0xaa);
 	GLCD.ClearScreen();
+  GLCD.SelectFont(System5x7);
+  GLCD.print("A quick brown fox jumped over the lazy dog. 012345689!\"#$%&'()=~|\\^/.,<>?}*+;:][@`{_");
 //	nokiaLCD.drawBitmap(PCD8544::SFEFlame);
-//	delay(500);
+	delay(500);
 	printf("done.  ");
 	printf("\r\n");
 

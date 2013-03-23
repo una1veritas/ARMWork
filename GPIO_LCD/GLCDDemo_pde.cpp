@@ -65,7 +65,7 @@ void setup()
     0x38, 0x00, 
   };
 
-  GLCD.SetImage(testbits, 13, 3, 8, 14);
+  GLCD.SetImage(testbits, 13, 3, 8, 12);
   delay(500);
 //      GLCD.ClearScreen(); //Rect(x,y,x+8,y+14, WHITE);
     while(1);

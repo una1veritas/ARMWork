@@ -243,8 +243,12 @@ void glcd_Device::SetImage(uint8_t * src, uint8_t dstx, uint8_t dsty, uint8_t wi
       printf("(%d, %d) %x, ", x, y, columnbits & mask);
       this->GotoXY(x,y);
       data = this->ReadData();
-      data &= ~mask;
-      data |= columnbits & mask;
+      if ( Inverted ) {
+        data &= ~(columnbits & mask);
+      } else {
+        data &= ~mask;
+        data |= columnbits & mask;
+      }
       this->WriteData(data); //columnbits&mask);
     }
     printf("\n");  
@@ -262,6 +266,12 @@ void glcd_Device::SetImage(uint8_t * src, uint8_t dstx, uint8_t dsty, uint8_t wi
       }
       printf("(%d, %d) %x, ", x, y, columnbits & 0xff);
       this->GotoXY(x,y);
+      data = this->ReadData();
+      if ( Inverted ) {
+        data &= ~(columnbits);
+      } else {
+        data |= columnbits;
+      }
       this->WriteData(columnbits & 0xff);
     }
     printf("\n");
@@ -280,6 +290,13 @@ void glcd_Device::SetImage(uint8_t * src, uint8_t dstx, uint8_t dsty, uint8_t wi
       }
       printf("(%d, %d) %x, ", x, y, columnbits & mask);
       this->GotoXY(x,y);
+      data = this->ReadData();
+      if ( Inverted ) {
+        data &= ~(columnbits & mask);
+      } else {
+        data &= ~mask;
+        data |= columnbits & mask;
+      }
       this->WriteData(columnbits&mask);
     }
     printf("\n");
