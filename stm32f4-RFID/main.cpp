@@ -34,8 +34,8 @@ IDCardStruct idtag;
 void PN532_init();
 void setup_peripherals(void);
 void readcard(ISO14443 & card, IDCardStruct & idtag);
-uint8 read_FCFBlock(IDCardStruct & idtag);
-uint8 read_MifareBlock(ISO14443 & card, IDCardStruct & idtag);
+uint8 get_FCFBlock(ISO14443 & card, IDCardStruct & idtag);
+uint8 get_MifareBlock(ISO14443 & card, IDCardStruct & idtag);
 
 //spi spi2bus = {SPI2, PB10, PC2, PC3, PB9};
 
@@ -76,47 +76,67 @@ int main(void) {
 	
 	armcmx_init();
 	setup_peripherals();
-	
+  
+//  GLCD.SelectFont(Chicago_12);
+//  GLCD.CursorTo(0,0);
+//  GLCD.println("!\"#0123456789 A Quick brown fox jumped over the lazy dog0|.");
+
 	while (1) {
 		if ( status == S_IDLE ) {
-      cardtmp.clear();
 			if ( nfc.InAutoPoll(1, 1, pollingOrder+1, pollingOrder[0]) 
         && nfc.getAutoPollResponse((byte*) readerbuf) ) {
 				digitalWrite(LED1, HIGH);
 				// NbTg, type1, length1, [Tg, ...]
 				cardtmp.set(readerbuf[1], readerbuf+3);
-				if ( cardtmp == card ) {
-						cardtmp.clear();
-				}
-        if ( !cardtmp.isEmpty() && lastread + 500 <= millis() ) {
+				if ( cardtmp != card && millis() > lastread + 500 ) {
           card = cardtmp;
           readcard(card, idtag);
-          lastread = millis();
-          //
-          GLCD.SelectFont(SystemFont5x7);
-          GLCD.CursorTo(0, 1);
-          GLCD.print("Div: ");
-          tdate = asctoBCD((char*)idtag.card.fcf.division, 2);
-          sprintf(mess, "%02x.%02x", tdate>>8&0xff, tdate&0xff);
-          GLCD.println(mess);
-          GLCD.CursorTo(0, 2);
-          GLCD.print("ID ");
-          sprintf(mess,"%08x-%x",asctoBCD((char*)idtag.card.fcf.pid, 8), dtoi(idtag.card.fcf.reissue));
-          GLCD.println(mess);
-          GLCD.CursorTo(0,3);
-          GLCD.SelectFont(SystemKana5x7);
-          for(int i = 0; i < 12; i++) 
-            GLCD.print((char)idtag.card.fcf.namekana[i]);
-          GLCD.println();
-          GLCD.CursorTo(0,4);
-          GLCD.SelectFont(SystemFont5x7);
-          GLCD.print("GThru ");
-          tdate = asctoBCD((char*)idtag.card.fcf.goodthru, 8);
-          sprintf(mess, "%04x/%02x/%02x", tdate>>16&0xffff, tdate>>8&0xff, tdate&0xff);
-          GLCD.println(mess);
-          //for(int i = 0; i < 12; i++) 
-          //  printf("%c",idd.id[i]);
-          //printf("\n");
+          if ( !idtag.isEmpty() ) {
+            lastread = millis();
+            //
+            GLCD.SelectFont(fixed6x11);
+            GLCD.CursorTo(0, 1);
+            GLCD.print("Div ");
+            if ( idtag.cardtype == FeliCa212kb )
+              sprintf(mess, "%c.%c", idtag.card.fcf.division[0], idtag.card.fcf.division[1]);
+            else
+              sprintf(mess, "%c.%c", idtag.card.ktech.division[0], idtag.card.ktech.division[1]);
+            GLCD.println(mess);
+            GLCD.CursorTo(0, 2);
+            GLCD.print("ID ");
+            if ( idtag.cardtype == FeliCa212kb )
+              sprintf(mess,"%08x-%x",asctoBCD((char*)idtag.card.fcf.pid, 8), dtoi(idtag.card.fcf.reissue));
+            else
+              sprintf(mess,"%08x-%x",asctoBCD((char*)idtag.card.ktech.pid, 8), dtoi(idtag.card.ktech.reissue));
+            GLCD.println(mess);
+          //  GLCD.CursorTo(0,3);
+          //  GLCD.SelectFont(SystemKana5x7);
+          //  for(int i = 0; i < 12; i++) 
+          //  GLCD.print((char)idtag.card.fcf.namekana[i]);
+          //  GLCD.println();
+            GLCD.CursorTo(0,4);
+            GLCD.SelectFont(fixed6x11);
+            GLCD.print("GThru ");
+            if ( idtag.cardtype == FeliCa212kb ) 
+              tdate = asctoBCD((char*)idtag.card.fcf.goodthru, 8);
+            else {
+              tdate = asctoBCD((char*) (idtag.card.ktech.dofissue + 1), 6);
+              uint16 gyear;
+              if ( idtag.card.ktech.dofissue[0] == 'H' ) {
+                gyear = (tdate>>20 & 0x0f)*10 + (tdate>>16&0x0f) + 1988;
+                tdate = (tdate & 0xffff) | ((gyear/10%10)<<4 | (gyear%10))<<16;
+              } else {
+                // unknown, probably 'Showa'
+                gyear = (tdate>>20 & 0x0f)*10 + (tdate>>16&0x0f) + 1925;
+                tdate = (tdate & 0xffff) | ((gyear/10%10)<<4 | (gyear%10))<<16;
+              }
+            }
+            sprintf(mess, "%04x/%02x/%02x", tdate>>16&0xffff, tdate>>8&0xff, tdate&0xff);
+            GLCD.println(mess);
+            //for(int i = 0; i < 12; i++) 
+            //  printf("%c",idd.id[i]);
+            //printf("\n");
+          }
         }
       }
 			if ( digitalRead(LED1) && millis() > lastread + 1500 ) {
@@ -125,10 +145,10 @@ int main(void) {
 			}
 			if ( ds3231.updateTime() ) {
 				ds3231.updateCalendar();
-				sprintf(mess, "%02x:%02x:%02x %02x/%02x/20%02x", ds3231.time>>16, ds3231.time>>8&0x7f, ds3231.time&0x7f, 
+				sprintf(mess, "%02x:%02x:%02x %02x/%02x ~%02x", ds3231.time>>16, ds3231.time>>8&0x7f, ds3231.time&0x7f, 
                 ds3231.cal>>8&0x1f, ds3231.cal&0x3f, ds3231.cal>>16&0xff);
 				GLCD.CursorTo(0, 0);
-        GLCD.SelectFont(SystemFont5x7);
+        GLCD.SelectFont(fixed6x11);
 				GLCD.println(mess);
 			}
       
@@ -180,9 +200,10 @@ void setup_peripherals(void) {
 	GLCD.begin(); //NON_INVERTED);	
 //	nokiaLCD.setContrast(0xaa);
 	GLCD.ClearScreen();
+  GLCD.SelectFont(System5x7);
+  GLCD.print("A quick brown fox jumped over the lazy dog. 012345689!\"#$%&'()=~|\\^/.,<>?}*+;:][@`{_");
 //	nokiaLCD.drawBitmap(PCD8544::SFEFlame);
-//	delay(500);
-	GLCD.SelectFont(SystemFont5x7);
+	delay(500);
 	printf("done.  ");
 	printf("\r\n");
 
@@ -255,41 +276,31 @@ void PN532_init() {
 }
 
 void readcard(ISO14443 & card, IDCardStruct & idtag) {
-  static char msg[128];
-  char tmp[64];
-	int length = 0;
-	msg[0] = 0;
 	if ( card.type == 0x11 ) {
-		sprintf(tmp, "FeliCa %02x", (uint8)card.IDm[0]);
-		strcat(msg, tmp);
+		printf("FeliCa %02x", (uint8)card.IDm[0]);
 		for(int i = 1; i < 8; i++) {
-			sprintf(tmp, "-%02x", (uint8)card.IDm[i]);
-			strcat(msg, tmp);
+			printf("-%02x", (uint8)card.IDm[i]);
 		}
-    printf(msg);
     printf("\n");
-    if ( read_FCFBlock(idtag) == 0 ) {
-//      tone(4, 1200, 100);
-      card.clear();
+    if ( get_FCFBlock(card, idtag) == 0 ) {
+      idtag.clear();
+      return;
     }
-
 	} else if ( card.type == 0x10 ) {
-		sprintf(tmp, "Mifare %02x", card.UID[0]);
-		strcat(msg, tmp);
+		printf("Mifare %02x", card.UID[0]);
 		for(int i = 1; i < card.IDLength; i++) {
-			sprintf(tmp, "-%02x", card.UID[i]);
-			strcat(msg, tmp);
+			printf("-%02x", card.UID[i]);
 		}
-    printf(msg);
     printf("\n");
-    if ( read_MifareBlock(card, idtag) == 0 ) {
-      card.clear();
+    if ( get_MifareBlock(card, idtag) == 0 ) {
+      idtag.clear();
+      return;
     }
 	}
 	return;
 }
   
-uint8 read_FCFBlock(IDCardStruct & idtag) {
+uint8 get_FCFBlock(ISO14443 & card, IDCardStruct & idtag) {
   word syscode = 0x00FE;
   int len;
   byte c;
@@ -297,16 +308,10 @@ uint8 read_FCFBlock(IDCardStruct & idtag) {
 
   // Polling command, with system code request.
   len = nfc.felica_Polling(buf, syscode);
-  if ( len == 0 )
+  if ( len == 0 ) {
+    printf("failed polling w/ system code 0x00fe.\n");
     return 0;
-  printf("Sys. code %02x, ", syscode);
-  printf(" IDm ");
-  for(int i = 0; i < 8; i++) {
-    printf("%02x", buf[i+1]);
-    if ( i+1 < 8 )
-      printf("-");
   }
-  printf("\n");
   // low-byte first service code.
   // Suica, Nimoca, etc. 0x090f system 0x0300
   // Edy service 0x170f (0x1317), system 0x00FE // 8280
@@ -322,7 +327,7 @@ uint8 read_FCFBlock(IDCardStruct & idtag) {
   word blist[] = { 0, 1, 2, 3};
   c = nfc.felica_ReadBlocksWithoutEncryption(buf, servcode, (byte) 4, blist);
   if ( c == 0 ) {
-    printf("\nfailed. \n");
+    printf("\nfailed reading FCF blocks. \n");
     return 0;
   }
   for(int blk = 0; blk < 4; blk++) {
@@ -342,18 +347,21 @@ uint8 read_FCFBlock(IDCardStruct & idtag) {
     printf("\n");
   }
   memcpy(&idtag, buf, 64);
+  idtag.cardtype = FeliCa212kb;
 //  printf("\n--- End of FCF reading ---\n\n");
   return 1;
 }
 
-uint8 read_MifareBlock(ISO14443 & card, IDCardStruct & idtag) {
 
+uint8 get_MifareBlock(ISO14443 & card, IDCardStruct & idtag) {
+  uint8 res;
   nfc.targetSet(0x10, card.UID, card.IDLength);
-  if ( nfc.mifare_AuthenticateBlock(4, IizukaKey_b) ) {
+  if ( nfc.mifare_AuthenticateBlock(4, IizukaKey_b) 
+     && nfc.getCommandResponse(&res) && res == 0) {
     nfc.mifare_ReadDataBlock(4, idtag.card.rawdata);
     nfc.mifare_ReadDataBlock(5, idtag.card.rawdata+16);
     nfc.mifare_ReadDataBlock(6, idtag.card.rawdata+32);
-    
+    idtag.cardtype = Mifare;
     for(int blk = 0; blk < 3; blk++) {
       printf("%02d: ", blk);
       for(int i = 0; i < 16; i++) {
@@ -374,6 +382,7 @@ uint8 read_MifareBlock(ISO14443 & card, IDCardStruct & idtag) {
   } 
   else {
     printf("Mifare sector 1 Authentication failed.\n");
+    return 0;
   }
 
   return 1;

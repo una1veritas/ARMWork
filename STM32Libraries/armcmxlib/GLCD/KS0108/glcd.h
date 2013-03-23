@@ -38,7 +38,7 @@
 #ifdef ARDUINO
 #include <avr/pgmspace.h>
 #endif
-#include "include/gText.h" 
+#include "gText.h" 
 
 #define GLCD_VERSION 3 // software version of this library
 

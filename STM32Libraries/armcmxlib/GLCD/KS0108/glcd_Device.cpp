@@ -24,10 +24,14 @@
 
 */
 
-#include "include/glcd_Device.h"
-#include "include/glcd_io.h"
-#include "include/glcd_errno.h"
+#include "glcd_Device.h"
+#include "glcd_io.h"
+#include "glcd_errno.h"
 
+#define DEBUG
+#ifdef DEBUG
+#include "armcmx.h"
+#endif
 
 /*
  * define the static variables declared in glcd_Device
@@ -216,6 +220,89 @@ uint8_t width = x2-x+1;
 		}
 	}
 }
+
+
+void glcd_Device::SetImage(uint8_t * src, uint8_t dstx, uint8_t dsty, uint8_t width, uint8_t height) {
+  uint16 columnbits;
+  uint16 x, y, row, col;
+  uint8 columnsize = height/8 + (height%8 > 0? 1 : 0);
+  uint8 offsety = (dsty % 8);
+  uint8 oversety = (dsty+height)%8;
+  uint8 mask, data;
+  
+  printf("\ndstx %d, dsty %d, width %d, height %d, ", dstx, dsty, width, height);
+  printf("columnsize %d, offsety %d, oversety %d\n", columnsize, offsety, oversety);
+  y = (dsty & 0xfff8); //dsty;
+  if ( offsety > 0) {
+    mask = 0xff<<offsety;
+    printf("row == -1\n");
+    // row == -1
+    for(x = dstx, col = 0; col < width; col++, x++) {
+      columnbits = src[col*columnsize];
+      columnbits <<= offsety;
+      printf("(%d, %d) %x, ", x, y, columnbits & mask);
+      this->GotoXY(x,y);
+      data = this->ReadData();
+      if ( Inverted ) {
+        data &= ~(columnbits & mask);
+      } else {
+        data &= ~mask;
+        data |= columnbits & mask;
+      }
+      this->WriteData(data); //columnbits&mask);
+    }
+    printf("\n");  
+    y += 8;
+  }
+  //return;
+  print("row == 0");
+  for(row = 0 ; y + 8 <= dsty + height; row++, y += 8) {
+    for(x = dstx, col = 0; x < dstx+width; x++, col++) {
+      columnbits = src[col*columnsize + row];
+      if ( offsety > 0 ) {
+        columnbits |= (uint16)(src[col*columnsize + row+1])<<8;
+        columnbits <<= offsety;
+        columnbits >>= 8;
+      }
+      printf("(%d, %d) %x, ", x, y, columnbits & 0xff);
+      this->GotoXY(x,y);
+      data = this->ReadData();
+      if ( Inverted ) {
+        data &= ~(columnbits);
+      } else {
+        data |= columnbits;
+      }
+      this->WriteData(columnbits & 0xff);
+    }
+    printf("\n");
+  }
+  
+  printf("oversety with row == %d\n", row);
+  if ( oversety > 0) {
+    mask = 0xff>>(8-oversety);
+    // row == the last, y == the last page
+    // the appropriate values are already set when exiting the for-loop above.
+    for(x = dstx, col = 0; col < width; col++, x++) {
+      columnbits = src[col*columnsize + row];
+      if ( offsety > 0 ) {
+        columnbits |= (uint16)(src[col*columnsize + row+1])<<8;
+        columnbits >>= (8 - offsety);
+      }
+      printf("(%d, %d) %x, ", x, y, columnbits & mask);
+      this->GotoXY(x,y);
+      data = this->ReadData();
+      if ( Inverted ) {
+        data &= ~(columnbits & mask);
+      } else {
+        data &= ~mask;
+        data |= columnbits & mask;
+      }
+      this->WriteData(columnbits&mask);
+    }
+    printf("\n");
+  }
+}
+
 
 /**
  * set current x,y coordinate on display device
