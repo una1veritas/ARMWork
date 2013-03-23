@@ -37,7 +37,7 @@
 #include "include/arduino_io.h"    // these macros map arduino pins
 #elif defined ARMCMX
 #include "armcmx.h"
-#include "KS0108/include/arm_io.h"
+#include "KS0108/arm_io.h"
 #endif
 
 /*

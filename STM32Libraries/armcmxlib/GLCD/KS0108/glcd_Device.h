@@ -101,16 +101,19 @@ class glcd_Device : public Print
 
   public:
     glcd_Device();
+    void SetImage(uint8_t * src, uint8_t dstx, uint8_t dsty, uint8_t width, uint8_t height);
+
 	protected:
+    static lcdCoord	  	Coord;  
+    static uint8_t	 	Inverted; 
+
     int Init(uint8_t invert = false);      // now public, default is non-inverted
     void SetDot(uint8_t x, uint8_t y, uint8_t color);
     void SetPixels(uint8_t x, uint8_t y,uint8_t x1, uint8_t y1, uint8_t color);
     uint8_t ReadData(void);        // now public
-    void WriteData(uint8_t data); 
-
-  	void GotoXY(uint8_t x, uint8_t y);   
-    static lcdCoord	  	Coord;  
-    static uint8_t	 	Inverted; 
+    void WriteData(uint8_t data);
+  
+  	void GotoXY(uint8_t x, uint8_t y);
 };
   
 #endif
