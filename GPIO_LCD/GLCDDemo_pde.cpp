@@ -48,6 +48,27 @@ void setup()
     icon = ArduinoIcon64x64;  // the 64 pixel high icon
   else
     icon = ArduinoIcon64x32;  // the 32 pixel high icon
+  
+  GLCD.SelectFont(System5x7);
+  GLCD.CursorTo(0,0);
+  GLCD.print("A QUICK BROWN FOX JUMPED OVER THE LAZY DOG.");
+  uint8 testbits []  = { 
+//    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+//    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 
+   0xcc, 0x01, 
+    0xfe,0x03, 
+     0x32,0x02,
+    0x02,0x02, 
+     0xc6,0x03,
+    0xc6,0x01, 
+     0x40,0x00,
+    0x38, 0x00, 
+  };
+
+  GLCD.SetImage(testbits, 13, 3, 8, 14);
+  delay(500);
+//      GLCD.ClearScreen(); //Rect(x,y,x+8,y+14, WHITE);
+    while(1);
   introScreen();
   GLCD.ClearScreen(); 
 
