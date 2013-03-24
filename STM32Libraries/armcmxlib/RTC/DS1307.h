@@ -7,6 +7,8 @@
 #define DS1307_h
 
 //#include <avr/pgmspace.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 /*
 #if ARDUINO >= 100
@@ -105,9 +107,15 @@ public:
 	void start(void);
 	void stop(void);
 
+  // utility functions
 	byte dayOfWeek();
+  
+  inline long JD2000(void) {
+    return this->JD2000(cal);
+  }
 	static long JD2000(byte y, byte m, byte d);
 	static long JD2000(const long & yymmdd);
+  static float CalendarDate(float jd);
 
 
 	static char * copyNameOfDay(char * buf, byte d) {

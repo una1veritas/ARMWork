@@ -141,6 +141,51 @@ long DS1307::JD2000(byte year, byte month, byte day) {
 //			+ 1720994.5 + b);
 }
 
+long integerPart(float df) {
+	return (long int) df;
+}
+
+float fractionalPart(float df) {
+	return df - ((long int) df);
+}
+
+long sign(float d) {
+	if ( d < 0 )
+		return -1;
+	else
+		return 1;
+}
+
+float DS1307::CalendarDate(float jd) {
+	jd += 0.5f;
+	long z = integerPart(jd);
+	long a = z;
+	float f = fractionalPart(jd);
+	if ( z >= 2299161 ) {
+		long alpha = integerPart( (z-1867216.25f)/36524.25f );
+		a += 1 + alpha - integerPart(alpha/4);
+	}
+	long b = a + 1524;
+	long c = integerPart( (b-122.1f)/365.25f );
+	long d = integerPart(365.25f * c);
+	long e = integerPart( (b-d)/30.6001f );
+	long day = b - d - integerPart(30.6001f * e) + f;
+	int month;
+	if ( e < 13.5f ) {
+		month = e - 1;
+	} else {
+		month = e-13;
+	}
+	long year;
+	if ( month > 2.5f) {
+		year = c - 4716;
+	} else {
+		year = c - 4715;
+	}
+	return sign(year)*(abs(year)*10000 + month*100 + day + f);
+}
+
+
 void DS1307::writeRegister(byte rg, byte val) {
 	writeRegisters(rg % 0x40, (uint8_t *) &val, 1);
 }

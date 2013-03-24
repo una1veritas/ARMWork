@@ -132,7 +132,7 @@ int main(void) {
                 (isprint(idcard.datablock.ktech.division[1])? idcard.datablock.ktech.division[1] : ' ')); 
             lcd.print(mess);
             lcd.setCursor(0,2);
-            lcd.print("GThru ");
+            lcd.print("Expires ");
             if ( idcard.type == FeliCa212kb ) 
               tdate = asctoBCD((char*)idcard.datablock.fcf.goodthru, 8);
             else {
@@ -147,9 +147,10 @@ int main(void) {
                 gyear = BCDtoi(tdate>>16) + 1925;
                 tdate = (tdate & 0xffff) | itoBCD(gyear)<<16;
               }
-              printf("%08x, %08x\n", gyear, tdate);
-              uint32 jd = ds3231.JD2000(tdate+0x030000) - 1;
-              printf("expire %012d\n", jd);
+             // printf("%08x, %08x\n", gyear, tdate);
+              float jd = ds3231.JD2000(tdate+0x030000) - 1;
+             // printf("expire %012d\n", (uint32)ds3231.CalendarDate(jd));
+              tdate = itoBCD((uint32)ds3231.CalendarDate(jd));
             }
             sprintf(mess, "%04x/%02x/%02x", tdate>>16&0xffff, tdate>>8&0xff, tdate&0xff);
             lcd.print(mess);
