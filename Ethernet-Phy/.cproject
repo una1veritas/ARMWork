@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?>
-
-<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="org.eclipse.cdt.core.default.config.1758903934">
 			<storageModule buildSystemId="org.eclipse.cdt.core.defaultConfigDataProvider" id="org.eclipse.cdt.core.default.config.1758903934" moduleId="org.eclipse.cdt.core.settings" name="Configuration">
@@ -11,49 +9,15 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings">
-				<externalSettings containerId="org.coocox.ExternalSettings" factoryId="org.eclipse.cdt.core.extension.container.factory">
-					<externalSetting>
-						<entry flags="" kind="includePath" name="C:\Program Files (x86)\GNU Tools ARM Embedded\4.6 2012q2\arm-none-eabi\include"/>
-						<entry flags="" kind="includePath" name="C:\Program Files (x86)\GNU Tools ARM Embedded\4.6 2012q2\lib\gcc\arm-none-eabi\4.6.2\include"/>
-						<entry flags="" kind="includePath" name="C:\Program Files (x86)\GNU Tools ARM Embedded\4.6 2012q2\lib\gcc\arm-none-eabi\4.6.2\include-fixed"/>
-						<entry flags="" kind="includePath" name="."/>
-						<entry flags="" kind="includePath" name="cmsis"/>
-						<entry flags="" kind="includePath" name="cmsis_boot"/>
-						<entry flags="" kind="includePath" name="cmsis_lib"/>
-						<entry flags="" kind="includePath" name="cmsis_lib/include"/>
-						<entry flags="" kind="includePath" name="Ethernet/include"/>
-						<entry flags="" kind="includePath" name="STM32F4x7_ETH_Driver/inc"/>
-						<entry flags="" kind="includePath" name="STM32F4x7_ETH_Driver/inc/lwip"/>
-						<entry flags="" kind="macro" name="__GNUC__" value=""/>
-						<entry flags="" kind="macro" name="USE_STDPERIPH_DRIVER" value=""/>
-						<entry flags="" kind="macro" name="__FPU_USED" value=""/>
-						<entry flags="" kind="macro" name="HSE_VALUE=8000000" value=""/>
-						<entry flags="" kind="macro" name="STM32F407VG" value=""/>
-					</externalSetting>
-				</externalSettings>
+				<externalSettings containerId="org.coocox.ExternalSettings" factoryId="org.eclipse.cdt.core.extension.container.factory"/>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
-			<storageModule moduleId="org.eclipse.cdt.core.pathentry">
-				<pathentry kind="src" path=""/>
-				<pathentry include="C:/Program Files (x86)/GNU Tools ARM Embedded/4.6 2012q2/arm-none-eabi/include" kind="inc" path="" system="true"/>
-				<pathentry include="C:/Program Files (x86)/GNU Tools ARM Embedded/4.6 2012q2/lib/gcc/arm-none-eabi/4.6.2/include" kind="inc" path="" system="true"/>
-				<pathentry include="C:/Program Files (x86)/GNU Tools ARM Embedded/4.6 2012q2/lib/gcc/arm-none-eabi/4.6.2/include-fixed" kind="inc" path="" system="true"/>
-				<pathentry include="C:/CooCox/CoIDE/workspace/STM32F4_Ethernet" kind="inc" path="" system="true"/>
-				<pathentry include="C:/CooCox/CoIDE/workspace/STM32F4_Ethernet/cmsis" kind="inc" path="" system="true"/>
-				<pathentry include="C:/CooCox/CoIDE/workspace/STM32F4_Ethernet/cmsis_boot" kind="inc" path="" system="true"/>
-				<pathentry include="C:/CooCox/CoIDE/workspace/STM32F4_Ethernet/cmsis_lib" kind="inc" path="" system="true"/>
-				<pathentry include="C:/CooCox/CoIDE/workspace/STM32F4_Ethernet/cmsis_lib/include" kind="inc" path="" system="true"/>
-				<pathentry include="C:/CooCox/CoIDE/workspace/STM32F4_Ethernet/Ethernet/include" kind="inc" path="" system="true"/>
-				<pathentry include="C:/CooCox/CoIDE/workspace/STM32F4_Ethernet/STM32F4x7_ETH_Driver/inc" kind="inc" path="" system="true"/>
-				<pathentry include="C:/CooCox/CoIDE/workspace/STM32F4_Ethernet/STM32F4x7_ETH_Driver/inc/lwip" kind="inc" path="" system="true"/>
-				<pathentry kind="mac" name="__GNUC__" path="" value=""/>
-				<pathentry kind="mac" name="USE_STDPERIPH_DRIVER" path="" value=""/>
-				<pathentry kind="mac" name="__FPU_USED" path="" value=""/>
-				<pathentry kind="mac" name="HSE_VALUE=8000000" path="" value=""/>
-				<pathentry kind="mac" name="STM32F407VG" path="" value=""/>
-				<pathentry kind="out" path=""/>
-			</storageModule>
 		</cconfiguration>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.pathentry">
+		<pathentry kind="src" path=""/>
+		<pathentry kind="out" path=""/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>
