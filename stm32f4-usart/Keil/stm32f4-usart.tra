@@ -5,9 +5,10 @@
 ### List of Objects: adding '"main.o"'
 ### List of Objects: adding '"stm32f4xx_it.o"'
 ### List of Objects: adding '"system_stm32f4xx.o"'
-### List of Objects: adding '"cmcore.o"'
+### List of Objects: adding '"armcmx.o"'
 ### List of Objects: adding '"delay.o"'
 ### List of Objects: adding '"gpio.o"'
+### List of Objects: adding '"i2c.o"'
 ### List of Objects: adding '"rtc.o"'
 ### List of Objects: adding '"usart.o"'
 ### List of Objects: adding '"misc.o"'
@@ -19,7 +20,7 @@
 ### List of Objects: adding '"stm32f4xx_tim.o"'
 ### List of Objects: adding '"stm32f4xx_usart.o"'
 ### ADS-LD Command completed:
---cpu Cortex-M4.fp "startup_stm32f4xx.o" "main.o" "stm32f4xx_it.o" "system_stm32f4xx.o" "cmcore.o" "delay.o" "gpio.o" "rtc.o" "usart.o" "misc.o" "stm32f4xx_gpio.o" "stm32f4xx_i2c.o" "stm32f4xx_rcc.o" "stm32f4xx_rtc.o" "stm32f4xx_pwr.o" "stm32f4xx_tim.o" "stm32f4xx_usart.o" 
+--cpu Cortex-M4.fp "startup_stm32f4xx.o" "main.o" "stm32f4xx_it.o" "system_stm32f4xx.o" "armcmx.o" "delay.o" "gpio.o" "i2c.o" "rtc.o" "usart.o" "misc.o" "stm32f4xx_gpio.o" "stm32f4xx_i2c.o" "stm32f4xx_rcc.o" "stm32f4xx_rtc.o" "stm32f4xx_pwr.o" "stm32f4xx_tim.o" "stm32f4xx_usart.o" 
 --strict --scatter "stm32f4-usart.sct" 
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
 --info sizes --info totals --info unused --info veneers 
@@ -27,7 +28,7 @@
 ### ADS-LD Output File: 'stm32f4-usart.axf'
 ### ADS-LD Command File: 'stm32f4-usart.lnp'
 ### Checking for dirty Components...
-### Creating CmdFile 'stm32f4-usart.lnp', Handle=0x000004B0
+### Creating CmdFile 'stm32f4-usart.lnp', Handle=0x00001D04
 ### Writing '.lnp' file
 ### ADS-LD Command file 'stm32f4-usart.lnp' is ready.
 ### ADS-LD: About to start ADS-LD Thread.

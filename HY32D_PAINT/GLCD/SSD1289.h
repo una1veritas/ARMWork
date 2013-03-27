@@ -4,7 +4,7 @@
 #include "stm32f4xx.h"
 #include "AsciiLib.h"
 
-// cmcore delay
+// armcmx delay
 #include "delay.h"
 
 #define Delay(x)  delay_us((x)/10)
@@ -129,6 +129,7 @@ class SSD1289 {
 #define LCD_REG_229           0xE5
 */
 
+#define REG_DRIVER_OUTPUT_CONTROL 	0x01
 #define REG_DISPLAY_CONTROL 	0x07
 #define REG_ENTRY_MODE 				0x11
 #define REG_RAM_DATA			 		0x22
@@ -172,13 +173,27 @@ class SSD1289 {
 #define LCD_PIXEL_WIDTH         0x00F0
 
 #define ASSEMBLE_RGB(R ,G, B)    ((((R)& 0xF8) << 8) | (((G) & 0xFC) << 3) | (((B) & 0xF8) >> 3)) 
+
+  const static uint16 BIT_RL = 1<<14; // right left
+  const static uint16 BIT_REV = 1<<13;
+  const static uint16 BIT_CAD = 1<<12;
+  const static uint16 BIT_BGR = 1<<11;
+  const static uint16 BIT_SM = 1<<10; // interlace
+  const static uint16 BIT_TB = 1<<9;  // top bottom
+  const static uint16 MUX8_0 = 0x013F;
+  //
+  const static uint16 ID0_HINCREMENT = 1<<4;
+  const static uint16 ID1_VINCREMENT = 1<<5;
+  const static uint16 AM_VERTICAL_LOWER = 1<<3;
+  const static uint16 ENTRYMODE_BASE = 0x6040;
+  
 private:
 	GPIOPin NRSTpin;
 	uint16 textCursorX, textCursorY;
 	uint16 deviceCode;
 
+	uint16 driveroutput, entrymode;
 	uint16 width, height;
-	uint8 orientation;
 
 private:
 	void TIM_Config(void);
@@ -201,7 +216,13 @@ public:
 
 	void PolyLineRelativeClosed(pPoint Points, uint16_t PointCount, uint16_t Closed);
 
-
+  enum DISPLAY_ORIGIN {
+    PORTRAIT = 0, // connecter ribbon side is up
+    LANDSCAPE,
+    PORTRAINT_REVERSE,
+    LANDSCAPE_DOWN,
+  };
+  
 public:
 	SSD1289() {
 		NRSTpin = PC5;
@@ -210,11 +231,14 @@ public:
 		textCursorY = 0;
 		deviceCode = 0;
 		//
-		uint16_t TextColor = 0x0000;
-		uint16_t BackColor = 0xFFFF;
-		uint16_t charsize = 12;
-		uint16_t TimerPeriod    = 0;
-		uint16_t Channel3Pulse  = 0;
+    driveroutput = BIT_RL | BIT_REV | BIT_BGR | BIT_TB | MUX8_0;
+    entrymode = ENTRYMODE_BASE | ID1_VINCREMENT | ID0_HINCREMENT | AM_VERTICAL_LOWER;
+    //
+		TextColor = 0x0000;
+		BackColor = 0xFFFF;
+		charsize = 12;
+		TimerPeriod    = 0;
+		Channel3Pulse  = 0;
 	}
 		
 	void init();
@@ -222,6 +246,7 @@ public:
 	void DisplayOn(void);
 	void DisplayOff(void);
 	void BackLight(int procentai);
+  void displayMode(uint8 tb, uint8 rl, uint8 vinc, uint8 hinc, uint8 Vfirst);
 	void displayOrientation(uint8 d);
 	
 	uint16 device(void) { return deviceCode; }

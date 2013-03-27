@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -348,9 +348,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER F4DISCOVERY HSE_VALUE=8000000  STDSERIAL=6</Define>
+              <Define>USE_STDPERIPH_DRIVER OPEN407VC STM32F4_DISCOVERY HSE_VALUE=8000000  STDSERIAL=3</Define>
               <Undefine></Undefine>
-              <IncludePath>..\;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\cmcore;..\GLCD;..\TouchScreenController</IncludePath>
+              <IncludePath>..\;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\armcmx;..\GLCD;..\TouchScreenController;..\..\STM32Libraries\armcmxlib\GLCD\fonts</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -389,7 +389,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Source Group 1</GroupName>
+          <GroupName>main Group</GroupName>
           <Files>
             <File>
               <FileName>startup_stm32f4xx.s</FileName>
@@ -397,49 +397,14 @@
               <FilePath>.\startup_stm32f4xx.s</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\stm32f4xx_it.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f4xx_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\stm32f4xx_conf.h</FilePath>
             </File>
             <File>
-              <FileName>stm32f4xx_it.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\stm32f4xx_it.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_stm32f4xx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\Boards\system_stm32f4xx.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4_discovery.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\Boards\stm32f4_discovery.h</FilePath>
-            </File>
-            <File>
               <FileName>main.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\main.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>AsciiLib.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\GLCD\AsciiLib.c</FilePath>
-            </File>
-            <File>
-              <FileName>AsciiLib.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\GLCD\AsciiLib.h</FilePath>
-            </File>
-            <File>
-              <FileName>SSD1289.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\GLCD\SSD1289.h</FilePath>
             </File>
             <File>
               <FileName>ads7846.h</FileName>
@@ -452,19 +417,24 @@
               <FilePath>..\TouchScreenController\ads7864.cpp</FilePath>
             </File>
             <File>
+              <FileName>system_stm32f4xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\armcmx\utility\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\armcmx\utility\stm32f4xx_it.c</FilePath>
+            </File>
+            <File>
               <FileName>SSD1289.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\GLCD\SSD1289.cpp</FilePath>
             </File>
             <File>
-              <FileName>stdiodef.h</FileName>
+              <FileName>SSD1289.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\stdiodef.h</FilePath>
-            </File>
-            <File>
-              <FileName>stdiodef.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\stdiodef.c</FilePath>
+              <FilePath>..\GLCD\SSD1289.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -524,67 +494,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>cmcore</GroupName>
+          <GroupName>armcmx</GroupName>
           <Files>
-            <File>
-              <FileName>cmcore.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\cmcore.c</FilePath>
-            </File>
-            <File>
-              <FileName>cmcore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\cmcore.h</FilePath>
-            </File>
             <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>delay.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\delay.h</FilePath>
-            </File>
-            <File>
-              <FileName>binary.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\binary.h</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f4_discovery.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\Boards\stm32f4_discovery.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmx\delay.c</FilePath>
             </File>
             <File>
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\gpio.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmx\gpio.c</FilePath>
             </File>
             <File>
               <FileName>spi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\spi.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmx\spi.c</FilePath>
             </File>
             <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\usart.c</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmx\usart.c</FilePath>
             </File>
             <File>
-              <FileName>usart.h</FileName>
+              <FileName>armcmx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\armcmx\armcmx.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>periphlib</GroupName>
+          <Files>
+            <File>
+              <FileName>AsciiLib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\fonts\AsciiLib.c</FilePath>
+            </File>
+            <File>
+              <FileName>AsciiLib.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\usart.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\fonts\AsciiLib.h</FilePath>
             </File>
           </Files>
         </Group>

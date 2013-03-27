@@ -5,11 +5,19 @@
 
 #if defined (STDSERIAL)
 #if (STDSERIAL == 3)
+#if defined(OPEN407VC)
+#define STDUSART 	USART3
+#define STDRX 		PC11
+#define STDTX 		PC10
+#define STDBAUD 	115200
+#warning "using STDSERIAL USART3 for Open 407V-C"
+#else
 #define STDUSART 	USART3
 #define STDRX 		PB11
 #define STDTX 		PB10
 #define STDBAUD 	57600
 #warning "using STDSERIAL USART3"
+#endif
 #elif (STDSERIAL == 6)
 #define STDUSART 	USART6
 #define STDRX 		PC7
