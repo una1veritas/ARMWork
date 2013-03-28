@@ -192,6 +192,35 @@ void SSD1289::displayMode(uint8 TopBottom, uint8 RightLeft, uint8 VInc, uint8 HI
 }
 
 void SSD1289::displayOrientation(uint8 d) {
+  /*
+switch ( _orientation )
+  {
+      case LANDSCAPE: // works
+          WriteCmdData( 0x01, 0x293F ); // driver output control
+          wait_ms( 1 );
+          WriteCmdData( 0x11, 0x6078 ); // entry mode
+          break;
+          
+      case PORTRAIT_REV: // works
+          WriteCmdData( 0x01, 0x693F ); // driver output control
+          wait_ms( 1 );
+          WriteCmdData( 0x11, 0x6070 ); // entry mode
+          break;
+          
+      case LANDSCAPE_REV: // works
+          WriteCmdData( 0x01, 0x6B3F ); // driver output control
+          wait_ms( 1 );
+          WriteCmdData( 0x11, 0x6078 ); // entry mode
+          break;
+          
+      case PORTRAIT: // works
+      default:
+          WriteCmdData( 0x01, 0x2B3F ); // driver output control
+          wait_ms( 1 );
+          WriteCmdData( 0x11, 0x6070 ); // entry mode
+          break;
+  }
+*/
  switch(d) {	
     case 0:
       displayMode(0, 1, 1, 1, 1);
