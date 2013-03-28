@@ -132,8 +132,7 @@ void SSD1289::start(void)
 			WriteReg(0x004e,0x0000);    Delay(50);
 			break;
 	}
-	
-
+	displayOrientation(PORTRAIT);
 }
 
 void SSD1289::WriteRAM_Prepare(void)
@@ -159,32 +158,50 @@ uint16 SSD1289::ReadReg(uint8_t LCD_Reg)
 	return t;
 }
 
+void SSD1289::displayMode(uint8 TopBottom, uint8 RightLeft, uint8 VInc, uint8 HInc, uint8 VFirst) {
+  if ( TopBottom ) {
+    driveroutput |= BIT_TB;
+  } else {
+    driveroutput &= ~BIT_TB;
+  }
+  if ( RightLeft ) {
+    driveroutput |= BIT_RL;
+  } else {
+    driveroutput &= ~BIT_RL;
+  }
+  if ( VInc ) { 
+    entrymode |= ID1_VINCREMENT;
+  } else {
+    entrymode &= ~ID1_VINCREMENT;
+  }
+  if ( HInc ) { 
+    entrymode |= ID0_HINCREMENT;
+  } else {
+    entrymode &= ~ID0_HINCREMENT;
+  }
+  if ( VFirst ) {
+    entrymode |= AM_VERTICAL_LOWER;
+  } else {
+    entrymode &= ~AM_VERTICAL_LOWER;
+  }
+
+  WriteReg(REG_DRIVER_OUTPUT_CONTROL, driveroutput);//0x2B3F);
+  WriteReg(REG_ENTRY_MODE, entrymode); //0x6070);
+  height = LCD_PIXEL_HEIGHT;	
+  width = LCD_PIXEL_WIDTH;  
+}
+
 void SSD1289::displayOrientation(uint8 d) {
-	switch(d) {	
-		case 0:
-			WriteReg(0x0001, 0x2B3F);
-		/* ID = 11 AM = 0 */
-			WriteReg(0x0011, 0x6070);
-		height = LCD_PIXEL_HEIGHT;	
-		width = LCD_PIXEL_WIDTH;
-		break;
-		case 1:
-			WriteReg(0x0001, 0x293F);
-		/* ID = 11 AM = 1 */
-		WriteReg(0x0011, 0x6078);	
-		break;
-		case 2:
-				WriteReg(0x0001, 0x2B3F);	
-		/* ID = 01 AM = 0 */		
-		WriteReg(0x0011, 0x6040);	
-			break;
-			case 3:
-			WriteReg(0x0001, 0x293F);
-				/* ID = 01 AM = 1 */	
-			WriteReg(0x0011, 0x6048);
-			break;
-			default:				
-			return;	
+ switch(d) {	
+    case 0:
+      displayMode(0, 1, 1, 1, 1);
+      break;
+    case 2:
+      displayMode(1, 0, 0, 1, 1);
+      break;
+    default:
+      displayMode(1, 1, 1, 1, 1);
+      break;
 		}
 }
 

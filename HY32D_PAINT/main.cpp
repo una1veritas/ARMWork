@@ -3,12 +3,9 @@
 //#include "touch_7846.h"
 #include "ads7846.h"
 
-#include "cmcore.h"
-#include "delay.h"
-
+#include "armcmx.h"
 
 #define Delay(x)  delay_us((x)/10)
-
 
 //char stringas[8];
 //int xold,yold;
@@ -21,11 +18,10 @@ int main(void)
 {
 //	int i;
 	char tmp[64];
-		RCC_ClocksTypeDef RCC_Clocks;
+	RCC_ClocksTypeDef RCC_Clocks;
 	
-	cmcore_init();
+	armcmx_init();
 	RCC_GetClocksFreq(&RCC_Clocks);
-
 	printf( "SYSCLK = %dl\n", RCC_Clocks.SYSCLK_Frequency);
 
 	spi_init(&spi2bus, SPI2,  PB13, PB14, PB15, PB12);
@@ -35,35 +31,34 @@ int main(void)
 //  Delay(0x3FFFFF);
   lcd.init();
 	lcd.start();
-//  Delay(0x3FFFFF);
-  //touch_init();
-	delay_ms(5);
-  lcd.clear(BLACK);
+  //lcd.displayOrientation(lcd.PORTRAINT);
+    
+  //  Delay(0x3FFFFF);
+    //touch_init();
+    delay_ms(5);
+    lcd.clear(BLACK);
 
-//	lcd.displayOrientation(0);
-	lcd.textSize(16);
-  lcd.SetTextColor(WHITE);
-  lcd.SetBackColor(BLACK);
-	lcd.print("Hi.\n");
-	lcd.print("Resistive touch screen driver.");
-	
-  sprintf(tmp, "device code %04x", lcd.device());
-	lcd.textCursor(0, 2);
-	lcd.print(tmp);
-	printf(tmp);
- printf("\n");
+    lcd.textSize(16);
+    lcd.SetTextColor(WHITE);
+    lcd.SetBackColor(BLACK);
+    lcd.print("Hi.\n");
+    lcd.print("Resistive touch screen driver.");
+    
+    sprintf(tmp, "device code %04x", lcd.device());
+    lcd.textCursor(0, 2);
+    lcd.print(tmp);
+    printf("%s\n", tmp);
 
-while(1)
- {
+while(1) {
   tp.convertPos();
   lcd.Pixel(tp.x, tp.y,WHITE); 
   lcd.Pixel(tp.x, tp.y+1,WHITE);
   lcd.Pixel(tp.x+1, tp.y,WHITE);
   lcd.Pixel(tp.x+1, tp.y+1,WHITE);
-	 //
-	 sprintf(tmp, "x =% 5d, y =% 5d", tp.x, tp.y);
-	 lcd.textCursor(0, 3);
-	 lcd.print(tmp);
+ //
+  sprintf(tmp, "x =% 5d, y =% 5d", tp.x, tp.y);
+  lcd.textCursor(0, 3);
+  lcd.print(tmp);
 	 /*
 	 if ( tp.x != 0 and tp.y != 0 ) {
 	 printf(tmp);

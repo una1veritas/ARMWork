@@ -348,9 +348,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER</Define>
+              <Define>USE_STDPERIPH_DRIVER ARMCMX STM32F4_DISCOVERY</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\stm32f4-usart;..\..\STM32Libraries\cmcore;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
+              <IncludePath>..\..\stm32f4-usart;..\..\STM32Libraries\armcmx;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -424,32 +424,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>cmcore</GroupName>
+          <GroupName>armcmx</GroupName>
           <Files>
             <File>
-              <FileName>cmcore.c</FileName>
+              <FileName>armcmx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\cmcore.c</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmx\armcmx.c</FilePath>
             </File>
             <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\delay.c</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmx\delay.c</FilePath>
             </File>
             <File>
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\gpio.c</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmx\gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\armcmx\i2c.c</FilePath>
             </File>
             <File>
               <FileName>rtc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\rtc.c</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmx\rtc.c</FilePath>
             </File>
             <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\STM32Libraries\cmcore\usart.c</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmx\usart.c</FilePath>
             </File>
           </Files>
         </Group>

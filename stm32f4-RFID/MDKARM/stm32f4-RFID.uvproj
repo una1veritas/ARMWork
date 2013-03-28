@@ -43,14 +43,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\</OutputDirectory>
+          <OutputDirectory>.\Obj\</OutputDirectory>
           <OutputName>stm32f4-RFID</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\</ListingPath>
+          <ListingPath>.\Obj\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -334,7 +334,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>2</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER ARMCMX STM32F4_DISCOVERY HSE_VALUE=8000000 STDSERIAL=6</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\stm32f4-SPI;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\armcmx;..\..\STM32Libraries\armcmxlib\GLCD;..\..\STM32Libraries\armcmx\utility;..\..\STM32Libraries\armcmxlib</IncludePath>
+              <IncludePath>..\..\stm32f4-SPI;..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\STM32Libraries\armcmx;..\..\STM32Libraries\armcmx\utility;..\..\STM32Libraries\armcmxlib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -552,44 +552,14 @@
               <FilePath>..\..\STM32Libraries\armcmxlib\RTC\DS1307.h</FilePath>
             </File>
             <File>
-              <FileName>gText.cpp</FileName>
+              <FileName>LiquidCrystal.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\gText.cpp</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\LCD\LiquidCrystal.cpp</FilePath>
             </File>
             <File>
-              <FileName>glcd_Device.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\glcd_Device.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>glcd.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\glcd.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>glcd.h</FileName>
+              <FileName>LiquidCrystal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\glcd.h</FilePath>
-            </File>
-            <File>
-              <FileName>glcd_Device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\KS0108\include\glcd_Device.h</FilePath>
-            </File>
-            <File>
-              <FileName>allFonts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\fonts\allFonts.h</FilePath>
-            </File>
-            <File>
-              <FileName>fixed7x8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\fonts\fixed7x8.h</FilePath>
-            </File>
-            <File>
-              <FileName>SystemFont5x7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxlib\GLCD\fonts\SystemFont5x7.h</FilePath>
+              <FilePath>..\..\STM32Libraries\armcmxlib\LCD\LiquidCrystal.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -20,7 +20,7 @@ void NVIC_TOUCHConfiguration(void);
 }
 #endif
 
-#include "cmcore.h"
+#include "armcmx.h"
 #include "spi.h"
 
 class TouchScreen {

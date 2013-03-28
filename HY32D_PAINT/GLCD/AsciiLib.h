@@ -11,7 +11,7 @@ extern "C" {
 #include <string.h>
 #include <stdint.h>
 
-#include "cmcore.h"
+#include "armcmx.h"
 	
 /* Private function prototypes -----------------------------------------------*/
 void GetASCIICode1(unsigned char* pBuffer,unsigned char ASCII);

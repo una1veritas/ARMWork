@@ -1,4 +1,4 @@
---cpu Cortex-M4.fp "startup_stm32f4xx.o" "main.o" "stm32f4xx_it.o" "system_stm32f4xx.o" "cmcore.o" "delay.o" "gpio.o" "rtc.o" "usart.o" "misc.o" "stm32f4xx_gpio.o" "stm32f4xx_i2c.o" "stm32f4xx_rcc.o" "stm32f4xx_rtc.o" "stm32f4xx_pwr.o" "stm32f4xx_tim.o" "stm32f4xx_usart.o" 
+--cpu Cortex-M4.fp "startup_stm32f4xx.o" "main.o" "stm32f4xx_it.o" "system_stm32f4xx.o" "armcmx.o" "delay.o" "gpio.o" "i2c.o" "rtc.o" "usart.o" "misc.o" "stm32f4xx_gpio.o" "stm32f4xx_i2c.o" "stm32f4xx_rcc.o" "stm32f4xx_rtc.o" "stm32f4xx_pwr.o" "stm32f4xx_tim.o" "stm32f4xx_usart.o" 
 --strict --scatter "stm32f4-usart.sct" 
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
 --info sizes --info totals --info unused --info veneers 

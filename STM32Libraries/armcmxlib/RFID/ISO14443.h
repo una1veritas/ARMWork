@@ -40,7 +40,33 @@ struct ISO14443 {
 		byte IDm[8];
 		byte ID[NFCID_size];
 	};
+  union DataBlock {
+    struct FCFStruct {
+      uint8 division[2];
+      uint8 pid[12];
+      uint8 reissue;
+      uint8 gender;
+      uint8 namekana[16];
+      uint8 orgid[8];
+      uint8 dofissue[8];
+      uint8 goodthru[8];
+      uint8 issuerdata[8];
+    } fcf;
+    struct KTechIDStruct {
+      uint8 division[2];
+      uint8 pid[8];
+      uint8 reissue;
+      uint8 reserved1[5];
+      uint8 namesjis[16];
+      uint8 dofbirth[7];
+      uint8 gender;
+      uint8 dofissue[7];
+      uint8 reserved2;
+    } ktech;
+    uint8 raw[64];
+  } datablock;
 
+  
 	ISO14443() {
 		clear();
 	}

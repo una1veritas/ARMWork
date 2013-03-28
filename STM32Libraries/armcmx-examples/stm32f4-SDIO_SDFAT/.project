@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>stm32f4-SDIO_FATFS</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<triggers>clean,full,incremental,</triggers>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.ScannerConfigBuilder</name>
+			<triggers>full,incremental,</triggers>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>STM32F4xx_StdPeriph_Driver</name>
+			<type>2</type>
+			<location>C:/Users/Sin/Documents/GitHub/ARMWork/STM32Libraries/STM32F4xx_StdPeriph_Driver</location>
+		</link>
+		<link>
+			<name>armcore</name>
+			<type>2</type>
+			<location>C:/Users/Sin/Documents/GitHub/ARMWork/STM32Libraries/armcore</location>
+		</link>
+	</linkedResources>
+</projectDescription>

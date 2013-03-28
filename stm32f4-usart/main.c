@@ -3,9 +3,7 @@
 #include "stm32f4xx.h"
 #include <stm32f4xx_rtc.h>
 
-#include "cmcore.h"
-#include "delay.h"
-#include "usart.h"
+#include "armcmx.h"
 
 // rtc timer
 static __IO uint32_t TimingDelay;
@@ -22,7 +20,7 @@ void RTC_Config(void);
 void RTC_AlarmConfig(void);
 Table_TypeDef RTC_Get_Time(uint32_t Secondfraction , RTC_TimeTypeDef* RTC_TimeStructure );
 
-usart Serial6;
+usart Serial3;
  
 int main(void) {
 	char printbuf[64];
@@ -30,11 +28,11 @@ int main(void) {
 
 	RTC_Config();	
 
-	cmcore_init();
+	armcmx_init();
 
-	usart_init(&Serial6, USART6, PC7, PC6); // 7 6
-	usart_begin(&Serial6, 57600); // 7 6
-	usart_print(&Serial6, "\r\nWelcome to USART.\r\n\r\n");
+	usart_init(&Serial3, USART3, PC11, PC10); // 6 PC7, PC6); // 7 6
+	usart_begin(&Serial3, 57600); // 7 6
+	usart_print(&Serial3, "\r\nWelcome to USART.\r\n\r\n");
 
 	delay_ms(500);
 
@@ -55,11 +53,11 @@ int main(void) {
     /* Display the curent time and the sub second on the LCD */
     RTC_Get_Time(Secondfraction , &RTC_TimeStruct);
 		sprintf(printbuf, "second fraction = %d ", Secondfraction),
-		usart_print(&Serial6, printbuf);
+		usart_print(&Serial3, printbuf);
 		
-		usart_print(&Serial6, ".");
+		usart_print(&Serial3, ".");
 		sprintf(printbuf, "millis = %dl\r\n", millis()),
-		usart_print(&Serial6, printbuf);
+		usart_print(&Serial3, printbuf);
 
 		delay_ms(250);
 	}
