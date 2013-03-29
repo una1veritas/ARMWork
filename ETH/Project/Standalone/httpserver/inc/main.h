@@ -32,6 +32,8 @@
 #include "stm32f4xx.h"
 #include "stm32f4x7_eth_bsp.h"
 
+#include "stm32_open407vc.h"
+
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 

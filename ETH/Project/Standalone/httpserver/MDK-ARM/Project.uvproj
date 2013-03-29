@@ -736,6 +736,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\STM32Libraries\armcmx\utility\stm32_open407vc.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32_open407vc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\..\STM32Libraries\armcmx\utility\stm32_open407vc.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
