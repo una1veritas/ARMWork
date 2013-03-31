@@ -1,5 +1,6 @@
 #include "stm32f4_discovery.h"
 
+
 void STM_EVAL_LEDInit(Led_TypeDef Led) { 
    pinMode(Led, OUTPUT); 
 }
@@ -15,8 +16,11 @@ void STM_EVAL_COMInit(COM_TypeDef COM, USART_InitTypeDef* USART_InitStruct) {
 #endif
 }
 
-//typedef void sFONT;
-void STM324xG_LCD_Init(void) {}
+// for the compatibility
+/*
+void STM324xG_LCD_Init(void) {
+  
+}
 void LCD_DisplayStringLine(uint16 x, uint8 *y) {
   printf("%s\n",y);
 }
@@ -25,4 +29,4 @@ void LCD_SetTextColor(uint16 x) {}
 //sFONT *LCD_GetFont(void) { return 0; }
 void LCD_Clear(uint16 c) {}
 void LCD_SetBackColor(uint16 c) {}
-
+*/

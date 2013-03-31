@@ -172,7 +172,7 @@
               = ((HSE_VALUE / PLL_M) * PLL_N) / PLL_P
               = ((25 MHz / 25) * 240 ) / 2 = 120 MHz
    */
-#elif defined (STM32F4_DISCOVERY)
+#elif defined (STM32F4_DISCOVERY) || defined(OPEN407VC)
 #warning "PLL params for STM32F4 Discovery selected."
 
 //F4 Discovery

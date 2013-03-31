@@ -32,6 +32,8 @@
 #include "stm32f4xx.h"
 #include "stm32f4x7_eth_bsp.h"
 
+#include "stm32_open407vc.h"
+
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 
@@ -82,6 +84,7 @@
 
 /* Uncomment the define below to clock the PHY from external 25MHz crystal (only for MII mode) */
 #ifdef 	MII_MODE
+#warning "PHY_CLOCK_MCO"
  #define PHY_CLOCK_MCO
 #endif
 
