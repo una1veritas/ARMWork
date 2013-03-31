@@ -59,8 +59,8 @@ void ETH_BSP_Config(void)
     LCD_DisplayStringLine(Line5, (uint8_t*)"   Ethernet Init   ");
     LCD_DisplayStringLine(Line6, (uint8_t*)"      failed      ");
 #else
-    printf("   Ethernet Init   ");
-    printf("      failed      ");
+    printf("   Ethernet Init   \n");
+    printf("      failed      \n");
 #endif
     while(1);
   }
@@ -217,7 +217,6 @@ void ETH_GPIO_Config(void)
   GPIO_PinAFConfig(GPIOA, GPIO_PinSource7, GPIO_AF_ETH);
 
 #if defined (USE_STM324xG_EVAL)
-#warning "STM324xG_EVAL!!"
   /* Configure PB5 and PB8 */
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_8;
   GPIO_Init(GPIOB, &GPIO_InitStructure);
@@ -226,6 +225,7 @@ void ETH_GPIO_Config(void)
 #endif
 
   /* Configure PC1, PC2, PC3, PC4 and PC5 */
+#if defined (USE_STM324xG_EVAL)
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5;
   GPIO_Init(GPIOC, &GPIO_InitStructure);
   GPIO_PinAFConfig(GPIOC, GPIO_PinSource1, GPIO_AF_ETH);
@@ -233,9 +233,15 @@ void ETH_GPIO_Config(void)
   GPIO_PinAFConfig(GPIOC, GPIO_PinSource3, GPIO_AF_ETH);
   GPIO_PinAFConfig(GPIOC, GPIO_PinSource4, GPIO_AF_ETH);
   GPIO_PinAFConfig(GPIOC, GPIO_PinSource5, GPIO_AF_ETH);
+#elif defined(OPEN407VC)
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_4 | GPIO_Pin_5;
+  GPIO_Init(GPIOC, &GPIO_InitStructure);
+  GPIO_PinAFConfig(GPIOC, GPIO_PinSource1, GPIO_AF_ETH);
+  GPIO_PinAFConfig(GPIOC, GPIO_PinSource4, GPIO_AF_ETH);
+  GPIO_PinAFConfig(GPIOC, GPIO_PinSource5, GPIO_AF_ETH);
+#endif
                                 
 #if defined (USE_STM324xG_EVAL)
-#warning "STM324xG_EVAL!!"
   /* Configure PG11, PG14 and PG13 */
   GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_11 | GPIO_Pin_13 | GPIO_Pin_14;
   GPIO_Init(GPIOG, &GPIO_InitStructure);
@@ -257,7 +263,6 @@ void ETH_GPIO_Config(void)
   GPIO_PinAFConfig(GPIOI, GPIO_PinSource10, GPIO_AF_ETH);
 #endif
 #if defined(OPEN407VC)
-#warning "OPEN407VC!!"
   /* Configure PB11 and PB12 */
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13;
   GPIO_Init(GPIOB, &GPIO_InitStructure);
@@ -373,14 +378,14 @@ void Eth_Link_ITHandler(uint16_t PHYAddress)
     if(EthLinkStatus != 0)
     {
       /* Display message on the LCD */
-      printf("  Network Cable is  ");
-      printf("     unplugged      ");
+      printf("  Network Cable is  \n");
+      printf("     unplugged      \n");
     }
     else
     {
       /* Display message on the LCD */
-      printf("  Network Cable is  ");
-      printf("   now connected    ");
+      printf("  Network Cable is  \n");
+      printf("   now connected    \n");
     }
 #endif
   }

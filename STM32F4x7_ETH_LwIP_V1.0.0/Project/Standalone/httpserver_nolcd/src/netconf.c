@@ -88,7 +88,7 @@ void LwIP_Init(void)
   IP4_ADDR(&netmask, NETMASK_ADDR0, NETMASK_ADDR1 , NETMASK_ADDR2, NETMASK_ADDR3);
   IP4_ADDR(&gw, GW_ADDR0, GW_ADDR1, GW_ADDR2, GW_ADDR3);
 
-#ifdef USE_LCD  
+#if defined (USE_LCD)  
    iptab[0] = IP_ADDR3;
    iptab[1] = IP_ADDR2;
    iptab[2] = IP_ADDR1;
@@ -98,6 +98,9 @@ void LwIP_Init(void)
       
    LCD_DisplayStringLine(Line8, (uint8_t*)"  Static IP address   ");
    LCD_DisplayStringLine(Line9, iptxt);
+#else
+   printf("  Static IP address   \n");
+   printf("  %d.%d.%d.%d\n", iptab[3], iptab[2], iptab[1], iptab[0]); 
 #endif
 #endif
 
@@ -207,6 +210,10 @@ void LwIP_DHCP_Process_Handle()
       LCD_DisplayStringLine(Line4, (uint8_t*)"     Looking for    ");
       LCD_DisplayStringLine(Line5, (uint8_t*)"     DHCP server    ");
       LCD_DisplayStringLine(Line6, (uint8_t*)"     please wait... ");
+#else
+      printf("     Looking for    \n");
+      printf("     DHCP server    \n");
+      printf("     please wait... \n");
 #endif
     }
     break;
@@ -239,6 +246,16 @@ void LwIP_DHCP_Process_Handle()
         LCD_DisplayStringLine(Line7, (uint8_t*)"IP address assigned ");
         LCD_DisplayStringLine(Line8, (uint8_t*)"  by a DHCP server  ");
         LCD_DisplayStringLine(Line9, iptxt);
+#else
+        iptab[0] = (uint8_t)(IPaddress >> 24);
+        iptab[1] = (uint8_t)(IPaddress >> 16);
+        iptab[2] = (uint8_t)(IPaddress >> 8);
+        iptab[3] = (uint8_t)(IPaddress);
+
+        /* Display the IP address */
+        printf("IP address assigned \n");
+        printf("  by a DHCP server  \n");
+        printf(" %d.%d.%d.%d\n", iptab[3], iptab[2], iptab[1], iptab[0]);
 #endif
         STM_EVAL_LEDOn(LED1);
       }
@@ -274,6 +291,16 @@ void LwIP_DHCP_Process_Handle()
 
           LCD_DisplayStringLine(Line8, (uint8_t*)"  Static IP address   ");
           LCD_DisplayStringLine(Line9, iptxt);         
+#else
+          printf("    DHCP timeout    \n");
+
+          iptab[0] = IP_ADDR3;
+          iptab[1] = IP_ADDR2;
+          iptab[2] = IP_ADDR1;
+          iptab[3] = IP_ADDR0;
+
+          printf("  Static IP address   \n");
+          printf("  %d.%d.%d.%d\n", iptab[3], iptab[2], iptab[1], iptab[0]); 
 #endif    
           STM_EVAL_LEDOn(LED1);
         }

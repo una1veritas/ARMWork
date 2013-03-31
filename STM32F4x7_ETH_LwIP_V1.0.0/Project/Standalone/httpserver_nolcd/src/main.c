@@ -19,6 +19,14 @@
   ******************************************************************************
   */
 
+/* Note 
+  STM324x_G_EVAL definition in compiler option must be disabled, and 
+  eval header files stm324xg_eval.h and stm324xg_eval_lcd.h must not be included 
+  (it also set that definition).
+  RMII_MODE must be defined as well as MII_MODE must be unset in main.h.
+  
+*/
+
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4x7_eth.h"
 #include "netconf.h"
@@ -152,9 +160,13 @@ void LCD_LED_Init(void)
   LCD_DisplayStringLine(Line3, (uint8_t*)MESSAGE4);
 #else
   printf(MESSAGE1);
+  printf("\n");
   printf(MESSAGE2);
+  printf("\n");
   printf(MESSAGE3);
+  printf("\n");
   printf(MESSAGE4);
+  printf("\n");
 #endif
 }
 

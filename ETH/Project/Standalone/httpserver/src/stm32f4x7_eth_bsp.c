@@ -213,7 +213,7 @@ void ETH_GPIO_Config(void)
   GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_ETH);
   GPIO_PinAFConfig(GPIOA, GPIO_PinSource7, GPIO_AF_ETH);
 
-  /* Configure PB11 and PB12 */
+  /* Configure PB11, PB12 and PB13 */
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13;
   GPIO_Init(GPIOB, &GPIO_InitStructure);
   GPIO_PinAFConfig(GPIOB, GPIO_PinSource11, GPIO_AF_ETH);	

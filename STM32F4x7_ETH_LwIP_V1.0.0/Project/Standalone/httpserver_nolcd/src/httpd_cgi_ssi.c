@@ -63,10 +63,10 @@ static void ADC_Configuration(void)
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC3, ENABLE);
 
   /* Configure ADC Channel 7 as analog input */
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0; //9;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
-  GPIO_Init(GPIOF, &GPIO_InitStructure);
+  GPIO_Init(GPIOC/*F*/, &GPIO_InitStructure);
 
   /* ADC Common Init */
   ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
@@ -86,7 +86,7 @@ static void ADC_Configuration(void)
   ADC_Init(ADC3, &ADC_InitStructure);
 
   /* ADC3 Regular Channel Config */
-  ADC_RegularChannelConfig(ADC3, ADC_Channel_7, 1, ADC_SampleTime_56Cycles);
+  ADC_RegularChannelConfig(ADC3, ADC_Channel_10 /*7*/, 1, ADC_SampleTime_56Cycles);
 
   /* Enable ADC3 */
   ADC_Cmd(ADC3, ENABLE);
