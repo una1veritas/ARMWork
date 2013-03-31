@@ -35,7 +35,7 @@
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 
-//#define USE_LCD        /* enable LCD  */  
+#define USE_LCD        /* enable LCD  */  
 //#define USE_DHCP       /* enable DHCP, if disabled static address is used */
    
 /* Uncomment SERIAL_DEBUG to enables retarget of printf to serial port (COM1 on STM32 evalboard) 
@@ -54,7 +54,7 @@
 /*Static IP ADDRESS: IP_ADDR0.IP_ADDR1.IP_ADDR2.IP_ADDR3 */
 #define IP_ADDR0   192
 #define IP_ADDR1   168
-#define IP_ADDR2   24
+#define IP_ADDR2   0
 #define IP_ADDR3   10
    
 /*NETMASK*/
@@ -78,7 +78,7 @@
                      // board User manual (UM1461).
 
                                      
-//#define MII_MODE
+#define MII_MODE
 
 /* Uncomment the define below to clock the PHY from external 25MHz crystal (only for MII mode) */
 #ifdef 	MII_MODE
