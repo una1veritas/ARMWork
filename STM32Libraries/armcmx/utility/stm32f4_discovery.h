@@ -6,6 +6,7 @@
  extern "C" {
 #endif
 
+#include "stm32f4xx.h"
 #include "armcmx.h"
 
 #define LED1 	PD12

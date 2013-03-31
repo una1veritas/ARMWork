@@ -17,6 +17,7 @@ void STM_EVAL_COMInit(COM_TypeDef COM, USART_InitTypeDef* USART_InitStruct) {
 }
 
 // for the compatibility
+/*
 void STM324xG_LCD_Init(void) {
   
 }
@@ -28,4 +29,4 @@ void LCD_SetTextColor(uint16 x) {}
 //sFONT *LCD_GetFont(void) { return 0; }
 void LCD_Clear(uint16 c) {}
 void LCD_SetBackColor(uint16 c) {}
-
+*/

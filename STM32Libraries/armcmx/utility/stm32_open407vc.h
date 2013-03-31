@@ -6,10 +6,9 @@
  extern "C" {
 #endif
 
+#include "stm32f4xx.h"
 #include "armcmx.h"
 #include "stm32f4_discovery.h"
-//#include "stm324xg_eval_lcd.h"
-//#include "stm32_eval_legacy.h"
 
 typedef enum { 
   JOY_NONE = NOT_A_PIN,
@@ -20,18 +19,6 @@ typedef enum {
   JOY_UP = PA4
 } JOYState_TypeDef;
 
-typedef GPIOPin Button_TypeDef;
-typedef GPIOMode_TypeDef ButtonMode_TypeDef;
-
-typedef usart* COM_TypeDef;
-
-void STM_EVAL_LEDInit(Led_TypeDef Led);
-void STM_EVAL_LEDOn(Led_TypeDef Led);
-void STM_EVAL_LEDOff(Led_TypeDef Led);
-void STM_EVAL_LEDToggle(Led_TypeDef Led);
-void STM_EVAL_PBInit(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode);
-uint32_t STM_EVAL_PBGetState(Button_TypeDef Button);
-void STM_EVAL_COMInit(COM_TypeDef COM, USART_InitTypeDef* USART_InitStruct);
 /*
 void SD_LowLevel_DeInit(void);
 void SD_LowLevel_Init(void); 
@@ -42,7 +29,7 @@ void sEE_LowLevel_Init(void);
 void sEE_LowLevel_DMAConfig(uint32_t pBuffer, uint32_t BufferSize, uint32_t Direction);
 */
 
-
+/*
 #define Red   1
 #define White 1
 #define Black 0
@@ -66,12 +53,10 @@ void LCD_SetTextColor(uint16 x); // {}
 sFONT * LCD_GetFont(void); // { return 0; }
 void LCD_Clear(uint16);
 void LCD_SetBackColor(uint16);
+*/
 
 #ifdef __cplusplus
 }
 #endif
-
-//#include "SSD1289.h"
-//extern SSD1289 lcd;
 
 #endif /* __STM32F4_DISCOVERY_H */
