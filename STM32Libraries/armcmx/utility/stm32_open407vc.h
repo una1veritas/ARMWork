@@ -59,7 +59,8 @@ void sEE_LowLevel_DMAConfig(uint32_t pBuffer, uint32_t BufferSize, uint32_t Dire
 
 typedef void sFONT;
 void STM324xG_LCD_Init(void);
-void LCD_DisplayStringLine(uint16 x, uint8 *y);// {} //  DisplayStringLine((x), (y))
+void LCD_Clear(uint16 c);
+void LCD_DisplayStringLine(uint16 x, char *y);// {} //  DisplayStringLine((x), (y))
 //void LCD_GetFont(x) {}
 void LCD_SetTextColor(uint16 x); // {}
 sFONT * LCD_GetFont(void); // { return 0; }
@@ -69,5 +70,8 @@ void LCD_SetBackColor(uint16);
 #ifdef __cplusplus
 }
 #endif
+
+//#include "SSD1289.h"
+//extern SSD1289 lcd;
 
 #endif /* __STM32F4_DISCOVERY_H */

@@ -348,7 +348,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER STM32F4_DISCOVERY STDSERIAL=3 USE_LCD HSE_VALUE=8000000</Define>
+              <Define>USE_STDPERIPH_DRIVER OPEN407VC STDSERIAL=3 USE_LCD HSE_VALUE=8000000</Define>
               <Undefine></Undefine>
               <IncludePath>..\inc;..\..\..\..\..\STM32Libraries\STM32F4xx_StdPeriph_Driver\inc;..\..\..\..\..\STM32Libraries\STM32F4x7_ETH_Driver\inc;..\..\..\..\Utilities\STM32_EVAL\Common;..\..\..\..\Utilities\STM32_EVAL\STM3240_41_G_EVAL;..\..\..\..\Utilities\Third_Party\lwip_v1.3.2\src\include;..\..\..\..\Utilities\Third_Party\lwip_v1.3.2\src\include\lwip;..\..\..\..\Utilities\Third_Party\lwip_v1.3.2\src\include\netif;..\..\..\..\Utilities\Third_Party\lwip_v1.3.2\src\include\ipv4;..\..\..\..\Utilities\Third_Party\lwip_v1.3.2\port\STM32F4x7;..\..\..\..\Utilities\Third_Party\lwip_v1.3.2\port\STM32F4x7\Standalone;..\..\..\..\..\STM32Libraries\armcmx;..\..\..\..\..\STM32Libraries\armcmx\utility</IncludePath>
             </VariousControls>
@@ -732,14 +732,14 @@
               <FilePath>..\..\..\..\..\STM32Libraries\armcmx\utility\stm32f4_discovery.h</FilePath>
             </File>
             <File>
-              <FileName>stm32_open407vc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\STM32Libraries\armcmx\utility\stm32_open407vc.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32_open407vc.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\..\..\STM32Libraries\armcmx\utility\stm32_open407vc.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_open407vc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\STM32Libraries\armcmx\utility\stm32_open407vc.c</FilePath>
             </File>
           </Files>
         </Group>
