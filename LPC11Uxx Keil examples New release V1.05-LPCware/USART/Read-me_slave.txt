@@ -1,0 +1,5 @@
+Purpose:
+Configure USART in Slave mode on LPC11Uxx
+
+Running mode:
+* Compile, Flash the program and reset.

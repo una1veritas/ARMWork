@@ -1,0 +1,17 @@
+Purpose:
+The HID project is a demo program using the NXP LPC11Uxx Microcontroller.
+
+Description:
+It demonstrates an USB HID (Human Interface Device):
+  
+The USB HID is recognized by the host PC running Windows
+which will load a generic HID driver. The board LEDs
+and Push Buttons can then be accessed from the PC
+through a custom HID Client Program.
+
+The HID program is available for the following targets:
+  NXP LPC11Uxx Eval Board: configured for on-chip Flash ROM
+                 (used for production or target debugging)
+
+Running mode:
+* Compile, Flash the program and reset.
