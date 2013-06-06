@@ -1,6 +1,6 @@
-/*
- *
- */
+
+
+
 
 #include "LPC11Uxx.h"
 #include "type.h"
@@ -59,9 +59,9 @@ int main (void)
   GPIOSetDir(1, 6, 1 );
   GPIOSetBitValue( 1, 6, 1);
 
-  i2c_puts((unsigned char *)"lpclcd");
+  i2c_puts("lpclcd");
   i2c_cmd(0xC0);	// move to 2nd line
-  i2c_puts((unsigned char *)"Smart LCD Module");
+  i2c_puts("Smart LCD Module");
 
   cn = 0;
 

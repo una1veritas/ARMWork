@@ -54,7 +54,7 @@ int main (void) {
   enable_timer16(TEST_TIMER_NUM);
 
   /* Set port 1_19 to output */
-  GPIOSetDir( 1, 19, 1 );
+  GPIOSetDir( 0, 6, 1 );
 
   while (1)                                /* Loop forever */
   {
@@ -62,11 +62,11 @@ int main (void) {
 	/* I/O configuration and LED setting pending. */
 	if ( (timer16_1_counter[0] > 0) && (timer16_1_counter[0] <= 200) )
 	{
-	  GPIOSetBitValue( 1, 19, 0 );
+	  GPIOSetBitValue( 0, 6, 0 );
 	}
 	if ( (timer16_1_counter[0] > 200) && (timer16_1_counter[0] <= 400) )
 	{
-	  GPIOSetBitValue( 1, 19, 1 );
+	  GPIOSetBitValue( 0, 6, 1 );
 	}
 	else if ( timer16_1_counter[0] > 400 )
 	{
@@ -76,11 +76,11 @@ int main (void) {
 	/* I/O configuration and LED setting pending. */
 	if ( (timer16_0_counter[0] > 0) && (timer16_0_counter[0] <= 200) )
 	{
-	  GPIOSetBitValue( 1, 19, 0 );
+	  GPIOSetBitValue( 0, 6, 0 );
 	}
 	if ( (timer16_0_counter[0] > 200) && (timer16_0_counter[0] <= 400) )
 	{
-	  GPIOSetBitValue( 1, 19, 1 );
+	  GPIOSetBitValue( 0, 6, 1 );
 	}
 	else if ( timer16_0_counter[0] > 400 )
 	{

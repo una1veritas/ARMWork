@@ -210,10 +210,10 @@
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.1739697165;com.crt.advproject.config.exe.debug.1739697165.;com.crt.advproject.gcc.exe.debug.1178660549;com.crt.advproject.compiler.input.105516288">
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.1739697165;com.crt.advproject.config.exe.debug.1739697165.;com.crt.advproject.gas.exe.debug.215919380;com.crt.advproject.assembler.input.1941220968">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.1739697165;com.crt.advproject.config.exe.debug.1739697165.;com.crt.advproject.gas.exe.debug.215919380;com.crt.advproject.assembler.input.1941220968">
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.1739697165;com.crt.advproject.config.exe.debug.1739697165.;com.crt.advproject.gcc.exe.debug.1178660549;com.crt.advproject.compiler.input.105516288">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
 		</scannerConfigBuildInfo>
 	</storageModule>
