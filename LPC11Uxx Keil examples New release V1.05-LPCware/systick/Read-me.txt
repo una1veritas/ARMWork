@@ -1,9 +1,0 @@
-Purpose:
-Implements Blinky using Systick handler on LPC11Uxx.
-
-Description:
-SYstick handler setup for 10ms interrupt.
-P1_20 is configured as the output bit and toggles continuosly.
-
-Running mode:
-* Compile, Flash the program and reset.

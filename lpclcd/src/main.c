@@ -1,6 +1,7 @@
-
-
-
+/*
+ * LPCLDC ported to Keil uV
+ *
+ */
 
 #include "LPC11Uxx.h"
 #include "type.h"
@@ -11,13 +12,13 @@
 #include "i2c.h"
 #include "i2clcd.h"
 
-#include <cr_section_macros.h>
-#include <NXP/crp.h>
+//#include <cr_section_macros.h>
+//#include <NXP/crp.h>
 
 // Variable to store CRP value in. Will be placed automatically
 // by the linker when "Enable Code Read Protect" selected.
 // See crp.h header for more information
-__CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
+//__CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 
 
 
@@ -59,18 +60,18 @@ int main (void)
   GPIOSetDir(1, 6, 1 );
   GPIOSetBitValue( 1, 6, 1);
 
-  i2c_puts("lpclcd");
+  i2c_puts((uint8_t*)"lpclcd");
   i2c_cmd(0xC0);	// move to 2nd line
-  i2c_puts("Smart LCD Module");
+  i2c_puts((uint8_t*)"Smart LCD Module");
 
   cn = 0;
 
   while (1){                                /* Loop forever */
 
 	GPIOSetBitValue( 1, 6, 0 );
-        wait_ms(500);
+        wait_ms(250);
 	GPIOSetBitValue( 1, 6, 1 );
-        wait_ms(500);
+        wait_ms(250);
 
 
         i2c_cmd(0x80+7);

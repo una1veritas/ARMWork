@@ -1,0 +1,34 @@
+Purpose:
+Program to test Brown Out Detection (BOD) on LPC11Uxx
+
+* Tested on Keil MCB11U10 board
+
+Hardware settings:
+1.19 is for BOD reset,  
+1.20 is for POR reset, 
+1.21 is for BOD interrupt.
+0.16 is for external interrupt to trigger power down.
+
+
+Running mode:
+* Build, Debug
+
+Procedure:
+
+  (1) POR LED should blink on after power cycle.
+  (2) when voltage(VDD_MAIN) falls to the BOD interrupt level, BOD interrupt LED will 
+  be ON, POR LED should be off. 
+  (3) when voltage raises, BOD interrupt LED should be off, POR RESET LED will blink
+  back on again. 
+  (4) when voltage drops further to the BOD RESET, BOD RESET LED will blink. 
+  (5) Once it happens, BOD interrupt is disabled. 
+
+If DEEPSLEEP_BOD_WAKEUP flag is true. It will test, 
+when MCU is in deep sleep mode, BOD RESET can be used as the wakeup source. 
+	  
+	  The procedure is: 
+	  (1) Install jumper to put MCU into deep sleep mode.
+	  (2) Decrease the VDD_MAIN voltage below BOD RESET.
+	  (3) Increase the VDD MAIN voltage back to BOD RESET range.
+	  (4) The system will be waken up, and BOD RESET LED
+	  should blink. 

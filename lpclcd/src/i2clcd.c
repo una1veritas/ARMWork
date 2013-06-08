@@ -43,7 +43,7 @@ uint8_t i2c_puts(unsigned char *s)
   
 	while(*s){
           re = i2c_data(*s++);
-          if(re<0) return re;
+//          if(re<0) return re;
 	}
         return 0;
 }

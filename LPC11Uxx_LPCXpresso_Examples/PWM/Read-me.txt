@@ -1,0 +1,12 @@
+Purpose:
+This example implements Pulse Width Modulation Test modules on LPC11Uxx
+
+Running mode:
+* Build, Debug
+
+Output:
+P0_7 toggles continuosly.
+Also CT32_1 MAT0 and CT16_1 MAT1 output waveforms with frequency 48KHz but with duty cycles 25% and 50% respectively.
+
+Note:
+PWM frequency used = 48KHz

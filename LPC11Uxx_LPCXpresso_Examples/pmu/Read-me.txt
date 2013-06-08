@@ -1,0 +1,25 @@
+Purpose:
+This example implements Power Management Unit (PMU) on LPC11Uxx
+
+Running mode:
+* Build, Debug
+
+Note:
+Tested on Keil MCB11U10 board.
+
+Description:
+
+** The LPC11Uxx can be configured to Sleep,Deep Sleep,Powerdown or Deep Powerdown modes. Power modes can be configured in pmu.h file.
+
+** When TEST_POWERDOWN is enabled, the part is put to Deep Powerdown mode and all LEDs are found to be switched OFF on reset (peripherals).
+To wake up, press P0_16 button on the board and P1_20 is found to be toggling continuosly.
+
+** When TEST_POWERDOWN is not enabled, the user can configure the part to Sleep, Deep Sleep or Powerdown mode based on the flags set in pmu.h.
+To wake up, press the P0_17 button.
+
+** The wake up source can also be set as Group Interrupts. To configure, enable the "Gint_Enable" flag in pmu.h and configure desired required conditions in PMU_Init() in the pmu.c file.
+
+** When Sleep, Deep Sleep or Powerdown mode is programmed, The reset function is lost. In order to reset the part, power cycle the part holding down the ISP button. To wake-up the chip, use the PIO0_17 button on the board.
+
+Note:
+The clock set-up for this example has been disabled and configured to run from IRC to achieve optimum power charecteristics.

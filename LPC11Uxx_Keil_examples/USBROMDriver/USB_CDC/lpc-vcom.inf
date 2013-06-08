@@ -1,0 +1,65 @@
+; 
+; NXP  Comunication Device Class driver installation file
+; (C)2011 Copyright 
+;
+
+[Version] 
+Signature="$Windows NT$" 
+Class=Ports
+ClassGuid={4D36E978-E325-11CE-BFC1-08002BE10318} 
+Provider=%Keil% 
+;LayoutFile=layout.inf
+DriverVer=01/06/07
+
+[Manufacturer] 
+%Keil%=DeviceList
+
+[DestinationDirs] 
+DefaultDestDir=12 
+
+[SourceDisksFiles]
+
+[SourceDisksNames]
+
+[DeviceList] 
+%DESCRIPTION%=LPCVCOM, USB\VID_1FC9&PID_0011 
+
+;------------------------------------------------------------------------------
+;  Windows 2000/XP Sections
+;------------------------------------------------------------------------------
+
+[LPCVCOM.nt] 
+include=mdmcpq.inf
+CopyFiles=DriverCopyFiles
+AddReg=LPCVCOM.nt.AddReg 
+
+[DriverCopyFiles]
+usbser.sys,,,0x20
+
+[LPCVCOM.nt.AddReg] 
+HKR,,DevLoader,,*ntkern 
+HKR,,NTMPDriver,,usbser.sys 
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider" 
+
+[LPCVCOM.nt.Services] 
+include=mdmcpq.inf
+AddService=usbser, 0x00000002, DriverService
+
+
+[LPCVCOM.nt.HW]
+include=mdmcpq.inf
+
+[DriverService] 
+DisplayName=%DESCRIPTION% 
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary=%12%\usbser.sys 
+
+;------------------------------------------------------------------------------
+;  String Definitions
+;------------------------------------------------------------------------------
+
+[Strings] 
+NXP="NXP - Founded by Philips"
+DESCRIPTION="LPC USB VCom Port" 
