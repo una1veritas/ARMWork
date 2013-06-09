@@ -1,0 +1,26 @@
+Purpose:
+A program to implement Analog to  Digital Converter (ADC) example on LPC11Uxx
+
+Note:
+Tested on LPCXpresso LPC11U14 with EA Baseboard
+
+Running mode:
+* Build, Debug
+* Setup UART for 9600, 8 data bits, no parity, 1 stop bit
+* Vary the Trim Pot on board  
+  ** AD0 (Channel 0) on Keil MCB 11U10 
+  ** AD0 (Channel 0) on EA Baseboard
+  ** AD6 (Channel 6) on IAR LPC11U14 KSK
+
+Output:
+
+Ch CUR MIN MAX
+0 3F8 3E0 3FF
+1 2D1 21A 34E
+2 217 1FB 2A4
+3 3F5 3E8 3FF
+4 000 000 004
+5 3FF 3F6 3FF
+6 000 000 3FF
+7 1E9 1E6 1EF
+No of Samples: 034
