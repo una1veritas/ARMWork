@@ -12,21 +12,32 @@
 #include "i2c.h"
 #include "i2clcd.h"
 
-//#include <cr_section_macros.h>
-//#include <NXP/crp.h>
+#ifdef _LPCXPRESSO_CRP_
+#include <cr_section_macros.h>
+#include <NXP/crp.h>
 
 // Variable to store CRP value in. Will be placed automatically
 // by the linker when "Enable Code Read Protect" selected.
 // See crp.h header for more information
-//__CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
-
+__CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
+#endif
 
 
 /*******************************************************************************
 **   Main Function  main()
 *******************************************************************************/
-int main (void)
-{
+
+// Strawberry Linux original lpclcd port maps
+#define LCDBKLT PIO1_3
+#define LCDRST  PIO1_25
+#define USERLED PIO1_6
+#define USERBTN PIO0_1
+#define RXD2    PIO0_18
+#define TXD2    PIO0_19
+
+
+
+int main (void) {
 	long cn;
 
   SystemInit();
@@ -37,12 +48,18 @@ int main (void)
   LPC_SYSCON->SYSAHBCLKCTRL |= (1<<6);
 
   // initialize xprintf
-  xfunc_out = (void(*)(unsigned char))i2c_data;
+  xfunc_out = (void(*)(unsigned char))i2clcd_data;
   
   // I2C LCD Backlight controll pin
+  /*
   GPIOSetDir(1, 3, 1 );
   GPIOSetBitValue( 1, 3, 0);
+  */
+  pinMode(PIO1_3, OUTPUT);
+  digitalWrite(PIO1_3, LOW);
 
+  pinMode(PIO0_1, INPUT);
+  
   /* NVIC is installed inside UARTInit file. */
   UARTInit(115200);
 
@@ -57,25 +74,36 @@ int main (void)
   }
 
   // PIO1_6 USR LED
-  GPIOSetDir(1, 6, 1 );
-  GPIOSetBitValue( 1, 6, 1);
+//  GPIOSetDir(1, 6, 1 );
+//  GPIOSetBitValue( 1, 6, 1);
+    pinMode(PIO1_6, OUTPUT);
+    digitalWrite(PIO1_6, HIGH);
+  
+  
+  print_string((uint8_t*)"Hello!\n");
 
-  i2c_puts((uint8_t*)"lpclcd");
-  i2c_cmd(0xC0);	// move to 2nd line
-  i2c_puts((uint8_t*)"Smart LCD Module");
+  i2clcd_puts((uint8_t*)"lpclcd");
+  i2clcd_cursor(1, 0);	// move to 2nd line
+  i2clcd_puts((uint8_t*)"Smart LCD Module");
 
   cn = 0;
 
   while (1){                                /* Loop forever */
 
-	GPIOSetBitValue( 1, 6, 0 );
+//	GPIOSetBitValue( 1, 6, 0 );
+    digitalWrite(PIO1_6, LOW);
         wait_ms(250);
-	GPIOSetBitValue( 1, 6, 1 );
+//	GPIOSetBitValue( 1, 6, 1 );
+    digitalWrite(PIO1_6, HIGH);
         wait_ms(250);
 
+    if ( digitalRead(USERBTN) == LOW ) {
+      digitalToggle(LCDBKLT);
+    }
 
-        i2c_cmd(0x80+7);
-        xprintf("%9d", cn++);
+    i2clcd_cursor(0,7);
+    xprintf("%9d", cn++);
+    
   }
   
 

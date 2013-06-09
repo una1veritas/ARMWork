@@ -74,9 +74,9 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>objcopy -I ihex -O binary LPC11U24LCD.hex LPC11U24LCD.bin</UserProg1Name>
-            <UserProg2Name></UserProg2Name>
+            <RunUserProg2>1</RunUserProg2>
+            <UserProg1Name>C:\Keil\ARM\ARMCC\bin\fromelf.exe --bin "#L" -o "$Pfirmware.bin"</UserProg1Name>
+            <UserProg2Name>C:\nxp\LPCXpresso_5.2.4\lpcxpresso\bin\checksum -p LPC11U24_401 -d "$Pfirmware.bin"</UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </AfterMake>
@@ -165,6 +165,7 @@
             <Capability>1</Capability>
             <DriverSelection>4104</DriverSelection>
           </Flash1>
+          <bUseTDR>0</bUseTDR>
           <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
@@ -350,7 +351,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\CMSISv2p00_LPC11Uxx\inc;..\inc;..\src</IncludePath>
+              <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\LPCLibrary\armcmx_lpc11xx;..\inc;..\src</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -406,11 +407,6 @@
               <FileType>1</FileType>
               <FilePath>..\src\main.c</FilePath>
             </File>
-            <File>
-              <FileName>system_LPC11Uxx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\system_LPC11Uxx.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -442,9 +438,19 @@
               <FilePath>..\src\xprintf.c</FilePath>
             </File>
             <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\gpio.c</FilePath>
+              <FileName>type.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\inc\type.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\inc\uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\inc\usart.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -452,9 +458,29 @@
           <GroupName>cmsis2.0</GroupName>
           <Files>
             <File>
+              <FileName>system_LPC11Uxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\system_LPC11Uxx.c</FilePath>
+            </File>
+            <File>
               <FileName>core_cm0.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\CMSISv2p00_LPC11Uxx\src\core_cm0.c</FilePath>
+              <FilePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx\src\core_cm0.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>armcmx_lpc11xx</GroupName>
+          <Files>
+            <File>
+              <FileName>gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx_lpc11xx\gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx_lpc11xx\gpio.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -7,13 +7,11 @@
 #include "i2clcd.h"
 #include "systick.h"
 
-//const unsigned char contrast = 0x28;//0b00101000;	// 3.0V ”’l‚ğã‚°‚é‚Æ”Z‚­‚È‚è‚Ü‚·B
+//const unsigned char contrast = 0x28;//0b00101000;	// 3.0Vï¿½ï¿½ ï¿½ï¿½ï¿½lï¿½ï¿½ï¿½ã‚°ï¿½ï¿½Æ”Zï¿½ï¿½ï¿½È‚ï¿½Ü‚ï¿½ï¿½B
 
 
 
 #define I2C_LCD_RST          25
-
-
 
 extern volatile uint32_t I2CCount;
 extern volatile uint8_t I2CMasterBuffer[BUFSIZE];
@@ -24,69 +22,71 @@ extern volatile uint32_t I2CReadLength, I2CWriteLength;
 
 
 
-// ƒRƒ}ƒ“ƒh‚ğ‘—M‚µ‚Ü‚·BHD44780‚Å‚¢‚¤RS=0‚É‘Š“–
-uint8_t i2c_cmd(unsigned char db)
+// ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ğ‘—Mï¿½ï¿½ï¿½Ü‚ï¿½ï¿½BHD44780ï¿½Å‚ï¿½ï¿½ï¿½RS=0ï¿½É‘ï¿½ï¿½ï¿½
+uint8_t i2clcd_cmd(unsigned char db)
 {
 	return i2c_write(0x7c, 0x00, db);
 }
 
-// ƒf[ƒ^‚ğ‘—M‚µ‚Ü‚·BHD44780‚Å‚¢‚¤RS=1‚É‘Š“–
-uint8_t i2c_data(unsigned char db)
+// ï¿½fï¿½[ï¿½^ï¿½ğ‘—Mï¿½ï¿½ï¿½Ü‚ï¿½ï¿½BHD44780ï¿½Å‚ï¿½ï¿½ï¿½RS=1ï¿½É‘ï¿½ï¿½ï¿½
+uint8_t i2clcd_data(unsigned char db)
 {
 	return i2c_write(0x7c, 0x40, db);
 }
 
-// iå‚Éj•¶š—ñ‚ğ˜A‘±‘—M‚µ‚Ü‚·B
-uint8_t i2c_puts(unsigned char *s)
+// ï¿½iï¿½ï¿½Éjï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
+uint8_t i2clcd_puts(unsigned char *s)
 {
-        uint8_t re;
+        uint8_t re = 0;
   
 	while(*s){
-          re = i2c_data(*s++);
+          re += i2clcd_data(*s++);
 //          if(re<0) return re;
 	}
-        return 0;
+        return re;
 }
 
-uint8_t i2c_clear()
+void i2clcd_clear()
 {
         uint8_t re;
         
-  	re = i2c_cmd(0x01);
-        if(re) return re;
+  	re = i2clcd_cmd(0x01);
+        if(re) return; // re;
         
 	wait_ms(2);
-        return 0;
+        return; // 0;
 }
 
 
 
 uint32_t i2clcd_init( unsigned char contrast)
 {
-        GPIOSetDir(1, I2C_LCD_RST, 1 );
-
-        GPIOSetBitValue( 1, I2C_LCD_RST, 0 );
+//        GPIOSetDir(1, I2C_LCD_RST, 1 );
+  pinMode(PIO1_25, 1);
+//        GPIOSetBitValue( 1, I2C_LCD_RST, 0 );
+  digitalWrite(PIO1_25, 0);
+//
         wait_ms(10);
-        GPIOSetBitValue( 1, I2C_LCD_RST, 1 );
-
+//        GPIOSetBitValue( 1, I2C_LCD_RST, 1 );
+  digitalWrite(PIO1_25, 1);
 	
-	// ‚±‚±‚©‚çI2C LCD‚Ì‰Šú‰»‚ğs‚¢‚Ü‚·B
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½I2C LCDï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
 	wait_ms(40);
-	i2c_cmd(0x38);//0b00111000); // function set
-	i2c_cmd(0x39);//0b00111001); // function set
-	i2c_cmd(0x14);//0b00010100); // interval osc
-	i2c_cmd(0x70 | (contrast & 0xF)); // contrast Low
+	i2clcd_cmd(0x38);//0b00111000); // function set
+	i2clcd_cmd(0x39);//0b00111001); // function set
+	i2clcd_cmd(0x14);//0b00010100); // interval osc
+	i2clcd_cmd(0x70 | (contrast & 0xF)); // contrast Low
         
 	//i2c_cmd(0b01011100 | ((contrast >> 4) & 0x3)); // contast High/icon/power
-	i2c_cmd(0x5C | ((contrast >> 4) & 0x3)); // contast High/icon/power
-	i2c_cmd(0x6C); // follower control
+	i2clcd_cmd(0x5C | ((contrast >> 4) & 0x3)); // contast High/icon/power
+	i2clcd_cmd(0x6C); // follower control
 	wait_ms(300);
 
-	i2c_cmd(0x38);//0b00111000); // function set
-	i2c_cmd(0x0c);//0b00001100); // Display On
+	i2clcd_cmd(0x38);//0b00111000); // function set
+	i2clcd_cmd(0x0c);//0b00001100); // Display On
 	
-	i2c_cmd(0x01);//0b00000001); // Clear Display
-	wait_ms(2);			 // Clear Display‚Í’Ç‰ÁƒEƒFƒCƒg‚ª•K—v
+	i2clcd_cmd(0x01);//0b00000001); // Clear Display
+	wait_ms(2);			 // Clear Displayï¿½Í’Ç‰ï¿½ï¿½Eï¿½Fï¿½Cï¿½gï¿½ï¿½ï¿½Kï¿½v
   
   
   return 0;
@@ -98,25 +98,25 @@ static const unsigned char hex[16]="0123456789ABCDEF";
 
 static unsigned char _hex10[10+1+2];
 
-void i2c_lcd_hex8(unsigned char c)
+void i2clcd_hex8(unsigned char c)
 {
-	i2c_data(hex[c>>4]);
-	i2c_data(hex[c&15]);
+	i2clcd_data(hex[c>>4]);
+	i2clcd_data(hex[c&15]);
 }
 
 
-unsigned int i2c_lcd_decimal(long d)
+unsigned int i2clcd_decimal(long d)
 {
 	unsigned char *p;
 	unsigned char n;
 	
 
 	if(d<0){
-		i2c_data('-');
-		return i2c_lcd_decimal(-d);
+		i2clcd_data('-');
+		return i2clcd_decimal(-d);
 	}
 	if(!d){
-		i2c_data('0');
+		i2clcd_data('0');
 		return 1;
 	}
 	n=0;
@@ -127,10 +127,12 @@ unsigned int i2c_lcd_decimal(long d)
 		d /= 10;
 	}
 	while(*p){
-		i2c_data(*p++); n++;
+		i2clcd_data(*p++); n++;
 	}
 	return n;
 }
 
 
-
+extern void i2clcd_cursor(uint8_t r, uint8_t c) {
+	   i2clcd_cmd(0x80 + (r == 0? 0 : 0x40) +c);
+}
