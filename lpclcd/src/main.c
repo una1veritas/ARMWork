@@ -36,10 +36,10 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #define TXD2    PIO0_19
 
 
-
 int main (void) {
 	long cn;
-
+  int i;
+  
   SystemInit();
   GPIOInit();
   
@@ -69,17 +69,16 @@ int main (void) {
 
   // I2C液晶を初期化します
   while(1){
-        if(!i2clcd_init(0x27)) break;   // 初期化完了ならwhileを抜ける
-        // 失敗したら初期化を永遠に繰り返す
+    if(!i2clcd_init(0x27)) break;   // 初期化完了ならwhileを抜ける
+    // 失敗したら初期化を永遠に繰り返す
   }
 
   // PIO1_6 USR LED
 //  GPIOSetDir(1, 6, 1 );
 //  GPIOSetBitValue( 1, 6, 1);
-    pinMode(PIO1_6, OUTPUT);
-    digitalWrite(PIO1_6, HIGH);
-  
-  
+  pinMode(PIO1_6, OUTPUT);
+  digitalWrite(PIO1_6, HIGH);
+    
   print_string((uint8_t*)"Hello!\n");
 
   i2clcd_puts((uint8_t*)"lpclcd");
@@ -89,16 +88,27 @@ int main (void) {
   cn = 0;
 
   while (1){                                /* Loop forever */
-
-//	GPIOSetBitValue( 1, 6, 0 );
+    
+    //	GPIOSetBitValue( 1, 6, 0 );
     digitalWrite(PIO1_6, LOW);
-        wait_ms(250);
-//	GPIOSetBitValue( 1, 6, 1 );
-    digitalWrite(PIO1_6, HIGH);
-        wait_ms(250);
+    wait_ms(500);
 
-    if ( digitalRead(USERBTN) == LOW ) {
-      digitalToggle(LCDBKLT);
+    //	GPIOSetBitValue( 1, 6, 1 );
+    digitalWrite(PIO1_6, HIGH);
+    wait_ms(500);
+
+    if ( UARTCount > 0 ) {
+      i2clcd_cursor(1,0);
+      for(i = 0; i < UARTCount; i++) {
+        i2clcd_data(UARTBuffer[i]);
+      }
+      
+      for( ; i < 16; i++) {
+        i2clcd_data(' ');
+      }
+      if ( UARTBuffer[UARTCount-1] == '\n' ) {
+        UARTCount = 0;
+      }
     }
 
     i2clcd_cursor(0,7);

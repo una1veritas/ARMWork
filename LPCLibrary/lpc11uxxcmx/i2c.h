@@ -23,9 +23,11 @@
 /* If I2C SEEPROM is tested, make sure FAST_MODE_PLUS is 0.
 For board to board test, this flag can be turned on. */
 
+#include <stdio.h>
+
 #define FAST_MODE_PLUS      0
 
-#define BUFSIZE             64
+#define I2C_BUFSIZE             64
 #define MAX_TIMEOUT         0x00FFFFFF
 
 #define I2CMASTER           0x01
@@ -79,6 +81,11 @@ extern uint32_t I2CInit( uint32_t I2cMode );
 extern uint32_t I2CStart( void );
 extern uint32_t I2CStop( void );
 extern uint32_t I2CEngine( void );
+
+//
+extern uint8_t i2c_write(uint8_t addr, uint8_t * data, size_t length);
+extern uint8_t i2c_write16(uint8_t addr, uint16_t data);
+extern uint8_t i2c_read(uint8_t addr, uint8_t * data, size_t reqlen, size_t receivelen);
 
 #endif /* end __I2C_H */
 /****************************************************************************

@@ -35,10 +35,11 @@
 volatile uint32_t UARTStatus;
 volatile uint8_t  UARTTxEmpty = 1;
 volatile uint8_t  UARTBuffer[BUFSIZE];
-volatile uint32_t UARTCount = 0;
+volatile uint32_t UARTCount; // = 0;
 
 #if AUTOBAUD_ENABLE
-volatile uint32_t UARTAutoBaud = 0, AutoBaudTimeout = 0;
+volatile uint32_t UARTAutoBaud = 0, 
+volatile uint32_t AutoBaudTimeout = 0;
 #endif
 
 /*****************************************************************************
@@ -50,8 +51,7 @@ volatile uint32_t UARTAutoBaud = 0, AutoBaudTimeout = 0;
 ** Returned value:		None
 ** 
 *****************************************************************************/
-void UART_IRQHandler(void)
-{
+void UART_IRQHandler(void) {
   uint8_t IIRValue, LSRValue;
   uint8_t Dummy = Dummy;
 

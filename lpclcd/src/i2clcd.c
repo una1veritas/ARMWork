@@ -1,5 +1,4 @@
 
-
 #include "LPC11uxx.h"			/* LPC11uxx Peripheral Registers */
 #include "type.h"
 #include "i2c.h"
@@ -10,51 +9,50 @@
 //const unsigned char contrast = 0x28;//0b00101000;	// 3.0V�� ���l���グ��ƔZ���Ȃ�܂��B
 
 
-
 #define I2C_LCD_RST          25
 
 extern volatile uint32_t I2CCount;
-extern volatile uint8_t I2CMasterBuffer[BUFSIZE];
-extern volatile uint8_t I2CSlaveBuffer[BUFSIZE];
+extern volatile uint8_t I2CMasterBuffer[I2C_BUFSIZE];
+extern volatile uint8_t I2CSlaveBuffer[I2C_BUFSIZE];
 extern volatile uint32_t I2CMasterState;
 extern volatile uint32_t I2CReadLength, I2CWriteLength;
-
-
 
 
 // �R�}���h�𑗐M���܂��BHD44780�ł���RS=0�ɑ���
 uint8_t i2clcd_cmd(unsigned char db)
 {
-	return i2c_write(0x7c, 0x00, db);
+//	return i2c_write(0x7c, 0x00, db);
+	return i2c_write16(0x7c, db);
 }
 
 // �f�[�^�𑗐M���܂��BHD44780�ł���RS=1�ɑ���
 uint8_t i2clcd_data(unsigned char db)
 {
-	return i2c_write(0x7c, 0x40, db);
+//	return i2c_write(0x7c, 0x40, db);
+	return i2c_write16(0x7c, 0x40<<8 | db);
 }
 
 // �i��Ɂj�������A�����M���܂��B
 uint8_t i2clcd_puts(unsigned char *s)
 {
-        uint8_t re = 0;
+  uint8_t re = 0;
   
-	while(*s){
-          re += i2clcd_data(*s++);
-//          if(re<0) return re;
+	while(*s) {
+    re += i2clcd_data(*s++);
+    // if(re<0) return re;
 	}
-        return re;
+  return re;
 }
 
 void i2clcd_clear()
 {
-        uint8_t re;
-        
-  	re = i2clcd_cmd(0x01);
-        if(re) return; // re;
+  uint8_t re;
+
+  re = i2clcd_cmd(0x01);
+  if(re) return; // re;
         
 	wait_ms(2);
-        return; // 0;
+  return; // 0;
 }
 
 
@@ -66,7 +64,7 @@ uint32_t i2clcd_init( unsigned char contrast)
 //        GPIOSetBitValue( 1, I2C_LCD_RST, 0 );
   digitalWrite(PIO1_25, 0);
 //
-        wait_ms(10);
+  wait_ms(10);
 //        GPIOSetBitValue( 1, I2C_LCD_RST, 1 );
   digitalWrite(PIO1_25, 1);
 	
@@ -76,18 +74,17 @@ uint32_t i2clcd_init( unsigned char contrast)
 	i2clcd_cmd(0x39);//0b00111001); // function set
 	i2clcd_cmd(0x14);//0b00010100); // interval osc
 	i2clcd_cmd(0x70 | (contrast & 0xF)); // contrast Low
-        
+  
 	//i2c_cmd(0b01011100 | ((contrast >> 4) & 0x3)); // contast High/icon/power
 	i2clcd_cmd(0x5C | ((contrast >> 4) & 0x3)); // contast High/icon/power
 	i2clcd_cmd(0x6C); // follower control
 	wait_ms(300);
-
+  
 	i2clcd_cmd(0x38);//0b00111000); // function set
 	i2clcd_cmd(0x0c);//0b00001100); // Display On
 	
 	i2clcd_cmd(0x01);//0b00000001); // Clear Display
 	wait_ms(2);			 // Clear Display�͒ǉ��E�F�C�g���K�v
-  
   
   return 0;
 }
@@ -108,8 +105,7 @@ void i2clcd_hex8(unsigned char c)
 unsigned int i2clcd_decimal(long d)
 {
 	unsigned char *p;
-	unsigned char n;
-	
+	unsigned char n;	
 
 	if(d<0){
 		i2clcd_data('-');
@@ -134,5 +130,5 @@ unsigned int i2clcd_decimal(long d)
 
 
 extern void i2clcd_cursor(uint8_t r, uint8_t c) {
-	   i2clcd_cmd(0x80 + (r == 0? 0 : 0x40) +c);
+  i2clcd_cmd(0x80 + (r == 0? 0 : 0x40) +c);
 }

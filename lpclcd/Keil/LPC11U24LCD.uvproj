@@ -448,16 +448,6 @@
               <FilePath>..\..\LPCLibrary\lpc11uxxcmx\gpio.h</FilePath>
             </File>
             <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\i2c.h</FilePath>
-            </File>
-            <File>
               <FileName>LPC11Uxx.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\LPCLibrary\lpc11uxxcmx\LPC11Uxx.h</FilePath>
@@ -491,6 +481,26 @@
               <FileName>timer32.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\LPCLibrary\lpc11uxxcmx\timer32.h</FilePath>
+            </File>
+            <File>
+              <FileName>systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\systick.c</FilePath>
+            </File>
+            <File>
+              <FileName>systick.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\systick.h</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\i2c.h</FilePath>
             </File>
           </Files>
         </Group>
