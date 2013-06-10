@@ -351,7 +351,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\LPCLibrary\armcmx_lpc11xx;..\inc;..\src</IncludePath>
+              <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\LPCLibrary\lpc11uxxcmx;..\inc;..\src</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -403,24 +403,9 @@
           <GroupName>main</GroupName>
           <Files>
             <File>
-              <FileName>main.c</FileName>
+              <FileName>xprintf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\main.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>library</GroupName>
-          <Files>
-            <File>
-              <FileName>systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\systick.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\i2c.c</FilePath>
+              <FilePath>..\src\xprintf.c</FilePath>
             </File>
             <File>
               <FileName>i2clcd.c</FileName>
@@ -428,29 +413,9 @@
               <FilePath>..\src\i2clcd.c</FilePath>
             </File>
             <File>
-              <FileName>uart.c</FileName>
+              <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>xprintf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\xprintf.c</FilePath>
-            </File>
-            <File>
-              <FileName>type.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\inc\type.h</FilePath>
-            </File>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\inc\uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\inc\usart.h</FilePath>
+              <FilePath>..\src\main.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -470,17 +435,62 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>armcmx_lpc11xx</GroupName>
+          <GroupName>lpc11uxxcmx</GroupName>
           <Files>
-            <File>
-              <FileName>gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx_lpc11xx\gpio.h</FilePath>
-            </File>
             <File>
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx_lpc11xx\gpio.c</FilePath>
+              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>LPC11Uxx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\LPC11Uxx.h</FilePath>
+            </File>
+            <File>
+              <FileName>type.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\type.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>timer32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\timer32.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer32.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\lpc11uxxcmx\timer32.h</FilePath>
             </File>
           </Files>
         </Group>
