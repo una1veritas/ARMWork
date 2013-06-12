@@ -3,6 +3,8 @@
  *
  */
 
+#include <string.h>
+
 #include "LPC11Uxx.h"
 #include "type.h"
 #include "gpio.h"
@@ -38,8 +40,8 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 int main (void) {
 	long cn;
   int i;
-  char c;
-  char lcdbuf2[16] = { 0 };
+  char c = 0;
+  char message[16] = "";
   
   SystemInit();
   GPIOInit();
@@ -82,11 +84,11 @@ int main (void) {
 
   i2clcd_puts((uint8_t*)"lpclcd");
   i2clcd_cursor(1, 0);	// move to 2nd line
-  i2clcd_puts((uint8_t*)"Smart LCD Module");
+  i2clcd_puts((uint8_t*)"LPCLCD Module");
 
   cn = 0;
 
-  while (1){                                /* Loop forever */
+  while (1){    /* Loop forever */
     
     //	GPIOSetBitValue( 1, 6, 0 );
     digitalWrite(PIO1_6, LOW);
@@ -97,16 +99,25 @@ int main (void) {
     wait_ms(500);
 
     if ( UARTavailable() > 0 ) {
-      i2clcd_cursor(1,0);
-      for(i = 0; i < UARTavailable(); i++) {
+      i = strlen(message);
+      while ( UARTavailable() > 0 ) {
         c = UARTread();
-        if ( c == '\n' )
+        UARTSend((uint8_t*)&c, 1);
+        if ( c == '\n' || c == '\r' )
           break;
-      }      
+        message[i++] = c;
+      }
+      message[i] = 0;
+      i2clcd_cursor(1,0);
+      for(i = 0; message[i] && i < 16; i++) {
+        i2clcd_data(message[i]);
+      }
       for( ; i < 16; i++) {
         i2clcd_data(' ');
       }
-      i2clcd_data(c);
+      if ( c == '\n' || c == '\r' ) {
+        message[0] = 0;
+      }
     }
 
     i2clcd_cursor(0,7);

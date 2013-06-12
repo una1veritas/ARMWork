@@ -49,7 +49,7 @@
 #define LSR_TEMT        (0x01<<6)
 #define LSR_RXFE        (0x01<<7)
 
-#define BUFSIZE         0x40
+#define UART_BUFSIZE         0x40
 
 /* RS485 mode definition. */
 #define RS485_NMMEN		(0x1<<0)
@@ -62,8 +62,9 @@
 typedef struct {
   volatile uint32_t Status;
   volatile uint8_t  TxEmpty; // = 1;
-  volatile uint8_t  Buffer[BUFSIZE];
-  volatile uint32_t Count; // = 0;
+  volatile uint8_t  Buffer[UART_BUFSIZE];
+  volatile uint16_t Count; // = 0;
+  volatile uint16_t Tail; //
 
   #if AUTOBAUD_ENABLE
   volatile uint32_t AutoBaud = 0, 

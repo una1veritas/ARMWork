@@ -69,20 +69,28 @@ void UART_IRQHandler(void) {
     {
       /* If no error on RLS, normal ready, save into the data buffer. */
       /* Note: read RBR will clear the interrupt */
-      uart.Buffer[uart.Count++] = LPC_USART->RBR;
-      if (uart.Count == BUFSIZE)
+      uart.Buffer[(uart.Tail+uart.Count)%UART_BUFSIZE] = LPC_USART->RBR;
+      uart.Count++;
+      if (uart.Count == UART_BUFSIZE)
       {
-        uart.Count = 0;		/* buffer overflow */
+//        uart.Count = 0;		/* buffer overflow */
+        uart.Tail++;
+        uart.Tail %= UART_BUFSIZE;
+        uart.Count--;
       }	
     }
   }
   else if (IIRValue == IIR_RDA)	/* Receive Data Available */
   {
     /* Receive Data Available */
-    uart.Buffer[uart.Count++] = LPC_USART->RBR;
-    if (uart.Count == BUFSIZE)
+    uart.Buffer[(uart.Count+uart.Tail) % UART_BUFSIZE] = LPC_USART->RBR;
+    uart.Count++;
+    if (uart.Count == UART_BUFSIZE)
     {
-      uart.Count = 0;		/* buffer overflow */
+//      uart.Count = 0;		/* buffer overflow */
+      uart.Tail++;
+      uart.Tail %= UART_BUFSIZE;
+      uart.Count--;
     }
   }
   else if (IIRValue == IIR_CTI)	/* Character timeout indicator */
@@ -276,6 +284,7 @@ void UARTInit(uint32_t baudrate)
 
   uart.TxEmpty = 1;
   uart.Count = 0;
+  uart.Tail = 0;
   
   NVIC_DisableIRQ(UART_IRQn);
   /* Select only one location from below. */
@@ -439,13 +448,11 @@ uint32_t UARTavailable(void) {
 
 int16_t UARTread(void) {
   int16_t c;
-  int i;
   if ( uart.Count > 0 ) {
-    c = uart.Buffer[0];
+    c = uart.Buffer[uart.Tail];
     uart.Count--;
-    for(i = 0; i < uart.Count; i++) {
-      uart.Buffer[i] = uart.Buffer[i+1];
-    }
+    uart.Tail++;
+    uart.Tail %= UART_BUFSIZE;
   } else {
     c = -1;
   }
