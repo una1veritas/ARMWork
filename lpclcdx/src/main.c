@@ -35,10 +35,11 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #define RXD2    PIO0_18
 #define TXD2    PIO0_19
 
-
 int main (void) {
 	long cn;
   int i;
+  char c;
+  char lcdbuf2[16] = { 0 };
   
   SystemInit();
   GPIOInit();
@@ -73,13 +74,11 @@ int main (void) {
     // 失敗したら初期化を永遠に繰り返す
   }
 
-  // PIO1_6 USR LED
-//  GPIOSetDir(1, 6, 1 );
-//  GPIOSetBitValue( 1, 6, 1);
+  // PIO1_6 USR LED //  GPIOSetDir(1, 6, 1 ); //  GPIOSetBitValue( 1, 6, 1);
   pinMode(PIO1_6, OUTPUT);
   digitalWrite(PIO1_6, HIGH);
     
-  print_string((uint8_t*)"Hello!\n");
+  UARTputs((uint8_t*)"Hello!\n");
 
   i2clcd_puts((uint8_t*)"lpclcd");
   i2clcd_cursor(1, 0);	// move to 2nd line
@@ -97,18 +96,17 @@ int main (void) {
     digitalWrite(PIO1_6, HIGH);
     wait_ms(500);
 
-    if ( UARTCount > 0 ) {
+    if ( UARTavailable() > 0 ) {
       i2clcd_cursor(1,0);
-      for(i = 0; i < UARTCount; i++) {
-        i2clcd_data(UARTBuffer[i]);
-      }
-      
+      for(i = 0; i < UARTavailable(); i++) {
+        c = UARTread();
+        if ( c == '\n' )
+          break;
+      }      
       for( ; i < 16; i++) {
         i2clcd_data(' ');
       }
-      if ( UARTBuffer[UARTCount-1] == '\n' ) {
-        UARTCount = 0;
-      }
+      i2clcd_data(c);
     }
 
     i2clcd_cursor(0,7);

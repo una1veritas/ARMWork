@@ -29,13 +29,13 @@ typedef enum _GPIOPin_Def {
   PIO1_3 = (PIO1 <<4) | ((uint8_t)3),
   PIO1_6 = (PIO1 <<4) | ((uint8_t)6),
   PIO1_25 = (PIO1 <<4) | ((uint8_t)25),
-} GPIOPin_Def;
+} GPIOPin;
 
 void GPIOInit( void );
 
-void pinMode( GPIOPin_Def pin, uint8_t dir );
-void digitalWrite(GPIOPin_Def pin, uint8_t bitVal );
-uint8_t digitalRead(GPIOPin_Def pin);
-uint8_t digitalToggle(GPIOPin_Def pin);
+void pinMode( GPIOPin pin, uint8_t dir );
+void digitalWrite(GPIOPin pin, uint8_t bitVal );
+uint8_t digitalRead(GPIOPin pin);
+uint8_t digitalToggle(GPIOPin pin);
 
 #endif

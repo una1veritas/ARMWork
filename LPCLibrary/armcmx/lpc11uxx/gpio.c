@@ -11,7 +11,7 @@ void GPIOInit( void )
   return;
 }
 
-void pinMode( GPIOPin_Def pin, uint8_t dir ) {
+void pinMode( GPIOPin pin, uint8_t dir ) {
   if( dir ) {
     LPC_GPIO->DIR[pin>>4&0x0f] |= (1<<(pin&0x0f));
   } else {
@@ -20,7 +20,7 @@ void pinMode( GPIOPin_Def pin, uint8_t dir ) {
   return;
 }
 
-void digitalWrite(GPIOPin_Def pin, uint8_t bitVal ) {
+void digitalWrite(GPIOPin pin, uint8_t bitVal ) {
   if ( bitVal ) {
     LPC_GPIO->SET[pin>>4&0x0f] = 1<<(pin&0x0f);
   } else {
@@ -29,11 +29,11 @@ void digitalWrite(GPIOPin_Def pin, uint8_t bitVal ) {
   return;
 }
 
-uint8_t digitalRead(GPIOPin_Def pin) {
+uint8_t digitalRead(GPIOPin pin) {
   return (LPC_GPIO->PIN[pin>>4&0x0f] & (1<<(pin&0x0f))) != 0;
 }
 
-uint8_t digitalToggle(GPIOPin_Def pin) {
+uint8_t digitalToggle(GPIOPin pin) {
   if ( LPC_GPIO->PIN[pin>>4&0x0f] & (1<<(pin&0x0f)) ) {
     LPC_GPIO->CLR[pin>>4&0x0f] = 1<<(pin&0x0f);
     return 1;

@@ -32,15 +32,7 @@
 #include "type.h"
 #include "uart.h"
 
-volatile uint32_t UARTStatus;
-volatile uint8_t  UARTTxEmpty = 1;
-volatile uint8_t  UARTBuffer[BUFSIZE];
-volatile uint32_t UARTCount; // = 0;
-
-#if AUTOBAUD_ENABLE
-volatile uint32_t UARTAutoBaud = 0, 
-volatile uint32_t AutoBaudTimeout = 0;
-#endif
+UART uart;
 
 /*****************************************************************************
 ** Function name:		UART_IRQHandler
@@ -51,6 +43,7 @@ volatile uint32_t AutoBaudTimeout = 0;
 ** Returned value:		None
 ** 
 *****************************************************************************/
+// tied with struct UART uart
 void UART_IRQHandler(void) {
   uint8_t IIRValue, LSRValue;
   uint8_t Dummy = Dummy;
@@ -67,7 +60,7 @@ void UART_IRQHandler(void) {
     {
       /* There are errors or break interrupt */
       /* Read LSR will clear the interrupt */
-      UARTStatus = LSRValue;
+      uart.Status = LSRValue;
       Dummy = LPC_USART->RBR;	/* Dummy read on RX to clear 
 								interrupt, then bail out */
       return;
@@ -76,26 +69,26 @@ void UART_IRQHandler(void) {
     {
       /* If no error on RLS, normal ready, save into the data buffer. */
       /* Note: read RBR will clear the interrupt */
-      UARTBuffer[UARTCount++] = LPC_USART->RBR;
-      if (UARTCount == BUFSIZE)
+      uart.Buffer[uart.Count++] = LPC_USART->RBR;
+      if (uart.Count == BUFSIZE)
       {
-        UARTCount = 0;		/* buffer overflow */
+        uart.Count = 0;		/* buffer overflow */
       }	
     }
   }
   else if (IIRValue == IIR_RDA)	/* Receive Data Available */
   {
     /* Receive Data Available */
-    UARTBuffer[UARTCount++] = LPC_USART->RBR;
-    if (UARTCount == BUFSIZE)
+    uart.Buffer[uart.Count++] = LPC_USART->RBR;
+    if (uart.Count == BUFSIZE)
     {
-      UARTCount = 0;		/* buffer overflow */
+      uart.Count = 0;		/* buffer overflow */
     }
   }
   else if (IIRValue == IIR_CTI)	/* Character timeout indicator */
   {
     /* Character Time-out indicator */
-    UARTStatus |= 0x100;		/* Bit 9 as the CTI error */
+    uart.Status |= 0x100;		/* Bit 9 as the CTI error */
   }
   else if (IIRValue == IIR_THRE)	/* THRE, transmit holding register empty */
   {
@@ -104,11 +97,11 @@ void UART_IRQHandler(void) {
 								valid data in U0THR or not */
     if (LSRValue & LSR_THRE)
     {
-      UARTTxEmpty = 1;
+      uart.TxEmpty = 1;
     }
     else
     {
-      UARTTxEmpty = 0;
+      uart.TxEmpty = 0;
     }
   }
 #if AUTOBAUD_ENABLE
@@ -117,7 +110,7 @@ void UART_IRQHandler(void) {
 	LPC_USART->IER &= ~IIR_ABEO;
 	/* clear bit ABEOInt in the IIR by set ABEOIntClr in the ACR register */
 	LPC_USART->ACR |= IIR_ABEO;
-	UARTAutoBaud = 1;
+	uart.AutoBaud = 1;
   }
   else if (LPC_USART->IIR & IIR_ABTO)/* Auto baud time out */
   {
@@ -281,8 +274,8 @@ void UARTInit(uint32_t baudrate)
 #endif
   volatile uint32_t regVal;
 
-  UARTTxEmpty = 1;
-  UARTCount = 0;
+  uart.TxEmpty = 1;
+  uart.Count = 0;
   
   NVIC_DisableIRQ(UART_IRQn);
   /* Select only one location from below. */
@@ -380,9 +373,9 @@ void UARTSend(uint8_t *BufferPtr, uint32_t Length)
 	  LPC_USART->THR = *BufferPtr;
 #else
 	  /* Below flag is set inside the interrupt handler when THRE occurs. */
-      while ( !(UARTTxEmpty & 0x01) );
+      while ( !(uart.TxEmpty & 0x01) );
 	  LPC_USART->THR = *BufferPtr;
-      UARTTxEmpty = 0;	/* not empty in the THR until it shifts out */
+      uart.TxEmpty = 0;	/* not empty in the THR until it shifts out */
 #endif
       BufferPtr++;
       Length--;
@@ -399,7 +392,7 @@ void UARTSend(uint8_t *BufferPtr, uint32_t Length)
 ** Returned value:		none.
 ** 
 *****************************************************************************/
-void print_string( uint8_t *str_ptr )
+void UARTputs( uint8_t *str_ptr )
 {
   while(*str_ptr != 0x00)
   {
@@ -419,7 +412,7 @@ void print_string( uint8_t *str_ptr )
 ** Returned value:		character, zero is none.
 ** 
 *****************************************************************************/
-uint8_t get_key( void )
+uint8_t UARTgetc( void )
 {
   uint8_t dummy;
   
@@ -438,3 +431,23 @@ uint8_t get_key( void )
 /******************************************************************************
 **                            End Of File
 ******************************************************************************/
+// enhanced by me.
+
+uint32_t UARTavailable(void) {
+  return uart.Count;
+}
+
+int16_t UARTread(void) {
+  int16_t c;
+  int i;
+  if ( uart.Count > 0 ) {
+    c = uart.Buffer[0];
+    uart.Count--;
+    for(i = 0; i < uart.Count; i++) {
+      uart.Buffer[i] = uart.Buffer[i+1];
+    }
+  } else {
+    c = -1;
+  }
+  return c;
+}

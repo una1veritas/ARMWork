@@ -55,19 +55,33 @@
 #define RS485_NMMEN		(0x1<<0)
 #define RS485_RXDIS		(0x1<<1)
 #define RS485_AADEN		(0x1<<2)
-#define RS485_SEL             (0x1<<3)
+#define RS485_SEL     (0x1<<3)
 #define RS485_DCTRL		(0x1<<4)
 #define RS485_OINV		(0x1<<5)
 
-extern volatile uint8_t  UARTBuffer[BUFSIZE];
-extern volatile uint32_t UARTCount;
+typedef struct {
+  volatile uint32_t Status;
+  volatile uint8_t  TxEmpty; // = 1;
+  volatile uint8_t  Buffer[BUFSIZE];
+  volatile uint32_t Count; // = 0;
+
+  #if AUTOBAUD_ENABLE
+  volatile uint32_t AutoBaud = 0, 
+  volatile uint32_t AutoBaudTimeout = 0;
+  #endif
+} UART;
+
+// Global, unique for M0
+extern UART uart;
 
 void ModemInit( void );
 void UARTInit(uint32_t Baudrate);
 void UART_IRQHandler(void);
 void UARTSend(uint8_t *BufferPtr, uint32_t Length);
-void print_string( uint8_t *str_ptr );
-uint8_t get_key( void );
+uint32_t UARTavailable(void);
+int16_t UARTread(void);
+void UARTputs(uint8_t *str_ptr );
+uint8_t UARTgetc( void );
 
 #endif /* end __UART_H */
 /*****************************************************************************
