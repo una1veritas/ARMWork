@@ -32,17 +32,18 @@
 #include "timer32.h"
 #include "nmi.h"
 
-
+/*
 volatile uint32_t timer32_0_counter[4] = {0,0,0,0};
 volatile uint32_t timer32_1_counter[4] = {0,0,0,0};
 volatile uint32_t timer32_0_capture[4] = {0,0,0,0};
 volatile uint32_t timer32_1_capture[4] = {0,0,0,0};
 volatile uint32_t timer32_0_period = 0;
 volatile uint32_t timer32_1_period = 0;
-
+*/
+Timer32 Timer0 = {0}, Timer1 = {1};
 
 uint32_t millis(void) {
-  return timer32_0_counter[0];
+  return Timer0.counter[0];
 }
 
 /*****************************************************************************
@@ -101,32 +102,32 @@ void TIMER32_0_IRQHandler(void)
   if ( LPC_CT32B0->IR & (0x01<<0) )
   {  
 	LPC_CT32B0->IR = 0x1<<0;			/* clear interrupt flag */
-	timer32_0_counter[0]++;
+	Timer0.counter[0]++;
   }
   if ( LPC_CT32B0->IR & (0x01<<1) )
   {  
 	LPC_CT32B0->IR = 0x1<<1;			/* clear interrupt flag */
-	timer32_0_counter[1]++;
+	Timer0.counter[1]++;
   }
   if ( LPC_CT32B0->IR & (0x01<<2) )
   {  
 	LPC_CT32B0->IR = 0x1<<2;			/* clear interrupt flag */
-	timer32_0_counter[2]++;
+	Timer0.counter[2]++;
   }
   if ( LPC_CT32B0->IR & (0x01<<3) )
   {  
 	LPC_CT32B0->IR = 0x1<<3;			/* clear interrupt flag */
-	timer32_0_counter[3]++;
+	Timer0.counter[3]++;
   }
   if ( LPC_CT32B0->IR & (0x1<<4) )
   {  
 	LPC_CT32B0->IR = 0x1<<4;			/* clear interrupt flag */
-	timer32_0_capture[0]++;
+	Timer0.capture[0]++;
   }
   if ( LPC_CT32B0->IR & (0x1<<6) )
   {  
 	LPC_CT32B0->IR = 0x1<<6;			/* clear interrupt flag */
-	timer32_0_capture[1]++;
+	Timer0.capture[1]++;
   }
     
   return;
@@ -146,37 +147,37 @@ void TIMER32_1_IRQHandler(void)
   if ( LPC_CT32B1->IR & (0x01<<0) )
   {  
 	LPC_CT32B1->IR = 0x1<<0;			/* clear interrupt flag */
-	timer32_1_counter[0]++;
+	Timer1.counter[0]++;
   }
   if ( LPC_CT32B1->IR & (0x01<<1) )
   {  
 	LPC_CT32B1->IR = 0x1<<1;			/* clear interrupt flag */
-	timer32_1_counter[1]++;
+	Timer1.counter[1]++;
   }
   if ( LPC_CT32B1->IR & (0x01<<2) )
   {  
 	LPC_CT32B1->IR = 0x1<<2;			/* clear interrupt flag */
-	timer32_1_counter[2]++;
+	Timer1.counter[2]++;
   }
   if ( LPC_CT32B1->IR & (0x01<<3) )
   {  
 	LPC_CT32B1->IR = 0x1<<3;			/* clear interrupt flag */
-	timer32_1_counter[3]++;
+	Timer1.counter[3]++;
   }
   if ( LPC_CT32B1->IR & (0x1<<4) )
   {  
 	LPC_CT32B1->IR = 0x1<<4;			/* clear interrupt flag */
-	timer32_1_capture[0]++;
+	Timer1.capture[0]++;
   }
   if ( LPC_CT32B1->IR & (0x1<<5) )
   {  
 	LPC_CT32B1->IR = 0x1<<5;			/* clear interrupt flag */
-	timer32_1_capture[1]++;
+	Timer1.capture[1]++;
   }
   if ( LPC_CT32B1->IR & (0x1<<6) )
   {  
 	LPC_CT32B1->IR = 0x1<<6;			/* clear interrupt flag */
-	timer32_1_capture[2]++;
+	Timer1.capture[2]++;
   }
     return;
 }
@@ -458,7 +459,7 @@ void init_timer32(uint8_t timer_num, uint32_t TimerInterval)
 	#if MATCH
   	for ( i = 0; i < 4; i++ )
 	{
-      timer32_0_counter[i] = 0;
+      Timer0.counter[i] = 0;
 	}
     set_timer32_match(timer_num, 0x0F, 0);
 	LPC_CT32B0->EMR &= ~(0xFF<<4);
@@ -469,7 +470,7 @@ void init_timer32(uint8_t timer_num, uint32_t TimerInterval)
 	#if CAPTURE 
 	for ( i = 0; i < 4; i++ )
 	{
-      timer32_0_capture[i] = 0;
+      Timer32_0.capture[i] = 0;
 	}
 	set_timer32_capture(timer_num, 0 );
 	/* Capture 0 on rising edge, interrupt enable. */
@@ -495,7 +496,7 @@ void init_timer32(uint8_t timer_num, uint32_t TimerInterval)
 #if MATCH
     for ( i = 0; i < 4; i++ )
 	{
-      timer32_1_counter[i] = 0;
+      Timer1.counter[i] = 0;
 	}
 	set_timer32_match(timer_num, 0x0F, 0);
 	LPC_CT32B1->EMR &= ~(0xFF<<4);
@@ -506,7 +507,7 @@ void init_timer32(uint8_t timer_num, uint32_t TimerInterval)
 	#if CAPTURE	
   	for ( i = 0; i < 4; i++ )
 	{
-      timer32_1_capture[i] = 0;
+      Timer32_1.capture[i] = 0;
 	}
 	set_timer32_capture(timer_num, 0 );
 	/* Capture 0 on rising edge, interrupt enable. */
@@ -555,11 +556,11 @@ void init_timer32PWM(uint8_t timer_num, uint32_t period, uint8_t match_enable)
  
     /* Setup the match registers */
     /* set the period value to a global variable */
-    timer32_1_period = period;
-    LPC_CT32B1->MR3 = timer32_1_period;
-    LPC_CT32B1->MR0 = timer32_1_period/2;
-    LPC_CT32B1->MR1 = timer32_1_period/2;
-    LPC_CT32B1->MR2 = timer32_1_period/2;
+    Timer1.period = period;
+    LPC_CT32B1->MR3 = Timer1.period;
+    LPC_CT32B1->MR0 = Timer1.period/2;
+    LPC_CT32B1->MR1 = Timer1.period/2;
+    LPC_CT32B1->MR2 = Timer1.period/2;
     LPC_CT32B1->MCR = 1<<10;				/* Reset on MR3 */
   }
   else
@@ -580,11 +581,11 @@ void init_timer32PWM(uint8_t timer_num, uint32_t period, uint8_t match_enable)
 
     /* Setup the match registers */
     /* set the period value to a global variable */
-    timer32_0_period = period;
-    LPC_CT32B0->MR3 = timer32_0_period;
-    LPC_CT32B0->MR0 = timer32_0_period/2;
-    LPC_CT32B0->MR1 = timer32_0_period/2;
-    LPC_CT32B0->MR2 = timer32_0_period/2;
+    Timer0.period = period;
+    LPC_CT32B0->MR3 = Timer0.period;
+    LPC_CT32B0->MR0 = Timer0.period/2;
+    LPC_CT32B0->MR1 = Timer0.period/2;
+    LPC_CT32B0->MR2 = Timer0.period/2;
     LPC_CT32B0->MCR = 1<<10;				/* Reset on MR3 */
   }
 }

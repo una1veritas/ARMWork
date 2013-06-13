@@ -3,6 +3,7 @@
  *
  */
 
+#include <stdio.h>
 #include <string.h>
 
 #include "LPC11Uxx.h"
@@ -39,15 +40,12 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #define TXD2    PIO0_19
 
 
-#define TEST_TIMER_NUM		0		/* 0 or 1 for 32-bit timers only */
-
-
-
 int main (void) {
 	long cn;
   int i;
   char c = 0;
   char message[16] = "";
+  char tmp[32];
   
   SystemInit();
   GPIOInit();
@@ -56,8 +54,8 @@ int main (void) {
   SysTick_Config( SystemCoreClock / 1000 );
   LPC_SYSCON->SYSAHBCLKCTRL |= (1<<6);
 
-  init_timer32(TEST_TIMER_NUM, TIME_INTERVAL);
-  enable_timer32(TEST_TIMER_NUM);
+  init_timer32(Timer0.num, TIME_INTERVAL);
+  enable_timer32(Timer0.num);
 
   // initialize xprintf
   xfunc_out = (void(*)(unsigned char))i2clcd_data;
@@ -100,13 +98,11 @@ int main (void) {
   while (1){    /* Loop forever */
     
     if ( millis() - cn >= 1000 ) {
-      if ( digitalRead(PIO1_6) == LOW ) 
-        digitalWrite(PIO1_6, HIGH);
-      else
-        digitalWrite(PIO1_6, LOW);
+      digitalToggle(PIO1_6);
       cn = millis();
-      i2clcd_cursor(0,7);
-      xprintf("%9d", millis());
+      i2clcd_cursor(0,0);
+      sprintf(tmp, "%8d", cn );
+      i2clcd_puts(tmp);
     }
     
     if ( UARTavailable() > 0 ) {

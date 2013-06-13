@@ -40,8 +40,14 @@
 #define TIME_INTERVAL	(SystemCoreClock/1000 - 1)
 #endif
 
-extern volatile uint32_t timer32_0_counter[4];
-extern volatile uint32_t timer32_1_counter[4];
+typedef struct {
+  uint8_t num;
+  volatile uint32_t counter[4]; // = {0,0,0,0};
+  volatile uint32_t capture[4]; // = {0,0,0,0};
+  volatile uint32_t period; // = 0;
+} Timer32;
+
+extern Timer32 Timer0, Timer1;
 
 void delay32Ms(uint8_t timer_num, uint32_t delayInMs);
 void TIMER32_0_IRQHandler(void);

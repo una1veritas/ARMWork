@@ -1,0 +1,4 @@
+--cpu Cortex-M0 "startup_lpc11uxx.o" "xprintf.o" "i2clcd.o" "main.o" "system_lpc11uxx.o" "core_cm0.o" "gpio.o" "i2c.o" "nmi.o" "systick.o" "timer16.o" "timer32.o" "uart.o" 
+--library_type=microlib --ro-base 0x00000000 --entry 0x00000000 --rw-base 0x10000000 --entry Reset_Handler --first __Vectors --strict --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\LPC11U24LCD.map" -o LPC11U24LCD.axf

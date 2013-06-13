@@ -1,0 +1,69 @@
+;#<FEEDBACK># ARM Linker, 5.03 [Build 69]: Last Updated: Fri Jun 14 01:23:10 2013
+;VERSION 0.2
+;FILE gpio.o
+__asm___6_gpio_c_GPIOInit____REV16 <= USED 0
+__asm___6_gpio_c_GPIOInit____REVSH <= USED 0
+digitalRead <= USED 0
+;FILE i2c.o
+I2CStart <= USED 0
+I2CStop <= USED 0
+__asm___5_i2c_c_e755d2a4____REV16 <= USED 0
+__asm___5_i2c_c_e755d2a4____REVSH <= USED 0
+i2c_read <= USED 0
+;FILE i2clcd.o
+__asm___8_i2clcd_c_7d6c580e____REV16 <= USED 0
+__asm___8_i2clcd_c_7d6c580e____REVSH <= USED 0
+i2clcd_clear <= USED 0
+i2clcd_decimal <= USED 0
+i2clcd_hex8 <= USED 0
+;FILE main.o
+__asm___6_main_c_main____REV16 <= USED 0
+__asm___6_main_c_main____REVSH <= USED 0
+;FILE nmi.o
+__asm___5_nmi_c_e5a6a253____REV16 <= USED 0
+__asm___5_nmi_c_e5a6a253____REVSH <= USED 0
+;FILE startup_lpc11uxx.o
+;FILE system_lpc11uxx.o
+__asm___17_system_LPC11Uxx_c_5d646a67____REV16 <= USED 0
+__asm___17_system_LPC11Uxx_c_5d646a67____REVSH <= USED 0
+;FILE systick.o
+__asm___9_systick_c_b672aa62____REV16 <= USED 0
+__asm___9_systick_c_b672aa62____REVSH <= USED 0
+wait_sec <= USED 0
+;FILE timer16.o
+__asm___9_timer16_c_afbac873____REV16 <= USED 0
+__asm___9_timer16_c_afbac873____REVSH <= USED 0
+delayMs <= USED 0
+disable_timer16 <= USED 0
+enable_timer16 <= USED 0
+init_timer16 <= USED 0
+init_timer16PWM <= USED 0
+reset_timer16 <= USED 0
+setMatch_timer16PWM <= USED 0
+set_timer16_capture <= USED 0
+set_timer16_match <= USED 0
+;FILE timer32.o
+__asm___9_timer32_c_Timer0____REV16 <= USED 0
+__asm___9_timer32_c_Timer0____REVSH <= USED 0
+delay32Ms <= USED 0
+disable_timer32 <= USED 0
+init_timer32PWM <= USED 0
+reset_timer32 <= USED 0
+setMatch_timer32PWM <= USED 0
+set_timer32_capture <= USED 0
+;FILE uart.o
+UARTgetc <= USED 0
+__asm___6_uart_c_6d57c09f____REV16 <= USED 0
+__asm___6_uart_c_6d57c09f____REVSH <= USED 0
+uart_set_divisors <= USED 0
+;FILE xprintf.o
+put_dump <= USED 0
+xatoi <= USED 0
+xfgets <= USED 0
+xfprintf <= USED 0
+xfputs <= USED 0
+xgets <= USED 0
+xprintf <= USED 0
+xputc <= USED 0
+xputs <= USED 0
+xsprintf <= USED 0
