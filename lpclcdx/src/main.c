@@ -13,6 +13,7 @@
 #include "uart.h"
 #include "i2c.h"
 #include "i2clcd.h"
+#include "timer32.h"
 
 #ifdef _LPCXPRESSO_CRP_
 #include <cr_section_macros.h>
@@ -37,6 +38,11 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #define RXD2    PIO0_18
 #define TXD2    PIO0_19
 
+
+#define TEST_TIMER_NUM		0		/* 0 or 1 for 32-bit timers only */
+
+
+
 int main (void) {
 	long cn;
   int i;
@@ -49,6 +55,9 @@ int main (void) {
   // systick initialize
   SysTick_Config( SystemCoreClock / 1000 );
   LPC_SYSCON->SYSAHBCLKCTRL |= (1<<6);
+
+  init_timer32(TEST_TIMER_NUM, TIME_INTERVAL);
+  enable_timer32(TEST_TIMER_NUM);
 
   // initialize xprintf
   xfunc_out = (void(*)(unsigned char))i2clcd_data;
@@ -90,14 +99,16 @@ int main (void) {
 
   while (1){    /* Loop forever */
     
-    //	GPIOSetBitValue( 1, 6, 0 );
-    digitalWrite(PIO1_6, LOW);
-    wait_ms(500);
-
-    //	GPIOSetBitValue( 1, 6, 1 );
-    digitalWrite(PIO1_6, HIGH);
-    wait_ms(500);
-
+    if ( millis() - cn >= 1000 ) {
+      if ( digitalRead(PIO1_6) == LOW ) 
+        digitalWrite(PIO1_6, HIGH);
+      else
+        digitalWrite(PIO1_6, LOW);
+      cn = millis();
+      i2clcd_cursor(0,7);
+      xprintf("%9d", millis());
+    }
+    
     if ( UARTavailable() > 0 ) {
       i = strlen(message);
       while ( UARTavailable() > 0 ) {
@@ -120,8 +131,7 @@ int main (void) {
       }
     }
 
-    i2clcd_cursor(0,7);
-    xprintf("%9d", cn++);
+    // cn++;
     
   }
   

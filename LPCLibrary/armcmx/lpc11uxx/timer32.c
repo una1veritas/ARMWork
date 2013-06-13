@@ -32,12 +32,18 @@
 #include "timer32.h"
 #include "nmi.h"
 
+
 volatile uint32_t timer32_0_counter[4] = {0,0,0,0};
 volatile uint32_t timer32_1_counter[4] = {0,0,0,0};
 volatile uint32_t timer32_0_capture[4] = {0,0,0,0};
 volatile uint32_t timer32_1_capture[4] = {0,0,0,0};
 volatile uint32_t timer32_0_period = 0;
 volatile uint32_t timer32_1_period = 0;
+
+
+uint32_t millis(void) {
+  return timer32_0_counter[0];
+}
 
 /*****************************************************************************
 ** Function name:		delay32Ms

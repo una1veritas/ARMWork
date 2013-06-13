@@ -51,7 +51,7 @@ int main (void)
   LPC_SYSCON->SYSAHBCLKCTRL |= (1<<6);
     
   /* Set port 1_20 to output */
-  GPIOSetDir( 1, 20, 1 );
+  GPIOSetDir( 0, 6, 1 );
 
   while (1)                                /* Loop forever */
   {
@@ -59,11 +59,11 @@ int main (void)
 	/* I/O configuration and LED setting pending. */
 	if ( (timer32_1_counter[0] > 0) && (timer32_1_counter[0] <= 50) )
 	{
-	  GPIOSetBitValue( 1, 20, 0 );
+	  GPIOSetBitValue( 0, 6, 0 );
 	}
 	if ( (timer32_1_counter[0] > 50) && (timer32_1_counter[0] <= 100) )
 	{
-	  GPIOSetBitValue( 1, 20, 1 );
+	  GPIOSetBitValue( 0, 6, 1 );
 	}
 	else if ( timer32_1_counter[0] > 100 )
 	{
@@ -73,11 +73,11 @@ int main (void)
 	/* I/O configuration and LED setting pending. */
 	if ( (timer32_0_counter[0] > 0) && (timer32_0_counter[0] <= 50) )
 	{
-	  GPIOSetBitValue( 1, 20, 0 );
+	  GPIOSetBitValue( 0, 6, 0 );
 	}
 	if ( (timer32_0_counter[0] > 50) && (timer32_0_counter[0] <= 100) )
 	{
-	  GPIOSetBitValue( 1, 20, 1 );
+	  GPIOSetBitValue( 0, 6, 1 );
 	}
 	else if ( timer32_0_counter[0] > 100 )
 	{
