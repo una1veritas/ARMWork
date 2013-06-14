@@ -24,7 +24,7 @@
 #include <string.h>
 #include <math.h>
 //#include "Arduino.h"
-#include "armcmx.h"
+//#include "armcmx.h"
 
 #include "Print.h"
 
@@ -129,7 +129,7 @@ size_t Print::print(const Printable& x)
 }
 */
 
-size_t Print::printByte(uint8 * p, uint8 length, char sep) {
+size_t Print::printByte(uint8_t * p, uint8_t length, char sep) {
 	size_t i, n = 0;
 	for(i = 0; i < length; i++) {
 		n += printByte(p[i]);
@@ -138,19 +138,19 @@ size_t Print::printByte(uint8 * p, uint8 length, char sep) {
 	return n;
 }
 
-size_t Print::printByte(uint8 val) {
+size_t Print::printByte(uint8_t val) {
 	size_t n = 0;
 	n += print(long(val>>4), HEX);
 	n += print(long(val&0x0f), HEX);
 	return n;
 }
 
-size_t Print::printByte(uint32 val) {
+size_t Print::printByte(uint32_t val) {
 	size_t n = 0;
-	n += printByte((uint8)(val>>24 &0xff));
-	n += printByte((uint8)(val>>16 &0xff));
-	n += printByte((uint8)(val>>8 &0xff));
-	n += printByte((uint8)val);
+	n += printByte((uint8_t)(val>>24 &0xff));
+	n += printByte((uint8_t)(val>>16 &0xff));
+	n += printByte((uint8_t)(val>>8 &0xff));
+	n += printByte((uint8_t)val);
 	return n;
 }
 
@@ -255,7 +255,7 @@ size_t Print::printNumber(unsigned long n, uint8_t base) {
   return write(str);
 }
 
-size_t Print::printFloat(float number, uint8 digits) 
+size_t Print::printFloat(float number, uint8_t digits) 
 { 
   size_t n = 0;
   

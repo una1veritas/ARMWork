@@ -165,7 +165,6 @@
             <Capability>1</Capability>
             <DriverSelection>4104</DriverSelection>
           </Flash1>
-          <bUseTDR>0</bUseTDR>
           <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
@@ -351,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\LPCLibrary\armcmx\lpc11uxx;..\inc;..\src</IncludePath>
+              <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\LPCLibrary\armcmx\lpc11uxx;..\..\LPCLibrary\armcmx;..\inc;..\src</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -526,6 +525,46 @@
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>Print.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\Print.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Print.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\Print.h</FilePath>
+            </File>
+            <File>
+              <FileName>Stream.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\Stream.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Stream.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\Stream.h</FilePath>
+            </File>
+            <File>
+              <FileName>USART.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\USART.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>USART.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>armcmx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\armcmx.h</FilePath>
+            </File>
+            <File>
+              <FileName>armcmx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\armcmx.c</FilePath>
             </File>
           </Files>
         </Group>
