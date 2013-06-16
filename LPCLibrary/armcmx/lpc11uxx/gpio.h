@@ -1,7 +1,7 @@
 #ifndef _GPIO_H_
 #define _GPIO_H_
 
-#include "LPC11Uxx.h"			/* LPC11xx Peripheral Registers */
+#include "armcmx.h"
 
 #define OUTPUT 1
 #define INPUT  0

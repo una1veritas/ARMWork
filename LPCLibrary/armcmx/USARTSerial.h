@@ -13,17 +13,18 @@
 
 //#include <stm32f4xx_usart.h>
 
-//#include "cmcore.h"
-#include "usart.h"
+#include "armcmx.h"
+#include "uart.h"
+#include "gpio.h"
 #include "Stream.h"
 
 class USARTSerial : public Stream {
-	USARTStruct port;
+	UARTDef * port;
 	GPIOPin pinrx, pintx, pincts, pindtr;
 
 public:
-	USARTSerial(USART_TypeDef * usartx, GPIOPin rx, GPIOPin tx) {
-		port.USARTx = usartx;
+	USARTSerial(UARTDef * usartx, GPIOPin rx, GPIOPin tx) {
+		port = usartx;
 		pinrx = rx;
 		pintx = tx;
 	}

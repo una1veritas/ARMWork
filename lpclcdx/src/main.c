@@ -11,7 +11,7 @@
 #include "gpio.h"
 #include "xprintf.h"
 #include "systick.h"
-#include "uart.h"
+#include "usart.h"
 #include "i2c.h"
 #include "i2clcd.h"
 #include "timer32.h"
@@ -71,7 +71,8 @@ int main (void) {
   pinMode(PIO0_1, INPUT);
   
   /* NVIC is installed inside UARTInit file. */
-  UARTInit(115200);
+  USART_init(&uart, PIO0_18, PIO0_19);
+  USART_begin(&uart, 115200);
 
   if ( I2CInit( (uint32_t)I2CMASTER ) == FALSE ){	/* initialize I2c */
   	while ( 1 );				/* Fatal error */
@@ -87,7 +88,7 @@ int main (void) {
   pinMode(PIO1_6, OUTPUT);
   digitalWrite(PIO1_6, HIGH);
     
-  UARTputs((uint8_t*)"Hello!\n");
+  USART_print(&uart, "Hello!\n");
 
   i2clcd_puts((uint8_t*)"lpclcd");
   i2clcd_cursor(1, 0);	// move to 2nd line
@@ -97,19 +98,19 @@ int main (void) {
 
   while (1){    /* Loop forever */
     
-    if ( millis() - cn >= 1000 ) {
+    if ( millis() - cn >= 500 ) {
       digitalToggle(PIO1_6);
       cn = millis();
       i2clcd_cursor(0,0);
       sprintf(tmp, "%8d", cn );
-      i2clcd_puts(tmp);
+      i2clcd_puts((uint8_t *)tmp);
     }
     
-    if ( UARTavailable() > 0 ) {
+    if ( USART_available(&uart) > 0 ) {
       i = strlen(message);
-      while ( UARTavailable() > 0 ) {
-        c = UARTread();
-        UARTSend((uint8_t*)&c, 1);
+      while ( USART_available(&uart) > 0 ) {
+        c = USART_read(&uart);
+        USART_write(&uart, c);
         if ( c == '\n' || c == '\r' )
           break;
         message[i++] = c;

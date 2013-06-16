@@ -57,16 +57,28 @@ typedef uint8_t boolean;
 #define true 0xff
 #define false 0x00
 
+#ifndef NULL
+#define NULL    ((void *)0)
+#endif
+
+#ifndef FALSE
+#define FALSE   (0)
+#endif
+
+#ifndef TRUE
+#define TRUE    (1)
+#endif
+
 #define UINT8(x)  ((uint8_t)(x))
 #define UINT16(x)  ((uint16_t)(x))
 #define HIGHLOW(x, y)  (((uint16_t)(x))<< 8 | y)
 
-#include "gpio.h"
-#include "delay.h"
-#include "usart.h"
-#include "spi.h"
+//#include "gpio.h"
+//#include "delay.h"
+//#include "usart.h"
+//#include "spi.h"
 
-void armcmx_init(void);
+//void armcmx_init(void);
 //size_t strlen(const char * s);
 
 #ifdef __cplusplus

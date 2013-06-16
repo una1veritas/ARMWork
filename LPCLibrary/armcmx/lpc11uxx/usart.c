@@ -29,10 +29,11 @@
 ****************************************************************************/
 
 #include "LPC11Uxx.h"
-#include "type.h"
-#include "uart.h"
+#include "armcmx.h"
+#include "gpio.h"
+#include "usart.h"
 
-UART uart;
+USARTDef uart;
 
 /*****************************************************************************
 ** Function name:		UART_IRQHandler
@@ -265,35 +266,17 @@ uint32_t uart_set_divisors(uint32_t UARTClk, uint32_t baudrate)
   return ( FALSE );
 }
 
-/*****************************************************************************
-** Function name:		UARTInit
-**
-** Descriptions:		Initialize UART0 port, setup pin select,
-**				clock, parity, stop bits, FIFO, etc.
-**
-** parameters:			UART baudrate
-** Returned value:		None
-** 
-*****************************************************************************/
-void UARTInit(uint32_t baudrate)
-{
-#if !AUTOBAUD_ENABLE
-  uint32_t Fdiv;
-#endif
-  volatile uint32_t regVal;
 
-  uart.TxEmpty = 1;
-  uart.Count = 0;
-  uart.Tail = 0;
-  
+void USART_init(USARTDef * uart, const GPIOPin rx, const GPIOPin tx) {
+
   NVIC_DisableIRQ(UART_IRQn);
-  /* Select only one location from below. */
-#if 1
+    /* Select only one location from below. */
+if ( rx == PIO0_18 && tx == PIO0_19 ) {
   LPC_IOCON->PIO0_18 &= ~0x07;    /*  UART I/O config */
   LPC_IOCON->PIO0_18 |= 0x01;     /* UART RXD */
   LPC_IOCON->PIO0_19 &= ~0x07;	
   LPC_IOCON->PIO0_19 |= 0x01;     /* UART TXD */
-#endif
+  }
 #if 0
   LPC_IOCON->PIO1_14 &= ~0x07;    /*  UART I/O config */
   LPC_IOCON->PIO1_14 |= 0x03;     /* UART RXD */
@@ -312,6 +295,31 @@ void UARTInit(uint32_t baudrate)
   LPC_IOCON->PIO1_27 &= ~0x07;	
   LPC_IOCON->PIO1_27 |= 0x02;     /* UART TXD */
 #endif
+  
+}
+
+/*****************************************************************************
+** Function name:		UARTInit
+**
+** Descriptions:		Initialize UART0 port, setup pin select,
+**				clock, parity, stop bits, FIFO, etc.
+**
+** parameters:			UART baudrate
+** Returned value:		None
+** 
+*****************************************************************************/
+void USART_begin(USARTDef * uart, uint32_t baudrate)
+{
+#if !AUTOBAUD_ENABLE
+  uint32_t Fdiv;
+#endif
+  volatile uint32_t regVal;
+
+  uart->TxEmpty = 1;
+  uart->Count = 0;
+  uart->Tail = 0;
+  
+  NVIC_DisableIRQ(UART_IRQn);
 
   /* Enable UART clock */
   LPC_SYSCON->SYSAHBCLKCTRL |= (1<<12);
@@ -371,25 +379,31 @@ void UARTInit(uint32_t baudrate)
 ** Returned value:	None
 ** 
 *****************************************************************************/
-void UARTSend(uint8_t *BufferPtr, uint32_t Length)
+size_t USART_write(USARTDef * uart, uint8_t c)
 {
   
-  while ( Length != 0 )
-  {
-	  /* THRE status, contain valid data */
+  /* THRE status, contain valid data */
 #if !TX_INTERRUPT
 	  while ( !(LPC_USART->LSR & LSR_THRE) );
-	  LPC_USART->THR = *BufferPtr;
+	  LPC_USART->THR = c;
 #else
 	  /* Below flag is set inside the interrupt handler when THRE occurs. */
       while ( !(uart.TxEmpty & 0x01) );
-	  LPC_USART->THR = *BufferPtr;
+	  LPC_USART->THR = c;
       uart.TxEmpty = 0;	/* not empty in the THR until it shifts out */
 #endif
-      BufferPtr++;
-      Length--;
-  }
-  return;
+
+  return 1;
+}
+
+size_t USART_polling_write(USARTDef * uart, uint8_t c)
+{
+  
+  /* THRE status, contain valid data */
+	  while ( !(LPC_USART->LSR & LSR_THRE) );
+	  LPC_USART->THR = c;
+
+  return 1;
 }
 
 /*****************************************************************************
@@ -421,7 +435,7 @@ void UARTputs( uint8_t *str_ptr )
 ** Returned value:		character, zero is none.
 ** 
 *****************************************************************************/
-uint8_t UARTgetc( void )
+int16_t USART_polling_read(USARTDef * uart)
 {
   uint8_t dummy;
   
@@ -442,19 +456,27 @@ uint8_t UARTgetc( void )
 ******************************************************************************/
 // enhanced by me.
 
-uint32_t UARTavailable(void) {
-  return uart.Count;
+uint32_t USART_available(USARTDef * uart) {
+  return uart->Count;
 }
 
-int16_t UARTread(void) {
+int16_t USART_read(USARTDef * uart) {
   int16_t c;
-  if ( uart.Count > 0 ) {
-    c = uart.Buffer[uart.Tail];
-    uart.Count--;
-    uart.Tail++;
-    uart.Tail %= UART_BUFSIZE;
+  if ( uart->Count > 0 ) {
+    c = uart->Buffer[uart->Tail];
+    uart->Count--;
+    uart->Tail++;
+    uart->Tail %= UART_BUFSIZE;
   } else {
     c = -1;
   }
   return c;
+}
+
+size_t USART_print(USARTDef * uart, const char * ptr) {
+  size_t n = 0;
+  while (*ptr) {
+    n += USART_write(uart, *ptr++);
+  }
+  return n;
 }

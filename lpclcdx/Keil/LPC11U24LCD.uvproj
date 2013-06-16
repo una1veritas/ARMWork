@@ -165,6 +165,7 @@
             <Capability>1</Capability>
             <DriverSelection>4104</DriverSelection>
           </Flash1>
+          <bUseTDR>0</bUseTDR>
           <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
@@ -217,7 +218,7 @@
             <RoSelD>3</RoSelD>
             <RwSelD>3</RwSelD>
             <CodeSel>0</CodeSel>
-            <OptFeed>1</OptFeed>
+            <OptFeed>0</OptFeed>
             <NoZi1>0</NoZi1>
             <NoZi2>0</NoZi2>
             <NoZi3>0</NoZi3>
@@ -507,64 +508,19 @@
               <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\timer32.h</FilePath>
             </File>
             <File>
-              <FileName>type.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\type.h</FilePath>
-            </File>
-            <File>
-              <FileName>uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\usart.h</FilePath>
-            </File>
-            <File>
-              <FileName>Print.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\Print.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Print.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\Print.h</FilePath>
-            </File>
-            <File>
-              <FileName>Stream.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\Stream.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Stream.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\Stream.h</FilePath>
-            </File>
-            <File>
-              <FileName>USART.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\USART.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>USART.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\USART.h</FilePath>
-            </File>
-            <File>
               <FileName>armcmx.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\LPCLibrary\armcmx\armcmx.h</FilePath>
             </File>
             <File>
-              <FileName>armcmx.c</FileName>
+              <FileName>usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\armcmx.c</FilePath>
+              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\usart.h</FilePath>
             </File>
           </Files>
         </Group>
