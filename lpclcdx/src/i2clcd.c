@@ -11,25 +11,19 @@
 
 #define I2C_LCD_RST          25
 
-extern volatile uint32_t I2CCount;
-extern volatile uint8_t I2CMasterBuffer[I2C_BUFSIZE];
-extern volatile uint8_t I2CSlaveBuffer[I2C_BUFSIZE];
-extern volatile uint32_t I2CMasterState;
-extern volatile uint32_t I2CReadLength, I2CWriteLength;
-
 
 // �R�}���h�𑗐M���܂��BHD44780�ł���RS=0�ɑ���
 uint8_t i2clcd_cmd(unsigned char db)
 {
 //	return i2c_write(0x7c, 0x00, db);
-	return i2c_write16(0x7c, db);
+	return I2C_write16(&i2c, 0x7c, db);
 }
 
 // �f�[�^�𑗐M���܂��BHD44780�ł���RS=1�ɑ���
 uint8_t i2clcd_data(unsigned char db)
 {
 //	return i2c_write(0x7c, 0x40, db);
-	return i2c_write16(0x7c, 0x40<<8 | db);
+	return I2C_write16(&i2c, 0x7c, 0x40<<8 | db);
 }
 
 // �i��Ɂj�������A�����M���܂��B

@@ -456,7 +456,7 @@ int16_t USART_polling_read(USARTDef * uart)
 ******************************************************************************/
 // enhanced by me.
 
-uint32_t USART_available(USARTDef * uart) {
+size_t USART_available(USARTDef * uart) {
   return uart->Count;
 }
 

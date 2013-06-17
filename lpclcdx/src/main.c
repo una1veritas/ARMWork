@@ -61,10 +61,6 @@ int main (void) {
   xfunc_out = (void(*)(unsigned char))i2clcd_data;
   
   // I2C LCD Backlight controll pin
-  /*
-  GPIOSetDir(1, 3, 1 );
-  GPIOSetBitValue( 1, 3, 0);
-  */
   pinMode(PIO1_3, OUTPUT);
   digitalWrite(PIO1_3, LOW);
 
@@ -74,9 +70,17 @@ int main (void) {
   USART_init(&uart, PIO0_18, PIO0_19);
   USART_begin(&uart, 115200);
 
-  if ( I2CInit( (uint32_t)I2CMASTER ) == FALSE ){	/* initialize I2c */
+  if ( I2C_init(&i2c, (uint32_t)I2CMASTER ) == FALSE ){	/* initialize I2c */
   	while ( 1 );				/* Fatal error */
   }
+
+  tmp[0] = 0;
+  I2C_read(&i2c, 0x0d<<1, (uint8*)tmp, 1, 4);
+  for(i = 0; i < 8; i++) {
+    sprintf(message, "%02x ", tmp[i]);
+    USART_print(&uart, message);
+  }
+  USART_print(&uart, "\n");
 
   // I2C液晶を初期化します
   while(1){
@@ -89,7 +93,7 @@ int main (void) {
   digitalWrite(PIO1_6, HIGH);
     
   USART_print(&uart, "Hello!\n");
-
+    
   i2clcd_puts((uint8_t*)"lpclcd");
   i2clcd_cursor(1, 0);	// move to 2nd line
   i2clcd_puts((uint8_t*)"LPCLCD Module");
@@ -98,7 +102,7 @@ int main (void) {
 
   while (1){    /* Loop forever */
     
-    if ( millis() - cn >= 500 ) {
+    if ( millis() - cn >= 1000 ) {
       digitalToggle(PIO1_6);
       cn = millis();
       i2clcd_cursor(0,0);

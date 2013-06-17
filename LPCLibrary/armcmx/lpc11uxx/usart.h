@@ -105,7 +105,7 @@ void USART_init(USARTDef *, const GPIOPin rx, const GPIOPin tx);
 void USART_begin(USARTDef *, const uint32_t baudrate);
 size_t USART_write(USARTDef * usart, uint8_t c);
 size_t USART_print(USARTDef *, const char *);
-uint32_t USART_available(USARTDef * usart);
+size_t USART_available(USARTDef * usart);
 int16_t USART_read(USARTDef *);
 size_t USART_polling_write(USARTDef * usart, uint8_t c );
 int16_t USART_polling_read(USARTDef *);

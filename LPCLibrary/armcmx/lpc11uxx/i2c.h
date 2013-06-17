@@ -24,6 +24,7 @@
 For board to board test, this flag can be turned on. */
 
 #include <stdio.h>
+#include "armcmx.h"
 
 #define FAST_MODE_PLUS      0
 
@@ -33,7 +34,7 @@ For board to board test, this flag can be turned on. */
 #define I2CMASTER           0x01
 #define I2CSLAVE            0x02
 
-#define PCF8594_ADDR        0xA0
+//#define PCF8594_ADDR        0xA0
 #define READ_WRITE          0x01
 
 /* For more info, read NXP's SE95 datasheet */
@@ -76,16 +77,52 @@ For board to board test, this flag can be turned on. */
 #define I2SCLH_HS_SCLH		0x00000015  /* Fast Plus I2C SCL Duty Cycle High Reg */
 #define I2SCLL_HS_SCLL		0x00000015  /* Fast Plus I2C SCL Duty Cycle Low Reg */
 
-extern void I2C_IRQHandler( void );
-extern uint32_t I2CInit( uint32_t I2cMode );
-extern uint32_t I2CStart( void );
-extern uint32_t I2CStop( void );
-extern uint32_t I2CEngine( void );
+typedef struct {
+//  volatile uint32_t MasterState; // = I2C_IDLE;
+//  volatile uint32_t SlaveState; // = I2C_IDLE;
+  volatile uint32_t State;
+  volatile uint32_t timeout; // = 0;
 
+//  volatile uint32_t Mode;
+
+  volatile uint8_t MasterBuffer[I2C_BUFSIZE];
+  volatile uint8_t SlaveBuffer[I2C_BUFSIZE];
+  volatile uint32_t Count; // = 0;
+  volatile uint32_t ReadLength;
+  volatile uint32_t WriteLength;
+
+  volatile uint32_t RdIndex; // = 0;
+  volatile uint32_t WrIndex; // = 0;
+} I2CDef;
+
+extern I2CDef i2c;
+
+/*
+void i2c_init(i2c * i2cxptr, I2C_TypeDef * I2Cx, GPIOPin scl, GPIOPin sda);
+boolean i2c_begin(i2c * i2cxptr, uint32 clk);
+//I2C_TypeDef * I2Cx, uint32_t clk);
+
+void i2c_setup_comm(i2c * i2cxptr, I2C_Mode mode, uint8_t dstaddr, uint8_t * databuffer, uint16_t length);
+boolean i2c_start_send(i2c * i2cxptr);
+boolean i2c_start_receive(i2c * i2cxptr);
+
+boolean i2c_transmit(i2c * i2cxptr, uint8_t addr, uint8_t * data, uint16_t length);
+boolean i2c_request(i2c * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t len);
+boolean i2c_receive(i2c * I2Cbuf, uint8_t * data, uint16_t lim);
+*/
+
+void I2C_IRQHandler( void );
+uint32 I2C_init(I2CDef * i2c, uint32 I2cMode );
+uint32 I2C_start(I2CDef * i2c);
+uint32 I2C_stop(I2CDef * i2c);
+uint32 I2C_Engine(I2CDef * i2c);
 //
-extern uint8_t i2c_write(uint8_t addr, uint8_t * data, size_t length);
-extern uint8_t i2c_write16(uint8_t addr, uint16_t data);
-extern uint8_t i2c_read(uint8_t addr, uint8_t * data, size_t reqlen, size_t receivelen);
+uint8 I2C_transmit(I2CDef * i2c, uint8 addr, uint8 * data, size_t length);
+uint8 I2C_read(I2CDef * i2c, uint8 addr, uint8 * data, size_t reqlen, size_t reclen);
+uint8_t I2C_request(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen);
+uint8_t I2C_receive(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reclen);
+//
+uint8 I2C_write16(I2CDef * i2c, uint8 addr, uint16 data);
 
 #endif /* end __I2C_H */
 /****************************************************************************
