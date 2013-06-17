@@ -74,13 +74,14 @@ int main (void) {
   	while ( 1 );				/* Fatal error */
   }
 
+  I2C_write(&i2c, 0x68<<1, (uint8*)tmp, 4);
   tmp[0] = 0;
-  I2C_read(&i2c, 0x0d<<1, (uint8*)tmp, 1, 4);
+  I2C_read(&i2c, 0x68<<1, (uint8*)tmp, 1, 4);
   for(i = 0; i < 8; i++) {
     sprintf(message, "%02x ", tmp[i]);
     USART_print(&uart, message);
   }
-  USART_print(&uart, "\n");
+  USART_print(&uart, ";\n");
 
   // I2C液晶を初期化します
   while(1){
