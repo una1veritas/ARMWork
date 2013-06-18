@@ -4,6 +4,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "LPC11Uxx.h"
@@ -51,7 +52,7 @@ char day[7][4] = {
 
 int main (void) {
 	long cn;
-  int i;
+  long i;
   char c = 0;
   char message[16] = "";
   char tmp[32];
