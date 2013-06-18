@@ -332,7 +332,7 @@ uint8_t I2C_read(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen,
 	i2c->ReadLength = rcvlen+1;
 	i2c->MasterBuffer[0] = addr & 0xFE;
 	memcpy((void*) (i2c->MasterBuffer + 1), data, reqlen);
-  i2c->MasterBuffer[2] = addr | RD_BIT;
+  i2c->MasterBuffer[reqlen+1] = addr | RD_BIT;
 	I2C_Engine(i2c);
 	//if(!I2CEngine()) return -1;
 

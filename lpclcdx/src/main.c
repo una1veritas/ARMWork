@@ -39,6 +39,15 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #define RXD2    PIO0_18
 #define TXD2    PIO0_19
 
+char day[7][4] = {
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat"
+  };
 
 int main (void) {
 	long cn;
@@ -74,11 +83,10 @@ int main (void) {
   	while ( 1 );				/* Fatal error */
   }
 
-  I2C_write(&i2c, 0x68<<1, (uint8*)tmp, 4);
   tmp[0] = 0;
-  I2C_read(&i2c, 0x68<<1, (uint8*)tmp, 1, 4);
-  for(i = 0; i < 8; i++) {
-    sprintf(message, "%02x ", tmp[i]);
+  I2C_read(&i2c, 0x68<<1, (uint8*)tmp, 1, 7);
+  for(i = 0; i < 7; i++) {
+    sprintf(message, "%02x", tmp[7-i-1]);
     USART_print(&uart, message);
   }
   USART_print(&uart, ";\n");
@@ -103,12 +111,20 @@ int main (void) {
 
   while (1){    /* Loop forever */
     
-    if ( millis() - cn >= 1000 ) {
+    if ( millis() - cn >= 100 ) {
       digitalToggle(PIO1_6);
       cn = millis();
       i2clcd_cursor(0,0);
-      sprintf(tmp, "%8d", cn );
+      sprintf(tmp, "%8d", cn/100 );
       i2clcd_puts((uint8_t *)tmp);
+      
+      i2clcd_cursor(1,0);
+      tmp[0] = 0;
+      I2C_read(&i2c, 0x68<<1, (uint8*)tmp, 1, 7);
+      sprintf(message, "%02x:%02x:%02x", tmp[2], tmp[1], tmp[0]);
+      i2clcd_puts((uint8_t*)message);
+      sprintf(message, " %02x/%02x", tmp[5], tmp[4]);
+      i2clcd_puts((uint8_t*)message);
     }
     
     if ( USART_available(&uart) > 0 ) {
