@@ -53,8 +53,9 @@ char day[7][4] = {
   };
 
 int main (void) {
-	long cn;
+	long sw;
   long i;
+  boolean btnstate = false;
   char c = 0;
   char str[32];
   char message[32];
@@ -74,10 +75,10 @@ int main (void) {
   xfunc_out = (void(*)(unsigned char))i2clcd_data;
   
   // I2C LCD Backlight controll pin
-  pinMode(PIO1_3, OUTPUT);
-  digitalWrite(PIO1_3, LOW);
+  pinMode(LCDBKLT, OUTPUT);
+  digitalWrite(LCDBKLT, HIGH);
 
-  pinMode(PIO0_1, INPUT);
+  pinMode(USERBTN, INPUT);
   
   /* NVIC is installed inside UARTInit file. */
   USART_init(&uart, PIO0_18, PIO0_19);
@@ -87,14 +88,6 @@ int main (void) {
   	while ( 1 );				/* Fatal error */
   }
 
-  tmp[0] = 0;
-  I2C_read(&i2c, RTC_ADDR, (uint8*)tmp, 1, 8);
-  for(i = 0; i < 8; i++) {
-    sprintf(str, "%02x", tmp[8-i-1]);
-    USART_print(&uart, str);
-  }
-  USART_print(&uart, ";\n");
-
   // I2C液晶を初期化します
   while(1){
     if(!i2clcd_init(0x27)) break;   // 初期化完了ならwhileを抜ける
@@ -102,8 +95,8 @@ int main (void) {
   }
 
   // PIO1_6 USR LED //  GPIOSetDir(1, 6, 1 ); //  GPIOSetBitValue( 1, 6, 1);
-  pinMode(PIO1_6, OUTPUT);
-  digitalWrite(PIO1_6, HIGH);
+  pinMode(USERLED, OUTPUT);
+  digitalWrite(USERLED, HIGH);
     
   USART_print(&uart, "Hello!\n");
     
@@ -111,14 +104,28 @@ int main (void) {
   i2clcd_cursor(1, 0);	// move to 2nd line
   i2clcd_puts((uint8_t*)"LPCLCD Module");
 
-  cn = 0;
-
+  sw = millis();
+  
   while (1){    /* Loop forever */
-    
-    if ( millis() - cn >= 100 ) {
-      digitalToggle(PIO1_6);
-      cn = millis();
-      
+        
+    if ( millis() - sw >= 500 ) {
+      sw = millis();
+
+      if ( digitalRead(USERBTN) == LOW ) {
+        while ( digitalRead(USERBTN) == LOW );
+        if ( millis() - sw > 3000 ) {
+          tmp[0] = 1;
+          tmp[1] = 0x00;
+          tmp[2] = 0x44;
+          tmp[3] = 0x00;
+          tmp[4] = 0x04;
+          tmp[5] = 0x20;
+          tmp[6] = 0x06;
+          tmp[7] = 0x13;
+          I2C_transmit(&i2c, RTC_ADDR, tmp, 8);
+        }
+      }
+
       i2clcd_cursor(1,0);
       tmp[0] = 0;
       I2C_read(&i2c, RTC_ADDR, (uint8*)tmp, 1, 8);
@@ -139,7 +146,7 @@ int main (void) {
       }
       message[i] = 0;
       i2clcd_cursor(0,0);
-      i2clcd_puts(message);
+      i2clcd_puts((uint8_t *)message);
       if ( c == '\n' || c == '\r' ) {
         if ( message[0] == 't' ) {
           
@@ -149,11 +156,8 @@ int main (void) {
       }
     }
 
-    // cn++;
-    
   }
   
-
 }
 
 /******************************************************************************

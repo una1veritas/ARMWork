@@ -178,6 +178,7 @@ void I2C_IRQHandler(void) {
  ** Returned value:		true or false, return false if timed out
  ** 
  *****************************************************************************/
+
 uint32_t I2C_start(I2CDef * i2c) {
 	uint32_t timeout = 0;
 	uint32_t retVal = FALSE;
@@ -344,13 +345,24 @@ uint8_t I2C_read(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen,
 }
 
 uint8_t I2C_request(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen) {
-	/* Write SLA(W), address, SLA(R), and read one byte back. */
-	i2c->WriteLength = reqlen;
-	i2c->ReadLength = 0;
-	i2c->MasterBuffer[0] = addr & 0xFE;
-	memcpy((void*) (i2c->MasterBuffer + 1), data, reqlen);
-  //  I2CMasterBuffer[2] = addr | RD_BIT;
-  return 1;
+	i2c->RdIndex = 0;
+	i2c->WrIndex = 0;
+
+	/*--- Issue a start condition ---*/
+	LPC_I2C->CONSET = I2CONSET_STA; /* Set Start flag */
+
+	i2c->State = I2C_BUSY;
+
+	while (i2c->State == I2C_BUSY) {
+		if (i2c->timeout >= MAX_TIMEOUT) {
+			i2c->State = I2C_TIME_OUT;
+			break;
+		}
+		i2c->timeout++;
+	}
+	LPC_I2C->CONCLR = I2CONCLR_STAC;
+
+	return (i2c->State);
 }
 
 uint8_t I2C_receive(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t rcvlen) {

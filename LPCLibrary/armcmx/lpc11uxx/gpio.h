@@ -26,6 +26,8 @@ typedef enum _GPIOPin_Def {
   PIO0_18 = (PIO0 <<4) | ((uint8_t)18),
   PIO0_19 = (PIO0 <<4) | ((uint8_t)19),
 
+  PIO1_0 = (PIO1 <<4) | ((uint8_t)0),
+  PIO1_1 = (PIO1 <<4) | ((uint8_t)1),
   PIO1_3 = (PIO1 <<4) | ((uint8_t)3),
   PIO1_6 = (PIO1 <<4) | ((uint8_t)6),
   PIO1_25 = (PIO1 <<4) | ((uint8_t)25),

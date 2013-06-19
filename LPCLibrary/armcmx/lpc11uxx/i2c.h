@@ -45,6 +45,7 @@ For board to board test, this flag can be turned on. */
 
 #define RD_BIT              0x01
 
+// I2C State const
 #define I2C_IDLE              0
 #define I2C_STARTED           1
 #define I2C_RESTARTED         2
@@ -82,7 +83,7 @@ typedef struct {
 //  volatile uint32_t SlaveState; // = I2C_IDLE;
   volatile uint32_t State;
   volatile uint32_t timeout; // = 0;
-
+    
 //  volatile uint32_t Mode;
 
   volatile uint8_t MasterBuffer[I2C_BUFSIZE];
@@ -91,6 +92,8 @@ typedef struct {
   volatile uint32_t ReadLength;
   volatile uint32_t WriteLength;
 
+  uint8_t RequestReceive;
+  
   volatile uint32_t RdIndex; // = 0;
   volatile uint32_t WrIndex; // = 0;
 } I2CDef;
