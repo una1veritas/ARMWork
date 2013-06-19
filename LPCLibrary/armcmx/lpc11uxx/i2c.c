@@ -346,23 +346,26 @@ uint8_t I2C_read(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen,
 uint8_t I2C_request(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen) {
 	/* Write SLA(W), address, SLA(R), and read one byte back. */
 	i2c->WriteLength = reqlen;
+	i2c->ReadLength = 0;
 	i2c->MasterBuffer[0] = addr & 0xFE;
 	memcpy((void*) (i2c->MasterBuffer + 1), data, reqlen);
   //  I2CMasterBuffer[2] = addr | RD_BIT;
   return 1;
 }
 
-uint8_t I2C_receive(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reclen) {
+uint8_t I2C_receive(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t rcvlen) {
 	int i;
-
+	i2c->WriteLength = 1;
 	/* Write SLA(W), address, SLA(R), and read one byte back. */
-	i2c->ReadLength = reclen;
+	i2c->ReadLength = rcvlen;
+
+  i2c->MasterBuffer[0] = addr | RD_BIT;
 
 	I2C_Engine(i2c);
 	//if(!I2CEngine()) return -1;
 
 	i = 0;
-	while (reclen--) {
+	while (rcvlen--) {
 		*data++ = i2c->SlaveBuffer[i++];
 	}
 	return 0;

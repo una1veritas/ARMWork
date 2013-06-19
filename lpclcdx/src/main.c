@@ -40,6 +40,8 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #define RXD2    PIO0_18
 #define TXD2    PIO0_19
 
+#define RTC_ADDR 0xd0
+
 char day[7][4] = {
   "Sun",
   "Mon",
@@ -54,7 +56,8 @@ int main (void) {
 	long cn;
   long i;
   char c = 0;
-  char message[16] = "";
+  char str[32];
+  char message[32];
   char tmp[32];
   
   SystemInit();
@@ -85,10 +88,10 @@ int main (void) {
   }
 
   tmp[0] = 0;
-  I2C_read(&i2c, 0x68<<1, (uint8*)tmp, 1, 7);
-  for(i = 0; i < 7; i++) {
-    sprintf(message, "%02x", tmp[7-i-1]);
-    USART_print(&uart, message);
+  I2C_read(&i2c, RTC_ADDR, (uint8*)tmp, 1, 8);
+  for(i = 0; i < 8; i++) {
+    sprintf(str, "%02x", tmp[8-i-1]);
+    USART_print(&uart, str);
   }
   USART_print(&uart, ";\n");
 
@@ -115,37 +118,33 @@ int main (void) {
     if ( millis() - cn >= 100 ) {
       digitalToggle(PIO1_6);
       cn = millis();
-      i2clcd_cursor(0,0);
-      sprintf(tmp, "%8d", cn/100 );
-      i2clcd_puts((uint8_t *)tmp);
       
       i2clcd_cursor(1,0);
       tmp[0] = 0;
-      I2C_read(&i2c, 0x68<<1, (uint8*)tmp, 1, 7);
-      sprintf(message, "%02x:%02x:%02x", tmp[2], tmp[1], tmp[0]);
-      i2clcd_puts((uint8_t*)message);
-      sprintf(message, " %02x/%02x", tmp[5], tmp[4]);
-      i2clcd_puts((uint8_t*)message);
+      I2C_read(&i2c, RTC_ADDR, (uint8*)tmp, 1, 8);
+      sprintf(str, "%02x:%02x:%02x", tmp[3]&0x3f, tmp[2]&0x7f, tmp[1]&0x7f);
+      i2clcd_puts((uint8_t*)str);
+      sprintf(str, " %02x/%02x %02x", tmp[6]&0x1f, tmp[5]&0x3f, tmp[7]);
+      i2clcd_puts((uint8_t*)str);
     }
     
     if ( USART_available(&uart) > 0 ) {
       i = strlen(message);
       while ( USART_available(&uart) > 0 ) {
         c = USART_read(&uart);
-        USART_write(&uart, c);
+        message[i] = c;
         if ( c == '\n' || c == '\r' )
           break;
-        message[i++] = c;
+        i++;
       }
       message[i] = 0;
-      i2clcd_cursor(1,0);
-      for(i = 0; message[i] && i < 16; i++) {
-        i2clcd_data(message[i]);
-      }
-      for( ; i < 16; i++) {
-        i2clcd_data(' ');
-      }
+      i2clcd_cursor(0,0);
+      i2clcd_puts(message);
       if ( c == '\n' || c == '\r' ) {
+        if ( message[0] == 't' ) {
+          
+ //         USART_prints(Revert);
+        }
         message[0] = 0;
       }
     }
