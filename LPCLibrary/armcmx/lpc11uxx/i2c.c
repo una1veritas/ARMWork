@@ -112,8 +112,9 @@ void I2C_IRQHandler(void) {
 			} else if ( i2c.Mode == I2C_MODE_WRITE ) {
 				LPC_I2C->CONSET = I2CONSET_STO; /* Set Stop flag */
 				i2c.State = I2C_OK;
-			}
-      // if i2c.Mode == I2C_MODE_REQUEST, then finish sending without issuing stop condition.
+			} else { // if i2c.Mode == I2C_MODE_REQUEST, then finish sending without issuing stop condition.
+				i2c.State = I2C_OK;        
+      }
 		}
 		LPC_I2C->CONCLR = I2CONCLR_SIC;
 		break;
@@ -312,7 +313,7 @@ uint32_t I2C_Engine(I2CDef * i2c) {
 	return (i2c->State);
 }
 
-uint8_t I2C_transmit(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t length) {
+uint8_t I2C_write(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t length) {
 	i2c->WriteLength = length + 1;
 	i2c->ReadLength = 0;
   i2c->Mode = I2C_MODE_WRITE;
@@ -325,7 +326,7 @@ uint8_t I2C_write16(I2CDef * i2c, uint8_t addr, uint16_t data) {
 	uint8_t buf[2];
 	buf[0] = data >> 8;
 	buf[1] = data & 0xff;
-	return I2C_transmit(i2c, addr, buf, 2);
+	return I2C_write(i2c, addr, buf, 2);
 }
 
 uint8_t I2C_read(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen,
@@ -333,7 +334,7 @@ uint8_t I2C_read(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen,
 	int i;
 	/* Write SLA(W), address, SLA(R), and read one byte back. */
 	i2c->WriteLength = reqlen+1;
-	i2c->ReadLength = rcvlen+1;
+	i2c->ReadLength = rcvlen;
 	i2c->Buffer[0] = addr & 0xFE;
   i2c->Mode = I2C_MODE_READ;
 	memcpy((void*) (i2c->Buffer + 1), data, reqlen);
@@ -348,40 +349,27 @@ uint8_t I2C_read(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen,
 	return 0;
 }
 
-uint8_t I2C_request(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen) {
-	i2c->RdIndex = 0;
-	i2c->WrIndex = 0;
-
-	/*--- Issue a start condition ---*/
-	LPC_I2C->CONSET = I2CONSET_STA; /* Set Start flag */
-
-	i2c->State = I2C_BUSY;
-
-	while (i2c->State == I2C_BUSY) {
-		if (i2c->timeout >= MAX_TIMEOUT) {
-			i2c->State = I2C_TIME_OUT;
-			break;
-		}
-		i2c->timeout++;
-	}
-	LPC_I2C->CONCLR = I2CONCLR_STAC;
-
-	return (i2c->State);
+uint8_t I2C_request(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t length) {
+	i2c->WriteLength = length + 1;
+	i2c->ReadLength = 0;
+  i2c->Mode = I2C_MODE_REQUEST;
+	i2c->Buffer[0] = addr & 0xFE;
+	memcpy((void*) (i2c->Buffer + 1), data, length);
+	return !I2C_Engine(i2c);
 }
 
-uint8_t I2C_receive(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t rcvlen) {
-	int i;
-	i2c->WriteLength = 1;
+uint8_t I2C_receive(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t length) {
+  int i;
 	/* Write SLA(W), address, SLA(R), and read one byte back. */
-	i2c->ReadLength = rcvlen;
-
+	i2c->WriteLength = 0;
+	i2c->ReadLength = length;
+  i2c->Mode = I2C_MODE_READ;
   i2c->Buffer[0] = addr | RD_BIT;
-
 	I2C_Engine(i2c);
 	//if(!I2CEngine()) return -1;
 
 	i = 0;
-	while (rcvlen--) {
+	while (length--) {
 		*data++ = i2c->Buffer[i++];
 	}
 	return 0;

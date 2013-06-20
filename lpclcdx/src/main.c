@@ -53,9 +53,8 @@ char day[7][4] = {
   };
 
 int main (void) {
-	long sw;
+	long sw, ontime = 0; //, offtime;
   long i;
-  boolean btnstate = false;
   char c = 0;
   char str[32];
   char message[32];
@@ -99,7 +98,14 @@ int main (void) {
   digitalWrite(USERLED, HIGH);
     
   USART_print(&uart, "Hello!\n");
-    
+  
+  tmp[0] = 0;
+  I2C_request(&i2c, RTC_ADDR, (uint8*)tmp, 1);
+  I2C_receive(&i2c, RTC_ADDR, (uint8*)tmp, 8);
+  sprintf(str, "%02x:%02x:%02x\n%s\n%02x/%02x/'%02x\n", tmp[3]&0x3f, tmp[2]&0x7f, tmp[1]&0x7f, day[tmp[4]&0x07], tmp[6]&0x1f, tmp[5]&0x3f, tmp[7]);
+  USART_print(&uart, (uint8_t*)str);
+
+  
   i2clcd_puts((uint8_t*)"lpclcd");
   i2clcd_cursor(1, 0);	// move to 2nd line
   i2clcd_puts((uint8_t*)"LPCLCD Module");
@@ -108,25 +114,8 @@ int main (void) {
   
   while (1){    /* Loop forever */
         
-    if ( millis() - sw >= 500 ) {
+    if ( millis() - sw >= 100 ) {
       sw = millis();
-
-      if ( digitalRead(USERBTN) == LOW ) {
-        while ( digitalRead(USERBTN) == LOW );
-        if ( millis() - sw > 5000 ) {
-          tmp[0] = 1;
-          tmp[1] = 0x00;
-          tmp[2] = 0x44;
-          tmp[3] = 0x00;
-          tmp[4] = 0x04;
-          tmp[5] = 0x20;
-          tmp[6] = 0x06;
-          tmp[7] = 0x13;
-          I2C_transmit(&i2c, RTC_ADDR, (uint8_t*)tmp, 8);
-        } else if ( millis() - sw > 1000 ) {
-          digitalToggle(LCDBKLT);
-        }
-      }
 
       i2clcd_cursor(1,0);
       tmp[0] = 0;
@@ -135,6 +124,26 @@ int main (void) {
       i2clcd_puts((uint8_t*)str);
       sprintf(str, " %02x/%02x %02x", tmp[6]&0x1f, tmp[5]&0x3f, tmp[7]);
       i2clcd_puts((uint8_t*)str);
+    }
+    
+    if ( digitalRead(USERBTN) == LOW ) {
+      if ( ontime == 0 ) 
+        ontime = millis();
+    } else /* if ( digitalRead(USERBTN) == HIGH ) */ {
+      if (  ontime > 0 && (millis() - ontime >= 5000) ) {
+        tmp[0] = 1;
+        tmp[1] = 0x00;
+        tmp[2] = 0x41;
+        tmp[3] = 0x23;
+        tmp[4] = 0x04;
+        tmp[5] = 0x20;
+        tmp[6] = 0x06;
+        tmp[7] = 0x13;
+        I2C_write(&i2c, RTC_ADDR, (uint8_t*)tmp, 8);
+      } else if ( ontime > 0 && (millis() - ontime >= 1000) ) {
+        digitalToggle(LCDBKLT);
+      } 
+      ontime = 0;
     }
     
     if ( USART_available(&uart) > 0 ) {

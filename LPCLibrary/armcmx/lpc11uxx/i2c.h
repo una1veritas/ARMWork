@@ -124,7 +124,7 @@ uint32 I2C_start(I2CDef * i2c);
 uint32 I2C_stop(I2CDef * i2c);
 uint32 I2C_Engine(I2CDef * i2c);
 //
-uint8 I2C_transmit(I2CDef * i2c, uint8 addr, uint8 * data, size_t length);
+uint8 I2C_write(I2CDef * i2c, uint8 addr, uint8 * data, size_t length);
 uint8 I2C_read(I2CDef * i2c, uint8 addr, uint8 * data, size_t reqlen, size_t reclen);
 uint8_t I2C_request(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen);
 uint8_t I2C_receive(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reclen);
