@@ -78,21 +78,25 @@ For board to board test, this flag can be turned on. */
 #define I2SCLH_HS_SCLH		0x00000015  /* Fast Plus I2C SCL Duty Cycle High Reg */
 #define I2SCLL_HS_SCLL		0x00000015  /* Fast Plus I2C SCL Duty Cycle Low Reg */
 
+#define I2C_MODE_WRITE    0
+#define I2C_MODE_REQUEST  1
+#define I2C_MODE_READ  2
+
 typedef struct {
 //  volatile uint32_t MasterState; // = I2C_IDLE;
 //  volatile uint32_t SlaveState; // = I2C_IDLE;
   volatile uint32_t State;
   volatile uint32_t timeout; // = 0;
     
-//  volatile uint32_t Mode;
+  volatile uint8_t DstAddr;
+  volatile uint8_t Mode;
 
-  volatile uint8_t MasterBuffer[I2C_BUFSIZE];
-  volatile uint8_t SlaveBuffer[I2C_BUFSIZE];
+//  volatile uint8_t MasterBuffer[I2C_BUFSIZE];
+  volatile uint8_t Buffer[I2C_BUFSIZE];
+//  volatile uint8_t SlaveBuffer[I2C_BUFSIZE];
   volatile uint32_t Count; // = 0;
   volatile uint32_t ReadLength;
   volatile uint32_t WriteLength;
-
-  uint8_t RequestReceive;
   
   volatile uint32_t RdIndex; // = 0;
   volatile uint32_t WrIndex; // = 0;

@@ -113,7 +113,7 @@ int main (void) {
 
       if ( digitalRead(USERBTN) == LOW ) {
         while ( digitalRead(USERBTN) == LOW );
-        if ( millis() - sw > 3000 ) {
+        if ( millis() - sw > 5000 ) {
           tmp[0] = 1;
           tmp[1] = 0x00;
           tmp[2] = 0x44;
@@ -122,7 +122,9 @@ int main (void) {
           tmp[5] = 0x20;
           tmp[6] = 0x06;
           tmp[7] = 0x13;
-          I2C_transmit(&i2c, RTC_ADDR, tmp, 8);
+          I2C_transmit(&i2c, RTC_ADDR, (uint8_t*)tmp, 8);
+        } else if ( millis() - sw > 1000 ) {
+          digitalToggle(LCDBKLT);
         }
       }
 

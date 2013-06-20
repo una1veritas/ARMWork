@@ -81,14 +81,14 @@ void I2C_IRQHandler(void) {
 	case 0x08: /* A Start condition is issued. */
 		i2c.WrIndex = 0;
 		i2c.RdIndex = 0;
-		LPC_I2C->DAT = i2c.MasterBuffer[i2c.WrIndex++];
+		LPC_I2C->DAT = i2c.Buffer[i2c.WrIndex++];
 		LPC_I2C->CONCLR = (I2CONCLR_SIC | I2CONCLR_STAC);
 		break;
 
 	case 0x10: /* A repeated started is issued */
 		i2c.RdIndex = 0;
 		/* Send SLA with R bit set, */
-		LPC_I2C->DAT = i2c.MasterBuffer[i2c.WrIndex++];
+		LPC_I2C->DAT = i2c.Buffer[i2c.WrIndex++];
 		LPC_I2C->CONCLR = (I2CONCLR_SIC | I2CONCLR_STAC);
 		break;
 
@@ -97,21 +97,23 @@ void I2C_IRQHandler(void) {
 			LPC_I2C->CONSET = I2CONSET_STO; /* Set Stop flag */
 			i2c.State = I2C_NO_DATA;
 		} else {
-			LPC_I2C->DAT = i2c.MasterBuffer[i2c.WrIndex++];
+			LPC_I2C->DAT = i2c.Buffer[i2c.WrIndex++];
 		}
 		LPC_I2C->CONCLR = I2CONCLR_SIC;
 		break;
 
 	case 0x28: /* Data byte has been transmitted, regardless ACK or NACK */
 		if (i2c.WrIndex < i2c.WriteLength) {
-			LPC_I2C->DAT = i2c.MasterBuffer[i2c.WrIndex++]; /* this should be the last one */
+			LPC_I2C->DAT = i2c.Buffer[i2c.WrIndex++]; /* this should be the last one */
 		} else {
-			if (i2c.ReadLength != 0) {
+			if ( i2c.Mode == I2C_MODE_READ ) //(i2c.ReadLength != 0) 
+      {
 				LPC_I2C->CONSET = I2CONSET_STA; /* Set Repeated-start flag */
-			} else {
+			} else if ( i2c.Mode == I2C_MODE_WRITE ) {
 				LPC_I2C->CONSET = I2CONSET_STO; /* Set Stop flag */
 				i2c.State = I2C_OK;
 			}
+      // if i2c.Mode == I2C_MODE_REQUEST, then finish sending without issuing stop condition.
 		}
 		LPC_I2C->CONCLR = I2CONCLR_SIC;
 		break;
@@ -134,7 +136,7 @@ void I2C_IRQHandler(void) {
 		break;
 
 	case 0x50: /* Data byte has been received, regardless following ACK or NACK */
-		i2c.SlaveBuffer[i2c.RdIndex++] = LPC_I2C->DAT;
+		i2c.Buffer[i2c.RdIndex++] = LPC_I2C->DAT;
 		if ((i2c.RdIndex + 1) < i2c.ReadLength) {
 			LPC_I2C->CONSET = I2CONSET_AA; /* assert ACK after data is received */
 		} else {
@@ -144,7 +146,7 @@ void I2C_IRQHandler(void) {
 		break;
 
 	case 0x58:
-		i2c.SlaveBuffer[i2c.RdIndex++] = LPC_I2C->DAT;
+		i2c.Buffer[i2c.RdIndex++] = LPC_I2C->DAT;
 		i2c.State = I2C_OK;
 		LPC_I2C->CONSET = I2CONSET_STO; /* Set Stop flag */
 		LPC_I2C->CONCLR = I2CONCLR_SIC; /* Clear SI flag */
@@ -313,8 +315,9 @@ uint32_t I2C_Engine(I2CDef * i2c) {
 uint8_t I2C_transmit(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t length) {
 	i2c->WriteLength = length + 1;
 	i2c->ReadLength = 0;
-	i2c->MasterBuffer[0] = addr;
-	memcpy((void*) (i2c->MasterBuffer + 1), data, length);
+  i2c->Mode = I2C_MODE_WRITE;
+	i2c->Buffer[0] = addr;
+	memcpy((void*) (i2c->Buffer + 1), data, length);
 	return !I2C_Engine(i2c);
 }
 
@@ -331,15 +334,16 @@ uint8_t I2C_read(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen,
 	/* Write SLA(W), address, SLA(R), and read one byte back. */
 	i2c->WriteLength = reqlen+1;
 	i2c->ReadLength = rcvlen+1;
-	i2c->MasterBuffer[0] = addr & 0xFE;
-	memcpy((void*) (i2c->MasterBuffer + 1), data, reqlen);
-  i2c->MasterBuffer[reqlen+1] = addr | RD_BIT;
+	i2c->Buffer[0] = addr & 0xFE;
+  i2c->Mode = I2C_MODE_READ;
+	memcpy((void*) (i2c->Buffer + 1), data, reqlen);
+  i2c->Buffer[reqlen+1] = addr | RD_BIT;
 	I2C_Engine(i2c);
 	//if(!I2CEngine()) return -1;
 
 	i = 0;
 	while (rcvlen--) {
-		*data++ = i2c->SlaveBuffer[i++];
+		*data++ = i2c->Buffer[i++];
 	}
 	return 0;
 }
@@ -371,14 +375,14 @@ uint8_t I2C_receive(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t rcvlen) {
 	/* Write SLA(W), address, SLA(R), and read one byte back. */
 	i2c->ReadLength = rcvlen;
 
-  i2c->MasterBuffer[0] = addr | RD_BIT;
+  i2c->Buffer[0] = addr | RD_BIT;
 
 	I2C_Engine(i2c);
 	//if(!I2CEngine()) return -1;
 
 	i = 0;
 	while (rcvlen--) {
-		*data++ = i2c->SlaveBuffer[i++];
+		*data++ = i2c->Buffer[i++];
 	}
 	return 0;
 }
