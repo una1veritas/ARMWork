@@ -1,6 +1,10 @@
 #ifndef _GPIO_H_
 #define _GPIO_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "armcmx.h"
 
 #define OUTPUT 1
@@ -14,7 +18,7 @@ enum PortNameDef {
 	PIO1 = 1,
 };
 
-typedef enum _GPIOPin_Def {
+enum _GPIOPin_Def {
 	NOT_A_PIN = 0,
   PIO0_0 = (PIO0 <<4) | ((uint8_t)0),
   PIO0_1 = (PIO0 <<4) | ((uint8_t)1),
@@ -31,7 +35,7 @@ typedef enum _GPIOPin_Def {
   PIO1_3 = (PIO1 <<4) | ((uint8_t)3),
   PIO1_6 = (PIO1 <<4) | ((uint8_t)6),
   PIO1_25 = (PIO1 <<4) | ((uint8_t)25),
-} GPIOPin;
+};
 
 void GPIOInit( void );
 
@@ -39,5 +43,9 @@ void pinMode( GPIOPin pin, uint8_t dir );
 void digitalWrite(GPIOPin pin, uint8_t bitVal );
 uint8_t digitalRead(GPIOPin pin);
 uint8_t digitalToggle(GPIOPin pin);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

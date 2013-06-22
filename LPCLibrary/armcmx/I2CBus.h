@@ -1,6 +1,6 @@
 
-#ifndef I2CWire_h
-#define I2CWire_h
+#ifndef I2CBus_h
+#define I2CBus_h
 
 #include <inttypes.h>
 #include "gpio.h"
@@ -9,11 +9,11 @@
 
 #define BUFFER_LENGTH I2C_BUFFER_SIZE
 
-class I2CWire : public Stream
+class I2CBus : public Stream
 {
   private:
-//		I2C_TypeDef * i2cx;
-		i2c i2cbuf;
+		I2CDef * i2cx;
+//		i2c i2cbuf;
 		GPIOPin sclpin, sdapin;
 
 		uint8_t dstaddress;
@@ -21,9 +21,12 @@ class I2CWire : public Stream
 		uint8_t txbuffer[I2C_BUFFER_SIZE];
 		int16_t rxposition, txposition;
 		int16_t rxlength, txlength;
+  
+  public:
+    uint32_t status;
 	
   public:
-    I2CWire(I2C_TypeDef * I2Cx, GPIOPin scl, GPIOPin sda) : i2cx(I2Cx), sclpin(scl), sdapin(sda) {
+    I2CBus(I2CDef * I2Cx, GPIOPin scl = 0, GPIOPin sda = 0) : i2cx(I2Cx), sclpin(scl), sdapin(sda) {
 		}
     void begin(uint32_t clk = 100000);
 	
@@ -54,7 +57,7 @@ class I2CWire : public Stream
     using Print::write;
 };
 
-//extern I2CWire Wire1(I2C1);
+extern I2CBus Wire;
 
 #endif
 

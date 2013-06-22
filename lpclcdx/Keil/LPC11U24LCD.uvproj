@@ -413,9 +413,14 @@
               <FilePath>..\src\i2clcd.c</FilePath>
             </File>
             <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\main.c</FilePath>
+              <FileName>main.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\src\main.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>i2clcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\src\i2clcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -551,6 +556,16 @@
               <FileName>Print.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\LPCLibrary\armcmx\Print.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>I2CBus.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\I2CBus.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>I2CBus.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\I2CBus.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -40,6 +40,10 @@
 #define TIME_INTERVAL	(SystemCoreClock/1000 - 1)
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct {
   uint8_t num;
   volatile uint32_t counter[4]; // = {0,0,0,0};
@@ -62,6 +66,10 @@ void init_timer32PWM(uint8_t timer_num, uint32_t period, uint8_t match_enable);
 void setMatch_timer32PWM (uint8_t timer_num, uint8_t match_nr, uint32_t value);
 
 uint32_t millis(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* end __TIMER32_H */
 /*****************************************************************************

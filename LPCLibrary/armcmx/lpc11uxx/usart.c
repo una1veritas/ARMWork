@@ -415,17 +415,26 @@ size_t USART_polling_write(USARTDef * uart, uint8_t c)
 ** Returned value:		none.
 ** 
 *****************************************************************************/
-void UARTputs( uint8_t *str_ptr )
-{
-  while(*str_ptr != 0x00)
-  {
+size_t USART_puts(USARTDef * uart, const char *ptr ) {
+  size_t n = 0;
+  while(*ptr) {
     while((LPC_USART->LSR & 0x60) != 0x60);
-    LPC_USART->THR = *str_ptr;
-    str_ptr++;
+    LPC_USART->THR = *ptr;
+    ptr++;
+    n++;
   }
-  return;
+  return n;
 }
 
+/*
+size_t USART_print(USARTDef * uart, const char * ptr) {
+  size_t n = 0;
+  while (*ptr) {
+    n += USART_write(uart, *ptr++);
+  }
+  return n;
+}
+*/
 /*****************************************************************************
 ** Function name:		get_key
 **
@@ -473,10 +482,17 @@ int16_t USART_read(USARTDef * uart) {
   return c;
 }
 
-size_t USART_print(USARTDef * uart, const char * ptr) {
-  size_t n = 0;
-  while (*ptr) {
-    n += USART_write(uart, *ptr++);
+
+void USART_flush(USARTDef *uart) {
+  return;
+}
+
+int16_t USART_peek(USARTDef * uart) {
+  int16_t c;
+  if ( uart->Count > 0 ) {
+    c = uart->Buffer[uart->Tail];
+  } else {
+    c = -1;
   }
-  return n;
+  return c;
 }

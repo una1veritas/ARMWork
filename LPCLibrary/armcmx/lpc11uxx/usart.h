@@ -22,6 +22,10 @@
 
 #include "gpio.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Synchronous mode control register definition. */
 #define SYNC_ON             (0x1<<0)
 #define SYNC_OFF            (0x0<<0)
@@ -104,7 +108,7 @@ void UART_IRQHandler(void);
 void USART_init(USARTDef *, const GPIOPin rx, const GPIOPin tx);
 void USART_begin(USARTDef *, const uint32_t baudrate);
 size_t USART_write(USARTDef * usart, uint8_t c);
-size_t USART_print(USARTDef *, const char *);
+size_t USART_puts(USARTDef *, const char *);
 size_t USART_available(USARTDef * usart);
 int16_t USART_read(USARTDef *);
 size_t USART_polling_write(USARTDef * usart, uint8_t c );
@@ -133,6 +137,10 @@ void UART4_IRQHandler(void);
 void UART5_IRQHandler(void);
 void USART6_IRQHandler(void);
 */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* end __UART_H */
 /*****************************************************************************

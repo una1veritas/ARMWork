@@ -8,8 +8,8 @@
 #ifndef USARTSERIAL_H_
 #define USARTSERIAL_H_
 
-#include <stdio.h>
-#include <stdint.h>
+//#include <stdio.h>
+//#include <stdint.h>
 
 //#include <stm32f4xx_usart.h>
 
@@ -41,5 +41,7 @@ public:
 
 };
 
+
+extern USARTSerial Serial;
 
 #endif /* USARTSERIAL_H_ */

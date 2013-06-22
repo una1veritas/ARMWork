@@ -26,7 +26,7 @@ extern "C" {
 
 #include <inttypes.h>
 #include <stdio.h> // for size_t
-#include <stdlib.h>
+//#include <stdlib.h>
 #include <string.h>
 
 #ifdef __cplusplus

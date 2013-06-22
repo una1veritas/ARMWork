@@ -20,6 +20,10 @@
 #ifndef __I2C_H 
 #define __I2C_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* If I2C SEEPROM is tested, make sure FAST_MODE_PLUS is 0.
 For board to board test, this flag can be turned on. */
 
@@ -28,7 +32,7 @@ For board to board test, this flag can be turned on. */
 
 #define FAST_MODE_PLUS      0
 
-#define I2C_BUFSIZE             64
+#define I2C_BUFFER_SIZE             64
 #define MAX_TIMEOUT         0x00FFFFFF
 
 #define I2CMASTER           0x01
@@ -92,7 +96,7 @@ typedef struct {
   volatile uint8_t Mode;
 
 //  volatile uint8_t MasterBuffer[I2C_BUFSIZE];
-  volatile uint8_t Buffer[I2C_BUFSIZE];
+  volatile uint8_t Buffer[I2C_BUFFER_SIZE];
 //  volatile uint8_t SlaveBuffer[I2C_BUFSIZE];
   volatile uint32_t Count; // = 0;
   volatile uint32_t ReadLength;
@@ -119,7 +123,9 @@ boolean i2c_receive(i2c * I2Cbuf, uint8_t * data, uint16_t lim);
 */
 
 void I2C_IRQHandler( void );
-uint32 I2C_init(I2CDef * i2c, uint32 I2cMode );
+uint8_t I2C_init(I2CDef * i2c, uint32 I2cMode );
+uint8_t I2C_begin(I2CDef * i2c);
+
 uint32 I2C_start(I2CDef * i2c);
 uint32 I2C_stop(I2CDef * i2c);
 uint32 I2C_Engine(I2CDef * i2c);
@@ -130,6 +136,10 @@ uint8_t I2C_request(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen);
 uint8_t I2C_receive(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reclen);
 //
 uint8 I2C_write16(I2CDef * i2c, uint8 addr, uint16 data);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* end __I2C_H */
 /****************************************************************************

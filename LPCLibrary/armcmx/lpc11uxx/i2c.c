@@ -234,7 +234,7 @@ uint32_t I2C_stop(I2CDef * i2c) {
  **				interrupt handler was not installed correctly
  ** 
  *****************************************************************************/
-uint32_t I2C_init(I2CDef * i2c, uint32_t I2cMode) {
+uint8_t I2C_init(I2CDef * i2c, uint32_t I2cMode) {
 	LPC_SYSCON->PRESETCTRL |= (0x1 << 1);
 
 	LPC_SYSCON->SYSAHBCLKCTRL |= (1 << 5);
@@ -245,6 +245,16 @@ uint32_t I2C_init(I2CDef * i2c, uint32_t I2cMode) {
 	/* IOCON may change in the next release, save change for future references. */
 //  LPC_IOCON->PIO0_4 |= (0x1<<10);	/* open drain pins */
 //  LPC_IOCON->PIO0_5 |= (0x1<<10);	/* open drain pins */
+
+	if (I2cMode != I2CMASTER) {
+    // set slave address
+    //LPC_I2C->ADR0 = PCF8594_ADDR;
+	}
+
+  return (TRUE);
+}
+
+uint8_t I2C_begin(I2CDef * i2c) {
 	/*--- Clear flags ---*/
 	LPC_I2C->CONCLR = I2CONCLR_AAC | I2CONCLR_SIC | I2CONCLR_STAC
 			| I2CONCLR_I2ENC;
@@ -263,10 +273,6 @@ uint32_t I2C_init(I2CDef * i2c, uint32_t I2cMode) {
 // set initial value idle
 	i2c->State = I2C_IDLE;
 //	i2c->SlaveState = I2C_IDLE;
-
-	if (I2cMode == I2CSLAVE) {
-//		LPC_I2C->ADR0 = PCF8594_ADDR;
-	}
 
 	/* Enable the I2C Interrupt */
 	NVIC_EnableIRQ (I2C_IRQn);

@@ -7,38 +7,39 @@ extern "C" {
 	#include "delay.h"
 }
 
-#include "I2CWire.h"
+#include "I2CBus.h"
 
 // Initialize Class Variables //////////////////////////////////////////////////
 
-//uint8_t I2CWire::transmitting = 0;
-//void (*I2CWire::user_onRequest)(void);
-//void (*I2CWire::user_onReceive)(int);
+I2CBus Wire(&i2c);
+
+//uint8_t I2CBus::transmitting = 0;
+//void (*I2CBus::user_onRequest)(void);
+//void (*I2CBus::user_onReceive)(int);
 
 // Constructors ////////////////////////////////////////////////////////////////
 
 
 // Public Methods //////////////////////////////////////////////////////////////
 
-void I2CWire::begin(uint32_t clkHz)
+void I2CBus::begin(uint32_t clkHz)
 {
-	i2c_init(&i2cbuf, i2cx, sclpin, sdapin);
-	i2c_begin(&i2cbuf, clkHz);
+	status = I2C_init(i2cx, I2CMASTER);
+	status = I2C_begin(i2cx);
 }
 
-void I2CWire::beginTransmission(uint8_t address) {
+void I2CBus::beginTransmission(uint8_t address) {
 	dstaddress = address;
 	txposition = 0;
 	txlength = 0;
 }
 
-uint8_t I2CWire::receiveFrom(uint8_t address, uint16 quantity)
-{
+uint8_t I2CBus::receiveFrom(uint8_t address, uint16 quantity) {
   // clamp to buffer length
   if(quantity > BUFFER_LENGTH)
     quantity = BUFFER_LENGTH;
 	rxposition = 0;
- 	if ( i2c_receive(&i2cbuf, rxbuffer, quantity) ) {
+ 	if ( I2C_receive(i2cx, address, rxbuffer, quantity) ) {
 		return (rxlength = quantity);
 	}
 	return 0;
@@ -57,16 +58,16 @@ uint8_t I2CWire::receiveFrom(uint8_t address, uint16 quantity)
 //	no call to endTransmission(true) is made. Some I2C
 //	devices will behave oddly if they do not see a STOP.
 //
-uint8_t I2CWire::endTransmission(uint8_t sendStop)
+uint8_t I2CBus::endTransmission(uint8_t sendStop)
 {
 	//  int8_t ret = 0;
   // transmit buffer (blocking)
 	if ( sendStop ) {
-		if ( i2c_transmit(&i2cbuf, dstaddress, txbuffer, txlength) ) {
+		if ( I2C_write(i2cx, dstaddress, txbuffer, txlength) ) {
 			return txlength;
 		}
 	} else {
-		if ( i2c_request(&i2cbuf, dstaddress, txbuffer, txlength) ) {
+		if ( I2C_request(i2cx, dstaddress, txbuffer, txlength) ) {
 			return txlength;
 		}
 	}
@@ -76,14 +77,14 @@ uint8_t I2CWire::endTransmission(uint8_t sendStop)
 //	This provides backwards compatibility with the original
 //	definition, and expected behaviour, of endTransmission
 //
-uint8_t I2CWire::endRequest() {
+uint8_t I2CBus::endRequest() {
   return endTransmission(false);
 }
 
 // must be called in:
 // slave tx event callback
 // or after beginTransmission(address)
-size_t I2CWire::write(uint8_t data)
+size_t I2CBus::write(uint8_t data)
 {
   // don't bother if buffer is full
 	if(txlength >= BUFFER_LENGTH){
@@ -100,7 +101,7 @@ size_t I2CWire::write(uint8_t data)
 // must be called in:
 // slave tx event callback
 // or after beginTransmission(address)
-size_t I2CWire::write(const uint8_t *data, size_t quantity)
+size_t I2CBus::write(const uint8_t *data, size_t quantity)
 {
   if(transmitting){
   // in master transmitter mode
@@ -118,7 +119,7 @@ size_t I2CWire::write(const uint8_t *data, size_t quantity)
 // must be called in:
 // slave rx event callback
 // or after requestFrom(address, numBytes)
-size_t I2CWire::available(void)
+size_t I2CBus::available(void)
 {
   return rxBufferLength - rxBufferIndex;
 }
@@ -126,7 +127,7 @@ size_t I2CWire::available(void)
 // must be called in:
 // slave rx event callback
 // or after requestFrom(address, numBytes)
-int16 I2CWire::read(void)
+int16 I2CBus::read(void)
 {
   int16 value = -1;
   
@@ -142,7 +143,7 @@ int16 I2CWire::read(void)
 // must be called in:
 // slave rx event callback
 // or after requestFrom(address, numBytes)
-int16 I2CWire::peek(void)
+int16 I2CBus::peek(void)
 {
   int16 value = -1;
   
@@ -154,14 +155,14 @@ int16 I2CWire::peek(void)
 }
 */
 
-void I2CWire::flush(void)
+void I2CBus::flush(void)
 {
   // XXX: to be implemented.
 }
 
 /*
 // behind the scenes function that is called when data is received
-void I2CWire::onReceiveService(uint8_t* inBytes, int numBytes)
+void I2CBus::onReceiveService(uint8_t* inBytes, int numBytes)
 {
   // don't bother if user hasn't registered a callback
   if(!user_onReceive){
@@ -186,7 +187,7 @@ void I2CWire::onReceiveService(uint8_t* inBytes, int numBytes)
 }
 
 // behind the scenes function that is called when data is requested
-void I2CWire::onRequestService(void)
+void I2CBus::onRequestService(void)
 {
   // don't bother if user hasn't registered a callback
   if(!user_onRequest){
@@ -201,13 +202,13 @@ void I2CWire::onRequestService(void)
 }
 
 // sets function called on slave write
-void I2CWire::onReceive( void (*function)(int) )
+void I2CBus::onReceive( void (*function)(int) )
 {
   user_onReceive = function;
 }
 
 // sets function called on slave read
-void I2CWire::onRequest( void (*function)(void) )
+void I2CBus::onRequest( void (*function)(void) )
 {
   user_onRequest = function;
 }
@@ -215,5 +216,5 @@ void I2CWire::onRequest( void (*function)(void) )
 
 // Preinstantiate Objects //////////////////////////////////////////////////////
 
-//I2CWire Wire1 = I2CWire(I2C1);
+//I2CBus Wire1 = I2CBus(I2C1);
 

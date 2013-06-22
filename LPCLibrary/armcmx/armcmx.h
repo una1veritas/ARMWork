@@ -73,9 +73,11 @@ typedef uint8_t boolean;
 #define UINT16(x)  ((uint16_t)(x))
 #define HIGHLOW(x, y)  (((uint16_t)(x))<< 8 | y)
 
-//#include "gpio.h"
+typedef uint8_t GPIOPin;
+
+#include "gpio.h"
 //#include "delay.h"
-//#include "usart.h"
+#include "usart.h"
 //#include "spi.h"
 
 //void armcmx_init(void);
