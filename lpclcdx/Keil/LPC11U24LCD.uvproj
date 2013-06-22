@@ -522,6 +522,36 @@
               <FileType>5</FileType>
               <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\usart.h</FilePath>
             </File>
+            <File>
+              <FileName>USARTSerial.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\USARTSerial.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>USARTSerial.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\USARTSerial.h</FilePath>
+            </File>
+            <File>
+              <FileName>Stream.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\Stream.h</FilePath>
+            </File>
+            <File>
+              <FileName>Stream.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\Stream.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Print.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\Print.h</FilePath>
+            </File>
+            <File>
+              <FileName>Print.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\Print.cpp</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

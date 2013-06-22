@@ -80,8 +80,8 @@ int main (void) {
   pinMode(USERBTN, INPUT);
   
   /* NVIC is installed inside UARTInit file. */
-  USART_init(&uart, PIO0_18, PIO0_19);
-  USART_begin(&uart, 115200);
+  USART_init(&usart, PIO0_18, PIO0_19);
+  USART_begin(&usart, 115200);
 
   if ( I2C_init(&i2c, (uint32_t)I2CMASTER ) == FALSE ){	/* initialize I2c */
   	while ( 1 );				/* Fatal error */
@@ -97,13 +97,13 @@ int main (void) {
   pinMode(USERLED, OUTPUT);
   digitalWrite(USERLED, HIGH);
     
-  USART_print(&uart, "Hello!\n");
+  USART_print(&usart, "Hello!\n");
   
   tmp[0] = 0;
   I2C_request(&i2c, RTC_ADDR, (uint8*)tmp, 1);
   I2C_receive(&i2c, RTC_ADDR, (uint8*)tmp, 8);
   sprintf(str, "%02x:%02x:%02x\n%s\n%02x/%02x/'%02x\n", tmp[3]&0x3f, tmp[2]&0x7f, tmp[1]&0x7f, day[tmp[4]&0x07], tmp[6]&0x1f, tmp[5]&0x3f, tmp[7]);
-  USART_print(&uart, (uint8_t*)str);
+  USART_print(&usart, (uint8_t*)str);
 
   
   i2clcd_puts((uint8_t*)"lpclcd");
@@ -146,10 +146,10 @@ int main (void) {
       ontime = 0;
     }
     
-    if ( USART_available(&uart) > 0 ) {
+    if ( USART_available(&usart) > 0 ) {
       i = strlen(message);
-      while ( USART_available(&uart) > 0 ) {
-        c = USART_read(&uart);
+      while ( USART_available(&usart) > 0 ) {
+        c = USART_read(&usart);
         message[i] = c;
         if ( c == '\n' || c == '\r' )
           break;

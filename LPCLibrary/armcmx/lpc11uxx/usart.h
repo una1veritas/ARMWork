@@ -71,7 +71,7 @@
 #define LSR_TEMT        (0x01<<6)
 #define LSR_RXFE        (0x01<<7)
 
-#define UART_BUFSIZE         0x40
+#define USART_BUFSIZE         0x40
 
 /* RS485 mode definition. */
 #define RS485_NMMEN		(0x1<<0)
@@ -84,7 +84,7 @@
 typedef struct {
   volatile uint32_t Status;
   volatile uint8_t  TxEmpty; // = 1;
-  volatile uint8_t  Buffer[UART_BUFSIZE];
+  volatile uint8_t  Buffer[USART_BUFSIZE];
   volatile uint16_t Count; // = 0;
   volatile uint16_t Tail; //
 
@@ -95,7 +95,7 @@ typedef struct {
 } USARTDef;
 
 // Global, unique for M0
-extern USARTDef uart;
+extern USARTDef usart;
 
 // original irq handler
 void UART_IRQHandler(void);

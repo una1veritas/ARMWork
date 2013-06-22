@@ -14,16 +14,16 @@
 //#include <stm32f4xx_usart.h>
 
 #include "armcmx.h"
-#include "uart.h"
+#include "usart.h"
 #include "gpio.h"
 #include "Stream.h"
 
 class USARTSerial : public Stream {
-	UARTDef * port;
+	USARTDef * port;
 	GPIOPin pinrx, pintx, pincts, pindtr;
 
 public:
-	USARTSerial(UARTDef * usartx, GPIOPin rx, GPIOPin tx) {
+	USARTSerial(USARTDef * usartx, GPIOPin rx, GPIOPin tx) {
 		port = usartx;
 		pinrx = rx;
 		pintx = tx;
@@ -34,10 +34,10 @@ public:
 	virtual size_t write(const uint8_t w);
 	using Print::write;
 
-	virtual int16_t read() { return usart_read(&port); }
-	virtual size_t available() { return usart_available(&port); }
-	virtual int16_t peek() { return usart_peek(&port); }
-	virtual void flush() { usart_flush(&port); }
+	virtual int16_t read() { return USART_read(port); }
+	virtual size_t available() { return USART_available(port); }
+	virtual int16_t peek() { return USART_peek(port); }
+	virtual void flush() { USART_flush(port); }
 
 };
 

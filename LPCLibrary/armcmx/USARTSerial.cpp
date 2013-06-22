@@ -10,9 +10,10 @@
 #include "USARTSerial.h"
 
 void USARTSerial::begin(const uint32_t baud) {
-	usart_init(&port, port.USARTx, pinrx, pintx, baud);
+	USART_init(port, pinrx, pintx);
+  USART_begin(port, baud);
 }
 
 size_t USARTSerial::write(const uint8_t w) {
-	return usart_write(&port, w);
+	return USART_write(port, w);
 }

@@ -33,7 +33,7 @@
 #include "gpio.h"
 #include "usart.h"
 
-USARTDef uart;
+USARTDef usart;
 
 /*****************************************************************************
 ** Function name:		UART_IRQHandler
@@ -61,7 +61,7 @@ void UART_IRQHandler(void) {
     {
       /* There are errors or break interrupt */
       /* Read LSR will clear the interrupt */
-      uart.Status = LSRValue;
+      usart.Status = LSRValue;
       Dummy = LPC_USART->RBR;	/* Dummy read on RX to clear 
 								interrupt, then bail out */
       return;
@@ -70,34 +70,34 @@ void UART_IRQHandler(void) {
     {
       /* If no error on RLS, normal ready, save into the data buffer. */
       /* Note: read RBR will clear the interrupt */
-      uart.Buffer[(uart.Tail+uart.Count)%UART_BUFSIZE] = LPC_USART->RBR;
-      uart.Count++;
-      if (uart.Count == UART_BUFSIZE)
+      usart.Buffer[(usart.Tail+usart.Count)%USART_BUFSIZE] = LPC_USART->RBR;
+      usart.Count++;
+      if (usart.Count == USART_BUFSIZE)
       {
 //        uart.Count = 0;		/* buffer overflow */
-        uart.Tail++;
-        uart.Tail %= UART_BUFSIZE;
-        uart.Count--;
+        usart.Tail++;
+        usart.Tail %= USART_BUFSIZE;
+        usart.Count--;
       }	
     }
   }
   else if (IIRValue == IIR_RDA)	/* Receive Data Available */
   {
     /* Receive Data Available */
-    uart.Buffer[(uart.Count+uart.Tail) % UART_BUFSIZE] = LPC_USART->RBR;
-    uart.Count++;
-    if (uart.Count == UART_BUFSIZE)
+    usart.Buffer[(usart.Count+usart.Tail) % USART_BUFSIZE] = LPC_USART->RBR;
+    usart.Count++;
+    if (usart.Count == USART_BUFSIZE)
     {
 //      uart.Count = 0;		/* buffer overflow */
-      uart.Tail++;
-      uart.Tail %= UART_BUFSIZE;
-      uart.Count--;
+      usart.Tail++;
+      usart.Tail %= USART_BUFSIZE;
+      usart.Count--;
     }
   }
   else if (IIRValue == IIR_CTI)	/* Character timeout indicator */
   {
     /* Character Time-out indicator */
-    uart.Status |= 0x100;		/* Bit 9 as the CTI error */
+    usart.Status |= 0x100;		/* Bit 9 as the CTI error */
   }
   else if (IIRValue == IIR_THRE)	/* THRE, transmit holding register empty */
   {
@@ -106,11 +106,11 @@ void UART_IRQHandler(void) {
 								valid data in U0THR or not */
     if (LSRValue & LSR_THRE)
     {
-      uart.TxEmpty = 1;
+      usart.TxEmpty = 1;
     }
     else
     {
-      uart.TxEmpty = 0;
+      usart.TxEmpty = 0;
     }
   }
 #if AUTOBAUD_ENABLE
@@ -466,7 +466,7 @@ int16_t USART_read(USARTDef * uart) {
     c = uart->Buffer[uart->Tail];
     uart->Count--;
     uart->Tail++;
-    uart->Tail %= UART_BUFSIZE;
+    uart->Tail %= USART_BUFSIZE;
   } else {
     c = -1;
   }
