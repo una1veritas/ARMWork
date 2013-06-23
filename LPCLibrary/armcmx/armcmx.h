@@ -75,16 +75,16 @@ typedef uint8_t boolean;
 
 typedef uint8_t GPIOPin;
 
-#include "gpio.h"
-//#include "delay.h"
-#include "usart.h"
-//#include "spi.h"
-
 //void armcmx_init(void);
 //size_t strlen(const char * s);
 
 #ifdef __cplusplus
 }
 #endif
+
+#include "gpio.h"
+#include "delay.h"
+#include "usart.h"
+//#include "spi.h"
 
 #endif /* ARMCORE_H_ */

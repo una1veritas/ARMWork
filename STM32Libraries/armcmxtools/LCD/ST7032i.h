@@ -3,7 +3,7 @@
 #define ST7032i_h
 
 #include <stdio.h>
-#include <stdlib.h>
+//#include <stdlib.h>
 #include <string.h>
 #include <inttypes.h>
 
@@ -15,12 +15,12 @@
 #endif
 #include "CharacterLCD.h"
 #else
-#include <cmcore.h>
+#include <armcmx.h>
 #include <gpio.h>
 
 #include <Print.h>
-#include <I2CWire.h>
-#include "ChLCD/CharacterLCD.h"
+#include <I2CBus.h>
+#include "HD44780.h"
 #endif
 
 
@@ -36,16 +36,18 @@ class ST7032i : public CharacterLCD {
 	  uint8_t _position;
 //
 //	I2CBuffer * wirex;
-	I2CWire & wirex;
+	I2CBus & wire;
 	byte contrast;
 	byte i2c_address;
 	GPIOPin pin_bklight;
+  GPIOPin pin_reset;
 
 public:
 
 //	void init(I2CBuffer * );
-	ST7032i(I2CWire &);
-	void begin();
+	ST7032i(I2CBus &, GPIOPin bklt = NOT_A_PIN, GPIOPin rst = NOT_A_PIN);
+	bool begin();
+  void reset();
 
 	using CharacterLCD::write;
 

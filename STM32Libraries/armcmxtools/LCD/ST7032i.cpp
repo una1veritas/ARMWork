@@ -10,8 +10,8 @@
 
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+//#include <stdio.h>
+//#include <stdlib.h>
 
 /*
  #if ARDUINO >= 100
@@ -20,17 +20,17 @@
  #include <WProgram.h>
  #endif
  */
-#include "armcore.h"
+#include "armcmx.h"
 #include "binary.h"
 #include "delay.h"
-#include "I2CWire.h"
-#include "ChLCD/ST7032i.h"
+#include "I2CBus.h"
+#include "ST7032i.h"
 
 // private constants
 
 #define CMDDELAY 50        // Delay to wait after sending commands;
 #define DATADELAY 50        // Delay to wait after sending data;
-#define DEFAULTCONTRAST  42
+#define DEFAULTCONTRAST  0x27 //42
 
 #define LCDI2C_MAX_STRLEN			40
 #define LCDI2C_PRINT_STR_DELAY		50
@@ -59,13 +59,12 @@
 //
 
 //
-ST7032i::ST7032i(I2CWire & wx) : wirex(wx){
+ST7032i::ST7032i(I2CBus & bus,  GPIOPin bklt, GPIOPin rst) : wire(bus), pin_bklight(bklt), pin_reset(rst){
 	_numlines = 2;
 	_numcolumns = 16;
 	_position = 0;
 	i2c_address = DEFAULT_I2C_ADDRESS;
 	contrast = DEFAULTCONTRAST;
-	pin_bklight = PIN_NOT_DEFINED;
 
 //	wirex = wx;
 	/*
@@ -74,40 +73,52 @@ ST7032i::ST7032i(I2CWire & wx) : wirex(wx){
 	 _displayfunction |= LCD_5x10DOTS;
 	 }
 	 */
-	if (pin_bklight != PIN_NOT_DEFINED) {
+	if (pin_bklight != NOT_A_PIN) {
 		pinMode(pin_bklight, OUTPUT);
+	}
+	if (pin_reset != NOT_A_PIN) {
+		pinMode(pin_reset, OUTPUT);
+    digitalWrite(pin_reset, HIGH);
 	}
 }
 //
 
 void ST7032i::send(uint8_t value, uint8_t dcswitch) {
 	if ( dcswitch == LOW ) {
-		wirex.beginTransmission(i2c_address);
-		wirex.write((uint8)0x00);
-		wirex.write(value);
-		wirex.endTransmission();	
-		delay_us(CMDDELAY);
+		wire.beginTransmission(i2c_address);
+		wire.write((uint8)0x00);
+		wire.write(value);
+		wire.endTransmission();
+		// delay_us(CMDDELAY);
 	} else {
-		wirex.beginTransmission(i2c_address);
-		wirex.write((uint8)B01000000);
-		wirex.write((uint8)value);
-		wirex.endTransmission();
-
-		delay_us(CMDDELAY);
+		wire.beginTransmission(i2c_address);
+		wire.write((uint8)B01000000);
+		wire.write((uint8)value);
+		wire.endTransmission();
+		// delay_us(CMDDELAY);
 		_position++;
 	}
 }
 
+void ST7032i::reset() {
+	if (pin_reset != NOT_A_PIN) {
+    digitalWrite(pin_reset, LOW);
+    delay(10);
+    digitalWrite(pin_reset, HIGH);
+  }
+}
 
-void ST7032i::begin() {
-//	delay(40);
+bool ST7032i::begin() {
+
+  reset();
+
+	delay(40);
 	command(B00111000); //function set
 	command(B00111001); // function set
-	delay_ms(2);
-
+//	delay_ms(2);
 	command(B00010100); // interval osc
 	command(B01110000 | (contrast & 0xf)); // contrast Low 4 bits
-	delay_ms(2);
+//	delay_ms(2);
 
 	command(B01011100 | ((contrast >> 4) & 0x3)); // contast High/icon/power
 	command(B01101100); // follower control
@@ -115,28 +126,29 @@ void ST7032i::begin() {
 
 	command(B00111000); // function set
 	command(B00001100); // Display On
-	delay_ms(2);
+//	delay_ms(2);
 
 	command(B00000001); // Clear Display
 	delay_ms(2); // Clear Display needs additional wait
-	command(B00000010); // home, but does not work
-	delay_ms(2);
+  
+  /*
+//	command(B00000010); // home, but does not work
+//	delay_ms(2);
 
 	// finally, set # lines, font size, etc.
 	command(LCD_FUNCTIONSET | _displayfunction);
-
+*/
 	// turn the display on with no cursor or blinking default
+  
 	_displaycontrol = LCD_DISPLAYON | LCD_CURSOROFF | LCD_BLINKOFF;
-	display();
-
-	// clear it off
-	clear();
-//	home();
+//	display();
 
 	// Initialize to default text direction (for romance languages)
 	_displaymode = LCD_ENTRYLEFT | LCD_ENTRYSHIFTDECREMENT;
 	// set the entry mode
-	command(LCD_ENTRYMODESET | _displaymode);
+command(LCD_ENTRYMODESET | _displaymode);
+  
+  return true;
 }
 
 void ST7032i::setContrast(byte val) {

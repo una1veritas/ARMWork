@@ -1,90 +1,210 @@
 /*
- * delay5.c
+ * delay.c
  *
  *  Created on: 2012/11/15
  *      Author: sin
  */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_rcc.h"
-#include "stm32f4xx_tim.h"
+#include "LPC11Uxx.h"
+#include "timer16.h"
+#include "nmi.h"
 
+#include "armcmx.h"
 #include "delay.h"
-//#include "platform_config.h"
+
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 
 volatile uint32_t __counter_micros;
 volatile uint32_t __counter_millis;
-volatile uint32_t __countdown_millis;
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
-/**
- * @brief  millisecond
- * @param  none
- * @retval None
- */
-void TIM2_delaytimer_start(void) {
-	// TIM_TimeBaseInitTypeDef's order is {uint16_t TIM_Prescaler, uint16_t TIM_CounterMode, uint16_t TIM_Period, uint16_t TIM_ClockDivision, uint8_t TIM_RepetitionCounter}
-	TIM_TimeBaseInitTypeDef TimeBaseStructure;
-//			= { 84, TIM_CounterMode_Up, 999, TIM_CKD_DIV1, 0 };
-	NVIC_InitTypeDef NVIC_InitStructure;
 
-	RCC_ClocksTypeDef RCC_Clocks;
-	RCC_GetClocksFreq(&RCC_Clocks);
+/******************************************************************************
+** Function name:		init_timer
+**
+** Descriptions:		Initialize timer, set timer interval, reset timer,
+**						install timer interrupt handler
+**
+** parameters:			timer number and timer interval
+** Returned value:		None
+** 
+******************************************************************************/
+void init_timer16_1(void) 
+{
+  ///* For 16-bit timer, make sure that TIME_INTERVAL should be no
+//greater than 0xFFFF. */
+#ifndef TIME_INTERVAL
+#define TIME_INTERVAL	(1000 - 1)
+#define TIME_PRESCALER (SystemCoreClock/1000000 - 1)
+#endif
 
-	TimeBaseStructure.TIM_Prescaler = (RCC_Clocks.SYSCLK_Frequency>>1)/1000000L ;
-	TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
-	TimeBaseStructure.TIM_Period = 1000 - 1;
-	TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
-	TimeBaseStructure.TIM_RepetitionCounter = 0;
-
-	//Supply APB1 Clock
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
-	/* Time base configuration */
-	TIM_TimeBaseInit(TIM2, &TimeBaseStructure);
-//  TIM_SelectOnePulseMode(TIM2, TIM_OPMode_Repetitive);
-	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
-
-	/* Enable the TIM2 gloabal Interrupt */
-	NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
-
-	// reset time-passed counters
-	__counter_micros = 0;
-	__counter_millis = 0;
-	TIM_SetCounter(TIM2, 0);
-	__countdown_millis = 0;
-	
-	/* TIM enable counter */
-	TIM_Cmd(TIM2, ENABLE);
+  uint32_t TimerInterval = TIME_INTERVAL;
+  
+    /* Some of the I/O pins need to be clearfully planned if
+    you use below module because JTAG and TIMER CAP/MAT pins are muxed. */
+    LPC_SYSCON->SYSAHBCLKCTRL |= (1<<8);
+    LPC_CT16B1->MR0 = TimerInterval;
+    LPC_CT16B1->MR1 = TimerInterval;
+#if TIMER_MATCH
+    __counter_micros = 0;
+    __counter_millis = 0;
+	  set_timer16_match(1, 0x07, 0);
+    LPC_CT16B1->EMR &= ~(0xFF<<4);
+    LPC_CT16B1->EMR |= ((0x3<<4)|(0x3<<6)|(0x3<<8));
+		LPC_CT16B1->MCR = (0x3<<0)|(0x3<<3);  /* Interrupt and Reset on MR0 and MR1 */
+		#endif
+		
+		#if CAPTURE
+    timer16_1_capture[0] = 0;
+    timer16_1_capture[1] = 0;
+    set_timer16_capture(timer_num, 0);
+    /* Capture 0 and 1 on rising edge, interrupt enable. */
+    LPC_CT16B1->CCR = (0x5<<0)|(0x5<<3);
+		#endif
+    
+    /* Enable the TIMER1 Interrupt */
+#if NMI_ENABLED
+    NVIC_DisableIRQ(TIMER_16_1_IRQn);
+    NMI_Init( TIMER_16_1_IRQn );
+#else
+    NVIC_EnableIRQ(TIMER_16_1_IRQn);
+#endif
+return;
 }
 
+
+void TIMER16_1_IRQHandler(void)
+{
+  if ( LPC_CT16B1->IR & (0x1<<0) )
+  {  
+	LPC_CT16B1->IR = 0x1<<0;			/* clear interrupt flag */
+	__counter_micros += 1000;
+    __counter_millis++;
+  }
+  if ( LPC_CT16B1->IR & (0x1<<1) )
+  {  
+	LPC_CT16B1->IR = 0x1<<1;			/* clear interrupt flag */
+//	timer16_1_counter[1]++;
+  }
+  if ( LPC_CT16B1->IR & (0x1<<4) )
+  {
+	LPC_CT16B1->IR = 0x1<<4;		/* clear interrupt flag */
+//	timer16_1_capture[0]++;
+  }
+  if ( LPC_CT16B1->IR & (0x1<<5) )
+  {
+	LPC_CT16B1->IR = 0x1<<5;		/* clear interrupt flag */
+//	timer16_1_capture[1]++;
+  }
+  return;
+}
+
+
 uint32_t micros(void) {
-	return __counter_micros + TIM_GetCounter(TIM2);
+	return __counter_micros + LPC_CT16B1->TC;
 }
 
 uint32_t millis(void) {
 	return __counter_millis;
 }
 
+void enable_timer16_1(void) {
+  LPC_CT16B1->TCR = 0x02;	//	 reset timer 
+  LPC_CT16B1->PR = (SystemCoreClock/1000000 - 1);//		 set prescaler  
+    LPC_CT16B1->MR0 =  (1000 - 1);
+//    LPC_CT16B1->IR  = 0xff;	//	 reset all interrrupts 
+//    LPC_CT16B1->MCR = 0x04;	//	 stop timer on match 
+    LPC_CT16B1->TCR = 0x01;	//	 start timer 
+}
 
-void TIM2_delaytimer_reset() {
+void reset_timer16_1(void) {
 	__counter_millis = 0;
 	__counter_micros = 0;
-	TIM_SetCounter(TIM2, 0);
+  LPC_CT16B1->TCR = 0x02; // reset timer 
+    LPC_CT16B1->TCR = 0x01;	//	 start timer 
 }
 
-void TIM2_delaytimer_up(void) {
-	uint32 tim2 = TIM_GetCounter(TIM2);
-	while( tim2 == TIM_GetCounter(TIM2) );
+void set_timer16_match(uint8_t timer_num, uint8_t match_enable, uint8_t location)
+{
+  if ( timer_num == 0 )
+  {
+	if ( match_enable & 0x01 )
+	{
+	  /*  Timer0_16 I/O config */
+	  if ( location == 0 )
+	  {
+		LPC_IOCON->PIO0_8           &= ~0x07;	
+		LPC_IOCON->PIO0_8           |= 0x02;		/* Timer0_16 MAT0 */
+	  }
+	  else if ( location == 1 )
+	  {
+		LPC_IOCON->PIO1_13           &= ~0x07;
+		LPC_IOCON->PIO1_13           |= 0x02;		/* Timer0_16 MAT0 */
+	  }
+	}
+	if ( match_enable & 0x02 )
+	{
+	  /*  Timer0_16 I/O config */
+	  if ( location == 0 )
+	  {
+		LPC_IOCON->PIO0_9           &= ~0x07;
+		LPC_IOCON->PIO0_9           |= 0x02;		/* Timer0_16 MAT1 */
+	  }
+	  else if ( location == 1 )
+	  {
+		LPC_IOCON->PIO1_14           &= ~0x07;
+		LPC_IOCON->PIO1_14           |= 0x02;		/* Timer0_16 MAT1 */
+	  }
+	}
+	if ( match_enable & 0x04 )
+	{
+	  /*  Timer0_16 I/O config */
+	  if ( location == 0 )
+	  {
+#ifdef __SWD_DISABLED
+		LPC_IOCON->SWCLK_PIO0_10    &= ~0x07;
+		LPC_IOCON->SWCLK_PIO0_10    |= 0x03;		/* Timer0_16 MAT2 */
+#endif	
+	  }
+	  else if ( location == 1 )
+	  {
+		LPC_IOCON->PIO1_15           &= ~0x07;
+		LPC_IOCON->PIO1_15           |= 0x02;		/* Timer0_16 MAT0 */
+	  }
+	}
+  }
+  else if ( timer_num == 1 )
+  {
+	if ( match_enable & 0x01 )
+	{
+	  /*  Timer1_16 I/O config */
+	  if ( location == 0 )
+	  {
+		LPC_IOCON->PIO0_21           &= ~0x07;
+		LPC_IOCON->PIO0_21           |= 0x01;		/* Timer1_16 MAT0 */
+	  }
+	}
+	if ( match_enable & 0x02 )
+	{
+	  /*  Timer1_16 I/O config */
+	  if ( location == 0 )
+	  {
+		LPC_IOCON->PIO0_22           &= ~0x07;
+		LPC_IOCON->PIO0_22           |= 0x02;		/* Timer1_16 MAT1 */
+	  }
+	  else if ( location == 1 )
+	  {
+		LPC_IOCON->PIO1_23           &= ~0x07;
+		LPC_IOCON->PIO1_23           |= 0x01;		/* Timer1_16 MAT0 */
+	  }
+	}
+  }
+  return;		
 }
-
 
 void delay_ms(uint32_t w) {
 	uint32_t wtill = millis() + w;
@@ -95,36 +215,11 @@ void delay_ms(uint32_t w) {
 }
 
 void delay_us(uint32_t w) {
-	uint32 tim2 = TIM_GetCounter(TIM2);
+	uint32 tim2 = LPC_CT16B1->TC;
 	for ( ; w > 0 ; ) {
-		if (tim2 == TIM_GetCounter(TIM2)) 
+		if (tim2 == LPC_CT16B1->TC) 
 			continue;
-		tim2 = TIM_GetCounter(TIM2);
+		tim2 = LPC_CT16B1->TC;
 		w--;
 	}
 }
-
-void delay_nop(uint32_t w) {
-	for(; w > 0; w--) {
-		__NOP();
-	}
-}
-
-void countdown_start(uint32_t t) {
-	__countdown_millis = t;
-}
-
-uint8_t countdown_expired(void) {
-	return __countdown_millis == 0;
-}
-
-void TIM2_IRQHandler(void) {
-	if (TIM_GetITStatus(TIM2, TIM_IT_Update ) == SET) {
-		TIM_ClearITPendingBit(TIM2, TIM_IT_Update );
-		if ( __countdown_millis > 0 )
-			__countdown_millis--;
-		__counter_micros += 1000;
-		__counter_millis += 1;
-	}
-}
-

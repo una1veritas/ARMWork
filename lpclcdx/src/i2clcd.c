@@ -4,30 +4,32 @@
 #include "i2c.h"
 #include "gpio.h"
 #include "i2clcd.h"
-#include "systick.h"
+//#include "systick.h"
+#include "delay.h"
 
 //const unsigned char contrast = 0x28;//0b00101000;	// 3.0V�� ���l���グ��ƔZ���Ȃ�܂��B
 
 
 #define I2C_LCD_RST          25
+#define I2CLCD_ADDR  0x3e
 
 
 // �R�}���h�𑗐M���܂��BHD44780�ł���RS=0�ɑ���
 uint8_t i2clcd_cmd(unsigned char db)
 {
 //	return i2c_write(0x7c, 0x00, db);
-	return I2C_write16(&i2c, 0x7c, db);
+	return I2C_write16(&i2c, I2CLCD_ADDR, db);
 }
 
 // �f�[�^�𑗐M���܂��BHD44780�ł���RS=1�ɑ���
 uint8_t i2clcd_data(unsigned char db)
 {
 //	return i2c_write(0x7c, 0x40, db);
-	return I2C_write16(&i2c, 0x7c, 0x40<<8 | db);
+	return I2C_write16(&i2c, I2CLCD_ADDR, 0x40<<8 | db);
 }
 
 // �i��Ɂj�������A�����M���܂��B
-uint8_t i2clcd_puts(unsigned char *s)
+uint8_t i2clcd_puts(char *s)
 {
   uint8_t re = 0;
   
@@ -45,7 +47,8 @@ void i2clcd_clear()
   re = i2clcd_cmd(0x01);
   if(re) return; // re;
         
-	wait_ms(2);
+	//wait_ms(2);
+  delay(2);
   return; // 0;
 }
 
@@ -58,12 +61,14 @@ uint32_t i2clcd_init( unsigned char contrast)
 //        GPIOSetBitValue( 1, I2C_LCD_RST, 0 );
   digitalWrite(PIO1_25, 0);
 //
-  wait_ms(10);
+//  wait_ms(10);
+  delay(10);
 //        GPIOSetBitValue( 1, I2C_LCD_RST, 1 );
   digitalWrite(PIO1_25, 1);
 	
 	// ��������I2C LCD�̏�����s���܂��B
-	wait_ms(40);
+	//wait_ms
+  delay(40);
 	i2clcd_cmd(0x38);//0b00111000); // function set
 	i2clcd_cmd(0x39);//0b00111001); // function set
 	i2clcd_cmd(0x14);//0b00010100); // interval osc
@@ -72,13 +77,15 @@ uint32_t i2clcd_init( unsigned char contrast)
 	//i2c_cmd(0b01011100 | ((contrast >> 4) & 0x3)); // contast High/icon/power
 	i2clcd_cmd(0x5C | ((contrast >> 4) & 0x3)); // contast High/icon/power
 	i2clcd_cmd(0x6C); // follower control
-	wait_ms(300);
+	//wait_ms
+  delay(300);
   
 	i2clcd_cmd(0x38);//0b00111000); // function set
 	i2clcd_cmd(0x0c);//0b00001100); // Display On
 	
 	i2clcd_cmd(0x01);//0b00000001); // Clear Display
-	wait_ms(2);			 // Clear Display�͒ǉ��E�F�C�g���K�v
+	//wait_ms
+  delay(2);			 // Clear Display�͒ǉ��E�F�C�g���K�v
   
   return 0;
 }
