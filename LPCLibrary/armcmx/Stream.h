@@ -93,4 +93,10 @@ class Stream : public Print
   float parseFloat(char skipChar);  // as above but the given skipChar is ignored
 };
 
+template<class T>
+inline Stream & operator <<(Stream &stream, T arg) {
+	stream.print(arg);
+	return stream;
+}
+
 #endif

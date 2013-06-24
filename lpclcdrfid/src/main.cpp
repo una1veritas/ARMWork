@@ -48,49 +48,35 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 
 #define RTC_ADDR 0x68
 
-char day[7][4] = {
-  "Sun",
-  "Mon",
-  "Tue",
-  "Wed",
-  "Thu",
-  "Fri",
-  "Sat"
-  };
 
 ST7032i i2clcd(Wire, LCDBKLT, LCDRST);
 DS1307 rtc(Wire, DS1307::CHIP_M41T62);
 PN532  nfcreader(Wire, PN532::I2C_ADDRESS, NFC_IRQ, PIO1_25);
-const byte pollingOrder[] = {
+const byte NFCpollingOrder[] = {
   2,
   TypeA,
   TypeF
 };
 
-int main (void) {
-	long sw, ontime = 0; //, offtime;
-  long i;
-  char c = 0;
-  char str[64];
-  char msg[32];
-  
+void init() {
   SystemInit();
   GPIOInit();
-  
   // systick initialize
 //  SysTick_Config( SystemCoreClock / 1000 );
 //  LPC_SYSCON->SYSAHBCLKCTRL |= (1<<6);
 
   init_timer16_1();
-  enable_timer16_1();
-
   // initialize xprintf
   //xfunc_out = (void(*)(unsigned char))i2clcd_data;
-  
-  // I2C LCD Backlight controll pin
-  pinMode(LCDBKLT, OUTPUT);
-  digitalWrite(LCDBKLT, HIGH);
+}
 
+char msg[32];
+uint8_t tmp[32];
+
+void setup() {
+  
+  enable_timer16_1(); // for delay
+  
   pinMode(USERBTN, INPUT);
   
   /* NVIC is installed inside UARTInit file. */
@@ -120,33 +106,49 @@ int main (void) {
 
   nfcreader.begin();
   while (1) {
-    if ( nfcreader.GetFirmwareVersion() && nfcreader.getCommandResponse((uint8_t*)msg) ) {
+    if ( nfcreader.GetFirmwareVersion() && nfcreader.getCommandResponse((uint8_t*)tmp) ) {
       break;
     }
     delay(250);
   }
-  Serial.print("I2C NFC reader ");
-  sprintf((char*)str, "ver. %02x firm. %02x rev. %02x support %02x.", msg[0], msg[1], msg[2], msg[3]);
-  Serial.println(str); 
+  Serial.print("I2C NFC reader ver. ");
+  Serial.print(tmp[0], HEX); 
+  Serial.print(" firm. ");
+  Serial.print(tmp[1], HEX); 
+  Serial.print(" rev. ");
+  Serial.print(tmp[2], HEX);
+  Serial.print(" supported ");
+  Serial.print(tmp[3], BIN);
   if ( !nfcreader.SAMConfiguration() ) {
-		Serial.println("\nSAMConfiguration failed. Halt.\n");
+		Serial.println("....SAMConfiguration failed. Halt.\n");
 		while (1);
 	}
-  Serial.println("PN532 SAM Configured.");
+  Serial.println(", SAM Configured.");
   
   // PIO1_6 USR LED //  GPIOSetDir(1, 6, 1 ); //  GPIOSetBitValue( 1, 6, 1);
   pinMode(USERLED, OUTPUT);
   digitalWrite(USERLED, HIGH);
+}
 
 
+int main (void) {
+	long sw, ontime = 0; //, offtime;
+  long i;
+  char c = 0;
+  ISO14443 card;
+  
+  
+  init();
+
+  setup();
   // ---------------------------------------
   
   rtc.updateCalendar();
   rtc.updateTime();
-  sprintf(str, "%02x:%02x:%02x\n%02x/%02x/'%02x\n", 
+  sprintf(msg, "%02x:%02x:%02x\n%02x/%02x/'%02x\n", 
                 rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f, 
                 rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.cal>>16&0xff);
-  Serial.print(str);
+  Serial.print(msg);
 
 
   i2clcd.print("I was an lpclcd.");
@@ -157,12 +159,13 @@ int main (void) {
   
   while (1){    /* Loop forever */
     
-		if ( nfcreader.InAutoPoll(1, 1, pollingOrder+1, pollingOrder[0]) 
-        && nfcreader.getAutoPollResponse((byte*) str) ) {
+		if ( nfcreader.InAutoPoll(1, 1, NFCpollingOrder+1, NFCpollingOrder[0]) 
+        && nfcreader.getAutoPollResponse(tmp) ) {
 				// NbTg, type1, length1, [Tg, ...]
           Serial.print("InAutoPoll: ");
-				Serial.printByte((uint8_t*)str, 8);
-        Serial.println();
+        card.set(tmp[1], tmp+3);
+        card.printOn(Serial);
+          Serial.println();
     }
 
     if ( millis() - sw >= 100 ) {
@@ -170,10 +173,10 @@ int main (void) {
 
       i2clcd.setCursor(0, 1);
       rtc.updateTime();
-      sprintf(str, "%02x:%02x:%02x", rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f);
-      i2clcd.print(str);
-      sprintf(str, " %06d", millis());
-      i2clcd.print(str);
+      sprintf((char*)tmp, "%02x:%02x:%02x", rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f);
+      i2clcd.print((char*)tmp);
+      sprintf((char*)tmp, " %06d", millis());
+      i2clcd.print((char*)tmp);
     }
     
     if ( digitalRead(USERBTN) == LOW ) {
@@ -194,7 +197,7 @@ int main (void) {
     }
     
     if ( Serial.available() > 0 ) {
-      i = strlen(str);
+      i = strlen(msg);
       while ( Serial.available() > 0 ) {
         c = Serial.read();
         if ( c == '\n' || c == '\r' )

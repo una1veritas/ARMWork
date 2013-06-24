@@ -7,9 +7,9 @@
 #define DS1307_h
 
 //#include <avr/pgmspace.h>
-#include <stdio.h>
+//#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+//#include <string.h>
 /*
 #if ARDUINO >= 100
 #include <Arduino.h>
