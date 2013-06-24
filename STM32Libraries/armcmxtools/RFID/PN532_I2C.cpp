@@ -228,7 +228,7 @@ boolean PN532::IRQ_wait(long timeout) {
 //	Serial.println(timeout);
 	timeout += millis();
 	// Wait for chip to say its ready!
-	if (pin_irq == 0xff) {
+	if (pin_irq == NOT_A_PIN) {
 		return false;
 	}
 	while (digitalRead(pin_irq) == HIGH) {

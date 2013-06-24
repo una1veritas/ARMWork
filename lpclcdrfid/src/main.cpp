@@ -42,7 +42,7 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #define USERBTN PIO0_1
 #define RXD2    PIO0_18
 #define TXD2    PIO0_19
-
+#define NFC_IRQ PIO1_5
 #define RTC_ADDR 0x68
 
 char day[7][4] = {
@@ -57,7 +57,7 @@ char day[7][4] = {
 
 ST7032i i2clcd(Wire, LCDBKLT, LCDRST);
 DS1307 rtc(Wire, DS1307::CHIP_M41T62);
-PN532  nfcreader(Wire, PN532::I2C_ADDRESS, PIO0_1, PIO1_25);
+PN532  nfcreader(Wire, PN532::I2C_ADDRESS, NFC_IRQ, PIO1_25);
 /*
 uint8_t i2clcd_data(uint8_t d) {
   return (uint8_t) i2clcd.write(d);
@@ -99,23 +99,32 @@ int main (void) {
   if ( Wire.status == FALSE ){	/* initialize I2c */
   	while ( 1 );				/* Fatal error */
   }
-
+  Serial.println("Wire I2C Bus started.");
+  
   // I2C液晶を初期化します
   while(1){
     //if(!i2clcd_init(0x27)) break;   // 初期化完了ならwhileを抜ける
     if ( i2clcd.begin() ) break;
     // 失敗したら初期化を永遠に繰り返す
   }
+  Serial.println("I2CLCD started.");
 
   while(1){
     if ( rtc.begin() ) break;
     // 失敗したら初期化を永遠に繰り返す
   }
+  Serial.println("I2C RTC started.");
 
-  while(1){
-    if ( nfcreader.begin() ) break;
-    // 失敗したら初期化を永遠に繰り返す
+  nfcreader.begin();
+  while (1) {
+    if ( nfcreader.GetFirmwareVersion() && nfcreader.getCommandResponse((uint8_t*)tmp) ) {
+      sprintf((char*)message, "Firm. ver.: %02x %02x %02x ", tmp[0], tmp[1], tmp[2]);
+      Serial.print(message); 
+      break;
+    }
+    delay(250);
   }
+  Serial.println("I2C NFC reader started.");
 
   // PIO1_6 USR LED //  GPIOSetDir(1, 6, 1 ); //  GPIOSetBitValue( 1, 6, 1);
   pinMode(USERLED, OUTPUT);

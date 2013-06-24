@@ -33,6 +33,7 @@ enum _GPIOPin_Def {
   PIO1_0 = (PIO1 <<4) | ((uint8_t)0),
   PIO1_1 = (PIO1 <<4) | ((uint8_t)1),
   PIO1_3 = (PIO1 <<4) | ((uint8_t)3),
+  PIO1_5 = (PIO1 <<4) | ((uint8_t)5),
   PIO1_6 = (PIO1 <<4) | ((uint8_t)6),
   PIO1_25 = (PIO1 <<4) | ((uint8_t)25),
 };
