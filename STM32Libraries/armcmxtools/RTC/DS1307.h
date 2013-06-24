@@ -19,13 +19,13 @@
 #include <Wire.h>
 */
 #include "armcmx.h"
-#include "I2CWire.h"
+#include "I2CBus.h"
 
 // library interface description
 class DS1307 {
 	// library-accessible "private" interface
 private:
-	I2CWire & wire;
+	I2CBus & wire;
 	uint8 chipID;
 	
 	void readRegisters(byte reg, uint8_t *, byte);
@@ -79,7 +79,7 @@ public:
 public:
 	uint32 time, cal;
 
-	DS1307(I2CWire & w, uint8 chip = CHIP_DS1307) : wire(w), chipID(chip) {
+	DS1307(I2CBus & w, uint8 chip = CHIP_DS1307) : wire(w), chipID(chip) {
 		time = 0;
 		cal = 0; 
 	}
@@ -87,8 +87,9 @@ public:
 	void init() {
 		start();
 	}
-	void begin() {
+	bool begin() {
 		start();
+    return true;
 	}
 //		static int base_year() { return DS1307_BASE_YR; }
 

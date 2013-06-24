@@ -19,7 +19,7 @@
 #else
 
 #include "armcmx.h"
-#include <I2CWire.h>
+#include "I2CBus.h"
 
 #endif
 
@@ -80,7 +80,7 @@ class PN532 {
 
 	static const byte PACKBUFFSIZE = 80;
 //
-	I2CWire & wire;
+	I2CBus & wire;
 	GPIOPin pin_irq; // P70_IRQ
 	GPIOPin pin_rst;
 	byte i2c_addr;
@@ -156,11 +156,12 @@ public:
 
 public:
 
-	PN532(I2CWire & wirex, byte addr = I2C_ADDRESS, GPIOPin irq = PIN_NOT_DEFINED, GPIOPin rst = PIN_NOT_DEFINED);
+	PN532(I2CBus & wirex, byte addr = I2C_ADDRESS, GPIOPin irq = NOT_A_PIN, GPIOPin rst = NOT_A_PIN);
 
 	void init();
-	inline void begin() {
+	inline bool begin() {
 		init();
+    return GetFirmwareVersion();
 	}
 
 	enum STATUS_CODE {

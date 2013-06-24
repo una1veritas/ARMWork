@@ -15,16 +15,16 @@
 //#define PN532COMM
 //#define FELICADEBUG
 
-PN532::PN532(I2CWire & wirex, byte addr, GPIOPin irq, GPIOPin rst) :
+PN532::PN532(I2CBus & wirex, byte addr, GPIOPin irq, GPIOPin rst) :
 		wire(wirex) {
 	i2c_addr = addr;
 	pin_irq = irq;
 	pin_rst = rst;
-	if (pin_irq != PIN_NOT_DEFINED) {
+	if (pin_irq != NOT_A_PIN) {
 		pinMode(pin_irq, INPUT);
 		digitalWrite(pin_irq, HIGH); // pull-up
 	}
-	if (pin_rst != PIN_NOT_DEFINED) {
+	if (pin_rst != NOT_A_PIN) {
 		pinMode(pin_rst, OUTPUT);
 		digitalWrite(pin_rst, HIGH);
 	}
