@@ -9,7 +9,8 @@
 #define ISO14443_H_
 
 #include <string.h>
-//#include <Print.h>
+#include "armcmx.h"
+#include <Print.h>
 
 //#include "PN532_I2C.h"
 static const byte TypeA = 0x00;
@@ -29,42 +30,13 @@ static const word FELICA_SERVICE_SUICA = 0x090F;
 static const word FELICA_SERVICE_EDY = 0x170F;
 static const word FELICA_SERVICE_FCF = 0x1a8b;
 
+
 struct ISO14443 {
-	static const byte NFCID_size = 8;
+	static const byte CARDID_MAXSIZE = 8;
 	//
 	byte type;
 	byte IDLength;
-	union {
-		byte UID[7];
-		byte NUID[7];
-		byte IDm[8];
-		byte ID[NFCID_size];
-	};
-  union DataBlock {
-    struct FCFStruct {
-      uint8 division[2];
-      uint8 pid[12];
-      uint8 reissue;
-      uint8 gender;
-      uint8 namekana[16];
-      uint8 orgid[8];
-      uint8 dofissue[8];
-      uint8 goodthru[8];
-      uint8 issuerdata[8];
-    } fcf;
-    struct KTechIDStruct {
-      uint8 division[2];
-      uint8 pid[8];
-      uint8 reissue;
-      uint8 reserved1[5];
-      uint8 namesjis[16];
-      uint8 dofbirth[7];
-      uint8 gender;
-      uint8 dofissue[7];
-      uint8 reserved2;
-    } ktech;
-    uint8 raw[64];
-  } datablock;
+  byte ID[CARDID_MAXSIZE];
 
   
 	ISO14443() {
@@ -84,10 +56,10 @@ struct ISO14443 {
 		IDLength = card.IDLength;
 		switch (type) {
 		case FeliCa212kb: // Felica
-			memcpy(IDm, card.IDm, IDLength);
+			memcpy(ID, card.ID, IDLength);
 			break;
 		default: // Mifare
-			memcpy(UID, card.UID, IDLength);
+			memcpy(ID, card.ID, IDLength);
 			break;
 		}
 	}
@@ -112,7 +84,7 @@ struct ISO14443 {
 		case FeliCa424kb:
 			IDLength = 8;
 //			len = raw[1];
-			memcpy(IDm, raw + 3, 8);
+			memcpy(ID, raw + 3, 8);
 //			memcpy(PMm, raw + 11, 8);
 //			if (len == 20)
 //				memcpy(SysCode, raw + 19, 2);
@@ -120,7 +92,7 @@ struct ISO14443 {
 		case Mifare:
 		default: // Mifare 106k TypeA
 			IDLength = raw[4];
-			memcpy(UID, raw + 5, IDLength);
+			memcpy(ID, raw + 5, IDLength);
 			break;
 		}
 	}
@@ -174,6 +146,37 @@ struct ISO14443 {
 		return !(operator==(c));
 	}
 };
+
+
+struct IDCard {
+  ISO14443 card;
+  union {
+      struct FCF {
+        uint8 division[2];
+        uint8 pid[12];
+        uint8 reissue;
+        uint8 gender;
+        uint8 namekana[16];
+        uint8 orgid[8];
+        uint8 dofissue[8];
+        uint8 goodthru[8];
+        uint8 issuerdata[8];
+      } fcf;
+      struct IIZUKA {
+        uint8 division[2];
+        uint8 pid[8];
+        uint8 reissue;
+        uint8 reserved1[5];
+        uint8 namesjis[16];
+        uint8 dofbirth[7];
+        uint8 gender;
+        uint8 dofissue[7];
+        uint8 reserved2;
+      } ktech;
+      uint8 raw[64];
+  } pdata;
+};
+
 
 #endif /* NFCCARD_H_ */
 

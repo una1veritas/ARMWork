@@ -111,14 +111,7 @@ void setup() {
     }
     delay(250);
   }
-  Serial.print("I2C NFC reader ver. ");
-  Serial.print(tmp[0], HEX); 
-  Serial.print(" firm. ");
-  Serial.print(tmp[1], HEX); 
-  Serial.print(" rev. ");
-  Serial.print(tmp[2], HEX);
-  Serial.print(" supported ");
-  Serial.print(tmp[3], BIN);
+  Serial << "I2C NFC reader ver. " << tmp[0] << " firm. " << tmp[1] << " rev. " << tmp[2] << " support " << tmp[3];
   if ( !nfcreader.SAMConfiguration() ) {
 		Serial.println("....SAMConfiguration failed. Halt.\n");
 		while (1);
