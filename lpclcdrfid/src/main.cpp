@@ -58,6 +58,16 @@ const byte NFCpollingOrder[] = {
   TypeF
 };
 
+void readcard(ISO14443 & card, IDData & data);
+uint8 get_MifareBlock(ISO14443 & card, IDData & data);
+uint8 get_FCFBlock(ISO14443 & card, IDData & data);
+
+const static byte IizukaKey_b[] = {
+  0xBB, 0x63, 0x45, 0x74, 0x55, 0x79, 0x4B };
+//const static byte factory_a[] = {
+//  0xaa, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
+
+
 void init() {
   SystemInit();
   GPIOInit();
@@ -74,9 +84,7 @@ char msg[32];
 uint8_t tmp[32];
 
 void setup() {
-  
   enable_timer16_1(); // for delay
-  
   pinMode(USERBTN, INPUT);
   
   /* NVIC is installed inside UARTInit file. */
@@ -84,34 +92,43 @@ void setup() {
   Serial.begin(115200);
   Serial.println("\nUSART Serial started. \nHello.");
 
-  Wire.begin();
-  if ( Wire.status == FALSE ){	/* initialize I2c */
+  Wire.begin(); 	/* initialize I2c */
+  if ( Wire.status == FALSE )
   	while ( 1 );				/* Fatal error */
-  }
   Serial.println("I2C Bus started.");
   
   // I2C液晶を初期化します
-  while(1){
+  while(1)
     //if(!i2clcd_init(0x27)) break;   // 初期化完了ならwhileを抜ける
     if ( i2clcd.begin() ) break;
     // 失敗したら初期化を永遠に繰り返す
-  }
   Serial.println("I2CLCD started.");
+  i2clcd.clear();
+  i2clcd.print("Hello.");
   
-  while(1){
+  while(1)
     if ( rtc.begin() ) break;
     // 失敗したら初期化を永遠に繰り返す
-  }
   Serial.println("I2C RTC started.");
 
   nfcreader.begin();
   while (1) {
-    if ( nfcreader.GetFirmwareVersion() && nfcreader.getCommandResponse((uint8_t*)tmp) ) {
+    if ( nfcreader.GetFirmwareVersion() && nfcreader.getCommandResponse((uint8_t*)tmp) ) 
       break;
-    }
     delay(250);
   }
+<<<<<<< HEAD
   Serial << "I2C NFC reader ver. " << tmp[0] << " firm. " << tmp[1] << " rev. " << tmp[2] << " support " << tmp[3];
+=======
+  Serial.print("I2C NFC reader ver. ");
+  Serial.print(tmp[0], HEX); 
+  Serial.print(" firm. ");
+  Serial.print(tmp[1], HEX); 
+  Serial.print(" rev. ");
+  Serial.print(tmp[2], HEX);
+  Serial.print(" support ");
+  Serial.print(tmp[3], BIN);
+>>>>>>> origin/@home
   if ( !nfcreader.SAMConfiguration() ) {
 		Serial.println("....SAMConfiguration failed. Halt.\n");
 		while (1);
@@ -125,17 +142,15 @@ void setup() {
 
 
 int main (void) {
-	long sw, ontime = 0; //, offtime;
+	long lastread;
   long i;
   char c = 0;
-  ISO14443 card;
-  
+  ISO14443 card, lastcard;
+  IDData iddata;
   
   init();
-
   setup();
   // ---------------------------------------
-  
   rtc.updateCalendar();
   rtc.updateTime();
   sprintf(msg, "%02x:%02x:%02x\n%02x/%02x/'%02x\n", 
@@ -143,12 +158,7 @@ int main (void) {
                 rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.cal>>16&0xff);
   Serial.print(msg);
 
-
-  i2clcd.print("I was an lpclcd.");
-  i2clcd.setCursor(0, 1);	// move to 2nd line
-  i2clcd.print("Hi, everybody!");
-
-  sw = millis();
+  lastread = millis();
   
   while (1){    /* Loop forever */
     
@@ -156,9 +166,45 @@ int main (void) {
         && nfcreader.getAutoPollResponse(tmp) ) {
 				// NbTg, type1, length1, [Tg, ...]
           Serial.print("InAutoPoll: ");
-        card.set(tmp[1], tmp+3);
-        card.printOn(Serial);
+          card.set(tmp[1], tmp+3);
+          card.printOn(Serial);
           Serial.println();
+          if ( lastcard != card) {
+            readcard(card, iddata);
+            if (card.type == FeliCa212kb ) {
+              i2clcd.setCursor(0,0);
+              if ( iddata.fcf.division[1] == 0 ) 
+                i2clcd.write(iddata.fcf.division, 1);
+              else
+                i2clcd.write(iddata.fcf.division, 2);
+              i2clcd.print('-');
+              i2clcd.write(iddata.fcf.pid, 8);
+              i2clcd.print('-');
+              
+              i2clcd.write((char)iddata.fcf.issue);
+              Serial.write(iddata.fcf.pid, 8);
+              Serial.print('-');
+              Serial.write((char)iddata.fcf.issue);
+              Serial.println();
+              //
+              lastcard = card;
+            } else if (card.type == Mifare ) {
+              i2clcd.setCursor(0,0);
+              i2clcd.write(iddata.iizuka.division, 2);
+              i2clcd.print('-');
+              i2clcd.write(iddata.iizuka.pid, 8);
+              i2clcd.print('-');
+              i2clcd.print((char)iddata.iizuka.issue);
+              Serial.write(iddata.iizuka.pid, 8);
+              Serial.print('-');
+              Serial.print((char)iddata.iizuka.issue);
+              Serial.println();
+              //
+              lastcard = card;
+            } else {
+              Serial.println("Unknown card type.");
+            }
+          }
     }
 
     if ( millis() - sw >= 100 ) {
@@ -168,49 +214,78 @@ int main (void) {
       rtc.updateTime();
       sprintf((char*)tmp, "%02x:%02x:%02x", rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f);
       i2clcd.print((char*)tmp);
-      sprintf((char*)tmp, " %06d", millis());
+      rtc.updateCalendar();
+      sprintf((char*)tmp, " %02x/%02x/%02x", rtc.cal>>16&0xff, rtc.cal>>8&0x1f, rtc.cal&0x3f);
       i2clcd.print((char*)tmp);
     }
     
-    if ( digitalRead(USERBTN) == LOW ) {
-      if ( ontime == 0 ) {
-        ontime = millis();
-        Serial.println(micros());
-      }
-    } else /* if ( digitalRead(USERBTN) == HIGH ) */ {
-      if (  ontime > 0 && (millis() - ontime >= 5000) ) {
-        Serial.println(millis() - ontime);
-        rtc.setTime(0x235000);
-        rtc.setCalendar(0x235000);
-      } else if ( ontime > 0 && (millis() - ontime >= 1000) ) {
-        Serial.println(millis() - ontime);
-        digitalToggle(LCDBKLT);
-      } 
-      ontime = 0;
-    }
-    
-    if ( Serial.available() > 0 ) {
-      i = strlen(msg);
-      while ( Serial.available() > 0 ) {
-        c = Serial.read();
-        if ( c == '\n' || c == '\r' )
-          break;
-        msg[i] = c;
-        i++;
-      }
-      msg[i] = 0;
-      i2clcd.home();
-      i2clcd.print(msg);
-      if ( c == '\n' || c == '\r' ) {
-        Serial.println(msg);
-        for( ; i < 16; i++) 
-          i2clcd.print(' ');
-        msg[0] = 0;
-      }
-    }
-
   }
   
+}
+
+
+
+void readcard(ISO14443 & card, IDData & data) {
+	switch (card.type) {
+    case 0x10:
+      if ( get_MifareBlock(card, data) == 0 ) 
+        card.clear();
+      break;
+    case 0x11:
+      if ( get_FCFBlock(card, data) == 0 )
+        card.clear();
+      break;
+	}
+	return;
+}
+
+uint8 get_FCFBlock(ISO14443 & card, IDData & data) {
+  word syscode = 0x00FE;
+  int len;
+  byte c;
+
+  // Polling command, with system code request.
+  len = nfcreader.felica_Polling(data.raw, syscode);
+  if ( len == 0 ) 
+    return 0;
+  
+  // low-byte first service code.
+  // Suica, Nimoca, etc. 0x090f system 0x0300
+  // Edy service 0x170f (0x1317), system 0x00FE // 8280
+  // FCF 1a8b
+  word servcode = 0x1a8b;
+  word scver = nfcreader.felica_RequestService(servcode);
+  if ( scver == 0xffff ) 
+    return 0;
+  //
+  //printf("%04x ver %04x.\n", servcode, scver);
+  //
+  word blist[] = { 0, 1, 2, 3};
+  c = nfcreader.felica_ReadBlocksWithoutEncryption(data.raw, servcode, (byte) 4, blist);
+  if ( c == 0 ) {
+    //printf("\nfailed reading FCF blocks. \n");
+    return 0;
+  }
+//  printf("\n--- End of FCF reading ---\n\n");
+  return 1;
+}
+
+
+uint8 get_MifareBlock(ISO14443 & card, IDData & data) {
+  uint8 res;
+  nfcreader.targetSet(0x10, card.ID, card.IDLength);
+  if ( nfcreader.mifare_AuthenticateBlock(4, IizukaKey_b) 
+     && nfcreader.getCommandResponse(&res) && res == 0) {
+    nfcreader.mifare_ReadDataBlock(4, data.raw);
+    nfcreader.mifare_ReadDataBlock(5, data.raw+16);
+    nfcreader.mifare_ReadDataBlock(6, data.raw+32);
+    card.type = Mifare;
+  } 
+  else {
+    printf("Mifare sector 1 Authentication failed.\n");
+    return 0;
+  }
+  return 1;
 }
 
 /******************************************************************************

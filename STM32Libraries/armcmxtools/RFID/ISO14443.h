@@ -9,8 +9,14 @@
 #define ISO14443_H_
 
 #include <string.h>
+<<<<<<< HEAD
 #include "armcmx.h"
 #include <Print.h>
+=======
+
+#include "armcmx.h"
+#include "Print.h"
+>>>>>>> origin/@home
 
 //#include "PN532_I2C.h"
 static const byte TypeA = 0x00;
@@ -32,11 +38,19 @@ static const word FELICA_SERVICE_FCF = 0x1a8b;
 
 
 struct ISO14443 {
+<<<<<<< HEAD
 	static const byte CARDID_MAXSIZE = 8;
 	//
 	byte type;
 	byte IDLength;
   byte ID[CARDID_MAXSIZE];
+=======
+	static const byte NFCID_MAXSIZE = 8;
+	//
+	byte type;
+	byte IDLength;
+	byte ID[NFCID_MAXSIZE];
+>>>>>>> origin/@home
 
   
 	ISO14443() {
@@ -83,7 +97,10 @@ struct ISO14443 {
 		case FeliCa212kb:
 		case FeliCa424kb:
 			IDLength = 8;
+<<<<<<< HEAD
 //			len = raw[1];
+=======
+>>>>>>> origin/@home
 			memcpy(ID, raw + 3, 8);
 //			memcpy(PMm, raw + 11, 8);
 //			if (len == 20)
@@ -148,6 +165,7 @@ struct ISO14443 {
 };
 
 
+<<<<<<< HEAD
 struct IDCard {
   ISO14443 card;
   union {
@@ -178,5 +196,33 @@ struct IDCard {
 };
 
 
+=======
+union IDData {
+  struct {
+    uint8 division[2];
+    uint8 pid[12];
+    uint8 issue;
+    uint8 gender;
+    uint8 namekana[16];
+    uint8 orgid[8];
+    uint8 dofissue[8];
+    uint8 goodthru[8];
+    uint8 issuerdata[8];
+  } fcf;
+  struct {
+    uint8 division[2];
+    uint8 pid[8];
+    uint8 issue;
+    uint8 reserved1[5];
+    uint8 namesjis[16];
+    uint8 dofbirth[7];
+    uint8 gender;
+    uint8 dofissue[7];
+    uint8 reserved2;
+  } iizuka;
+  uint8 raw[64];
+};
+
+>>>>>>> origin/@home
 #endif /* NFCCARD_H_ */
 
