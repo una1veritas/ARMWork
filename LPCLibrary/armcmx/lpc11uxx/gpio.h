@@ -22,6 +22,7 @@ enum _GPIOPin_Def {
 	NOT_A_PIN = 0,
   PIO0_0 = (PIO0 <<4) | ((uint8_t)0),
   PIO0_1 = (PIO0 <<4) | ((uint8_t)1),
+  PIO0_2 = (PIO0 <<4) | ((uint8_t)2),
   
   PIO0_4 = (PIO0 <<4) | ((uint8_t)4),
   PIO0_5 = (PIO0 <<4) | ((uint8_t)5),
@@ -35,6 +36,7 @@ enum _GPIOPin_Def {
   PIO1_3 = (PIO1 <<4) | ((uint8_t)3),
   PIO1_5 = (PIO1 <<4) | ((uint8_t)5),
   PIO1_6 = (PIO1 <<4) | ((uint8_t)6),
+  PIO1_23 = (PIO1 <<4) | ((uint8_t)23),
   PIO1_25 = (PIO1 <<4) | ((uint8_t)25),
 };
 
