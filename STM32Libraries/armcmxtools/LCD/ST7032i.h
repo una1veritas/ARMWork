@@ -76,15 +76,16 @@ public:
 	}
 
 
-	void home();
-	void clear();
-	void setCursor(uint8_t c, uint8_t r);
+	virtual void home();
+	virtual void clear();
+	virtual void setCursor(uint8_t c, uint8_t r);
 	void setContrast(byte c);
 
 	void createChar(uint8_t location, uint8_t charmap[]);
 
-	//	void ST7032i_backlightOn(ST7032i * lcd); // { digitalWrite(pin_bklight, LOW); }
-	//	void ST7032i_backlightOff(ST7032i * lcd); // { digitalWrite(pin_bklight, HIGH); }
+	inline void backlightOn() { digitalWrite(pin_bklight, LOW); }
+	inline void backlightOff() { digitalWrite(pin_bklight, HIGH); }
+
 };
 
 #endif

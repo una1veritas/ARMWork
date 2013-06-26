@@ -21,11 +21,11 @@
 
 
 class SPIBus {
-	spi spiport;
+	SPIDef * spi;
 	GPIOPin sck, miso, mosi, nss;
 	
 public:
-	SPIBus(SPI_TypeDef * SPIx, 
+	SPIBus(SPIDef * SPIx, 
 		GPIOPin sckpin, GPIOPin misopin, GPIOPin mosipin, GPIOPin nsspin) : 
 		sck(sckpin), miso(misopin), mosi(mosipin), nss(nsspin)  {
 			spiport.SPIx = SPIx;

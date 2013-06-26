@@ -1,18 +1,17 @@
 ;/**************************************************************************//**
 ; * @file     startup_LPC11Uxx.s
-; * @brief    CMSIS Cortex-M0 Core Device Startup File
-; *           for the NXP LPC11Uxx Device Series
-; * @version  V1.10
-; * @date     24. November 2010
-; *------- <<< Use Configuration Wizard in Context Menu >>> ------------------
+; * @brief    CMSIS Cortex-M0 Core Device Startup File for
+; *           NXP LPC11Uxx Device Series
+; * @version  V1.12
+; * @date     10. October 2012
 ; *
 ; * @note
-; * Copyright (C) 2009-2010 ARM Limited. All rights reserved.
+; * Copyright (C) 2012 ARM Limited. All rights reserved.
 ; *
 ; * @par
-; * ARM Limited (ARM) is supplying this software for use with Cortex-M 
-; * processor based microcontrollers.  This file can be freely distributed 
-; * within development tools that are supporting such ARM based processors. 
+; * ARM Limited (ARM) is supplying this software for use with Cortex-M
+; * processor based microcontrollers.  This file can be freely distributed
+; * within development tools that are supporting such ARM based processors.
 ; *
 ; * @par
 ; * THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
@@ -23,6 +22,7 @@
 ; *
 ; ******************************************************************************/
 
+; *------- <<< Use Configuration Wizard in Context Menu >>> ------------------
 
 ; <h> Stack Configuration
 ;   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
@@ -74,45 +74,50 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
                 DCD     SysTick_Handler           ; SysTick Handler
 
                 ; External Interrupts
-                DCD     FLEX_INT0_IRQHandler      ; All GPIO pin can be routed to FLEX_INTx
-                DCD     FLEX_INT1_IRQHandler          
-                DCD     FLEX_INT2_IRQHandler                       
-                DCD     FLEX_INT3_IRQHandler                         
-                DCD     FLEX_INT4_IRQHandler                        
-                DCD     FLEX_INT5_IRQHandler
-                DCD     FLEX_INT6_IRQHandler
-                DCD     FLEX_INT7_IRQHandler                       
-                DCD     GINT0_IRQHandler                         
-                DCD     GINT1_IRQHandler          ; PIO0 (0:7)              
-                DCD     Reserved_IRQHandler		  ; Reserved
-                DCD     Reserved_IRQHandler
-                DCD     Reserved_IRQHandler       
-                DCD     Reserved_IRQHandler                       
-                DCD     SSP1_IRQHandler           ; SSP1               
-                DCD     I2C_IRQHandler            ; I2C
-                DCD     TIMER16_0_IRQHandler      ; 16-bit Timer0
-                DCD     TIMER16_1_IRQHandler      ; 16-bit Timer1
-                DCD     TIMER32_0_IRQHandler      ; 32-bit Timer0
-                DCD     TIMER32_1_IRQHandler      ; 32-bit Timer1
-                DCD     SSP0_IRQHandler           ; SSP0
-                DCD     UART_IRQHandler           ; UART
-                DCD     USB_IRQHandler            ; USB IRQ
-                DCD     USB_FIQHandler            ; USB FIQ
-                DCD     ADC_IRQHandler            ; A/D Converter
-                DCD     WDT_IRQHandler            ; Watchdog timer
-                DCD     BOD_IRQHandler            ; Brown Out Detect
-                DCD     FMC_IRQHandler            ; IP2111 Flash Memory Controller
-                DCD     Reserved_IRQHandler	       ; Reserved
-                DCD     Reserved_IRQHandler       ; Reserved
-                DCD     USBWakeup_IRQHandler      ; USB wake up
-                DCD     Reserved_IRQHandler       ; Reserved
+                DCD     FLEX_INT0_IRQHandler      ; 16+ 0: All GPIO pin can be routed to FLEX_INTx
+                DCD     FLEX_INT1_IRQHandler      ; 16+ 1: Pin interrupt
+                DCD     FLEX_INT2_IRQHandler      ; 16+ 2: Pin interrupt
+                DCD     FLEX_INT3_IRQHandler      ; 16+ 3: Pin interrupt
+                DCD     FLEX_INT4_IRQHandler      ; 16+ 4: Pin interrupt
+                DCD     FLEX_INT5_IRQHandler      ; 16+ 5: Pin interrupt
+                DCD     FLEX_INT6_IRQHandler      ; 16+ 6: Pin interrupt
+                DCD     FLEX_INT7_IRQHandler      ; 16+ 7: Pin interrupt
+                DCD     GINT0_IRQHandler          ; 16+ 8: Port interrupt
+                DCD     GINT1_IRQHandler          ; 16+ 9: Port interrupt
+                DCD     Reserved_IRQHandler		  ; 16+10: Reserved
+                DCD     Reserved_IRQHandler		  ; 16+11: Reserved
+                DCD     Reserved_IRQHandler       ; 16+12: Reserved
+                DCD     Reserved_IRQHandler       ; 16+13: Reserved
+                DCD     SSP1_IRQHandler           ; 16+14: SSP1
+                DCD     I2C_IRQHandler            ; 16+15: I2C
+                DCD     TIMER16_0_IRQHandler      ; 16+16: 16-bit Timer0
+                DCD     TIMER16_1_IRQHandler      ; 16+17: 16-bit Timer1
+                DCD     TIMER32_0_IRQHandler      ; 16+18: 32-bit Timer0
+                DCD     TIMER32_1_IRQHandler      ; 16+19: 32-bit Timer1
+                DCD     SSP0_IRQHandler           ; 16+20: SSP0
+                DCD     UART_IRQHandler           ; 16+21: UART
+                DCD     USB_IRQHandler            ; 16+22: USB IRQ
+                DCD     USB_FIQHandler            ; 16+23: USB FIQ
+                DCD     ADC_IRQHandler            ; 16+24: A/D Converter
+                DCD     WDT_IRQHandler            ; 16+25: Watchdog Timer
+                DCD     BOD_IRQHandler            ; 16+26: Brown Out Detect
+                DCD     FMC_IRQHandler            ; 16+27: IP2111 Flash Memory Controller
+                DCD     Reserved_IRQHandler       ; 16+28: Reserved
+                DCD     Reserved_IRQHandler       ; 16+29: Reserved
+                DCD     USBWakeup_IRQHandler      ; 16+30: USB wake up
+                DCD     Reserved_IRQHandler       ; 16+31: Reserved
 
-
+; <h> Code Read Protection
+;   <o> Code Read Protection  <0xFFFFFFFF=>CRP Disabled
+;                             <0x12345678=>CRP Level 1
+;                             <0x87654321=>CRP Level 2
+;                             <0x43218765=>CRP Level 3 (ARE YOU SURE?)
+;                             <0x4E697370=>NO ISP (ARE YOU SURE?)
+; </h>
                 IF      :LNOT::DEF:NO_CRP
                 AREA    |.ARM.__at_0x02FC|, CODE, READONLY
-CRP_Key         DCD     0xFFFFFFFF
+                DCD     0xFFFFFFFF
                 ENDIF
-
 
                 AREA    |.text|, CODE, READONLY
 
@@ -130,14 +135,12 @@ Reset_Handler   PROC
                 ENDP
 
 
-; Dummy Exception Handlers (infinite loops which can be modified)                
+; Dummy Exception Handlers (infinite loops which can be modified)
 
-; now, under COMMON NMI.c and NMI.h, a real NMI handler is created if NMI is enabled 
-; for particular peripheral.
-;NMI_Handler     PROC
-;                EXPORT  NMI_Handler               [WEAK]
-;                B       .
-;                ENDP
+NMI_Handler     PROC
+                EXPORT  NMI_Handler               [WEAK]
+                B       .
+                ENDP
 HardFault_Handler\
                 PROC
                 EXPORT  HardFault_Handler         [WEAK]
@@ -161,7 +164,6 @@ Reserved_IRQHandler PROC
                 ENDP
 
 Default_Handler PROC
-                EXPORT  NMI_Handler               [WEAK]
                 EXPORT  FLEX_INT0_IRQHandler      [WEAK]
                 EXPORT  FLEX_INT1_IRQHandler      [WEAK]
                 EXPORT  FLEX_INT2_IRQHandler      [WEAK]
@@ -180,7 +182,6 @@ Default_Handler PROC
                 EXPORT  TIMER32_1_IRQHandler      [WEAK]
                 EXPORT  SSP0_IRQHandler           [WEAK]
                 EXPORT  UART_IRQHandler           [WEAK]
-
                 EXPORT  USB_IRQHandler            [WEAK]
                 EXPORT  USB_FIQHandler            [WEAK]
                 EXPORT  ADC_IRQHandler            [WEAK]
@@ -189,7 +190,6 @@ Default_Handler PROC
                 EXPORT  FMC_IRQHandler            [WEAK]
                 EXPORT	USBWakeup_IRQHandler      [WEAK]
 
-NMI_Handler
 FLEX_INT0_IRQHandler
 FLEX_INT1_IRQHandler
 FLEX_INT2_IRQHandler
@@ -227,13 +227,13 @@ USBWakeup_IRQHandler
 ; User Initial Stack & Heap
 
                 IF      :DEF:__MICROLIB
-                
+
                 EXPORT  __initial_sp
                 EXPORT  __heap_base
                 EXPORT  __heap_limit
-                
+
                 ELSE
-                
+
                 IMPORT  __use_two_region_memory
                 EXPORT  __user_initial_stackheap
 __user_initial_stackheap

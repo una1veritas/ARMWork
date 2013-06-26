@@ -117,18 +117,9 @@ void setup() {
       break;
     delay(250);
   }
-<<<<<<< HEAD
-  Serial << "I2C NFC reader ver. " << tmp[0] << " firm. " << tmp[1] << " rev. " << tmp[2] << " support " << tmp[3];
-=======
-  Serial.print("I2C NFC reader ver. ");
-  Serial.print(tmp[0], HEX); 
-  Serial.print(" firm. ");
-  Serial.print(tmp[1], HEX); 
-  Serial.print(" rev. ");
-  Serial.print(tmp[2], HEX);
+  Serial << "I2C NFC reader ver. " << tmp[0] << " firm. " << tmp[1] << " rev. " << tmp[2];
   Serial.print(" support ");
   Serial.print(tmp[3], BIN);
->>>>>>> origin/@home
   if ( !nfcreader.SAMConfiguration() ) {
 		Serial.println("....SAMConfiguration failed. Halt.\n");
 		while (1);
@@ -142,9 +133,7 @@ void setup() {
 
 
 int main (void) {
-	long lastread;
-  long i;
-  char c = 0;
+	long lastread, swatch, lasttime;
   ISO14443 card, lastcard;
   IDData iddata;
   
@@ -169,7 +158,10 @@ int main (void) {
           card.set(tmp[1], tmp+3);
           card.printOn(Serial);
           Serial.println();
-          if ( lastcard != card) {
+          i2clcd.backlightOn();
+          if ( millis() - lastread > 10000 or (millis() - lastread > 1999 and lastcard != card) ) {
+            lastread = millis();
+            //
             readcard(card, iddata);
             if (card.type == FeliCa212kb ) {
               i2clcd.setCursor(0,0);
@@ -205,18 +197,24 @@ int main (void) {
               Serial.println("Unknown card type.");
             }
           }
-    }
+    } else if (millis() - lastread > 10000 ) {
+      i2clcd.setCursor(0, 0);
+      i2clcd.print("                ");
+      i2clcd.backlightOff();
+    }      
 
-    if ( millis() - sw >= 100 ) {
-      sw = millis();
-
-      i2clcd.setCursor(0, 1);
+    if ( millis() - swatch >= 100 ) {
+      swatch = millis();
       rtc.updateTime();
-      sprintf((char*)tmp, "%02x:%02x:%02x", rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f);
-      i2clcd.print((char*)tmp);
-      rtc.updateCalendar();
-      sprintf((char*)tmp, " %02x/%02x/%02x", rtc.cal>>16&0xff, rtc.cal>>8&0x1f, rtc.cal&0x3f);
-      i2clcd.print((char*)tmp);
+      if ( lasttime != rtc.time ) {
+        lasttime = rtc.time;
+        rtc.updateCalendar();
+        i2clcd.setCursor(0, 1);
+        sprintf((char*)tmp, "%02x:%02x:%02x", rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f);
+        i2clcd.print((char*)tmp);
+        sprintf((char*)tmp, " %02x/%02x", rtc.cal>>8&0x1f, rtc.cal&0x3f);
+        i2clcd.print((char*)tmp);
+      }
     }
     
   }

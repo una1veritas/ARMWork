@@ -12,10 +12,10 @@
 #include "SPIBus.h"
 
 void SPIBus::begin() {
-  spi_init(&spiport, spiport.SPIx, sck, miso, mosi, nss); 
+  SPI_init(&spi, sck, miso, mosi, nss); 
 }
 
 void SPIBus::end() {
-	spi_disable(&spiport);
+	SPI_disable(&spi);
 }
 

@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>lpclcdrfid</TargetName>
+      <TargetName>lpclcdspi</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -44,10 +44,10 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Obj\</OutputDirectory>
-          <OutputName>LPC11U24LCDRFID</OutputName>
+          <OutputName>LPC11U24SPI</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>1</CreateHexFile>
+          <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\Obj\</ListingPath>
@@ -73,10 +73,10 @@
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </BeforeMake>
           <AfterMake>
-            <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
-            <UserProg1Name>C:\Keil\ARM\ARMCC\bin\fromelf.exe --bin "#L" -o "$Pfirmware.bin"</UserProg1Name>
-            <UserProg2Name>C:\nxp\LPCXpresso_5.2.4\lpcxpresso\bin\checksum -p LPC11U24_401 -d "$Pfirmware.bin"</UserProg2Name>
+            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name></UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </AfterMake>
@@ -117,7 +117,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>0</UseSimulator>
+            <UseSimulator>1</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -128,9 +128,9 @@
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
           </Simulator>
           <Target>
-            <UseTarget>1</UseTarget>
+            <UseTarget>0</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
+            <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
@@ -162,11 +162,11 @@
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>1</Capability>
-            <DriverSelection>4096</DriverSelection>
+            <Capability>0</Capability>
+            <DriverSelection>-1</DriverSelection>
           </Flash1>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>
@@ -334,23 +334,23 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>2</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>1</OneElfS>
+            <OneElfS>0</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>0</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARMCMX</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\LPCLibrary\armcmx\lpc11uxx;..\..\LPCLibrary\armcmx;..\inc;..\src;..\..\STM32Libraries\armcmxtools\LCD;..\..\STM32Libraries\armcmxtools\RTC;..\..\STM32Libraries\armcmxtools\RFID</IncludePath>
+              <IncludePath>..\LPCLibrary\CMSISv2p00_LPC11Uxx\inc;..\LPCLibrary\armcmx\lpc11uxx;..\LPCLibrary\armcmx;..\STM32Libraries\armcmxtools\LCD</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -370,7 +370,7 @@
             </VariousControls>
           </Aads>
           <LDads>
-            <umfTarg>0</umfTarg>
+            <umfTarg>1</umfTarg>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
             <noStLib>0</noStLib>
@@ -404,22 +404,22 @@
             <File>
               <FileName>main.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\src\main.cpp</FilePath>
+              <FilePath>.\main.cpp</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>cmsis2.0</GroupName>
+          <GroupName>CMSIS</GroupName>
           <Files>
-            <File>
-              <FileName>system_LPC11Uxx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\system_LPC11Uxx.c</FilePath>
-            </File>
             <File>
               <FileName>core_cm0.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx\src\core_cm0.c</FilePath>
+              <FilePath>..\LPCLibrary\CMSISv2p00_LPC11Uxx\src\core_cm0.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_LPC11Uxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LPCLibrary\CMSISv2p00_LPC11Uxx\src\system_LPC11Uxx.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -427,164 +427,79 @@
           <GroupName>armcmx</GroupName>
           <Files>
             <File>
-              <FileName>gpio.c</FileName>
+              <FileName>clkconfig.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>LPC11Uxx.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\LPC11Uxx.h</FilePath>
-            </File>
-            <File>
-              <FileName>nmi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\nmi.c</FilePath>
-            </File>
-            <File>
-              <FileName>nmi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\nmi.h</FilePath>
-            </File>
-            <File>
-              <FileName>power_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\power_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>armcmx.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\armcmx.h</FilePath>
-            </File>
-            <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\usart.h</FilePath>
-            </File>
-            <File>
-              <FileName>USARTSerial.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\USARTSerial.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>USARTSerial.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\USARTSerial.h</FilePath>
-            </File>
-            <File>
-              <FileName>Stream.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\Stream.h</FilePath>
-            </File>
-            <File>
-              <FileName>Stream.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\Stream.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Print.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\Print.h</FilePath>
-            </File>
-            <File>
-              <FileName>Print.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\Print.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>I2CBus.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\I2CBus.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>I2CBus.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\I2CBus.h</FilePath>
-            </File>
-            <File>
-              <FileName>delay.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay.h</FilePath>
+              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\clkconfig.c</FilePath>
             </File>
             <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay.c</FilePath>
+              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\delay.c</FilePath>
             </File>
             <File>
-              <FileName>timer16.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\timer16.h</FilePath>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\gpio.c</FilePath>
             </File>
             <File>
-              <FileName>type.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\type.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tools</GroupName>
-          <Files>
-            <File>
-              <FileName>HD44780.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\LCD\HD44780.h</FilePath>
+              <FileName>i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\i2c.c</FilePath>
             </File>
             <File>
-              <FileName>ST7032i.cpp</FileName>
+              <FileName>nmi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\nmi.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>I2CBus.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\LCD\ST7032i.cpp</FilePath>
+              <FilePath>..\LPCLibrary\armcmx\I2CBus.cpp</FilePath>
             </File>
             <File>
-              <FileName>ST7032i.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\LCD\ST7032i.h</FilePath>
-            </File>
-            <File>
-              <FileName>ISO14443.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\RFID\ISO14443.h</FilePath>
-            </File>
-            <File>
-              <FileName>PN532_I2C.cpp</FileName>
+              <FileName>Print.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\RFID\PN532_I2C.cpp</FilePath>
+              <FilePath>..\LPCLibrary\armcmx\Print.cpp</FilePath>
             </File>
             <File>
-              <FileName>PN532_I2C.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\RFID\PN532_I2C.h</FilePath>
-            </File>
-            <File>
-              <FileName>DS1307.cpp</FileName>
+              <FileName>Stream.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\RTC\DS1307.cpp</FilePath>
+              <FilePath>..\LPCLibrary\armcmx\Stream.cpp</FilePath>
             </File>
             <File>
-              <FileName>DS1307.h</FileName>
+              <FileName>USARTSerial.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\LPCLibrary\armcmx\USARTSerial.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>SPIBus.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\LPCLibrary\armcmx\SPIBus.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>SPIBus.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\RTC\DS1307.h</FilePath>
+              <FilePath>..\LPCLibrary\armcmx\SPIBus.h</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>ssp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\ssp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\ssp.h</FilePath>
             </File>
           </Files>
         </Group>
