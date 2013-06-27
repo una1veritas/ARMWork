@@ -493,16 +493,6 @@
               <FilePath>..\LPCLibrary\armcmx\lpc11uxx\i2c.h</FilePath>
             </File>
             <File>
-              <FileName>ssp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\ssp.c</FilePath>
-            </File>
-            <File>
-              <FileName>ssp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\ssp.h</FilePath>
-            </File>
-            <File>
               <FileName>gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\LPCLibrary\armcmx\lpc11uxx\gpio.h</FilePath>
@@ -516,6 +506,21 @@
               <FileName>usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\LPCLibrary\armcmx\lpc11uxx\usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>ssp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\ssp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\ssp.h</FilePath>
             </File>
           </Files>
         </Group>

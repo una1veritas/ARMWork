@@ -15,21 +15,19 @@
 #include <stdint.h>
 //#include <Arduino.h>
 //#include <avr/pgmspace.h>
-//#include "cmcore.h"
+#include "armcmx.h"
 
 #include "spi.h"
 
 
 class SPIBus {
-	SPIDef * spi;
+	SPIDef * port;
 	GPIOPin sck, miso, mosi, nss;
 	
 public:
-	SPIBus(SPIDef * SPIx, 
+	SPIBus(SPIDef * port, 
 		GPIOPin sckpin, GPIOPin misopin, GPIOPin mosipin, GPIOPin nsspin) : 
-		sck(sckpin), miso(misopin), mosi(mosipin), nss(nsspin)  {
-			spiport.SPIx = SPIx;
-	}
+		sck(sckpin), miso(misopin), mosi(mosipin), nss(nsspin)  {}
 
   // SPI Configuration methods
 
@@ -40,7 +38,7 @@ public:
   void end();
 
 	inline uint16 transfer(uint16 _data) {
-		return spi_transfer(&spiport, _data);
+    return spi_transfer(&port, _data);
 	}
 
 	inline void setBitOrder(uint16_t bitOrder) {

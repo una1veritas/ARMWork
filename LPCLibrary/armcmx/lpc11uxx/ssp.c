@@ -33,13 +33,6 @@
 #include "ssp.h"
 
 /* statistics of all the interrupts */
-volatile uint32_t interruptRxStat0 = 0;
-volatile uint32_t interruptOverRunStat0 = 0;
-volatile uint32_t interruptRxTimeoutStat0 = 0;
-
-volatile uint32_t interruptRxStat1 = 0;
-volatile uint32_t interruptOverRunStat1 = 0;
-volatile uint32_t interruptRxTimeoutStat1 = 0;
 
 /*****************************************************************************
 ** Function name:		SSP0_IRQHandler

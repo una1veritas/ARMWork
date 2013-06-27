@@ -261,7 +261,8 @@ int main (void)
   SystemCoreClockUpdate();
 
 #if SSP_DEBUG
-  UART_init(115200);
+  USART_init(&usart, PIO0_18, PIO0_19);
+  USART_begin(&usart, 115200);
 #endif
 
   SSP_IOConfig( SSP_NUM );
