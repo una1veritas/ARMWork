@@ -38,23 +38,23 @@ public:
   void end();
 
 	inline uint16 transfer(uint16 _data) {
-    return spi_transfer(&port, _data);
+    return SPI_transfer(port, _data);
 	}
 
 	inline void setBitOrder(uint16_t bitOrder) {
-		spi_setBitOrder(&spiport, bitOrder);
+		//SPI_setBitOrder(port, bitOrder);
 	}
 
 	inline void setDataMode(uint16_t mode) {
-		spi_setDataMode(&spiport, mode);
+		//SPI_setDataMode(port, mode);
 	}
 
 	inline void setClockDivider(uint16_t rate) {	
-		spi_setClockDivier(&spiport, rate);
+		// spi_setClockDivier(port, rate);
 	}
 	
 	inline void setMode(uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst) {
-		spi_setMode(&spiport, clkdiv, cpol, cpha, msbfirst);
+		//SPI_setMode(port, clkdiv, cpol, cpha, msbfirst);
 	}
 	
 };

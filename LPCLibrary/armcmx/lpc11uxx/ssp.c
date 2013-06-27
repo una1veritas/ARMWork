@@ -31,6 +31,9 @@
 #include "LPC11Uxx.h"			/* LPC11xx Peripheral Registers */
 #include "gpio.h"
 #include "ssp.h"
+#include "spi.h"
+
+extern SPIDef SPI0, SPI1;
 
 /* statistics of all the interrupts */
 
@@ -55,12 +58,12 @@ void SSP0_IRQHandler(void)
   regValue = LPC_SSP0->MIS;
   if ( regValue & SSPMIS_RORMIS )	/* Receive overrun interrupt */
   {
-	interruptOverRunStat0++;
+    SPI0.interruptOverRunStat++;
 	LPC_SSP0->ICR = SSPICR_RORIC;	/* clear interrupt */
   }
   if ( regValue & SSPMIS_RTMIS )	/* Receive timeout interrupt */
   {
-	interruptRxTimeoutStat0++;
+    SPI0.interruptRxTimeoutStat++;
 	LPC_SSP0->ICR = SSPICR_RTIC;	/* clear interrupt */
   }
 
@@ -70,51 +73,11 @@ void SSP0_IRQHandler(void)
   in both main and ISR could prevent this kind of race condition */
   if ( regValue & SSPMIS_RXMIS )	/* Rx at least half full */
   {
-	interruptRxStat0++;		/* receive until it's empty */		
+    SPI0.interruptRxStat++;		/* receive until it's empty */		
   }
   return;
 }
 
-/*****************************************************************************
-** Function name:		SSP1_IRQHandler
-**
-** Descriptions:		SSP port is used for SPI communication.
-**						SSP interrupt handler
-**						The algorithm is, if RXFIFO is at least half full, 
-**						start receive until it's empty; if TXFIFO is at least
-**						half empty, start transmit until it's full.
-**						This will maximize the use of both FIFOs and performance.
-**
-** parameters:			None
-** Returned value:		None
-** 
-*****************************************************************************/
-void SSP1_IRQHandler(void) 
-{
-  uint32_t regValue;
-
-  regValue = LPC_SSP1->MIS;
-  if ( regValue & SSPMIS_RORMIS )	/* Receive overrun interrupt */
-  {
-	interruptOverRunStat1++;
-	LPC_SSP1->ICR = SSPICR_RORIC;	/* clear interrupt */
-  }
-  if ( regValue & SSPMIS_RTMIS )	/* Receive timeout interrupt */
-  {
-	interruptRxTimeoutStat1++;
-	LPC_SSP1->ICR = SSPICR_RTIC;	/* clear interrupt */
-  }
-
-  /* please be aware that, in main and ISR, CurrentRxIndex and CurrentTxIndex
-  are shared as global variables. It may create some race condition that main
-  and ISR manipulate these variables at the same time. SSPSR_BSY checking (polling)
-  in both main and ISR could prevent this kind of race condition */
-  if ( regValue & SSPMIS_RXMIS )	/* Rx at least half full */
-  {
-	interruptRxStat1++;		/* receive until it's empty */		
-  }
-  return;
-}
 
 /*****************************************************************************
 ** Function name:		SSP_IOConfig
@@ -125,9 +88,9 @@ void SSP1_IRQHandler(void)
 ** Returned value:		None
 ** 
 *****************************************************************************/
-void SSP_IOConfig( uint8_t portNum )
+void SSP_IOConfig(SPIDef * port)
 {
-  if ( portNum == 0 )
+  if ( port->Num == 0 )
   {
 	LPC_SYSCON->PRESETCTRL |= (0x1<<0);
 	LPC_SYSCON->SYSAHBCLKCTRL |= (0x1<<11);
@@ -159,8 +122,8 @@ void SSP_IOConfig( uint8_t portNum )
 
 	LPC_IOCON->PIO0_2 &= ~0x07;		/* SSP SSEL is a GPIO pin */
 	/* port0, bit 2 is set to GPIO output and high */
-	GPIOSetDir( PORT0, 2, 1 );
-	GPIOSetBitValue( PORT0, 2, 1 );
+  pinMode(PIO0_2, OUTPUT);
+	digitalWrite( PIO0_2, OUTPUT );
 #endif
   }
   else		/* port number 1 */
@@ -204,8 +167,8 @@ void SSP_IOConfig( uint8_t portNum )
 
 	LPC_IOCON->PIO1_23 &= ~0x07;		/* SSP SSEL is a GPIO pin */
 	/* port2, bit 0 is set to GPIO output and high */
-	GPIOSetDir( PORT1, 23, 1 );
-	GPIOSetBitValue( PORT1, 23, 1 );
+	pinMode( PIO1_23, OUTPUT );
+	digitalWrite( PIO1_23, HIGH );
 #endif
   }
   return;		
@@ -220,11 +183,11 @@ void SSP_IOConfig( uint8_t portNum )
 ** Returned value:		None
 ** 
 *****************************************************************************/
-void SSP_Init( uint8_t portNum )
+void SSP_Init(SPIDef * port)
 {
   uint8_t i, Dummy=Dummy;
 
-  if ( portNum == 0 )
+  if ( port->Num == 0 )
   {
 	/* Set DSS data to 8-bit, Frame format SPI, CPOL = 0, CPHA = 0, and SCR is 15 */
 	LPC_SSP0->CR0 = 0x0707;
@@ -314,14 +277,14 @@ void SSP_Init( uint8_t portNum )
 ** Returned value:		None
 ** 
 *****************************************************************************/
-void SSP_Send( uint8_t portNum, uint8_t *buf, uint32_t Length )
+void SSP_Send( SPIDef * port, uint8_t *buf, uint32_t Length )
 {
   uint32_t i;
   uint8_t Dummy = Dummy;
     
   for ( i = 0; i < Length; i++ )
   {
-	if ( portNum == 0 )
+	if ( port->Num == 0 )
 	{
 	  /* Move on only if NOT busy and TX FIFO not full. */
 	  while ( (LPC_SSP0->SR & (SSPSR_TNF|SSPSR_BSY)) != SSPSR_TNF );
@@ -368,7 +331,7 @@ void SSP_Send( uint8_t portNum, uint8_t *buf, uint32_t Length )
 ** Returned value:		None
 ** 
 *****************************************************************************/
-void SSP_Receive( uint8_t portNum, uint8_t *buf, uint32_t Length )
+void SSP_Receive(SPIDef * port, uint8_t *buf, uint32_t Length )
 {
   uint32_t i;
  
@@ -379,7 +342,7 @@ void SSP_Receive( uint8_t portNum, uint8_t *buf, uint32_t Length )
 	no need to write dummy byte to get clock to get the data */
 	/* if it's a peer-to-peer communication, SSPDR needs to be written
 	before a read can take place. */
-	if ( portNum == 0 )
+	if ( port->Num == 0 )
 	{
 #if !LOOPBACK_MODE
 #if SSP_SLAVE

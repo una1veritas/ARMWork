@@ -20,6 +20,12 @@
 #ifndef __SSP_H__
 #define __SSP_H__
 
+#include "spi.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* There are there modes in SSP: loopback, master or slave. */
 /* Here are the combination of all the tests. 
 (1) LOOPBACK test:		LOOPBACK_MODE=1, TX_RX_ONLY=0, USE_CS=1;
@@ -112,10 +118,14 @@
 SSPReceive() will not be needed. */
 extern void SSP0_IRQHandler (void);
 extern void SSP1_IRQHandler (void);
-extern void SSP_IOConfig( uint8_t portNum );
-extern void SSP_Init( uint8_t portNum );
-extern void SSP_Send( uint8_t portNum, uint8_t *Buf, uint32_t Length );
-extern void SSP_Receive( uint8_t portNum, uint8_t *buf, uint32_t Length );
+extern void SSP_IOConfig(SPIDef * ); // uint8_t portNum );
+extern void SSP_Init(SPIDef * ); // uint8_t portNum );
+extern void SSP_Send(SPIDef * port, /* uint8_t portNum,*/ uint8_t *Buf, uint32_t Length );
+extern void SSP_Receive(SPIDef * port, /* uint8_t portNum,*/ uint8_t *buf, uint32_t Length );
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  /* __SSP_H__ */
 /*****************************************************************************

@@ -9,13 +9,15 @@
  */
 
 //#include "pins_arduino.h"
+#include "gpio.h"
+#include "spi.h"
 #include "SPIBus.h"
 
 void SPIBus::begin() {
-  SPI_init(&spi, sck, miso, mosi, nss); 
+  SPI_init(port, sck, miso, mosi, nss); 
 }
 
 void SPIBus::end() {
-	SPI_disable(&spi);
+	SPI_disable(port);
 }
 

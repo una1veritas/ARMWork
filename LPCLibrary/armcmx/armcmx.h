@@ -19,6 +19,8 @@ extern "C" {
 #include <stdio.h>
 #include <stdint.h>
 
+typedef uint8_t GPIOPin;
+
 #include "binary.h"
 
 #define HEX 16
@@ -29,7 +31,6 @@ extern "C" {
 #undef abs
 #define abs(x)  ((x) < 0 ? -(x) : (x))
 #endif
-  
 
 #ifndef max
 #define max(x, y) 	((x) >= (y)? (x) : (y))
@@ -73,18 +74,16 @@ typedef uint8_t boolean;
 #define UINT16(x)  ((uint16_t)(x))
 #define HIGHLOW(x, y)  (((uint16_t)(x))<< 8 | y)
 
-typedef uint8_t GPIOPin;
-
 //void armcmx_init(void);
 //size_t strlen(const char * s);
-
-#ifdef __cplusplus
-}
-#endif
 
 #include "gpio.h"
 #include "delay.h"
 #include "usart.h"
 //#include "spi.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ARMCORE_H_ */

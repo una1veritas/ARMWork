@@ -21,10 +21,14 @@
 #define __SPI_H__
 
 #include <stdint.h>
-#include "ssp.h"
+#include "armcmx.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef struct {
-  uint8_t portno;
+  uint8_t Num;
   /* statistics of all the interrupts */
   volatile uint32_t interruptRxStat; //0 = 0;
   volatile uint32_t interruptOverRunStat; //0 = 0;
@@ -50,11 +54,19 @@ typedef struct {
 /* When test serial SEEPROM(LOOPBACK_MODE=0, TX_RX_ONLY=0), set USE_CS to 0. */
 /* When LOOPBACK_MODE=1 or TX_RX_ONLY=1, set USE_CS to 1. */
 
-  bool USE_CS; //          0
+  uint8_t USE_CS; //          0
 
 } SPIDef;
 
 uint8_t SPI_transfer(SPIDef * port, uint8_t data);
+void SPI_init(SPIDef * port, GPIOPin clk, GPIOPin miso, GPIOPin mosi, GPIOPin ssel);
+void SPI_disable(SPIDef * port);
+
+extern SPIDef SPI0, SPI1;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  /* __SPI_H__ */
 /*****************************************************************************

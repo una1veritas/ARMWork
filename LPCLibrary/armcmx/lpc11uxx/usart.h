@@ -20,11 +20,11 @@
 #ifndef __UART_H 
 #define __UART_H
 
-#include "gpio.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include "gpio.h"
 
 /* Synchronous mode control register definition. */
 #define SYNC_ON             (0x1<<0)

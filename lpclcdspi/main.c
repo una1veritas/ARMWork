@@ -47,11 +47,11 @@ uint8_t dest_addr[SSP_BUFSIZE];
 ** Returned value:		None
 ** 
 *****************************************************************************/
-void SSP_LoopbackTest( uint8_t portNum )
+void SSP_LoopbackTest(SPIDef * port)
 {
   uint32_t i;
 
-  if ( portNum == 0 )
+  if ( port->Num == 0 )
   {
 #if !USE_CS
 	/* Set SSEL pin to output low. */
@@ -62,10 +62,10 @@ void SSP_LoopbackTest( uint8_t portNum )
 	{
 	  /* to check the RXIM and TXIM interrupt, I send a block data at one time 
 	  based on the FIFOSIZE(8). */
-	  SSP_Send( portNum, (uint8_t *)&src_addr[i], FIFOSIZE );
+	  SSP_Send( port, (uint8_t *)&src_addr[i], FIFOSIZE );
 	  /* If RX interrupt is enabled, below receive routine can be
 	  also handled inside the ISR. */
-	  SSP_Receive( portNum, (uint8_t *)&dest_addr[i], FIFOSIZE );
+	  SSP_Receive( port, (uint8_t *)&dest_addr[i], FIFOSIZE );
 	  i += FIFOSIZE;
 	}
 #if !USE_CS
@@ -84,10 +84,10 @@ void SSP_LoopbackTest( uint8_t portNum )
 	{
 	  /* to check the RXIM and TXIM interrupt, I send a block data at one time 
 	  based on the FIFOSIZE(8). */
-	  SSP_Send( portNum, (uint8_t *)&src_addr[i], FIFOSIZE );
+	  SSP_Send( port, (uint8_t *)&src_addr[i], FIFOSIZE );
 	  /* If RX interrupt is enabled, below receive routine can be
 	  also handled inside the ISR. */
-	  SSP_Receive( portNum, (uint8_t *)&dest_addr[i], FIFOSIZE );
+	  SSP_Receive( port, (uint8_t *)&dest_addr[i], FIFOSIZE );
 	  i += FIFOSIZE;
 	}
 #if !USE_CS
@@ -107,11 +107,11 @@ void SSP_LoopbackTest( uint8_t portNum )
 ** Returned value:		None
 ** 
 *****************************************************************************/
-void SSP_SEEPROMTest( uint8_t portNum )
+void SSP_SEEPROMTest(SPIDef * port)
 {
   uint32_t i, timeout;
 
-  if ( portNum == 0 )
+  if ( port->Num == 0 )
   {
 	LPC_IOCON->PIO0_2 &= ~0x07;	/* SSP SSEL is a GPIO pin */
 	digitalWrite(PIO0_2, 1 );
@@ -121,14 +121,14 @@ void SSP_SEEPROMTest( uint8_t portNum )
 	digitalWrite( PIO0_2, LOW );
 	/* Test Atmel AT25DF041 Serial flash. */
 	src_addr[0] = WREN;			/* set write enable latch */
-	SSP_Send( portNum, (uint8_t *)src_addr, 1 );
+	SSP_Send( port, (uint8_t *)src_addr, 1 );
 	digitalWrite( PIO0_2, 1 );
 
 	for ( i = 0; i < 0x80; i++ );	/* delay minimum 250ns */
 	digitalWrite( PIO0_2, 0 );
 	src_addr[0] = RDSR;	/* check status to see if write enabled is latched */
-	SSP_Send( portNum, (uint8_t *)src_addr, 1 );
-	SSP_Receive( portNum, (uint8_t *)dest_addr, 1 );
+	SSP_Send( port, (uint8_t *)src_addr, 1 );
+	SSP_Receive( port, (uint8_t *)dest_addr, 1 );
 	digitalWrite( PIO0_2, 1 );
 	if ( dest_addr[0] & (RDSR_WEN|RDSR_RDY) != RDSR_WEN ) 
 	/* bit 0 to 0 is ready, bit 1 to 1 is write enable */
@@ -140,14 +140,14 @@ void SSP_SEEPROMTest( uint8_t portNum )
 	digitalWrite( PIO0_2, LOW );
 	src_addr[0] = WRSR;
 	src_addr[1] = 0x00;				/* Make the whole device unprotected. */
-	SSP_Send( portNum, (uint8_t *)src_addr, 2 );
+	SSP_Send( port, (uint8_t *)src_addr, 2 );
 	digitalWrite( PIO0_2, 1 );
 
 	for ( i = 0; i < 0x80; i++ );	/* delay minimum 250ns */
 	digitalWrite( PIO0_2, 0 );
 	src_addr[0] = RDSR;				/* check status to see if write enabled is latched */
-	SSP_Send( portNum, (uint8_t *)src_addr, 1 );
-	SSP_Receive( portNum, (uint8_t *)dest_addr, 1 );
+	SSP_Send( port, (uint8_t *)src_addr, 1 );
+	SSP_Receive( port, (uint8_t *)dest_addr, 1 );
 	digitalWrite( PIO0_2, HIGH );
 	if ( dest_addr[0] & (RDSR_WEN|RDSR_RDY) != RDSR_WEN ) 
 	/* bit 0 to 0 is ready, bit 1 to 1 is write enable */
@@ -158,15 +158,15 @@ void SSP_SEEPROMTest( uint8_t portNum )
 	for ( i = 0; i < 0x80; i++ );	/* delay minimum 250ns */
 	digitalWrite( PIO0_2, 0 );
 	src_addr[0] = CHIP_ERASE;	/* Write command is 0x02, low 256 bytes only */
-	SSP_Send( portNum, (uint8_t *)src_addr, 1 );
+	SSP_Send( port, (uint8_t *)src_addr, 1 );
 	digitalWrite( PIO0_2, 1 );
 
 	for ( i = 0; i < 0x1400000; i++ );	/* Be careful with the dumb delay, it
 										may vary depending on the system clock.  */
 	digitalWrite( PIO0_2, 0 );
 	src_addr[0] = RDSR;	/* check status to see if write enabled is latched */
-	SSP_Send( portNum, (uint8_t *)src_addr, 1 );
-	SSP_Receive( portNum, (uint8_t *)dest_addr, 1 );
+	SSP_Send( port, (uint8_t *)src_addr, 1 );
+	SSP_Receive( port, (uint8_t *)dest_addr, 1 );
 	digitalWrite( PIO0_2, 1 );
 	if ( dest_addr[0] & (RDSR_EPE|RDSR_RDY) != 0x0 ) 
 	/* bit 0 to 0 is ready, bit 1 to 1 is write enable */
@@ -177,14 +177,14 @@ void SSP_SEEPROMTest( uint8_t portNum )
 	digitalWrite( PIO0_2, 0 );
 	/* Test Atmel AT25DF041 Serial flash. */
 	src_addr[0] = WREN;			/* set write enable latch */
-	SSP_Send( portNum, (uint8_t *)src_addr, 1 );
+	SSP_Send( port, (uint8_t *)src_addr, 1 );
 	digitalWrite( PIO0_2, 1 );
 
 	for ( i = 0; i < 0x80; i++ );	/* delay minimum 250ns */
 	digitalWrite( PIO0_2, 0 );
 	src_addr[0] = RDSR;	/* check status to see if write enabled is latched */
-	SSP_Send( portNum, (uint8_t *)src_addr, 1 );
-	SSP_Receive( portNum, (uint8_t *)dest_addr, 1 );
+	SSP_Send( port, (uint8_t *)src_addr, 1 );
+	SSP_Receive( port, (uint8_t *)dest_addr, 1 );
 	digitalWrite( PIO0_2, 1 );
 	if ( dest_addr[0] & (RDSR_WEN|RDSR_RDY) != RDSR_WEN ) 
 	/* bit 0 to 0 is ready, bit 1 to 1 is write enable */
@@ -206,7 +206,7 @@ void SSP_SEEPROMTest( uint8_t portNum )
 	src_addr[1] = 0x00;	/* write address offset MSB is 0x00 */
 	src_addr[2] = 0x00;	/* write address offset LSB is 0x00 */
 	src_addr[3] = 0x00;	/* write address offset LSB is 0x00 */
-	SSP_Send( portNum, (uint8_t *)src_addr, SSP_BUFSIZE );
+	SSP_Send( port, (uint8_t *)src_addr, SSP_BUFSIZE );
 	digitalWrite( PIO0_2, 1 );
 
 	for ( i = 0; i < 0x400000; i++ );	/* Be careful with the dumb delay, it
@@ -216,8 +216,8 @@ void SSP_SEEPROMTest( uint8_t portNum )
 	{
 	  digitalWrite( PIO0_2, 0 );
 	  src_addr[0] = RDSR;	/* check status to see if write cycle is done or not */
-	  SSP_Send( portNum, (uint8_t *)src_addr, 1);
-	  SSP_Receive( portNum, (uint8_t *)dest_addr, 1 );
+	  SSP_Send( port, (uint8_t *)src_addr, 1);
+	  SSP_Receive( port, (uint8_t *)dest_addr, 1 );
 	  digitalWrite( PIO0_2, 1 );
 	  if ( (dest_addr[0] & RDSR_RDY) == 0x00 )	/* bit 0 to 0 is ready */
 	  {
@@ -236,8 +236,8 @@ void SSP_SEEPROMTest( uint8_t portNum )
 	src_addr[1] = 0x00;		/* Read address offset MSB is 0x00 */
 	src_addr[2] = 0x00;		/* Read address offset LSB is 0x00 */
 	src_addr[3] = 0x00;		/* Read address offset LSB is 0x00 */
-	SSP_Send( portNum, (uint8_t *)src_addr, SFLASH_INDEX ); 
-	SSP_Receive( portNum, (uint8_t *)&dest_addr[SFLASH_INDEX], SSP_BUFSIZE-SFLASH_INDEX );
+	SSP_Send( port, (uint8_t *)src_addr, SFLASH_INDEX ); 
+	SSP_Receive( port, (uint8_t *)&dest_addr[SFLASH_INDEX], SSP_BUFSIZE-SFLASH_INDEX );
 	digitalWrite( PIO0_2, 1 );
   }
   else			/* Port 1 */
@@ -312,37 +312,30 @@ int main (void)
   for ( i = SFLASH_INDEX; i < SSP_BUFSIZE; i++ )
 #endif
   {
-	if ( src_addr[i] != dest_addr[i] )
-	{
+    if ( src_addr[i] != dest_addr[i] ) {
 #if SSP_DEBUG
-	  temp[0] = (dest_addr[i] & 0xF0) >> 4;
-	  if ( (temp[0] >= 0) && (temp[0] <= 9) )
-	  {
-		temp[0] += 0x30;
-	  }
-	  else
-	  {
-		temp[0] -= 0x0A;
-		temp[0] += 0x41;
-	  }
-	  temp[1] = dest_addr[i] & 0x0F;
-	  if ( (temp[1] >= 0) && (temp[1] <= 9) )
-	  {
-		temp[1] += 0x30;
-	  }
-	  else
-	  {
-		temp[1] -= 0x0A;
-		temp[1] += 0x41;
-	  }
-	  UARTSend((uint8_t *)&temp[0], 2);
-	  UARTSend("\r\n", 2);
+      temp[0] = (dest_addr[i] & 0xF0) >> 4;
+      if ( (temp[0] >= 0) && (temp[0] <= 9) ) {
+        temp[0] += 0x30;
+      } else {
+        temp[0] -= 0x0A;
+        temp[0] += 0x41;
+      }
+      temp[1] = dest_addr[i] & 0x0F;
+      if ( (temp[1] >= 0) && (temp[1] <= 9) ) {
+        temp[1] += 0x30;
+      } else {
+        temp[1] -= 0x0A;
+        temp[1] += 0x41;
+      }
+      USART_write(&usart, temp[0]); USART_write(&usart, temp[1]);
+      USART_puts(&usart, "\r\n");
 #endif
-	  while( 1 );			/* Verification failed */
-	}
+      while( 1 );			/* Verification failed */
+    }
   }
 #if SSP_DEBUG
-  UARTSend("PASS\r\n", 6);
+  USART_puts(&usart, "PASS\r\n");
 #endif
 #endif			/* endif NOT TX_RX_ONLY */
   while ( 1 );
