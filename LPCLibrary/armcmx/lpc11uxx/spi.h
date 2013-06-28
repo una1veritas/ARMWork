@@ -29,6 +29,7 @@ extern "C" {
 
 typedef struct {
   uint8_t Num;
+  GPIOPin SSel;
   /* statistics of all the interrupts */
   volatile uint32_t interruptRxStat; //0 = 0;
   volatile uint32_t interruptOverRunStat; //0 = 0;

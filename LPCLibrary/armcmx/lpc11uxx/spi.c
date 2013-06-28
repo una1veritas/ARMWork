@@ -15,6 +15,8 @@ uint8_t SPI_transfer(SPIDef * port, uint8_t data) {
 }
 
 void SPI_init(SPIDef * port, GPIOPin clk, GPIOPin miso, GPIOPin mosi, GPIOPin ssel) {
+  SSP_IOConfig( port );
+  SSP_Init( port );			
 }
 
 void SPI_disable(SPIDef * port) {

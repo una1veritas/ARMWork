@@ -136,6 +136,7 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
+            <RestoreTracepoints>0</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>1</TargetSelection>
@@ -164,6 +165,7 @@
             <Capability>1</Capability>
             <DriverSelection>4097</DriverSelection>
           </Flash1>
+          <bUseTDR>0</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
@@ -344,6 +346,7 @@
             <Rwpi>0</Rwpi>
             <wLevel>0</wLevel>
             <uThumb>0</uThumb>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>__DEBUG_RAM</Define>
@@ -359,6 +362,7 @@
             <SplitLS>0</SplitLS>
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>NO_CRP</Define>
@@ -452,6 +456,7 @@
                 <Rwpi>2</Rwpi>
                 <wLevel>0</wLevel>
                 <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
                 <VariousControls>
                   <MiscControls></MiscControls>
                   <Define></Define>
@@ -467,6 +472,7 @@
                 <SplitLS>2</SplitLS>
                 <SwStkChk>2</SwStkChk>
                 <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
                 <VariousControls>
                   <MiscControls></MiscControls>
                   <Define></Define>
@@ -631,6 +637,7 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
+            <RestoreTracepoints>0</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>1</TargetSelection>
@@ -659,6 +666,7 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
+          <bUseTDR>0</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3></Flash3>
           <Flash4></Flash4>
@@ -839,6 +847,7 @@
             <Rwpi>0</Rwpi>
             <wLevel>0</wLevel>
             <uThumb>0</uThumb>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>__DEBUG_FLASH</Define>
@@ -854,6 +863,7 @@
             <SplitLS>0</SplitLS>
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
+            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -947,6 +957,7 @@
                 <Rwpi>2</Rwpi>
                 <wLevel>0</wLevel>
                 <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
                 <VariousControls>
                   <MiscControls></MiscControls>
                   <Define></Define>
@@ -962,6 +973,7 @@
                 <SplitLS>2</SplitLS>
                 <SwStkChk>2</SwStkChk>
                 <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
                 <VariousControls>
                   <MiscControls></MiscControls>
                   <Define></Define>
