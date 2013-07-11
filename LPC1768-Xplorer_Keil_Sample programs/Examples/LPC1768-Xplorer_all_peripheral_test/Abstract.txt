@@ -1,0 +1,22 @@
+Note:
+-----------------------------------------------------------------------------------------------------
+1) The LPC1768 Xplorer comes with the pre-loaded  Firmware,which tests all the peripherals.You can 
+   also test peripherals on board with mX-Base Board rev1.2 individually by the hex files given and observe
+   the output as given below.
+
+    --------------------------------Output to be observed
+
+1)Blinky:                  LED(D4) toggle for some time.
+
+
+2)USB_Vcom                 When USB connected, it enumerates as virtual com,can be observed through the device manager.
+
+
+3)I2C_EEPROM               The status of the EEPROM displayed via vcom port.
+
+4)SDcard		   This project Writes and reads few sectors and displays the status via vcom port 
+					     
+5)Ethernet		   This tests the ethernet on board.When connected to LAN ,and configured to the local router 
+					       IP address,opens UIP webserver page for configured host IP address.
+
+6)RTC                      Display date and time via vcom port..

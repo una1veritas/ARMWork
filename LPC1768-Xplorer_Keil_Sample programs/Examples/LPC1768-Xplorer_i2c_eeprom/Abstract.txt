@@ -1,0 +1,7 @@
+The project is a demo program for the LPC1768-Xplorer
+I2C EEPROM.
+
+The status of the i2c eeprom is displayed via USB Vcom port.
+
+
+
