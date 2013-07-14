@@ -155,11 +155,11 @@ int main (void) {
         Serial.println(millis() - ontime);
         tmp[0] = 1;
         tmp[1] = 0x00;
-        tmp[2] = 0x30;
+        tmp[2] = 0x11;
         tmp[3] = 0x01;
         tmp[4] = 0x06;
-        tmp[5] = 0x23;
-        tmp[6] = 0x06;
+        tmp[5] = 0x13;
+        tmp[6] = 0x07;
         tmp[7] = 0x13;
         Wire.beginTransmission(RTC_ADDR);
         Wire.write((const uint8_t *)tmp, 8);

@@ -1,0 +1,61 @@
+/**********************************************************************
+* $Id$		abstract.txt		2011-06-02
+*//**
+* @file		abstract.txt
+* @brief	Example description file
+* @version	1.0
+* @date		02. June. 2011
+* @author	NXP MCU SW Application Team
+*
+* Copyright(C) 2011, NXP Semiconductor
+* All rights reserved.
+*
+***********************************************************************
+* Software that is described herein is for illustrative purposes only
+* which provides customers with programming information regarding the
+* products. This software is supplied "AS IS" without any warranties.
+* NXP Semiconductors assumes no responsibility or liability for the
+* use of the software, conveys no license or title under any patent,
+* copyright, or mask work right to the product. NXP Semiconductors
+* reserves the right to make changes in the software without
+* notification. NXP Semiconductors also make no representation or
+* warranty that such application will be suitable for the specified
+* use without further testing or modification.
+**********************************************************************/
+  
+@Example description:
+	Purpose:
+		This example describes how to use LPC1830 Xplorer perpherals.
+	Process:
+		- Configure pin as GPIO function
+		- Configure system tick
+		- Depend on a limited tick value to turn on and turn off LED.
+					
+@Directory contents:
+	\Keil:	includes Keil project and configuration files  
+	lpc18xx_libcfg_default.h: Library configuration file - include needed driver library for this example 
+	main.c: Main program
+
+@How to run:
+	Hardware configuration:		
+		This example was tested on:
+			LPC1830 Xplorer Board
+		
+						
+	Running mode:
+		Internal SRAM mode:	This example can run on Internal SRAM mode.
+		SPIFI 32MB Debug mode:
+			+ This example can be run on external SPIFI flash:
+					- Burn by Keil's Load feature:
+						a) Copy all things in ..\..\..\Tools\Flash\Keil_Binaries to
+						   C:\Keil\ARM\Flash (Keil uVision 4)
+						b) Open Keil->Configure for flash compiling->Compile->Select debugger->Press LOAD 	 						
+
+
+	Step to run:
+		- Step 1: Build example.
+		- Step 2: Burn hex file into board (if run on ROM mode)
+		- Step 3: Start Debug example, Run it and Press user switch (SW2) observe data on Virtual com display
+		
+@Tip:
+	- Open \Keil\*.uvproj project file to run example on Keil

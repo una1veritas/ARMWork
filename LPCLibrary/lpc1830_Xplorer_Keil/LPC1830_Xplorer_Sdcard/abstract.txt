@@ -1,0 +1,141 @@
+/**********************************************************************
+* $Id$		abstract.txt		2011-06-02
+*//**
+* @file		abstract.txt
+* @brief	Example description file
+* @version	1.0
+* @date		02. June. 2011
+* @author	NXP MCU SW Application Team
+*
+* Copyright(C) 2011, NXP Semiconductor
+* All rights reserved.
+*
+***********************************************************************
+* Software that is described herein is for illustrative purposes only
+* which provides customers with programming information regarding the
+* products. This software is supplied "AS IS" without any warranties.
+* NXP Semiconductors assumes no responsibility or liability for the
+* use of the software, conveys no license or title under any patent,
+* copyright, or mask work right to the product. NXP Semiconductors
+* reserves the right to make changes in the software without
+* notification. NXP Semiconductors also make no representation or
+* warranty that such application will be suitable for the specified
+* use without further testing or modification.
+* Permission to use, copy, modify, and distribute this software and its
+* documentation is hereby granted, under NXP Semiconductors'
+* relevant copyright in the software, without fee, provided that it
+* is used in conjunction with NXP Semiconductors microcontrollers.  This
+* copyright, permission, and disclaimer notice must appear in all copies of
+* this code.
+**********************************************************************/
+
+@Example description for SD card:
+	Purpose:
+		This example describes how to read and write from/to SD Card
+		It also measures read and write speed.
+	Process:
+		Prepare an SD card  and insert it into SD card holder.
+		
+		In single transfer mode, the example will try to write then verify data in sector 1.
+		In multi transfer mode, it then will verify from sector 1 to the number that is defined in MULT_XFER_MAX_SECTORS.
+		After done these step, the example will measure the read and write speed by doing reading and writing in 
+		1000 x MULT_XFER_MAX_SECTORS sectors.
+		
+		Note that the unit is kB/s, it means 1000 Bytes/second 
+
+@Directory contents:
+	\Keil:	includes Keil project and configuration files 	
+	lpc18xx_libcfg.h: Library configuration file - include needed driver library for this example 
+	Sdio_readwrite.c: Main program
+
+@How to run:
+	Hardware configuration:		
+		This example was tested on:
+			LPC1830 Xplorer Board
+		
+						
+	Running mode:
+		Internal SRAM mode:	This example can run on Internal SRAM mode.
+		SPIFI 32MB Debug mode:
+			+ This example can be run on external SPIFI flash:
+					- Burn by Keil's Load feature:
+						a) Copy all things in ..\..\..\Tools\Flash\Keil_Binaries to
+						   C:\Keil\ARM\Flash (Keil uVision 4)
+						b) Open Keil->Configure for flash compiling->Compile->Select debugger->Press LOAD						
+
+	Step to run:
+		- Step 1: Build example.
+		- Step 2: After see UGL(USB Good Link) led on board turn on, open Device Manager > Ports (COM & LPT)
+				  see if "LPC18xx USB Vcom Port (COMx)" appears or not. 
+		- Step 3: Open one HyperTerminal for COM1 and other for COMx with below configuration:
+					- 9600 bps
+					- 8 data bits
+					- none parity
+					- 1 stop bit
+					- None flow control
+		- Step 5: Start Debug example, Run it and Press user switch (SW2) observe data on Virtual com display
+		
+		(Pls see "LPC18xx Example Description" document - chapter "Examples > SDIO > SDIO_Readwrite
+		for more details)
+
+Note: The debug messages can be viewed on UART0 or USB1 (VCOM). This is configured by a Compile time switch in file 
+      debug_frmwrk.h under drivers folder. Please note to use UART0 you need to use an external RS232 converter, 
+	  the LPC1830 Xplorer board has the UART0 at TTL level.
+
+@Setting up the VCOM port for debug messages:
+	Purpose:
+		This section describes how to use USB1 PORT on Xplorer board as .
+	Process:	           
+		If use USB Port 1, pls set Main Clock to 60Mhz in CGU_Init function       
+			                    
+		The PC will install a virtual COM port on the PC (see Driver Installation).
+		After installation an additional port "LPC18xx USB VCom Port(COMx)"
+		can be found under System/Hardware/Device Manager/Ports(COM&LPT).
+		Number "x" is not fixed as different PC configuration may have different 
+		"x" displayed on the device manager. The USB host driver assigns "x" 
+		dynamically based on the existing COM port configuration of the system.
+		Open Hyperterminal windows with "LPC18xx USB VCom Port(COMx)" 
+      	
+  		
+		
+@Driver Installation:
+     "Welcome to the Found New Hardware Wizard" appears
+     - select 'No, not this time'
+     - press  'Next'
+
+     - select 'Install from a list or specific location (Advanced)'
+     - press  'Next'
+
+     - select 'Search for the best driver in these locations'
+     - check  'include this location in the serach'
+     - set to <project folder>
+     - press 'Next'
+
+     "Hardware Installation" appears
+     "has not passed Windows Logo testing..."
+     - press 'Continue Anyway'
+
+     "Completing the Found New Hardware Wizard" appears
+     - press 'Finish'
+     		
+@Directory contents for usb_vcom:
+	\Vcom:	includes Keil project and configuration files 	
+	cdc.h: USB CDC (Communication Device) Definitions
+	cdcuser.h/.c: USB Communication Device Class User module
+	lpc18xx_libcfg.h: Library configuration file - include needed driver library for this example 
+	serial.h/.c: serial port handling for LPC18xx
+	usb.h:  USB Definitions
+	usbcfg.h: USB Custom Configuration
+	usbcore.h/.c: USB Core Module
+	usbdesc.h/.c: USB Descriptors
+	usbhw.h/.c: SB Hardware Layer Module
+	usbreg.h: USB Hardware Layer Definitions for NXP Semiconductors LPC 
+	usbuser.h/.c: USB Custom User Module
+	vcomdemo.h/.c: main program	
+	makefile: Example's makefile (to build with GNU toolchain)
+	lpc18xx-vom.inf: driver info for VCOM LPC18xx (used when Windows requires install driver)
+	  
+
+		
+@Tip:
+	- Open \Keil\*.uvproj project file to run example on Keil

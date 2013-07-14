@@ -133,7 +133,7 @@ void setup() {
 
 
 int main (void) {
-	long lastread, swatch, lasttime;
+	long lastread = 0, swatch = 0, lasttime = 0;
   ISO14443 card, lastcard;
   IDData iddata;
   
