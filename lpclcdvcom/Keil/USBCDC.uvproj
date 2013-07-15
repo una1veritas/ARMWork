@@ -7,18 +7,18 @@
 
   <Targets>
     <Target>
-      <TargetName>lpclcdrfid</TargetName>
+      <TargetName>LPC11Uxx_IFLASH</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>LPC11U24/401</Device>
+          <Device>LPC11U14/201</Device>
           <Vendor>NXP (founded by Philips)</Vendor>
-          <Cpu>IRAM(0x10000000-0x10001FFF) IROM(0-0x7FFF) CLOCK(12000000) CPUTYPE("Cortex-M0")</Cpu>
+          <Cpu>IRAM(0x10000000-0x10000FFF) IROM(0-0x7FFF) CLOCK(12000000) CPUTYPE("Cortex-M0")</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile>"STARTUP\NXP\LPC11Uxx\startup_LPC11Uxx.s" ("NXP LPC11Uxx Startup Code")</StartupFile>
           <FlashDriverDll>UL2CM3(-O4303 -S0 -C0 -FO7 -FD10000000 -FC800 -FN1 -FF0LPC1xxx_32 -FS00 -FL08000)</FlashDriverDll>
-          <DeviceId>6198</DeviceId>
+          <DeviceId>5738</DeviceId>
           <RegisterFile>LPC11Uxx.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
@@ -44,13 +44,13 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Obj\</OutputDirectory>
-          <OutputName>LPC11U24LCDRFID</OutputName>
+          <OutputName>USBCDC</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\Obj\</ListingPath>
+          <ListingPath>.\Lst\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -73,14 +73,14 @@
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </BeforeMake>
           <AfterMake>
-            <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
-            <UserProg1Name>C:\Keil\ARM\ARMCC\bin\fromelf.exe --bin "#L" -o "$Pfirmware.bin"</UserProg1Name>
-            <UserProg2Name>C:\nxp\LPCXpresso_5.2.4\lpcxpresso\bin\checksum -p LPC11U24_401 -d "$Pfirmware.bin"</UserProg2Name>
+            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name></UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </AfterMake>
-          <SelectedForBatchBuild>0</SelectedForBatchBuild>
+          <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString></SVCSIdString>
         </TargetCommonOption>
         <CommonProperty>
@@ -102,11 +102,11 @@
           <SimDllName>SARMCM3.DLL</SimDllName>
           <SimDllArguments></SimDllArguments>
           <SimDlgDll>DARMP1.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pLPC11U24</SimDlgDllArguments>
+          <SimDlgDllArguments>-pLPC11U14</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
           <TargetDlgDll>TARMP1.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pLPC11U24</TargetDlgDllArguments>
+          <TargetDlgDllArguments>-pLPC11U14</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -130,13 +130,13 @@
           <Target>
             <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
+            <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <RestoreTracepoints>1</RestoreTracepoints>
+            <RestoreTracepoints>0</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>1</TargetSelection>
@@ -161,7 +161,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -216,13 +216,13 @@
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <RoSelD>3</RoSelD>
-            <RwSelD>3</RwSelD>
+            <RwSelD>5</RwSelD>
             <CodeSel>0</CodeSel>
             <OptFeed>0</OptFeed>
             <NoZi1>0</NoZi1>
             <NoZi2>0</NoZi2>
             <NoZi3>0</NoZi3>
-            <NoZi4>0</NoZi4>
+            <NoZi4>1</NoZi4>
             <NoZi5>0</NoZi5>
             <Ro1Chk>0</Ro1Chk>
             <Ro2Chk>0</Ro2Chk>
@@ -268,7 +268,7 @@
               <IRAM>
                 <Type>0</Type>
                 <StartAddress>0x10000000</StartAddress>
-                <Size>0x2000</Size>
+                <Size>0x1000</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
@@ -323,7 +323,7 @@
               <OCR_RVCT9>
                 <Type>0</Type>
                 <StartAddress>0x10000000</StartAddress>
-                <Size>0x2000</Size>
+                <Size>0x1000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
@@ -335,23 +335,23 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>2</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>1</OneElfS>
+            <OneElfS>0</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>0</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARMCMX</Define>
+              <Define>__DEBUG_FLASH</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\LPCLibrary\armcmx\lpc11uxx;..\..\LPCLibrary\armcmx;..\inc;..\src;..\..\STM32Libraries\armcmxtools\LCD;..\..\STM32Libraries\armcmxtools\RTC;..\..\STM32Libraries\armcmxtools\RFID</IncludePath>
+              <IncludePath>..\;..\..\LPCLibrary\armcmx\lpc11uxx;..\..\LPCLibrary\armcmx\;..\..\LPCLibrary\LPC11Uxx_USBDriver</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -365,13 +365,13 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define></Define>
+              <Define>NO_CRP</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
-            <umfTarg>0</umfTarg>
+            <umfTarg>1</umfTarg>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
             <noStLib>0</noStLib>
@@ -390,7 +390,42 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>Source</GroupName>
+          <Files>
+            <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>cdcuser.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\cdcuser.c</FilePath>
+            </File>
+            <File>
+              <FileName>usbdesc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usbdesc.c</FilePath>
+            </File>
+            <File>
+              <FileName>usbuser.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\usbuser.c</FilePath>
+            </File>
+            <File>
+              <FileName>usbcore.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\LPC11Uxx_USBDriver\usbcore.c</FilePath>
+            </File>
+            <File>
+              <FileName>usbhw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\LPC11Uxx_USBDriver\usbhw.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Startup</GroupName>
           <Files>
             <File>
               <FileName>startup_LPC11Uxx.s</FileName>
@@ -400,27 +435,83 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>main</GroupName>
+          <GroupName>Common</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>2</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath>..\Common\inc</IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
           <Files>
-            <File>
-              <FileName>main.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\src\main.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>cmsis2.0</GroupName>
-          <Files>
-            <File>
-              <FileName>system_LPC11Uxx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\system_LPC11Uxx.c</FilePath>
-            </File>
             <File>
               <FileName>core_cm0.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx\src\core_cm0.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_LPC11Uxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx\src\system_LPC11Uxx.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Documentation</GroupName>
+          <Files>
+            <File>
+              <FileName>Abstract.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Abstract.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -428,89 +519,29 @@
           <GroupName>armcmx</GroupName>
           <Files>
             <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay.c</FilePath>
+            </File>
+            <File>
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\gpio.c</FilePath>
             </File>
             <File>
-              <FileName>i2c.c</FileName>
+              <FileName>spi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\i2c.c</FilePath>
+              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\spi.c</FilePath>
             </File>
             <File>
-              <FileName>nmi.c</FileName>
+              <FileName>ssp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\nmi.c</FilePath>
+              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\ssp.c</FilePath>
             </File>
             <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>USARTSerial.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\USARTSerial.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Stream.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\Stream.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Print.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\Print.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>I2CBus.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\I2CBus.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tools</GroupName>
-          <Files>
-            <File>
-              <FileName>ST7032i.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\LCD\ST7032i.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>ST7032i.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\LCD\ST7032i.h</FilePath>
-            </File>
-            <File>
-              <FileName>ISO14443.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\RFID\ISO14443.h</FilePath>
-            </File>
-            <File>
-              <FileName>PN532_I2C.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\RFID\PN532_I2C.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>PN532_I2C.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\RFID\PN532_I2C.h</FilePath>
-            </File>
-            <File>
-              <FileName>DS1307.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\RTC\DS1307.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>DS1307.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\RTC\DS1307.h</FilePath>
             </File>
           </Files>
         </Group>

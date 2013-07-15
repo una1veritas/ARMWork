@@ -129,6 +129,9 @@ void UART_IRQHandler(void) {
 	LPC_USART->ACR |= IIR_ABTO;
   }
 #endif
+
+  usart.Status &= 0xff1E;        // update linestate
+
   return;
 }
 
@@ -369,6 +372,26 @@ void USART_begin(USARTDef * uart, uint32_t baudrate)
   return;
 }
 
+
+/*----------------------------------------------------------------------------
+  close the serial port
+ *---------------------------------------------------------------------------*/
+void USART_close (USARTDef * usart) {
+  LPC_IOCON->PIO0_18 &= ~0x07;    /*  UART I/O config */
+  LPC_IOCON->PIO0_19 &= ~0x07;
+  
+//  LPC_IOCON->PIO1_14 &= ~0x07;    /*  UART I/O config */
+//  LPC_IOCON->PIO1_13 &= ~0x07;
+//  LPC_IOCON->PIO1_26 &= ~0x07;    /*  UART I/O config */
+//  LPC_IOCON->PIO1_27 &= ~0x07;
+
+  /* Disable the interrupt in the VIC and UART controllers */
+  LPC_USART->IER = 0;
+  NVIC_DisableIRQ(UART_IRQn);
+  return;
+}
+
+
 /*****************************************************************************
 ** Function name:		UARTSend
 **
@@ -483,6 +506,19 @@ int16_t USART_read(USARTDef * uart) {
 }
 
 
+size_t USART_gets(USARTDef * uart, char * buf) {
+  size_t n = 0;
+  while ( uart->Count > 0 ) {
+    buf[n++] = (char) uart->Buffer[uart->Tail];
+    uart->Count--;
+    uart->Tail++;
+    uart->Tail %= USART_BUFSIZE;
+  }
+  buf[n] = 0;
+  return n;
+}
+
+
 void USART_flush(USARTDef *uart) {
   return;
 }
@@ -496,3 +532,11 @@ int16_t USART_peek(USARTDef * uart) {
   }
   return c;
 }
+
+
+uint16_t USART_linestate(USARTDef * uart) {
+  uint16_t s = uart->Status;
+  uart->Status = 0;
+  return s;
+}
+

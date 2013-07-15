@@ -30,11 +30,39 @@ static const word FELICA_SERVICE_SUICA = 0x090F;
 static const word FELICA_SERVICE_EDY = 0x170F;
 static const word FELICA_SERVICE_FCF = 0x1a8b;
 
+/*
+Theses values comes from http://www.libnfc.org/documentation/hardware/tags/iso14443
+
+Manufacturer	Product			ATQA	SAK	ATS (called ATR for contact smartcards) 
+
+NXP		MIFARE Mini		00 04 	09 	
+		MIFARE Classic 1K 	00 04 	08 	
+		MIFARE Classic 4K 	00 02 	18 	
+		MIFARE Ultralight 	00 44 	00 	
+		MIFARE DESFire		03 44 	20 	06 75 77 81 02 80
+		MIFARE DESFire EV1 	03 44 	20 	06 75 77 81 02 80
+		JCOP31			03 04 	28 	38 77 b1 4a 43 4f 50 33 31
+		JCOP31 v2.4.1		00 48 	20 	78 77 b1 02 4a 43 4f 50 76 32 34 31
+		JCOP41 v2.2		00 48 	20 	38 33 b1 4a 43 4f 50 34 31 56 32 32
+		JCOP41 v2.3.1		00 04 	28 	38 33 b1 4a 43 4f 50 34 31 56 32 33 31
+Infineon 	MIFARE Classic 1K 	00 04 	88 	
+Gemplus 	MPCOS 			00 02 	98
+Innovision R&T 	Jewel 			0C 00
+*/
+
+static const word ATQA_MIFARE_CLASSIC1K = 0x0004;
+static const word ATQA_MIFARE_CLASSIC4K = 0x0002;
+static const word ATQA_MIFARE_ULTRALIGHT = 0x0044;
+static const word ATQA_MIFARE_DESFIRE = 0x0344;
+static const word ATQA_MIFARE_DESFIRE_EV1 = 0x0344;
+
 
 struct ISO14443 {
 	static const byte NFCID_MAXSIZE = 8;
 	//
 	byte type;
+  word sens_res;
+  byte sel_res;
 	byte IDLength;
 	byte ID[NFCID_MAXSIZE];
 

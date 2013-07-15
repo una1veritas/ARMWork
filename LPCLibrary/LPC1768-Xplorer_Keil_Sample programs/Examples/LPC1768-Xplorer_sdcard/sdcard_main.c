@@ -193,7 +193,6 @@ int main (void) {
 
 	int8_t sdcard_test;
 	SystemInit();                         /* initialize clocks */
-	SystemInit();                         /* initialize clocks */
 	debug_frmwrk_init();
 	do{
 	  user_switch_init();

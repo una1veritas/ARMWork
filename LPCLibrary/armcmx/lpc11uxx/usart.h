@@ -107,12 +107,16 @@ void UART_IRQHandler(void);
 //void ModemInit( void );
 void USART_init(USARTDef *, const GPIOPin rx, const GPIOPin tx);
 void USART_begin(USARTDef *, const uint32_t baudrate);
+void USART_close(USARTDef *);
 size_t USART_write(USARTDef * usart, uint8_t c);
 size_t USART_puts(USARTDef *, const char *);
 size_t USART_available(USARTDef * usart);
 int16_t USART_read(USARTDef *);
+size_t USART_gets(USARTDef * uart, char * buf);
 size_t USART_polling_write(USARTDef * usart, uint8_t c );
 int16_t USART_polling_read(USARTDef *);
+uint16_t USART_linestate(USARTDef *);
+
 
 void USART_flush(USARTDef *);
 int16_t USART_peek(USARTDef *);

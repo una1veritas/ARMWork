@@ -210,7 +210,7 @@ int c_entry (void) {                       /* Main Program                      
 		Test_led();				//Blinky
 		Test_ethernet();
 		Test_audio(); 
-//	Test_sdcard();
+	Test_sdcard();
 		if(int_flag == 1)
 		{
 			lpc_printf("User input detected\r\n");

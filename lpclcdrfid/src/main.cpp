@@ -225,11 +225,11 @@ int main (void) {
 
 void readcard(ISO14443 & card, IDData & data) {
 	switch (card.type) {
-    case 0x10:
+    case Mifare:
       if ( get_MifareBlock(card, data) == 0 ) 
         card.clear();
       break;
-    case 0x11:
+    case FeliCa212kb:
       if ( get_FCFBlock(card, data) == 0 )
         card.clear();
       break;
@@ -280,7 +280,7 @@ uint8 get_MifareBlock(ISO14443 & card, IDData & data) {
     card.type = Mifare;
   } 
   else {
-    printf("Mifare sector 1 Authentication failed.\n");
+    Serial.println("Mifare sector 1 Authentication failed.");
     return 0;
   }
   return 1;
