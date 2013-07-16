@@ -219,7 +219,6 @@ public:
 	byte InListPassiveTarget(const byte maxtg, const byte brty, byte * data, const byte initlen);
 	byte InAutoPoll(const byte pollnr, const byte per, const byte * types,
 			const byte typeslen);
-	byte getAutoPollResponse(byte * respo);
 
 	byte InDataExchange(const byte Tg, const byte * data, const byte length);
 //	byte InDataExchange(const byte Tg, const byte fcmd, const byte * data, const byte len);
@@ -227,15 +226,8 @@ public:
 			const byte * data, const byte datalen);
 
 	byte getCommandResponse(byte * resp, const long & wait = 1000);
-
-	byte getListPassiveTarget(byte * data) {
-		byte count = getCommandResponse(packet);
-		if (!count)
-			return 0;
-		//	count -= 2; // remove checksum and postamble bytes.
-		memcpy(data, packet, count);
-		return packet[0];
-	}
+	byte getAutoPollResponse(byte * respo);
+	byte getListPassiveTarget(byte * data);
 
 	void targetSet(const byte cardtype, const byte * uid, const byte uidLen);
 	void targetClear();

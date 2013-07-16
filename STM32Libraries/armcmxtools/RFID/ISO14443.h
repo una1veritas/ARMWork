@@ -61,8 +61,8 @@ struct ISO14443 {
 	static const byte NFCID_MAXSIZE = 8;
 	//
 	byte type;
-  word sens_res;
-  byte sel_res;
+  word SENS_RES;
+  byte SEL_RES;
 	byte IDLength;
 	byte ID[NFCID_MAXSIZE];
 
@@ -101,6 +101,8 @@ struct ISO14443 {
 		type = tp;
 		IDLength = len;
 		memcpy(ID, data, len);
+    SENS_RES = 0;
+    SEL_RES = 0;
 	}
 
 	void set(const byte tp, const byte * raw) {
@@ -123,13 +125,42 @@ struct ISO14443 {
 			memcpy(ID, raw + 5, IDLength);
 			break;
 		}
+    SENS_RES = 0;
+    SEL_RES = 0;
 	}
 
+  void setInList(const byte * pssvres) {
+    // pssvres[1] == 1 (target no.)
+    const byte * cardres = pssvres+1;
+    type = Mifare;
+    SENS_RES = cardres[1] | cardres[2]<<8;
+    SEL_RES = cardres[3];
+    IDLength = cardres[4];
+    memcpy(ID, cardres+5, IDLength);
+  }
+  
 	size_t printOn(Print & pr) {
 		int cnt = 0;
 		switch(type) {
 		case Mifare:
 			cnt += pr.print("Mifare");
+      if (SENS_RES != 0) {
+        switch(SENS_RES) {
+          case ATQA_MIFARE_CLASSIC1K:
+          case ATQA_MIFARE_CLASSIC4K:
+            cnt += pr.print(" Classic 1/4K");
+            break;
+          case ATQA_MIFARE_ULTRALIGHT:
+            cnt += pr.print(" Ultralight");
+            break;
+          case ATQA_MIFARE_DESFIRE:
+            cnt+= pr.print(" DESFIRE");
+            break;
+          default:
+            cnt+= pr.print(" Unknown");
+            break;
+        }
+      }
 			break;
 		case FeliCa212kb:
 			cnt += pr.print("FeliCa212kb");

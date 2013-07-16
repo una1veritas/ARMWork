@@ -154,13 +154,14 @@ int main (void) {
 		if ( nfcreader.InAutoPoll(1, 1, NFCpollingOrder+1, NFCpollingOrder[0]) 
         && nfcreader.getAutoPollResponse(tmp) ) {
 				// NbTg, type1, length1, [Tg, ...]
-          Serial.print("InAutoPoll: ");
           card.set(tmp[1], tmp+3);
-          card.printOn(Serial);
-          Serial.println();
           i2clcd.backlightOn();
           if ( millis() - lastread > 10000 or (millis() - lastread > 1999 and lastcard != card) ) {
             lastread = millis();
+            lastcard = card;
+            Serial.print("InAutoPoll: ");
+            card.printOn(Serial);
+            Serial.println();
             //
             readcard(card, iddata);
             if (card.type == FeliCa212kb ) {
@@ -179,7 +180,6 @@ int main (void) {
               Serial.write((char)iddata.fcf.issue);
               Serial.println();
               //
-              lastcard = card;
             } else if (card.type == Mifare ) {
               i2clcd.setCursor(0,0);
               i2clcd.write(iddata.iizuka.division, 2);
@@ -192,7 +192,6 @@ int main (void) {
               Serial.print((char)iddata.iizuka.issue);
               Serial.println();
               //
-              lastcard = card;
             } else {
               Serial.println("Unknown card type.");
             }
@@ -224,11 +223,21 @@ int main (void) {
 
 
 void readcard(ISO14443 & card, IDData & data) {
+  byte resp[128];
+  uint16_t n;
 	switch (card.type) {
     case Mifare:
-      if ( get_MifareBlock(card, data) == 0 ) 
-        card.clear();
-      break;
+      if ( nfcreader.InListPassiveTarget(1, PN532::BaudrateType_106kbitTypeA, (byte *)0, 0)
+        and nfcreader.getListPassiveTarget(resp) ) {
+          Serial.print("result: ");
+          Serial.println(n);
+          Serial.printByte(resp, 64);
+          Serial.println();
+          card.setInList(resp);
+          if ( get_MifareBlock(card, data) == 0 ) 
+            card.clear();
+        }
+        break;
     case FeliCa212kb:
       if ( get_FCFBlock(card, data) == 0 )
         card.clear();

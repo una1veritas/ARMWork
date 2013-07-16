@@ -416,6 +416,15 @@ byte PN532::getAutoPollResponse(byte * respo) {
 	return respo[0];
 }
 
+byte PN532::getListPassiveTarget(byte * data) {
+  byte count = getCommandResponse(packet);
+	if (!count)
+		return 0;
+	//	count -= 2; // remove checksum and postamble bytes.
+	memcpy(data, packet, count);
+	return packet[0];
+}
+
 /*
  byte PN532::felica_getDataExchangeResponse(const byte fcmd, byte * resp) {
  byte count = getCommandResponse(COMMAND_InDataExchange, resp);
