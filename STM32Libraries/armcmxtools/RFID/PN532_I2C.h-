@@ -15,14 +15,15 @@
 #include "WProgram.h"
 #endif
 #include <Wire.h>
-#endif
 
-#ifdef ARMCMX
+#else
+
 #include "armcmx.h"
 #include "I2CBus.h"
+
 #endif
 
-#include "ISO14443.h"
+
 
 class PN532 {
 /*
@@ -79,9 +80,10 @@ class PN532 {
 
 	static const byte PACKBUFFSIZE = 80;
 //
+	I2CBus & wire;
+	GPIOPin pin_irq; // P70_IRQ
+	GPIOPin pin_rst;
 	byte i2c_addr;
-	byte pin_irq; // P70_IRQ
-	byte pin_rst;
 	//
 	byte chksum;
 	byte packet[PACKBUFFSIZE];
@@ -90,12 +92,12 @@ class PN532 {
 	volatile byte comm_status;
 	//
 
-	inline void wirewrite(const byte & d) {
-		Wire.write(d);
+	void wirewrite(byte d) {
+		wire.write(d);
 	}
 
-	inline byte wireread() {
-		return Wire.read();
+	byte wireread() {
+		return wire.read();
 	}
 
 	void send(byte d);
@@ -103,8 +105,8 @@ class PN532 {
 	byte receive();
 	byte receivepacket(int n);
 	byte receivepacket();
-	boolean checkACKframe(long timeout = 250);
-	boolean IRQ_wait(long timeout = 250);
+	boolean checkACKframe(long timeout = 1000);
+	boolean IRQ_wait(long timeout = 1000);
 
 	void send_ack();
 	void send_nack();
@@ -142,77 +144,66 @@ public:
 	static const byte FELICA_CMD_WRITEWITHOUTENCRYPTION = 0x08;
 	static const byte FELICA_CMD_REQUESTSYSTEMCODE = 0x0c;
 
+/*
 	static void printHexString(const byte * a, byte len) {
 		for (int i = 0; i < len; i++) {
-			Serial.print(a[i] >> 4 & 0x0f, HEX);
+			USARTSerial3.print(a[i] >> 4 & 0x0f, HEX);
 			Serial.print(a[i] & 0x0f, HEX);
 			Serial.print(" ");
 		}
 	}
+*/
 
 public:
 
-	PN532(byte addr = I2C_ADDRESS, byte irq = 0xff, byte rst = 0xff);
+	PN532(I2CBus & wirex, byte addr = I2C_ADDRESS, GPIOPin irq = NOT_A_PIN, GPIOPin rst = NOT_A_PIN);
 
 	void init();
-	inline void begin() {
+	inline bool begin() {
 		init();
+    return GetFirmwareVersion();
 	}
 
 	enum STATUS_CODE {
 		IDLE = 0,
 		COMMAND_ISSUED = 0x01,
-		REQUEST_RECEIVE,
-		ACK_FRAME_RECEIVED,
-		ACK_NOT_RECEIVED,
-		NACK_FRAME_RECEIVED,
+		REQUEST_RECEIVE = 0x02,
+		ACK_FRAME_RECEIVED = 0x03,
+		ACK_NOT_RECEIVED = 0x04,
+		NACK_FRAME_RECEIVED = 0x05,
 		ERROR_FRAME_RECEIVED,
 		RESP_COMMAND_MISSMATCH,
 		RESP_RECEIVED,
-		RESP_FAILED,
 		CHECKSUMERROR = 0xfa,
-		I2CREADY_TIMEOUT,
+		I2CREADY_TIMEOUT = 0xfb,
 		WRONG_ACK,
 		WRONG_PREAMBLE,
 		WRONG_POSTAMBLE
 	};
-	const byte status() { return comm_status; }
+	
+	byte status() { return comm_status; }
 	byte status(const byte b) { return (comm_status = b); }
-	const byte command() { return last_command; }
+	byte command() { return last_command; }
 	boolean IRQ_ready(void);
 
 	boolean GetFirmwareVersion();
 	boolean GetGeneralStatus();
-	boolean SAMConfiguration(byte mode = 0x01, byte timeout = 0x14, byte use_irq =
+	enum { SAMMODE_NORMAL = 0x01,
+		SAMMODE_VIRTUAL_CARD,
+		SAMMODE_WIRED_CARD,
+		SAMMODE_DUYAL_CARD
+	};
+	boolean SAMConfiguration(byte mode = SAMMODE_NORMAL, byte timeout = 0x14, byte use_irq =
 			0x01);
-	// 01 normal mode (default), SAM is not used.
-	// timeout value in virtual card mode, x 50ms.
-	// x01 P70_IRQ is driven by PN532
-	// response has no value, only with answer header d5 and command response code 15.
-
 	boolean PowerDown(byte wkup, byte genirq = 0x01);
 	boolean WriteRegister(word addr, byte value);
 	inline boolean CPU_PowerMode(const byte mode = 0x00) {
 		return WriteRegister(0x02fc, (mode == 0 ? 0x00 : 0x02) ); // p. 12/200, User Manual Rev. 02
 	}
 
-/*
-	static const byte BaudrateType_106kbitTypeA = 0x00;
-	static const byte BaudrateType_212kbitFeliCa = 0x01;
-	static const byte BaudrateType_424kbitFeliCa = 0x02;
-	static const byte BaudrateType_106kbitTypeB = 0x03;
 
-	static const byte Type_GenericPassiveTypeA = 0x00;
-	static const byte Type_GenericPassive212kbFeliCa = 0x01;
-	static const byte Type_GenericPassive424kbFeliCa = 0x02;
-	static const byte Type_PassiveTypeB = 0x03;
-	*/
-	static const byte Type_Mifare = 0x10;
-	static const byte Type_FeliCa212kb = 0x11;
-	static const byte Type_FeliCa424kb = 0x12;
-	static const byte Type_Empty = 0xff;
 
-	byte InListPassiveTarget(const byte maxtg, const byte BaudModType, byte * data, const byte initlen);
+	byte InListPassiveTarget(const byte maxtg, const byte brty, byte * data, const byte initlen);
 	byte InAutoPoll(const byte pollnr, const byte per, const byte * types,
 			const byte typeslen);
 
@@ -221,7 +212,7 @@ public:
 	byte InDataExchange(const byte Tg, const byte micmd, const byte blkaddr,
 			const byte * data, const byte datalen);
 
-	byte getCommandResponse(byte * resp, const long & wait = 250);
+	byte getCommandResponse(byte * resp, const long & wait = 1000);
 	byte getAutoPollResponse(byte * respo);
 	byte getListPassiveTarget(byte * data);
 
