@@ -101,7 +101,7 @@ void setup() {
     //if(!i2clcd_init(0x27)) break;   // 初期化完了ならwhileを抜ける
     if ( i2clcd.begin() ) break;
     // 失敗したら初期化を永遠に繰り返す
-  Serial.println("I2CLCD started.");
+  Serial.println("I2C LCD started.");
   i2clcd.clear();
   i2clcd.print("Hello.");
   
@@ -132,7 +132,7 @@ void setup() {
 
 
 int main (void) {
-	long lastread = 0, swatch = 0, lasttime = 0;
+	long lastpolled = 0, lastread = 0, swatch = 0, lasttime = 0;
   ISO14443 card, lastcard;
   IDData iddata;
   
@@ -149,71 +149,8 @@ int main (void) {
   lastread = millis();
   
   while (1){    /* Loop forever */
-    
-		if ( nfcreader.InAutoPoll(1, 1, NFCPolling, 2) 
-        && nfcreader.getAutoPollResponse(tmp) ) {
-				// NbTg, type1, length1, [Tg, ...]
-          card.setPassiveTarget(nfcreader.target.NFCType, tmp);
-          i2clcd.backlightOn();
-          if ( millis() - lastread > 10000 or (millis() - lastread > 1999 and lastcard != card) ) {
-            lastread = millis();
-            lastcard = card;
-            Serial.print("InAutoPoll: ");
-            Serial.print(card);
-            Serial.println();
-            //
-            readIDInfo(card, iddata);
-            rtc.updateTime();
-            rtc.updateCalendar();
-            if (card.type == NFC::CARDTYPE_FELICA_212K ) {
-              i2clcd.setCursor(0,0);
-              if ( iddata.fcf.division[1] == 0 ) 
-                i2clcd.write(iddata.fcf.division, 1);
-              else
-                i2clcd.write(iddata.fcf.division, 2);
-              i2clcd.print('-');
-              i2clcd.write(iddata.fcf.pid, 8);
-              i2clcd.print('-');
-              
-              i2clcd.write((char)iddata.fcf.issue);
-              Serial.write(iddata.fcf.pid, 8);
-              Serial.print('-');
-              Serial.write((char)iddata.fcf.issue);
-              //
-              Serial.print(" ");
-              Serial.print(rtc.time, HEX);
-              Serial.print(" ");
-              Serial.print(rtc.cal, HEX);
-              Serial.println();
-              //
-            } else if (card.type == NFC::CARDTYPE_MIFARE ) {
-              i2clcd.setCursor(0,0);
-              i2clcd.write(iddata.iizuka.division, 2);
-              i2clcd.print('-');
-              i2clcd.write(iddata.iizuka.pid, 8);
-              i2clcd.print('-');
-              i2clcd.print((char)iddata.iizuka.issue);
-              Serial.write(iddata.iizuka.pid, 8);
-              Serial.print('-');
-              Serial.print((char)iddata.iizuka.issue);
-              //
-              //
-              Serial.print(" ");
-              Serial.print(rtc.time, HEX);
-              Serial.print(" ");
-              Serial.print(rtc.cal, HEX);
-              Serial.println();
-              //
-            } else {
-              Serial.println("Unknown card type.");
-            }
-          }
-    } else if (millis() - lastread > 10000 ) {
-      i2clcd.setCursor(0, 0);
-      i2clcd.print("                ");
-      i2clcd.backlightOff();
-    }      
 
+    // update clock values before polling cards
     if ( millis() - swatch >= 100 ) {
       swatch = millis();
       rtc.updateTime();
@@ -228,6 +165,70 @@ int main (void) {
       }
     }
     
+		if ( (lastpolled + 500 < millis() ) and 
+    nfcreader.InAutoPoll(1, 1, NFCPolling, 2) and nfcreader.getAutoPollResponse(tmp) ) {
+      lastpolled = millis();
+      // NbTg, type1, length1, [Tg, ...]
+      card.setPassiveTarget(nfcreader.target.NFCType, tmp);
+      i2clcd.backlightOn();
+      if ( millis() - lastread > 2000 and (millis() - lastread > 5000 or lastcard != card) ) {
+        lastread = millis();
+        lastcard = card;
+        Serial.print("InAutoPoll: ");
+        Serial.print(card);
+        Serial.println();
+        //
+        readIDInfo(card, iddata);
+        if (card.type == NFC::CARDTYPE_FELICA_212K ) {
+          i2clcd.setCursor(0,0);
+          if ( iddata.fcf.division[1] == 0 ) 
+            i2clcd.write(iddata.fcf.division, 1);
+          else
+            i2clcd.write(iddata.fcf.division, 2);
+          i2clcd.print('-');
+          i2clcd.write(iddata.fcf.pid, 8);
+          i2clcd.print('-');
+          
+          i2clcd.write((char)iddata.fcf.issue);
+          Serial.write(iddata.fcf.pid, 8);
+          Serial.print('-');
+          Serial.write((char)iddata.fcf.issue);
+          //
+          Serial.print(" ");
+          sprintf((char*)tmp, "%02x:%02x:%02x", rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f);
+          Serial.print((char*)tmp);
+          sprintf((char*)tmp, " %02x/%02x/20%02x", rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.cal&0xff);
+          Serial.println((char*)tmp);
+          //
+        } else if (card.type == NFC::CARDTYPE_MIFARE ) {
+          i2clcd.setCursor(0,0);
+          i2clcd.write(iddata.iizuka.division, 2);
+          i2clcd.print('-');
+          i2clcd.write(iddata.iizuka.pid, 8);
+          i2clcd.print('-');
+          i2clcd.print((char)iddata.iizuka.issue);
+          Serial.write(iddata.iizuka.pid, 8);
+          Serial.print('-');
+          Serial.print((char)iddata.iizuka.issue);
+          //
+          //
+          Serial.print(" ");
+          Serial.print(" ");
+          sprintf((char*)tmp, "%02x:%02x:%02x", rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f);
+          Serial.print((char*)tmp);
+          sprintf((char*)tmp, " %02x/%02x/20%02x", rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.cal&0xff);
+          Serial.println((char*)tmp);
+          //
+        } else {
+          Serial.println("Not an ID card.");
+        }
+      }
+    } else if (millis() - lastread > 5000 ) {
+      i2clcd.setCursor(0, 0);
+      i2clcd.print("                ");
+      i2clcd.backlightOff();
+    }      
+    
   }
   
 }
@@ -235,7 +236,6 @@ int main (void) {
 
 
 void readIDInfo(ISO14443 & card, IDData & data) {
-  byte resp[128];
   uint16_t n;
 	switch (card.type) {
     case NFC::CARDTYPE_MIFARE:
@@ -278,6 +278,10 @@ uint8 get_FCFBlock(ISO14443 & card, IDData & data) {
   // FCF 1a8b
   word servcode = 0x1a8b;
   word scver = nfcreader.felica_RequestService(servcode);
+#ifdef DEBUG
+  Serial.print("scver = ");
+  Serial.println(scver, HEX);
+#endif
   if ( scver == 0xffff ) 
     return 0;
   //

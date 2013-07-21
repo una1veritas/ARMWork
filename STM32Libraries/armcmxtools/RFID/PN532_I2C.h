@@ -102,7 +102,7 @@ class PN532 {
 	byte receive();
 	byte receivepacket(int n);
 	byte receivepacket();
-	boolean checkACKframe(long timeout = 667);
+	boolean checkACKframe(long timeout = 1000);
 	boolean IRQ_wait(long timeout = 1000);
 
 	void send_ack();
@@ -140,16 +140,7 @@ public:
 	static const byte FELICA_CMD_READWITHOUTENCRYPTION = 0x06;
 	static const byte FELICA_CMD_WRITEWITHOUTENCRYPTION = 0x08;
 	static const byte FELICA_CMD_REQUESTSYSTEMCODE = 0x0c;
-
-/*
-	static void printHexString(const byte * a, byte len) {
-		for (int i = 0; i < len; i++) {
-			Serial.print(a[i] >> 4 & 0x0f, HEX);
-			Serial.print(a[i] & 0x0f, HEX);
-			Serial.print(" ");
-		}
-	}
-*/
+  
 
 public:
 
@@ -200,22 +191,6 @@ public:
 		return WriteRegister(0x02fc, (mode == 0 ? 0x00 : 0x02) ); // p. 12/200, User Manual Rev. 02
 	}
 
-/*
-	static const byte BaudrateType_106kbitTypeA = 0x00;
-	static const byte BaudrateType_212kbitFeliCa = 0x01;
-	static const byte BaudrateType_424kbitFeliCa = 0x02;
-	static const byte BaudrateType_106kbitTypeB = 0x03;
-
-	static const byte Type_GenericPassiveTypeA = 0x00;
-	static const byte Type_GenericPassive212kbFeliCa = 0x01;
-	static const byte Type_GenericPassive424kbFeliCa = 0x02;
-	static const byte Type_PassiveTypeB = 0x03;
-	
-	static const byte Type_Mifare = 0x10;
-	static const byte Type_FeliCa212kb = 0x11;
-	static const byte Type_FeliCa424kb = 0x12;
-	static const byte Type_Empty = 0xff;
-*/
 	byte InListPassiveTarget(const byte maxtg, const byte BaudModType, byte * data, const byte initlen);
 	byte InAutoPoll(const byte numop, const byte per, const byte * types,
 			const byte length);

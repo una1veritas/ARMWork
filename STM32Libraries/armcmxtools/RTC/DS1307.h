@@ -6,20 +6,22 @@
 #ifndef DS1307_h
 #define DS1307_h
 
-//#include <avr/pgmspace.h>
 //#include <stdio.h>
 #include <stdlib.h>
 //#include <string.h>
-/*
+
+#if defined (ARMCMX)
+#include "armcmx.h"
+#include "I2CBus.h"
+#elif defined (ARDUINO)
+//#include <avr/pgmspace.h>
 #if ARDUINO >= 100
 #include <Arduino.h>
 #else
 #include <WProgram.h>
 #endif
 #include <Wire.h>
-*/
-#include "armcmx.h"
-#include "I2CBus.h"
+#endif
 
 // library interface description
 class DS1307 {
@@ -93,8 +95,11 @@ public:
 	}
 //		static int base_year() { return DS1307_BASE_YR; }
 
+  // returns true if the value is changed from time/cal.
 	boolean updateTime();
-	void updateCalendar();
+	boolean updateCalendar();
+  inline boolean update() { return updateTime() && updateCalendar(); }
+  
 	uint8 getSeconds();
 //		byte* getTimestamp(byte* );
 	void setTime(const long &);

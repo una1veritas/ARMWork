@@ -202,10 +202,10 @@ byte PN532::receivepacket() {
 		packet[i] = receive();
 	}
 #ifdef PN532DEBUG
-	Serial.print("recieve packet Len = ");
+	Serial.print("receivepacket Len = ");
 	Serial.print(n, DEC);
 	Serial.print(", ");
-	Serial.printByte(packet, n + 7);
+	Serial.printBytes(packet, n + 7);
 	Serial.println();
 	Serial.print("xsum: ");
 	Serial.print(chksum, HEX);
@@ -341,7 +341,7 @@ byte PN532::InListPassiveTarget(const byte maxtg, const byte brty, byte * data,
 	}
 #ifdef PN532DEBUG
 	Serial.print("InListPassiveTarget << ");
-	Serial.printByte(packet, length + 3);
+	Serial.printBytes(packet, length + 3);
 	Serial.println();
 #endif
 	sendpacket(3 + length);
@@ -367,9 +367,9 @@ byte PN532::InAutoPoll(const byte numop, const byte period, const byte * types,
 	// the first type N = 1 mandatory
 	memcpy(packet + 3, types, N);
 #ifdef PN532DEBUG
-	Serial.print("InAutoPoll sending ");
-	Serial.printByte(packet, typeslen + 3);
-	Serial.println();
+	Serial.print("<< InAutoPoll ");
+	Serial.printBytes(packet, typeslen + 3);
+	Serial.println(",\n");
 #endif
 	last_command = COMMAND_InAutoPoll;
 	sendpacket(3 + N);
@@ -378,7 +378,7 @@ byte PN532::InAutoPoll(const byte numop, const byte period, const byte * types,
 		return 0;
 	comm_status = ACK_FRAME_RECEIVED;
 #ifdef PN532DEBUG
-	Serial.println("InAutoPoll ACKed.");
+	Serial.println("ACKed.\n");
 #endif
 	return 1;
 }
@@ -395,9 +395,9 @@ byte PN532::getCommandResponse(byte * resp, const long & wmillis) {
 	comm_status = REQUEST_RECEIVE;
 	byte count = receivepacket();
 #ifdef PN532COMM
-	Serial.print("com resp. >> ");
-	printHexString(packet, count);
-	Serial.println();
+	Serial.print("CommandResp. >> ");
+	Serial.printBytes(packet, count);
+	Serial.println('\n');
 #endif
 //#undef PN532DEBUG
 	if (!(packet[0] == 0xd5 && packet[1] == (last_command + 1))) {
@@ -653,16 +653,14 @@ boolean PN532::InCommunicateThru(const byte * data, const byte len) {
 	packet[0] = COMMAND_InCommunicateThru;
 	packet[1] = len + 1;
 	memcpy(packet + 2, data, len);
-
 #ifdef FELICADEBUG
-	Serial.print("Thru: ");
+	Serial.print("<< InComm.Thru: ");
 	Serial.print("count = ");
 	Serial.print(len + 1, DEC);
-	Serial.print("  ");
-	printHexString(packet, len + 2);
-	Serial.println();
+	Serial.print(", ");
+	Serial.printBytes(packet, len + 2);
+	Serial.println("\n");
 #endif
-
 	/* Send the command */
 	sendpacket(len + 2);
 	comm_status = COMMAND_ISSUED;
@@ -677,6 +675,9 @@ boolean PN532::InCommunicateThru(const byte * data, const byte len) {
 
 byte PN532::felica_Polling(byte * resp, const word syscode) {
 	// Polling command, with system code request.
+#ifdef FELICADEBUG
+  Serial.println("felica_Polling");
+#endif
 	resp[0] = FELICA_CMD_POLLING;
 	resp[1] = syscode & 0xff;
 	resp[2] = syscode >> 8 & 0xff;
@@ -684,8 +685,10 @@ byte PN532::felica_Polling(byte * resp, const word syscode) {
 	resp[4] = 0; // time slot #
 	byte result = InCommunicateThru(resp, 5);
 	result = getCommunicateThruResponse(resp);
+#ifdef FELICADEBUG
 	Serial.printBytes(resp, result);
   Serial.println();
+#endif
 	if (resp[0] == FELICA_CMD_POLLING + 1) {
 		target.IDLength = 8;
 		memcpy(target.IDm, resp + 1, target.IDLength);
@@ -705,12 +708,12 @@ byte PN532::getCommunicateThruResponse(byte * data) {
 		return 0;
 	}
 #ifdef FELICADEBUG
-	Serial.print("Response: ");
+	Serial.print("Comm.ThruResp: ");
 	Serial.print("count = ");
 	Serial.print(count, DEC);
-	Serial.print("   ");
-	printHexString(packet, count);
-	Serial.println();
+	Serial.print(", ");
+	Serial.printBytes(packet, count);
+	Serial.println('\n');
 #endif
 	if (packet[0] != 0) {
 		return 0;
@@ -722,6 +725,9 @@ byte PN532::getCommunicateThruResponse(byte * data) {
 
 byte PN532::felica_RequestService(byte * resp, const word servcodes[],
 		const byte servnum) {
+#ifdef FELICADEBUG
+  Serial.println("felica_RequestService");
+#endif
 	resp[0] = FELICA_CMD_REQUESTSERVICE;
 	memcpy(resp + 1, target.IDm, 8);
 	resp[9] = servnum;
@@ -741,7 +747,7 @@ byte PN532::felica_RequestService(byte * resp, const word servcodes[],
 
 word PN532::felica_RequestService(const word servcode) {
 	byte tmp[14];
-	if (!felica_RequestService(tmp, (word*) &servcode, 1)) {
+  if (!felica_RequestService(tmp, (word*) &servcode, 1)) {
 		return 0xffff;
 	}
 	word servcodever = tmp[11];
@@ -749,7 +755,10 @@ word PN532::felica_RequestService(const word servcode) {
 }
 
 byte PN532::felica_RequestSystemCode(byte * resp) {
-	resp[0] = FELICA_CMD_REQUESTSYSTEMCODE;
+#ifdef FELICADEBUG
+  Serial.println("felica_RequestSystemCode");
+  #endif
+  resp[0] = FELICA_CMD_REQUESTSYSTEMCODE;
 	memcpy(resp + 1, target.IDm, 8);
 	InCommunicateThru(resp, 9);
 	if (getCommunicateThruResponse(resp) == 0)
@@ -762,7 +771,10 @@ byte PN532::felica_RequestSystemCode(byte * resp) {
 // Block list accepts only two byte codes.
 byte PN532::felica_ReadWithoutEncryption(byte * resp, const word servcode,
 		const byte blknum, const word blklist[]) {
-	resp[0] = FELICA_CMD_READWITHOUTENCRYPTION;
+#ifdef FELICADEBUG
+  Serial.println("felica_ReadBlocksWithoutEncryption");
+#endif
+  resp[0] = FELICA_CMD_READWITHOUTENCRYPTION;
 	memcpy(resp + 1, target.IDm, 8);
 	resp[9] = 1;
 	resp[10] = servcode & 0xff;
@@ -789,7 +801,10 @@ byte PN532::felica_ReadWithoutEncryption(byte * resp, const word servcode,
 
 byte PN532::felica_ReadBlocksWithoutEncryption(byte * resp, const word servcode,
 		const byte blknum, const word blklist[]) {
-	byte mess[40];
+#ifdef FELICADEBUG
+  Serial.println("felica_ReadBlocksWithoutEncryption");
+#endif
+  byte mess[40];
 	for (int bno = 0; bno < blknum; bno++) {
 		mess[0] = FELICA_CMD_READWITHOUTENCRYPTION;
 		memcpy(mess + 1, target.IDm, 8);

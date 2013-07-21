@@ -85,9 +85,13 @@ boolean DS1307::updateTime() {
 	return false;
 }
 
-void DS1307::updateCalendar() {
+boolean DS1307::updateCalendar() {
+  uint32 tmp = cal;
 	readRegisters((byte) DS1307_DATE, (byte *) &cal, 3);
 	cal &= ((unsigned long)BITS_YR<<16 | (unsigned long)BITS_MTH<<8 | BITS_DATE);
+  if ( tmp != cal ) 
+    return true;
+  return false;
 }
 
 uint8 DS1307::getSeconds() {
