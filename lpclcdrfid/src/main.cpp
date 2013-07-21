@@ -52,13 +52,12 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 ST7032i i2clcd(Wire, LCDBKLT, LCDRST);
 DS1307 rtc(Wire, DS1307::CHIP_M41T62);
 PN532  nfcreader(Wire, PN532::I2C_ADDRESS, NFC_IRQ, PIO1_25);
-const byte NFCpollingOrder[] = {
-  2,
-  TypeA,
-  TypeF
+const byte NFCPolling[] = {
+  NFC::BAUDTYPE_212K_F,
+  NFC::BAUDTYPE_106K_A,
 };
 
-void readcard(ISO14443 & card, IDData & data);
+void readIDInfo(ISO14443 & card, IDData & data);
 uint8 get_MifareBlock(ISO14443 & card, IDData & data);
 uint8 get_FCFBlock(ISO14443 & card, IDData & data);
 
@@ -151,20 +150,22 @@ int main (void) {
   
   while (1){    /* Loop forever */
     
-		if ( nfcreader.InAutoPoll(1, 1, NFCpollingOrder+1, NFCpollingOrder[0]) 
+		if ( nfcreader.InAutoPoll(1, 1, NFCPolling, 2) 
         && nfcreader.getAutoPollResponse(tmp) ) {
 				// NbTg, type1, length1, [Tg, ...]
-          card.set(tmp[1], tmp+3);
+          card.setPassiveTarget(nfcreader.target.NFCType, tmp);
           i2clcd.backlightOn();
           if ( millis() - lastread > 10000 or (millis() - lastread > 1999 and lastcard != card) ) {
             lastread = millis();
             lastcard = card;
             Serial.print("InAutoPoll: ");
-            card.printOn(Serial);
+            Serial.print(card);
             Serial.println();
             //
-            readcard(card, iddata);
-            if (card.type == FeliCa212kb ) {
+            readIDInfo(card, iddata);
+            rtc.updateTime();
+            rtc.updateCalendar();
+            if (card.type == NFC::CARDTYPE_FELICA_212K ) {
               i2clcd.setCursor(0,0);
               if ( iddata.fcf.division[1] == 0 ) 
                 i2clcd.write(iddata.fcf.division, 1);
@@ -178,9 +179,14 @@ int main (void) {
               Serial.write(iddata.fcf.pid, 8);
               Serial.print('-');
               Serial.write((char)iddata.fcf.issue);
+              //
+              Serial.print(" ");
+              Serial.print(rtc.time, HEX);
+              Serial.print(" ");
+              Serial.print(rtc.cal, HEX);
               Serial.println();
               //
-            } else if (card.type == Mifare ) {
+            } else if (card.type == NFC::CARDTYPE_MIFARE ) {
               i2clcd.setCursor(0,0);
               i2clcd.write(iddata.iizuka.division, 2);
               i2clcd.print('-');
@@ -190,6 +196,12 @@ int main (void) {
               Serial.write(iddata.iizuka.pid, 8);
               Serial.print('-');
               Serial.print((char)iddata.iizuka.issue);
+              //
+              //
+              Serial.print(" ");
+              Serial.print(rtc.time, HEX);
+              Serial.print(" ");
+              Serial.print(rtc.cal, HEX);
               Serial.println();
               //
             } else {
@@ -222,25 +234,29 @@ int main (void) {
 
 
 
-void readcard(ISO14443 & card, IDData & data) {
+void readIDInfo(ISO14443 & card, IDData & data) {
   byte resp[128];
   uint16_t n;
 	switch (card.type) {
-    case Mifare:
-      if ( nfcreader.InListPassiveTarget(1, PN532::BaudrateType_106kbitTypeA, (byte *)0, 0)
-        and nfcreader.getListPassiveTarget(resp) ) {
-          Serial.print("result: ");
-          Serial.println(n);
-          Serial.printByte(resp, 64);
-          Serial.println();
-          card.setInList(resp);
-          if ( get_MifareBlock(card, data) == 0 ) 
-            card.clear();
-        }
-        break;
-    case FeliCa212kb:
-      if ( get_FCFBlock(card, data) == 0 )
+    case NFC::CARDTYPE_MIFARE:
+      for (n = 0; n < 3 and get_MifareBlock(card, data) == 0; n++ )
+        delay(20);
+      if ( n >= 3 ) {
+        Serial.println("Unknown Mifare, not an ID.");
         card.clear();
+      }
+      break;
+    case NFC::CARDTYPE_FELICA_212K:
+      for (n = 0; n < 3 and get_FCFBlock(card, data) == 0; n++ )
+        delay(20);
+      if ( n >= 3) {
+        Serial.println("Unknown FeliCa, not an FCF.");
+        card.clear();
+      }
+      break;
+    default:
+      Serial.println("Not supported as ID card.");
+      card.clear();
       break;
 	}
 	return;
@@ -266,7 +282,6 @@ uint8 get_FCFBlock(ISO14443 & card, IDData & data) {
     return 0;
   //
   //printf("%04x ver %04x.\n", servcode, scver);
-  //
   word blist[] = { 0, 1, 2, 3};
   c = nfcreader.felica_ReadBlocksWithoutEncryption(data.raw, servcode, (byte) 4, blist);
   if ( c == 0 ) {
@@ -286,13 +301,9 @@ uint8 get_MifareBlock(ISO14443 & card, IDData & data) {
     nfcreader.mifare_ReadDataBlock(4, data.raw);
     nfcreader.mifare_ReadDataBlock(5, data.raw+16);
     nfcreader.mifare_ReadDataBlock(6, data.raw+32);
-    card.type = Mifare;
+       return 1;
   } 
-  else {
-    Serial.println("Mifare sector 1 Authentication failed.");
-    return 0;
-  }
-  return 1;
+  return 0;
 }
 
 /******************************************************************************

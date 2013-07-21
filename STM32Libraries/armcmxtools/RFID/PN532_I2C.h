@@ -31,14 +31,10 @@ class PN532 {
 	static const byte I2C_READY = (0x01);
 	static const byte I2C_READYTIMEOUT = (20);
 */
-	static const byte PREAMBLE = (0x00);
-	static const byte STARTCODE_1 = (0x00);
-	static const byte STARTCODE_2 = (0xFF);
-	static const byte POSTAMBLE = (0x00);
-
-	static const byte HOSTTOPN532 = (0xD4);
 
 	// PN532 Commands
+	static const byte HOSTTOPN532 = (0xD4);
+
 	static const byte COMMAND_GetFirmwareVersion = (0x02);
 	static const byte COMMAND_GetGeneralStatus   = (0x04);
 	static const byte COMMAND_SAMConfiguration   = (0x14);
@@ -78,8 +74,11 @@ class PN532 {
 #define PN532_COMMAND_TGGETTARGETSTATUS     (0x8A)
 
 	static const byte PACKBUFFSIZE = 80;
-//
-	byte i2c_addr;
+  //
+#ifdef ARMCMX
+  I2CBus & wire;
+#endif
+  byte i2c_addr;
 	byte pin_irq; // P70_IRQ
 	byte pin_rst;
 	//
@@ -103,8 +102,8 @@ class PN532 {
 	byte receive();
 	byte receivepacket(int n);
 	byte receivepacket();
-	boolean checkACKframe(long timeout = 250);
-	boolean IRQ_wait(long timeout = 250);
+	boolean checkACKframe(long timeout = 667);
+	boolean IRQ_wait(long timeout = 1000);
 
 	void send_ack();
 	void send_nack();
@@ -142,6 +141,7 @@ public:
 	static const byte FELICA_CMD_WRITEWITHOUTENCRYPTION = 0x08;
 	static const byte FELICA_CMD_REQUESTSYSTEMCODE = 0x0c;
 
+/*
 	static void printHexString(const byte * a, byte len) {
 		for (int i = 0; i < len; i++) {
 			Serial.print(a[i] >> 4 & 0x0f, HEX);
@@ -149,11 +149,15 @@ public:
 			Serial.print(" ");
 		}
 	}
+*/
 
 public:
 
+#if defined(ARDUINO)
 	PN532(byte addr = I2C_ADDRESS, byte irq = 0xff, byte rst = 0xff);
-
+#elif defined (ARMCMX)
+	PN532(I2CBus &wire, byte addr = I2C_ADDRESS, byte irq = 0xff, byte rst = 0xff);
+#endif
 	void init();
 	inline void begin() {
 		init();
@@ -176,9 +180,9 @@ public:
 		WRONG_PREAMBLE,
 		WRONG_POSTAMBLE
 	};
-	const byte status() { return comm_status; }
+	byte status() { return comm_status; }
 	byte status(const byte b) { return (comm_status = b); }
-	const byte command() { return last_command; }
+	byte command() { return last_command; }
 	boolean IRQ_ready(void);
 
 	boolean GetFirmwareVersion();
@@ -206,22 +210,22 @@ public:
 	static const byte Type_GenericPassive212kbFeliCa = 0x01;
 	static const byte Type_GenericPassive424kbFeliCa = 0x02;
 	static const byte Type_PassiveTypeB = 0x03;
-	*/
+	
 	static const byte Type_Mifare = 0x10;
 	static const byte Type_FeliCa212kb = 0x11;
 	static const byte Type_FeliCa424kb = 0x12;
 	static const byte Type_Empty = 0xff;
-
+*/
 	byte InListPassiveTarget(const byte maxtg, const byte BaudModType, byte * data, const byte initlen);
-	byte InAutoPoll(const byte pollnr, const byte per, const byte * types,
-			const byte typeslen);
+	byte InAutoPoll(const byte numop, const byte per, const byte * types,
+			const byte length);
 
 	byte InDataExchange(const byte Tg, const byte * data, const byte length);
 //	byte InDataExchange(const byte Tg, const byte fcmd, const byte * data, const byte len);
 	byte InDataExchange(const byte Tg, const byte micmd, const byte blkaddr,
 			const byte * data, const byte datalen);
 
-	byte getCommandResponse(byte * resp, const long & wait = 250);
+	byte getCommandResponse(byte * resp, const long & wait = 1000);
 	byte getAutoPollResponse(byte * respo);
 	byte getListPassiveTarget(byte * data);
 

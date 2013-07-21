@@ -122,14 +122,13 @@ size_t Print::println(const __FlashStringHelper *ifsh)
   n += println();
   return n;
 }
-
+*/
 size_t Print::print(const Printable& x)
 {
   return x.printTo(*this);
 }
-*/
 
-size_t Print::printByte(uint8_t * p, uint8_t length, char sep) {
+size_t Print::printBytes(uint8_t * p, uint8_t length, char sep) {
 	size_t i, n = 0;
 	for(i = 0; i < length; i++) {
 		n += printByte(p[i]);

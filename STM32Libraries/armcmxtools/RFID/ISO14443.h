@@ -12,21 +12,21 @@
 #include <Printable.h>
 
 namespace NFC {
-static const byte BaudrateType_106kbitTypeA = 0x00;
-static const byte BaudrateType_212kbitFeliCa = 0x01;
-static const byte BaudrateType_424kbitFeliCa = 0x02;
-static const byte BaudrateType_106kbitTypeB = 0x03;
-static const byte BaudrateType_Jewel = 0x04;
+static const byte BAUDTYPE_106K_A = 0x00;
+static const byte BAUDTYPE_212K_F = 0x01;
+static const byte BAUDTYPE_424K_F = 0x02;
+static const byte BAUDTYPE_106K_B = 0x03;
+static const byte BAUDTYPE_JEWEL = 0x04;
 
-static const byte Type_GenericPassiveTypeA = 0x00;
-static const byte Type_GenericPassive212kbFeliCa = 0x01;
-static const byte Type_GenericPassive424kbFeliCa = 0x02;
-static const byte Type_PassiveTypeB = 0x03;
-static const byte Type_Mifare = 0x10;
-static const byte Type_FeliCa212kb = 0x11;
-static const byte Type_FeliCa424kb = 0x12;
-static const byte Type_DESFire = 0x20;
-static const byte Type_Empty = 0xff;
+static const byte CARDTYPE_GENERICPASSIVE_A = 0x00;
+static const byte CARDTYPE_GENERICPASSIVE_212K_F = 0x01;
+static const byte CARDTYPE_GENERICPASSIVE_424K_F = 0x02;
+static const byte CARDTYPE_GENERICPASSIVE_B = 0x03;
+static const byte CARDTYPE_MIFARE = 0x10;
+static const byte CARDTYPE_FELICA_212K = 0x11;
+static const byte CARDTYPE_FELICA_424K = 0x12;
+static const byte CARDTYPE_MIFARE_DESFIRE = 0x20;
+static const byte CARDTYPE_EMPTY = 0xff;
 
 
 static const word ATQA_MIFARE_CLASSIC1K = 0x0004; // SAK = 08
@@ -73,7 +73,7 @@ struct ISO14443 : public Printable {
 		type = card.type;
 		IDLength = card.IDLength;
 		switch (type) {
-		case NFC::Type_FeliCa212kb: // Felica
+		case NFC::CARDTYPE_FELICA_212K: // Felica
 			memcpy(IDm, card.IDm, IDLength);
 			break;
 		default: // Mifare
@@ -100,18 +100,18 @@ struct ISO14443 : public Printable {
 	void set(const byte tp, const byte * raw) {
 		//PN532::printHexString(raw, 16);
 		type = tp;
-		byte len;
+//		byte len;
 		switch (type) {
-		case NFC::Type_FeliCa212kb:
-		case NFC::Type_FeliCa424kb:
+		case NFC::CARDTYPE_FELICA_212K:
+		case NFC::CARDTYPE_FELICA_424K:
 			IDLength = 8;
-			len = raw[1];
+//			len = raw[1];
 			memcpy(IDm, raw + 3, 8);
 //			memcpy(PMm, raw + 11, 8);
 //			if (len == 20)
 //				memcpy(SysCode, raw + 19, 2);
 			break;
-		case NFC::Type_Mifare:
+		case NFC::CARDTYPE_MIFARE:
 		default: // Mifare 106k TypeA
 			IDLength = raw[4];
 			memcpy(UID, raw + 5, IDLength);
@@ -121,46 +121,53 @@ struct ISO14443 : public Printable {
 		sak = 0;
 	}
 
-	void setPassiveTarget(const byte * raw) {
+	void setPassiveTarget(const byte tp, const byte * raw) {
 		// raw[0] ... number
-		type = NFC::Type_GenericPassiveTypeA;
-		atqa = raw[1]<<8 | raw[2];
-		sak = raw[3];
-		IDLength = raw[4];
-		memcpy(ID, raw+5, IDLength);
-		switch (atqa) {
-		case NFC::ATQA_MIFARE_CLASSIC1K:
-		case NFC::ATQA_MIFARE_CLASSIC4K:
-		case NFC::ATQA_MIFARE_ULTRALIGHT:
-		case NFC::ATQA_MIFARE_DESFIRE:
-			type = NFC::Type_Mifare;
-			break;
-		}
+		type = tp;
+    if ( type == NFC::CARDTYPE_MIFARE ) {
+      atqa = raw[1]<<8 | raw[2];
+      sak = raw[3];
+      IDLength = raw[4];
+      memcpy(ID, raw+5, IDLength);
+      switch (atqa) {
+      case NFC::ATQA_MIFARE_CLASSIC1K:
+      case NFC::ATQA_MIFARE_CLASSIC4K:
+      case NFC::ATQA_MIFARE_ULTRALIGHT:
+      case NFC::ATQA_MIFARE_DESFIRE:
+        type = NFC::CARDTYPE_MIFARE;
+        break;
+      }
+    } else if ( type == NFC::CARDTYPE_FELICA_212K ) {
+      atqa = 0;
+      sak = 0;
+      IDLength = 8;
+      memcpy(ID, raw+3, IDLength);
+    }
 	}
 
 	virtual size_t printTo(Print & pr) const {
 		int cnt = 0;
 		switch(type) {
-		case NFC::Type_Mifare:
+		case NFC::CARDTYPE_MIFARE:
+		case NFC::CARDTYPE_MIFARE_DESFIRE:
 			cnt += pr.print("Mifare");
-			if ( atqa == NFC::ATQA_MIFARE_ULTRALIGHT )
+      if ( type == NFC::CARDTYPE_MIFARE_DESFIRE ) 
+        cnt += pr.print(" DESFire");
+      else if ( atqa == NFC::ATQA_MIFARE_ULTRALIGHT )
 				cnt += pr.print(" Ultralight");
 			else if ( atqa == NFC::ATQA_MIFARE_CLASSIC1K )
 				cnt += pr.print(" Classic 1k");
 			else if ( atqa == NFC::ATQA_MIFARE_CLASSIC4K )
 				cnt += pr.print(" Classic 4k");
 			break;
-		case NFC::Type_FeliCa212kb:
-			cnt += pr.print("FeliCa212kb");
+		case NFC::CARDTYPE_FELICA_212K:
+			cnt += pr.print("FeliCa 212kb");
 			break;
-		case NFC::Type_FeliCa424kb:
-			cnt += pr.print("FeliCa424kb");
+		case NFC::CARDTYPE_FELICA_424K:
+			cnt += pr.print("FeliCa 424kb");
 			break;
-		case NFC::Type_DESFire:
-			cnt += pr.print("Mifare DESFire");
-			break;
-		case NFC::Type_Empty:
-			cnt += pr.print("Empty");
+		case NFC::CARDTYPE_EMPTY:
+			cnt += pr.print("Type Empty");
 			break;
 		default:
 			cnt += pr.print("Unknown (");
@@ -178,23 +185,51 @@ struct ISO14443 : public Printable {
 	}
 
 	void clear() {
-		type = NFC::Type_Empty;
+		type = NFC::CARDTYPE_EMPTY;
 		IDLength = 0;
 		memset(ID, 0, 8);
 		atqa = 0;
 		sak = 0;
 	}
 
-	const boolean operator==(const ISO14443 & c) const {
+	boolean operator==(const ISO14443 & c) const {
 		if (type == c.type && IDLength == c.IDLength) {
 			return memcmp(ID, c.ID, IDLength) == 0;
 		}
 		return false;
 	}
 
-	inline const boolean operator!=(const ISO14443 & c) const {
+	inline boolean operator!=(const ISO14443 & c) const {
 		return !(operator==(c));
 	}
+};
+
+
+
+union IDData {
+  struct {
+    uint8 division[2];
+    uint8 pid[12];
+    uint8 issue;
+    uint8 gender;
+    uint8 namekana[16];
+    uint8 orgid[8];
+    uint8 dofissue[8];
+    uint8 goodthru[8];
+    uint8 issuerdata[8];
+  } fcf;
+  struct {
+    uint8 division[2];
+    uint8 pid[8];
+    uint8 issue;
+    uint8 reserved1[5];
+    uint8 namesjis[16];
+    uint8 dofbirth[7];
+    uint8 gender;
+    uint8 dofissue[7];
+    uint8 reserved2;
+  } iizuka;
+  uint8 raw[64];
 };
 
 #endif /* NFCCARD_H_ */

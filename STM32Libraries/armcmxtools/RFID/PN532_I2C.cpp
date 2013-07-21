@@ -5,16 +5,30 @@
  *      Author: sin
  */
 
-//#include <Wire.h>
+#if defined (ARDUINO)
+#include <Wire.h>
+#elif defined (ARMCMX)
 #include "PN532_I2C.h"
+#include "USARTSerial.h"
+#endif
+
+#define PREAMBLE      (0x00)
+#define STARTCODE_1   (0x00)
+#define STARTCODE_2   (0xFF)
+#define POSTAMBLE     (0x00)
 
 //#define PN532DEBUG
 //#define MIFAREDEBUG
 //#define PN532COMM
 //#define FELICADEBUG
 
+#if defined(ARDUINO)
 PN532::PN532(byte addr, byte irq, byte rst) :
 		i2c_addr(addr), pin_irq(irq), pin_rst(rst) {
+#elif defined (ARMCMX)
+PN532::PN532(I2CBus & wire, byte addr, byte irq, byte rst) :
+		wire(wire), i2c_addr(addr), pin_irq(irq), pin_rst(rst) {
+#endif
 	if (pin_irq != 0xff) {
 		pinMode(pin_irq, INPUT);
 		digitalWrite(pin_irq, HIGH); // pull-up
@@ -155,7 +169,7 @@ void PN532::sendpacket(byte len) {
 		send(*p++);
 	}
 	wirewrite(~chksum);
-	wirewrite(POSTAMBLE);
+	wirewrite(POSTAMBLE); //POSTAMBLE);
 	Wire.endTransmission();
 }
 
@@ -191,7 +205,7 @@ byte PN532::receivepacket() {
 	Serial.print("recieve packet Len = ");
 	Serial.print(n, DEC);
 	Serial.print(", ");
-	printHexString(packet, n + 7);
+	Serial.printByte(packet, n + 7);
 	Serial.println();
 	Serial.print("xsum: ");
 	Serial.print(chksum, HEX);
@@ -327,7 +341,7 @@ byte PN532::InListPassiveTarget(const byte maxtg, const byte brty, byte * data,
 	}
 #ifdef PN532DEBUG
 	Serial.print("InListPassiveTarget << ");
-	printHexString(packet, length + 3);
+	Serial.printByte(packet, length + 3);
 	Serial.println();
 #endif
 	sendpacket(3 + length);
@@ -344,17 +358,17 @@ byte PN532::InListPassiveTarget(const byte maxtg, const byte brty, byte * data,
 	return 1;
 }
 
-byte PN532::InAutoPoll(const byte pollnr, const byte period, const byte * types,
+byte PN532::InAutoPoll(const byte numop, const byte period, const byte * types,
 		const byte typeslen) {
 	byte N = min(max(1, typeslen), 15);
 	packet[0] = COMMAND_InAutoPoll;
-	packet[1] = pollnr; // no. of polls
+	packet[1] = numop; // no. of polls
 	packet[2] = period; // no. of 150 ms period
 	// the first type N = 1 mandatory
 	memcpy(packet + 3, types, N);
 #ifdef PN532DEBUG
-	Serial.println("InAutoPoll sending");
-	printHexString(packet, typeslen + 3);
+	Serial.print("InAutoPoll sending ");
+	Serial.printByte(packet, typeslen + 3);
 	Serial.println();
 #endif
 	last_command = COMMAND_InAutoPoll;
@@ -410,11 +424,11 @@ byte PN532::getAutoPollResponse(byte * respo) {
 	if ( packet[0] > 0 ) { // count
 		memcpy(respo, packet+3, packet[2]); // length
 		switch (packet[1]) { // type
-		case Type_FeliCa212kb:
-			targetSet(Type_FeliCa212kb, respo+3, 8);
+		case NFC::CARDTYPE_FELICA_212K:
+			targetSet(NFC::CARDTYPE_FELICA_212K, respo+3, 8);
 			break;
-		case Type_Mifare:
-			targetSet(Type_Mifare, respo+5, respo[4]);
+		case NFC::CARDTYPE_MIFARE:
+			targetSet(NFC::CARDTYPE_MIFARE, respo+5, respo[4]);
 			break;
 		}
 	} else {
@@ -525,13 +539,13 @@ void PN532::targetSet(const byte cardtype, const byte * uid, const byte uidLen) 
 }
 
 void PN532::targetClear() {
-	target.NFCType = Type_Empty;
+	target.NFCType = NFC::CARDTYPE_EMPTY;
 	target.IDLength = 0;
 	target.UID[0] = 0;
 }
 
 byte PN532::mifare_AuthenticateBlock(word blkn, const byte * keyData) {
-	uint8_t len;
+//	uint8_t len;
 	byte tmp[16];
 
 #ifdef MIFAREDEBUG
@@ -544,7 +558,7 @@ byte PN532::mifare_AuthenticateBlock(word blkn, const byte * keyData) {
 	memcpy(tmp + 6, target.UID, max(4, target.IDLength));
 
 	byte authcmd;
-	byte rescount;
+//	byte rescount;
 	switch (keyData[0]) {
 	case 0:
 	case 0xaa:
@@ -580,8 +594,8 @@ byte PN532::mifare_ReadDataBlock(uint8_t blockNumber, uint8_t * data) {
 		Serial.println("Failed to receive ACK for read command");
 #endif
 	}
-	byte c;
-	if (!(c = getCommandResponse(packet))) {
+	byte c = getCommandResponse(packet);
+	if (! c) {
 #ifdef MIFAREDEBUG
 		Serial.println("Unexpected response");
 		printHexString(packet, 26);
@@ -670,14 +684,15 @@ byte PN532::felica_Polling(byte * resp, const word syscode) {
 	resp[4] = 0; // time slot #
 	byte result = InCommunicateThru(resp, 5);
 	result = getCommunicateThruResponse(resp);
-	// printHexString(resp, result);
+	Serial.printBytes(resp, result);
+  Serial.println();
 	if (resp[0] == FELICA_CMD_POLLING + 1) {
 		target.IDLength = 8;
 		memcpy(target.IDm, resp + 1, target.IDLength);
-		target.NFCType = Type_FeliCa212kb;
+		target.NFCType = NFC::CARDTYPE_FELICA_212K;
 		return result;
 	}
-	target.NFCType = Type_Empty;
+	target.NFCType = NFC::CARDTYPE_EMPTY;
 	target.IDLength = 0;
 	return 0;
 }
@@ -685,8 +700,8 @@ byte PN532::felica_Polling(byte * resp, const word syscode) {
 byte PN532::getCommunicateThruResponse(byte * data) {
 //	InCommunicateThru(data, len);
 	/* Read the response packet */
-	int count;
-	if (!(count = getCommandResponse(packet))) {
+	int count = getCommandResponse(packet);
+	if (!count ) {
 		return 0;
 	}
 #ifdef FELICADEBUG

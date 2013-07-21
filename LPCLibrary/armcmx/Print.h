@@ -35,6 +35,7 @@ extern "C" {
 
 #if defined (ARMCMX)
 #include "armcmx.h"
+#include "Printable.h"
 #else
 #ifdef ARDUINO
 #include "WString.h"
@@ -78,8 +79,8 @@ public:
     size_t print(unsigned long, int = DEC);
 		//
     size_t print(float, const int = 2);
-//    size_t print(const Printable&);
-		size_t printByte(uint8_t * array, uint8_t length, char sep = ' ');
+    size_t print(const Printable&);
+		size_t printBytes(uint8_t * array, uint8_t length, char sep = ' ');
 		size_t printByte(uint8_t val);
 		size_t printByte(uint32_t val);
 
@@ -95,7 +96,7 @@ public:
     size_t println(unsigned long, int = DEC);
 		//
     size_t println(float, const int = 2);
-//    size_t println(const Printable&);
+    size_t println(const Printable&);
     size_t println(void);
 };
 
