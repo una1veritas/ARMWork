@@ -1,0 +1,26 @@
+************************************************************************
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!READ ME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Project:
+adc_buzzer
+
+Hardware Requirements:
+LPCXpresso Board LPC17xx
+Embedded Artist LPCXpresso Base Board (Trim-pot, Speaker)
+Jumper wire connecting Base Board "PIO1_2" to "PIO1_11"
+The PWM signal can be probed on the Base Board pin PIO1_11
+or, if use of the speaker is preferred, remove the shutdown
+jumper from J33. Jumper J33 is on the large jumper strip, very close
+to the speaker and RGB LED. It is labeled U10-SHUTDN / PIO3_2 J33
+
+Project Objective:
+Uses ADC input to adjust the frequency of PWM output. PWM duty
+cycle is modulated via look up table using the SystemTick timer.
+
+Project Details:
+If project is built with debugging enabled, it will produce output
+via semi-hosted print statements (if a debugger is detected).
+
+Build Options:
+None
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!READ ME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+************************************************************************

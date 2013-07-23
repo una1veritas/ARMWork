@@ -1,0 +1,35 @@
+************************************************************************
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!READ ME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Project:
+rgb
+
+Hardware Requirements:
+LPCXpresso Board LPC17xx
+Embedded Artist LPCXpresso Base Board (RGB LED)
+Wire Jumper connecting Base Board PIO1_2 to PIO1_11
+
+Project Objective:
+The project objective is to demonstrate the importance of
+managing program code size LPC17xx.
+This project is a lab project accompanied with the "Managing
+Code Size on LPCXpresso" presentation slides.
+
+RGB Project Details:
+This project will allow the user to cycle or select a
+RGB color to be displayed on the EA base board.
+
+Build Options
+
+Debug:
+If connected to the debugger, the project prompts user 
+for color input or whether to cycle through the RGB
+colors automatically.
+If not connected to the debugger, project will cycle
+though the RGB colors automatically.
+
+Release:
+Project will cycle through the RGB colors automatically.
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!READ ME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+************************************************************************
+

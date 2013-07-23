@@ -1,0 +1,19 @@
+************************************************************************
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!READ ME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Project:
+ssp_spi
+
+Hardware Requirements:
+LPCXpresso Board LPC17xx
+Embedded Artist LPCXpresso Base Board (7-Segment Display)
+
+Project Objective:
+A simple SSP demo for LPCXpresso 1700. Uses SSP1 to display
+numerals 0 through 9 on the 7-Segment display. Uses SPI
+frame format.
+
+Build Options:
+None
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!READ ME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+************************************************************************

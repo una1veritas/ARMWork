@@ -1,0 +1,47 @@
+************************************************************************
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!READ ME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Project:
+LPCXpresso DMA + DAC Signal Generator
+
+Abstract:	
+This project uses the LPC17xx's GPDMA and DAC to generate
+waveforms of various frequencies using a look up table.
+
+Detail:
+Refer to AN10917 "Memory to DAC data transfers using the LPC1700's DMA"
+for guidelines on where DMA buffer memory should be placed.
+
+This project makes use of four wavetables which are
+transferred to the LPC17xx's DAC via the GPDMA controller.
+When used on the LPCXpresso Baseboard the DAC output is
+connected to the speaker. By using a spreadsheet to generate
+waveforms offline, and convert them into code words for the
+DAC, it becomes quite easy to use the GPDMA's linked list
+based scatter-gather to produce a repetitive signal on the DAC.
+The GPDMA timing for memory : peripherals is determined by the
+peripheral.
+ 
+The user can cycle through one of the four waveforms by
+moving the joystick on the Baseboard left or right. The wave frequency
+can be adjusted by moving the joystick up or down. Pressing the
+joystick downward into the board will cause the waveform and
+frequency to be reset. This example uses the DAC's counter register
+to trigger the DMA to load the DAC at a constant frequency and changes
+the playback frequency by changing the DMA buffer to hold longer or
+shorter waves. Because the DAC is being used, single transaction
+bursts are used.
+ 
+A single linked list consisting of two nodes was used to double
+buffer output data. Both nodes point to each other, causing the
+GPDMA to transfer data to the DAC indefinitely.	When a new signal
+is selected, the GPDMA's linked list register is polled to determine
+when a transaction is complete, at that time the software will then
+update the contents of one of the buffers. This process is repeated
+again on the second buffer to ensure that the signal being produced
+is continuous. The DMA buffer update process is only done when the
+waveform or frequency is changed, leading to a low overall CPU core
+utilization.
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!READ ME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+************************************************************************
+ 

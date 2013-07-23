@@ -1,0 +1,21 @@
+************************************************************************
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!READ ME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Project:
+dac
+
+Hardware Requirements:
+	LPCXpresso Board LPC17xx
+	Embedded Artist LPCXpresso Base Board (Optional)
+
+Project Objective:
+	A simple demonstration of LPCXpresso 1700's DAC. Produces
+	saw-tooth pattern on AOUT pin.
+	
+Project Details:
+	The DAC is initialized, and then a linearly increasing value
+	is output on the DAC's analog output pin.
+	
+Build Options:
+	None
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!READ ME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+************************************************************************

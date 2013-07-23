@@ -1,0 +1,21 @@
+************************************************************************
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!READ ME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Project:
+adc_semihosting
+
+Hardware Requirements:
+LPCXpresso Board LPC17xx
+Embedded Artist LPCXpresso Base Board (Recommended, but optional)
+
+Project Objective:
+Read ADC value and display bar graph using semi-hosting.
+
+Project Details:
+As this project only has semi-hosted output, it is effectively
+useless in a "Release" context. Thus the only configuration for
+the project is "Debug"
+
+Build Options:
+None
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!READ ME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+************************************************************************
