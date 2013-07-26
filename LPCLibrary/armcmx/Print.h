@@ -36,11 +36,9 @@ extern "C" {
 #if defined (ARMCMX)
 #include "armcmx.h"
 #include "Printable.h"
-#else
-#ifdef ARDUINO
+#elif defined (ARDUINO)
 #include "WString.h"
 #include "Printable.h"
-#endif
 #endif
 
 #define DEC 10

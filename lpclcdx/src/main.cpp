@@ -34,7 +34,8 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 *******************************************************************************/
 
 // Strawberry Linux original lpclcd port maps
-#define LCDBKLT PIO1_3
+//#define LCDBKLT PIO1_3
+#define LCDBKLT PIO0_3
 #define LCDRST  PIO1_25
 #define USERLED PIO1_6
 #define USERBTN PIO0_1
@@ -83,7 +84,7 @@ int main (void) {
   
   // I2C LCD Backlight controll pin
   pinMode(LCDBKLT, OUTPUT);
-  digitalWrite(LCDBKLT, HIGH);
+  digitalWrite(LCDBKLT, LOW);
 
   pinMode(USERBTN, INPUT);
   
