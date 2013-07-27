@@ -77,6 +77,11 @@ return;
 }
 
 
+void start_delay(void) {
+  init_timer16_1();
+  enable_timer16_1();
+}
+
 void TIMER16_1_IRQHandler(void)
 {
   if ( LPC_CT16B1->IR & (0x1<<0) )

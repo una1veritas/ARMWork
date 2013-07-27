@@ -117,7 +117,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>1</UseSimulator>
+            <UseSimulator>0</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -128,7 +128,7 @@
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
           </Simulator>
           <Target>
-            <UseTarget>0</UseTarget>
+            <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -162,12 +162,12 @@
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>0</Capability>
-            <DriverSelection>-1</DriverSelection>
+            <Capability>1</Capability>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
-          <bUseTDR>0</bUseTDR>
+          <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>
@@ -349,9 +349,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define></Define>
+              <Define>ARMCMX</Define>
               <Undefine></Undefine>
-              <IncludePath>..\LPCLibrary\CMSISv2p00_LPC11Uxx\inc;..\LPCLibrary\armcmx\lpc11uxx;..\LPCLibrary\armcmx;..\STM32Libraries\armcmxtools\LCD</IncludePath>
+              <IncludePath>..\LPCLibrary\CMSISv2p00_LPC11Uxx\inc;..\LPCLibrary\armcmx\lpc11uxx;..\LPCLibrary\armcmx;..\STM32Libraries\armcmxtools\SerialRAM</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -403,9 +403,9 @@
           <GroupName>main</GroupName>
           <Files>
             <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\main.c</FilePath>
+              <FileName>main.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\main.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -458,9 +458,24 @@
               <FilePath>..\LPCLibrary\armcmx\lpc11uxx\usart.c</FilePath>
             </File>
             <File>
-              <FileName>I2CBus.cpp</FileName>
+              <FileName>ssp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\ssp.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>SPIBus.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\LPCLibrary\armcmx\I2CBus.cpp</FilePath>
+              <FilePath>..\LPCLibrary\armcmx\SPIBus.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>SPIBus.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\LPCLibrary\armcmx\SPIBus.h</FilePath>
             </File>
             <File>
               <FileName>Print.cpp</FileName>
@@ -478,59 +493,14 @@
               <FilePath>..\LPCLibrary\armcmx\USARTSerial.cpp</FilePath>
             </File>
             <File>
-              <FileName>SPIBus.cpp</FileName>
+              <FileName>SPISRAM.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\LPCLibrary\armcmx\SPIBus.cpp</FilePath>
+              <FilePath>..\STM32Libraries\armcmxtools\SerialRAM\SPISRAM.cpp</FilePath>
             </File>
             <File>
-              <FileName>SPIBus.h</FileName>
+              <FileName>SPISRAM.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\LPCLibrary\armcmx\SPIBus.h</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>type.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\type.h</FilePath>
-            </File>
-            <File>
-              <FileName>usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\usart.h</FilePath>
-            </File>
-            <File>
-              <FileName>spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\spi.h</FilePath>
-            </File>
-            <File>
-              <FileName>ssp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\ssp.c</FilePath>
-            </File>
-            <File>
-              <FileName>ssp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\ssp.h</FilePath>
-            </File>
-            <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\LPCLibrary\armcmx\lpc11uxx\spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>armcmx.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\LPCLibrary\armcmx\armcmx.h</FilePath>
+              <FilePath>..\STM32Libraries\armcmxtools\SerialRAM\SPISRAM.h</FilePath>
             </File>
           </Files>
         </Group>

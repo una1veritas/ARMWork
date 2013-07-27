@@ -28,6 +28,7 @@ uint32_t millis(void);
 	
 void init_timer16_1(void);
 void enable_timer16_1(void);
+void start_delay(void);
 void disable_timer16_1(void);
 void reset_timer16_1(void);
 void TIMER16_1_IRQHandler(void);

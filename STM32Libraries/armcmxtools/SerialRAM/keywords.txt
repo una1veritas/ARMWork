@@ -1,0 +1,27 @@
+#######################################
+# Syntax Coloring Map For SerialRAM
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+SerialFRAM	KEYWORD1
+SerialSRAM  KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+read	KEYWORD2
+write	KEYWORD2
+csLow	KEYWORD2
+csHigh	KEYWORD2
+select	KEYWORD2
+deselect	KEYWORD2
+setSPIMode	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+

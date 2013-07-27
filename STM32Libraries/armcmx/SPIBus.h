@@ -15,13 +15,15 @@
 #include <stdint.h>
 //#include <Arduino.h>
 //#include <avr/pgmspace.h>
-#include "cmcore.h"
+#if defined (ARMCMX)
+#include "armcmx.h"
+#endif
 
 #include "spi.h"
 
 
 class SPIBus {
-	spi spiport;
+	SPIDef & spiport;
 	GPIOPin sck, miso, mosi, nss;
 	
 public:

@@ -58,12 +58,12 @@ void SSP0_IRQHandler(void)
   regValue = LPC_SSP0->MIS;
   if ( regValue & SSPMIS_RORMIS )	/* Receive overrun interrupt */
   {
-    SPI0.interruptOverRunStat++;
+//    SPI0.interruptOverRunStat++;
 	LPC_SSP0->ICR = SSPICR_RORIC;	/* clear interrupt */
   }
   if ( regValue & SSPMIS_RTMIS )	/* Receive timeout interrupt */
   {
-    SPI0.interruptRxTimeoutStat++;
+//    SPI0.interruptRxTimeoutStat++;
 	LPC_SSP0->ICR = SSPICR_RTIC;	/* clear interrupt */
   }
 
@@ -73,7 +73,7 @@ void SSP0_IRQHandler(void)
   in both main and ISR could prevent this kind of race condition */
   if ( regValue & SSPMIS_RXMIS )	/* Rx at least half full */
   {
-    SPI0.interruptRxStat++;		/* receive until it's empty */		
+//    SPI0.interruptRxStat++;		/* receive until it's empty */		
   }
   return;
 }

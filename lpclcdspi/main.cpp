@@ -26,65 +26,45 @@
 
 ****************************************************************************/
 
-#include "LPC11Uxx.h"                        /* LPC11xx definitions */
-#include "gpio.h"
-#include "ssp.h"
-#if SSP_DEBUG
-#include "usart.h"
-#endif
+#include <stdio.h>
+#include <string.h>
+
+#include "LPC11Uxx.h"
+#include "type.h"
+
+#include "armcmx.h"
+#include "SPIBus.h"
+#include "SPISRAM.h"
+
+
 
 //#define SSP_NUM			0
+#define SSP_CS1       PIO1_23
+#define LED_SD_BUSY   PIO1_19
 
-uint8_t src_addr[SSP_BUFSIZE]; 
-uint8_t dest_addr[SSP_BUFSIZE];
-
-/*****************************************************************************
-** Function name:		LoopbackTest
-**
-** Descriptions:		Loopback test
-**				
-** parameters:			port #
-** Returned value:		None
-** 
-*****************************************************************************/
-void SSP_LoopbackTest(SPIDef * port)
-{
-  uint32_t i;
-
-	/* Set SSEL pin to output low. */
-	digitalWrite( port->SSel, LOW );
-	i = 0;
-	while ( i <= SSP_BUFSIZE )
-	{
-	  /* to check the RXIM and TXIM interrupt, I send a block data at one time 
-	  based on the FIFOSIZE(8). */
-	  SSP_Send( port, (uint8_t *)&src_addr[i], FIFOSIZE );
-	  /* If RX interrupt is enabled, below receive routine can be
-	  also handled inside the ISR. */
-	  SSP_Receive( port, (uint8_t *)&dest_addr[i], FIFOSIZE );
-	  i += FIFOSIZE;
-	}
-	/* Set SSEL pin to output high. */
-	digitalWrite(port->SSel, HIGH );
-  return;
-}
-
+SPIBus SPI1(&SPI1Def, SSP_CS1, SSP_CS1, SSP_CS1, SSP_CS1);
+SPISRAM sram(SPI1, SSP_CS1, SPISRAM::BUS_MBits);
 
 /******************************************************************************
 **   Main Function  main()
 ******************************************************************************/
 int main (void) {
-  
+  int i;
+   
   SystemCoreClockUpdate();
+  start_delay();
 
   USART_init(&usart, PIO0_18, PIO0_19);
   USART_begin(&usart, 115200);
   USART_puts(&usart, "Hello.\n");
-
   
-  SPI_init(&SPI0, PIO0_1, PIO0_1, PIO0_1, PIO0_2);			
+  SPI1.begin();
 	
-  while ( 1 );
+  while ( 1 ) {
+    uint8_t t = millis() & 0xff;
+    sram.read(0x55);
+    delay(10);
+  }
 }
 
 /******************************************************************************

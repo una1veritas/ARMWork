@@ -17,6 +17,7 @@
 #include "I2CBus.h"
 #include "i2clcd.h"
 #include "ST7032i.h"
+#include "DS1307.h"
 
 #ifdef _LPCXPRESSO_CRP_
 #include <cr_section_macros.h>
@@ -42,6 +43,9 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #define RXD2    PIO0_18
 #define TXD2    PIO0_19
 
+#define LED_SD_BUSY   PIO1_19
+
+
 #define RTC_ADDR 0x68
 
 char day[7][4] = {
@@ -55,6 +59,7 @@ char day[7][4] = {
   };
 
 ST7032i i2clcd(Wire, LCDBKLT, LCDRST);
+DS1307 rtc(Wire, DS1307::CHIP_M41T62);
 /*
 uint8_t i2clcd_data(uint8_t d) {
   return (uint8_t) i2clcd.write(d);
@@ -67,7 +72,8 @@ int main (void) {
   char c = 0;
   char str[32];
   char message[32];
-  char tmp[32];
+//  char tmp[32];
+  long ttime;
   
   SystemInit();
   GPIOInit();
@@ -85,7 +91,7 @@ int main (void) {
   // I2C LCD Backlight controll pin
   pinMode(LCDBKLT, OUTPUT);
   digitalWrite(LCDBKLT, LOW);
-
+  
   pinMode(USERBTN, INPUT);
   
   /* NVIC is installed inside UARTInit file. */
@@ -110,14 +116,13 @@ int main (void) {
     
   Serial.print("Hello!\n");
   
-  tmp[0] = 0;
-  Wire.beginTransmission(RTC_ADDR);
-  Wire.write(0);
-  Wire.endRequest();
-  Wire.requestFrom(RTC_ADDR, 8);
-  Wire.readBytes(tmp, 8);
-  sprintf(str, "%02x:%02x:%02x\n%s\n%02x/%02x/'%02x\n", tmp[3]&0x3f, tmp[2]&0x7f, tmp[1]&0x7f, day[tmp[4]&0x07], tmp[6]&0x1f, tmp[5]&0x3f, tmp[7]);
-  Serial.print(str);
+  rtc.begin();
+  rtc.update();
+//  sprintf(str, "%02x:%02x:%02x\n%s\n%02x/%02x/'%02x\n", rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f, 
+//      day[rtc.cal&0x07], rtc.cal>>16&0x1f, rtc.cal>>8&0x3f, rtc.cal>>16);
+  Serial.println(rtc.time, HEX);
+  Serial.println(rtc.cal);
+  //Serial.print(str);
 
 
   i2clcd.print("I was an lpclcd.");
@@ -132,14 +137,9 @@ int main (void) {
       sw = millis();
 
       i2clcd.setCursor(0, 1);
-      tmp[0] = 0;
-      Wire.beginTransmission(RTC_ADDR);
-      Wire.write(0);
-      Wire.endRequest();
-      Wire.receiveFrom(RTC_ADDR, 8);
-      Wire.readBytes(tmp, 8); //Wire.receive();
+      rtc.updateTime();
 //      I2C_read(&i2c, RTC_ADDR, (uint8*)tmp, 1, 8);
-      sprintf(str, "%02x:%02x:%02x", tmp[3]&0x3f, tmp[2]&0x7f, tmp[1]&0x7f);
+      sprintf(str, "%02x:%02x:%02x", rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f);
       i2clcd.print(str);
 //      sprintf(str, " %02x/%02x %02x", tmp[6]&0x1f, tmp[5]&0x3f, tmp[7]);
       sprintf(str, " %06d", micros()/1000);
@@ -154,17 +154,10 @@ int main (void) {
     } else /* if ( digitalRead(USERBTN) == HIGH ) */ {
       if (  ontime > 0 && (millis() - ontime >= 5000) ) {
         Serial.println(millis() - ontime);
-        tmp[0] = 1;
-        tmp[1] = 0x00;
-        tmp[2] = 0x11;
-        tmp[3] = 0x01;
-        tmp[4] = 0x06;
-        tmp[5] = 0x13;
-        tmp[6] = 0x07;
-        tmp[7] = 0x13;
-        Wire.beginTransmission(RTC_ADDR);
-        Wire.write((const uint8_t *)tmp, 8);
-        Wire.endTransmission();
+        ttime = 0x001101;
+        rtc.setTime(ttime);
+        ttime = 0x130726;
+        rtc.setCalendar(ttime);
       } else if ( ontime > 0 && (millis() - ontime >= 1000) ) {
         Serial.println(millis() - ontime);
         digitalToggle(LCDBKLT);

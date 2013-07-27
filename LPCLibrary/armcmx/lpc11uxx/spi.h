@@ -20,20 +20,22 @@
 #ifndef __SPI_H__
 #define __SPI_H__
 
-#include <stdint.h>
+//#include <stdint.h>
+#include "LPC11Uxx.h"
 #include "armcmx.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+  
 typedef struct {
   uint8_t Num;
-  GPIOPin SSel;
+  LPC_SSPx_Type * SSPx;
+  GPIOPin SSELx;
   /* statistics of all the interrupts */
-  volatile uint32_t interruptRxStat; //0 = 0;
-  volatile uint32_t interruptOverRunStat; //0 = 0;
-  volatile uint32_t interruptRxTimeoutStat; //0 = 0;
+//  volatile uint32_t interruptRxStat; //0 = 0;
+//  volatile uint32_t interruptOverRunStat; //0 = 0;
+//  volatile uint32_t interruptRxTimeoutStat; //0 = 0;
   
   /* There are there modes in SSP: loopback, master or slave. */
 /* Here are the combination of all the tests. 
@@ -42,11 +44,11 @@ typedef struct {
 (3) TX(Master) Only:	LOOPBACK_MODE=0, SSP_SLAVE=0, TX_RX_ONLY=1, USE_CS=1;
 (4) RX(Slave) Only:		LOOPBACK_MODE=0, SSP_SLAVE=1, TX_RX_ONLY=1, USE_CS=1 */
 
-  uint8_t LOOPBACK_MODE; //   0
+//  uint8_t LOOPBACK_MODE; //   0
   /* 1 is loopback, 0 is normal operation. */
-  uint8_t SSP_SLAVE; //       0
+//  uint8_t SSP_SLAVE; //       0
   /* 1 is SLAVE mode, 0 is master mode */
-  uint8_t TX_RX_ONLY; //      0		
+//  uint8_t TX_RX_ONLY; //      0		
   /* 1 is TX or RX only depending on SSP_SLAVE
 								flag, 0 is either loopback mode or communicate
 								with a serial EEPROM. */
@@ -55,7 +57,7 @@ typedef struct {
 /* When test serial SEEPROM(LOOPBACK_MODE=0, TX_RX_ONLY=0), set USE_CS to 0. */
 /* When LOOPBACK_MODE=1 or TX_RX_ONLY=1, set USE_CS to 1. */
 
-  uint8_t USE_CS; //          0
+//  uint8_t USE_CS; //          0
 
 } SPIDef;
 
@@ -63,7 +65,7 @@ uint8_t SPI_transfer(SPIDef * port, uint8_t data);
 void SPI_init(SPIDef * port, GPIOPin clk, GPIOPin miso, GPIOPin mosi, GPIOPin ssel);
 void SPI_disable(SPIDef * port);
 
-extern SPIDef SPI0, SPI1;
+extern SPIDef SPI0Def, SPI1Def;
 
 #ifdef __cplusplus
 }

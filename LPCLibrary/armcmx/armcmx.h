@@ -80,7 +80,6 @@ typedef uint8_t boolean;
 #include "gpio.h"
 #include "delay.h"
 #include "usart.h"
-//#include "spi.h"
 
 #ifdef __cplusplus
 }

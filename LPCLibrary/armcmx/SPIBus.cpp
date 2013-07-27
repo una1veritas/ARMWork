@@ -8,9 +8,6 @@
  * published by the Free Software Foundation.
  */
 
-//#include "pins_arduino.h"
-#include "gpio.h"
-#include "spi.h"
 #include "SPIBus.h"
 
 void SPIBus::begin() {
