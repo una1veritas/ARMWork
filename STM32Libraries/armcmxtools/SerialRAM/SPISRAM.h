@@ -48,7 +48,7 @@ private:
 
 	void set_access(const byte mode, const long & address) {
 		SPIx.transfer(mode);
-		if (_addrbus == BUS_MBits)
+		if (_addrbus == BUS_MBITS)
 			SPIx.transfer(address >> 16 & 0xff);
 		SPIx.transfer(address >> 8 & 0xff);
 		SPIx.transfer(address & 0xff);
@@ -65,11 +65,11 @@ private:
 
 public:
 	enum {
-		BUS_WIDTH_23K256 = 16, // 23K256
-		BUS_WIDTH_23K640 = 16,  // 23K640
-		BUS_WIDTH_23LC1024 = 24, // 23A/LC1024
-		BUS_KBits = 16,
-		BUS_MBits = 24
+		BUS_23K256 = 16, // 23K256
+		BUS_23K640 = 16,  // 23K640
+		BUS_23LC1024 = 24, // 23A/LC1024
+		BUS_KBITS = 16,
+		BUS_MBITS = 24
 	};
 
 	SPISRAM(SPIBus & spi, const byte csPin, const byte addrwidth = BUS_WIDTH_23K256);

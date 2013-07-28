@@ -1,0 +1,11 @@
+Purpose:
+To implement Watch Dog Timer (WDT) on LPC11Uxx
+
+Running mode:
+* Compile, Flash the program and reset.
+Note:
+Tested on Keil MCB 11U10 board
+
+Description:
+When a WDT reset occurs, PIO1_20 toggles continuously
+Else, when there is no WDT reset is detected PIO1_22 toggles continuously

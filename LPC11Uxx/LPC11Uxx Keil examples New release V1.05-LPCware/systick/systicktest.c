@@ -1,9 +1,10 @@
 /****************************************************************************
- *   $Id:: ssptest.c 4103 2010-08-02 20:56:20Z usb00423                     $
- *   Project: NXP LPC11Uxx SSP example
+ *   $Id:: systicktest.c 4079 2010-07-30 17:55:20Z usb00423                 $
+ *   Project: NXP LPC11Uxx Systick example
  *
  *   Description:
- *     This file contains SSP test modules, main entry, to test SSP APIs.
+ *     This file contains System tick test modules, main entry, to test 
+ *     systick APIs.
 *
 ****************************************************************************
 * Software that is described herein is for illustrative purposes only
@@ -26,51 +27,58 @@
 
 ****************************************************************************/
 
-#include <stdio.h>
-#include <string.h>
+#include "LPC11Uxx.h"                        /* LPC11xx definitions */
+#include "gpio.h"
 
-#include "LPC11Uxx.h"
-#include "type.h"
+#define SYSTICK_DELAY		(SystemCoreClock/100)
 
-#include "armcmx.h"
-#include "SPIBus.h"
-#include "SPISRAM.h"
+volatile uint32_t TimeTick = 0;
 
-
-
-//#define SSP_NUM			0
-#define SSP_CS1       PIO1_23
-#define LED_SD_BUSY   PIO1_19
-
-SPIBus SPI1(&SPI1Def, SSP_CS1, SSP_CS1, SSP_CS1, SSP_CS1);
-SPISRAM sram(SPI1, SSP_CS1, SPISRAM::BUS_MBITS);
-
-/******************************************************************************
-**   Main Function  main()
-******************************************************************************/
-int main (void) {
-  int i;
-   
-  SystemCoreClockUpdate();
-  start_delay();
-
-  USART_init(&usart, PIO0_18, PIO0_19);
-  USART_begin(&usart, 115200);
-  USART_puts(&usart, "Hello.\n");
-  
-  SPI1.begin();
-  sram.begin();
-	
-  while ( 1 ) {
-    uint8_t t = millis();
-    sram.read(t);
-    sram.write(t, millis()&0xff);
-    sram.read(t);
-    delay(10);
-  }
+/* SysTick interrupt happens every 10 ms */
+void SysTick_Handler(void)
+{
+  TimeTick++;
 }
 
-/******************************************************************************
-**                            End Of File
-******************************************************************************/
+void delaySysTick(uint32_t tick)
+{
+  uint32_t timetick;
 
+  /* Clear SysTick Counter */
+  SysTick->VAL = 0;
+  /* Enable the SysTick Counter */
+  SysTick->CTRL |= (0x1<<0);
+
+  timetick = TimeTick;
+  while ((TimeTick - timetick) < tick);
+  
+  /* Disable SysTick Counter */
+  SysTick->CTRL &= ~(0x1<<0);
+  /* Clear SysTick Counter */
+  SysTick->VAL = 0;
+  return;
+}
+
+/* Main Program */
+
+int main (void) 
+{
+  SystemCoreClockUpdate();
+
+  /* Called for system library in core_cmx.h(x=0 or 3). */
+  SysTick_Config( SYSTICK_DELAY );
+  
+  /* Enable AHB clock to the GPIO domain. */
+  LPC_SYSCON->SYSAHBCLKCTRL |= (1<<6);
+  
+  /* Set port 1_20 to output */
+  GPIOSetDir( 1, 20, 1 );
+
+  while (1)                                /* Loop forever */
+  {
+	delaySysTick(10);
+	GPIOSetBitValue( 1, 20, 0 );
+	delaySysTick(10);
+	GPIOSetBitValue( 1, 20, 1 );
+  }
+}

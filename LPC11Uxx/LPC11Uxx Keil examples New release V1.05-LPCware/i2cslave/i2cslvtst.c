@@ -1,9 +1,10 @@
 /****************************************************************************
- *   $Id:: ssptest.c 4103 2010-08-02 20:56:20Z usb00423                     $
- *   Project: NXP LPC11Uxx SSP example
+ *   $Id:: i2cslvtst.c 4015 2010-07-28 22:28:05Z usb00423                   $
+ *   Project: NXP LPC11Uxx I2C example
  *
  *   Description:
- *     This file contains SSP test modules, main entry, to test SSP APIs.
+ *     This file contains I2C slave test modules, main entry, to test I2C 
+ *     slave APIs.
 *
 ****************************************************************************
 * Software that is described herein is for illustrative purposes only
@@ -26,51 +27,36 @@
 
 ****************************************************************************/
 
-#include <stdio.h>
-#include <string.h>
-
-#include "LPC11Uxx.h"
+#include "LPC11Uxx.h"			/* LPC11xx Peripheral Registers */
 #include "type.h"
+#include "i2cslave.h"
 
-#include "armcmx.h"
-#include "SPIBus.h"
-#include "SPISRAM.h"
+extern volatile uint8_t I2CWrBuffer[BUFSIZE];
+extern volatile uint8_t I2CRdBuffer[BUFSIZE];
+extern volatile uint32_t I2CSlaveState;
+extern volatile uint32_t I2CReadLength, I2CWriteLength;
 
-
-
-//#define SSP_NUM			0
-#define SSP_CS1       PIO1_23
-#define LED_SD_BUSY   PIO1_19
-
-SPIBus SPI1(&SPI1Def, SSP_CS1, SSP_CS1, SSP_CS1, SSP_CS1);
-SPISRAM sram(SPI1, SSP_CS1, SPISRAM::BUS_MBITS);
-
-/******************************************************************************
+/*******************************************************************************
 **   Main Function  main()
-******************************************************************************/
-int main (void) {
-  int i;
-   
+*******************************************************************************/
+int main (void)
+{
+  uint32_t i;
   SystemCoreClockUpdate();
-  start_delay();
-
-  USART_init(&usart, PIO0_18, PIO0_19);
-  USART_begin(&usart, 115200);
-  USART_puts(&usart, "Hello.\n");
   
-  SPI1.begin();
-  sram.begin();
-	
-  while ( 1 ) {
-    uint8_t t = millis();
-    sram.read(t);
-    sram.write(t, millis()&0xff);
-    sram.read(t);
-    delay(10);
+  for ( i = 0; i < BUFSIZE; i++ )
+  {
+	I2CRdBuffer[i] = 0x00;
   }
+  
+  I2CSlaveInit();			/* initialize I2c */
+ 
+  /* When the NACK occurs, the master has stopped the 
+  communication. Just check the content of I2CRd/WrBuffer. */
+  while ( I2CSlaveState != DATA_NACK );
+  return 0;
 }
 
 /******************************************************************************
 **                            End Of File
 ******************************************************************************/
-

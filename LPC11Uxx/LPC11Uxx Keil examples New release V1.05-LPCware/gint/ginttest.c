@@ -1,10 +1,10 @@
 /****************************************************************************
- *   $Id:: ssptest.c 4103 2010-08-02 20:56:20Z usb00423                     $
- *   Project: NXP LPC11Uxx SSP example
+ *   $Id:: ginttest.c 4217 2010-08-05 00:19:31Z usb00423                    $
+ *   Project: NXP LPC11Uxx GINT example
  *
  *   Description:
- *     This file contains SSP test modules, main entry, to test SSP APIs.
-*
+ *     This file contains GINT test modules, main entry, to test I2C APIs.
+ *
 ****************************************************************************
 * Software that is described herein is for illustrative purposes only
 * which provides customers with programming information regarding the
@@ -26,51 +26,41 @@
 
 ****************************************************************************/
 
-#include <stdio.h>
-#include <string.h>
-
-#include "LPC11Uxx.h"
+#include "LPC11Uxx.h"			/* LPC11xx Peripheral Registers */
 #include "type.h"
+#include "gpio.h"
 
-#include "armcmx.h"
-#include "SPIBus.h"
-#include "SPISRAM.h"
-
-
-
-//#define SSP_NUM			0
-#define SSP_CS1       PIO1_23
-#define LED_SD_BUSY   PIO1_19
-
-SPIBus SPI1(&SPI1Def, SSP_CS1, SSP_CS1, SSP_CS1, SSP_CS1);
-SPISRAM sram(SPI1, SSP_CS1, SPISRAM::BUS_MBITS);
-
-/******************************************************************************
+/*******************************************************************************
 **   Main Function  main()
-******************************************************************************/
-int main (void) {
-  int i;
-   
+*******************************************************************************/
+int main (void)
+{
+  uint32_t bitPattern[2];
+  uint32_t eventPattern[2];
   SystemCoreClockUpdate();
-  start_delay();
+  GPIOInit();
 
-  USART_init(&usart, PIO0_18, PIO0_19);
-  USART_begin(&usart, 115200);
-  USART_puts(&usart, "Hello.\n");
-  
-  SPI1.begin();
-  sram.begin();
-	
-  while ( 1 ) {
-    uint8_t t = millis();
-    sram.read(t);
-    sram.write(t, millis()&0xff);
-    sram.read(t);
-    delay(10);
-  }
+#if 1
+  bitPattern[0] = 0x1<<5;		/* PIO0_5 enabled */
+  bitPattern[1] = 0x1<<5;		/* PIO1_5 enabled */
+  eventPattern[0] = 0x1<<5;		/* PIO0_5 rising edge */
+  eventPattern[1] = 0x0<<5;		/* PIO1_5 falling edge */
+  /* GINT0_INT sources OR together */
+  GPIOSetGroupedInterrupt( GROUP0, &bitPattern[0], 0, 0, &eventPattern[0] );
+#endif
+
+#if 0
+  bitPattern[0] = 0x1<<5;		/* PIO0_5 enabled */
+  bitPattern[1] = 0x1<<5;		/* PIO1_5 enabled */
+  eventPattern[0] = 0x1<<5;		/* PIO0_5 rising edge */
+  eventPattern[1] = 0x0<<5;		/* PIO1_5 falling edge */
+  /* GINT1_INT sources AND together */
+  GPIOSetGroupedInterrupt( GROUP1, &bitPattern[0], 1, 0, &eventPattern[0] );
+#endif
+
+  while ( 1 );
 }
 
 /******************************************************************************
 **                            End Of File
 ******************************************************************************/
-

@@ -1,10 +1,11 @@
 /****************************************************************************
- *   $Id:: ssptest.c 4103 2010-08-02 20:56:20Z usb00423                     $
- *   Project: NXP LPC11Uxx SSP example
+ *   $Id:: misc_gpio.c 5143 2010-10-07 23:06:18Z usb00423                       $
+ *   Project: NXP LPC software example
  *
  *   Description:
- *     This file contains SSP test modules, main entry, to test SSP APIs.
-*
+ *     This file contains routines to control and monitor
+ *     Smart Card interface signals.
+ *
 ****************************************************************************
 * Software that is described herein is for illustrative purposes only
 * which provides customers with programming information regarding the
@@ -26,51 +27,38 @@
 
 ****************************************************************************/
 
-#include <stdio.h>
-#include <string.h>
-
 #include "LPC11Uxx.h"
 #include "type.h"
+#include "misc_gpio.h"
 
-#include "armcmx.h"
-#include "SPIBus.h"
-#include "SPISRAM.h"
-
-
-
-//#define SSP_NUM			0
-#define SSP_CS1       PIO1_23
-#define LED_SD_BUSY   PIO1_19
-
-SPIBus SPI1(&SPI1Def, SSP_CS1, SSP_CS1, SSP_CS1, SSP_CS1);
-SPISRAM sram(SPI1, SSP_CS1, SPISRAM::BUS_MBITS);
-
-/******************************************************************************
-**   Main Function  main()
-******************************************************************************/
-int main (void) {
-  int i;
-   
-  SystemCoreClockUpdate();
-  start_delay();
-
-  USART_init(&usart, PIO0_18, PIO0_19);
-  USART_begin(&usart, 115200);
-  USART_puts(&usart, "Hello.\n");
-  
-  SPI1.begin();
-  sram.begin();
-	
-  while ( 1 ) {
-    uint8_t t = millis();
-    sram.read(t);
-    sram.write(t, millis()&0xff);
-    sram.read(t);
-    delay(10);
-  }
+void MiscGpioInit(void)
+{
+  /* Smart Card GPIO interface */
+  /*
+   P1.9; L=off, H=on; Pin used for the activity LED, it will toggle whenever bytes
+   are recevied or transmitted and remain off when there is no activity
+   P1.10; L=extracted, H=inserted; Pin is used to detect whether a Smart Card
+   is inserted into its socket
+   P1.11; L=off, H=on; Pin is used to enable power to the Smart Card
+   P1.12; L=assert reset, H=out of reset; Pin is used to assert the reset condition
+   to the Smart Card
+  */
+  LPC_IOCON->CARD_ACTIVITY_IOCON &= ~0x7;
+  LPC_IOCON->CARD_ACTIVITY_IOCON |= 0x0;
+  LPC_IOCON->CARD_RESET_IOCON &= ~0x7;
+  LPC_IOCON->CARD_RESET_IOCON |= 0x0 | _BV(10);
+  LPC_IOCON->POWER_ENABLE_IOCON &= ~0x7;
+  LPC_IOCON->POWER_ENABLE_IOCON |= 0;
+  LPC_IOCON->CARD_DETECT_IOCON &= ~0x7;
+  LPC_IOCON->CARD_DETECT_IOCON |= 0; /* DETECT @ P1.10 */
+  /* RST active, power off, activity inactive */
+  /* Only RST, POWER_EN, activity LED are outputs */ 
+  LPC_GPIO->CLR[1] = CARD_RESET | POWER_ENABLE | CARD_ACTIVITY;
+  LPC_GPIO->DIR[1] |= CARD_RESET | POWER_ENABLE | CARD_ACTIVITY; 
+  return;
 }
 
-/******************************************************************************
+
+/*****************************************************************************
 **                            End Of File
 ******************************************************************************/
-
