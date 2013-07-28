@@ -27,7 +27,10 @@ enum _GPIOPin_Def {
   PIO0_4 = (PIO0 <<5) | ((uint8_t)4),
   PIO0_5 = (PIO0 <<5) | ((uint8_t)5),
   PIO0_6 = (PIO0 <<5) | ((uint8_t)6),
-  
+  PIO0_7 = (PIO0 <<5) | ((uint8_t)7),
+  PIO0_8 = (PIO0 <<5) | ((uint8_t)8),
+  PIO0_9 = (PIO0 <<5) | ((uint8_t)9),
+
   PIO0_18 = (PIO0 <<5) | ((uint8_t)18),
   PIO0_19 = (PIO0 <<5) | ((uint8_t)19),
 
@@ -56,6 +59,9 @@ enum _GPIOPin_Def {
   PIO1_23 = (PIO1 <<5) | ((uint8_t)23),
   PIO1_24 = (PIO1 <<5) | ((uint8_t)24),
   PIO1_25 = (PIO1 <<5) | ((uint8_t)25),
+  
+  PIO1_29 = (PIO1 <<5) | ((uint8_t)29),
+
 };
 
 void GPIOInit( void );

@@ -28,6 +28,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "LPC11Uxx.h"
 #include "type.h"
@@ -35,7 +36,7 @@
 #include "armcmx.h"
 #include "SPIBus.h"
 #include "SPISRAM.h"
-
+#include "USARTSerial.h"
 
 
 //#define SSP_NUM			0
@@ -48,29 +49,46 @@ SPISRAM sram(SPI1, SSP_CS1, SPISRAM::BUS_MBITS);
 /******************************************************************************
 **   Main Function  main()
 ******************************************************************************/
+
+char text[] = "Happy are those who knwon they are spiritually poor;";
+int n = strlen(text);
+
 int main (void) {
-  int i;
+  uint32_t t = 0;
+  uint16_t i;
+  char strbuf[64];
+  char c;
    
   SystemCoreClockUpdate();
   start_delay();
 
-  USART_init(&usart, PIO0_18, PIO0_19);
-  USART_begin(&usart, 115200);
-  USART_puts(&usart, "Hello.\n");
+  Serial.begin(115200);
+  Serial.println("Hello.");
   
   SPI1.begin();
   sram.begin();
-	
+
+  srand((uint16_t)micros());
+  
   while ( 1 ) {
-    uint8_t t = millis();
-    sram.read(t);
-    sram.write(t, micros()&0xff);
-    sram.read(t);
-    delay(10);
+    c = text[t];
+    Serial.print(t, HEX);
+    Serial.print(" ");
+    Serial.print(c);
+    sram.write(t, c);
+    c = sram.read(t);
+    Serial.print(" ");
+    Serial.print(c);
+    Serial.print(" (");
+    Serial.print(c, HEX);
+    Serial.println(")");
+
+    t++;
+    t %= n;
+    delay(1000);
   }
 }
 
 /******************************************************************************
 **                            End Of File
 ******************************************************************************/
-

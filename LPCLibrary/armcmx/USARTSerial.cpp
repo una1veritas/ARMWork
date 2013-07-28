@@ -1,5 +1,6 @@
 /*
  * USARTSerial.cpp
+ *  for LPC11Uxx
  *
  *  Created on: 2012/12/14
  *      Author: Sin

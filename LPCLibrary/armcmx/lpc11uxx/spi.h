@@ -30,8 +30,8 @@ extern "C" {
   
 typedef struct {
   uint8_t Num;
-  LPC_SSPx_Type * SSPx;
-  GPIOPin SSELx;
+  GPIOPin sck, miso, mosi, nss;
+  
   /* statistics of all the interrupts */
 //  volatile uint32_t interruptRxStat; //0 = 0;
 //  volatile uint32_t interruptOverRunStat; //0 = 0;
@@ -62,6 +62,9 @@ typedef struct {
 } SPIDef;
 
 uint8_t SPI_transfer(SPIDef * port, uint8_t data);
+uint8_t SPI_send( SPIDef * port, uint8_t data );
+uint8_t SPI_receive(SPIDef * port, uint8_t data );
+
 void SPI_init(SPIDef * port, GPIOPin clk, GPIOPin miso, GPIOPin mosi, GPIOPin ssel);
 void SPI_disable(SPIDef * port);
 

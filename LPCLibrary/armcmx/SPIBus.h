@@ -38,9 +38,18 @@ public:
   void end();
 
 	inline uint16 transfer(uint16 _data) {
-    return SPI_transfer(port, _data);
+    //return SPI_transfer(port, _data);
+    return SPI_receive(port, _data);
 	}
 
+  inline uint16 send(uint16 _data) {
+    return SPI_send(port, _data);
+  }
+  
+  inline uint16 receive(uint16 _data) {
+    return SPI_receive(port, _data);
+  }
+  
 	inline void setBitOrder(uint16_t bitOrder) {
 		//SPI_setBitOrder(port, bitOrder);
 	}
