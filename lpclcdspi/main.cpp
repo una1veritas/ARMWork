@@ -64,7 +64,7 @@ int main (void) {
   while ( 1 ) {
     uint8_t t = millis();
     sram.read(t);
-    sram.write(t, millis()&0xff);
+    sram.write(t, micros()&0xff);
     sram.read(t);
     delay(10);
   }

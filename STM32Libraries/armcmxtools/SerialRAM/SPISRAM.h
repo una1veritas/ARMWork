@@ -72,7 +72,7 @@ public:
 		BUS_MBITS = 24
 	};
 
-	SPISRAM(SPIBus & spi, const byte csPin, const byte addrwidth = BUS_WIDTH_23K256);
+	SPISRAM(SPIBus & spi, const byte csPin, const byte addrwidth = BUS_23K256);
 
 	void init();
 	inline void begin() {
