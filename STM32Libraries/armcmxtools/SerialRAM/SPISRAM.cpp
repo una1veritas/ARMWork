@@ -35,7 +35,7 @@ byte SPISRAM::read(const long & address) {
 	//addr = ;
 	select();
 	set_access(READ, address);
-	data = SPIx.receive(0);
+	data = SPIx.transfer(0);
 	deselect();
 	return data;
 }
@@ -48,7 +48,7 @@ void SPISRAM::read(const long & address, byte *buffer, const long & size) {
 	byte * p = buffer;
 	set_access(READ, address);
 	for (unsigned int i = 0; i < size; i++)
-		*p++ = SPIx.receive(0);
+		*p++ = SPIx.transfer(0);
 	deselect();
 }
 

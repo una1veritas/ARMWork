@@ -11,10 +11,10 @@
 #include "SPIBus.h"
 
 void SPIBus::begin() {
-  SPI_init(port, sck, miso, mosi, nss); 
+  SPI_init(SPIPort, sck, miso, mosi, nss); 
 }
 
 void SPIBus::end() {
-	SPI_disable(port);
+	SPI_disable(SPIPort);
 }
 

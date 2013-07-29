@@ -103,7 +103,7 @@ void SSP_IOConfig(SPIDef * port)
 	LPC_IOCON->SWCLK_PIO0_10 &= ~0x07;
 	LPC_IOCON->SWCLK_PIO0_10 |= 0x02;		/* SSP CLK */
 #else
-#if 0
+#if 1
 	/* On C1U, SSP CLK can be routed to different pins. */
 	LPC_IOCON->PIO1_29 &= ~0x07;	
 	LPC_IOCON->PIO1_29 = 0x01;
@@ -123,7 +123,7 @@ void SSP_IOConfig(SPIDef * port)
 	LPC_IOCON->PIO0_2 &= ~0x07;		/* SSP SSEL is a GPIO pin */
 	/* port0, bit 2 is set to GPIO output and high */
   pinMode(PIO0_2, OUTPUT);
-	digitalWrite( PIO0_2, OUTPUT );
+	digitalWrite( PIO0_2, HIGH );
 #endif
   }
   else		/* port number 1 */
@@ -183,85 +183,83 @@ void SSP_IOConfig(SPIDef * port)
 ** Returned value:		None
 ** 
 *****************************************************************************/
-void SSP_Init(SPIDef * port)
-{
-  uint8_t i, Dummy=Dummy;
+void SSP_Init(SPIDef * port) {
+  uint8_t i, Dummy=Dummy
+  ;
 
   if ( port->Num == 0 )
-  {
-	/* Set DSS data to 8-bit, Frame format SPI, CPOL = 0, CPHA = 0, and SCR is 15 */
-	LPC_SSP0->CR0 = 0x0707;
+    {
+    /* Set DSS data to 8-bit, Frame format SPI, CPOL = 0, CPHA = 0, and SCR is 15 */
+    LPC_SSP0->CR0 = 0x0707;
 
-	/* SSPCPSR clock prescale register, master mode, minimum divisor is 0x02 */
-	LPC_SSP0->CPSR = 0x2;
+    /* SSPCPSR clock prescale register, master mode, minimum divisor is 0x02 */
+    LPC_SSP0->CPSR = 0x2;
 
-	for ( i = 0; i < FIFOSIZE; i++ )
-	{
-	  Dummy = LPC_SSP0->DR;		/* clear the RxFIFO */
-	}
+    for ( i = 0; i < FIFOSIZE; i++ )
+    {
+      Dummy = LPC_SSP0->DR;		/* clear the RxFIFO */
+    }
 
-	/* Enable the SSP Interrupt */
-	NVIC_EnableIRQ(SSP0_IRQn);
-	
-	/* Device select as master, SSP Enabled */
-#if LOOPBACK_MODE
-	LPC_SSP0->CR1 = SSPCR1_LBM | SSPCR1_SSE;
-#else
-#if SSP_SLAVE
-	/* Slave mode */
-	if ( LPC_SSP0->CR1 & SSPCR1_SSE )
-	{
-	  /* The slave bit can't be set until SSE bit is zero. */
-	  LPC_SSP0->CR1 &= ~SSPCR1_SSE;
-	}
-	LPC_SSP0->CR1 = SSPCR1_MS;		/* Enable slave bit first */
-	LPC_SSP0->CR1 |= SSPCR1_SSE;	/* Enable SSP */
-#else
-	/* Master mode */
-	LPC_SSP0->CR1 = SSPCR1_SSE;
-#endif
-#endif
-	/* Set SSPINMS registers to enable interrupts */
-	/* enable all error related interrupts */
-	LPC_SSP0->IMSC = SSPIMSC_RORIM | SSPIMSC_RTIM;
-  }
-  else
-  {
-	/* Set DSS data to 8-bit, Frame format SPI, CPOL = 0, CPHA = 0, and SCR is 15 */
-	LPC_SSP1->CR0 = 0x0707;
+    /* Enable the SSP Interrupt */
+    NVIC_EnableIRQ(SSP0_IRQn);
+    
+    /* Device select as master, SSP Enabled */
+  #if LOOPBACK_MODE
+    LPC_SSP0->CR1 = SSPCR1_LBM | SSPCR1_SSE;
+  #else
+  #if SSP_SLAVE
+    /* Slave mode */
+    if ( LPC_SSP0->CR1 & SSPCR1_SSE )
+    {
+      /* The slave bit can't be set until SSE bit is zero. */
+      LPC_SSP0->CR1 &= ~SSPCR1_SSE;
+    }
+    LPC_SSP0->CR1 = SSPCR1_MS;		/* Enable slave bit first */
+    LPC_SSP0->CR1 |= SSPCR1_SSE;	/* Enable SSP */
+  #else
+    /* Master mode */
+    LPC_SSP0->CR1 = SSPCR1_SSE;
+  #endif
+  #endif
+    /* Set SSPINMS registers to enable interrupts */
+    /* enable all error related interrupts */
+    LPC_SSP0->IMSC = SSPIMSC_RORIM | SSPIMSC_RTIM;
+  } else {
+    /* Set DSS data to 8-bit, Frame format SPI, CPOL = 0, CPHA = 0, and SCR is 15 */
+    LPC_SSP1->CR0 = 0x0707;
 
-	/* SSPCPSR clock prescale register, master mode, minimum divisor is 0x02 */
-	LPC_SSP1->CPSR = 0x2;
+    /* SSPCPSR clock prescale register, master mode, minimum divisor is 0x02 */
+    LPC_SSP1->CPSR = 0x2;
 
-	for ( i = 0; i < FIFOSIZE; i++ )
-	{
-	  Dummy = LPC_SSP1->DR;		/* clear the RxFIFO */
-	}
+    for ( i = 0; i < FIFOSIZE; i++ )
+    {
+      Dummy = LPC_SSP1->DR;		/* clear the RxFIFO */
+    }
 
-	/* Enable the SSP Interrupt */
-	NVIC_EnableIRQ(SSP1_IRQn);
-	
-	/* Device select as master, SSP Enabled */
-#if LOOPBACK_MODE
-	LPC_SSP1->CR1 = SSPCR1_LBM | SSPCR1_SSE;
-#else
-#if SSP_SLAVE
-	/* Slave mode */
-	if ( LPC_SSP1->CR1 & SSPCR1_SSE )
-	{
-	  /* The slave bit can't be set until SSE bit is zero. */
-	  LPC_SSP1->CR1 &= ~SSPCR1_SSE;
-	}
-	LPC_SSP1->CR1 = SSPCR1_MS;		/* Enable slave bit first */
-	LPC_SSP1->CR1 |= SSPCR1_SSE;	/* Enable SSP */
-#else
-	/* Master mode */
-	LPC_SSP1->CR1 = SSPCR1_SSE;
-#endif
-#endif
-	/* Set SSPINMS registers to enable interrupts */
-	/* enable all error related interrupts */
-	LPC_SSP1->IMSC = SSPIMSC_RORIM | SSPIMSC_RTIM;
+    /* Enable the SSP Interrupt */
+    NVIC_EnableIRQ(SSP1_IRQn);
+    
+    /* Device select as master, SSP Enabled */
+  #if LOOPBACK_MODE
+    LPC_SSP1->CR1 = SSPCR1_LBM | SSPCR1_SSE;
+  #else
+  #if SSP_SLAVE
+    /* Slave mode */
+    if ( LPC_SSP1->CR1 & SSPCR1_SSE )
+    {
+      /* The slave bit can't be set until SSE bit is zero. */
+      LPC_SSP1->CR1 &= ~SSPCR1_SSE;
+    }
+    LPC_SSP1->CR1 = SSPCR1_MS;		/* Enable slave bit first */
+    LPC_SSP1->CR1 |= SSPCR1_SSE;	/* Enable SSP */
+  #else
+    /* Master mode */
+    LPC_SSP1->CR1 = SSPCR1_SSE;
+  #endif
+  #endif
+    /* Set SSPINMS registers to enable interrupts */
+    /* enable all error related interrupts */
+    LPC_SSP1->IMSC = SSPIMSC_RORIM | SSPIMSC_RTIM;
   }
   return;
 }
