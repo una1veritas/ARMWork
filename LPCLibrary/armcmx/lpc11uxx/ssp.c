@@ -88,8 +88,7 @@ void SSP0_IRQHandler(void)
 ** Returned value:		None
 ** 
 *****************************************************************************/
-void SSP_IOConfig(SPIDef * port)
-{
+void SSP_IOConfig(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin ncs) {
   if ( port->Num == 0 )
   {
 	LPC_SYSCON->PRESETCTRL |= (0x1<<0);

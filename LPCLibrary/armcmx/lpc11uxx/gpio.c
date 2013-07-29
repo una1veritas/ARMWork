@@ -15,32 +15,32 @@ void GPIOInit( void )
 
 void pinMode( GPIOPin pin, uint8_t dir ) {
   if( dir ) {
-    LPC_GPIO->DIR[pin>>5&0x07] |= (1<<(pin&0x1f));
+    LPC_GPIO->DIR[PIONumber[pin>>5]] |= (1<<(pin&0x1f));
   } else {
-    LPC_GPIO->DIR[pin>>5&0x07] &= ~(1<<(pin&0x1f));
+    LPC_GPIO->DIR[PIONumber[pin>>5]] &= ~(1<<(pin&0x1f));
   }
   return;
 }
 
 void digitalWrite(GPIOPin pin, uint8_t bitVal ) {
   if ( bitVal ) {
-    LPC_GPIO->SET[pin>>5&0x07] = 1<<(pin&0x1f);
+    LPC_GPIO->SET[PIONumber[pin>>5]] = 1<<(pin&0x1f);
   } else {
-    LPC_GPIO->CLR[pin>>5&0x07] = 1<<(pin&0x1f);
+    LPC_GPIO->CLR[PIONumber[pin>>5]] = 1<<(pin&0x1f);
   }
   return;
 }
 
 uint8_t digitalRead(GPIOPin pin) {
-  return (LPC_GPIO->PIN[pin>>5&0x07] & (1<<(pin&0x1f))) != 0;
+  return (LPC_GPIO->PIN[PIONumber[pin>>5]] & (1<<(pin&0x1f))) != 0;
 }
 
 uint8_t digitalToggle(GPIOPin pin) {
-  if ( LPC_GPIO->PIN[pin>>5&0x07] & (1<<(pin&0x1f)) ) {
-    LPC_GPIO->CLR[pin>>5&0x07] = 1<<(pin&0x1f);
+  if ( LPC_GPIO->PIN[PIONumber[pin>>5]] & (1<<(pin&0x1f)) ) {
+    LPC_GPIO->CLR[PIONumber[pin>>5]] = 1<<(pin&0x1f);
     return 1;
   } else {
-    LPC_GPIO->SET[pin>>5&0x07] = 1<<(pin&0x1f);
+    LPC_GPIO->SET[PIONumber[pin>>5]] = 1<<(pin&0x1f);
     return 0;
   }
 }
