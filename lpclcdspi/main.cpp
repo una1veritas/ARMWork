@@ -39,23 +39,23 @@
 #include "USARTSerial.h"
 
 
-//#define SSP_NUM			0
-#define SSP_CS1       PIO1_23
+#define SSP_NUM			0
+#define SSP_CS0       PIO0_2
 #define LED_SD_BUSY   PIO1_19
 
-SPIBus SPI1(&SPI1Def, SSP_CS1, SSP_CS1, SSP_CS1, SSP_CS1);
-SPISRAM sram(SPI1, SSP_CS1, SPISRAM::BUS_MBITS);
+SPIBus SPI0(&SPI0Def, SSP_CS0, SSP_CS0, SSP_CS0, SSP_CS0);
+SPISRAM sram(SPI0, SSP_CS0, SPISRAM::BUS_MBITS);
 
 /******************************************************************************
 **   Main Function  main()
 ******************************************************************************/
 
-char text[] = "Happy are those who knwon they are spiritually poor;";
+char text[] = "Happy are those who know they are spiritually poor;";
 int n = strlen(text);
 
 int main (void) {
   uint32_t t = 0;
-  uint16_t i;
+  uint32_t addr;
   char strbuf[64];
   char c;
    
@@ -65,19 +65,24 @@ int main (void) {
   Serial.begin(115200);
   Serial.println("Hello.");
   
-  SPI1.begin();
+  SPI0.begin();
   sram.begin();
 
   srand((uint16_t)micros());
+  addr = rand() & 0xfff;
   
   while ( 1 ) {
+    if ( t == 0 )
+      addr = rand() & 0xfff;
     c = text[t];
-    Serial.print(t, HEX);
-    Serial.print(" ");
+    Serial.println(addr+t, HEX);
+    Serial.print(' ');
     Serial.print(c);
-    sram.write(t, c);
-    c = sram.read(t);
-    Serial.print(" ");
+    Serial.print(' ');
+    sram.write(addr+t, c);
+    c = 0xff;
+    c = sram.read(addr+t);
+    Serial.print(' ');
     Serial.print(c);
     Serial.print(" (");
     Serial.print(c, HEX);
@@ -85,7 +90,7 @@ int main (void) {
 
     t++;
     t %= n;
-    delay(1000);
+    delay(500);
   }
 }
 

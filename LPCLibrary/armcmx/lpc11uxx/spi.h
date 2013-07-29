@@ -62,8 +62,7 @@ typedef struct {
 } SPIDef;
 
 uint8_t SPI_transfer(SPIDef * port, uint8_t data);
-uint8_t SPI_send( SPIDef * port, uint8_t data );
-uint8_t SPI_receive(SPIDef * port, uint8_t data );
+//uint8_t SPI_receive(SPIDef * port, uint8_t data );
 
 void SPI_init(SPIDef * port, GPIOPin clk, GPIOPin miso, GPIOPin mosi, GPIOPin ssel);
 void SPI_disable(SPIDef * port);
