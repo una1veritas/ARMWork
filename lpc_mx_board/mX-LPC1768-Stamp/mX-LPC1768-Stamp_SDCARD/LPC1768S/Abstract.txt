@@ -1,5 +1,0 @@
-The project is a demo program for the mX-LPC1768 Stamp
-using mX-Base Board for SD Card.
-
-
-
