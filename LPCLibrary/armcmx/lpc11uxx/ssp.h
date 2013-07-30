@@ -118,7 +118,7 @@ extern "C" {
 SSPReceive() will not be needed. */
 extern void SSP0_IRQHandler (void);
 extern void SSP1_IRQHandler (void);
-extern void SSP_IOConfig(SPIDef * ); // uint8_t portNum );
+extern void SSP_IOConfig(SPIDef *, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin ncs); // uint8_t portNum );
 extern void SSP_Init(SPIDef * ); // uint8_t portNum );
 extern void SSP_Send(SPIDef * port, /* uint8_t portNum,*/ uint8_t *Buf, uint32_t Length );
 extern void SSP_Receive(SPIDef * port, /* uint8_t portNum,*/ uint8_t *buf, uint32_t Length );

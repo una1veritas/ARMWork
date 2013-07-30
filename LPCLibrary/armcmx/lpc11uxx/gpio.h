@@ -12,11 +12,14 @@ extern "C" {
 #define HIGH   1
 #define LOW    0
 
-enum PortNameDef {
-	Not_A_Port = 0xff,
-	PIO0 = 0,
-	PIO1 = 1,
+enum PIONameDef {
+	Not_A_Port = 0,
+	PIO0 = 1,
+	PIO1 = 2,
+  PORT_NOT_DEFINED = 0xff,
 };
+
+static uint8_t PIONumber[] = { Not_A_Port, 0, 1, PORT_NOT_DEFINED }; 
 
 enum _GPIOPin_Def {
 	NOT_A_PIN = 0,
@@ -62,7 +65,13 @@ enum _GPIOPin_Def {
   
   PIO1_29 = (PIO1 <<5) | ((uint8_t)29),
 
+	PIN_NOT_DEFINED = (uint8_t) 0xff,
 };
+
+#define PIO_SPIMode 0x02
+#define PIO_ClearMode (~0x07)
+#define PIOClear(x)  LPC_IOCON->x &= ~0x07
+#define PIOSetMode(x, mode) LPC_IOCON->x |= (mode)
 
 void GPIOInit( void );
 

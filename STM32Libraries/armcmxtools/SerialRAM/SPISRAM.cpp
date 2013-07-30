@@ -42,8 +42,9 @@ byte SPISRAM::read(const long & address) {
 
 void SPISRAM::read(const long & address, byte *buffer, const long & size) {
 	select();
-//	SPI.transfer(WRSR);
-//	SPI.transfer(SEQ_MODE);
+	writeStatusRegister(SEQ_MODE);
+  csHigh();
+  csLow();
 	//
 	byte * p = buffer;
 	set_access(READ, address);
@@ -61,9 +62,10 @@ void SPISRAM::write(const long & address, byte data) {
 
 void SPISRAM::write(const long & address, byte *buffer, const long & size) {
 	select();
-//	SPI.transfer(WRSR);
-//	SPI.transfer(SEQ_MODE);
+	writeStatusRegister(SEQ_MODE);
+  csHigh();
 	//
+  csLow();
 	set_access(WRITE, address);
 	for (unsigned int i = 0; i < size; i++)
 		SPIx.transfer(*buffer++);

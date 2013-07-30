@@ -39,58 +39,56 @@
 #include "USARTSerial.h"
 
 
-#define SSP_NUM			0
 #define SSP_CS0       PIO0_2
+#define SSP_CS1       PIO1_23
 #define LED_SD_BUSY   PIO1_19
 
-SPIBus SPI0(&SPI0Def, SSP_CS0, SSP_CS0, SSP_CS0, SSP_CS0);
-SPISRAM sram(SPI0, SSP_CS0, SPISRAM::BUS_MBITS);
+//SPIBus SPI0(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, SSP_CS0); // sck, miso, mosi, cs
+SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, SSP_CS1); // sck, miso, mosi, cs
+SPISRAM sram(SPI1, SSP_CS1, SPISRAM::BUS_MBITS);
 
 /******************************************************************************
 **   Main Function  main()
 ******************************************************************************/
 
-char text[] = "Happy are those who know they are spiritually poor;";
+char text[] = "Awake, arise, or be for ever fall'n. \n" 
+    " They heard, and were abasht, and up they sprung \n"
+    "Upon the wing, as when men wont to watch \n"
+    "On duty, sleeping found by whom they dread, \n"
+    "Rouse and bestir themselves ere well awake.";
 int n = strlen(text);
 
 int main (void) {
   uint32_t t = 0;
-  uint32_t addr;
-  char strbuf[64];
-  char c;
+  uint32_t addr = 0;
+  char strbuf[256];
+//  char c;
    
   SystemCoreClockUpdate();
   start_delay();
 
   Serial.begin(115200);
   Serial.println("Hello.");
+  Serial.print("Text length is ");
+  Serial.println(strlen(text));
   
-  SPI0.begin();
+  SPI1.begin();
   sram.begin();
 
   srand((uint16_t)micros());
-  addr = rand() & 0xfff;
   
   while ( 1 ) {
     if ( t == 0 )
-      addr = rand() & 0xfff;
-    c = text[t];
-    Serial.println(addr+t, HEX);
-    Serial.print(' ');
-    Serial.print(c);
-    Serial.print(' ');
-    sram.write(addr+t, c);
-    c = 0xff;
-    c = sram.read(addr+t);
-    Serial.print(' ');
-    Serial.print(c);
-    Serial.print(" (");
-    Serial.print(c, HEX);
-    Serial.println(")");
+      addr = rand() & 0x1ffff;
+    Serial.printByte(addr);
+    Serial.println(":");
+    sram.write((long) addr, (uint8_t*)text, (long) n);
+    sram.read(addr, (uint8_t*) strbuf, n);
+    strbuf[n] = 0;
+    Serial.println(strbuf);
 
-    t++;
-    t %= n;
-    delay(500);
+    memset(strbuf, 0x20, n);
+    delay(1000);
   }
 }
 
