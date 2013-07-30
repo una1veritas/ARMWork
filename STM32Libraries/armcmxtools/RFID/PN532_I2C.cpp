@@ -29,11 +29,11 @@ PN532::PN532(byte addr, byte irq, byte rst) :
 PN532::PN532(I2CBus & wire, byte addr, byte irq, byte rst) :
 		wire(wire), i2c_addr(addr), pin_irq(irq), pin_rst(rst) {
 #endif
-	if (pin_irq != 0xff) {
+	if (pin_irq != PIN_NOT_DEFINED) {
 		pinMode(pin_irq, INPUT);
 		digitalWrite(pin_irq, HIGH); // pull-up
 	}
-	if (pin_rst != 0xff) {
+	if (pin_rst != PIN_NOT_DEFINED) {
 		pinMode(pin_rst, OUTPUT);
 		digitalWrite(pin_rst, HIGH);
 	}
@@ -45,7 +45,7 @@ PN532::PN532(I2CBus & wire, byte addr, byte irq, byte rst) :
 
 void PN532::init() {
 	// Reset the PN532
-	if (pin_rst != 0xff) {
+	if (pin_rst != PIN_NOT_DEFINED) {
 		digitalWrite(pin_rst, LOW);
 		delay(50);
 		digitalWrite(pin_rst, HIGH);

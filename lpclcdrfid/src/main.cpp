@@ -4,7 +4,7 @@
  */
 
 #include <stdio.h>
-//#include <stdlib.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "LPC11Uxx.h"
@@ -59,7 +59,7 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 
 ST7032i i2clcd(Wire, LCDBKLT, LCDRST);
 DS1307 rtc(Wire, DS1307::CHIP_M41T62);
-PN532  nfcreader(Wire, PN532::I2C_ADDRESS, NFC_IRQ, PIO1_25);
+PN532  nfcreader(Wire, PN532::I2C_ADDRESS, NFC_IRQ, PIN_NOT_DEFINED);
 const byte NFCPolling[] = {
   NFC::BAUDTYPE_212K_F,
   NFC::BAUDTYPE_106K_A,
@@ -99,39 +99,44 @@ void setup() {
   Serial.begin(115200);
   Serial.println("\nUSART Serial started. \nHello.");
 
+  Serial.print("I2C Bus ");
   Wire.begin(); 	/* initialize I2c */
   if ( Wire.status == FALSE )
   	while ( 1 );				/* Fatal error */
-  Serial.println("I2C Bus started.");
+  Serial.println("started.");
   
   // I2C液晶を初期化します
+  Serial.print("I2C LCD ");
   while(1)
     //if(!i2clcd_init(0x27)) break;   // 初期化完了ならwhileを抜ける
     if ( i2clcd.begin() ) break;
     // 失敗したら初期化を永遠に繰り返す
-  Serial.println("I2C LCD started.");
+  Serial.println("started.");
   i2clcd.clear();
   i2clcd.print("Hello.");
   
+  Serial.print("I2C RTC ");
   while(1)
     if ( rtc.begin() ) break;
     // 失敗したら初期化を永遠に繰り返す
-  Serial.println("I2C RTC started.");
+  Serial.println("started.");
 
+  Serial.print("I2C NFC PN532 ");
   nfcreader.begin();
   while (1) {
     if ( nfcreader.GetFirmwareVersion() && nfcreader.getCommandResponse((uint8_t*)tmp) ) 
       break;
     delay(250);
   }
-  Serial << "I2C NFC reader ver. " << tmp[0] << " firm. " << tmp[1] << " rev. " << tmp[2];
+  Serial << "ver. " << tmp[0] << " firm. " << tmp[1] << " rev. " << tmp[2];
   Serial.print(" support ");
   Serial.print(tmp[3], BIN);
+  Serial.println(" started, ");
   if ( !nfcreader.SAMConfiguration() ) {
 		Serial.println("....SAMConfiguration failed. Halt.\n");
 		while (1);
 	}
-  Serial.println(", SAM Configured.");
+  Serial.println("SAM Configured.");
   
   // PIO1_6 USR LED //  GPIOSetDir(1, 6, 1 ); //  GPIOSetBitValue( 1, 6, 1);
   pinMode(USERLED, OUTPUT);
