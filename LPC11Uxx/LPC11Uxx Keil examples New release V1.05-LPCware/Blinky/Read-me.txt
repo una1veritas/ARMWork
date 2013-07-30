@@ -1,8 +1,0 @@
-Purpose:
-Simple blinky for LPC11Uxx
-
-Running mode:
-* Compile, Flash the program and reset.
-
-Output:
-PIO1_19 toggles continuously
