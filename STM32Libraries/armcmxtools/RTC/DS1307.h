@@ -7,7 +7,7 @@
 #define DS1307_h
 
 //#include <stdio.h>
-#include <stdlib.h>
+//#include <stdlib.h>
 //#include <string.h>
 
 #if defined (ARMCMX)

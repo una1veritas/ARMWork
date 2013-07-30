@@ -38,13 +38,21 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 *******************************************************************************/
 
 // Strawberry Linux original lpclcd port maps
+
+#define CAPPUCCINO
+#if defined(LPCLCD)
 #define LCDBKLT PIO1_3
+#define NFC_IRQ PIO1_5
+#elif defined (CAPPUCCINO)
+#define LCDBKLT PIO0_3
+#define NFC_IRQ PIO0_23
+#endif
+
 #define LCDRST  PIO1_25
 #define USERLED PIO1_6
 #define USERBTN PIO0_1
 #define RXD2    PIO0_18
 #define TXD2    PIO0_19
-#define NFC_IRQ PIO1_5
 
 #define RTC_ADDR 0x68
 

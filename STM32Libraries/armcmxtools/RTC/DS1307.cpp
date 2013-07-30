@@ -186,7 +186,12 @@ float DS1307::CalendarDate(float jd) {
 	} else {
 		year = c - 4715;
 	}
-	return sign(year)*(abs(year)*10000 + month*100 + day + f);
+  if ( year > 0 )
+    return year*10000 + month*100 + day + f;
+  else {
+    year = -year;
+    return -1*(year*10000 + month*100 + day + f);
+  }
 }
 
 
