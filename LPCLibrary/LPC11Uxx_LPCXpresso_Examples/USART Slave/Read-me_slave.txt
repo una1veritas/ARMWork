@@ -1,5 +1,0 @@
-Purpose:
-Configure USART in Slave mode on LPC11Uxx
-
-Running mode:
-* Build, Debug

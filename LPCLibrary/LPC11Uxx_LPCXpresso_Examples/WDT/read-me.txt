@@ -1,9 +1,0 @@
-Purpose:
-To implement Watch Dog Timer (WDT) on LPC11Uxx
-
-Running mode:
-* Build, Debug
-
-Description:
-When a WDT reset occurs, PIO0_8 toggles continuosly
-Else, when there is no WDT reset is detected PIO0_7 toggles continuosly

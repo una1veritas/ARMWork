@@ -1,5 +1,0 @@
-Purpose:
-This example implements I2C monitor which include I2C monitor initialization, I2C interrupt handler, and APIs for I2C monitoring.
-
-Running mode:
-* Build, Debug

@@ -1,5 +1,0 @@
-Purpose:
-Configure USART in Master mode on LPC11Uxx
-
-Running mode:
-* Compile, Flash the program and reset.

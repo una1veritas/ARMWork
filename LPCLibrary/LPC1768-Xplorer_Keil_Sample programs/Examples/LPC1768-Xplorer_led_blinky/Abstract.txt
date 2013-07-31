@@ -1,6 +1,0 @@
-The project is a demo program for the LPC1768-Xplorer
-GPIO.
-Toggle LED(D4).
-
-
-

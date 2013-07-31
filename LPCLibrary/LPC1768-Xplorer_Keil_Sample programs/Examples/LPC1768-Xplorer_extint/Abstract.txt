@@ -1,8 +1,0 @@
-The project is a demo program for the LPC1768-Xplorer
-external interrupt.
-
-when user switch is pressed the message "User input detected " is displayed via vcom port.
-
-
-
-

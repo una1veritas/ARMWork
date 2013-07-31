@@ -1,6 +1,0 @@
-LPC1768-Xplorer initial version.
---------------------------------------------------------------------
-Sample programs for LPC1768-Xplorer in KEIL IDE.
-------------------------------------------------------------
-Sample programs to test indivisual peripheral
-Sample program to test all peripherals in on workspace
