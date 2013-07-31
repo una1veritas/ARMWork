@@ -126,6 +126,7 @@ void TIMER16_0_IRQHandler(void)
 ** Returned value:		None
 ** 
 ******************************************************************************/
+#ifdef TIMER16_0_DELAY
 void TIMER16_1_IRQHandler(void)
 {
   if ( LPC_CT16B1->IR & (0x1<<0) )
@@ -150,6 +151,7 @@ void TIMER16_1_IRQHandler(void)
   }
   return;
 }
+#endif
 
 /******************************************************************************
 ** Function name:		enable_timer

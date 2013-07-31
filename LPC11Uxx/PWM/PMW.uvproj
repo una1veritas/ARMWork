@@ -165,6 +165,7 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
+          <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4>.</Flash4>
@@ -350,7 +351,7 @@
               <MiscControls></MiscControls>
               <Define>__DEBUG_RAM</Define>
               <Undefine></Undefine>
-              <IncludePath>.;..\Common\inc</IncludePath>
+              <IncludePath>..\PWM;..\..\LPCLibrary\armcmx\lpc11uxx;..\..\LPCLibrary\armcmx</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -392,9 +393,9 @@
           <GroupName>Source</GroupName>
           <Files>
             <File>
-              <FileName>PWM16_32test.c</FileName>
+              <FileName>PWM16test.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\PWM16_32test.c</FilePath>
+              <FilePath>.\PWM16test.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -419,88 +420,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Common</GroupName>
-          <GroupOption>
-            <CommonProperty>
-              <UseCPPCompiler>0</UseCPPCompiler>
-              <RVCTCodeConst>0</RVCTCodeConst>
-              <RVCTZI>0</RVCTZI>
-              <RVCTOtherData>0</RVCTOtherData>
-              <ModuleSelection>0</ModuleSelection>
-              <IncludeInBuild>2</IncludeInBuild>
-              <AlwaysBuild>2</AlwaysBuild>
-              <GenerateAssemblyFile>2</GenerateAssemblyFile>
-              <AssembleAssemblyFile>2</AssembleAssemblyFile>
-              <PublicsOnly>2</PublicsOnly>
-              <StopOnExitCode>11</StopOnExitCode>
-              <CustomArgument></CustomArgument>
-              <IncludeLibraryModules></IncludeLibraryModules>
-            </CommonProperty>
-            <GroupArmAds>
-              <Cads>
-                <interw>2</interw>
-                <Optim>0</Optim>
-                <oTime>2</oTime>
-                <SplitLS>2</SplitLS>
-                <OneElfS>2</OneElfS>
-                <Strict>2</Strict>
-                <EnumInt>2</EnumInt>
-                <PlainCh>2</PlainCh>
-                <Ropi>2</Ropi>
-                <Rwpi>2</Rwpi>
-                <wLevel>0</wLevel>
-                <uThumb>2</uThumb>
-                <uSurpInc>2</uSurpInc>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath>..\Common\inc</IncludePath>
-                </VariousControls>
-              </Cads>
-              <Aads>
-                <interw>2</interw>
-                <Ropi>2</Ropi>
-                <Rwpi>2</Rwpi>
-                <thumb>2</thumb>
-                <SplitLS>2</SplitLS>
-                <SwStkChk>2</SwStkChk>
-                <NoWarn>2</NoWarn>
-                <uSurpInc>2</uSurpInc>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </Aads>
-            </GroupArmAds>
-          </GroupOption>
-          <Files>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Common\src\gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>timer32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Common\src\timer32.c</FilePath>
-            </File>
-            <File>
-              <FileName>timer16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Common\src\timer16.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>Documentation</GroupName>
           <Files>
             <File>
               <FileName>Read-me.txt</FileName>
               <FileType>5</FileType>
               <FilePath>.\Read-me.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>armcmx</GroupName>
+          <Files>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\gpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Common</GroupName>
+          <Files>
+            <File>
+              <FileName>timer16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Common\src\timer16.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -665,6 +615,7 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
+          <bUseTDR>0</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3></Flash3>
           <Flash4></Flash4>
@@ -892,9 +843,9 @@
           <GroupName>Source</GroupName>
           <Files>
             <File>
-              <FileName>PWM16_32test.c</FileName>
+              <FileName>PWM16test.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\PWM16_32test.c</FilePath>
+              <FilePath>.\PWM16test.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -919,88 +870,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Common</GroupName>
-          <GroupOption>
-            <CommonProperty>
-              <UseCPPCompiler>0</UseCPPCompiler>
-              <RVCTCodeConst>0</RVCTCodeConst>
-              <RVCTZI>0</RVCTZI>
-              <RVCTOtherData>0</RVCTOtherData>
-              <ModuleSelection>0</ModuleSelection>
-              <IncludeInBuild>2</IncludeInBuild>
-              <AlwaysBuild>2</AlwaysBuild>
-              <GenerateAssemblyFile>2</GenerateAssemblyFile>
-              <AssembleAssemblyFile>2</AssembleAssemblyFile>
-              <PublicsOnly>2</PublicsOnly>
-              <StopOnExitCode>11</StopOnExitCode>
-              <CustomArgument></CustomArgument>
-              <IncludeLibraryModules></IncludeLibraryModules>
-            </CommonProperty>
-            <GroupArmAds>
-              <Cads>
-                <interw>2</interw>
-                <Optim>0</Optim>
-                <oTime>2</oTime>
-                <SplitLS>2</SplitLS>
-                <OneElfS>2</OneElfS>
-                <Strict>2</Strict>
-                <EnumInt>2</EnumInt>
-                <PlainCh>2</PlainCh>
-                <Ropi>2</Ropi>
-                <Rwpi>2</Rwpi>
-                <wLevel>0</wLevel>
-                <uThumb>2</uThumb>
-                <uSurpInc>2</uSurpInc>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath>..\Common\inc</IncludePath>
-                </VariousControls>
-              </Cads>
-              <Aads>
-                <interw>2</interw>
-                <Ropi>2</Ropi>
-                <Rwpi>2</Rwpi>
-                <thumb>2</thumb>
-                <SplitLS>2</SplitLS>
-                <SwStkChk>2</SwStkChk>
-                <NoWarn>2</NoWarn>
-                <uSurpInc>2</uSurpInc>
-                <VariousControls>
-                  <MiscControls></MiscControls>
-                  <Define></Define>
-                  <Undefine></Undefine>
-                  <IncludePath></IncludePath>
-                </VariousControls>
-              </Aads>
-            </GroupArmAds>
-          </GroupOption>
-          <Files>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Common\src\gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>timer32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Common\src\timer32.c</FilePath>
-            </File>
-            <File>
-              <FileName>timer16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Common\src\timer16.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>Documentation</GroupName>
           <Files>
             <File>
               <FileName>Read-me.txt</FileName>
               <FileType>5</FileType>
               <FilePath>.\Read-me.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>armcmx</GroupName>
+          <Files>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\gpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Common</GroupName>
+          <Files>
+            <File>
+              <FileName>timer16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Common\src\timer16.c</FilePath>
             </File>
           </Files>
         </Group>
