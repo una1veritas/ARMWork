@@ -165,6 +165,7 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
+          <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
@@ -334,10 +335,10 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>3</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>1</OneElfS>
+            <OneElfS>0</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
@@ -350,7 +351,7 @@
               <MiscControls></MiscControls>
               <Define>ARMCMX</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\..\LPCLibrary\armcmx\lpc11uxx;..\..\..\LPCLibrary\armcmx;..\inc;..\src;..\..\..\STM32Libraries\armcmxtools\LCD</IncludePath>
+              <IncludePath>..\src;..\..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\..\LPCLibrary\armcmx\lpc11uxx;..\..\..\LPCLibrary\armcmx;..\..\..\STM32Libraries\armcmxtools\LCD</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -364,7 +365,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define></Define>
+              <Define>NO_CRP</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -406,20 +407,30 @@
               <FileType>8</FileType>
               <FilePath>..\src\main.cpp</FilePath>
             </File>
+            <File>
+              <FileName>systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\systick.c</FilePath>
+            </File>
+            <File>
+              <FileName>systick.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\src\systick.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>cmsis2.0</GroupName>
           <Files>
             <File>
-              <FileName>system_LPC11Uxx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\system_LPC11Uxx.c</FilePath>
-            </File>
-            <File>
               <FileName>core_cm0.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\LPCLibrary\CMSISv2p00_LPC11Uxx\src\core_cm0.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_LPC11Uxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\LPCLibrary\CMSISv2p00_LPC11Uxx\src\system_LPC11Uxx.c</FilePath>
             </File>
           </Files>
         </Group>

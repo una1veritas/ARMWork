@@ -30,6 +30,9 @@
 #include "LPC11Uxx.h"                        /* LPC11xx definitions */
 #include "gpio.h"
 
+#include "armcmx.h"
+#include "delay.h"
+
 #define SYSTICK_DELAY		(SystemCoreClock/100)
 
 volatile uint32_t TimeTick = 0;
@@ -70,15 +73,21 @@ int main (void)
   
   /* Enable AHB clock to the GPIO domain. */
   LPC_SYSCON->SYSAHBCLKCTRL |= (1<<6);
+
+  start_delay();
   
   /* Set port 1_20 to output */
-  GPIOSetDir( 1, 20, 1 );
+  GPIOSetDir( 1, 6, 1 );
 
   while (1)                                /* Loop forever */
   {
-	delaySysTick(10);
-	GPIOSetBitValue( 1, 20, 0 );
-	delaySysTick(10);
-	GPIOSetBitValue( 1, 20, 1 );
+	delaySysTick(20);
+	GPIOSetBitValue( 1, 6, 0 );
+	delaySysTick(20);
+	GPIOSetBitValue( 1, 6, 1 );
+	delay(100);
+	GPIOSetBitValue( 1, 6, 0 );
+	delay(100);
+	GPIOSetBitValue( 1, 6, 1 );
   }
 }

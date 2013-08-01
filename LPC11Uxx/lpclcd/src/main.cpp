@@ -8,12 +8,14 @@
 #include <string.h>
 
 #include "LPC11Uxx.h"
-//#include "systick.h"
+#include "type.h"
 
 #include "armcmx.h"
+
+#include "systick.h"
+
 #include "USARTSerial.h"
 #include "I2CBus.h"
-#include "i2clcd.h"
 #include "ST7032i.h"
 
 #ifdef _LPCXPRESSO_CRP_
@@ -32,102 +34,69 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 *******************************************************************************/
 
 // Strawberry Linux original lpclcd port maps
-//#define LCDBKLT PIO1_3
-#define LCDBKLT PIO1_3
+#define LPCLCDBKLT PIO1_3
+//#define CAPPUCINOBKLT PIO0_3
 #define LCDRST  PIO1_25
 #define USERLED PIO1_6
 #define USERBTN PIO0_1
 #define RXD2    PIO0_18
 #define TXD2    PIO0_19
 
-//#define LED_SD_BUSY   PIO1_19
+#define CAPPUCINO_LED_SDBUSY   PIO1_19
+
 #define SYSTICK_DELAY		(SystemCoreClock/100)
 
-volatile uint32_t TimeTick = 0;
-
-/* SysTick interrupt happens every 10 ms */
-void SysTick_Handler(void)
-{
-  TimeTick++;
-}
-
-void delaySysTick(uint32_t tick)
-{
-  uint32_t timetick;
-
-  /* Clear SysTick Counter */
-  SysTick->VAL = 0;
-  /* Enable the SysTick Counter */
-  SysTick->CTRL |= (0x1<<0);
-
-  timetick = TimeTick;
-  while ((TimeTick - timetick) < tick);
-  
-  /* Disable SysTick Counter */
-  SysTick->CTRL &= ~(0x1<<0);
-  /* Clear SysTick Counter */
-  SysTick->VAL = 0;
-  return;
-}
-ST7032i i2clcd(Wire, LCDBKLT, LCDRST);
+ST7032i i2clcd(Wire, LPCLCDBKLT, LCDRST);
 
 int main (void) {
+	long sw;
   char str[32];
-  long sw;
   int i;
   
-  SystemInit();
   SystemCoreClockUpdate();
-  
+
+  SystemInit();
   GPIOInit();
+  start_delay();
   
+  sw = SYSTICK_DELAY;
   // systick initialize
-  SysTick_Config( SystemCoreClock / 1000 );
-  LPC_SYSCON->SYSAHBCLKCTRL |= (1<<6);
-
-    /* Clear SysTick Counter */
+  SysTick_Config(SYSTICK_DELAY);
+  // Clear SysTick Counter 
   SysTick->VAL = 0;
-  /* Enable the SysTick Counter */
-  SysTick->CTRL |= (0x1<<0);
-
-  init_timer16_1();
-  enable_timer16_1();
+  // Enable the SysTick Counter 
+  SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
   
+  delay(200);
   // I2C LCD Backlight controll pin
-  pinMode(LCDBKLT, OUTPUT);
-  digitalWrite(LCDBKLT, LOW);
+  pinMode(LPCLCDBKLT, OUTPUT);
+  digitalWrite(LPCLCDBKLT, LOW);
   
   pinMode(USERBTN, INPUT);
-
+  
   Wire.begin();
-  if ( Wire.status == FALSE ){	/* initialize I2c */
+  if ( Wire.status == FALSE ) 
   	while ( 1 );				/* Fatal error */
-  }
 
   // I2C液晶を初期化します
-  while(1){
-    //if(!i2clcd_init(0x27)) break;   // 初期化完了ならwhileを抜ける
-    if ( i2clcd.begin() ) break;
-    // 失敗したら初期化を永遠に繰り返す
-  }
+  if ( ! i2clcd.begin() ) 
+    while (1); 
 
-  // PIO1_6 USR LED //  GPIOSetDir(1, 6, 1 ); //  GPIOSetBitValue( 1, 6, 1);
   pinMode(USERLED, OUTPUT);
   digitalWrite(USERLED, HIGH);
     
-  Serial.print("Hello!\n");
-
-
-  i2clcd.print("I'm lpclcd.");
+  i2clcd.print("I was an lpclcd.");
   i2clcd.setCursor(0, 1);	// move to 2nd line
   i2clcd.print("Hi, everybody!");
   for(i = 0; i < 3; i++) {
-    delay(750);
+    delay(500);
     i2clcd.noDisplay();
-    delay(250);
+    delay(500);
     i2clcd.display();
   }
+  delay(500);
   i2clcd.clear();
+  
   sw = millis();
   
   while (1){    /* Loop forever */
@@ -139,8 +108,6 @@ int main (void) {
       sprintf(str, " %06d", TimeTick);
       i2clcd.print(str);
     }
-    
-
   }
   
 }

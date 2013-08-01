@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-//#include "armcmx.h"
+#include "armcmx.h"
 
 extern volatile uint32_t __counter_micros;
 extern volatile uint32_t __counter_millis;
