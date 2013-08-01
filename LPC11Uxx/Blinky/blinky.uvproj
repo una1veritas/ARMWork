@@ -7,19 +7,19 @@
 
   <Targets>
     <Target>
-      <TargetName>PWM_Debug</TargetName>
+      <TargetName>Blinky_Debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
         <TargetCommonOption>
-          <Device>LPC11U37/401</Device>
-          <Vendor>NXP (founded by Philips)</Vendor>
-          <Cpu>IRAM(0x10000000-0x10001FFF) IRAM2(0x20004000-0x200047FF) IROM(0-0x1FFFF) CLOCK(12000000) CPUTYPE("Cortex-M0")</Cpu>
+          <Device>Cortex-M0</Device>
+          <Vendor>ARM</Vendor>
+          <Cpu>CLOCK(12000000) CPUTYPE("Cortex-M0")</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
-          <StartupFile>"STARTUP\NXP\LPC11Uxx\startup_LPC11Uxx.s" ("NXP LPC11Uxx Startup Code")</StartupFile>
-          <FlashDriverDll>UL2CM3(-O4303 -S0 -C0 -FO7 -FD10000000 -FC800 -FN1 -FF0LPC1xxx_128 -FS00 -FL020000)</FlashDriverDll>
-          <DeviceId>6508</DeviceId>
-          <RegisterFile>LPC11Uxx.h</RegisterFile>
+          <StartupFile></StartupFile>
+          <FlashDriverDll></FlashDriverDll>
+          <DeviceId>4803</DeviceId>
+          <RegisterFile></RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -29,13 +29,13 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>SFD\NXP\LPC11Uxx\LPC11Uxx.SFR</SFDFile>
+          <SFDFile></SFDFile>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath>NXP\LPC11Uxx\</RegisterFilePath>
-          <DBRegisterFilePath>NXP\LPC11Uxx\</DBRegisterFilePath>
+          <RegisterFilePath>NXP\</RegisterFilePath>
+          <DBRegisterFilePath>NXP\</DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -44,7 +44,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Obj\</OutputDirectory>
-          <OutputName>pwmtest</OutputName>
+          <OutputName>Blinky</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -102,11 +102,11 @@
           <SimDllName>SARMCM3.DLL</SimDllName>
           <SimDllArguments></SimDllArguments>
           <SimDlgDll>DARMCM1.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pCM0</SimDlgDllArguments>
+          <SimDlgDllArguments></SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
           <TargetDlgDll>TARMCM1.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pCM0</TargetDlgDllArguments>
+          <TargetDlgDllArguments></TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -129,14 +129,13 @@
           </Simulator>
           <Target>
             <UseTarget>1</UseTarget>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
+            <LoadApplicationAtStartup>0</LoadApplicationAtStartup>
+            <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <RestoreTracepoints>0</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>1</TargetSelection>
@@ -152,7 +151,7 @@
             <CpuDllArguments></CpuDllArguments>
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
-            <InitializationFile>.</InitializationFile>
+            <InitializationFile>.\RAM.ini</InitializationFile>
             <Driver>BIN\UL2CM3.DLL</Driver>
           </TargetDlls>
         </DebugOption>
@@ -161,13 +160,13 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4096</DriverSelection>
+            <DriverSelection>4097</DriverSelection>
           </Flash1>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
-          <Flash4>.</Flash4>
+          <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>
           <ArmAdsMisc>
@@ -203,12 +202,12 @@
             <mOS>0</mOS>
             <uocRom>0</uocRom>
             <uocRam>0</uocRam>
-            <hadIROM>1</hadIROM>
-            <hadIRAM>1</hadIRAM>
+            <hadIROM>0</hadIROM>
+            <hadIRAM>0</hadIRAM>
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
-            <hadIRAM2>1</hadIRAM2>
+            <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
             <useUlib>1</useUlib>
@@ -267,12 +266,12 @@
               <IRAM>
                 <Type>0</Type>
                 <StartAddress>0x10000000</StartAddress>
-                <Size>0x2000</Size>
+                <Size>0x8000</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x20000</Size>
+                <Size>0x40000</Size>
               </IROM>
               <XRAM>
                 <Type>0</Type>
@@ -296,8 +295,8 @@
               </OCR_RVCT3>
               <OCR_RVCT4>
                 <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x20000</Size>
+                <StartAddress>0x10000000</StartAddress>
+                <Size>0x1c00</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -321,13 +320,13 @@
               </OCR_RVCT8>
               <OCR_RVCT9>
                 <Type>0</Type>
-                <StartAddress>0x10000000</StartAddress>
-                <Size>0x2000</Size>
+                <StartAddress>0x10001c00</StartAddress>
+                <Size>0x400</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
-                <StartAddress>0x20004000</StartAddress>
-                <Size>0x800</Size>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector></RvctStartVector>
@@ -337,7 +336,7 @@
             <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>1</OneElfS>
+            <OneElfS>0</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
@@ -345,12 +344,11 @@
             <Rwpi>0</Rwpi>
             <wLevel>0</wLevel>
             <uThumb>0</uThumb>
-            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>__DEBUG_RAM</Define>
               <Undefine></Undefine>
-              <IncludePath>..\PWM;..\..\LPCLibrary\armcmx\lpc11uxx;..\..\LPCLibrary\armcmx</IncludePath>
+              <IncludePath>.;..\Common\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -361,7 +359,6 @@
             <SplitLS>0</SplitLS>
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
-            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>NO_CRP</Define>
@@ -392,9 +389,9 @@
           <GroupName>Source</GroupName>
           <Files>
             <File>
-              <FileName>PWM16test.c</FileName>
+              <FileName>blinky.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\PWM16test.c</FilePath>
+              <FilePath>.\blinky.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -419,6 +416,85 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>Common</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>2</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath>..\Common\inc</IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+          <Files>
+            <File>
+              <FileName>clkconfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Common\src\clkconfig.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Common\src\timer16.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Common\src\gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>nmi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Common\src\nmi.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>Documentation</GroupName>
           <Files>
             <File>
@@ -428,45 +504,10 @@
             </File>
           </Files>
         </Group>
-        <Group>
-          <GroupName>armcmx</GroupName>
-          <Files>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\systick.c</FilePath>
-            </File>
-            <File>
-              <FileName>systick.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\systick.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Common</GroupName>
-          <Files>
-            <File>
-              <FileName>timer16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Common\src\timer16.c</FilePath>
-            </File>
-          </Files>
-        </Group>
       </Groups>
     </Target>
     <Target>
-      <TargetName>PWM_Release</TargetName>
+      <TargetName>Blinky_Release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -503,7 +544,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Obj\</OutputDirectory>
-          <OutputName>PWMtest</OutputName>
+          <OutputName>Blinky</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -539,7 +580,7 @@
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </AfterMake>
-          <SelectedForBatchBuild>0</SelectedForBatchBuild>
+          <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString></SVCSIdString>
         </TargetCommonOption>
         <CommonProperty>
@@ -595,7 +636,6 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <RestoreTracepoints>0</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>1</TargetSelection>
@@ -643,7 +683,7 @@
             <ldXref>1</ldXref>
             <BigEnd>0</BigEnd>
             <AdsALst>1</AdsALst>
-            <AdsACrf>1</AdsACrf>
+            <AdsACrf>0</AdsACrf>
             <AdsANop>0</AdsANop>
             <AdsANot>0</AdsANot>
             <AdsLLst>1</AdsLLst>
@@ -804,7 +844,6 @@
             <Rwpi>0</Rwpi>
             <wLevel>0</wLevel>
             <uThumb>0</uThumb>
-            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>__DEBUG_FLASH</Define>
@@ -820,7 +859,6 @@
             <SplitLS>0</SplitLS>
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
-            <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>NO_CRP</Define>
@@ -851,9 +889,9 @@
           <GroupName>Source</GroupName>
           <Files>
             <File>
-              <FileName>PWM16test.c</FileName>
+              <FileName>blinky.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\PWM16test.c</FilePath>
+              <FilePath>.\blinky.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -878,47 +916,91 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>Common</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>2</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath>..\Common\inc</IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+          <Files>
+            <File>
+              <FileName>clkconfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Common\src\clkconfig.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Common\src\timer16.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Common\src\gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>nmi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Common\src\nmi.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>Documentation</GroupName>
           <Files>
             <File>
               <FileName>Read-me.txt</FileName>
               <FileType>5</FileType>
               <FilePath>.\Read-me.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>armcmx</GroupName>
-          <Files>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\systick.c</FilePath>
-            </File>
-            <File>
-              <FileName>systick.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\systick.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Common</GroupName>
-          <Files>
-            <File>
-              <FileName>timer16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Common\src\timer16.c</FilePath>
             </File>
           </Files>
         </Group>
