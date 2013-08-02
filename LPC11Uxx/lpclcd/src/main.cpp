@@ -10,9 +10,10 @@
 #include "LPC11Uxx.h"
 #include "type.h"
 
-#include "armcmx.h"
+#define DELAY_SYSTICK
 
-#include "systick.h"
+#include "armcmx.h"
+#include "delay.h"
 
 #include "USARTSerial.h"
 #include "I2CBus.h"
@@ -44,8 +45,6 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 
 #define CAPPUCINO_LED_SDBUSY   PIO1_19
 
-#define SYSTICK_DELAY		(SystemCoreClock/100)
-
 ST7032i i2clcd(Wire, LPCLCDBKLT, LCDRST);
 
 int main (void) {
@@ -53,20 +52,10 @@ int main (void) {
   char str[32];
   int i;
   
-  SystemCoreClockUpdate();
-
   SystemInit();
   GPIOInit();
   start_delay();
-  
-  sw = SYSTICK_DELAY;
-  // systick initialize
-  SysTick_Config(SYSTICK_DELAY);
-  // Clear SysTick Counter 
-  SysTick->VAL = 0;
-  // Enable the SysTick Counter 
-  SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
-  
+    
   delay(200);
   // I2C LCD Backlight controll pin
   pinMode(LPCLCDBKLT, OUTPUT);
@@ -104,8 +93,11 @@ int main (void) {
     if ( millis() != sw ) {
       sw = millis();
 
+      i2clcd.setCursor(0, 0);
+      sprintf(str, " %08d", micros());
+      i2clcd.print(str);
       i2clcd.setCursor(0, 1);
-      sprintf(str, " %06d", TimeTick);
+      sprintf(str, " %08d", millis());
       i2clcd.print(str);
     }
   }

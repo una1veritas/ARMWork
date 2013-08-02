@@ -165,7 +165,6 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
-          <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
@@ -407,16 +406,6 @@
               <FileType>8</FileType>
               <FilePath>..\src\main.cpp</FilePath>
             </File>
-            <File>
-              <FileName>systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\systick.c</FilePath>
-            </File>
-            <File>
-              <FileName>systick.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\src\systick.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -478,9 +467,9 @@
               <FilePath>..\..\..\LPCLibrary\armcmx\I2CBus.cpp</FilePath>
             </File>
             <File>
-              <FileName>delay.c</FileName>
+              <FileName>delay_systick.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\LPCLibrary\armcmx\lpc11uxx\delay.c</FilePath>
+              <FilePath>..\..\..\LPCLibrary\armcmx\lpc11uxx\delay_systick.c</FilePath>
             </File>
           </Files>
         </Group>
