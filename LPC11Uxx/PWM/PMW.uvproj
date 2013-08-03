@@ -165,6 +165,7 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
+          <bUseTDR>0</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4>.</Flash4>
@@ -432,36 +433,24 @@
           <GroupName>armcmx</GroupName>
           <Files>
             <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay.c</FilePath>
-            </File>
-            <File>
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\gpio.c</FilePath>
             </File>
             <File>
-              <FileName>systick.c</FileName>
+              <FileName>delay_systick.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\systick.c</FilePath>
+              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay_systick.c</FilePath>
             </File>
             <File>
-              <FileName>systick.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\systick.h</FilePath>
+              <FileName>PWM0tone.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\PWM0tone.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Common</GroupName>
-          <Files>
-            <File>
-              <FileName>timer16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Common\src\timer16.c</FilePath>
-            </File>
-          </Files>
         </Group>
       </Groups>
     </Target>
@@ -624,6 +613,7 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
+          <bUseTDR>0</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3></Flash3>
           <Flash4></Flash4>
@@ -891,36 +881,24 @@
           <GroupName>armcmx</GroupName>
           <Files>
             <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay.c</FilePath>
-            </File>
-            <File>
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\gpio.c</FilePath>
             </File>
             <File>
-              <FileName>systick.c</FileName>
+              <FileName>delay_systick.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\systick.c</FilePath>
+              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay_systick.c</FilePath>
             </File>
             <File>
-              <FileName>systick.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\systick.h</FilePath>
+              <FileName>PWM0tone.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\PWM0tone.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Common</GroupName>
-          <Files>
-            <File>
-              <FileName>timer16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Common\src\timer16.c</FilePath>
-            </File>
-          </Files>
         </Group>
       </Groups>
     </Target>

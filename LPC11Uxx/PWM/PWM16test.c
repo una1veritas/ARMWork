@@ -32,76 +32,69 @@
 #include "timer16.h"
 #include "delay.h"
 
+#include "PWM0tone.h"
+
+#ifdef CAPPUCINO
 #define LCDBKLT PIO0_3
+#else
+#define LCDBKLT PIO1_3
+#endif
 #define LCDRST  PIO1_25
 #define USERLED PIO1_6
 #define USERBTN PIO0_1
 #define RXD2    PIO0_18
 #define TXD2    PIO0_19
 
-volatile uint32_t period;
-void beep_up(void);
-void beep_down(void);
-
 /* Main Program */
 
 int main (void) 
 { 
-  long swatch;
+  long toggled;
+  long swatch, btndur;
+  uint8_t btnstate;
   
   SystemInit();
   SystemCoreClockUpdate();  
 
   start_delay();
-  delay(5);
   GPIOInit();
   
-  pinMode(PIO0_1, INPUT);
-  pinMode(PIO1_6, OUTPUT);
+  pinMode(USERBTN, INPUT);
+  pinMode(USERLED, OUTPUT);
+  pinMode(LCDBKLT, OUTPUT);
   
+  PWM0_tone(PIO0_8, 1320, 100);
+	PWM0_tone(PIO0_8, 1540, 100);
+
+  toggled = millis();
+  btnstate = HIGH;
+
   while (1)                                /* Loop forever */
   {
-    if ( digitalRead(PIO0_1) == LOW ) {
+    if ( btnstate == HIGH && digitalRead(PIO0_1) == LOW ) {
+      btnstate = LOW;
       swatch = millis();
-      while ( digitalRead(PIO0_1) == LOW) {
-        if ( millis() >= swatch + 500 )
-          break;
+    } else
+    if ( btnstate == LOW && digitalRead(PIO0_1) == HIGH ) {
+      btnstate = HIGH;
+      if ( millis() >= swatch + 10 ) {
+        btndur = millis() - swatch;
+      } else {
+        btndur = 0;
       }
-      if ( millis() >= swatch + 500 )
-        beep_up();
-      else 
-        beep_down();
+      if ( btndur > 667 ) {
+        digitalToggle(LCDBKLT);
+        PWM0_tone(PIO0_8, 1320, 100);
+        PWM0_tone(PIO0_8, 1540, 100);
+      } else {
+        PWM0_tone(PIO0_8, 1100, 100);
+        PWM0_tone(PIO0_8, 880, 100);
+      }
     }
-    digitalToggle(PIO1_6);
-    delay(1000);
+    if ( millis() >= toggled + 1000 ) {
+      digitalToggle(USERLED);
+      toggled = millis();
+    }
   }
-}
-
-void beep_up() {
-    /* Initialize the PWM in timer16_0 enabling match1 output */
-	period = SystemCoreClock/1320;  // PWM frequency  
-  init_timer16PWM(0, period, MATCH1, 0);
-//  setMatch_timer16PWM (0, 1, period/2);
-  enable_timer16(0);
-  delay(100);
-	period = SystemCoreClock/1540;  // PWM frequency  
-  init_timer16PWM(0, period, MATCH1, 0);
-  enable_timer16(0);
-  delay(100);
-  disable_timer16(0);
-}
-
-void beep_down() {
-    /* Initialize the PWM in timer16_0 enabling match1 output */
-	period = SystemCoreClock/1100;  // PWM frequency  
-  init_timer16PWM(0, period, MATCH1, 0);
-//  setMatch_timer16PWM (0, 1, period/2);
-  enable_timer16(0);
-  delay(100);
-	period = SystemCoreClock/880;  // PWM frequency  
-  init_timer16PWM(0, period, MATCH1, 0);
-  enable_timer16(0);
-  delay(100);
-  disable_timer16(0);
 }
 
