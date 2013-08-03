@@ -10,7 +10,8 @@
 #include "LPC11Uxx.h"
 #include "type.h"
 
-#define DELAY_SYSTICK
+//#define DELAY_TIMER16_1
+//DELAY_SYSTICK
 
 #include "armcmx.h"
 #include "delay.h"
@@ -48,7 +49,7 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 ST7032i i2clcd(Wire, LPCLCDBKLT, LCDRST);
 
 int main (void) {
-	long sw;
+	long sw, mu;
   char str[32];
   int i;
   
@@ -91,14 +92,17 @@ int main (void) {
   while (1){    /* Loop forever */
     
     if ( millis() != sw ) {
+      mu = micros();
       sw = millis();
 
       i2clcd.setCursor(0, 0);
-      sprintf(str, " %08d", micros());
+      sprintf(str, " %08ld", mu);
       i2clcd.print(str);
       i2clcd.setCursor(0, 1);
-      sprintf(str, " %08d", millis());
+      sprintf(str, " %08ld", sw);
       i2clcd.print(str);
+      
+      while ( digitalRead(USERBTN) == LOW);
     }
   }
   
