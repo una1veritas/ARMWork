@@ -417,6 +417,11 @@
               <FileType>1</FileType>
               <FilePath>..\src\mmc_spi.c</FilePath>
             </File>
+            <File>
+              <FileName>sd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\sd.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

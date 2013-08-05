@@ -33,14 +33,6 @@
 __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #endif
 
-
-FATFS Fatfs;		/* File system object */
-FIL Fil;			/* File object */
-static uint8_t buff[32];
-void sd_test(void);
-void die(FRESULT rc);
-DWORD get_fattime(void);
-
 int main(void) {
 	long cn;
 
@@ -91,66 +83,3 @@ int main(void) {
 //	return 0 ;
 }
 
-
-void sd_test() {
-	FRESULT rc;
-
-//	DIR dir;				/* Directory object */
-//	FILINFO fno;			/* File information object */
-	UINT bw, br, i;
-  uint16_t linenum;
-  
-	f_mount(0, &Fatfs);		/* Register volume work area (never fails) */
-
-	/*
-	 * SDカードのMESSAGE.TXTを開いてI2C液晶に表示します。英数カナのみ
-	 * ２行分のみ
-	 */
-	rc = f_open(&Fil, "MESSAGE.TXT", FA_READ);
-	if (!rc){
-		USART_puts(&usart, "\nType the file content.\n");
-    for (;;) {
-      rc = f_read(&Fil, buff, sizeof(buff), &br);	/* Read a chunk of file */
-      if (rc || !br) break;			/* Error or end of file */
-
-      for (i = 0; i < br; i++){
-        USART_write(&usart, buff[0]);
-      }
-    }
-    if (rc) die(rc);
-    rc = f_close(&Fil);
-  /*
-   *	ファイル書き込みテスト
-   *	SD0001.TXTファイルを作成し、Strawberry Linuxの文字を永遠に書き込む
-   */
-
-    rc = f_open(&Fil, "SD0001.TXT", FA_WRITE | FA_CREATE_ALWAYS);
-    if (rc) die(rc);
-
-    // 無限ループでこの関数からは抜けない
-      while(1){
-        rc = f_write(&Fil, "Strawberry Linux\r\n", 18, &bw);
-        if (rc) die(rc);
-
-        // SDカードに書き出します。
-        f_sync(&Fil);
-      }
-//	return;
-}
-}
-
-DWORD get_fattime()
-{
-  return 0;
-}
-
-void die(FRESULT rc) {
-  switch(rc) {
-    case 0x03:
-      USART_puts(&usart, "FR_NOT_READY.\n");
-      break;
-    default:
-      sprintf((uint8_t*)buff, "error %d.\n", rc);
-  }
-  USART_puts(&usart, "\ndied.\n");
-}
