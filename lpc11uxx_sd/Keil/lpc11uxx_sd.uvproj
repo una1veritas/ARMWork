@@ -413,19 +413,9 @@
               <FilePath>..\src\ff.c</FilePath>
             </File>
             <File>
-              <FileName>mmc_ssp.c</FileName>
+              <FileName>mmc_spi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\mmc_ssp.c</FilePath>
-            </File>
-            <File>
-              <FileName>sd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\sd.c</FilePath>
-            </File>
-            <File>
-              <FileName>ssp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\ssp.c</FilePath>
+              <FilePath>..\src\mmc_spi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -481,6 +471,26 @@
               <FileName>ST7032i.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\STM32Libraries\armcmxtools\LCD\ST7032i.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Print.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\Print.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>I2CBus.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\I2CBus.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Stream.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\Stream.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\i2c.c</FilePath>
             </File>
           </Files>
         </Group>

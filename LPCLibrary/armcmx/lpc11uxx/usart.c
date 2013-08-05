@@ -274,31 +274,29 @@ void USART_init(USARTDef * uart, const GPIOPin rx, const GPIOPin tx) {
 
   NVIC_DisableIRQ(UART_IRQn);
     /* Select only one location from below. */
-if ( rx == PIO0_18 && tx == PIO0_19 ) {
-  LPC_IOCON->PIO0_18 &= ~0x07;    /*  UART I/O config */
-  LPC_IOCON->PIO0_18 |= 0x01;     /* UART RXD */
-  LPC_IOCON->PIO0_19 &= ~0x07;	
-  LPC_IOCON->PIO0_19 |= 0x01;     /* UART TXD */
-  }
-#if 0
+ if ( rx == PIO1_14 && tx == PIO1_13 ) {
   LPC_IOCON->PIO1_14 &= ~0x07;    /*  UART I/O config */
   LPC_IOCON->PIO1_14 |= 0x03;     /* UART RXD */
   LPC_IOCON->PIO1_13 &= ~0x07;	
   LPC_IOCON->PIO1_13 |= 0x03;     /* UART TXD */
-#endif
-#if 0
+  } else if ( rx == PIO1_17 && tx == PIO1_18 ) {
   LPC_IOCON->PIO1_17 &= ~0x07;    /*  UART I/O config */
   LPC_IOCON->PIO1_17 |= 0x02;     /* UART RXD */
   LPC_IOCON->PIO1_18 &= ~0x07;	
   LPC_IOCON->PIO1_18 |= 0x02;     /* UART TXD */
-#endif
-#if 0
+  } else if  ( rx == PIO1_26 && tx == PIO1_27 ) {
   LPC_IOCON->PIO1_26 &= ~0x07;    /*  UART I/O config */
   LPC_IOCON->PIO1_26 |= 0x02;     /* UART RXD */
   LPC_IOCON->PIO1_27 &= ~0x07;	
   LPC_IOCON->PIO1_27 |= 0x02;     /* UART TXD */
-#endif
-  
+  } 
+  else // if ( rx == PIO0_18 && tx == PIO0_19 ) 
+  {
+  LPC_IOCON->PIO0_18 &= ~0x07;    /*  UART I/O config */
+  LPC_IOCON->PIO0_18 |= 0x01;     /* UART RXD */
+  LPC_IOCON->PIO0_19 &= ~0x07;	
+  LPC_IOCON->PIO0_19 |= 0x01;     /* UART TXD */
+  } 
 }
 
 /*****************************************************************************

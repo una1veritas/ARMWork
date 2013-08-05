@@ -82,8 +82,8 @@ int main (void) {
 //  SysTick_Config( SystemCoreClock / 1000 );
 //  LPC_SYSCON->SYSAHBCLKCTRL |= (1<<6);
 
-  init_timer16_1();
-  enable_timer16_1();
+  start_delay(); //init_timer16_1();
+  //enable_timer16_1();
 
   // initialize xprintf
   //xfunc_out = (void(*)(unsigned char))i2clcd_data;

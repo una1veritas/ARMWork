@@ -1,13 +1,9 @@
 
 #include "LPC11Uxx.h"
-#include "type.h"
-#include "gpio.h"
-#include "xprintf.h"
-#include "systick.h"
-#include "uart.h"
-#include "i2c.h"
-#include "i2clcd.h"
+#include "armcmx.h"
+#include "usart.h"
 #include "ff.h"
+
 #include "cappuccino.h"
 
 DWORD get_fattime()
@@ -51,15 +47,13 @@ void sd_test()
 	 */
 	rc = f_open(&Fil, "MESSAGE.TXT", FA_READ);
 	if (!rc){
-		 i2c_cmd(0x80);
-//	xprintf("\nType the file content.\n");
+    USART_puts(&usart, "\nType the file content.\n");
     for (;;) {
       rc = f_read(&Fil, buff, sizeof(buff), &br);	/* Read a chunk of file */
       if (rc || !br) break;			/* Error or end of file */
 
       for (i = 0; i < br; i++){
-        if(i==0x10) i2c_cmd(0xC0);
-        i2c_data(buff[i]);
+        USART_write(&usart, buff[i]);
       }
     }
     if (rc) die(rc);

@@ -63,8 +63,8 @@ int main (void)
   pinMode(USERLED, OUTPUT);
   pinMode(LCDBKLT, OUTPUT);
   
-  PWM0_tone(PIO0_8, 1320, 100);
-	PWM0_tone(PIO0_8, 1540, 100);
+  PWM0_tone(PIO1_13, 1320, 100);
+	PWM0_tone(PIO1_13, 1540, 100);
 
   toggled = millis();
   btnstate = HIGH;

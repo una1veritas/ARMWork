@@ -148,4 +148,7 @@ void SPI_config(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin 
 void SPI_disable(SPIDef * port) {
 }
 
+void SPI_mode16bit(SPIDef * port) {
+  port->SSPx->CR0 = 0x000F;				/* Select 16-bit mode */
+}
 

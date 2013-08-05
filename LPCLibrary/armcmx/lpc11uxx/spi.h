@@ -68,6 +68,8 @@ void SPI_init(SPIDef * port, GPIOPin clk, GPIOPin miso, GPIOPin mosi, GPIOPin ss
 void SPI_disable(SPIDef * port);
 void SPI_config(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin ncs);
 
+void SPI_mode16bit(SPIDef * port);
+
 extern SPIDef SPI0Def, SPI1Def;
 
 #ifdef __cplusplus
