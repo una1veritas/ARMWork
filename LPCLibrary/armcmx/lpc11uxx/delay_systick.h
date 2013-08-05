@@ -13,7 +13,7 @@ extern volatile uint32_t __counter_millis;
   
 void init_systick_delay(void);
 //void enable_systick_delay(void);
-void start_systick_delaydelay(void);
+void start_systick_delay(void);
 //void disable_systick_delay(void);
 void stop_systick_delay(void);
 void reset_systick(void);

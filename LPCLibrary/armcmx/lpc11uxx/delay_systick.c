@@ -47,7 +47,7 @@ void delaySysTick(uint32_t tick)
 }
 */
 
-void start_systick_delay(uint32_t tick)
+void start_systick_delay(void)
 {
   // Clear SysTick Counter 
   SysTick->VAL = 0;
