@@ -262,10 +262,11 @@ int select (void)	/* 1:OK, 0:Timeout */
 /* Control SPI module (Platform dependent)                               */
 /*-----------------------------------------------------------------------*/
 
+#ifdef __ORIGINAL
+
 static
 void power_on (void)	/* Enable SSP module and attach it to I/O pads */
 {
-  
   
 #if 0
 	__set_PCONP(PCSSPx, 1);		/* Enable SSP module */
@@ -295,6 +296,8 @@ void power_on (void)	/* Enable SSP module and attach it to I/O pads */
         delay(10);
 //	for (Timer1 = 10; Timer1; ) ;	/* 10ms */
 }
+
+#endif
 
 static
 void mode_on (void)	/* Enable SSP module and attach it to I/O pads */

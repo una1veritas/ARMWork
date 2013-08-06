@@ -1,6 +1,7 @@
 
 #include "LPC11Uxx.h"
 #include "armcmx.h"
+#include "delay.h"
 #include "usart.h"
 #include "ff.h"
 
@@ -21,12 +22,6 @@ static uint8_t buff[32];
  * (先頭32文字だけ)
  * その後、SD0001.TXTというファイルを作成して、LPCcappuccino!+CR+LFという文字を永遠に書き込みます
  */
-
-void die(FRESULT rc)
-{
-
-}
-
 
 /*
  * SDカードのサンプル
@@ -57,7 +52,10 @@ void sd_test()
         USART_write(&usart, buff[i]);
       }
     }
-    if (rc) die(rc);
+    if (rc) {
+      USART_puts(&usart, "\nFailed while reading the file.\n");
+      return;
+    }
     rc = f_close(&Fil);
     /*
      *	ファイル書き込みテスト
@@ -65,22 +63,26 @@ void sd_test()
      */
 
     rc = f_open(&Fil, "SD0001.TXT", FA_WRITE | FA_CREATE_ALWAYS);
-    if (rc) die(rc);
+    if (rc) {
+      USART_puts(&usart, "\nCouldn't open SD0001.TXT.\n");
+      return;
+    }
 
     swatch = millis();
     // 無限ループでこの関数からは抜けない
     while(1){
       rc = f_write(&Fil, "Strawberry Linux\r\n", 18, &bw);
-      if (rc) die(rc);
-
+      if (rc) 
+        break;
       // SDカードに書き出します。
       f_sync(&Fil);
-      if ( swatch + 10000 < millis() ) break;      
+      if ( swatch + 10000 < millis() ) 
+        break;
     }
     f_close(&Fil);
   	return;
-  } else {
-    USART_puts(&usart, "\nCouldn't open MESSAGE.TXT.\n");
   }
+  if ( rc == FR_NOT_READY )
+    USART_puts(&usart, "\nCouldn't open MESSAGE.TXT.\n");
 
 }

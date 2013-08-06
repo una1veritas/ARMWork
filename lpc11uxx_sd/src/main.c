@@ -33,6 +33,8 @@
 __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #endif
 
+void sd_test(void);
+
 int main(void) {
 	int i;
 
@@ -90,3 +92,85 @@ int main(void) {
 //	return 0 ;
 }
 
+DWORD get_fattime()
+{
+  return 0;
+}
+
+FATFS Fatfs;		/* File system object */
+FIL Fil;			/* File object */
+static uint8_t buff[128];
+
+
+/*
+ * SDカードからMESSAGE.TXTのファイルを読み込んでI2C液晶に表示します。
+ * (先頭32文字だけ)
+ * その後、SD0001.TXTというファイルを作成して、LPCcappuccino!+CR+LFという文字を永遠に書き込みます
+ */
+
+/*
+ * SDカードのサンプル
+ */
+void sd_test()
+{
+	FRESULT rc;
+  long swatch;
+  
+//	DIR dir;				/* Directory object */
+//	FILINFO fno;			/* File information object */
+	UINT bw, br, i;
+
+	f_mount(0, &Fatfs);		/* Register volume work area (never fails) */
+
+	/*
+	 * SDカードのMESSAGE.TXTを開いてI2C液晶に表示します。英数カナのみ
+	 * ２行分のみ
+	 */
+	rc = f_open(&Fil, "MESSAGE.TXT", FA_READ);
+	if (!rc){
+    USART_puts(&usart, "\nType the file content.\n");
+    for (;;) {
+      rc = f_read(&Fil, buff, sizeof(buff), &br);	/* Read a chunk of file */
+      if (rc || !br) break;			/* Error or end of file */
+
+      for (i = 0; i < br; i++){
+        USART_write(&usart, buff[i]);
+      }
+    }
+    if (rc) {
+      USART_puts(&usart, "\nFailed while reading the file.\n");
+      return;
+    }
+    rc = f_close(&Fil);
+    /*
+     *	ファイル書き込みテスト
+     *	SD0001.TXTファイルを作成し、Strawberry Linuxの文字を永遠に書き込む
+     */
+
+    rc = f_open(&Fil, "SD0001.TXT", FA_WRITE | FA_CREATE_ALWAYS);
+    if (rc) {
+      USART_puts(&usart, "\nCouldn't open SD0001.TXT.\n");
+      return;
+    }
+
+    swatch = millis();
+    // 無限ループでこの関数からは抜けない
+    while(1){
+      i = sprintf((char*)buff, "%08u ", millis());
+      f_write(&Fil, buff, i, &bw);
+      rc = f_write(&Fil, "Strawberry Linux\r\n", 18, &bw);
+      if (rc) 
+        break;
+      // SDカードに書き出します。
+      f_sync(&Fil);
+      if ( swatch + 2000 < millis() ) 
+        break;
+    }
+    f_close(&Fil);
+    USART_puts(&usart, "\nSD File IO test finished.\n");
+  	return;
+  }
+  if ( rc == FR_NOT_READY )
+    USART_puts(&usart, "\nCouldn't open MESSAGE.TXT.\n");
+
+}
