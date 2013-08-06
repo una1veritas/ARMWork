@@ -26,15 +26,17 @@
 
 #define CAPPUCCINO
 
-#define LCDBKLT PIO0_3
-#define NFC_IRQ PIO0_23
-#define LED_SD_BUSY   PIO1_19
+#define LED_LCDBKLT PIO0_3
+#define LED_SDBUSY   PIO1_19
 
 #define LCDRST  PIO1_25
-#define USERLED PIO1_6
 #define USERBTN PIO0_1
-#define RXD2    PIO0_18
-#define TXD2    PIO0_19
+#define RXD_C    PIO0_18
+#define TXD_C    PIO0_19
+#define RXD_A    PIO1_26
+#define TXD_A    PIO1_27
+#define RXD_E    PIO1_17
+#define TXD_E    PIO1_18
 
 #endif /* end __CAPPUCCINO_H */
 /*****************************************************************************

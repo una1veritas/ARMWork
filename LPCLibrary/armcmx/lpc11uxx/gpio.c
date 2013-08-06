@@ -22,6 +22,21 @@ void pinMode( GPIOPin pin, uint8_t dir ) {
   return;
 }
 
+void pinFuncClear(GPIOPin pin) {
+  __IO uint32_t * iocon = (__IO uint32_t *) LPC_IOCON;
+  uint32_t num = (PIONumber[pin>>5] ? 24 : 0 ) + (pin&0x1f);
+  iocon[num ] &= ~0x07;
+}
+
+void pinFuncSet(GPIOPin pin, uint8_t func) {
+  uint32_t num = (PIONumber[pin>>5] ? 24 : 0 ) + (pin&0x1f);
+  ((__IO uint32_t *) LPC_IOCON)[num] |= (func & 0x07);  
+}
+/*
+#define PIO_SetFunc(x, mode)  LPC_IOCON->x |= (mode & 0x07)
+#define PIO_Reset(x)          LPC_IOCON->x = 0x90
+*/
+
 void digitalWrite(GPIOPin pin, uint8_t bitVal ) {
   if ( bitVal ) {
     LPC_GPIO->SET[PIONumber[pin>>5]] = 1<<(pin&0x1f);

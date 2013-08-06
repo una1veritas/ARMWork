@@ -63,11 +63,11 @@ void SPI_config(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin 
     LPC_IOCON->PIO0_8 |= 0x01;		/* SSP MISO */
     LPC_IOCON->PIO0_9 &= ~0x07;	
     LPC_IOCON->PIO0_9 |= 0x01;		/* SSP MOSI */
-#ifdef __SWD_DISABLED
-    LPC_IOCON->SWCLK_PIO0_10 &= ~0x07;
-    LPC_IOCON->SWCLK_PIO0_10 |= 0x02;		/* SSP CLK */
-#else
-    if ( sck == PIO1_29 ) {
+    
+    if ( sck == PIO0_10 ) {
+      LPC_IOCON->SWCLK_PIO0_10 &= ~0x07;
+      LPC_IOCON->SWCLK_PIO0_10 |= 0x02;		/* SSP CLK */
+    } else if ( sck == PIO1_29 ) {
     /* On C1U, SSP CLK can be routed to different pins. */
       LPC_IOCON->PIO1_29 &= ~0x07;	
       LPC_IOCON->PIO1_29 = 0x01;
@@ -75,20 +75,19 @@ void SPI_config(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin 
       LPC_IOCON->PIO0_6 &= ~0x07;	
       LPC_IOCON->PIO0_6 = 0x02;
     }
-#endif	/* endif __SWD_DISABLED */  
-
-    if ( ncs == PIO0_2 ) {
+    
+    if ( ncs == NOT_A_PIN || ncs == PIN_NOT_DEFINED ) {
+      LPC_IOCON->PIO0_2 &= ~0x07;	
+      LPC_IOCON->PIO0_2 |= 0x01;		/* System SSP SSEL */
+    } else {
       // as user controllable GPIO pin
       /* Enable AHB clock to the GPIO domain. */
       LPC_SYSCON->SYSAHBCLKCTRL |= (1<<6);
-      PIO_ClearFunc(PIO0_2);		/* SSP SSEL is a GPIO pin */
-      /* port0, bit 2 is set to GPIO output and high */
-      pinMode(PIO0_2, OUTPUT);
-      digitalWrite( PIO0_2, HIGH );
-    } else {
-      LPC_IOCON->PIO0_2 &= ~0x07;	
-      LPC_IOCON->PIO0_2 |= 0x01;		/* System SSP SSEL */
+      pinFuncClear(ncs);		/* SSP SSEL is a GPIO pin */
+      pinMode(ncs, OUTPUT);
+      digitalWrite(ncs, HIGH );
     }
+
   }
   else if (port->SSPx == LPC_SSP1) 		/* port number 1 */
   {
@@ -96,8 +95,8 @@ void SPI_config(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin 
     LPC_SYSCON->SYSAHBCLKCTRL |= (1<<18);
     LPC_SYSCON->SSP1CLKDIV = 0x02;			/* Divided by 2 */
     if ( sck == PIO1_20 ) {
-      PIO_ClearFunc(PIO1_20); // &= ~0x07;    /*  SSP I/O config */
-      PIO_SetFunc(PIO1_20, 0x02); //0x02;		/* SSP CLK */
+      pinFuncClear(PIO1_20); // &= ~0x07;    /*  SSP I/O config */
+      pinFuncSet(PIO1_20, 0x02); //0x02;		/* SSP CLK */
     } else {
       LPC_IOCON->PIO1_15 &= ~0x07;    /*  SSP I/O config */
       LPC_IOCON->PIO1_15 |= 0x03;		/* SSP CLK */
@@ -105,8 +104,8 @@ void SPI_config(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin 
     if ( miso == PIO1_21 ) {
       //LPC_IOCON->PIO1_21 &= ~0x07;	
       //LPC_IOCON->PIO1_21 |= 0x02;		/* SSP MISO */
-      PIO_ClearFunc(PIO1_21);
-      PIO_SetFunc(PIO1_21, 0x02);
+      pinFuncClear(PIO1_21);
+      pinFuncSet(PIO1_21, 0x02);
     } else {
       LPC_IOCON->PIO0_22 &= ~0x07;	
       LPC_IOCON->PIO0_22 |= 0x03;		/* SSP MISO */
@@ -150,5 +149,10 @@ void SPI_disable(SPIDef * port) {
 
 void SPI_mode16bit(SPIDef * port) {
   port->SSPx->CR0 = 0x000F;				/* Select 16-bit mode */
+}
+
+void SPI_select(void) {
+  // cs high
+  // set mode
 }
 

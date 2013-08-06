@@ -296,6 +296,26 @@ void power_on (void)	/* Enable SSP module and attach it to I/O pads */
 //	for (Timer1 = 10; Timer1; ) ;	/* 10ms */
 }
 
+static
+void mode_on (void)	/* Enable SSP module and attach it to I/O pads */
+{
+  
+  
+#if 0
+	__set_PCONP(PCSSPx, 1);		/* Enable SSP module */
+	__set_PCLKSEL(PCLKSSPx, PCLKDIV_SSP);	/* Select PCLK frequency for SSP */
+	SSPxCR0 = 0x0007;			/* Set mode: SPI mode 0, 8-bit */
+	SSPxCR1 = 0x2;				/* Enable SSP with Master */
+#endif    
+//        SSP_IOConfig( 0 );
+//        SSP_Init(0);
+          
+	CS_HIGH();					/* Set CS# high */
+  delay(10);
+//	for (Timer1 = 10; Timer1; ) ;	/* 10ms */
+}
+
+
 
 static
 void power_off (void)		/* Disable SPI function */
@@ -429,7 +449,7 @@ DSTATUS disk_initialize (
 
 
 	if (drv) return STA_NOINIT;			/* Supports only drive 0 */
-	power_on();							/* Initialize SPI */
+	mode_on(); //power_on();							/* Initialize SPI */
 
 	if (Stat & STA_NODISK) return Stat;	/* Is card existing in the soket? */
 

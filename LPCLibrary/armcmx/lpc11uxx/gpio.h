@@ -75,10 +75,6 @@ enum _GPIOPin_Def {
 	PIN_NOT_DEFINED = (uint8_t) 0xff,
 };
 
-#define PIO_ClearFunc(x)      LPC_IOCON->x &= ~0x07
-#define PIO_SetFunc(x, mode)  LPC_IOCON->x |= (mode & 0x07)
-#define PIO_Reset(x)          LPC_IOCON->x = 0x90
-
 #define PIO_MODE_INACTIVE 0x00
 #define PIO_MODE_PULLDOWN 0x01
 #define PIO_MODE_PULLUP   0x02
@@ -89,6 +85,10 @@ enum _GPIOPin_Def {
 void GPIOInit( void );
 
 void pinMode( GPIOPin pin, uint8_t dir );
+void pinFuncClear(GPIOPin pin);
+void pinFuncReset(GPIOPin pin);
+void pinFuncSet(GPIOPin pin, uint8_t func);
+
 void digitalWrite(GPIOPin pin, uint8_t bitVal );
 uint8_t digitalRead(GPIOPin pin);
 uint8_t digitalToggle(GPIOPin pin);

@@ -34,7 +34,8 @@ void die(FRESULT rc)
 void sd_test()
 {
 	FRESULT rc;
-
+  long swatch;
+  
 //	DIR dir;				/* Directory object */
 //	FILINFO fno;			/* File information object */
 	UINT bw, br, i;
@@ -58,33 +59,28 @@ void sd_test()
     }
     if (rc) die(rc);
     rc = f_close(&Fil);
-  /*
-   *	ファイル書き込みテスト
-   *	SD0001.TXTファイルを作成し、Strawberry Linuxの文字を永遠に書き込む
-   */
+    /*
+     *	ファイル書き込みテスト
+     *	SD0001.TXTファイルを作成し、Strawberry Linuxの文字を永遠に書き込む
+     */
 
     rc = f_open(&Fil, "SD0001.TXT", FA_WRITE | FA_CREATE_ALWAYS);
     if (rc) die(rc);
 
+    swatch = millis();
     // 無限ループでこの関数からは抜けない
-      while(1){
-        rc = f_write(&Fil, "Strawberry Linux\r\n", 18, &bw);
-        if (rc) die(rc);
+    while(1){
+      rc = f_write(&Fil, "Strawberry Linux\r\n", 18, &bw);
+      if (rc) die(rc);
 
-        // SDカードに書き出します。
-        f_sync(&Fil);
-      }
-//	return;
-}
-
-
-
-
-
-
-
-
-
-
+      // SDカードに書き出します。
+      f_sync(&Fil);
+      if ( swatch + 10000 < millis() ) break;      
+    }
+    f_close(&Fil);
+  	return;
+  } else {
+    USART_puts(&usart, "\nCouldn't open MESSAGE.TXT.\n");
+  }
 
 }
