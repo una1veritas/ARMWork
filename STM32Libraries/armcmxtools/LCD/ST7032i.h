@@ -83,8 +83,8 @@ public:
 
 	void createChar(uint8_t location, uint8_t charmap[]);
 
-	inline void backlightOn() { digitalWrite(pin_bklight, LOW); }
-	inline void backlightOff() { digitalWrite(pin_bklight, HIGH); }
+	inline void backlightHigh() { digitalWrite(pin_bklight, HIGH); }
+	inline void backlightLow() { digitalWrite(pin_bklight, LOW); }
 
 };
 

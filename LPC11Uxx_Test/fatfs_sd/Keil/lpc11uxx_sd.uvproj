@@ -351,7 +351,7 @@
               <MiscControls></MiscControls>
               <Define>ARMCMX</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\LPCLibrary\armcmx\lpc11uxx;..\..\LPCLibrary\armcmx;.\;..\inc;..\..\..\LPCLibrary\CMSISv2p00_LPC11Uxx\inc;..\..\STM32Libraries\armcmxtools\LCD</IncludePath>
+              <IncludePath>..\..\LPCLibrary\armcmx\lpc11uxx;..\..\LPCLibrary\armcmx;.\;..\inc;..\..\..\LPCLibrary\CMSISv2p00_LPC11Uxx\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -403,6 +403,11 @@
           <GroupName>src</GroupName>
           <Files>
             <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\main.c</FilePath>
+            </File>
+            <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\src\ff.c</FilePath>
@@ -411,11 +416,6 @@
               <FileName>mmc_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\src\mmc_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>main.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\src\main.cpp</FilePath>
             </File>
           </Files>
         </Group>
