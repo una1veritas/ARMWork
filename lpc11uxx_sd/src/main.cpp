@@ -136,10 +136,10 @@ void sd_test()
       f_gets((TCHAR*)buff, sizeof(buff), &Fil);	/* Read a chunk of file */
       if (rc || !br) break;			/* Error or end of file */
 
-      USART_write(&usart, (char*)buff);
+      USART_puts(&usart, (char*)buff);
     }
     if (rc) {
-      USART_puts(&usart, "\nFailed while reading the file.\n");
+      USART_puts(&usart, "\nFailed while reading.\n");
       return;
     }
     rc = f_close(&Fil);
