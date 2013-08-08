@@ -165,7 +165,6 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
-          <bUseTDR>0</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
@@ -407,6 +406,11 @@
               <FileType>8</FileType>
               <FilePath>..\src\main.cpp</FilePath>
             </File>
+            <File>
+              <FileName>cappuccino.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\inc\cappuccino.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -483,11 +487,6 @@
               <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay.h</FilePath>
             </File>
             <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay.c</FilePath>
-            </File>
-            <File>
               <FileName>timer16.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\timer16.h</FilePath>
@@ -496,6 +495,11 @@
               <FileName>type.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\type.h</FilePath>
+            </File>
+            <File>
+              <FileName>delay_systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay_systick.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -4,13 +4,11 @@
  */
 
 #include <stdio.h>
-//#include <stdlib.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "LPC11Uxx.h"
 #include "type.h"
-#include "xprintf.h"
-//#include "systick.h"
 
 #include "armcmx.h"
 #include "USARTSerial.h"
@@ -18,6 +16,8 @@
 #include "i2clcd.h"
 #include "ST7032i.h"
 #include "DS1307.h"
+
+#include "cappuccino.h"
 
 #ifdef _LPCXPRESSO_CRP_
 #include <cr_section_macros.h>
@@ -34,16 +34,6 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 **   Main Function  main()
 *******************************************************************************/
 
-// Strawberry Linux original lpclcd port maps
-//#define LCDBKLT PIO1_3
-#define LCDBKLT PIO0_3
-#define LCDRST  PIO1_25
-#define USERLED PIO1_6
-#define USERBTN PIO0_1
-#define RXD2    PIO0_18
-#define TXD2    PIO0_19
-
-#define LED_SD_BUSY   PIO1_19
 
 
 #define RTC_ADDR 0x68
@@ -58,7 +48,7 @@ char day[7][4] = {
   "Sat"
   };
 
-ST7032i i2clcd(Wire, LCDBKLT, LCDRST);
+ST7032i i2clcd(Wire, LED_LCDBKLT, LCDRST);
 DS1307 rtc(Wire, DS1307::CHIP_M41T62);
 /*
 uint8_t i2clcd_data(uint8_t d) {
@@ -71,8 +61,8 @@ int main (void) {
   long i;
   char c = 0;
   char str[32];
-  char message[32];
-//  char tmp[32];
+  char message[64];
+  char * ptr;
   long ttime;
   
   SystemInit();
@@ -89,8 +79,8 @@ int main (void) {
   //xfunc_out = (void(*)(unsigned char))i2clcd_data;
   
   // I2C LCD Backlight controll pin
-  pinMode(LCDBKLT, OUTPUT);
-  digitalWrite(LCDBKLT, LOW);
+  pinMode(LED_LCDBKLT, OUTPUT);
+  digitalWrite(LED_LCDBKLT, LOW);
   
   pinMode(USERBTN, INPUT);
   
@@ -111,8 +101,8 @@ int main (void) {
   }
 
   // PIO1_6 USR LED //  GPIOSetDir(1, 6, 1 ); //  GPIOSetBitValue( 1, 6, 1);
-  pinMode(USERLED, OUTPUT);
-  digitalWrite(USERLED, HIGH);
+  pinMode(LED_SDBUSY, OUTPUT);
+  digitalWrite(LED_SDBUSY, HIGH);
     
   Serial.print("Hello!\n");
   
@@ -121,7 +111,7 @@ int main (void) {
 //  sprintf(str, "%02x:%02x:%02x\n%s\n%02x/%02x/'%02x\n", rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f, 
 //      day[rtc.cal&0x07], rtc.cal>>16&0x1f, rtc.cal>>8&0x3f, rtc.cal>>16);
   Serial.println(rtc.time, HEX);
-  Serial.println(rtc.cal);
+  Serial.println(rtc.cal, HEX);
   //Serial.print(str);
 
 
@@ -152,15 +142,9 @@ int main (void) {
         Serial.println(micros());
       }
     } else /* if ( digitalRead(USERBTN) == HIGH ) */ {
-      if (  ontime > 0 && (millis() - ontime >= 5000) ) {
+      if ( ontime > 0 && (millis() - ontime >= 1000) ) {
         Serial.println(millis() - ontime);
-        ttime = 0x001101;
-        rtc.setTime(ttime);
-        ttime = 0x130726;
-        rtc.setCalendar(ttime);
-      } else if ( ontime > 0 && (millis() - ontime >= 1000) ) {
-        Serial.println(millis() - ontime);
-        digitalToggle(LCDBKLT);
+        digitalToggle(LED_LCDBKLT);
       } 
       ontime = 0;
     }
@@ -169,18 +153,32 @@ int main (void) {
       i = strlen(message);
       while ( Serial.available() > 0 ) {
         c = Serial.read();
-        if ( c == '\n' || c == '\r' )
-          break;
         message[i] = c;
         i++;
+        if ( c == '\n' || c == '\r' )
+          break;
       }
       message[i] = 0;
-      i2clcd.home();
-      i2clcd.print(message);
       if ( c == '\n' || c == '\r' ) {
-        Serial.println(message);
-        for( ; i < 16; i++) 
-          i2clcd.print(' ');
+        if ( message[0] == 't' ) {
+          rtc.time = strtol(message+1, &ptr, 16);
+          Serial.println(rtc.time, HEX);
+          if ( *ptr == '.' ) {
+            Serial.print("time ");
+            rtc.setTime(rtc.time);           
+          }            
+        } else if ( message[0] == 'c' ) {
+          rtc.cal = strtol(message+1, &ptr, 16);
+          Serial.print("cal ");
+          Serial.println(rtc.cal, HEX);
+          if ( *ptr == '.' ) {
+            rtc.setCalendar(rtc.cal);
+            rtc.updateCalendar();
+            Serial.print("calendar ");
+            Serial.println(rtc.cal, HEX);
+          }
+        }
+        i = 0;
         message[0] = 0;
       }
     }

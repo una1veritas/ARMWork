@@ -10,7 +10,7 @@
 
 #include "USARTSerial.h"
 
-USARTSerial Serial = USARTSerial(&usart, PIO0_18, PIO0_19);
+USARTSerial Serial = USARTSerial(&usart, PIO1_26, PIO1_27);
 
 void USARTSerial::begin(const uint32_t baud) {
 	USART_init(port, pinrx, pintx);

@@ -44,7 +44,7 @@ private:
 		DS1307_YR
 	};
 
-	static const uint8_t DS1307_CTRL_ID = B01101000; //DS1307
+	static const uint8_t DS1307_CTRL_ID = B01101000; //DS1307, M41T62
 
 	// Define register bit masks
 	static const uint8_t DS1307_CLOCKHALT = B10000000;
@@ -82,6 +82,11 @@ public:
 	uint32 time, cal;
 
 	DS1307(I2CBus & w, uint8 chip = CHIP_DS1307) : wire(w), chipID(chip) {
+		time = 0;
+		cal = 0; 
+	}
+
+	DS1307(uint8 chip = CHIP_DS1307) : wire(Wire), chipID(chip) {
 		time = 0;
 		cal = 0; 
 	}

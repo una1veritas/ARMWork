@@ -13,9 +13,10 @@
 #include "armcmx.h"
 #include "gpio.h"
 #include "delay.h"
-#include "usart.h"
+#include "USARTSerial.h"
 #include "I2Cbus.h"
 #include "ST7032i.h"
+#include "DS1307.h"
 #include "spi.h"
 #include "ff.h"
 
@@ -36,8 +37,8 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 void sd_test(void);
 
 ST7032i lcd(Wire, LED_LCDBKLT);
+DS1307 rtc(DS1307::CHIP_M41T62);
 
-#define RTC_ADDR 0x68
 
 int main(void) {
 	int i;
@@ -71,11 +72,19 @@ int main(void) {
   lcd.backlightHigh();
   lcd.print("Let's start!");
 
+  rtc.begin();
+  rtc.update();
+  lcd.setCursor(0,1);
+  lcd.print(rtc.time, HEX);
+  lcd.print(" ");
+  lcd.print(rtc.cal, HEX);
 //	 下記は不要な部分はコメントアウトしてお試しください。
 
 /*
  *	SDカードのデモ（エンドレス）
  */
+ 
+  Serial.println(get_fattime(), HEX);
   SPI_init(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, SSP_CS0);
 
 	sd_test();
@@ -95,10 +104,30 @@ int main(void) {
 //	return 0 ;
 }
 
-DWORD get_fattime()
-{
-  return 0;
+
+#define BCD8TODEC(n)  ( ((n)&>>4&0x0f)*10 + ((n)&0x0f) )
+
+DWORD get_fattime(void) {
+  uint8_t y,m,d, hh, mm, ss;
+  rtc.update();
+  y = 20 + (rtc.cal>>16&0x0f) + (rtc.cal>>20&0x0f)*10;
+  m = (rtc.cal>>8&0x0f) + (rtc.cal>>12&0x0f)*10;
+  d = (rtc.cal&0x0f) + (rtc.cal>>4&0x0f)*10;
+  Serial.print("y/m/d = ");
+  Serial.print(y);
+  Serial.print("/");
+  Serial.print(m);
+  Serial.print("/");
+  Serial.print(d);
+  Serial.print(" ");
+
+  hh = (rtc.time>>16&0x0f) + (rtc.time>>20&0x0f)*10;
+  mm = (rtc.time>>8&0x0f) + (rtc.time>>12&0x0f)*10;
+  ss = (rtc.time&0x0f) + (rtc.time>>4&0x0f)*10;
+  
+  return ((uint32_t)y<<25) | m<<21 | d<<16 | hh << 11 | mm<<5 | ss>>1;
 }
+
 
 FATFS Fatfs;		/* File system object */
 FIL Fil;			/* File object */
@@ -133,8 +162,8 @@ void sd_test()
 	if (!rc){
     USART_puts(&usart, "\nType the file content.\n");
     for (;;) {
-      f_gets((TCHAR*)buff, sizeof(buff), &Fil);	/* Read a chunk of file */
-      if (rc || !br) break;			/* Error or end of file */
+      /* Read a chunk of file */
+      if (rc || !f_gets((TCHAR*)buff, sizeof(buff), &Fil) ) break;			/* Error or end of file */
 
       USART_puts(&usart, (char*)buff);
     }
@@ -147,7 +176,7 @@ void sd_test()
      *	ファイル書き込みテスト
      *	SD0001.TXTファイルを作成し、Strawberry Linuxの文字を永遠に書き込む
      */
-#ifdef TEST_F_WRITE
+
     rc = f_open(&Fil, "SD0001.TXT", FA_WRITE | FA_CREATE_ALWAYS);
     if (rc) {
       USART_puts(&usart, "\nCouldn't open SD0001.TXT.\n");
@@ -170,7 +199,7 @@ void sd_test()
     f_close(&Fil);
     USART_puts(&usart, "\nSD File IO test finished.\n");
   	return;
-#endif
+
   }
   if ( rc == FR_NOT_READY )
     USART_puts(&usart, "\nCouldn't open MESSAGE.TXT.\n");
