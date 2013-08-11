@@ -113,6 +113,7 @@ DWORD get_fattime(void) {
   y = 20 + (rtc.cal>>16&0x0f) + (rtc.cal>>20&0x0f)*10;
   m = (rtc.cal>>8&0x0f) + (rtc.cal>>12&0x0f)*10;
   d = (rtc.cal&0x0f) + (rtc.cal>>4&0x0f)*10;
+  /*
   Serial.print("y/m/d = ");
   Serial.print(y);
   Serial.print("/");
@@ -120,7 +121,7 @@ DWORD get_fattime(void) {
   Serial.print("/");
   Serial.print(d);
   Serial.print(" ");
-
+*/
   hh = (rtc.time>>16&0x0f) + (rtc.time>>20&0x0f)*10;
   mm = (rtc.time>>8&0x0f) + (rtc.time>>12&0x0f)*10;
   ss = (rtc.time&0x0f) + (rtc.time>>4&0x0f)*10;

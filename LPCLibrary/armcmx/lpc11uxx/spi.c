@@ -1,9 +1,8 @@
-  /*
+ /*
   *
   *
   */
   
-#include "ssp.h"
 #include "spi.h"
 
 #include "gpio.h"
@@ -16,41 +15,22 @@
 #define SD_SELECTION_CLR (LPC_GPIO->PIN[0] &= ~(1<<2))
 */
 
-//SPIDef SPI0Def = { 0, PIO1_29, PIO0_8, PIO0_9, PIO0_2, LPC_SSP0 }, SPI1Def = { 1, PIO1_20, PIO1_21, PIO1_22, PIO1_23, LPC_SSP1 };
-SPIDef SPI0Def = { 0, LPC_SSP0 }, SPI1Def = { 1, LPC_SSP1 };
+SPIDef SPI0Def = { LPC_SSP0 }, SPI1Def = { LPC_SSP1 };
 
 uint8_t SPI_transfer(SPIDef * port, uint8_t data) {
-//  volatile uint8_t rcv;
-//  char tmp[64];
-//  sprintf(tmp, "%02x/", data);
-//  USART_puts(&usart, tmp);
-
-/*
-	if ( port->Num == 0 ) {
-	  LPC_SSP0->DR = data;
-	  // Wait until the Busy bit is cleared 
-	  while ( (LPC_SSP0->SR & (SSPSR_BSY|SSPSR_RNE)) != SSPSR_RNE );
-	  data = LPC_SSP0->DR;
-	} else {
-*/
-//	  LPC_SSP1->DR = data;
-	  port->SSPx->DR = data;
-	  /* Wait until the Busy bit is cleared */
-	  while ( (port->SSPx->SR & (SSPSR_BSY|SSPSR_RNE)) != SSPSR_RNE );
-	  data = port->SSPx->DR;
-//	}
-
-//  sprintf(tmp, "%02x ", data);
-//  USART_puts(&usart, tmp);
+  port->SSPx->DR = data;
+  /* Wait until the Busy bit is cleared */
+  while ( (port->SSPx->SR & (SSPSR_BSY|SSPSR_RNE)) != SSPSR_RNE );
+  data = port->SSPx->DR;
   return data;
 }
 
-
-
-void SPI_init(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin ssel) {
-  SPI_config( port, sck, miso, mosi, ssel );
-  SSP_Init( port );			
+void SPI_init(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin ncs) {
+  SPI_reset(port);
+  SPI_config(port, sck, miso, mosi, ncs);
+  SPI_start(port);
 }
+
 
 void SPI_config(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin ncs) {
 
@@ -144,12 +124,58 @@ void SPI_config(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin 
 }
 
 
+void SPI_start(SPIDef * port) {
+  uint8_t i, Dummy=Dummy;
+
+  /* Set DSS data to 8-bit, Frame format SPI, CPOL = 0, CPHA = 0, and SCR is 15 */
+  port->SSPx->CR0 = 0x0707;
+  /* SSPCPSR clock prescale register, master mode, minimum divisor is 0x02 */
+  port->SSPx->CPSR = 0x2;
+
+  for ( i = 0; i < FIFOSIZE; i++ ) {
+    Dummy = port->SSPx->DR;		/* clear the RxFIFO */
+  }
+
+  /* Enable the SSP Interrupt */
+  if ( port->SSPx == LPC_SSP0 ) {
+    NVIC_EnableIRQ(SSP0_IRQn);
+  } else {
+    NVIC_EnableIRQ(SSP1_IRQn);
+  }
+  /* Device select as master, SSP Enabled */
+  /* Master mode */
+  port->SSPx->CR1 = SSPCR1_SSE;
+  /* Set SSPINMS registers to enable interrupts */
+  /* enable all error related interrupts */
+  port->SSPx->IMSC = SSPIMSC_RORIM | SSPIMSC_RTIM;
+
+  return;
+}
+
+
+void SPI_reset(SPIDef * port) {
+ if ( port->SSPx == LPC_SSP0 ) {
+    LPC_SYSCON->PRESETCTRL &= ~SSP0_RST_N;
+   __nop();
+    LPC_SYSCON->PRESETCTRL |= SSP0_RST_N;
+ } else if ( port->SSPx == LPC_SSP1 ) {
+    LPC_SYSCON->PRESETCTRL &= ~SSP1_RST_N;
+   __nop();
+    LPC_SYSCON->PRESETCTRL |= SSP1_RST_N;
+ }
+}
+
 void SPI_disable(SPIDef * port) {
 }
 
 void SPI_mode16bit(SPIDef * port) {
   port->SSPx->CR0 = 0x000F;				/* Select 16-bit mode */
 }
+
+void SPI_mode8bit(SPIDef * port) {
+  port->SSPx->CR0 = 0x0007;				/* Select 8-bit mode */
+}
+
 
 void SPI_select(void) {
   // cs high
