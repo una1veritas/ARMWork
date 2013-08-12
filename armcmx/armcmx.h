@@ -19,6 +19,7 @@ extern "C" {
 #include <stdio.h>
 #include <stdint.h>
 
+
 typedef uint8_t GPIOPin;
 
 #include "binary.h"
@@ -73,6 +74,8 @@ typedef uint8_t boolean;
 #define UINT8(x)  ((uint8_t)(x))
 #define UINT16(x)  ((uint16_t)(x))
 #define HIGHLOW(x, y)  (((uint16_t)(x))<< 8 | y)
+
+#define BCD8TODEC(n)  ( ((n)&>>4&0x0f)*10 + ((n)&0x0f) )
 
 //void armcmx_init(void);
 //size_t strlen(const char * s);

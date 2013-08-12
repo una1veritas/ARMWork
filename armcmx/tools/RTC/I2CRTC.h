@@ -6,10 +6,6 @@
 #ifndef I2CRTC_h
 #define I2CRTC_h
 
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <string.h>
-
 #if defined (ARMCMX)
 #include "armcmx.h"
 #include "I2CBus.h"
@@ -65,12 +61,17 @@ private:
 	// user-accessible "public" interface
 
 public:
-	//PROGMEM 
-	const static char NameOfDay[36];
-	//PROGMEM 
-	const static char NameOfMonth[60];
+
+#ifdef __AVR__
+  PROGMEM const static char NameOfDay[36];
+  PROGMEM const static char NameOfMonth[60];
+#else
+  const static char NameOfDay[36];
+  const static char NameOfMonth[60];
+#endif
+
 	enum DAYINDEX {
-		NA = 0, SUN = 1, MON, TUE, WED, THU, FRI, SAT,
+		SUN = 0, MON, TUE, WED, THU, FRI, SAT,
 	};
 
 	enum {

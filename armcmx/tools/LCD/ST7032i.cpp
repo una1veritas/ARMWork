@@ -21,8 +21,6 @@
  #endif
  */
 #include "armcmx.h"
-#include "binary.h"
-#include "delay.h"
 #include "I2CBus.h"
 #include "ST7032i.h"
 

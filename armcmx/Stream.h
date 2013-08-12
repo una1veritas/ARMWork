@@ -82,8 +82,8 @@ class Stream : public Print
   // returns the number of characters placed in the buffer (0 means no valid data found)
 
   // Arduino String functions to be added here
-//  String readString();
-//  String readStringUntil(char terminator);
+  char * readString(char *);
+  char * readStringUntil(char *, char terminator);
 
   protected:
   long parseInt(char skipChar); // as above but the given skipChar is ignored
@@ -91,12 +91,7 @@ class Stream : public Print
   // this allows format characters (typically commas) in values to be ignored
 
   float parseFloat(char skipChar);  // as above but the given skipChar is ignored
+  
 };
-
-template<class T>
-inline Stream & operator <<(Stream &stream, T arg) {
-	stream.print(arg);
-	return stream;
-}
 
 #endif

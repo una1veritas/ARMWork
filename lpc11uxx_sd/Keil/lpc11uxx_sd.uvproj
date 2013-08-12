@@ -351,7 +351,7 @@
               <MiscControls></MiscControls>
               <Define>ARMCMX</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\LPCLibrary\armcmx\lpc11uxx;..\..\LPCLibrary\armcmx;.\;..\inc;..\..\..\LPCLibrary\CMSISv2p00_LPC11Uxx\inc;..\..\STM32Libraries\armcmxtools\LCD;..\..\STM32Libraries\armcmxtools\RTC</IncludePath>
+              <IncludePath>.\;..\inc;..\..\armcmx\lpc11uxx;..\..\armcmx;..\..\..\LPCLibrary\CMSISv2p00_LPC11Uxx\inc;..\..\armcmx\tools\LCD;..\..\armcmx\tools\RTC;..\..\armcmx\tools\SerialRAM;..\..\armcmx\tools\SDFatFs\FatFs;..\..\armcmx\tools\SDFatFs</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -440,67 +440,72 @@
             <File>
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\gpio.c</FilePath>
+              <FilePath>..\..\armcmx\lpc11uxx\gpio.c</FilePath>
             </File>
             <File>
               <FileName>delay_systick.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay_systick.c</FilePath>
+              <FilePath>..\..\armcmx\lpc11uxx\delay_systick.c</FilePath>
             </File>
             <File>
               <FileName>PWM0tone.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\PWM0tone.c</FilePath>
+              <FilePath>..\..\armcmx\lpc11uxx\PWM0tone.c</FilePath>
             </File>
             <File>
               <FileName>spi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\spi.c</FilePath>
+              <FilePath>..\..\armcmx\lpc11uxx\spi.c</FilePath>
             </File>
             <File>
               <FileName>ST7032i.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\LCD\ST7032i.cpp</FilePath>
+              <FilePath>..\..\armcmx\tools\LCD\ST7032i.cpp</FilePath>
             </File>
             <File>
               <FileName>Print.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\Print.cpp</FilePath>
+              <FilePath>..\..\armcmx\Print.cpp</FilePath>
             </File>
             <File>
               <FileName>I2CBus.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\I2CBus.cpp</FilePath>
+              <FilePath>..\..\armcmx\I2CBus.cpp</FilePath>
             </File>
             <File>
               <FileName>Stream.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\Stream.cpp</FilePath>
+              <FilePath>..\..\armcmx\Stream.cpp</FilePath>
             </File>
             <File>
               <FileName>i2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\i2c.c</FilePath>
+              <FilePath>..\..\armcmx\lpc11uxx\i2c.c</FilePath>
             </File>
             <File>
-              <FileName>DS1307.h</FileName>
+              <FileName>I2CRTC.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\RTC\DS1307.h</FilePath>
+              <FilePath>..\..\armcmx\tools\RTC\I2CRTC.h</FilePath>
             </File>
             <File>
-              <FileName>DS1307.cpp</FileName>
+              <FileName>I2CRTC.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\RTC\DS1307.cpp</FilePath>
+              <FilePath>..\..\armcmx\tools\RTC\I2CRTC.cpp</FilePath>
             </File>
             <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\usart.c</FilePath>
+              <FilePath>..\..\armcmx\lpc11uxx\usart.c</FilePath>
             </File>
             <File>
               <FileName>USARTSerial.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\USARTSerial.cpp</FilePath>
+              <FilePath>..\..\armcmx\USARTSerial.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>SPIBus.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\SPIBus.cpp</FilePath>
             </File>
           </Files>
         </Group>

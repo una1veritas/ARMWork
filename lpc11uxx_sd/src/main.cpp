@@ -11,13 +11,13 @@
 #include "LPC11Uxx.h"
 #include "type.h"
 #include "armcmx.h"
-#include "gpio.h"
-#include "delay.h"
 #include "USARTSerial.h"
 #include "I2Cbus.h"
 #include "ST7032i.h"
-#include "DS1307.h"
+#include "I2CRTC.h"
 #include "spi.h"
+#include "SPIBus.h"
+#include "SPISRAM.h"
 #include "ff.h"
 
 #include "PWM0Tone.h"
@@ -37,7 +37,9 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 void sd_test(void);
 
 ST7032i lcd(Wire, LED_LCDBKLT);
-DS1307 rtc(DS1307::CHIP_M41T62);
+I2CRTC rtc(I2CRTC::CHIP_M41T62);
+SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
+SPISRAM sram(SPI1, PIO1_23, SPISRAM::BUS_MBITS);
 
 
 int main(void) {
@@ -82,6 +84,8 @@ int main(void) {
   Serial.println(rtc.time, HEX);
 //	 下記は不要な部分はコメントアウトしてお試しください。
 
+  SPI1.begin();
+  sram.begin();
  /*
   * SDカードのデモ（エンドレス）
   */
@@ -154,7 +158,7 @@ void sd_test()
   
 //	DIR dir;				/* Directory object */
 //	FILINFO fno;			/* File information object */
-	UINT bw, br, i;
+	UINT br, i, bw, ;
 
 	f_mount(0, &Fatfs);		/* Register volume work area (never fails) */
 

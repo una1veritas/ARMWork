@@ -39,13 +39,13 @@
 #include "USARTSerial.h"
 
 
-#define SSP_CS0       PIO0_2
-#define SSP_CS1       PIO1_23
+//#define SSP_CS0       PIO0_2
+//#define SSP_CS1       PIO1_23
 #define LED_SD_BUSY   PIO1_19
 
 //SPIBus SPI0(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, SSP_CS0); // sck, miso, mosi, cs
-SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, SSP_CS1); // sck, miso, mosi, cs
-SPISRAM sram(SPI1, SSP_CS1, SPISRAM::BUS_MBITS);
+SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
+SPISRAM sram(SPI1, PIO1_23, SPISRAM::BUS_MBITS);
 
 /******************************************************************************
 **   Main Function  main()

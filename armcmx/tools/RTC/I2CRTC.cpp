@@ -1,23 +1,25 @@
-/*
-#if ARDUINO >= 100
-#include "Wire.h"
+ /*
+  *
+  */
+  
+#ifdef __AVR__
+#include <Wire.h>
+
+PROGMEM const char I2CRTC::NameOfDay[]=
+  "Sun\0Mon\0Tue\0Wed\0Thu\0Fri\0Sat\0";
+PROGMEM const char I2CRTC::NameOfMonth[]=
+  "Jan\0Feb\0Mar\0Apr\0May\0Jun\0Jul\0Aug\0Sep\0Oct\0Nov\0Dec\0";
 #else
-extern "C" {
-#include "Wire.h"
-}
-#endif
- */
 #include "i2c.h"
 #include "I2CRTC.h"
-//#include <Wire.h>
 
-
-//PROGMEM 
 const char I2CRTC::NameOfDay[]=
-"Sun\0Mon\0Tue\0Wed\0Thu\0Fri\0Sat\0";
-//PROGMEM 
+  "Sun\0Mon\0Tue\0Wed\0Thu\0Fri\0Sat\0";
 const char I2CRTC::NameOfMonth[]=
-"Jan\0Feb\0Mar\0Apr\0May\0Jun\0Jul\0Aug\0Sep\0Oct\0Nov\0Dec\0";
+  "Jan\0Feb\0Mar\0Apr\0May\0Jun\0Jul\0Aug\0Sep\0Oct\0Nov\0Dec\0";
+#endif
+
+
 
 // PRIVATE FUNCTIONS
 

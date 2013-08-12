@@ -98,4 +98,10 @@ public:
     size_t println(void);
 };
 
+template<class T>
+inline Print & operator <<(Print &out, T arg) {
+	out.print(arg);
+	return out;
+}
+
 #endif
