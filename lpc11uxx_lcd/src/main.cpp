@@ -15,7 +15,7 @@
 #include "I2CBus.h"
 #include "i2clcd.h"
 #include "ST7032i.h"
-#include "DS1307.h"
+#include "I2CRTC.h"
 
 #include "cappuccino.h"
 
@@ -49,7 +49,7 @@ char day[7][4] = {
   };
 
 ST7032i i2clcd(Wire, LED_LCDBKLT, LCDRST);
-DS1307 rtc(Wire, DS1307::CHIP_M41T62);
+I2CRTC rtc(Wire, I2CRTC::CHIP_M41T62);
 /*
 uint8_t i2clcd_data(uint8_t d) {
   return (uint8_t) i2clcd.write(d);
@@ -63,7 +63,7 @@ int main (void) {
   char str[32];
   char message[64];
   char * ptr;
-  long ttime;
+//  long ttime;
   
   SystemInit();
   GPIOInit();

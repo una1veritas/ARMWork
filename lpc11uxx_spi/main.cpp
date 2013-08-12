@@ -31,7 +31,7 @@
 #include <stdlib.h>
 
 #include "LPC11Uxx.h"
-#include "type.h"
+//#include "type.h"
 
 #include "armcmx.h"
 #include "SPIBus.h"

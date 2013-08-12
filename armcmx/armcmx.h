@@ -77,8 +77,8 @@ typedef uint8_t boolean;
 //void armcmx_init(void);
 //size_t strlen(const char * s);
 
-//#include "gpio.h"
-//#include "delay.h"
+#include "gpio.h"
+#include "delay.h"
 //#include "usart.h"
 
 #ifdef __cplusplus

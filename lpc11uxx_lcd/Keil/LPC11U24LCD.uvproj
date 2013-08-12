@@ -165,6 +165,7 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
+          <bUseTDR>0</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
@@ -350,7 +351,7 @@
               <MiscControls></MiscControls>
               <Define>ARMCMX</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\LPCLibrary\armcmx\lpc11uxx;..\..\LPCLibrary\armcmx;..\inc;..\src;..\..\STM32Libraries\armcmxtools\LCD;..\..\STM32Libraries\armcmxtools\RTC</IncludePath>
+              <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\armcmx\lpc11uxx;..\..\armcmx;..\inc;..\src;..\..\armcmx\tools\LCD;..\..\armcmx\tools\RTC</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -434,92 +435,57 @@
             <File>
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\gpio.c</FilePath>
+              <FilePath>..\..\armcmx\lpc11uxx\gpio.c</FilePath>
             </File>
             <File>
               <FileName>i2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\i2c.c</FilePath>
+              <FilePath>..\..\armcmx\lpc11uxx\i2c.c</FilePath>
             </File>
             <File>
               <FileName>nmi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\nmi.c</FilePath>
+              <FilePath>..\..\armcmx\lpc11uxx\nmi.c</FilePath>
             </File>
             <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\usart.c</FilePath>
+              <FilePath>..\..\armcmx\lpc11uxx\usart.c</FilePath>
             </File>
             <File>
               <FileName>USARTSerial.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\USARTSerial.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>USARTSerial.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\USARTSerial.h</FilePath>
+              <FilePath>..\..\armcmx\USARTSerial.cpp</FilePath>
             </File>
             <File>
               <FileName>Stream.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\Stream.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Print.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\Print.h</FilePath>
+              <FilePath>..\..\armcmx\Stream.cpp</FilePath>
             </File>
             <File>
               <FileName>Print.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\Print.cpp</FilePath>
+              <FilePath>..\..\armcmx\Print.cpp</FilePath>
             </File>
             <File>
               <FileName>I2CBus.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\I2CBus.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>delay.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay.h</FilePath>
-            </File>
-            <File>
-              <FileName>timer16.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\timer16.h</FilePath>
-            </File>
-            <File>
-              <FileName>type.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\type.h</FilePath>
+              <FilePath>..\..\armcmx\I2CBus.cpp</FilePath>
             </File>
             <File>
               <FileName>delay_systick.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\LPCLibrary\armcmx\lpc11uxx\delay_systick.c</FilePath>
+              <FilePath>..\..\armcmx\lpc11uxx\delay_systick.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>lcd</GroupName>
+          <GroupName>LCD</GroupName>
           <Files>
-            <File>
-              <FileName>HD44780.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\LCD\HD44780.h</FilePath>
-            </File>
             <File>
               <FileName>ST7032i.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\LCD\ST7032i.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>ST7032i.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\LCD\ST7032i.h</FilePath>
+              <FilePath>..\..\armcmx\tools\LCD\ST7032i.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -527,14 +493,14 @@
           <GroupName>RTC</GroupName>
           <Files>
             <File>
-              <FileName>DS1307.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\RTC\DS1307.cpp</FilePath>
+              <FileName>I2CRTC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\RTC\I2CRTC.h</FilePath>
             </File>
             <File>
-              <FileName>DS1307.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\STM32Libraries\armcmxtools\RTC\DS1307.h</FilePath>
+              <FileName>I2CRTC.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\RTC\I2CRTC.cpp</FilePath>
             </File>
           </Files>
         </Group>

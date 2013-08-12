@@ -3,8 +3,8 @@
  */
 
 // ensure this library description is only included once
-#ifndef DS1307_h
-#define DS1307_h
+#ifndef I2CRTC_h
+#define I2CRTC_h
 
 //#include <stdio.h>
 //#include <stdlib.h>
@@ -24,7 +24,7 @@
 #endif
 
 // library interface description
-class DS1307 {
+class I2CRTC {
 	// library-accessible "private" interface
 private:
 	I2CBus & wire;
@@ -81,12 +81,12 @@ public:
 public:
 	uint32 time, cal;
 
-	DS1307(I2CBus & w, uint8 chip = CHIP_DS1307) : wire(w), chipID(chip) {
+	I2CRTC(I2CBus & w, uint8 chip = CHIP_DS1307) : wire(w), chipID(chip) {
 		time = 0;
 		cal = 0; 
 	}
 
-	DS1307(uint8 chip = CHIP_DS1307) : wire(Wire), chipID(chip) {
+	I2CRTC(uint8 chip = CHIP_DS1307) : wire(Wire), chipID(chip) {
 		time = 0;
 		cal = 0; 
 	}
