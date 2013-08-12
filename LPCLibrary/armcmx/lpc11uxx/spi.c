@@ -35,8 +35,8 @@ void SPI_init(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nc
 void SPI_config(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin ncs) {
 
   if ( port->SSPx == LPC_SSP0 ) {
-    LPC_SYSCON->PRESETCTRL |= (0x1<<0);
-    LPC_SYSCON->SYSAHBCLKCTRL |= (0x1<<11);
+    LPC_SYSCON->PRESETCTRL |= (0x1<<0);  //SSP0 reset off
+    LPC_SYSCON->SYSAHBCLKCTRL |= (0x1<<11); // power on
     LPC_SYSCON->SSP0CLKDIV = 0x2;			/* Divided by 2 */
 
     LPC_IOCON->PIO0_8 &= ~0x07;		/*  SSP I/O config */
@@ -71,8 +71,8 @@ void SPI_config(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin 
   }
   else if (port->SSPx == LPC_SSP1) 		/* port number 1 */
   {
-    LPC_SYSCON->PRESETCTRL |= (0x1<<2);
-    LPC_SYSCON->SYSAHBCLKCTRL |= (1<<18);
+    LPC_SYSCON->PRESETCTRL |= (0x1<<2);  // SSP1 reset off
+    LPC_SYSCON->SYSAHBCLKCTRL |= (1<<18);  // power on
     LPC_SYSCON->SSP1CLKDIV = 0x02;			/* Divided by 2 */
     if ( sck == PIO1_20 ) {
       pinFuncClear(PIO1_20); // &= ~0x07;    /*  SSP I/O config */
@@ -168,12 +168,25 @@ void SPI_reset(SPIDef * port) {
 void SPI_disable(SPIDef * port) {
 }
 
-void SPI_mode16bit(SPIDef * port) {
-  port->SSPx->CR0 = 0x000F;				/* Select 16-bit mode */
+void SPI_ClockDivier(SPIDef * port, uint8_t div) {
+  if ( port->SSPx == LPC_SSP0 ) {
+    LPC_SYSCON->SSP0CLKDIV = div & 0xff;
+  } else {
+    LPC_SYSCON->SSP1CLKDIV = div & 0xff;
+  }
 }
 
-void SPI_mode8bit(SPIDef * port) {
-  port->SSPx->CR0 = 0x0007;				/* Select 8-bit mode */
+void SPI_DataSize(SPIDef * port, uint8_t bitsize) {
+    port->SSPx->CR0 &= ~0x0f;
+    port->SSPx->CR0 |= (0x0F & bitsize);				/* Select 8- or 16-bit mode */
+}
+
+void SPI_DataMode(SPIDef * port, uint8_t mode) {
+  port->SSPx->CR0 &= ~SPIMODE_CPOL;
+  if ( mode & 1 )
+    port->SSPx->CR0 |= SPIMODE_CPOL;
+  if ( mode & 2 )
+    port->SSPx->CR0 |= SPIMODE_CPHA;
 }
 
 

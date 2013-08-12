@@ -195,7 +195,7 @@ uint32_t I2C_start(I2CDef * i2c) {
 			retVal = TRUE;
 			break;
 		}
-		if (timeout >= MAX_TIMEOUT) {
+		if (timeout >= I2C_MAX_TIMEOUT) {
 			retVal = FALSE;
 			break;
 		}
@@ -308,7 +308,7 @@ uint32_t I2C_Engine(I2CDef * i2c) {
 	i2c->State = I2C_BUSY;
 
 	while (i2c->State == I2C_BUSY) {
-		if (i2c->timeout >= MAX_TIMEOUT) {
+		if (i2c->timeout >= I2C_MAX_TIMEOUT) {
 			i2c->State = I2C_TIME_OUT;
 			break;
 		}

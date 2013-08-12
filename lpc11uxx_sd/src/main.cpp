@@ -65,12 +65,12 @@ int main(void) {
 	USART_init(&usart, RXD_A, TXD_A);
 //  USART_init(&usart, RXD_C, TXD_C);
 	USART_begin(&usart, 115200);
-  USART_puts(&usart, "\nHello, \nits nice to see you!\n");
+  USART_puts(&usart, "\nHello, nice to see you!\n");
 
   Wire.begin();
   lcd.begin();
   lcd.backlightHigh();
-  lcd.print("Let's start!");
+  lcd.print("Let's start LCD!");
 
   rtc.begin();
   rtc.update();
@@ -78,13 +78,16 @@ int main(void) {
   lcd.print(rtc.time, HEX);
   lcd.print(" ");
   lcd.print(rtc.cal, HEX);
+  Serial.print("Current time printed on LCD: ");
+  Serial.println(rtc.time, HEX);
 //	 下記は不要な部分はコメントアウトしてお試しください。
 
-/*
- *	SDカードのデモ（エンドレス）
- */
- 
+ /*
+  * SDカードのデモ（エンドレス）
+  */
+  Serial.print("result of get_fattime: ");
   Serial.println(get_fattime(), HEX);
+  
   SPI_init(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, SSP_CS0);
 
 	sd_test();

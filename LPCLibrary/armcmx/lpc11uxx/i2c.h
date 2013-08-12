@@ -33,7 +33,7 @@ For board to board test, this flag can be turned on. */
 #define FAST_MODE_PLUS      0
 
 #define I2C_BUFFER_SIZE             64
-#define MAX_TIMEOUT         0x00FFFFFF
+#define I2C_MAX_TIMEOUT         0x00FFFFFF
 
 #define I2CMASTER           0x01
 #define I2CSLAVE            0x02

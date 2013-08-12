@@ -41,7 +41,7 @@ typedef struct {
 #define FIFOSIZE        8
 
 #define SFLASH_INDEX	4
-#define MAX_TIMEOUT     0xFF
+#define SPI_MAX_TIMEOUT     0xFF
 	
 /* SSP Status register */
 #define SSPSR_TFE       (0x1<<0)
@@ -95,8 +95,15 @@ void SPI_start(SPIDef * port);
 
 void SPI_disable(SPIDef * port);
 
-void SPI_mode16bit(SPIDef * port);
-void SPI_mode8bit(SPIDef * port);
+
+#define SPIMODE_CPOL    (1<<6)
+#define SPIMODE_CPHA    (1<<7)
+#define SPIMODE_DIVSET  (1<<8)
+
+#define SPIMODE_8BIT    (0<<15)
+#define SPIMODE_16BIT   (1<<15)
+
+void SPI_mode(SPIDef * port, uint32_t mode);
 
 extern SPIDef SPI0Def, SPI1Def;
 
