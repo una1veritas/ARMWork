@@ -48,6 +48,7 @@ int main (void) {
   char buf[4];
   char * ptr;
 //  int len;
+  boolean laststate;
   
   struct {
     uint32_t master;
@@ -65,8 +66,8 @@ int main (void) {
   // I2C LCD Backlight controll pin
   pinMode(LED_LCDBKLT, OUTPUT);
   digitalWrite(LED_LCDBKLT, LOW);
-  
-  pinMode(USERBTN, INPUT);
+
+  pinMode(SW_USERBTN, INPUT);
   
   /* NVIC is installed inside UARTInit file. */
   //USART_init(&usart, PIO0_18, PIO0_19);
@@ -88,6 +89,8 @@ int main (void) {
   // PIO1_6 USR LED //  GPIOSetDir(1, 6, 1 ); //  GPIOSetBitValue( 1, 6, 1);
   pinMode(LED_SDBUSY, OUTPUT);
   digitalWrite(LED_SDBUSY, HIGH);
+  pinMode(SW_SDDETECT, INPUT);
+  laststate = digitalRead(SW_SDDETECT);
     
   Serial.print("Hello!\n");
   
@@ -130,7 +133,17 @@ int main (void) {
     }
     
     if ( !task.button ) {
-      if ( digitalRead(USERBTN) == LOW ) {
+      if ( laststate != digitalRead(SW_SDDETECT) ) {
+        laststate = digitalRead(SW_SDDETECT);
+        if ( laststate ) {
+          Serial.println("SD DETECT is HIGH");
+          digitalWrite(LED_SDBUSY, HIGH);
+        } else {
+          Serial.println("SD DETECT is LOW");
+          digitalWrite(LED_SDBUSY, LOW);
+        }
+      }
+      if ( digitalRead(SW_USERBTN) == LOW ) {
         if ( ontime == 0 ) {
           ontime = millis();
           Serial.println(micros());

@@ -104,7 +104,8 @@ void SPI_disable(SPIDef * port);
 #define SPIMODE_16BIT   (1<<15)
 
 void SPI_mode(SPIDef * port, uint32_t mode);
-
+void SPI_setClockDivier(SPIDef *, uint8_t);
+    
 extern SPIDef SPI0Def, SPI1Def;
 
 #ifdef __cplusplus

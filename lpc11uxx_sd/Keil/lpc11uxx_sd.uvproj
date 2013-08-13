@@ -403,11 +403,6 @@
           <GroupName>src</GroupName>
           <Files>
             <File>
-              <FileName>mmc_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\mmc_spi.c</FilePath>
-            </File>
-            <File>
               <FileName>main.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\src\main.cpp</FilePath>
@@ -541,6 +536,11 @@
               <FileName>integer.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\integer.h</FilePath>
+            </File>
+            <File>
+              <FileName>mmc_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\mmc_spi.c</FilePath>
             </File>
           </Files>
         </Group>

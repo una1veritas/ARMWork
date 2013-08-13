@@ -60,8 +60,8 @@ public:
 		//SPI_setDataMode(port, mode);
 	}
 
-	inline void setClockDivider(uint16_t rate) {	
-		// spi_setClockDivier(port, rate);
+	inline void setClockDivider(uint8_t rate) {
+		SPI_setClockDivier(SPIPort, rate);
 	}
 	
 	inline void setMode(uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst) {

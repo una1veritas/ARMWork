@@ -11,6 +11,7 @@
 
 #include "SPIBus.h"
 
+#include "diskio.h"
 #include "ff.h"
 
 static uint32_t FatFsTimeStamp;
@@ -18,6 +19,15 @@ static uint32_t FatFsTimeStamp;
 // volume
 class SDFatFs {
   SPIBus & spibus;
+
+//  static volatile DSTATUS Stat;	/* Physical drive status */
+//  static volatile UINT Timer1, Timer2;	/* 1kHz decrement timer stopped at zero (disk_timerproc()) */
+//  static BYTE CardType;			/* Card type flags */
+
+  GPIOPin pin_cs;
+  GPIOPin pin_detect;
+  GPIOPin pin_busyled;
+  
   //
   FATFS fatfs;		/* File system object */
   
@@ -27,11 +37,10 @@ public:
   static uint32_t fattime(uint32_t cal, uint32_t time);
 
 public:
-  SDFatFs(SPIBus & bus) : spibus(bus) {}
+  SDFatFs(SPIBus & bus, GPIOPin cs, GPIOPin detect = PIO1_16, GPIOPin led = PIO1_19) 
+    : spibus(bus), pin_cs(cs), pin_detect(detect), pin_busyled(led) {}
   
-  void begin(void) {
-    f_mount(0, &fatfs);		/* Register volume work area (never fails) */
-  }
+  void begin(void);
   
 };
 

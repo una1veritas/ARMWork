@@ -13,7 +13,7 @@ extern "C" {
 #define LOW    0
 
 enum PIONameDef {
-	Not_A_Port = 0,
+	Not_A_Port = 0xff,
 	PIO0 = 1<<0,
 	PIO1 = 1<<1,
   PORT_NOT_DEFINED = 0xff,
@@ -22,7 +22,7 @@ enum PIONameDef {
 static uint8_t PIONumber[] = { Not_A_Port, 0, 1, PORT_NOT_DEFINED }; 
 
 enum _GPIOPin_Def {
-	NOT_A_PIN = 0,
+	NOT_A_PIN = 0xff,
   PIO0_0 = (PIO0 <<5) | ((uint8_t)0),
   PIO0_1 = (PIO0 <<5) | ((uint8_t)1),
   PIO0_2 = (PIO0 <<5) | ((uint8_t)2),

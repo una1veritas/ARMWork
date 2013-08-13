@@ -26,11 +26,13 @@
 
 #define CAPPUCCINO
 
-#define LED_LCDBKLT PIO0_3
-#define LED_SDBUSY   PIO1_19
+#define LED_LCDBKLT   PIO0_3
+#define LED_SDBUSY    PIO1_19   // As a sink
+
+#define SW_SDDETECT   PIO1_16    // High at slot empty
 
 #define LCDRST  PIO1_25
-#define USERBTN PIO0_1
+#define SW_USERBTN PIO0_1
 #define RXD_C    PIO0_18
 #define TXD_C    PIO0_19
 #define RXD_A    PIO1_26

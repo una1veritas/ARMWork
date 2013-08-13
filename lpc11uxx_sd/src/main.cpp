@@ -41,7 +41,7 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 SPIBus SPI0(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, PIO0_2); // sck, miso, mosi, cs
 SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
 
-SDFatFs sd(SPI0);
+SDFatFs sd(SPI0, PIO0_2);
 SDFatFile file(sd);
 void sd_test(void);
 
@@ -103,7 +103,12 @@ int main(void) {
   
   //SPI_init(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, SSP_CS0);
   SPI0.begin();
-  
+  sd.begin();
+  if ( digitalRead(SW_SDDETECT) == HIGH ) {
+    Serial.println("SD slot is empty.");
+  } else {
+    Serial.println("Card is in SD slot.");
+  }
 	sd_test();
 /*
  * i2C液晶のテスト（エンドレス）
@@ -153,7 +158,6 @@ void sd_test()
 	UINT br, i, bw ;
 
 //	f_mount(0, &Fatfs);		/* Register volume work area (never fails) */
-  sd.begin();
 	/*
 	 * SDカードのMESSAGE.TXTを開いてI2C液晶に表示します。英数カナのみ
 	 * ２行分のみ
@@ -161,7 +165,7 @@ void sd_test()
 	//rc = f_open(&Fil, "MESSAGE.TXT", FA_READ);
 	file.open("MESSAGE.TXT", SDFatFile::FILE_READ); 
   if ( !file.result() ) { //!rc){
-    USART_puts(&usart, "\nType the file content.\n");
+    USART_puts(&usart, "\nType the file content:\n\n");
     for (;;) {
       /* Read a chunk of file */
       //if (rc || !f_gets((TCHAR*)buff, sizeof(buff), &Fil) ) break;			/* Error or end of file */

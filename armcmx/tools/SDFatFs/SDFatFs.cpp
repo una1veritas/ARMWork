@@ -4,12 +4,13 @@
   
 #include "SDFatFs.h"
 
-size_t SDFatFile::write(const uint8_t * buf, size_t num) {
-  UINT count;
-  sdfs.rescode = f_write(&file, buf, num, &count);
-  return count;
+void SDFatFs::begin(void) {
+  pinMode(pin_cs, OUTPUT);
+  pinMode(pin_detect, INPUT);
+  pinMode(pin_busyled, OUTPUT);
+  f_mount(0, &fatfs);		/* Register volume work area (never fails) */
 }
-
+  
 // for get_fattime
 uint32_t SDFatFs::fattime(uint32_t cal, uint32_t time) {
   uint8_t y,m,d, hh, mm, ss;
@@ -22,3 +23,10 @@ uint32_t SDFatFs::fattime(uint32_t cal, uint32_t time) {
   
   return ((uint32_t)y<<25) | m<<21 | d<<16 | hh << 11 | mm<<5 | ss>>1;
 }
+
+size_t SDFatFile::write(const uint8_t * buf, size_t num) {
+  UINT count;
+  sdfs.rescode = f_write(&file, buf, num, &count);
+  return count;
+}
+

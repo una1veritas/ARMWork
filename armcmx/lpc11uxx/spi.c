@@ -168,12 +168,8 @@ void SPI_reset(SPIDef * port) {
 void SPI_disable(SPIDef * port) {
 }
 
-void SPI_ClockDivier(SPIDef * port, uint8_t div) {
-  if ( port->SSPx == LPC_SSP0 ) {
-    LPC_SYSCON->SSP0CLKDIV = div & 0xff;
-  } else {
-    LPC_SYSCON->SSP1CLKDIV = div & 0xff;
-  }
+void SPI_setClockDivier(SPIDef * port, uint8_t div) {
+  port->SSPx->CPSR = div & 0xfe;
 }
 
 void SPI_DataSize(SPIDef * port, uint8_t bitsize) {
