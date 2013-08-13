@@ -10,6 +10,10 @@
 
 #include "LPC11Uxx.h"
 #include "type.h"
+
+#include "integer.h"
+#include "ff.h"
+
 #include "armcmx.h"
 #include "USARTSerial.h"
 #include "I2Cbus.h"
@@ -18,7 +22,7 @@
 #include "spi.h"
 #include "SPIBus.h"
 #include "SPISRAM.h"
-#include "ff.h"
+#include "SDFatFs.h"
 
 #include "PWM0Tone.h"
 
@@ -34,12 +38,17 @@
 __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #endif
 
+SPIBus SPI0(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, PIO0_2); // sck, miso, mosi, cs
+SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
+
+SDFatFs sd(SPI0);
+SDFatFile file(sd);
 void sd_test(void);
 
 ST7032i lcd(Wire, LED_LCDBKLT);
 I2CRTC rtc(I2CRTC::CHIP_M41T62);
-SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
-SPISRAM sram(SPI1, PIO1_23, SPISRAM::BUS_MBITS);
+//SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
+//SPISRAM sram(SPI1, PIO1_23, SPISRAM::BUS_MBITS);
 
 
 int main(void) {
@@ -84,16 +93,17 @@ int main(void) {
   Serial.println(rtc.time, HEX);
 //	 下記は不要な部分はコメントアウトしてお試しください。
 
-  SPI1.begin();
-  sram.begin();
+//  SPI1.begin();
+//  sram.begin();
  /*
   * SDカードのデモ（エンドレス）
   */
   Serial.print("result of get_fattime: ");
   Serial.println(get_fattime(), HEX);
   
-  SPI_init(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, SSP_CS0);
-
+  //SPI_init(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, SSP_CS0);
+  SPI0.begin();
+  
 	sd_test();
 /*
  * i2C液晶のテスト（エンドレス）
@@ -115,30 +125,12 @@ int main(void) {
 #define BCD8TODEC(n)  ( ((n)&>>4&0x0f)*10 + ((n)&0x0f) )
 
 DWORD get_fattime(void) {
-  uint8_t y,m,d, hh, mm, ss;
-  rtc.update();
-  y = 20 + (rtc.cal>>16&0x0f) + (rtc.cal>>20&0x0f)*10;
-  m = (rtc.cal>>8&0x0f) + (rtc.cal>>12&0x0f)*10;
-  d = (rtc.cal&0x0f) + (rtc.cal>>4&0x0f)*10;
-  /*
-  Serial.print("y/m/d = ");
-  Serial.print(y);
-  Serial.print("/");
-  Serial.print(m);
-  Serial.print("/");
-  Serial.print(d);
-  Serial.print(" ");
-*/
-  hh = (rtc.time>>16&0x0f) + (rtc.time>>20&0x0f)*10;
-  mm = (rtc.time>>8&0x0f) + (rtc.time>>12&0x0f)*10;
-  ss = (rtc.time&0x0f) + (rtc.time>>4&0x0f)*10;
-  
-  return ((uint32_t)y<<25) | m<<21 | d<<16 | hh << 11 | mm<<5 | ss>>1;
+  return SDFatFs::fattime(rtc.cal, rtc.time);
 }
 
 
-FATFS Fatfs;		/* File system object */
-FIL Fil;			/* File object */
+//FATFS Fatfs;		/* File system object */
+//FIL Fil;			/* File object */
 static uint8_t buff[128];
 
 
@@ -153,40 +145,45 @@ static uint8_t buff[128];
  */
 void sd_test()
 {
-	FRESULT rc;
+//	FRESULT rc;
   long swatch;
   
 //	DIR dir;				/* Directory object */
 //	FILINFO fno;			/* File information object */
-	UINT br, i, bw, ;
+	UINT br, i, bw ;
 
-	f_mount(0, &Fatfs);		/* Register volume work area (never fails) */
-
+//	f_mount(0, &Fatfs);		/* Register volume work area (never fails) */
+  sd.begin();
 	/*
 	 * SDカードのMESSAGE.TXTを開いてI2C液晶に表示します。英数カナのみ
 	 * ２行分のみ
 	 */
-	rc = f_open(&Fil, "MESSAGE.TXT", FA_READ);
-	if (!rc){
+	//rc = f_open(&Fil, "MESSAGE.TXT", FA_READ);
+	file.open("MESSAGE.TXT", SDFatFile::FILE_READ); 
+  if ( !file.result() ) { //!rc){
     USART_puts(&usart, "\nType the file content.\n");
     for (;;) {
       /* Read a chunk of file */
-      if (rc || !f_gets((TCHAR*)buff, sizeof(buff), &Fil) ) break;			/* Error or end of file */
+      //if (rc || !f_gets((TCHAR*)buff, sizeof(buff), &Fil) ) break;			/* Error or end of file */
+      if ( file.gets((TCHAR*) buff, sizeof(buff)) == NULL || file.result() )
+        break;
 
       USART_puts(&usart, (char*)buff);
     }
-    if (rc) {
+    if ( file.result() ) {
       USART_puts(&usart, "\nFailed while reading.\n");
       return;
     }
-    rc = f_close(&Fil);
+    //rc = f_close(&Fil);
+    file.close();
     /*
      *	ファイル書き込みテスト
      *	SD0001.TXTファイルを作成し、Strawberry Linuxの文字を永遠に書き込む
      */
 
-    rc = f_open(&Fil, "SD0001.TXT", FA_WRITE | FA_CREATE_ALWAYS);
-    if (rc) {
+//    rc = f_open(&Fil, "SD0001.TXT", FA_WRITE | FA_CREATE_ALWAYS);
+    file.open("SD0001.TXT", SDFatFile::FILE_WRITE);
+    if ( file.result() ) { //rc) {
       USART_puts(&usart, "\nCouldn't open SD0001.TXT.\n");
       return;
     }
@@ -195,21 +192,26 @@ void sd_test()
     // 無限ループでこの関数からは抜けない
     while(1){
       i = sprintf((char*)buff, "%08u ", millis());
-      f_write(&Fil, buff, i, &bw);
-      rc = f_write(&Fil, "Strawberry Linux\r\n", 18, &bw);
-      if (rc) 
+      //f_write(&Fil, buff, i, &bw);
+      file.write(buff, i);
+      //rc = f_write(&Fil, "Strawberry Linux\r\n", 18, &bw);
+      file.write((uint8_t *)"Strawberry Linux\r\n", 18);
+      //if (rc) 
+      if ( file.result() ) 
         break;
       // SDカードに書き出します。
-      f_sync(&Fil);
+     // f_sync(&Fil);
+      file.flush();
       if ( swatch + 2000 < millis() ) 
         break;
     }
-    f_close(&Fil);
+    //f_close(&Fil);
+    file.close();
     USART_puts(&usart, "\nSD File IO test finished.\n");
   	return;
 
   }
-  if ( rc == FR_NOT_READY )
+  if ( file.result() == FR_NOT_READY ) //rc == FR_NOT_READY )
     USART_puts(&usart, "\nCouldn't open MESSAGE.TXT.\n");
 
 }

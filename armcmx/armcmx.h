@@ -22,8 +22,6 @@ extern "C" {
 
 typedef uint8_t GPIOPin;
 
-#include "binary.h"
-
 #define HEX 16
 #define DEC 10
 #define BIN 2

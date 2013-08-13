@@ -21,6 +21,7 @@
 #include <Print.h>
 #include <I2CBus.h>
 #include "HD44780.h"
+#include "binary.h"
 #endif
 
 

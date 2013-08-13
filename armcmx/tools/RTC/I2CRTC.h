@@ -8,7 +8,9 @@
 
 #if defined (ARMCMX)
 #include "armcmx.h"
+#include "binary.h"
 #include "I2CBus.h"
+
 #elif defined (ARDUINO)
 //#include <avr/pgmspace.h>
 #if ARDUINO >= 100
@@ -17,6 +19,7 @@
 #include <WProgram.h>
 #endif
 #include <Wire.h>
+
 #endif
 
 // library interface description

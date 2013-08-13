@@ -403,11 +403,6 @@
           <GroupName>src</GroupName>
           <Files>
             <File>
-              <FileName>ff.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\ff.c</FilePath>
-            </File>
-            <File>
               <FileName>mmc_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\src\mmc_spi.c</FilePath>
@@ -506,6 +501,46 @@
               <FileName>SPIBus.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\armcmx\SPIBus.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tools</GroupName>
+          <Files>
+            <File>
+              <FileName>SDFatFs.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\SDFatFs.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>SDFatFs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\SDFatFs.h</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\diskio.h</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\ff.h</FilePath>
+            </File>
+            <File>
+              <FileName>ffconf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\ffconf.h</FilePath>
+            </File>
+            <File>
+              <FileName>integer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\integer.h</FilePath>
             </File>
           </Files>
         </Group>
