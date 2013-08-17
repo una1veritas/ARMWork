@@ -15,9 +15,9 @@
 #define SD_SELECTION_CLR (LPC_GPIO->PIN[0] &= ~(1<<2))
 */
 
-SPIDef SPI0Def = { LPC_SSP0 }, SPI1Def = { LPC_SSP1 };
+SPIDef SPI0Def = { LPC_SSP0, PIO0_2 }, SPI1Def = { LPC_SSP1, PIO1_23 };
 
-uint8_t SPI_transfer(SPIDef * port, uint8_t data) {
+uint32_t SPI_transfer(SPIDef * port, uint32_t data) {
   port->SSPx->DR = data;
   /* Wait until the Busy bit is cleared */
   while ( (port->SSPx->SR & (SSPSR_BSY|SSPSR_RNE)) != SSPSR_RNE );
@@ -25,7 +25,8 @@ uint8_t SPI_transfer(SPIDef * port, uint8_t data) {
   return data;
 }
 
-void SPI_init(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin ncs) {
+
+void SPI_init(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin ncs) {  
   SPI_reset(port);
   SPI_config(port, sck, miso, mosi, ncs);
   SPI_start(port);
@@ -33,6 +34,7 @@ void SPI_init(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin nc
 
 
 void SPI_config(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin ncs) {
+  port->pin_SSPCS = ncs;
 
   if ( port->SSPx == LPC_SSP0 ) {
     LPC_SYSCON->PRESETCTRL |= (0x1<<0);  //SSP0 reset off
@@ -168,17 +170,17 @@ void SPI_reset(SPIDef * port) {
 void SPI_disable(SPIDef * port) {
 }
 
-void SPI_ClockDivier(SPIDef * port, uint8_t div) {
+void SPI_ClockDivier(SPIDef * port, uint32_t div) {
   port->SSPx->CPSR = div & 0xfe;
 }
 
-void SPI_DataSize(SPIDef * port, uint8_t bitsize) {
-    port->SSPx->CR0 &= ~0x0f;
-    port->SSPx->CR0 |= (0x0F & bitsize);				/* Select 8- or 16-bit mode */
+void SPI_DataSize(SPIDef * port, uint32_t dss) {
+    port->SSPx->CR0 &= ~((uint32_t)0x0f);
+    port->SSPx->CR0 |= (0x0F & dss);				/* Set dss value for select data size */
 }
 
-void SPI_DataMode(SPIDef * port, uint8_t mode) {
-  port->SSPx->CR0 &= ~SPIMODE_CPOL;
+void SPI_DataMode(SPIDef * port, uint32_t mode) {
+  port->SSPx->CR0 &= ~(SPIMODE_CPOL | SPIMODE_CPHA);
   if ( mode & 1 )
     port->SSPx->CR0 |= SPIMODE_CPOL;
   if ( mode & 2 )

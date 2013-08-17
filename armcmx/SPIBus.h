@@ -57,11 +57,11 @@ public:
 	}
 
 	inline void setDataMode(uint16_t mode) {
-		//SPI_setDataMode(port, mode);
+		SPI_DataMode(SPIPort, mode);
 	}
 
 	inline void setClockDivider(uint8_t rate) {
-		SPI_setClockDivier(SPIPort, rate);
+		SPI_ClockDivier(SPIPort, rate);
 	}
 	
 	inline void setMode(uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst) {

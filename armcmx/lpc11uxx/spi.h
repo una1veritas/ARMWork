@@ -31,6 +31,8 @@ extern "C" {
 typedef struct {
 //  uint8_t Num;
   LPC_SSPx_Type * SSPx;
+  GPIOPin pin_SSPCS;
+  //
 } SPIDef;
 
 #define SSP0_RST_N (1<<0)
@@ -85,7 +87,6 @@ typedef struct {
 #define SSPICR_RORIC    (0x1<<0)
 #define SSPICR_RTIC     (0x1<<1)
 
-uint8_t SPI_transfer(SPIDef * port, uint8_t data);
 
 void SPI_reset(SPIDef * port);
 
@@ -100,12 +101,19 @@ void SPI_disable(SPIDef * port);
 #define SPIMODE_CPHA    (1<<7)
 #define SPIMODE_DIVSET  (1<<8)
 
-#define SPIMODE_8BIT    (0<<15)
-#define SPIMODE_16BIT   (1<<15)
 
-void SPI_mode(SPIDef * port, uint32_t mode);
-void SPI_setClockDivier(SPIDef *, uint8_t);
-    
+#define SPI_DSS_8BIT 0x07
+#define SPI_DSS_16BIT 0x0f
+
+void SPI_DataMode(SPIDef * port, uint32_t mode);
+void SPI_ClockDivier(SPIDef *, uint32_t);
+void SPI_DataSize(SPIDef * port, uint32_t dss);
+
+uint32_t SPI_transfer(SPIDef * port, uint32_t data); // uint16 may be enough
+
+#define SPI_RNE(SSPx)  (SSPx->SR & SSPSR_RNE)
+
+
 extern SPIDef SPI0Def, SPI1Def;
 
 #ifdef __cplusplus

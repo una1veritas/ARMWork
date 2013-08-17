@@ -37,12 +37,13 @@ public:
   static uint32_t fattime(uint32_t cal, uint32_t time);
 
 public:
-  SDFatFs(SPIBus & bus, GPIOPin cs, GPIOPin detect = PIO1_16, GPIOPin led = PIO1_19) 
+  SDFatFs(SPIBus & bus, GPIOPin cs, GPIOPin detect = PIN_NOT_DEFINED, GPIOPin led = PIN_NOT_DEFINED) 
     : spibus(bus), pin_cs(cs), pin_detect(detect), pin_busyled(led) {}
   
   void begin(void);
   
 };
+
 
 class SDFatFile : public Stream {
   FIL file;			/* File object */

@@ -47,8 +47,8 @@
 #endif
 */
 
-#define CS_HIGH()  digitalWrite(PIO0_2, HIGH)
-#define CS_LOW()  digitalWrite(PIO0_2, LOW)
+#define CS_HIGH()  { digitalWrite(PIO0_2, HIGH); digitalWrite(PIO1_19, HIGH); }
+#define CS_LOW()   { digitalWrite(PIO0_2, LOW); digitalWrite(PIO1_19, LOW); }
 #define SD_SLOTEMPTY()  digitalRead(SW_SDDETECT)
 
 #if PCLK_SSP * 1 == CCLK
@@ -144,28 +144,32 @@ void rcvr_spi_multi (
 	UINT n = 512;
 	WORD d;
 
-
-	SPI0Def.SSPx->CR0 = 0x000F; //SSPxCR0 = 0x000F;				/* Select 16-bit mode */
-
+	//SPI0Def.SSPx->CR0 = 0x000F; //SSPxCR0 = 0x000F;				/* Select 16-bit mode */
+  SPI_DataSize(&SPI0Def, SPI_DSS_16BIT);
+  
 	for (n = 0; n < 8; n++)			/* Push 8 frames into pipeline  */
 		SPI0Def.SSPx->DR = 0xFFFF;
+    //SPI_transfer(&SPI0Def, 0xffff);
 	btr -= 16;
 	while (btr) {					/* Receive the data block into buffer */
 		while (!(SPI0Def.SSPx->SR & _BV(2))) ;
 		d = SPI0Def.SSPx->DR;
 		SPI0Def.SSPx->DR = 0xFFFF;
+    //d = SPI_transfer(&SPI0Def, 0xffff);
 		*buff++ = d >> 8;
 		*buff++ = d;
 		btr -= 2;
 	}
 	for (n = 0; n < 8; n++) {		/* Pop remaining frames from pipeline */
-		while (!(SPI0Def.SSPx->SR & _BV(2))) ;
+		while (!(SPI0Def.SSPx->SR & _BV(2))) ;  // while RNE is off
 		d = SPI0Def.SSPx->DR;
+    // d = SPI_receive(&SPI0Def);
 		*buff++ = d >> 8;
 		*buff++ = d;
 	}
 
-	SPI0Def.SSPx->CR0 = 0x0007;				/* Select 8-bit mode */
+	//SPI0Def.SSPx->CR0 = 0x0007;				/* Select 8-bit mode */
+  SPI_DataSize(&SPI0Def, SPI_DSS_8BIT);
 }
 
 
@@ -181,12 +185,14 @@ void xmit_spi_multi (
 	WORD d;
 
 
-	SPI0Def.SSPx->CR0 = 0x000F;			/* Select 16-bit mode */
+	//SPI0Def.SSPx->CR0 = 0x000F;			/* Select 16-bit mode */
+  SPI_DataSize(&SPI0Def, SPI_DSS_16BIT);
 
 	for (n = 0; n < 8; n++) {	/* Push 8 frames into pipeline  */
 		d = *buff++;
 		d = (d << 8) | *buff++;
 		SPI0Def.SSPx->DR = d;
+    //SPI_transfer(&SPI0Def, d);
 	}
 	btx -= 16;
 	do {						/* Transmit data block */
@@ -194,13 +200,16 @@ void xmit_spi_multi (
 		d = (d << 8) | *buff++;
 		while (!(SPI0Def.SSPx->SR & _BV(2))) ;
 		SPI0Def.SSPx->DR; SPI0Def.SSPx->DR = d;
+    //SPI_transfer(&SPI0Def, d);
 	} while (btx -= 2);
 	for (n = 0; n < 8; n++) {
 		while (!(SPI0Def.SSPx->SR & _BV(2))) ;
 		SPI0Def.SSPx->DR;
+    //SPI_transfer(&SPI0Def, 0);
 	}
 
-	SPI0Def.SSPx->CR0 = 0x0007;			/* Select 8-bit mode */
+	//SPI0Def.SSPx->CR0 = 0x0007;			/* Select 8-bit mode */
+  SPI_DataSize(&SPI0Def, SPI_DSS_8BIT);
 }
 #endif
 
@@ -263,7 +272,7 @@ int select (void)	/* 1:OK, 0:Timeout */
 /* Control SPI module (Platform dependent)                               */
 /*-----------------------------------------------------------------------*/
 
-#ifdef __ORIGINAL
+#ifdef __ORIGINAL_CODE
 
 static
 void power_on (void)	/* Enable SSP module and attach it to I/O pads */

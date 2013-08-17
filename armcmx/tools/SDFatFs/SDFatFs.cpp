@@ -6,8 +6,10 @@
 
 void SDFatFs::begin(void) {
   pinMode(pin_cs, OUTPUT);
-  pinMode(pin_detect, INPUT);
-  pinMode(pin_busyled, OUTPUT);
+  if ( pin_detect != NOT_A_PIN || pin_detect != PIN_NOT_DEFINED )
+    pinMode(pin_detect, INPUT);
+  if ( pin_busyled != NOT_A_PIN || pin_busyled != PIN_NOT_DEFINED )
+    pinMode(pin_busyled, OUTPUT);
   f_mount(0, &fatfs);		/* Register volume work area (never fails) */
 }
   

@@ -41,7 +41,7 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 SPIBus SPI0(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, PIO0_2); // sck, miso, mosi, cs
 SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
 
-SDFatFs sd(SPI0, PIO0_2);
+SDFatFs sd(SPI0, PIO0_2, PIO1_16, PIO1_19);
 SDFatFile file(sd);
 void sd_test(void);
 
