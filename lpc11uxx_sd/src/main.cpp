@@ -18,7 +18,7 @@
 #include "USARTSerial.h"
 #include "I2Cbus.h"
 #include "ST7032i.h"
-#include "I2CRTC.h"
+#include "RTC.h"
 #include "spi.h"
 #include "SPIBus.h"
 #include "SPISRAM.h"
@@ -46,7 +46,7 @@ SDFatFile file(sd);
 void sd_test(void);
 
 ST7032i lcd(Wire, LED_LCDBKLT);
-I2CRTC rtc(I2CRTC::CHIP_M41T62);
+RTC rtc(RTC::ST_M41T62);
 //SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
 //SPISRAM sram(SPI1, PIO1_23, SPISRAM::BUS_MBITS);
 

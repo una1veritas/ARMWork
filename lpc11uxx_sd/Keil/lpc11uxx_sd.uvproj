@@ -473,16 +473,6 @@
               <FilePath>..\..\armcmx\lpc11uxx\i2c.c</FilePath>
             </File>
             <File>
-              <FileName>I2CRTC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\armcmx\tools\RTC\I2CRTC.h</FilePath>
-            </File>
-            <File>
-              <FileName>I2CRTC.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\armcmx\tools\RTC\I2CRTC.cpp</FilePath>
-            </File>
-            <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\lpc11uxx\usart.c</FilePath>
@@ -541,6 +531,11 @@
               <FileName>mmc_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\mmc_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>RTC.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\RTC\RTC.cpp</FilePath>
             </File>
           </Files>
         </Group>

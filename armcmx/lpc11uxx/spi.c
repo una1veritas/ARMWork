@@ -168,7 +168,7 @@ void SPI_reset(SPIDef * port) {
 void SPI_disable(SPIDef * port) {
 }
 
-void SPI_setClockDivier(SPIDef * port, uint8_t div) {
+void SPI_ClockDivier(SPIDef * port, uint8_t div) {
   port->SSPx->CPSR = div & 0xfe;
 }
 

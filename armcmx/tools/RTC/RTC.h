@@ -3,8 +3,8 @@
  */
 
 // ensure this library description is only included once
-#ifndef I2CRTC_h
-#define I2CRTC_h
+#ifndef RTC_h
+#define RTC_h
 
 #if defined (ARMCMX)
 #include "armcmx.h"
@@ -23,7 +23,7 @@
 #endif
 
 // library interface description
-class I2CRTC {
+class RTC {
 	// library-accessible "private" interface
 private:
 	I2CBus & wire;
@@ -43,20 +43,20 @@ private:
 		DS1307_YR
 	};
 
-	static const uint8_t DS1307_CTRL_ID = B01101000; //DS1307, M41T62
+	static const uint8 DS1307_CTRL_ID = B01101000; //DS1307, M41T62
 
 	// Define register bit masks
-	static const uint8_t DS1307_CLOCKHALT = B10000000;
+	static const uint8 DS1307_CLOCKHALT = B10000000;
 
-	static const uint8_t BITS_SEC = B01111111;
-	static const uint8_t BITS_HR =  B00111111;
-	static const uint8_t BITS_MIN = B01111111;
-	static const uint8_t BITS_DOW = B00000111;
-	static const uint8_t BITS_DATE =B00111111;
-	static const uint8_t BITS_MTH = B00111111;
-	static const uint8_t BITS_YR =  B11111111;
+	static const uint8 BITS_SEC = B01111111;
+	static const uint8 BITS_HR =  B00111111;
+	static const uint8 BITS_MIN = B01111111;
+	static const uint8 BITS_DOW = B00000111;
+	static const uint8 BITS_DATE =B00111111;
+	static const uint8 BITS_MTH = B00111111;
+	static const uint8 BITS_YR =  B11111111;
 
-	static const int DS1307_BASE_YR = 2000;
+	static const uint16 DS1307_BASE_YR = 2000;
 
 //		uint8_t bcdToDec(uint8_t b) { return (b>>4)*10 + (b&0x0f); }
 //		uint8_t decToBcd(uint8_t d) { return ((d/10)<<4) + (d%10); }
@@ -65,7 +65,7 @@ private:
 
 public:
 
-#ifdef __AVR__
+#ifdef ARDUINO
   PROGMEM const static char NameOfDay[36];
   PROGMEM const static char NameOfMonth[60];
 #else
@@ -78,19 +78,19 @@ public:
 	};
 
 	enum {
-		CHIP_DS1307 = 0,
-		CHIP_M41T62 = 1
+		MAXIM_DS1307 = 0,
+		ST_M41T62 = 1
 	};
 
 public:
 	uint32 time, cal;
 
-	I2CRTC(I2CBus & w, uint8 chip = CHIP_DS1307) : wire(w), chipID(chip) {
+	RTC(I2CBus & w, uint8 chip = MAXIM_DS1307) : wire(w), chipID(chip) {
 		time = 0;
 		cal = 0; 
 	}
 
-	I2CRTC(uint8 chip = CHIP_DS1307) : wire(Wire), chipID(chip) {
+	RTC(uint8 chip = MAXIM_DS1307) : wire(Wire), chipID(chip) {
 		time = 0;
 		cal = 0; 
 	}

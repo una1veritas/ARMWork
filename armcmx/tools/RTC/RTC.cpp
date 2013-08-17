@@ -5,17 +5,17 @@
 #ifdef __AVR__
 #include <Wire.h>
 
-PROGMEM const char I2CRTC::NameOfDay[]=
+PROGMEM const char RTC::NameOfDay[]=
   "Sun\0Mon\0Tue\0Wed\0Thu\0Fri\0Sat\0";
-PROGMEM const char I2CRTC::NameOfMonth[]=
+PROGMEM const char RTC::NameOfMonth[]=
   "Jan\0Feb\0Mar\0Apr\0May\0Jun\0Jul\0Aug\0Sep\0Oct\0Nov\0Dec\0";
 #else
 #include "i2c.h"
-#include "I2CRTC.h"
+#include "RTC.h"
 
-const char I2CRTC::NameOfDay[]=
+const char RTC::NameOfDay[]=
   "Sun\0Mon\0Tue\0Wed\0Thu\0Fri\0Sat\0";
-const char I2CRTC::NameOfMonth[]=
+const char RTC::NameOfMonth[]=
   "Jan\0Feb\0Mar\0Apr\0May\0Jun\0Jul\0Aug\0Sep\0Oct\0Nov\0Dec\0";
 #endif
 
@@ -25,7 +25,7 @@ const char I2CRTC::NameOfMonth[]=
 
 // Aquire data from the RTC chip in BCD format
 // refresh the buffer
-void I2CRTC::readRegisters(uint8_t addr, uint8_t * regvals, uint8_t num) {
+void RTC::readRegisters(uint8_t addr, uint8_t * regvals, uint8_t num) {
 	// use the Wire lib to connect to tho rtc
 	// reset the resgiter pointer to zero
 
@@ -53,7 +53,7 @@ void I2CRTC::readRegisters(uint8_t addr, uint8_t * regvals, uint8_t num) {
 }
 
 // update the data on the IC from the bcd formatted data in the buffer
-void I2CRTC::writeRegisters(uint8_t addr, uint8_t *regvals, uint8_t num)
+void RTC::writeRegisters(uint8_t addr, uint8_t *regvals, uint8_t num)
 {
 	wire.beginTransmission(DS1307_CTRL_ID);
 //#if ARDUINO >= 100
@@ -77,7 +77,7 @@ void I2CRTC::writeRegisters(uint8_t addr, uint8_t *regvals, uint8_t num)
 }
 
 
-boolean I2CRTC::updateTime() {
+boolean RTC::updateTime() {
 	uint32 tmp = time;
 	readRegisters((byte) DS1307_SEC, (byte *) &tmp, 3);
 	if (tmp != time) {
@@ -87,7 +87,7 @@ boolean I2CRTC::updateTime() {
 	return false;
 }
 
-boolean I2CRTC::updateCalendar() {
+boolean RTC::updateCalendar() {
   uint32 tmp = cal;
 	readRegisters((byte) DS1307_DATE, (byte *) &cal, 3);
 	cal &= ((unsigned long)BITS_YR<<16 | (unsigned long)BITS_MTH<<8 | BITS_DATE);
@@ -96,29 +96,29 @@ boolean I2CRTC::updateCalendar() {
   return false;
 }
 
-uint8 I2CRTC::getSeconds() {
+uint8 RTC::getSeconds() {
 	uint8 sec;
 	readRegisters((byte) DS1307_SEC, (byte *) &sec, 1);
 	return sec & BITS_SEC;
 }
 
-void I2CRTC::setTime(const long & p) {
+void RTC::setTime(const long & p) {
 //	writeRegisters((byte *) &(p ((unsigned long)BITS_HR<<16 | BITS_MIN<<8 | BITS_SEC)),
 //			(byte) DS1307_SEC, 3);
 	writeRegisters((byte) DS1307_SEC, (byte *) &p, 3);
 }
 
-void I2CRTC::setCalendar(const long & p) {
+void RTC::setCalendar(const long & p) {
 	// YYMMDD
 //	writeRegisters((byte*) &(p & ((unsigned long)BITS_YR<<16 | (unsigned long)BITS_MTH<<8 | BITS_DATE)), (uint8_t) DS1307_DOW, 4);
 	writeRegisters((uint8_t) DS1307_DATE, (byte*) &p, 3);
 }
 
-byte I2CRTC::dayOfWeek() {
+byte RTC::dayOfWeek() {
 	return  (JD2000(cal) + 1) % 7;
 }
 
-long I2CRTC::JD2000(const long & yymmdd) {
+long RTC::JD2000(const long & yymmdd) {
 	byte y = yymmdd>>16 & 0xff;
 	byte m = yymmdd>>8 & 0xff;
 	byte d = yymmdd & 0xff;
@@ -128,7 +128,7 @@ long I2CRTC::JD2000(const long & yymmdd) {
 	return JD2000(y,m,d);
 }
 
-long I2CRTC::JD2000(byte year, byte month, byte day) {
+long RTC::JD2000(byte year, byte month, byte day) {
 	/* year must be after the millenium 2000 */
 	/*
 	Serial.println(year, DEC);
@@ -162,7 +162,7 @@ long sign(float d) {
 		return 1;
 }
 
-float I2CRTC::CalendarDate(float jd) {
+float RTC::CalendarDate(float jd) {
 	jd += 0.5f;
 	long z = integerPart(jd);
 	long a = z;
@@ -197,18 +197,18 @@ float I2CRTC::CalendarDate(float jd) {
 }
 
 
-void I2CRTC::writeRegister(byte rg, byte val) {
+void RTC::writeRegister(byte rg, byte val) {
 	writeRegisters(rg % 0x40, (uint8_t *) &val, 1);
 }
 
-byte I2CRTC::readRegister(byte rg) {
+byte RTC::readRegister(byte rg) {
 	byte val;
 	readRegisters(rg % 0x40, (uint8_t *) &val, 1);
 	return val;
 }
 
 
-void I2CRTC::stop(void)
+void RTC::stop(void)
 {
 	// set the ClockHalt bit high to stop the rtc
 	// this bit is part of the seconds byte
@@ -218,7 +218,7 @@ void I2CRTC::stop(void)
   writeRegisters(DS1307_SEC, &r, 1);
 }
 
-void I2CRTC::start(void)
+void RTC::start(void)
 {
 	// unset the ClockHalt bit to start the rtc
 	// TODO : preserve existing seconds
