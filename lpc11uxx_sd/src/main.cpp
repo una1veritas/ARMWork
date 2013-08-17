@@ -113,14 +113,19 @@ int main(void) {
 /*
  * i2C液晶のテスト（エンドレス）
  */
+  
 	  while (1){                                /* Loop forever */
 		  digitalWrite(LED_SDBUSY, LOW);
 		  delay(500);
 		  digitalWrite(LED_SDBUSY, HIGH);
 		  delay(500);
 
-		  //i2clcd_backlight(cn &1);
-		  //i2c_cmd(0x80+7);
+		  rtc.update();
+      lcd.setCursor(0,1);
+      lcd.print(rtc.time, HEX);
+      lcd.print(" ");
+      lcd.print(rtc.cal, HEX);
+      lcd.print("   ");
 	  }
 
 //	return 0 ;
