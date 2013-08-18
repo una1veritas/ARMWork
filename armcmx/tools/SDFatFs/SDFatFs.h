@@ -14,8 +14,6 @@
 #include "diskio.h"
 #include "ff.h"
 
-static uint32_t FatFsTimeStamp;
-
 // volume
 class SDFatFs {
   SPIBus & spibus;
@@ -62,27 +60,11 @@ public:
 
     FRESULT result(void) { return sdfs.rescode; }
     
-  void open(const char * fname, const uint8_t mode = FILE_READ) {
-    peeked = false;
-  	sdfs.rescode = f_open(&file, fname, mode);
-    if (mode == FILE_WRITE && !sdfs.rescode ) {
-      sdfs.rescode = f_lseek(&file, f_size(&file));
-    }
-  }
+  void open(const char * fname, const uint8_t mode = FILE_READ);
   
-  char * gets(char * buff, size_t sz) {
-    if ( peeked ) {
-      peeked = false;
-      *buff = rbuf;
-      return f_gets((TCHAR*)buff+1, sz-1, &file);      
-    } else {
-      return f_gets((TCHAR*)buff, sz, &file);
-    }
-  }
+  char * gets(char * buff, size_t sz);
   
-  void close(void) {
-    sdfs.rescode = f_close(&file);
-  }
+  void close(void);
   
   inline virtual size_t write(uint8_t c) {
     return write(&c, 1);
@@ -99,20 +81,9 @@ public:
     return f_size(&file) - f_tell(&file);
   }
 
-  virtual int16_t read() {
-    UINT n = 0;
-    if ( !peeked )
-      sdfs.rescode = f_read(&file, &rbuf, 1, &n);
-    peeked = false;
-    return rbuf;
-  }
-  virtual int16_t peek() {
-    UINT n = 0;
-    if ( !peeked ) 
-      sdfs.rescode = f_read(&file, &rbuf, 1, &n);
-    peeked = true;
-    return rbuf;
-  }
+  virtual int16_t read(void);
+  
+  virtual int16_t peek(void);
 
   virtual void flush() {
     sdfs.rescode = f_sync(&file);

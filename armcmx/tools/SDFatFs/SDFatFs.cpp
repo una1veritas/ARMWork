@@ -26,9 +26,49 @@ uint32_t SDFatFs::fattime(uint32_t cal, uint32_t time) {
   return ((uint32_t)y<<25) | m<<21 | d<<16 | hh << 11 | mm<<5 | ss>>1;
 }
 
+
+void SDFatFile::open(const char * fname, const uint8_t mode) {
+  digitalWrite(PIO1_19, LOW);
+  peeked = false;
+  sdfs.rescode = f_open(&file, fname, mode);
+  if (mode == FILE_WRITE && !sdfs.rescode ) {
+    sdfs.rescode = f_lseek(&file, f_size(&file));
+  }
+}
+
+void SDFatFile::close(void) {
+  sdfs.rescode = f_close(&file);
+  digitalWrite(PIO1_19, LOW);
+}
+
 size_t SDFatFile::write(const uint8_t * buf, size_t num) {
   UINT count;
   sdfs.rescode = f_write(&file, buf, num, &count);
   return count;
 }
 
+int16_t SDFatFile::read(void) {
+  UINT n = 0;
+  if ( !peeked )
+    sdfs.rescode = f_read(&file, &rbuf, 1, &n);
+  peeked = false;
+  return rbuf;
+}
+
+int16_t SDFatFile::peek(void) {
+  UINT n = 0;
+  if ( !peeked ) 
+    sdfs.rescode = f_read(&file, &rbuf, 1, &n);
+  peeked = true;
+  return rbuf;
+}
+
+char * SDFatFile::gets(char * buff, size_t sz) {
+  if ( peeked ) {
+    peeked = false;
+    *buff = rbuf;
+    return f_gets((TCHAR*)buff+1, sz-1, &file);      
+  } else {
+    return f_gets((TCHAR*)buff, sz, &file);
+  }
+}

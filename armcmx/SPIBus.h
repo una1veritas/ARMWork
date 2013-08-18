@@ -70,7 +70,7 @@ public:
 	
 };
 
-//sextern SPI SPIBus1();
+// extern SPIBus SPI(SPI0Def);
 
 /*
 void SPIClass::attachInterrupt() {

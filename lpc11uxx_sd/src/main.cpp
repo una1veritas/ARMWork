@@ -19,7 +19,6 @@
 #include "I2Cbus.h"
 #include "ST7032i.h"
 #include "RTC.h"
-#include "spi.h"
 #include "SPIBus.h"
 #include "SPISRAM.h"
 #include "SDFatFs.h"
@@ -211,7 +210,9 @@ void sd_test()
       // SDカードに書き出します。
      // f_sync(&Fil);
       file.flush();
-      if ( swatch + 2000 < millis() ) 
+      USART_puts(&usart, (const char*)buff);
+      USART_puts(&usart, "\n");
+      if ( swatch + 000 < millis() ) 
         break;
     }
     //f_close(&Fil);
