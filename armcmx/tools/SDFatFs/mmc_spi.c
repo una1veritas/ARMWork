@@ -135,16 +135,18 @@ BYTE xchg_spi (
 	return SSPxDR;
 }
 */
-#define xchg_spi(x)  SPI_transfer(&SPI0Def, x)
+#define xchg_spi(x)  SPI_transfer(&SPI0Def, (x))
 
 /* Receive multiple byte */
+//#define _TEST_CODE
+#ifndef _TEST_CODE
 static
 void rcvr_spi_multi (
 	BYTE *buff,		/* Pointer to data buffer */
 	UINT btr		/* Number of bytes to receive (16, 64 or 512) */
 )
 {
-	UINT n = 512;
+	UINT n; // = 512;
 	WORD d;
 
 	//SPI0Def.SSPx->CR0 = 0x000F; //SSPxCR0 = 0x000F;				/* Select 16-bit mode */
@@ -172,6 +174,21 @@ void rcvr_spi_multi (
   SPI_DataSize(&SPI0Def, SPI_DSS_8BIT);
 }
 
+#else
+
+static void rcvr_spi_multi(BYTE *buff,	UINT btr /* Number of bytes to receive (16, 64 or 512) */ ) {
+  int i;
+
+  SPI_DataSize(&SPI0Def, SPI_DSS_8BIT);
+
+  for ( i = 0; i < btr; i++) {
+    SPI0Def.SSPx->DR = 0xff; //buff[i];
+		while ( !(SPI0Def.SSPx->SR & SSPSR_RNE) or (SPI0Def.SSPx->SR & SSPSR_BSY) ) ;
+    buff[i] = SPI0Def.SSPx->DR;
+  }
+}
+
+#endif
 
 #if _USE_WRITE
 /* Send multiple byte */
