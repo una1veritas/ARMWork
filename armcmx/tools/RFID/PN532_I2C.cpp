@@ -18,8 +18,8 @@
 #define POSTAMBLE     (0x00)
 
 //#define PN532DEBUG
-//#define MIFAREDEBUG
-//#define PN532COMM
+#define MIFAREDEBUG
+#define PN532COMM
 //#define FELICADEBUG
 
 #if defined(ARDUINO)
@@ -205,7 +205,7 @@ byte PN532::receivepacket() {
 	Serial.print("receivepacket Len = ");
 	Serial.print(n, DEC);
 	Serial.print(", ");
-	Serial.printBytes(packet, n + 7);
+	printBytes(packet, n + 7);
 	Serial.println();
 	Serial.print("xsum: ");
 	Serial.print(chksum, HEX);
@@ -396,7 +396,7 @@ byte PN532::getCommandResponse(byte * resp, const long & wmillis) {
 	byte count = receivepacket();
 #ifdef PN532COMM
 	Serial.print("CommandResp. >> ");
-	Serial.printBytes(packet, count);
+	printBytes(packet, count);
 	Serial.println('\n');
 #endif
 //#undef PN532DEBUG
@@ -470,7 +470,7 @@ byte PN532::InDataExchange(const byte Tg, const byte * data,
 	memcpy(packet + 2, data, length);
 
 #ifdef MIFAREDEBUG
-	printHexString(packet, length + 2);
+	printBytes(packet, length+2);
 	Serial.println();
 #endif
 	sendpacket(length + 2);
@@ -518,7 +518,7 @@ byte PN532::InDataExchange(const byte Tg, const byte micmd, const byte blkaddr,
 
 #ifdef MIFAREDEBUG
 	Serial.print("Sending in InDataExchange: ");
-	printHexString(packet, datalen + 4);
+	printBytes(packet, datalen+4);
 	Serial.println();
 #endif
 	sendpacket(datalen + 4);
@@ -598,7 +598,7 @@ byte PN532::mifare_ReadDataBlock(uint8_t blockNumber, uint8_t * data) {
 	if (! c) {
 #ifdef MIFAREDEBUG
 		Serial.println("Unexpected response");
-		printHexString(packet, 26);
+		printBytes(packet, 26);
 		Serial.println();
 #endif
 		return 0;
@@ -606,7 +606,7 @@ byte PN532::mifare_ReadDataBlock(uint8_t blockNumber, uint8_t * data) {
 //#define MIFAREDEBUG
 #ifdef MIFAREDEBUG
 	Serial.print("Packet ");
-	printHexString(packet, c);
+	printBytes(packet, c);
 	Serial.println();
 #endif
 	if (packet[0] != 0) {
@@ -617,7 +617,7 @@ byte PN532::mifare_ReadDataBlock(uint8_t blockNumber, uint8_t * data) {
 #ifdef MIFAREDEBUG
 	Serial.print("data ");
 	Serial.println(blockNumber);
-	printHexString(data, 16);
+	printBytes(data, 16);
 	Serial.println();
 #endif
 //#undef MIFAREDEBUG
@@ -634,13 +634,13 @@ byte PN532::mifare_WriteDataBlock(uint8_t blockNumber, uint8_t * data) {
 	byte c = getCommandResponse(packet);
 	if (! c) {
 		Serial.println("Unexpected response");
-		Serial.printBytes(packet, 26);
+		printBytes(packet, 26);
 		Serial.println();
 		return 0;
 	}
 
 	Serial.print("Packet ");
-	Serial.printBytes(packet, c);
+	printBytes(packet, c);
 	Serial.println();
 
 	if (packet[0] != 0) {
@@ -650,7 +650,7 @@ byte PN532::mifare_WriteDataBlock(uint8_t blockNumber, uint8_t * data) {
 	memcpy(data, packet + 1, 16);
 	Serial.print("data ");
 	Serial.println(blockNumber);
-	Serial.printBytes(data, 16);
+	printBytes(data, 16);
 	Serial.println();
 
 	return 16;
@@ -876,3 +876,12 @@ boolean PN532::WriteRegister(word addr, byte val) {
 	comm_status = ACK_FRAME_RECEIVED;
 	return 1;
 }
+
+void PN532::printBytes(uint8_t * p, size_t n) {
+  while ( n-- > 0 ) {
+    Serial.printByte(*p++);
+    Serial.print(" ");
+  }
+  return;
+}
+

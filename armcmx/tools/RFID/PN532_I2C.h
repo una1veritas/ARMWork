@@ -108,6 +108,8 @@ class PN532 {
 	void send_ack();
 	void send_nack();
 
+  void printBytes(uint8_t *, size_t);
+  
 //	boolean sendCommand(byte cmd, long timeout = 1000);
 public:
 

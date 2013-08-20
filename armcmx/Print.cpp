@@ -128,6 +128,7 @@ size_t Print::print(const Printable& x)
   return x.printTo(*this);
 }
 
+/*
 size_t Print::printBytes(uint8_t * p, uint8_t length, char sep) {
 	size_t i, n = 0;
 	for(i = 0; i < length; i++) {
@@ -136,6 +137,7 @@ size_t Print::printBytes(uint8_t * p, uint8_t length, char sep) {
 	}
 	return n;
 }
+*/
 
 size_t Print::printByte(uint8_t val) {
 	size_t n = 0;

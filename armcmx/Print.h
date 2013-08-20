@@ -78,7 +78,7 @@ public:
 		//
     size_t print(float, const int = 2);
     size_t print(const Printable&);
-		size_t printBytes(uint8_t * array, uint8_t length, char sep = ' ');
+//		size_t printBytes(uint8_t * array, uint8_t length, char sep = ' ');
 		size_t printByte(uint8_t val);
 		size_t printByte(uint32_t val);
 

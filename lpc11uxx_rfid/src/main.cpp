@@ -221,12 +221,11 @@ int main (void) {
         if ( millis() - lastread > 2000 and (millis() - lastread > 5000 or lastcard != card) ) {
           lastread = millis();
           lastcard = card;
-          Serial.print("\nInAutoPoll: ");
+          Serial.print("\nBy InAutoPoll, ");
           Serial.print(card);
-          Serial.print(" ");
-          sprintf((char*)tmp, "%02x:%02x:%02x", rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f);
-          Serial.print((char*)tmp);
-          sprintf((char*)tmp, " %02x/%02x/20%02x", rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.cal>>16&0xff);
+          sprintf((char*)tmp, " [%02x:%02x:%02x %02x/%02x/20%02x]", 
+                rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f, 
+                rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.cal>>16&0xff);
           Serial.println((char*)tmp);
           //
           if ( readIDInfo(card, iddata) ) {
@@ -292,9 +291,9 @@ int main (void) {
             Serial.print("\nInAutoPoll: ");
             Serial.print(card);
             Serial.print(" ");
-            sprintf((char*)tmp, "%02x:%02x:%02x", rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f);
-            Serial.print((char*)tmp);
-            sprintf((char*)tmp, " %02x/%02x/20%02x", rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.cal>>16&0xff);
+            sprintf((char*)tmp, "[%02x:%02x:%02x %02x/%02x/20%02x]", 
+                rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f, 
+                rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.cal>>16&0xff);
             Serial.println((char*)tmp);
             //
             iddata.iizuka.division[0] = '1';
@@ -398,19 +397,23 @@ uint8 get_FCFBlock(ISO14443 & card, IDData & data) {
 uint8 get_MifareBlock(ISO14443 & card, IDData & data) {
   uint8 res;
   nfcreader.targetSet(0x10, card.ID, card.IDLength);
+  if ( nfcreader.mifare_AuthenticateBlock(4, factory_a) 
+     && nfcreader.getCommandResponse(&res) && res == 0) {
+    nfcreader.mifare_ReadDataBlock(4, data.raw);
+    nfcreader.mifare_ReadDataBlock(5, data.raw+16);
+    nfcreader.mifare_ReadDataBlock(6, data.raw+32);
+//    Serial.printBytes(data.raw, 48);
+       return 1;       
+  } else 
+         /* Note !!! Once failed to authentication, card's state will be back to the initial state, 
+        So the InListPassivTarget or InAutoPoll should be issued again. */
+
   if ( nfcreader.mifare_AuthenticateBlock(4, IizukaKey_b) 
      && nfcreader.getCommandResponse(&res) && res == 0) {
     nfcreader.mifare_ReadDataBlock(4, data.raw);
     nfcreader.mifare_ReadDataBlock(5, data.raw+16);
     nfcreader.mifare_ReadDataBlock(6, data.raw+32);
-    Serial.printBytes(data.raw, 48);
-       return 1;
-  } else if ( nfcreader.mifare_AuthenticateBlock(4, factory_a) 
-     && nfcreader.getCommandResponse(&res) && res == 0) {
-    nfcreader.mifare_ReadDataBlock(4, data.raw);
-    nfcreader.mifare_ReadDataBlock(5, data.raw+16);
-    nfcreader.mifare_ReadDataBlock(6, data.raw+32);
-    Serial.printBytes(data.raw, 48);
+//    Serial.printBytes(data.raw, 48);
        return 1;
   }
   return 0;
