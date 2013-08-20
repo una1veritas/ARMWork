@@ -8,10 +8,12 @@
 #ifndef TEXTSTREAM_H_
 #define TEXTSTREAM_H_
 
+#ifdef ARDUINO
 #if ARDUINO >= 100
 #include <Arduino.h>
 #else
 #include <Wiring.h>
+#endif
 #endif
 #include <Stream.h>
 // stdlib.h is included in Arduino.h

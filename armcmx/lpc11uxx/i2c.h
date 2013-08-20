@@ -77,8 +77,8 @@ For board to board test, this flag can be turned on. */
 
 #define I2DAT_I2C           0x00000000  /* I2C Data Reg */
 #define I2ADR_I2C           0x00000000  /* I2C Slave Address Reg */
-#define I2SCLH_SCLH         0x00000180  /* I2C SCL Duty Cycle High Reg */
-#define I2SCLL_SCLL         0x00000180  /* I2C SCL Duty Cycle Low Reg */
+#define I2SCLH_SCLH         46 //0x00000180  /* I2C SCL Duty Cycle High Reg */
+#define I2SCLL_SCLL         46 //0x00000180  /* I2C SCL Duty Cycle Low Reg */
 #define I2SCLH_HS_SCLH		0x00000015  /* Fast Plus I2C SCL Duty Cycle High Reg */
 #define I2SCLL_HS_SCLL		0x00000015  /* Fast Plus I2C SCL Duty Cycle Low Reg */
 

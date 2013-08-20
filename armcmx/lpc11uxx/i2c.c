@@ -235,9 +235,8 @@ uint32_t I2C_stop(I2CDef * i2c) {
  ** 
  *****************************************************************************/
 uint8_t I2C_init(I2CDef * i2c, uint32_t I2cMode) {
-	LPC_SYSCON->PRESETCTRL |= (0x1 << 1);
-
-	LPC_SYSCON->SYSAHBCLKCTRL |= (1 << 5);
+	LPC_SYSCON->PRESETCTRL |= (0x1 << 1); // I2C reset off
+	LPC_SYSCON->SYSAHBCLKCTRL |= (1 << 5); // Power and Peripheral clock on
 	LPC_IOCON->PIO0_4 &= ~0x3F; /*  I2C I/O config */
 	LPC_IOCON->PIO0_4 |= 0x01; /* I2C SCL */
 	LPC_IOCON->PIO0_5 &= ~0x3F;
@@ -260,7 +259,8 @@ uint8_t I2C_begin(I2CDef * i2c) {
 			| I2CONCLR_I2ENC;
 
 	/*--- Reset registers ---*/
-#if FAST_MODE_PLUS
+  /*
+#if 1 || FAST_MODE_PLUS
 	LPC_IOCON->PIO0_4 |= (0x1<<9);
 	LPC_IOCON->PIO0_5 |= (0x1<<9);
 	LPC_I2C->SCLL = I2SCLL_HS_SCLL;
@@ -269,7 +269,11 @@ uint8_t I2C_begin(I2CDef * i2c) {
 	LPC_I2C->SCLL = I2SCLL_SCLL;
 	LPC_I2C->SCLH = I2SCLH_SCLH;
 #endif
-
+*/
+  // standard 100kHz clock
+	LPC_I2C->SCLL = 232; //I2SCLL_SCLL;
+	LPC_I2C->SCLH = 232; //I2SCLH_SCLH;
+  
 // set initial value idle
 	i2c->State = I2C_IDLE;
 //	i2c->SlaveState = I2C_IDLE;

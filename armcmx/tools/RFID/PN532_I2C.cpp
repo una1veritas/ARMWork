@@ -624,6 +624,37 @@ byte PN532::mifare_ReadDataBlock(uint8_t blockNumber, uint8_t * data) {
 	return 16;
 }
 
+byte PN532::mifare_WriteDataBlock(uint8_t blockNumber, uint8_t * data) {
+	Serial.print("Try to write a block ");
+	Serial.println(blockNumber);
+
+	if (!InDataExchange(1, MIFARE_CMD_WRITE, blockNumber, data, 16)) {
+		Serial.println("Failed to receive ACK for write command");
+	}
+	byte c = getCommandResponse(packet);
+	if (! c) {
+		Serial.println("Unexpected response");
+		Serial.printBytes(packet, 26);
+		Serial.println();
+		return 0;
+	}
+
+	Serial.print("Packet ");
+	Serial.printBytes(packet, c);
+	Serial.println();
+
+	if (packet[0] != 0) {
+		// error.
+		return 0;
+	}
+	memcpy(data, packet + 1, 16);
+	Serial.print("data ");
+	Serial.println(blockNumber);
+	Serial.printBytes(data, 16);
+	Serial.println();
+
+	return 16;
+}
 /*
  byte PN532::felica_DataExchange(const byte cmd, const byte * data,
  const byte len) {
