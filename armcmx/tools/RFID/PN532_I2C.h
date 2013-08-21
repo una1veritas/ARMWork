@@ -193,6 +193,7 @@ public:
 		return WriteRegister(0x02fc, (mode == 0 ? 0x00 : 0x02) ); // p. 12/200, User Manual Rev. 02
 	}
 
+
 	byte InListPassiveTarget(const byte maxtg, const byte BaudModType, byte * data, const byte initlen);
 	byte InAutoPoll(const byte numop, const byte per, const byte * types,
 			const byte length);

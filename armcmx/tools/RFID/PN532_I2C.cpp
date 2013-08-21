@@ -339,9 +339,9 @@ byte PN532::InListPassiveTarget(const byte maxtg, const byte brty, byte * data,
 	if (length > 0) {
 		memcpy(packet + 3, data, length);
 	}
-#ifdef PN532DEBUG
+#ifdef PN532COMM
 	Serial.print("InListPassiveTarget << ");
-	Serial.printBytes(packet, length + 3);
+	printBytes(packet, length + 3);
 	Serial.println();
 #endif
 	sendpacket(3 + length);
@@ -351,7 +351,7 @@ byte PN532::InListPassiveTarget(const byte maxtg, const byte brty, byte * data,
 		comm_status = ACK_NOT_RECEIVED;
 		return 0;
 	}
-#ifdef PN532DEBUG
+#ifdef PN532COMM
 	Serial.println("ACKed.");
 #endif
 	comm_status = ACK_FRAME_RECEIVED;
@@ -368,7 +368,7 @@ byte PN532::InAutoPoll(const byte numop, const byte period, const byte * types,
 	memcpy(packet + 3, types, N);
 #ifdef PN532DEBUG
 	Serial.print("<< InAutoPoll ");
-	Serial.printBytes(packet, typeslen + 3);
+	printBytes(packet, typeslen + 3);
 	Serial.println(",\n");
 #endif
 	last_command = COMMAND_InAutoPoll;

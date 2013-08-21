@@ -12,7 +12,9 @@
 
 USARTSerial Serial = USARTSerial(&usart, PIO1_26, PIO1_27);
 
-void USARTSerial::begin(const uint32_t baud) {
+void USARTSerial::begin(const uint32_t baud, GPIOPin rx, GPIOPin tx) {
+  pinrx = rx;
+  pintx = tx;
 	USART_init(port, pinrx, pintx);
   USART_begin(port, baud);
 }

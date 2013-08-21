@@ -56,7 +56,7 @@ private:
 	static const uint8 BITS_MTH = B00111111;
 	static const uint8 BITS_YR =  B11111111;
 
-	static const uint16 DS1307_BASE_YR = 2000;
+	static const uint16 BASE_YEAR = 2000;
 
 //		uint8_t bcdToDec(uint8_t b) { return (b>>4)*10 + (b&0x0f); }
 //		uint8_t decToBcd(uint8_t d) { return ((d/10)<<4) + (d%10); }
@@ -78,22 +78,16 @@ public:
 	};
 
 	enum {
-		MAXIM_DS1307 = 0,
+		MAXIM = 0,
 		ST_M41T62 = 1
 	};
 
 public:
 	uint32 time, cal;
 
-	RTC(I2CBus & w, uint8 chip = MAXIM_DS1307) : wire(w), chipID(chip) {
-		time = 0;
-		cal = 0; 
-	}
+	RTC(I2CBus & w, uint8 chip = MAXIM) : wire(w), chipID(chip), time(0), cal(0) { }
 
-	RTC(uint8 chip = MAXIM_DS1307) : wire(Wire), chipID(chip) {
-		time = 0;
-		cal = 0; 
-	}
+	RTC(uint8 chip = MAXIM) : wire(Wire), chipID(chip), time(0), cal(0) {	}
 
 	void init() {
 		start();

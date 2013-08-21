@@ -28,7 +28,7 @@ public:
 		pintx = tx;
 	}
 	
-	void begin(const uint32_t baud);
+	void begin(const uint32_t baud, GPIOPin rx, GPIOPin tx);
 
 	virtual size_t write(const uint8_t w);
 	using Print::write;
