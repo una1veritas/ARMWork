@@ -107,8 +107,6 @@ class PN532 {
 
 	void send_ack();
 	void send_nack();
-
-  void printBytes(uint8_t *, size_t);
   
 //	boolean sendCommand(byte cmd, long timeout = 1000);
 public:
@@ -229,6 +227,10 @@ public:
 			const byte blknum, const word blklist[]);
 	byte felica_ReadBlocksWithoutEncryption(byte * resp, const word servcode,
 			const byte blknum, const word blklist[]);
+  
+  // utility function
+  void printBytes(uint8_t *, size_t);
+
 };
 
 #endif /* PN532_I2C_H_ */

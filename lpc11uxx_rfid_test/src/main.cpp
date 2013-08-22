@@ -22,6 +22,7 @@
 
 #include "StringStream.h"
 
+#define match(x,y)  (strcasecmp((char*)(x), (char*)(y)) == 0)
 
 #ifdef _LPCXPRESSO_CRP_
 #include <cr_section_macros.h>
@@ -47,8 +48,8 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #define LED_USER    PIO1_6
 #define LED_LCDBKLT PIO1_3
 #define SW_USERBTN  PIO0_1
-#define RX0         PIO0_18
-#define TX0         PIO0_19
+#define RXD0        PIO0_18
+#define TXD0        PIO0_19
 #elif defined (CAPPUCCINO)
 #include "cappuccino.h"
 #define NFC_RSTPD   PIN_NOT_DEFINED
@@ -58,7 +59,7 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 
 
 ST7032i i2clcd(Wire, LED_LCDBKLT, LCD_RST);
-RTC rtc(Wire, RTC::MAXIM);
+RTC rtc(Wire, RTC::ST_M41T62);
 PN532  nfcreader(Wire, PN532::I2C_ADDRESS, NFC_IRQ, NFC_RSTPD);
 const byte NFCPolling[] = {
   NFC::BAUDTYPE_212K_F,
@@ -69,7 +70,7 @@ uint8 readIDInfo(ISO14443 & card, IDData & data);
 uint8 writeIDInfo(ISO14443 & card, IDData & data);
 void displayIDData(uint8 cardtype, IDData &);
 
-uint8 get_MifareBlock(ISO14443 & card, IDData & data);
+uint8 get_MifareBlock(ISO14443 & card, IDData & data, const uint8_t * key);
 uint8 get_FCFBlock(ISO14443 & card, IDData & data);
 
 const static byte IizukaKey_b[] = {
@@ -116,9 +117,7 @@ enum CMDSTATUS {
 void setup() {
   pinMode(SW_USERBTN, INPUT);
   
-  /* NVIC is installed inside UARTInit file. */
-  //USART_init(&usart, PIO0_18, PIO0_19);
-  Serial.begin(115200, RX0, TX0) ;
+  Serial.begin(115200, RXD2, TXD2);
   Serial.println("\nUSART Serial started. \nHello.");
 
   Serial.print("I2C Bus ");
@@ -139,7 +138,6 @@ void setup() {
   i2clcd.clear();
   i2clcd.print("Hello.");
   
-#if 0
   Serial.print("I2C RTC ");
   while(1)
     if ( rtc.begin() ) break;
@@ -147,7 +145,6 @@ void setup() {
   Serial.println("started.");
   rtc.updateTime();
   Serial.println(rtc.time, HEX);
-#endif
   
   Serial.print("I2C NFC PN532 ");
   nfcreader.begin();
@@ -176,24 +173,21 @@ int main (void) {
 	long lastread = 0, swatch = 0, lasttime = 0;
   ISO14443 card, lastcard;
   IDData iddata;
-  char * strptr;
  
   uint8 cmdstatus = IDLE;
  	char streambuf[64];
   StringStream stream(streambuf, 64);
-  
 
   init();
   setup();
   // ---------------------------------------
-#if 0
   rtc.updateCalendar();
   rtc.updateTime();
   sprintf(msg, "%02x:%02x:%02x\n%02x/%02x/'%02x\n", 
                 rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f, 
                 rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.cal>>16&0xff);
   Serial.print(msg);
-#endif
+
   lastread = millis();
   
   while (1){    /* Loop forever */
@@ -211,7 +205,7 @@ int main (void) {
     }
 
     // update clock values before polling cards
-    if ( false && task.rtc == 0 ) {
+    if ( task.rtc == 0 ) {
       task.rtc = task.rtc_period;
       //
       rtc.updateTime();
@@ -232,7 +226,7 @@ int main (void) {
 		if ( task.nfc == 0 ) {
       task.nfc = task.nfc_period;
       //
-      if ( cmdstatus == IDLE) {
+      if ( cmdstatus == IDLE || cmdstatus == READ ) {
         if ( nfcreader.InAutoPoll(1, 1, NFCPolling, 2) and nfcreader.getAutoPollResponse(tmp) ) {
           // NbTg, type1, length1, [Tg, ...]
           card.setPassiveTarget(nfcreader.target.NFCType, tmp);
@@ -255,9 +249,26 @@ int main (void) {
           }
         }
       } else if ( cmdstatus == WRITE ) {
-        Serial.println("Write...");
-        writeIDInfo(card, iddata);
-        cmdstatus = IDLE;      
+        if ( swatch == 0 ) {
+          Serial.println("Write mode.");
+          swatch = millis();
+        }
+        if ( nfcreader.InListPassiveTarget(1,NFC::BAUDTYPE_106K_A, tmp, 0) 
+        and nfcreader.getListPassiveTarget(tmp) ) {
+          card.setPassiveTarget(NFC::CARDTYPE_MIFARE, tmp);
+          iddata.iizuka.division[0] = '1';
+          iddata.iizuka.division[0] = 'S';
+          strcpy((char*)iddata.iizuka.pid, "82541854");
+          iddata.iizuka.issue = '1';
+          writeIDInfo(card, iddata);
+          cmdstatus = IDLE;
+        } else {
+          if ( swatch + 5000 < millis() ) {
+            Serial.println("Write mode timed out.");
+            swatch = 0;
+            cmdstatus = IDLE;
+          }
+        }
       }
     }
     
@@ -275,13 +286,23 @@ int main (void) {
         stream.flush();
         stream.readLineFrom(rxbuf, 64);
         rxix = 0;
-        Serial.print("Echo back: ");
+        Serial.print("Request: ");
         Serial.println(rxbuf);
         //
         stream.getToken((char*)tmp, 64);
-        if ( strcmp((char*)tmp, "WRITE") == 0 ) {
+        if ( match(tmp, "WRITE") ) {
           cmdstatus = WRITE;
           Serial.println("WRITE MODE.");
+        } else 
+        if ( match(tmp, "TIME") ) {
+          if ( stream.available() ) {
+            stream.getToken((char*)tmp, 64);
+            rtc.time = strtol((char*) tmp, NULL,16);
+            rtc.setTime(rtc.time);
+          }
+          rtc.updateTime();
+          Serial.print("Current time: ");
+          Serial.println(rtc.time, HEX);
         }
       }
       //
@@ -298,20 +319,16 @@ uint8 writeIDInfo(ISO14443 & card, IDData & data) {
   
   if ( card.type != NFC::CARDTYPE_MIFARE )
     return 0;
-  delay(200);
-  if ( nfcreader.InListPassiveTarget(1,NFC::BAUDTYPE_106K_A, tmp, 0) ) {
-    if ( (res = nfcreader.getCommandResponse(tmp)) > 0 ) {
-      card.setPassiveTarget(nfcreader.target.NFCType, tmp);
-      if ( nfcreader.mifare_AuthenticateBlock(4, factory_a) 
-        && nfcreader.getCommandResponse(&res) && res == 0) {
-        nfcreader.mifare_ReadDataBlock(4, data.raw);
-        Serial.print("response: ");
-        Serial.println(res);
-        return 1;
-      }
-    }
+  
+  if ( nfcreader.mifare_AuthenticateBlock(4, factory_a) 
+  && nfcreader.getCommandResponse(&res) && res == 0) {
+//    nfcreader.mifare_ReadDataBlock(4, data.raw);
+    get_MifareBlock(card, data, factory_a);
+    Serial.print("Authenticate response: ");
+    Serial.println(res);
+    return 1;
   } else {
-    Serial.println("InListPassivTarget ack failed.");
+    Serial.println("Auth block ack failed.");
   }
   return 0;
 }
@@ -320,7 +337,7 @@ uint8 readIDInfo(ISO14443 & card, IDData & data) {
   uint16_t n;
 	switch (card.type) {
     case NFC::CARDTYPE_MIFARE:
-      for (n = 0; n < 3 and get_MifareBlock(card, data) == 0; n++ )
+      for (n = 0; n < 3 and get_MifareBlock(card, data, IizukaKey_b) == 0; n++ )
         delay(20);
       if ( n >= 3 ) {
         Serial.println("Unknown Mifare, not an ID.");
@@ -380,28 +397,30 @@ uint8 get_FCFBlock(ISO14443 & card, IDData & data) {
 }
 
 
-uint8 get_MifareBlock(ISO14443 & card, IDData & data) {
+uint8 get_MifareBlock(ISO14443 & card, IDData & data, const uint8_t * key) {
   uint8 res;
   nfcreader.targetSet(0x10, card.ID, card.IDLength);
-  if ( nfcreader.mifare_AuthenticateBlock(4, factory_a) 
-     && nfcreader.getCommandResponse(&res) && res == 0) {
-    nfcreader.mifare_ReadDataBlock(4, data.raw);
-    nfcreader.mifare_ReadDataBlock(5, data.raw+16);
-    nfcreader.mifare_ReadDataBlock(6, data.raw+32);
-//    Serial.printBytes(data.raw, 48);
-       return 1;       
-  } else 
          /* Note !!! Once failed to authentication, card's state will be back to the initial state, 
         So the InListPassivTarget or InAutoPoll should be issued again. */
 
-  if ( nfcreader.mifare_AuthenticateBlock(4, IizukaKey_b) 
-     && nfcreader.getCommandResponse(&res) && res == 0) {
+  if ( nfcreader.mifare_AuthenticateBlock(4, key) 
+  && nfcreader.getCommandResponse(&res) && res == 0) {
+    Serial.println("Auth succeeded.");
     nfcreader.mifare_ReadDataBlock(4, data.raw);
     nfcreader.mifare_ReadDataBlock(5, data.raw+16);
     nfcreader.mifare_ReadDataBlock(6, data.raw+32);
-//    Serial.printBytes(data.raw, 48);
-       return 1;
+    return 1;
+  } /* else 
+  
+  if ( nfcreader.mifare_AuthenticateBlock(4, factory_a) 
+  && nfcreader.getCommandResponse(&res) && res == 0) {
+    Serial.println("Auth by factory_a");
+    nfcreader.mifare_ReadDataBlock(4, data.raw);
+    nfcreader.mifare_ReadDataBlock(5, data.raw+16);
+    nfcreader.mifare_ReadDataBlock(6, data.raw+32);
+    return 1;
   }
+  */
   return 0;
 }
 

@@ -34,12 +34,15 @@
 
 #define LCD_RST  PIO1_25
 #define SW_USERBTN PIO0_1
-#define RXD_C    PIO0_18
-#define TXD_C    PIO0_19
-#define RXD_A    PIO1_26
-#define TXD_A    PIO1_27
-#define RXD_E    PIO1_17
-#define TXD_E    PIO1_18
+/* C-Connect */
+#define RXD0    PIO0_18
+#define TXD0    PIO0_19
+/* EXT Port E */
+#define RXD1    PIO1_17
+#define TXD1    PIO1_18
+/* EXT Port A */
+#define RXD2    PIO1_26 
+#define TXD2    PIO1_27
 
 #endif /* end __CAPPUCCINO_H */
 /*****************************************************************************

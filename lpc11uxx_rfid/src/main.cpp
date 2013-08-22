@@ -22,8 +22,6 @@
 
 #include "StringStream.h"
 
-#include "cappuccino.h"
-
 #ifdef _LPCXPRESSO_CRP_
 #include <cr_section_macros.h>
 #include <NXP/crp.h>
@@ -44,6 +42,7 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #if defined(LPCLCD)
 #define NFC_IRQ     PIO1_5
 #elif defined (CAPPUCCINO)
+#include "cappuccino.h"
 #define NFC_RSTPD   PIN_NOT_DEFINED
 #define NFC_IRQ     PIO0_17
 #define LED_USER    LED_SDBUSY
@@ -102,9 +101,7 @@ struct {
 void setup() {
   pinMode(SW_USERBTN, INPUT);
   
-  /* NVIC is installed inside UARTInit file. */
-  //USART_init(&usart, PIO0_18, PIO0_19);
-  Serial.begin(115200);
+  Serial.begin(115200, RXD2, TXD2); // re-assign rx/tx ports
   Serial.println("\nUSART Serial started. \nHello.");
 
   Serial.print("I2C Bus ");
@@ -397,24 +394,13 @@ uint8 get_FCFBlock(ISO14443 & card, IDData & data) {
 uint8 get_MifareBlock(ISO14443 & card, IDData & data) {
   uint8 res;
   nfcreader.targetSet(0x10, card.ID, card.IDLength);
-  if ( nfcreader.mifare_AuthenticateBlock(4, factory_a) 
-     && nfcreader.getCommandResponse(&res) && res == 0) {
-    nfcreader.mifare_ReadDataBlock(4, data.raw);
-    nfcreader.mifare_ReadDataBlock(5, data.raw+16);
-    nfcreader.mifare_ReadDataBlock(6, data.raw+32);
-//    Serial.printBytes(data.raw, 48);
-       return 1;       
-  } else 
-         /* Note !!! Once failed to authentication, card's state will be back to the initial state, 
-        So the InListPassivTarget or InAutoPoll should be issued again. */
-
   if ( nfcreader.mifare_AuthenticateBlock(4, IizukaKey_b) 
      && nfcreader.getCommandResponse(&res) && res == 0) {
     nfcreader.mifare_ReadDataBlock(4, data.raw);
     nfcreader.mifare_ReadDataBlock(5, data.raw+16);
     nfcreader.mifare_ReadDataBlock(6, data.raw+32);
-//    Serial.printBytes(data.raw, 48);
-       return 1;
+    nfcreader.printBytes(data.raw, 48);
+    return 1;
   }
   return 0;
 }

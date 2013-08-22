@@ -18,8 +18,8 @@
 #define POSTAMBLE     (0x00)
 
 //#define PN532DEBUG
-#define MIFAREDEBUG
-#define PN532COMM
+//#define MIFAREDEBUG
+//#define PN532COMM
 //#define FELICADEBUG
 
 #if defined(ARDUINO)
@@ -879,7 +879,7 @@ boolean PN532::WriteRegister(word addr, byte val) {
 
 void PN532::printBytes(uint8_t * p, size_t n) {
   while ( n-- > 0 ) {
-    Serial.printByte(*p++);
+    Serial.printBytes(*p++);
     Serial.print(" ");
   }
   return;

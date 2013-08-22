@@ -78,9 +78,10 @@ public:
 		//
     size_t print(float, const int = 2);
     size_t print(const Printable&);
-//		size_t printBytes(uint8_t * array, uint8_t length, char sep = ' ');
-		size_t printByte(uint8_t val);
-		size_t printByte(uint32_t val);
+		size_t printBytes(uint8_t * array, uint8_t length, char sep = ' ');
+		size_t printBytes(uint8_t val) { return printBytes(&val, 1); }
+		size_t printBytes(uint16_t val) { return printBytes((uint8_t*) &val, sizeof(val)); }
+		size_t printBytes(uint32_t val) { return printBytes((uint8_t*) &val, sizeof(val)); }
 
 //    size_t println(const __FlashStringHelper *);
 //    size_t println(const String &s);
