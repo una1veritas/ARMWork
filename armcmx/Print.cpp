@@ -228,14 +228,14 @@ size_t Print::println(float num, int digits)
   return n;
 }
 
-/*
+
 size_t Print::println(const Printable& x)
 {
   size_t n = print(x);
   n += println();
   return n;
 }
-*/
+
 // Private Methods /////////////////////////////////////////////////////////////
 
 size_t Print::printNumber(unsigned long n, uint8_t base) {

@@ -39,31 +39,32 @@ public:
 		windex = strlen(str); rindex = 0;
 		count = 0;
 	}
-    using Print::write;
-    virtual size_t write(uint8_t b);
-    virtual size_t available();
-    virtual inline int16_t read();
-    virtual inline int16_t peek();
+  
+  using Stream::write;
+  
+  virtual size_t write(uint8_t b);
+  virtual size_t available();
+  virtual inline int16_t read();
+  virtual inline int16_t peek();
 
-    size_t readLineFrom(Stream &, size_t);
-    size_t readLineFrom(char *, size_t);
+  size_t readLineFrom(Stream &, size_t);
+  size_t readLineFrom(char *, size_t);
 
-    uint8_t is_full();
+  uint8_t is_full();
 
-    size_t getString(char * dst, size_t maxlen);
-    size_t getToken(char * dst, size_t maxlen);
+  size_t getString(char * dst, size_t maxlen);
+  size_t getToken(char * dst, size_t maxlen);
 
-    uint32_t parseHex();
+  uint32_t parseHex();
 
-    virtual void flush();
-    uint16_t writeindex() { return windex; }
-    uint16_t readindex() { return rindex; }
-    size_t length() { return count; }
+  virtual void flush();
+  uint16_t writeindex() { return windex; }
+  uint16_t readindex() { return rindex; }
+  size_t length() { return count; }
 
-	using Print::print;
+  using Stream::print;
 
-
-    virtual size_t printTo(Print& p) const;
+  virtual size_t printTo(Print& p) const;
 
 //	size_t readLine(char *buffer, size_t length);
 

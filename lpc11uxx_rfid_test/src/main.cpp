@@ -85,13 +85,11 @@ void init() {
   // systick initialize
   start_delay(); // for delay
   
-  // initialize xprintf
-  //xfunc_out = (void(*)(unsigned char))i2clcd_data;
 }
 
 uint8 task_serial(void);
-char rxbuf[32];
-uint16 rxix;
+char streambuf[64];
+StringStream stream(streambuf, 64);
 
 char msg[32];
 uint8_t tmp[32];
@@ -176,8 +174,6 @@ int main (void) {
   int i;
   
   uint8 cmdstatus = IDLE;
- 	char streambuf[64];
-  StringStream stream(streambuf, 64);
 
   init();
   setup();
@@ -231,7 +227,7 @@ int main (void) {
       if ( cmdstatus == IDLE ) {
         if ( nfcreader.InAutoPoll(1, 1, NFCPolling, 2) and nfcreader.getAutoPollResponse(tmp) ) {
           // NbTg, type1, length1, [Tg, ...]
-          card.setPassiveTarget(nfcreader.target.NFCType, tmp);
+          card.set(nfcreader.target.NFCType, tmp);
           i2clcd.backlightLow();
           if ( cmdstatus == IDLE and (millis() - lastread > 2000 and (millis() - lastread > 5000 or lastcard != card)) ) {
             lastread = millis();
@@ -252,24 +248,23 @@ int main (void) {
         }
       } else if ( cmdstatus == WRITE ) {
         if ( swatch == 0 ) {
-          Serial.println("Write mode.");
+          Serial.println("Enters into write mode.");
           swatch = millis();
         }
         if ( nfcreader.InListPassiveTarget(1,NFC::BAUDTYPE_106K_A, tmp, 0) 
-        and nfcreader.getListPassiveTarget(tmp) ) {
+        and (nfcreader.getListPassiveTarget(tmp) > 0) ) {
           // tmp must be +1 ed.
-          card.setPassiveTarget(NFC::CARDTYPE_MIFARE, tmp);
           Serial.printBytes(tmp, 16);
-          Serial.println();
-          get_MifareBlock(card, (IDData &) tmp, mykey);
+          card.set(NFC::CARDTYPE_MIFARE, tmp+1);
+          Serial.println(card);
+          //get_MifareBlock(card, (IDData &) tmp, mykey);
           //nfcreader.printBytes(tmp, 16);
-          /*
-          iddata.iizuka.division[0] = '1';
-          iddata.iizuka.division[0] = 'S';
+          
+          strcpy((char*)iddata.iizuka.division, "1S");
           strcpy((char*)iddata.iizuka.pid, "82541854");
           iddata.iizuka.issue = '1';
-          */
-          //writeIDInfo(card, iddata);
+          writeIDInfo(card, iddata);
+          //
           cmdstatus = IDLE;
         } else {
           if ( swatch + 5000 < millis() ) {
@@ -292,11 +287,8 @@ int main (void) {
     
     if ( task.serial == 0 ) {
       if ( task_serial() ) {
-        stream.flush();
-        stream.readLineFrom(rxbuf, 64);
-        rxix = 0;
         Serial.print("Request: ");
-        Serial.println(rxbuf);
+        Serial.println(stream);
         //
         stream.getToken((char*)tmp, 64);
         if ( match(tmp, "WRITE") ) {
@@ -318,7 +310,7 @@ int main (void) {
             }
           }
           Serial.print("Current key: ");
-          nfcreader.printBytes((uint8*)mykey, 7);
+          Serial.printBytes((uint8*)mykey, 7);
         }
       }
       //
@@ -336,10 +328,10 @@ uint8 writeIDInfo(ISO14443 & card, IDData & data) {
   if ( card.type != NFC::CARDTYPE_MIFARE )
     return 0;
   
-  if ( nfcreader.mifare_AuthenticateBlock(4, factory_a) 
+  if ( nfcreader.mifare_AuthenticateBlock(4, mykey) 
   && nfcreader.getCommandResponse(&res) && res == 0) {
-//    nfcreader.mifare_ReadDataBlock(4, data.raw);
-    get_MifareBlock(card, data, factory_a);
+    nfcreader.mifare_WriteDataBlock(4, data.raw);
+//    get_MifareBlock(card, data, factory_a);
     Serial.print("Authenticate response: ");
     Serial.println(res);
     return 1;
@@ -449,15 +441,12 @@ uint8 task_serial(void) {
 
   while ( Serial.available() > 0 ) {
     c = Serial.read();
-    rxbuf[rxix] = c;
     if ( c == '\n' || c == '\r' || c == 0 )
       break;
-    rxix++;
-  }
-  rxbuf[rxix] = 0;
-  
-  if ( (c == '\n' || c == '\r') && rxix > 0 ) 
-    return rxix;
+    stream.write(c);
+  }  
+  if ( (c == '\n' || c == '\r') && stream.length() > 0 ) 
+    return stream.length();
   
   return 0;
 }
@@ -472,8 +461,9 @@ void displayIDData(uint8 type, IDData & iddata) {
     i2clcd.print('-');
     i2clcd.write(iddata.fcf.pid, 8);
     i2clcd.print('-');
-    
     i2clcd.write((char)iddata.fcf.issue);
+    Serial.write(iddata.fcf.division, 2);
+    Serial.print('-');
     Serial.write(iddata.fcf.pid, 8);
     Serial.print('-');
     Serial.write((char)iddata.fcf.issue);
@@ -486,6 +476,8 @@ void displayIDData(uint8 type, IDData & iddata) {
     i2clcd.write(iddata.iizuka.pid, 8);
     i2clcd.print('-');
     i2clcd.print((char)iddata.iizuka.issue);
+    Serial.write(iddata.iizuka.division, 2);
+    Serial.print('-');
     Serial.write(iddata.iizuka.pid, 8);
     Serial.print('-');
     Serial.print((char)iddata.iizuka.issue);

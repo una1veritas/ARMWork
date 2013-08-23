@@ -229,7 +229,7 @@ public:
 			const byte blknum, const word blklist[]);
   
   // utility function
-  void printBytes(uint8_t *, size_t);
+  // void printBytes(uint8_t *, size_t);
 
 };
 

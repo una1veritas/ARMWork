@@ -98,7 +98,6 @@ struct ISO14443 : public Printable {
 	}
 
 	void set(const byte tp, const byte * raw) {
-		//PN532::printHexString(raw, 16);
 		type = tp;
 //		byte len;
 		switch (type) {
@@ -110,19 +109,23 @@ struct ISO14443 : public Printable {
 //			memcpy(PMm, raw + 11, 8);
 //			if (len == 20)
 //				memcpy(SysCode, raw + 19, 2);
+      atqa = 0;
+      sak = 0;
 			break;
 		case NFC::CARDTYPE_MIFARE:
 		default: // Mifare 106k TypeA
+      atqa = raw[1]<<8 | raw[2];
+      sak = raw[3];
 			IDLength = raw[4];
 			memcpy(UID, raw + 5, IDLength);
 			break;
 		}
-		atqa = 0;
-		sak = 0;
 	}
 
+  /*
 	void setPassiveTarget(const byte tp, const byte * raw) {
-		// raw[0] ... number
+    int n = raw[0]; // the number of detected targets
+    int base = 1;
 		type = tp;
     if ( type == NFC::CARDTYPE_MIFARE ) {
       atqa = raw[1]<<8 | raw[2];
@@ -144,6 +147,7 @@ struct ISO14443 : public Printable {
       memcpy(ID, raw+3, IDLength);
     }
 	}
+*/
 
 	virtual size_t printTo(Print & pr) const {
 		int cnt = 0;
@@ -176,7 +180,7 @@ struct ISO14443 : public Printable {
 			break;
 		}
 		for(int i = 0; i < IDLength; i++) {
-			pr.print(' ');
+			pr.print('-');
 			pr.print(ID[i]>>4, HEX);
 			pr.print(ID[i]&0x0f, HEX);
 			cnt += 3;

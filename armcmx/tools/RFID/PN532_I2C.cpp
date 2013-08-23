@@ -634,13 +634,13 @@ byte PN532::mifare_WriteDataBlock(uint8_t blockNumber, uint8_t * data) {
 	byte c = getCommandResponse(packet);
 	if (! c) {
 		Serial.println("Unexpected response");
-		printBytes(packet, 26);
+		Serial.printBytes(packet, 26);
 		Serial.println();
 		return 0;
 	}
 
 	Serial.print("Packet ");
-	printBytes(packet, c);
+	Serial.printBytes(packet, c);
 	Serial.println();
 
 	if (packet[0] != 0) {
@@ -650,7 +650,7 @@ byte PN532::mifare_WriteDataBlock(uint8_t blockNumber, uint8_t * data) {
 	memcpy(data, packet + 1, 16);
 	Serial.print("data ");
 	Serial.println(blockNumber);
-	printBytes(data, 16);
+	Serial.printBytes(data, 16);
 	Serial.println();
 
 	return 16;
@@ -877,6 +877,7 @@ boolean PN532::WriteRegister(word addr, byte val) {
 	return 1;
 }
 
+/*
 void PN532::printBytes(uint8_t * p, size_t n) {
   while ( n-- > 0 ) {
     Serial.printBytes(*p++);
@@ -884,4 +885,4 @@ void PN532::printBytes(uint8_t * p, size_t n) {
   }
   return;
 }
-
+*/
