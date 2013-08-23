@@ -48,8 +48,8 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #define LED_USER    PIO1_6
 #define LED_LCDBKLT PIO1_3
 #define SW_USERBTN  PIO0_1
-#define RXD0        PIO0_18
-#define TXD0        PIO0_19
+#define RXD2        PIO0_18
+#define TXD2        PIO0_19
 #elif defined (CAPPUCCINO)
 #include "cappuccino.h"
 #define NFC_RSTPD   PIN_NOT_DEFINED
@@ -77,7 +77,7 @@ const static byte IizukaKey_b[] = {
   0xBB, 0x63, 0x45, 0x74, 0x55, 0x79, 0x4B };
 const static byte factory_a[] = {
   0xaa, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
-
+byte mykey[8];
 
 void init() {
   SystemInit();
@@ -188,6 +188,7 @@ int main (void) {
                 rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.cal>>16&0xff);
   Serial.print(msg);
 
+  memcpy(mykey, IizukaKey_b, 7);
   lastread = millis();
   
   while (1){    /* Loop forever */
@@ -256,6 +257,9 @@ int main (void) {
         if ( nfcreader.InListPassiveTarget(1,NFC::BAUDTYPE_106K_A, tmp, 0) 
         and nfcreader.getListPassiveTarget(tmp) ) {
           card.setPassiveTarget(NFC::CARDTYPE_MIFARE, tmp);
+          get_MifareBlock(card, (IDData &) tmp, factory_a);
+          nfcreader.printBytes(tmp, 16);
+          Serial.println();
           iddata.iizuka.division[0] = '1';
           iddata.iizuka.division[0] = 'S';
           strcpy((char*)iddata.iizuka.pid, "82541854");
@@ -337,7 +341,7 @@ uint8 readIDInfo(ISO14443 & card, IDData & data) {
   uint16_t n;
 	switch (card.type) {
     case NFC::CARDTYPE_MIFARE:
-      for (n = 0; n < 3 and get_MifareBlock(card, data, IizukaKey_b) == 0; n++ )
+      for (n = 0; n < 3 and get_MifareBlock(card, data, mykey) == 0; n++ )
         delay(20);
       if ( n >= 3 ) {
         Serial.println("Unknown Mifare, not an ID.");
@@ -405,7 +409,7 @@ uint8 get_MifareBlock(ISO14443 & card, IDData & data, const uint8_t * key) {
 
   if ( nfcreader.mifare_AuthenticateBlock(4, key) 
   && nfcreader.getCommandResponse(&res) && res == 0) {
-    Serial.println("Auth succeeded.");
+    Serial.println("Auth succeeded to read blocks.");
     nfcreader.mifare_ReadDataBlock(4, data.raw);
     nfcreader.mifare_ReadDataBlock(5, data.raw+16);
     nfcreader.mifare_ReadDataBlock(6, data.raw+32);
@@ -421,6 +425,7 @@ uint8 get_MifareBlock(ISO14443 & card, IDData & data, const uint8_t * key) {
     return 1;
   }
   */
+  Serial.println("Auth failed to read blocks.");
   return 0;
 }
 
