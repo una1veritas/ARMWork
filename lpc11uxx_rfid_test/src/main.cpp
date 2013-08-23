@@ -173,7 +173,8 @@ int main (void) {
 	long lastread = 0, swatch = 0, lasttime = 0;
   ISO14443 card, lastcard;
   IDData iddata;
- 
+  int i;
+  
   uint8 cmdstatus = IDLE;
  	char streambuf[64];
   StringStream stream(streambuf, 64);
@@ -227,7 +228,7 @@ int main (void) {
 		if ( task.nfc == 0 ) {
       task.nfc = task.nfc_period;
       //
-      if ( cmdstatus == IDLE || cmdstatus == READ ) {
+      if ( cmdstatus == IDLE ) {
         if ( nfcreader.InAutoPoll(1, 1, NFCPolling, 2) and nfcreader.getAutoPollResponse(tmp) ) {
           // NbTg, type1, length1, [Tg, ...]
           card.setPassiveTarget(nfcreader.target.NFCType, tmp);
@@ -256,15 +257,19 @@ int main (void) {
         }
         if ( nfcreader.InListPassiveTarget(1,NFC::BAUDTYPE_106K_A, tmp, 0) 
         and nfcreader.getListPassiveTarget(tmp) ) {
+          // tmp must be +1 ed.
           card.setPassiveTarget(NFC::CARDTYPE_MIFARE, tmp);
-          get_MifareBlock(card, (IDData &) tmp, factory_a);
-          nfcreader.printBytes(tmp, 16);
+          Serial.printBytes(tmp, 16);
           Serial.println();
+          get_MifareBlock(card, (IDData &) tmp, mykey);
+          //nfcreader.printBytes(tmp, 16);
+          /*
           iddata.iizuka.division[0] = '1';
           iddata.iizuka.division[0] = 'S';
           strcpy((char*)iddata.iizuka.pid, "82541854");
           iddata.iizuka.issue = '1';
-          writeIDInfo(card, iddata);
+          */
+          //writeIDInfo(card, iddata);
           cmdstatus = IDLE;
         } else {
           if ( swatch + 5000 < millis() ) {
@@ -303,10 +308,17 @@ int main (void) {
             stream.getToken((char*)tmp, 64);
             rtc.time = strtol((char*) tmp, NULL,16);
             rtc.setTime(rtc.time);
+          } 
+        } else 
+        if ( match(tmp, "KEY") ) {
+          if ( stream.available() ) {
+            for(i = 0; i < 7; i++) {
+              stream.getToken((char*)tmp, 64);
+              mykey[i] = strtol((char*) tmp, NULL,16) & 0xff;
+            }
           }
-          rtc.updateTime();
-          Serial.print("Current time: ");
-          Serial.println(rtc.time, HEX);
+          Serial.print("Current key: ");
+          nfcreader.printBytes((uint8*)mykey, 7);
         }
       }
       //
