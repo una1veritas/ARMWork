@@ -9,8 +9,6 @@
 
 #include "LPC11Uxx.h"
 #include "type.h"
-//#include "xprintf.h"
-//#include "systick.h"
 
 #include "armcmx.h"
 #include "USARTSerial.h"
@@ -79,10 +77,28 @@ const static byte factory_a[] = {
   0xaa, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
 byte mykey[8];
 
+
+#define ACCESSBITS(x)     ( ((x)[8])<<4 & 0xff0L | ((x)[7])>>4 & 0x000fL )
+#define TRAILERBITS(x)    ((((x)&1L)<<3)<<8 | (((x)>>1&1L)<<3)<<4 | (((x)>>2&1L)<<3))
+#define DATABLOCKBITS(x, b)    ((((x)&1L)<<(b&3))<<8 | (((x)>>1&1L)<<(b&3))<<4 | (((x)>>2&1L)<<(b&3)))
+
+static void setAccessBits(uint8_t trailer[16], uint8_t key_a[6], uint8_t key_b[6], uint32_t acc) {
+  byte c1, c2, c3;
+  
+  c1 = trailer[7]>>4 & 0x0f;
+  c2 = trailer[8] & 0x0f;
+  c3 = trailer[8]>>4 & 0x0f;
+  
+  Serial << "trailer " <<  (c1>>3&1) << (c2>>3&1) << (c3>>3&1) << '\n';
+  Serial << "3rd sec " << (c1>>2&1) << (c2>>2&1) << (c3>>2&1) << '\n';
+  Serial << "2nd sec " << (c1>>1&1) << (c2>>1&1) << (c3>>1&1) << '\n';
+  Serial << "1st sec " << (c1>>0&1) << (c2>>0&1) << (c3>>0&1) << '\n';
+  
+}
+
 void init() {
   SystemInit();
   GPIOInit();
-  // systick initialize
   start_delay(); // for delay
   
 }
@@ -96,15 +112,40 @@ uint8_t tmp[32];
 
 struct {
   uint32 master; 
-  uint32 serial; 
+  uint32 serial;
   uint32 rtc;
   uint32 nfc; 
   uint32 lcdlight;
-  uint32 serial_period; 
-  uint32 rtc_period;
-  uint32 nfc_period; 
-  uint32 lcdlight_period; 
-} task = { 0, 0, 0, 0, 0, 3, 73, 667, 1000 };
+  
+  boolean check_serial() {
+    if ( serial > 0 )
+      return false;
+    serial = 3;
+    return true;
+  }
+  
+  boolean check_rtc() {
+    if ( rtc > 0 )
+      return false;
+    rtc = 73;
+    return true;
+  }
+  
+  boolean check_nfc() {
+    if ( nfc > 0 )
+      return false;
+    nfc = 667;
+    return true;
+  }
+  
+  boolean check_lcdlight() {
+    if ( lcdlight > 0 )
+      return false;
+    lcdlight = 1000;
+    return true;
+  }
+  
+} task;
 
 enum CMDSTATUS {
   IDLE = 0,
@@ -172,6 +213,7 @@ int main (void) {
   ISO14443 card, lastcard;
   IDData iddata;
   int i;
+  char c;
   
   uint8 cmdstatus = IDLE;
 
@@ -203,9 +245,7 @@ int main (void) {
     }
 
     // update clock values before polling cards
-    if ( task.rtc == 0 ) {
-      task.rtc = task.rtc_period;
-      //
+    if ( task.check_rtc() ) {
       rtc.updateTime();
       if ( lasttime != rtc.time ) {
         lasttime = rtc.time;
@@ -221,9 +261,7 @@ int main (void) {
       }
     }
     
-		if ( task.nfc == 0 ) {
-      task.nfc = task.nfc_period;
-      //
+		if ( task.check_nfc() ) {
       if ( cmdstatus == IDLE ) {
         if ( nfcreader.InAutoPoll(1, 1, NFCPolling, 2) and nfcreader.getAutoPollResponse(tmp) ) {
           // NbTg, type1, length1, [Tg, ...]
@@ -239,6 +277,7 @@ int main (void) {
                   rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.cal>>16&0xff);
             Serial.println((char*)tmp);
             //
+            iddata.clear();
             if ( readIDInfo(card, iddata) ) {
               displayIDData(card.type, iddata);
             } else {
@@ -261,7 +300,7 @@ int main (void) {
           //nfcreader.printBytes(tmp, 16);
           
           strcpy((char*)iddata.iizuka.division, "1S");
-          strcpy((char*)iddata.iizuka.pid, "82541854");
+          strcpy((char*)iddata.iizuka.pid, "82529508");
           iddata.iizuka.issue = '1';
           writeIDInfo(card, iddata);
           //
@@ -276,8 +315,7 @@ int main (void) {
       }
     }
     
-    if ( task.lcdlight == 0 ) {
-      task.lcdlight = task.lcdlight_period;
+    if ( task.check_lcdlight() ) {
       if (millis() - lastread > 5000 ) {
         i2clcd.setCursor(0, 0);
         i2clcd.print("                ");
@@ -285,8 +323,14 @@ int main (void) {
       }
     }
     
-    if ( task.serial == 0 ) {
-      if ( task_serial() ) {
+    if ( task.check_serial() && Serial.available() ) {
+      while ( Serial.available() > 0 ) {
+        c = Serial.read();
+        if ( c == '\n' || c == '\r' || c == 0 )
+          break;
+        stream.write(c);
+      }
+      if ( (c == '\n' || c == '\r') && stream.length() > 0 ) {
         Serial.print("Request: ");
         Serial.println(stream);
         //
@@ -304,17 +348,20 @@ int main (void) {
         } else 
         if ( match(tmp, "KEY") ) {
           if ( stream.available() ) {
-            for(i = 0; i < 7; i++) {
-              stream.getToken((char*)tmp, 64);
+            for(i = 0; i < 7 && stream.getToken((char*)tmp, 64); i++) {
+              if ( match(tmp, "iizuka") ) {
+                memcpy(mykey, IizukaKey_b, 7);
+                break;
+              }
               mykey[i] = strtol((char*) tmp, NULL,16) & 0xff;
             }
           }
           Serial.print("Current key: ");
           Serial.printBytes((uint8*)mykey, 7);
+          Serial.println();
         }
+        stream.flush();
       }
-      //
-      task.serial = task.serial_period;
     }
     
   }
@@ -324,16 +371,41 @@ int main (void) {
 
 uint8 writeIDInfo(ISO14443 & card, IDData & data) {
   uint8 res;
+  uint8_t tmp[16];
+  uint32_t acc;
   
   if ( card.type != NFC::CARDTYPE_MIFARE )
     return 0;
   
   if ( nfcreader.mifare_AuthenticateBlock(4, mykey) 
   && nfcreader.getCommandResponse(&res) && res == 0) {
-    nfcreader.mifare_WriteDataBlock(4, data.raw);
-//    get_MifareBlock(card, data, factory_a);
-    Serial.print("Authenticate response: ");
-    Serial.println(res);
+    Serial.println("Authenticated.");
+    if ( nfcreader.mifare_WriteDataBlock(4, data.raw) )
+      Serial.println("Write to data block succeeded.");
+    if ( nfcreader.mifare_ReadDataBlock(7, tmp) ) {
+      Serial.println("Acc. cond.");
+      acc = ACCESSBITS(tmp);
+      Serial.println(acc, BIN);
+      acc &= ~TRAILERBITS(B111);
+      acc |=  TRAILERBITS(B011);
+      acc &= ~(DATABLOCKBITS(B111, 0) | DATABLOCKBITS(B111, 1) | DATABLOCKBITS(B111, 2));
+      acc |=  ( DATABLOCKBITS(B010, 0) | DATABLOCKBITS(B001, 1) | DATABLOCKBITS(B001, 2));
+      acc |= acc<<12;
+      acc ^= 0x00000fff;
+      Serial.println(acc, BIN);
+      Serial.println();
+      tmp[8] = acc>>16 & 0xff;
+      tmp[7] = acc>>8 & 0xff;
+      tmp[6] = acc & 0xff;
+      memcpy(tmp,factory_a+1, 6);
+      memcpy(tmp+10,IizukaKey_b+1, 6);
+      
+      //memcpy(tmp, "\xFF\xFF\xFF\xFF\xFF\xFF\x08\x77\x8F\x69\x63\x45\x74\x55\x79\x4B ", 16);
+      Serial.printBytes(tmp, 16);
+      Serial.println();
+      if ( nfcreader.mifare_WriteDataBlock(7, tmp) )
+        Serial.println("Write to trailer block succeeded.");
+    }
     return 1;
   } else {
     Serial.println("Auth block ack failed.");
@@ -342,21 +414,16 @@ uint8 writeIDInfo(ISO14443 & card, IDData & data) {
 }
 
 uint8 readIDInfo(ISO14443 & card, IDData & data) {
-  uint16_t n;
-	switch (card.type) {
+  switch (card.type) {
     case NFC::CARDTYPE_MIFARE:
-      for (n = 0; n < 3 and get_MifareBlock(card, data, mykey) == 0; n++ )
-        delay(20);
-      if ( n >= 3 ) {
+      if ( get_MifareBlock(card, data, mykey) == 0 ) {
         Serial.println("Unknown Mifare, not an ID.");
         card.clear();
         return 0;
       }
       break;
     case NFC::CARDTYPE_FELICA_212K:
-      for (n = 0; n < 3 and get_FCFBlock(card, data) == 0; n++ )
-        delay(20);
-      if ( n >= 3) {
+      if ( get_FCFBlock(card, data) == 0 ) {
         Serial.println("Unknown FeliCa, not an FCF.");
         card.clear();
         return 0;
@@ -413,45 +480,20 @@ uint8 get_MifareBlock(ISO14443 & card, IDData & data, const uint8_t * key) {
 
   if ( nfcreader.mifare_AuthenticateBlock(4, key) 
   && nfcreader.getCommandResponse(&res) && res == 0) {
-    Serial.println("Auth succeeded to read blocks.");
-    nfcreader.mifare_ReadDataBlock(4, data.raw);
-    nfcreader.mifare_ReadDataBlock(5, data.raw+16);
-    nfcreader.mifare_ReadDataBlock(6, data.raw+32);
-    return 1;
-  } /* else 
-  
-  if ( nfcreader.mifare_AuthenticateBlock(4, factory_a) 
-  && nfcreader.getCommandResponse(&res) && res == 0) {
-    Serial.println("Auth by factory_a");
-    nfcreader.mifare_ReadDataBlock(4, data.raw);
-    nfcreader.mifare_ReadDataBlock(5, data.raw+16);
-    nfcreader.mifare_ReadDataBlock(6, data.raw+32);
-    return 1;
-  }
-  */
+    Serial.println("Auth succeeded.");
+    if ( nfcreader.mifare_ReadDataBlock(4, data.raw)
+    && nfcreader.mifare_ReadDataBlock(5, data.raw+16)
+    && nfcreader.mifare_ReadDataBlock(6, data.raw+32)
+    && nfcreader.mifare_ReadDataBlock(7, data.raw+48) )
+      return 1;
+    Serial.println("Read data blocks failed. ");
+  } 
   Serial.println("Auth failed to read blocks.");
   return 0;
 }
 
-uint8 task_serial(void) {
-  int c = 0;
-
-  if ( !Serial.available() ) 
-    return 0;
-
-  while ( Serial.available() > 0 ) {
-    c = Serial.read();
-    if ( c == '\n' || c == '\r' || c == 0 )
-      break;
-    stream.write(c);
-  }  
-  if ( (c == '\n' || c == '\r') && stream.length() > 0 ) 
-    return stream.length();
-  
-  return 0;
-}
-
 void displayIDData(uint8 type, IDData & iddata) {
+  uint32_t acc;
   if (type == NFC::CARDTYPE_FELICA_212K ) {
     i2clcd.setCursor(0,0);
     if ( iddata.fcf.division[1] == 0 ) 
@@ -481,10 +523,46 @@ void displayIDData(uint8 type, IDData & iddata) {
     Serial.write(iddata.iizuka.pid, 8);
     Serial.print('-');
     Serial.print((char)iddata.iizuka.issue);
-    //
-    //
     Serial.println();
+    /*
+    Serial.printBytes(iddata.raw, 16);
+    Serial.println();
+    Serial.printBytes(iddata.raw+16, 16);
+    Serial.println();
+    Serial.printBytes(iddata.raw+32, 16);
+    Serial.println();
+    Serial.printBytes(iddata.raw+48, 16);
+    Serial.println();
+
+      Serial.println("Acc. cond.");
+      
+      Serial.println(TRAILERBITS(B111), BIN);
+      Serial.println((DATABLOCKBITS(B111, 0) | DATABLOCKBITS(B111, 1) | DATABLOCKBITS(B111, 2)), BIN);
+      acc = ACCESSBITS(iddata.raw+48);
+      Serial.println(acc, BIN);
+      acc &= ~TRAILERBITS(B111);
+      acc |=  TRAILERBITS(B011);
+      acc &= ~(DATABLOCKBITS(B111, 0) | DATABLOCKBITS(B111, 1) | DATABLOCKBITS(B111, 2));
+      acc |=  DATABLOCKBITS(B010, 0);
+      acc |=  DATABLOCKBITS(B000, 1);
+      acc |=  DATABLOCKBITS(B000, 2);
+      
+      acc |= acc<<12;
+      acc ^= 0x00000fff;
+      Serial.println(acc, BIN);
+      Serial.println();
+      (iddata.raw+48)[8] = acc>>16 & 0xff;
+      (iddata.raw+48)[7] = acc>>8 & 0xff;
+      (iddata.raw+48)[6] = acc & 0xff;
+      memcpy((iddata.raw+48),factory_a+1, 6);
+      memcpy((iddata.raw+48)+10,IizukaKey_b+1, 6);
+      Serial.printBytes((iddata.raw+48), 16);
+      Serial.println();
+      */
+    //
   }
+  //
+  Serial.println();
 }
 
 /******************************************************************************

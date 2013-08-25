@@ -886,3 +886,7 @@ void PN532::printBytes(uint8_t * p, size_t n) {
   return;
 }
 */
+
+void PN532::printAccessBits(uint8_t trailer[16]) {
+  
+}

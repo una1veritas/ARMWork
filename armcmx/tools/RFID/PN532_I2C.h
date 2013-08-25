@@ -229,6 +229,7 @@ public:
 			const byte blknum, const word blklist[]);
   
   // utility function
+  static void printAccessBits(uint8_t trailer[16]);
   // void printBytes(uint8_t *, size_t);
 
 };

@@ -179,8 +179,9 @@ struct ISO14443 : public Printable {
 			cnt += pr.print(")");
 			break;
 		}
+    pr.print(' ');
 		for(int i = 0; i < IDLength; i++) {
-			pr.print('-');
+			if ( i > 0 ) pr.print('-');
 			pr.print(ID[i]>>4, HEX);
 			pr.print(ID[i]&0x0f, HEX);
 			cnt += 3;
@@ -234,6 +235,10 @@ union IDData {
     uint8 reserved2;
   } iizuka;
   uint8 raw[64];
+  
+  void clear() {
+    memset(raw, 0, 64);
+  }
 };
 
 #endif /* NFCCARD_H_ */
