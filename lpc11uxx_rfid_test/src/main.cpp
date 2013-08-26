@@ -82,25 +82,10 @@ byte mykey[8];
 #define TRAILERBITS(x)    ((((x)&1L)<<3)<<8 | (((x)>>1&1L)<<3)<<4 | (((x)>>2&1L)<<3))
 #define DATABLOCKBITS(x, b)    ((((x)&1L)<<(b&3))<<8 | (((x)>>1&1L)<<(b&3))<<4 | (((x)>>2&1L)<<(b&3)))
 
-static void setAccessBits(uint8_t trailer[16], uint8_t key_a[6], uint8_t key_b[6], uint32_t acc) {
-  byte c1, c2, c3;
-  
-  c1 = trailer[7]>>4 & 0x0f;
-  c2 = trailer[8] & 0x0f;
-  c3 = trailer[8]>>4 & 0x0f;
-  
-  Serial << "trailer " <<  (c1>>3&1) << (c2>>3&1) << (c3>>3&1) << '\n';
-  Serial << "3rd sec " << (c1>>2&1) << (c2>>2&1) << (c3>>2&1) << '\n';
-  Serial << "2nd sec " << (c1>>1&1) << (c2>>1&1) << (c3>>1&1) << '\n';
-  Serial << "1st sec " << (c1>>0&1) << (c2>>0&1) << (c3>>0&1) << '\n';
-  
-}
-
 void init() {
   SystemInit();
   GPIOInit();
   start_delay(); // for delay
-  
 }
 
 uint8 task_serial(void);
@@ -300,7 +285,7 @@ int main (void) {
           //nfcreader.printBytes(tmp, 16);
           
           strcpy((char*)iddata.iizuka.division, "1S");
-          strcpy((char*)iddata.iizuka.pid, "82529508");
+          strcpy((char*)iddata.iizuka.pid, "82541854");
           iddata.iizuka.issue = '1';
           writeIDInfo(card, iddata);
           //
@@ -382,14 +367,15 @@ uint8 writeIDInfo(ISO14443 & card, IDData & data) {
     Serial.println("Authenticated.");
     if ( nfcreader.mifare_WriteDataBlock(4, data.raw) )
       Serial.println("Write to data block succeeded.");
-    if ( nfcreader.mifare_ReadDataBlock(7, tmp) ) {
+    acc = nfcreader.mifare_ReadAccessConditions(7>>2);
+    if ( acc > 0 ) {
       Serial.println("Acc. cond.");
-      acc = ACCESSBITS(tmp);
       Serial.println(acc, BIN);
       acc &= ~TRAILERBITS(B111);
       acc |=  TRAILERBITS(B011);
       acc &= ~(DATABLOCKBITS(B111, 0) | DATABLOCKBITS(B111, 1) | DATABLOCKBITS(B111, 2));
       acc |=  ( DATABLOCKBITS(B010, 0) | DATABLOCKBITS(B001, 1) | DATABLOCKBITS(B001, 2));
+      /*
       acc |= acc<<12;
       acc ^= 0x00000fff;
       Serial.println(acc, BIN);
@@ -399,11 +385,11 @@ uint8 writeIDInfo(ISO14443 & card, IDData & data) {
       tmp[6] = acc & 0xff;
       memcpy(tmp,factory_a+1, 6);
       memcpy(tmp+10,IizukaKey_b+1, 6);
-      
+      */
       //memcpy(tmp, "\xFF\xFF\xFF\xFF\xFF\xFF\x08\x77\x8F\x69\x63\x45\x74\x55\x79\x4B ", 16);
       Serial.printBytes(tmp, 16);
       Serial.println();
-      if ( nfcreader.mifare_WriteDataBlock(7, tmp) )
+      if ( nfcreader.mifare_WriteAccessConditions(7>>2, acc, factory_a+1, IizukaKey_b+1) )
         Serial.println("Write to trailer block succeeded.");
     }
     return 1;
@@ -493,7 +479,7 @@ uint8 get_MifareBlock(ISO14443 & card, IDData & data, const uint8_t * key) {
 }
 
 void displayIDData(uint8 type, IDData & iddata) {
-  uint32_t acc;
+//  uint32_t acc;
   if (type == NFC::CARDTYPE_FELICA_212K ) {
     i2clcd.setCursor(0,0);
     if ( iddata.fcf.division[1] == 0 ) 

@@ -24,6 +24,10 @@
 
 #include "ISO14443.h"
 
+#define ACCESSBITS(x)     ( ((x)[8])<<4 & 0xff0L | ((x)[7])>>4 & 0x000fL )
+#define TRAILERBITS(x)    ((((x)&1L)<<3)<<8 | (((x)>>1&1L)<<3)<<4 | (((x)>>2&1L)<<3))
+#define DATABLOCKBITS(x, b)    ((((x)&1L)<<(b&3))<<8 | (((x)>>1&1L)<<(b&3))<<4 | (((x)>>2&1L)<<(b&3)))
+
 class PN532 {
 /*
 	static const byte I2C_READBIT = (0x01);
@@ -211,8 +215,10 @@ public:
 	byte mifare_AuthenticateBlock(word blockNumber, const byte * keyData);
 	byte mifare_ReadDataBlock(uint8_t blockNumber, uint8_t * data);
 	byte mifare_WriteDataBlock(uint8_t blockNumber, uint8_t * data);
+  byte mifare_WriteAccessConditions(uint8_t sector, uint32_t acc, const uint8_t keya[6], const uint8_t keyb[6]);
+  uint32_t mifare_ReadAccessConditions(uint8_t sector);
 
-	boolean InCommunicateThru(const byte * data, const byte len);
+  boolean InCommunicateThru(const byte * data, const byte len);
 	byte getCommunicateThruResponse(byte * data);
 
 	//	byte felica_DataExchange(const byte cmd, const byte * data, const byte len);

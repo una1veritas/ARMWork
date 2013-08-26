@@ -887,6 +887,27 @@ void PN532::printBytes(uint8_t * p, size_t n) {
 }
 */
 
-void PN532::printAccessBits(uint8_t trailer[16]) {
-  
+byte PN532::mifare_WriteAccessConditions(uint8_t sector, uint32_t acc, const uint8_t keya[6], const uint8_t keyb[6]) {
+  uint8_t blknum = (sector + 1) * 4 - 1;
+  uint8_t data[16];
+  memcpy(data, keya, 6);
+  memcpy(data+10, keyb, 6);  
+  acc |= acc<<12;
+  acc ^= 0x00000fff;
+  data[8] = acc>>16 & 0xff;
+  data[7] = acc>>8 & 0xff;
+  data[6] = acc & 0xff;
+  return mifare_WriteDataBlock(blknum, data);
 }
+
+uint32_t PN532::mifare_ReadAccessConditions(uint8_t sector) {
+  uint32_t acc = 0;
+  uint8_t tmp[16];
+  if ( mifare_ReadDataBlock((sector+1)*4-1, tmp) ) {
+    acc = ACCESSBITS(tmp);
+    return acc;
+  }
+  return 0;
+}
+
+
