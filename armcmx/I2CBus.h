@@ -40,14 +40,14 @@ class I2CBus : public Stream
 	
     virtual size_t write(uint8_t);
 		virtual inline size_t write(int v) { return write((uint8_t) v); }
-		virtual size_t available(void) {
+		virtual int available(void) {
 		uint16_t d = (rxlength - rxposition);
 			return (d>0? (size_t)d: 0);
 		}
-    virtual int16_t read(void) {
+    virtual int read(void) {
 			return rxbuffer[rxposition++];
 		}
-    virtual int16_t peek(void) {
+    virtual int peek(void) {
 			return rxbuffer[rxposition];
 		}
 		virtual void flush(void);

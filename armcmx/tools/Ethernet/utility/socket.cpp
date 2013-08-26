@@ -143,10 +143,10 @@ uint16_t send(SOCKET s, const uint8_t * buf, uint16_t len)
  * 		
  * @return	received data size for success else -1.
  */
-uint16_t recv(SOCKET s, uint8_t *buf, uint16_t len)
+int16_t recv(SOCKET s, uint8_t *buf, int16_t len)
 {
   // Check how much data is available
-  uint16_t ret = W5100.getRXReceivedSize(s);
+  int16_t ret = W5100.getRXReceivedSize(s);
   if ( ret == 0 )
   {
     // No data available.
@@ -268,22 +268,8 @@ uint16_t recvfrom(SOCKET s, uint8_t *buf, uint16_t len, uint8_t *addr, uint16_t 
       data_len = head[6];
       data_len = (data_len << 8) + head[7];
 
-      if (data_len > len)
-      {
-	// read as much data as will fit into buf 
-        W5100.read_data(s, (uint8_t *)ptr, buf, len); // data copy.
-         
-        // skip over the extra bytes
-        ptr += data_len;
-        
-        // set a "failed" return code
-        data_len = len - data_len;
-      }
-      else
-      {
       W5100.read_data(s, (uint8_t *)ptr, buf, data_len); // data copy.
       ptr += data_len;
-      }
 
       W5100.writeSnRX_RD(s, ptr);
       break;
@@ -299,22 +285,8 @@ uint16_t recvfrom(SOCKET s, uint8_t *buf, uint16_t len, uint8_t *addr, uint16_t 
       data_len = head[4];
       data_len = (data_len << 8) + head[5];
 
-      if (data_len > len)
-      {
-	// read as much data as will fit into buf
-	W5100.read_data(s, (uint8_t *)ptr, buf, len); // data copy.
-
-	// skip over the extra bytes
-	ptr += data_len;
-
-	// set a "failed" return code
-	data_len = len - data_len;
-      }
-      else
-      {
       W5100.read_data(s, (uint8_t *)ptr, buf, data_len); // data copy.
       ptr += data_len;
-      }
 
       W5100.writeSnRX_RD(s, ptr);
       break;
@@ -325,23 +297,8 @@ uint16_t recvfrom(SOCKET s, uint8_t *buf, uint16_t len, uint8_t *addr, uint16_t 
       data_len = head[0];
       data_len = (data_len<<8) + head[1] - 2;
 
-      if (data_len > len)
-      {
-	// read as much data as will fit into buf
-	W5100.read_data(s, (uint8_t *)ptr, buf, len); // data copy.
-
-	// skip over the extra bytes
+      W5100.read_data(s,(uint8_t*) ptr,buf,data_len);
       ptr += data_len;
-
-	// set a "failed" return code
-	data_len = len - data_len;
-      }
-      else
-      {
-	W5100.read_data(s, (uint8_t*) ptr, buf, data_len); // data copy
-	ptr += data_len;
-      }
-
       W5100.writeSnRX_RD(s, ptr);
       break;
 

@@ -9,28 +9,22 @@
 
 #ifndef	W5100_H_INCLUDED
 #define	W5100_H_INCLUDED
-#include "w5100_config.h"
-//#include <avr/pgmspace.h>
-#include <stdint.h>
 
-//#define W5200
-
-#ifdef W5200
-#define MAX_SOCK_NUM 8
-#else
-#define MAX_SOCK_NUM 4
+#if defined __AVR__
+#include <avr/pgmspace.h>
+#elif defined (ARMCMX)
+#include "armcmx.h"
 #endif
+#include <SPI.h>
 
+#define MAX_SOCK_NUM 4
 
 typedef uint8_t SOCKET;
 
-#ifndef W5200
 #define IDM_OR  0x8000
 #define IDM_AR0 0x8001
 #define IDM_AR1 0x8002
 #define IDM_DR  0x8003
-#endif
-
 /*
 class MR {
 public:
@@ -243,18 +237,13 @@ public:
   __GP_REGISTER8 (IMR,    0x0016);    // Interrupt Mask
   __GP_REGISTER16(RTR,    0x0017);    // Timeout address
   __GP_REGISTER8 (RCR,    0x0019);    // Retry count
-  
-  #ifndef W5200
   __GP_REGISTER8 (RMSR,   0x001A);    // Receive memory size
   __GP_REGISTER8 (TMSR,   0x001B);    // Transmit memory size
-  #endif
   __GP_REGISTER8 (PATR,   0x001C);    // Authentication type address in PPPoE mode
   __GP_REGISTER8 (PTIMER, 0x0028);    // PPP LCP Request Timer
   __GP_REGISTER8 (PMAGIC, 0x0029);    // PPP LCP Magic Number
-  #ifndef W5200
   __GP_REGISTER_N(UIPR,   0x002A, 4); // Unreachable IP address in UDP mode
   __GP_REGISTER16(UPORT,  0x002E);    // Unreachable Port address in UDP mode
-#endif
   
 #undef __GP_REGISTER8
 #undef __GP_REGISTER16
@@ -268,12 +257,7 @@ private:
   static inline uint16_t readSn(SOCKET _s, uint16_t _addr, uint8_t *_buf, uint16_t len);
   static inline uint16_t writeSn(SOCKET _s, uint16_t _addr, uint8_t *_buf, uint16_t len);
 
-#ifdef W5200
-  static const uint16_t CH_BASE = 0x4000;
-#else
   static const uint16_t CH_BASE = 0x0400;
-#endif  
-
   static const uint16_t CH_SIZE = 0x0100;
 
 #define __SOCKET_REGISTER8(name, address)                    \
@@ -290,7 +274,10 @@ private:
   }                                                          \
   static uint16_t read##name(SOCKET _s) {                    \
     uint16_t res = readSn(_s, address);                      \
-    res = (res << 8) + readSn(_s, address + 1);              \
+    uint16_t res2 = readSn(_s,address + 1);                  \
+    res = res << 8;                                          \
+    res2 = res2 & 0xFF;                                      \
+    res = res | res2;                                        \
     return res;                                              \
   }
 #define __SOCKET_REGISTER_N(name, address, size)             \
@@ -329,12 +316,7 @@ public:
 private:
   static const uint8_t  RST = 7; // Reset BIT
 
-#ifdef W5200
-  static const int SOCKETS = 8;
-#else
   static const int SOCKETS = 4;
-#endif
-
   static const uint16_t SMASK = 0x07FF; // Tx buffer MASK
   static const uint16_t RMASK = 0x07FF; // Rx buffer MASK
 public:
@@ -345,26 +327,29 @@ private:
   uint16_t RBASE[SOCKETS]; // Rx buffer base address
 
 private:
+#if defined __AVR__
 #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
   inline static void initSS()    { DDRB  |=  _BV(4); };
   inline static void setSS()     { PORTB &= ~_BV(4); };
   inline static void resetSS()   { PORTB |=  _BV(4); };
-#elif defined(__AVR_ATmega32U4__) || defined(__AVR_AT90USB1286__) || defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB162__)
+#elif defined(__AVR_ATmega32U4__)
+  inline static void initSS()    { DDRB  |=  _BV(6); };
+  inline static void setSS()     { PORTB &= ~_BV(6); };
+  inline static void resetSS()   { PORTB |=  _BV(6); }; 
+#elif defined(__AVR_AT90USB1286__) || defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB162__)
   inline static void initSS()    { DDRB  |=  _BV(0); };
   inline static void setSS()     { PORTB &= ~_BV(0); };
   inline static void resetSS()   { PORTB |=  _BV(0); }; 
 #else
-  #if defined __arm__  /* See w5100_pin_config.h */ 
-  inline static void initSS()    { _initSS();  };
-  inline static void setSS()     { _setSS();   };
-  inline static void resetSS()   { _resetSS(); };
- #else
   inline static void initSS()    { DDRB  |=  _BV(2); };
   inline static void setSS()     { PORTB &= ~_BV(2); };
   inline static void resetSS()   { PORTB |=  _BV(2); };
- #endif
 #endif
-
+#elif defined(ARMCMX)
+  inline static void initSS()    { pinMode(PIO0_2, OUTPUT); };
+  inline static void setSS()     { digitalWrite(PIO0_2, LOW); };
+  inline static void resetSS()   { digitalWrite(PIO0_2, HIGH); };
+#endif
 };
 
 extern W5100Class W5100;

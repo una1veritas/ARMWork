@@ -33,9 +33,9 @@ public:
 	virtual size_t write(const uint8_t w);
 	using Print::write;
 
-	virtual int16_t read() { return USART_read(port); }
-	virtual size_t available() { return USART_available(port); }
-	virtual int16_t peek() { return USART_peek(port); }
+	virtual int read() { return USART_read(port); }
+	virtual int available() { return USART_available(port); }
+	virtual int peek() { return USART_peek(port); }
 	virtual void flush() { USART_flush(port); }
 
 };

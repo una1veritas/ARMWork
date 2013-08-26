@@ -12,6 +12,7 @@
 
 #include "armcmx.h"
 #include "USARTSerial.h"
+#include "SPIBus.h"
 #include "I2CBus.h"
 #include "ST7032i.h"
 #include "RTC.h"

@@ -40,11 +40,11 @@ size_t StringStream::write(uint8_t b) {
 	return n;
 }
 
-size_t StringStream::available() {
+int StringStream::available() {
 	return count;
 }
 
-int16_t StringStream::read() {
+int StringStream::read() {
 	int c;
 	if ( count == 0 )
 		return -1;
@@ -54,7 +54,7 @@ int16_t StringStream::read() {
 	return c;
 }
 
-int16_t StringStream::peek() {
+int StringStream::peek() {
 	if ( count == 0 )
 		return -1;
 	return buffer_array[rindex];

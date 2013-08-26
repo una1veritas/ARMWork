@@ -48,6 +48,7 @@ private:
   IPAddress _remoteIP; // remote IP address for the incoming packet whilst it's being processed
   uint16_t _remotePort; // remote port for the incoming packet whilst it's being processed
   uint16_t _offset; // offset into the packet being sent
+  uint16_t _remaining; // remaining bytes of incoming packet yet to be processed
 
 public:
   EthernetUDP();  // Constructor
@@ -70,7 +71,7 @@ public:
   // Write size bytes from buffer into the packet
   virtual size_t write(const uint8_t *buffer, size_t size);
   
-  using Printx::write;
+  using Print::write;
 
   // Start processing the next available incoming packet
   // Returns the size of the packet in bytes, or 0 if no packets are available

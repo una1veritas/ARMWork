@@ -43,9 +43,9 @@ public:
   using Stream::write;
   
   virtual size_t write(uint8_t b);
-  virtual size_t available();
-  virtual inline int16_t read();
-  virtual inline int16_t peek();
+  virtual int available();
+  virtual inline int read();
+  virtual inline int peek();
 
   size_t readLineFrom(Stream &, size_t);
   size_t readLineFrom(char *, size_t);

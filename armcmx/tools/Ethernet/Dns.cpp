@@ -2,16 +2,14 @@
 // (c) Copyright 2009-2010 MCQN Ltd.
 // Released under Apache License, version 2.0
 
-
-#include "wirish/wirish.h"
-//#include "w5100.h"
+#include "w5100.h"
 #include "EthernetUdp.h"
 #include "util.h"
 
 #include "Dns.h"
-//#include <string.h>
+#include <string.h>
 //#include <stdlib.h>
-//#include "Arduino.h"
+#include "Arduino.h"
 
 
 #define SOCKET_NONE	255
@@ -85,7 +83,7 @@ int DNSClient::inet_aton(const char* aIPAddrString, IPAddress& aResult)
                 }
                 else
                 {
-                    aResult[segment] = (uint8_t)segmentValue;
+                    aResult[segment] = (byte)segmentValue;
                     segment++;
                     segmentValue = 0;
                 }
@@ -107,7 +105,7 @@ int DNSClient::inet_aton(const char* aIPAddrString, IPAddress& aResult)
         }
         else
         {
-            aResult[segment] = (uint8_t)segmentValue;
+            aResult[segment] = (byte)segmentValue;
             return 1;
         }
     }
@@ -284,12 +282,9 @@ uint16_t DNSClient::ProcessResponse(uint16_t aTimeout, IPAddress& aAddress)
     }
     iUdp.read(header, DNS_HEADER_SIZE);
 
-    //uint16_t header_flags = htons(*((uint16_t*)&header[2]));
-    uint16_t header_flags = (((uint16_t)header[2])<<8) + header[3];
+    uint16_t header_flags = htons(*((uint16_t*)&header[2]));
     // Check that it's a response to this request
-	uint16_t tmp =(((uint16_t)header[1])<<8) + header[0];
-    //if ( ( iRequestId != (*((uint16_t*)&header[0])) ) ||
-    if ( ( iRequestId != tmp) ||
+    if ( ( iRequestId != (*((uint16_t*)&header[0])) ) ||
         ((header_flags & QUERY_RESPONSE_MASK) != (uint16_t)RESPONSE_FLAG) )
     {
         // Mark the entire packet as read
@@ -306,8 +301,7 @@ uint16_t DNSClient::ProcessResponse(uint16_t aTimeout, IPAddress& aAddress)
     }
 
     // And make sure we've got (at least) one answer
-    //uint16_t answerCount = htons(*((uint16_t*)&header[6]));
-    uint16_t answerCount = (((uint16_t)header[6])<<8) + header[7];
+    uint16_t answerCount = htons(*((uint16_t*)&header[6]));
     if (answerCount == 0 )
     {
         // Mark the entire packet as read
@@ -316,9 +310,7 @@ uint16_t DNSClient::ProcessResponse(uint16_t aTimeout, IPAddress& aAddress)
     }
 
     // Skip over any questions
-    //for (uint16_t i =0; i < htons(*((uint16_t*)&header[4])); i++)
-	tmp = (((uint16_t)header[4])<<8) + header[5];
-    for (uint16_t i =0; i < tmp; i++)
+    for (uint16_t i =0; i < htons(*((uint16_t*)&header[4])); i++)
     {
         // Skip over the name
         uint8_t len;

@@ -101,12 +101,12 @@
         <DllOption>
           <SimDllName>SARMCM3.DLL</SimDllName>
           <SimDllArguments></SimDllArguments>
-          <SimDlgDll>DARMCM1.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pCM0</SimDlgDllArguments>
+          <SimDlgDll>DARMP1.DLL</SimDlgDll>
+          <SimDlgDllArguments>-pLPC11U24</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
-          <TargetDlgDll>TARMCM1.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pCM0</TargetDlgDllArguments>
+          <TargetDlgDll>TARMP1.DLL</TargetDlgDll>
+          <TargetDlgDllArguments>-pLPC11U24</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -165,7 +165,6 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
-          <bUseTDR>0</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
@@ -351,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define>ARMCMX CAPPUCCINO</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\armcmx\lpc11uxx;..\..\armcmx;..\inc;..\src;..\..\armcmx\tools\LCD;..\..\armcmx\tools\RTC;..\..\armcmx\tools\RFID;..\..\armcmx\tools\StringStream</IncludePath>
+              <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\armcmx\lpc11uxx;..\..\armcmx;..\inc;..\src;..\..\armcmx\tools\LCD;..\..\armcmx\tools\RTC;..\..\armcmx\tools\RFID;..\..\armcmx\tools\StringStream;..\..\armcmx\tools\Ethernet;..\..\armcmx\tools\Ethernet\utility</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -496,6 +495,96 @@
               <FileName>StringStream.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\armcmx\tools\StringStream\StringStream.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Ethernet</GroupName>
+          <Files>
+            <File>
+              <FileName>util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\util.h</FilePath>
+            </File>
+            <File>
+              <FileName>EthernetUdp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\EthernetUdp.h</FilePath>
+            </File>
+            <File>
+              <FileName>EthernetUdp.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\EthernetUdp.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>EthernetServer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\EthernetServer.h</FilePath>
+            </File>
+            <File>
+              <FileName>EthernetServer.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\EthernetServer.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>EthernetClient.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\EthernetClient.h</FilePath>
+            </File>
+            <File>
+              <FileName>EthernetClient.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\EthernetClient.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Ethernet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\Ethernet.h</FilePath>
+            </File>
+            <File>
+              <FileName>Ethernet.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\Ethernet.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Dns.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\Dns.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Dns.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\Dns.h</FilePath>
+            </File>
+            <File>
+              <FileName>Dhcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\Dhcp.h</FilePath>
+            </File>
+            <File>
+              <FileName>Dhcp.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\Dhcp.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>socket.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\utility\socket.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>w5100.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\utility\w5100.h</FilePath>
+            </File>
+            <File>
+              <FileName>w5100.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\utility\w5100.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>socket.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\Ethernet\utility\socket.h</FilePath>
             </File>
           </Files>
         </Group>
