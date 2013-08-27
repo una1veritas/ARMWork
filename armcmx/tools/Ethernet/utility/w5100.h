@@ -12,10 +12,12 @@
 
 #if defined __AVR__
 #include <avr/pgmspace.h>
+#include <SPI.h>
 #elif defined (ARMCMX)
 #include "armcmx.h"
+#include "SPIBus.h"
+
 #endif
-#include <SPI.h>
 
 #define MAX_SOCK_NUM 4
 
@@ -346,9 +348,9 @@ private:
   inline static void resetSS()   { PORTB |=  _BV(2); };
 #endif
 #elif defined(ARMCMX)
-  inline static void initSS()    { pinMode(PIO0_2, OUTPUT); };
-  inline static void setSS()     { digitalWrite(PIO0_2, LOW); };
-  inline static void resetSS()   { digitalWrite(PIO0_2, HIGH); };
+  inline static void initSS()    { pinMode(ETHER_CS, OUTPUT); };
+  inline static void setSS()     { digitalWrite(ETHER_CS, LOW); };
+  inline static void resetSS()   { digitalWrite(ETHER_CS, HIGH); };
 #endif
 };
 

@@ -9,8 +9,9 @@
 #include "Dns.h"
 #include <string.h>
 //#include <stdlib.h>
+#ifdef ARDUINO
 #include "Arduino.h"
-
+#endif
 
 #define SOCKET_NONE	255
 // Various flags and header field values for a DNS message

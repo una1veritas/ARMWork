@@ -6,7 +6,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include "Dhcp.h"
+#ifdef ARDUINO
 #include "Arduino.h"
+#endif
 #include "util.h"
 
 int DhcpClass::beginWithDHCP(uint8_t *mac, unsigned long timeout, unsigned long responseTimeout)
@@ -40,7 +42,11 @@ int DhcpClass::request_DHCP_lease(){
     
   
     // Pick an initial transaction ID
-    _dhcpTransactionId = random(1UL, 2000UL);
+#ifdef ARDUINO
+  _dhcpTransactionId = random(1UL, 2000UL);
+#else
+    _dhcpTransactionId = rand() % 2000UL + 1UL;
+#endif
     _dhcpInitialTransactionId = _dhcpTransactionId;
 
     if (_dhcpUdpSocket.begin(DHCP_CLIENT_PORT) == 0)

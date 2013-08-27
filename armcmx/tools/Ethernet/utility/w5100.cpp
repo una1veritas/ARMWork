@@ -9,7 +9,9 @@
 
 #include <stdio.h>
 #include <string.h>
+#ifdef __AVR__
 #include <avr/interrupt.h>
+#endif
 
 #include "w5100.h"
 
