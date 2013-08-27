@@ -97,37 +97,45 @@ char msg[32];
 uint8_t tmp[32];
 
 struct {
-  uint32 master; 
-  uint32 serial;
-  uint32 rtc;
-  uint32 nfc; 
-  uint32 lcdlight;
+  uint32 timer_master; 
+  uint32 timer_serial;
+  uint32 timer_rtc;
+  uint32 timer_nfc; 
+  uint32 timer_lcdlight;
   
-  boolean check_serial() {
-    if ( serial > 0 )
+  boolean master() {
+    if ( timer_master != millis() ) {
+      timer_master = millis();
+      return true;
+    }
+    return false;
+  }
+  
+  boolean serial() {
+    if ( timer_serial > 0 )
       return false;
-    serial = 3;
+    timer_serial = 3;
     return true;
   }
   
-  boolean check_rtc() {
-    if ( rtc > 0 )
+  boolean rtc() {
+    if ( timer_rtc > 0 )
       return false;
-    rtc = 73;
+    timer_rtc = 73;
     return true;
   }
   
-  boolean check_nfc() {
-    if ( nfc > 0 )
+  boolean nfc() {
+    if ( timer_nfc > 0 )
       return false;
-    nfc = 667;
+    timer_nfc = 667;
     return true;
   }
   
-  boolean check_lcdlight() {
-    if ( lcdlight > 0 )
+  boolean lcdlight() {
+    if ( timer_lcdlight > 0 )
       return false;
-    lcdlight = 1000;
+    timer_lcdlight = 1000;
     return true;
   }
   
@@ -218,20 +226,19 @@ int main (void) {
   
   while (1){    /* Loop forever */
 
-    if ( task.master != millis() ) {
-      if ( task.serial )
-        task.serial--;
-      if ( task.rtc ) 
-        task.rtc--;
-      if ( task.nfc )
-        task.nfc--;
-      if ( task.lcdlight )
-        task.lcdlight--;
-      task.master = millis();
+    if ( task.master() ) {
+      if ( task.timer_serial )
+        task.timer_serial--;
+      if ( task.timer_rtc ) 
+        task.timer_rtc--;
+      if ( task.timer_nfc )
+        task.timer_nfc--;
+      if ( task.timer_lcdlight )
+        task.timer_lcdlight--;
     }
 
     // update clock values before polling cards
-    if ( task.check_rtc() ) {
+    if ( task.rtc() ) {
       rtc.updateTime();
       if ( lasttime != rtc.time ) {
         lasttime = rtc.time;
@@ -247,7 +254,7 @@ int main (void) {
       }
     }
     
-		if ( task.check_nfc() ) {
+		if ( task.nfc() ) {
       if ( cmdstatus == IDLE ) {
         if ( nfcreader.InAutoPoll(1, 1, NFCPolling, 2) and nfcreader.getAutoPollResponse(tmp) ) {
           // NbTg, type1, length1, [Tg, ...]
@@ -301,7 +308,7 @@ int main (void) {
       }
     }
     
-    if ( task.check_lcdlight() ) {
+    if ( task.lcdlight() ) {
       if (millis() - lastread > 5000 ) {
         i2clcd.setCursor(0, 0);
         i2clcd.print("                ");
@@ -309,7 +316,7 @@ int main (void) {
       }
     }
     
-    if ( task.check_serial() && Serial.available() ) {
+    if ( task.serial() && Serial.available() ) {
       while ( Serial.available() > 0 ) {
         c = Serial.read();
         if ( c == '\n' || c == '\r' || c == 0 )

@@ -5,7 +5,9 @@ extern "C" {
   #include "string.h"
 }
 
+#ifdef ARDUINO
 #include "Arduino.h"
+#endif
 
 #include "Ethernet.h"
 #include "EthernetClient.h"
