@@ -20,7 +20,6 @@
 #ifndef __SSP_H__
 #define __SSP_H__
 
-#include "spi.h"
 
 #ifdef __cplusplus
 extern "C" {

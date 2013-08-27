@@ -213,10 +213,10 @@ public:
 	void targetClear();
 
 	byte mifare_AuthenticateBlock(word blockNumber, const byte * keyData);
-	byte mifare_ReadDataBlock(uint8_t blockNumber, uint8_t * data);
-	byte mifare_WriteDataBlock(uint8_t blockNumber, uint8_t * data);
+	byte mifare_ReadBlock(uint8_t blockNumber, uint8_t * data);
+	byte mifare_WriteBlock(uint8_t blockNumber, uint8_t * data);
   byte mifare_WriteAccessConditions(uint8_t sector, uint32_t acc, const uint8_t keya[6], const uint8_t keyb[6]);
-  uint32_t mifare_ReadAccessConditions(uint8_t sector);
+  uint32_t mifare_ReadAccessConditions(uint8_t sector, uint8_t * data);
 
   boolean InCommunicateThru(const byte * data, const byte len);
 	byte getCommunicateThruResponse(byte * data);

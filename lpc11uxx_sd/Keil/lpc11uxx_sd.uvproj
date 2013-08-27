@@ -165,7 +165,6 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
-          <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
@@ -443,11 +442,6 @@
               <FilePath>..\..\armcmx\lpc11uxx\PWM0tone.c</FilePath>
             </File>
             <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\lpc11uxx\spi.c</FilePath>
-            </File>
-            <File>
               <FileName>ST7032i.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\armcmx\tools\LCD\ST7032i.cpp</FilePath>
@@ -486,6 +480,11 @@
               <FileName>SPIBus.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\armcmx\SPIBus.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>sspspi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\lpc11uxx\sspspi.c</FilePath>
             </File>
           </Files>
         </Group>

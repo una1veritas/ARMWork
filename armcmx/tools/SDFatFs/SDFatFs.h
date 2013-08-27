@@ -75,15 +75,15 @@ public:
   }
   using Print::write;
   
-  virtual size_t available() {
+  virtual int available() {
     if ( f_eof(&file) )
       return 0;
     return f_size(&file) - f_tell(&file);
   }
 
-  virtual int16_t read(void);
+  virtual int read(void);
   
-  virtual int16_t peek(void);
+  virtual int peek(void);
 
   virtual void flush() {
     sdfs.rescode = f_sync(&file);

@@ -3,7 +3,7 @@
   *
   */
   
-#include "spi.h"
+#include "sspspi.h"
 
 #include "gpio.h"
 //#include "usart.h"

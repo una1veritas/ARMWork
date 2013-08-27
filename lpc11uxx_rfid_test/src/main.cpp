@@ -58,7 +58,7 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 
 
 ST7032i i2clcd(Wire, LED_LCDBKLT, LCD_RST);
-RTC rtc(Wire, RTC::ST_M41T62);
+RTC rtc(Wire, RTC::MAXIM_DS1307);
 PN532  nfcreader(Wire, PN532::I2C_ADDRESS, NFC_IRQ, NFC_RSTPD);
 const byte NFCPolling[] = {
   NFC::BAUDTYPE_212K_F,
@@ -293,7 +293,7 @@ int main (void) {
           //nfcreader.printBytes(tmp, 16);
           
           strcpy((char*)iddata.iizuka.division, "1S");
-          strcpy((char*)iddata.iizuka.pid, "82541854");
+          strcpy((char*)iddata.iizuka.pid, "82552406");
           iddata.iizuka.issue = '1';
           writeIDInfo(card, iddata);
           //
@@ -373,32 +373,35 @@ uint8 writeIDInfo(ISO14443 & card, IDData & data) {
   if ( nfcreader.mifare_AuthenticateBlock(4, mykey) 
   && nfcreader.getCommandResponse(&res) && res == 0) {
     Serial.println("Authenticated.");
-    if ( nfcreader.mifare_WriteDataBlock(4, data.raw) )
-      Serial.println("Write to data block succeeded.");
-    acc = nfcreader.mifare_ReadAccessConditions(7>>2);
-    if ( acc > 0 ) {
-      Serial.println("Acc. cond.");
+    if ( nfcreader.mifare_ReadAccessConditions(7>>2, tmp) ) {
+      acc = ACCESSBITS(tmp);
+      Serial.println("Original trailer cond.");
+      Serial.printBytes(tmp, 16);
+      Serial.println();
       Serial.println(acc, BIN);
       acc &= ~TRAILERBITS(B111);
       acc |=  TRAILERBITS(B011);
       acc &= ~(DATABLOCKBITS(B111, 0) | DATABLOCKBITS(B111, 1) | DATABLOCKBITS(B111, 2));
-      acc |=  ( DATABLOCKBITS(B010, 0) | DATABLOCKBITS(B001, 1) | DATABLOCKBITS(B001, 2));
-      /*
-      acc |= acc<<12;
-      acc ^= 0x00000fff;
-      Serial.println(acc, BIN);
-      Serial.println();
-      tmp[8] = acc>>16 & 0xff;
-      tmp[7] = acc>>8 & 0xff;
-      tmp[6] = acc & 0xff;
-      memcpy(tmp,factory_a+1, 6);
-      memcpy(tmp+10,IizukaKey_b+1, 6);
-      */
-      //memcpy(tmp, "\xFF\xFF\xFF\xFF\xFF\xFF\x08\x77\x8F\x69\x63\x45\x74\x55\x79\x4B ", 16);
-      Serial.printBytes(tmp, 16);
-      Serial.println();
-      if ( nfcreader.mifare_WriteAccessConditions(7>>2, acc, factory_a+1, IizukaKey_b+1) )
-        Serial.println("Write to trailer block succeeded.");
+      acc |=  ( DATABLOCKBITS(B110, 0) | DATABLOCKBITS(B110, 1) | DATABLOCKBITS(B110, 2));
+
+      if ( nfcreader.mifare_WriteAccessConditions(7>>2, acc, factory_a+1, IizukaKey_b+1) ) {
+        Serial.println("Succeeded to write trailer block.");
+        acc = nfcreader.mifare_ReadAccessConditions(7>>2, tmp);
+      } else {
+        Serial.println("Trailer block write failed.");
+        return 0;
+      }
+      
+      if ( nfcreader.mifare_WriteBlock(4, data.raw) )
+        Serial.println("Write to data block succeeded.");
+      else {
+        Serial.println("Data block write failed.");
+        return 0;
+      }
+      
+    } else {
+      Serial.println("Read trailer block failed.");
+      return 0;
     }
     return 1;
   } else {
@@ -475,10 +478,10 @@ uint8 get_MifareBlock(ISO14443 & card, IDData & data, const uint8_t * key) {
   if ( nfcreader.mifare_AuthenticateBlock(4, key) 
   && nfcreader.getCommandResponse(&res) && res == 0) {
     Serial.println("Auth succeeded.");
-    if ( nfcreader.mifare_ReadDataBlock(4, data.raw)
-    && nfcreader.mifare_ReadDataBlock(5, data.raw+16)
-    && nfcreader.mifare_ReadDataBlock(6, data.raw+32)
-    && nfcreader.mifare_ReadDataBlock(7, data.raw+48) )
+    if ( nfcreader.mifare_ReadBlock(4, data.raw)
+    && nfcreader.mifare_ReadBlock(5, data.raw+16)
+    && nfcreader.mifare_ReadBlock(6, data.raw+32)
+    && nfcreader.mifare_ReadBlock(7, data.raw+48) )
       return 1;
     Serial.println("Read data blocks failed. ");
   } 

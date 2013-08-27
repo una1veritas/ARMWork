@@ -78,16 +78,17 @@ public:
 	};
 
 	enum {
-		MAXIM = 0,
+		MAXIM_DS1307 = 0,
+    MAXIM_DS3234 = 0,
 		ST_M41T62 = 1
 	};
 
 public:
 	uint32 time, cal;
 
-	RTC(I2CBus & w, uint8 chip = MAXIM) : wire(w), chipID(chip), time(0), cal(0) { }
+	RTC(I2CBus & w, uint8 chip = MAXIM_DS1307) : wire(w), chipID(chip), time(0), cal(0) { }
 
-	RTC(uint8 chip = MAXIM) : wire(Wire), chipID(chip), time(0), cal(0) {	}
+	RTC(uint8 chip = MAXIM_DS1307) : wire(Wire), chipID(chip), time(0), cal(0) {	}
 
 	void init() {
 		start();

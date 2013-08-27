@@ -37,8 +37,8 @@
 __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #endif
 
-SPIBus SPI0(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, PIO0_2); // sck, miso, mosi, cs
-SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
+//SPIBus SPI0(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, PIO0_2); // sck, miso, mosi, cs
+//SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
 
 SDFatFs sd(SPI0, PIO0_2, PIO1_16, PIO1_19);
 SDFatFile file(sd);
@@ -72,7 +72,7 @@ int main(void) {
   digitalWrite(LED_SDBUSY, LOW);
   //
   
-	USART_init(&usart, RXD_A, TXD_A);
+	USART_init(&usart, RXD2, TXD2);
 //  USART_init(&usart, RXD_C, TXD_C);
 	USART_begin(&usart, 115200);
   USART_puts(&usart, "\nHello, nice to see you!\n");

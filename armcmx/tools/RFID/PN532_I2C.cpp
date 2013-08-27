@@ -579,7 +579,7 @@ byte PN532::mifare_AuthenticateBlock(word blkn, const byte * keyData) {
 	return InDataExchange(1, authcmd, blkn, tmp, target.IDLength + 6);
 }
 
-byte PN532::mifare_ReadDataBlock(uint8_t blockNumber, uint8_t * data) {
+byte PN532::mifare_ReadBlock(uint8_t blockNumber, uint8_t * data) {
 #ifdef MIFAREDEBUG
 	Serial.print("Try to read 16 bytes from block ");
 	Serial.println(blockNumber);
@@ -624,7 +624,7 @@ byte PN532::mifare_ReadDataBlock(uint8_t blockNumber, uint8_t * data) {
 	return 16;
 }
 
-byte PN532::mifare_WriteDataBlock(uint8_t blockNumber, uint8_t * data) {
+byte PN532::mifare_WriteBlock(uint8_t blockNumber, uint8_t * data) {
 	Serial.print("Try to write a block ");
 	Serial.println(blockNumber);
 
@@ -897,17 +897,18 @@ byte PN532::mifare_WriteAccessConditions(uint8_t sector, uint32_t acc, const uin
   data[8] = acc>>16 & 0xff;
   data[7] = acc>>8 & 0xff;
   data[6] = acc & 0xff;
-  return mifare_WriteDataBlock(blknum, data);
+  
+  Serial.println("modified ");
+  Serial.println(blknum);
+      Serial.printBytes(data, 16);
+      Serial.println();
+      Serial.println("New acc. cond.");
+      Serial.println(ACCESSBITS(data), BIN);
+  return mifare_WriteBlock(blknum, data);
 }
 
-uint32_t PN532::mifare_ReadAccessConditions(uint8_t sector) {
-  uint32_t acc = 0;
-  uint8_t tmp[16];
-  if ( mifare_ReadDataBlock((sector+1)*4-1, tmp) ) {
-    acc = ACCESSBITS(tmp);
-    return acc;
-  }
-  return 0;
+uint32_t PN532::mifare_ReadAccessConditions(uint8_t sector, uint8_t * data) {
+  return mifare_ReadBlock((sector+1)*4-1, data);
 }
 
 

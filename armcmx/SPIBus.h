@@ -17,7 +17,7 @@
 //#include <avr/pgmspace.h>
 #include "armcmx.h"
 
-#include "spi.h"
+#include "spidef.h"
 
 
 class SPIBus {
@@ -70,7 +70,8 @@ public:
 	
 };
 
-// extern SPIBus SPI(SPI0Def);
+extern SPIBus SPI0; // sck, miso, mosi, cs
+extern SPIBus SPI1; // sck, miso, mosi, cs
 
 /*
 void SPIClass::attachInterrupt() {

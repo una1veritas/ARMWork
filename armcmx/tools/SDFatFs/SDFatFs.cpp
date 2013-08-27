@@ -47,7 +47,7 @@ size_t SDFatFile::write(const uint8_t * buf, size_t num) {
   return count;
 }
 
-int16_t SDFatFile::read(void) {
+int SDFatFile::read(void) {
   UINT n = 0;
   if ( !peeked )
     sdfs.rescode = f_read(&file, &rbuf, 1, &n);
@@ -55,7 +55,7 @@ int16_t SDFatFile::read(void) {
   return rbuf;
 }
 
-int16_t SDFatFile::peek(void) {
+int SDFatFile::peek(void) {
   UINT n = 0;
   if ( !peeked ) 
     sdfs.rescode = f_read(&file, &rbuf, 1, &n);

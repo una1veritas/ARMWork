@@ -17,8 +17,8 @@
  * warranty that such application will be suitable for the specified
  * use without further testing or modification.
 ****************************************************************************/
-#ifndef __SPI_H__
-#define __SPI_H__
+#ifndef __SSPSPI_H__
+#define __SSPSPI_H__
 
 //#include <stdint.h>
 #include "LPC11Uxx.h"
@@ -123,7 +123,7 @@ extern SPIDef SPI0Def, SPI1Def;
 }
 #endif
 
-#endif  /* __SPI_H__ */
+#endif  /* __SSPSPI_H__ */
 /*****************************************************************************
 **                            End Of File
 ******************************************************************************/
