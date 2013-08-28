@@ -17,7 +17,7 @@
 //#include <avr/pgmspace.h>
 #include "armcmx.h"
 
-#include "spidef.h"
+#include "spi.h"
 
 
 class SPIBus {

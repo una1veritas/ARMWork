@@ -462,14 +462,14 @@
               <FilePath>..\..\armcmx\USARTSerial.cpp</FilePath>
             </File>
             <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\lpc11uxx\spi.c</FilePath>
-            </File>
-            <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\lpc11uxx\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssp_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\lpc11uxx\ssp_spi.c</FilePath>
             </File>
           </Files>
         </Group>

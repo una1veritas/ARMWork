@@ -482,9 +482,9 @@
               <FilePath>..\..\armcmx\SPIBus.cpp</FilePath>
             </File>
             <File>
-              <FileName>sspspi.c</FileName>
+              <FileName>ssp_spi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\armcmx\lpc11uxx\sspspi.c</FilePath>
+              <FilePath>..\..\armcmx\lpc11uxx\ssp_spi.c</FilePath>
             </File>
           </Files>
         </Group>

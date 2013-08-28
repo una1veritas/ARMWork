@@ -58,7 +58,7 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 
 
 ST7032i i2clcd(Wire, LED_LCDBKLT, LCD_RST);
-RTC rtc(Wire, RTC::MAXIM_DS1307);
+RTC rtc(Wire, RTC::ST_M41T62);
 PN532  nfcreader(Wire, PN532::I2C_ADDRESS, NFC_IRQ, NFC_RSTPD);
 const byte NFCPolling[] = {
   NFC::BAUDTYPE_212K_F,
@@ -263,7 +263,6 @@ int main (void) {
           if ( cmdstatus == IDLE and (millis() - lastread > 2000 and (millis() - lastread > 5000 or lastcard != card)) ) {
             lastread = millis();
             lastcard = card;
-            Serial.print("\nBy InAutoPoll, ");
             Serial.print(card);
             sprintf((char*)tmp, " [%02x:%02x:%02x %02x/%02x/20%02x]", 
                   rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f, 
@@ -293,15 +292,14 @@ int main (void) {
           //nfcreader.printBytes(tmp, 16);
           
           strcpy((char*)iddata.iizuka.division, "1S");
-          strcpy((char*)iddata.iizuka.pid, "82552406");
+          strcpy((char*)iddata.iizuka.pid, "82831626");
           iddata.iizuka.issue = '1';
           writeIDInfo(card, iddata);
           //
           cmdstatus = IDLE;
         } else {
-          if ( swatch + 5000 < millis() ) {
+          if ( swatch + 10000 < millis() ) {
             Serial.println("Write mode timed out.");
-            swatch = 0;
             cmdstatus = IDLE;
           }
         }
@@ -328,8 +326,35 @@ int main (void) {
         Serial.println(stream);
         //
         stream.getToken((char*)tmp, 64);
+        if ( match(tmp, "TIME") ) {
+          Serial.println("SET TIME");
+          if ( stream.available() ) {
+            stream.getToken((char*)tmp, 64);
+            lasttime = strtol((char*) tmp, NULL, 16);
+            if ( lasttime ) {
+              Serial.println(lasttime, HEX);
+              rtc.setTime(lasttime);
+            }
+          } else {
+            Serial.println(rtc.time, HEX);
+          }
+        } else 
+        if ( match(tmp, "CAL") ) {
+          Serial.println("SET CALENDAR.");
+          if ( stream.available() ) {
+            stream.getToken((char*)tmp, 64);
+            lasttime = strtol((char*) tmp, NULL, 16);
+            if ( lasttime ) {
+              Serial.println(lasttime, HEX);
+              rtc.setCalendar(lasttime);
+            }
+          } else {
+            Serial.println(rtc.cal, HEX);
+          }
+        } else 
         if ( match(tmp, "WRITE") ) {
           cmdstatus = WRITE;
+          swatch = 0;
           Serial.println("WRITE MODE.");
         } else 
         if ( match(tmp, "TIME") ) {
@@ -383,7 +408,7 @@ uint8 writeIDInfo(ISO14443 & card, IDData & data) {
       acc |=  TRAILERBITS(B011);
       acc &= ~(DATABLOCKBITS(B111, 0) | DATABLOCKBITS(B111, 1) | DATABLOCKBITS(B111, 2));
       acc |=  ( DATABLOCKBITS(B110, 0) | DATABLOCKBITS(B110, 1) | DATABLOCKBITS(B110, 2));
-
+/*
       if ( nfcreader.mifare_WriteAccessConditions(7>>2, acc, factory_a+1, IizukaKey_b+1) ) {
         Serial.println("Succeeded to write trailer block.");
         acc = nfcreader.mifare_ReadAccessConditions(7>>2, tmp);
@@ -391,7 +416,7 @@ uint8 writeIDInfo(ISO14443 & card, IDData & data) {
         Serial.println("Trailer block write failed.");
         return 0;
       }
-      
+  */    
       if ( nfcreader.mifare_WriteBlock(4, data.raw) )
         Serial.println("Write to data block succeeded.");
       else {
