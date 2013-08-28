@@ -2,7 +2,7 @@
 // (c) Copyright 2009-2010 MCQN Ltd.
 // Released under Apache License, version 2.0
 
-#include "w5100.h"
+#include "utility/w5100.h"
 #include "EthernetUdp.h"
 #include "util.h"
 
@@ -194,7 +194,8 @@ uint16_t DNSClient::BuildRequest(const char* aName)
     // As we only support one request at a time at present, we can simplify
     // some of this header
     iRequestId = millis(); // generate a random ID
-    uint16_t twoByteBuffer;
+    //uint16_t twoByteBuffer;
+    uint32_t twoByteBuffer;
 
     // FIXME We should also check that there's enough space available to write to, rather
     // FIXME than assume there's enough space (as the code does at present)
@@ -261,7 +262,7 @@ uint16_t DNSClient::ProcessResponse(uint16_t aTimeout, IPAddress& aAddress)
     while(iUdp.parsePacket() <= 0)
     {
         if((millis() - startTime) > aTimeout)
-            return TIMED_OUT;
+            return (uint16_t) TIMED_OUT;
         delay(50);
     }
 
@@ -273,13 +274,13 @@ uint16_t DNSClient::ProcessResponse(uint16_t aTimeout, IPAddress& aAddress)
         (iUdp.remotePort() != DNS_PORT) )
     {
         // It's not from who we expected
-        return INVALID_SERVER;
+        return (uint16_t) INVALID_SERVER;
     }
 
     // Read through the rest of the response
     if (iUdp.available() < DNS_HEADER_SIZE)
     {
-        return TRUNCATED;
+        return (uint16_t) TRUNCATED;
     }
     iUdp.read(header, DNS_HEADER_SIZE);
 
@@ -290,7 +291,7 @@ uint16_t DNSClient::ProcessResponse(uint16_t aTimeout, IPAddress& aAddress)
     {
         // Mark the entire packet as read
         iUdp.flush();
-        return INVALID_RESPONSE;
+        return (uint16_t) INVALID_RESPONSE;
     }
     // Check for any errors in the response (or in our request)
     // although we don't do anything to get round these
@@ -298,7 +299,7 @@ uint16_t DNSClient::ProcessResponse(uint16_t aTimeout, IPAddress& aAddress)
     {
         // Mark the entire packet as read
         iUdp.flush();
-        return -5; //INVALID_RESPONSE;
+        return (uint16_t) -5; //INVALID_RESPONSE;
     }
 
     // And make sure we've got (at least) one answer
@@ -307,7 +308,7 @@ uint16_t DNSClient::ProcessResponse(uint16_t aTimeout, IPAddress& aAddress)
     {
         // Mark the entire packet as read
         iUdp.flush();
-        return -6; //INVALID_RESPONSE;
+        return (uint16_t) -6; //INVALID_RESPONSE;
     }
 
     // Skip over any questions
@@ -400,7 +401,7 @@ uint16_t DNSClient::ProcessResponse(uint16_t aTimeout, IPAddress& aAddress)
                 // It's a weird size
                 // Mark the entire packet as read
                 iUdp.flush();
-                return -9;//INVALID_RESPONSE;
+                return (uint16_t) -9;//INVALID_RESPONSE;
             }
             iUdp.read(aAddress.raw_address(), 4);
             return SUCCESS;
@@ -419,6 +420,6 @@ uint16_t DNSClient::ProcessResponse(uint16_t aTimeout, IPAddress& aAddress)
     iUdp.flush();
 
     // If we get here then we haven't found an answer
-    return -10;//INVALID_RESPONSE;
+    return (uint16_t) -10;//INVALID_RESPONSE;
 }
 

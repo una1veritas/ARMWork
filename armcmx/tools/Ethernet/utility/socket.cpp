@@ -248,7 +248,8 @@ uint16_t recvfrom(SOCKET s, uint8_t *buf, uint16_t len, uint8_t *addr, uint16_t 
 {
   uint8_t head[8];
   uint16_t data_len=0;
-  uint16_t ptr=0;
+  //uint16_t ptr=0;
+  uint32_t ptr=0;
 
   if ( len > 0 )
   {

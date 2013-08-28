@@ -98,7 +98,7 @@ void W5100Class::send_data_processing_offset(SOCKET s, uint16_t data_offset, con
 
 void W5100Class::recv_data_processing(SOCKET s, uint8_t *data, uint16_t len, uint8_t peek)
 {
-  uint16_t ptr;
+  uint32_t ptr;
   ptr = readSnRX_RD(s);
   read_data(s, (uint8_t *)ptr, data, len);
   if (!peek)
@@ -111,10 +111,10 @@ void W5100Class::recv_data_processing(SOCKET s, uint8_t *data, uint16_t len, uin
 void W5100Class::read_data(SOCKET s, volatile uint8_t *src, volatile uint8_t *dst, uint16_t len)
 {
   uint16_t size;
-  uint16_t src_mask;
-  uint16_t src_ptr;
+  /* uint16_t */ uint32_t src_mask;
+  /* uint16_t */ uint32_t src_ptr;
 
-  src_mask = (uint16_t)src & RMASK;
+  src_mask = (uint32_t)src & RMASK;
   src_ptr = RBASE[s] + src_mask;
 
   if( (src_mask + len) > RSIZE ) 

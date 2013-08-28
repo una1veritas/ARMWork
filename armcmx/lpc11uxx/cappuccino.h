@@ -19,9 +19,6 @@
 #ifndef __CAPPUCCINO_H
 #define __CAPPUCCINO_H
 
-#define SSP_CS0       PIO0_2
-#define SSP_CS1       PIO1_23
-
 // Strawberry Linux original lpclcd port maps
 
 #ifndef CAPPUCCINO
@@ -43,6 +40,13 @@
 /* EXT Port A */
 #define RXD2    PIO1_26 
 #define TXD2    PIO1_27
+
+#define SSP0_CS_DEFAULT       PIO0_2
+#define SSP1_CS_DEFAULT       PIO1_23
+#define SPI SPI1
+#define SPI_CS_DEFAULT PIO1_23
+#define RXD RXD2
+#define TXD TXD2
 
 #endif /* end __CAPPUCCINO_H */
 /*****************************************************************************

@@ -1,5 +1,10 @@
 
+#if defined(ARDUINO)
 #include <Arduino.h>
+#elif defined(ARMCMX)
+#include "armcmx.h"
+#include "Print.h"
+#endif
 #include <IPAddress.h>
 
 IPAddress::IPAddress()

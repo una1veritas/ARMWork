@@ -1,7 +1,7 @@
 // DHCP Library v0.3 - April 25, 2009
 // Author: Jordan Terrell - blog.jordanterrell.com
 
-#include "w5100.h"
+#include "utility/w5100.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -163,7 +163,7 @@ void DhcpClass::send_DHCP_MESSAGE(uint8_t messageType, uint16_t secondsElapsed)
     buffer[9] = (secondsElapsed & 0x00ff);
 
     // flags
-    unsigned short flags = htons(DHCP_FLAGSBROADCAST);
+    uint16_t flags = (uint16_t) htons(DHCP_FLAGSBROADCAST);
     memcpy(buffer + 10, &(flags), 2);
 
     // ciaddr: already zeroed

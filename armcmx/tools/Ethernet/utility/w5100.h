@@ -16,7 +16,6 @@
 #elif defined (ARMCMX)
 #include "armcmx.h"
 #include "SPIBus.h"
-
 #endif
 
 #define MAX_SOCK_NUM 4

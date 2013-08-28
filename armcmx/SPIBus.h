@@ -73,6 +73,8 @@ public:
 extern SPIBus SPI0; // sck, miso, mosi, cs
 extern SPIBus SPI1; // sck, miso, mosi, cs
 
+#define SPI SPI1
+
 /*
 void SPIClass::attachInterrupt() {
   SPCR |= _BV(SPIE);

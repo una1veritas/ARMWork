@@ -36,16 +36,12 @@
 #include "armcmx.h"
 #include "SPIBus.h"
 #include "SPISRAM.h"
+#include "Ethernet.h"
 #include "USARTSerial.h"
 
+#include "cappuccino.h"
 
-//#define SSP_CS0       PIO0_2
-//#define SSP_CS1       PIO1_23
-#define LED_SD_BUSY   PIO1_19
-
-//SPIBus SPI0(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, SSP_CS0); // sck, miso, mosi, cs
-SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
-SPISRAM sram(SPI1, PIO1_23, SPISRAM::BUS_MBITS);
+SPISRAM sram(SPI, SPI_CS_DEFAULT, SPISRAM::BUS_MBITS);
 
 /******************************************************************************
 **   Main Function  main()
@@ -67,12 +63,13 @@ int main (void) {
   SystemCoreClockUpdate();
   start_delay();
 
+  Serial.pinconfig(RXD, TXD);
   Serial.begin(115200);
   Serial.println("Hello.");
   Serial.print("Text length is ");
   Serial.println(strlen(text));
   
-  SPI1.begin();
+  SPI.begin();
   sram.begin();
 
   srand((uint16_t)micros());
@@ -80,7 +77,7 @@ int main (void) {
   while ( 1 ) {
     if ( t == 0 )
       addr = rand() & 0x1ffff;
-    Serial.printByte(addr);
+    Serial.print(addr, HEX);
     Serial.println(":");
     sram.write((long) addr, (uint8_t*)text, (long) n);
     sram.read(addr, (uint8_t*) strbuf, n);
