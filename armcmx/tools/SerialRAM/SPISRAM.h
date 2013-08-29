@@ -16,11 +16,10 @@
 
 #if defined (ARDUINO)
 #include <Arduino.h>
-#include <SPI.h>
 #elif defined (ARMCMX)
 #include "armcmx.h"
-#include "SPIBus.h"
 #endif
+#include <SPI.h>
 
 class SPISRAM {
 private:

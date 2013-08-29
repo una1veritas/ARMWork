@@ -116,9 +116,6 @@ uint32_t SPI_transfer(SPIDef * port, uint32_t data); // uint16 may be enough
 
 extern SPIDef SPI0Def, SPI1Def;
 
-#define ETHER_CS  PIO0_16
-#define ETHER_SPI SPI1Def
-
 #ifdef __cplusplus
 }
 #endif

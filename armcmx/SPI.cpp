@@ -8,7 +8,7 @@
  * published by the Free Software Foundation.
  */
 
-#include "SPIBus.h"
+#include "SPI.h"
 
 SPIBus SPI0(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, PIO0_2); // sck, miso, mosi, cs
 SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs

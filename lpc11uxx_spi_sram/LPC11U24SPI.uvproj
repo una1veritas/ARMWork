@@ -130,7 +130,7 @@
           <Target>
             <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
+            <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
@@ -338,7 +338,7 @@
             <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>1</OneElfS>
+            <OneElfS>0</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
@@ -351,7 +351,7 @@
               <MiscControls></MiscControls>
               <Define>ARMCMX CAPPUCCINO</Define>
               <Undefine></Undefine>
-              <IncludePath>..\LPCLibrary\CMSISv2p00_LPC11Uxx\inc;..\armcmx\lpc11uxx;..\armcmx;..\armcmx\tools\SerialRAM;..\armcmx\tools\EthernetDinau</IncludePath>
+              <IncludePath>..\LPCLibrary\CMSISv2p00_LPC11Uxx\inc;..\armcmx\lpc11uxx;..\armcmx;..\armcmx\tools\SerialRAM;..\armcmx\tools\Ethernet</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -453,6 +453,11 @@
               <FilePath>..\armcmx\Print.cpp</FilePath>
             </File>
             <File>
+              <FileName>SPIBus.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\armcmx\SPIBus.cpp</FilePath>
+            </File>
+            <File>
               <FileName>I2CBus.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\armcmx\I2CBus.cpp</FilePath>
@@ -481,16 +486,6 @@
               <FileName>ssp_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\armcmx\lpc11uxx\ssp_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>SPI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\armcmx\SPI.h</FilePath>
-            </File>
-            <File>
-              <FileName>SPI.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\armcmx\SPI.cpp</FilePath>
             </File>
           </Files>
         </Group>

@@ -48,6 +48,7 @@
 #define RXD RXD2
 #define TXD TXD2
 
+
 #endif /* end __CAPPUCCINO_H */
 /*****************************************************************************
 **                            End Of File

@@ -34,7 +34,7 @@ public:
 	void begin(const uint32_t baud, GPIOPin rx, GPIOPin tx) { pinconfig(rx, tx); begin(baud); }
 
 	virtual size_t write(const uint8_t w);
-	using Print::write;
+	using Stream::write;
 
 	virtual int read() { return USART_read(port); }
 	virtual int available() { return USART_available(port); }
