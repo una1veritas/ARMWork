@@ -21,8 +21,6 @@ extern "C" {
 #include <stdlib.h>
 #include <string.h>
 
-typedef uint8_t GPIOPin;
-
 #define HEX 16
 #define DEC 10
 #define BIN 2

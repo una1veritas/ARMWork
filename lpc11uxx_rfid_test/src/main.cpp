@@ -3,10 +3,6 @@
  *
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "LPC11Uxx.h"
 #include "type.h"
 

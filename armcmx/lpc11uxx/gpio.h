@@ -12,17 +12,19 @@ extern "C" {
 #define HIGH   1
 #define LOW    0
 
-enum PIONameDef {
-	Not_A_Port = 0xff,
-	PIO0 = 0,
-	PIO1 = 1,
+typedef uint32_t GPIOPin;
+
+enum PIOName_Def {
+	Not_A_Port = 0,
+	PIO0 = 1,
+	PIO1 = 2,
   PORT_NOT_DEFINED = 0xff,
 };
 
-#define PIONumber(p)  ((p)>>5&1) 
+#define PIONumber(p)  ( (p) == PIO0 ? 0 : ( (p) == PIO1 ? 1 : PORT_NOT_DEFINED ))
 
 enum _GPIOPin_Def {
-	NOT_A_PIN = 0xff,
+	NOT_A_PIN = 0,
   PIO0_0 = (PIO0 <<5) | ((uint8_t)0),
   PIO0_1 = (PIO0 <<5) | ((uint8_t)1),
   PIO0_2 = (PIO0 <<5) | ((uint8_t)2),
