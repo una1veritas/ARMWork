@@ -28,3 +28,7 @@
 
 #Mac
 .DS_Store
+
+#downloaded artifacts
+lpcopen*
+STM32F4xx_DSP_StdPeriph_Lib_*
