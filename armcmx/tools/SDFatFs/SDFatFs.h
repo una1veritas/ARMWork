@@ -9,7 +9,7 @@
 #include "Print.h"
 #include "Stream.h"
 
-#include "SPIBus.h"
+#include "SPI.h"
 
 #include "diskio.h"
 #include "ff.h"

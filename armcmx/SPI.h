@@ -17,8 +17,7 @@
 //#include <avr/pgmspace.h>
 #include "armcmx.h"
 
-#include "spibus.h"
-
+#include "spi_core.h"
 
 class SPIBus {
 	SPIDef * SPIPort;
@@ -70,10 +69,7 @@ public:
 	
 };
 
-extern SPIBus SPI0; // sck, miso, mosi, cs
-extern SPIBus SPI1; // sck, miso, mosi, cs
-
-#define SPI SPI1
+extern SPIBus SPI0, SPI1; // sck, miso, mosi, cs
 
 
 /*

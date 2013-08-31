@@ -10,7 +10,7 @@
 #if defined (ARDUINO)
 #include <SPI.h>
 #elif defined (ARMCMX)
-#include "SPIBus.h"
+#include "SPI.h"
 #endif
 
 #include "SPISRAM.h"
@@ -23,7 +23,6 @@ SPISRAM::SPISRAM(SPIBus & spi, const byte csPin, const byte addr_width) :
 void SPISRAM::init() {
 	pinMode(_csPin, OUTPUT);
 	csHigh();
-	//
 	//addr = 0;
 	select();
 	writeStatusRegister(SEQ_MODE);
@@ -78,11 +77,11 @@ void SPISRAM::setSPIMode(void) {
 //	SPIx.setDataMode(SPI_MODE0);
 }
 
-void SPISRAM::csLow() {
+inline void SPISRAM::csLow() {
 	digitalWrite(_csPin, LOW);
 }
 
-void SPISRAM::csHigh() {
+inline void SPISRAM::csHigh() {
 	digitalWrite(_csPin, HIGH);
 }
 

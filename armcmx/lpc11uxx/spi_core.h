@@ -101,7 +101,6 @@ void SPI_disable(SPIDef * port);
 #define SPIMODE_CPHA    (1<<7)
 #define SPIMODE_DIVSET  (1<<8)
 
-
 #define SPI_DSS_8BIT 0x07
 #define SPI_DSS_16BIT 0x0f
 

@@ -1,5 +1,4 @@
 
-#include "LPC11Uxx.h"			/* LPC11xx Peripheral Registers */
 #include "gpio.h"
 
 void GPIOInit( void )

@@ -19,7 +19,7 @@
 #include "I2Cbus.h"
 #include "ST7032i.h"
 #include "RTC.h"
-#include "SPIBus.h"
+#include "SPI.h"
 #include "SPISRAM.h"
 #include "SDFatFs.h"
 
@@ -190,6 +190,7 @@ void sd_test()
      */
 
 //    rc = f_open(&Fil, "SD0001.TXT", FA_WRITE | FA_CREATE_ALWAYS);
+//    file.open("SD0001.TXT", SDFatFile::FILE_WRITE);
     file.open("SD0001.TXT", SDFatFile::FILE_WRITE);
     if ( file.result() ) { //rc) {
       USART_puts(&usart, "\nCouldn't open SD0001.TXT.\n");

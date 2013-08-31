@@ -11,7 +11,7 @@
 /
 /-------------------------------------------------------------------------*/
 
-#include "spi.h"
+#include "spi_core.h"
 #include "mmc_spi.h"
 
 //#define SSP_CH	0	/* SSP channel to use (0:SSP0, 1:SSP1) */
@@ -78,12 +78,9 @@
 ---------------------------------------------------------------------------*/
 
 #include "LPC11uxx.h"
-#include "gpio.h"
-#include "delay.h"
-#include "diskio.h"
+#include "armcmx.h"
 #include "cappuccino.h"
-
-#include "ssp.h"
+#include "diskio.h"
 
 /* MMC/SD command */
 #define CMD0	(0)			/* GO_IDLE_STATE */
@@ -138,8 +135,8 @@ BYTE xchg_spi (
 #define xchg_spi(x)  SPI_transfer(&SPI0Def, (x))
 
 /* Receive multiple byte */
-//#define _TEST_CODE
-#ifndef _TEST_CODE
+//#define _ORIGINAL_CODE
+#ifdef _ORIGINAL_CODE
 static
 void rcvr_spi_multi (
 	BYTE *buff,		/* Pointer to data buffer */
@@ -182,9 +179,12 @@ static void rcvr_spi_multi(BYTE *buff,	UINT btr /* Number of bytes to receive (1
   SPI_DataSize(&SPI0Def, SPI_DSS_8BIT);
 
   for ( i = 0; i < btr; i++) {
+    /*
     SPI0Def.SSPx->DR = 0xff; //buff[i];
-		while ( !(SPI0Def.SSPx->SR & SSPSR_RNE) or (SPI0Def.SSPx->SR & SSPSR_BSY) ) ;
+    while ( !(SPI0Def.SSPx->SR & SSPSR_RNE) || (SPI0Def.SSPx->SR & SSPSR_BSY) );
     buff[i] = SPI0Def.SSPx->DR;
+    */ 
+    buff[i] = SPI_transfer(&SPI0Def, 0xff);
   }
 }
 
@@ -198,31 +198,38 @@ void xmit_spi_multi (
 	UINT btx			/* Number of bytes to send (512) */
 )
 {
-	UINT n = 512;
+	UINT n; // = 512;
 	WORD d;
-
 
 	//SPI0Def.SSPx->CR0 = 0x000F;			/* Select 16-bit mode */
   SPI_DataSize(&SPI0Def, SPI_DSS_16BIT);
 
-	for (n = 0; n < 8; n++) {	/* Push 8 frames into pipeline  */
+  /*
+	for (n = 0; n < 8; n++) {	// Push 8 frames into pipeline
 		d = *buff++;
 		d = (d << 8) | *buff++;
 		SPI0Def.SSPx->DR = d;
 	}
 	btx -= 16;
-	do {						/* Transmit data block */
+	do {						// Transmit data block 
 		d = *buff++;
 		d = (d << 8) | *buff++;
-		while (!(SPI0Def.SSPx->SR & SSPSR_RNE /*_BV(2)*/)) ;
+		while (!(SPI0Def.SSPx->SR & SSPSR_RNE )); // _BV(2) )) ;
 		SPI0Def.SSPx->DR; SPI0Def.SSPx->DR = d;
 	} while (btx -= 2);
 	for (n = 0; n < 8; n++) {
-		while (!(SPI0Def.SSPx->SR & SSPSR_RNE /*_BV(2)*/)) ;
+		while (!(SPI0Def.SSPx->SR & SSPSR_RNE )); //_BV(2) )) ;
 		SPI0Def.SSPx->DR;
 	}
-
-	//SPI0Def.SSPx->CR0 = 0x0007;			/* Select 8-bit mode */
+  */
+  for(n = 0; n < btx; n++) {
+    d = *buff++;
+    d <<= 8;
+    d |= *buff++;
+    d = SPI_transfer(&SPI0Def, 0xff);
+  }
+  
+	//SPI0Def.SSPx->CR0 = 0x0007;			// Select 8-bit mode 
   SPI_DataSize(&SPI0Def, SPI_DSS_8BIT);
 }
 #endif

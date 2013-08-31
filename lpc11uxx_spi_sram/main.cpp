@@ -34,7 +34,7 @@
 //#include "type.h"
 
 #include "armcmx.h"
-#include "SPIBus.h"
+#include "SPI.h"
 #include "SPISRAM.h"
 #include "USARTSerial.h"
 

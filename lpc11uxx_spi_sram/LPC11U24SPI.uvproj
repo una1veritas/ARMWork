@@ -453,11 +453,6 @@
               <FilePath>..\armcmx\Print.cpp</FilePath>
             </File>
             <File>
-              <FileName>SPIBus.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\armcmx\SPIBus.cpp</FilePath>
-            </File>
-            <File>
               <FileName>I2CBus.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\armcmx\I2CBus.cpp</FilePath>
@@ -483,9 +478,14 @@
               <FilePath>..\armcmx\lpc11uxx\i2c.c</FilePath>
             </File>
             <File>
-              <FileName>ssp_spi.c</FileName>
+              <FileName>SPI.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\armcmx\SPI.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>spi_core.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\armcmx\lpc11uxx\ssp_spi.c</FilePath>
+              <FilePath>..\armcmx\lpc11uxx\spi_core.c</FilePath>
             </File>
           </Files>
         </Group>

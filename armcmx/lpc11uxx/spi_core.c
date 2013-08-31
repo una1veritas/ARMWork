@@ -3,10 +3,7 @@
   *
   */
   
-#include "ssp_spi.h"
-
-#include "gpio.h"
-//#include "usart.h"
+#include "spi_core.h"
 
 /*
 #define SD_CARD BIT8

@@ -5,14 +5,15 @@
 extern "C" {
 #endif
 
-#include "armcmx.h"
+#include <stdint.h>
+#include "LPC11Uxx.h"			/* LPC11xx Peripheral Registers */
 
 #define OUTPUT 1
 #define INPUT  0
 #define HIGH   1
 #define LOW    0
 
-typedef uint32_t GPIOPin;
+typedef uint8_t GPIOPin;
 
 enum PIOName_Def {
 	Not_A_Port = 0,

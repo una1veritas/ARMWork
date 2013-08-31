@@ -4,7 +4,7 @@
  */
 
 #include "LPC11Uxx.h"
-#include "type.h"
+//#include "type.h"
 
 #include "armcmx.h"
 #include "USARTSerial.h"
@@ -14,6 +14,8 @@
 #include "RTC.h"
 #include "PN532_I2C.h"
 #include "ISO14443.h"
+
+#include "PWM0Tone.h"
 
 #include "StringStream.h"
 
@@ -208,6 +210,7 @@ int main (void) {
   uint8 cmdstatus = IDLE;
 
   init();
+  PWM0_tone(PIO1_13, 800, 250);
   setup();
   // ---------------------------------------
   rtc.updateCalendar();
