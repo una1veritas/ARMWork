@@ -478,14 +478,14 @@
               <FilePath>..\..\armcmx\USARTSerial.cpp</FilePath>
             </File>
             <File>
-              <FileName>ssp_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\lpc11uxx\ssp_spi.c</FilePath>
-            </File>
-            <File>
               <FileName>SPI.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\armcmx\SPI.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>spi_core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\lpc11uxx\spi_core.c</FilePath>
             </File>
           </Files>
         </Group>
