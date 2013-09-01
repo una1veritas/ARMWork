@@ -168,8 +168,46 @@ void SPI_disable(SPIDef * port) {
 }
 
 void SPI_ClockDivier(SPIDef * port, uint32_t div) {
-  port->SSPx->CPSR = div & 0xfe;
+  // assumes SSP_PCLK = 24 MHz
+  uint32 scrval, cpsval;
+  switch(div) {
+    case SPI_CLOCK_DIV4:
+      cpsval = 1<<1; // 2
+      scrval = 1; // 1+1
+      break;
+    case SPI_CLOCK_DIV8:
+      cpsval = 1<<1; // 2
+      scrval = 3;
+      break;
+    case SPI_CLOCK_DIV32:
+      cpsval = 1<<1; // 2
+      scrval = 15;
+      break;
+    case SPI_CLOCK_DIV64:
+      cpsval = 2<<1; // 4
+      scrval = 15;
+      break;
+    case SPI_CLOCK_DIV16:
+    default:
+      cpsval = 1<<1; // 2
+      scrval = 7;
+      break;
+  }
+  port->SSPx->CPSR = cpsval & 0xfe;
+  port->SSPx->CR0 &= ~(0xffUL<<8);
+  port->SSPx->CR0 |= (scrval & 0xff)<<8;
 }
+
+
+/*Set up output clocks per bit for SSP bus
+void IP_SSP_Set_ClockRate(IP_SSP_001_T *pSSP, uint32_t clk_rate, uint32_t prescale)
+{
+	uint32_t temp;
+	temp = pSSP->CR0 & (~(SSP_CR0_SCR(0xFF)));
+	pSSP->CR0 = temp | (SSP_CR0_SCR(clk_rate));
+	pSSP->CPSR = prescale;
+}
+*/
 
 void SPI_DataSize(SPIDef * port, uint32_t dss) {
     port->SSPx->CR0 &= ~((uint32_t)0x0f);
@@ -177,11 +215,11 @@ void SPI_DataSize(SPIDef * port, uint32_t dss) {
 }
 
 void SPI_DataMode(SPIDef * port, uint32_t mode) {
-  port->SSPx->CR0 &= ~(SPIMODE_CPOL | SPIMODE_CPHA);
+  port->SSPx->CR0 &= ~(SSPCR0_CPOL | SSPCR0_CPHA);
   if ( mode & 1 )
-    port->SSPx->CR0 |= SPIMODE_CPOL;
+    port->SSPx->CR0 |= SSPCR0_CPOL;
   if ( mode & 2 )
-    port->SSPx->CR0 |= SPIMODE_CPHA;
+    port->SSPx->CR0 |= SSPCR0_CPHA;
 }
 
 

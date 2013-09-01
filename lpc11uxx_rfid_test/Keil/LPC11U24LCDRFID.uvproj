@@ -335,7 +335,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>3</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -351,7 +351,7 @@
               <MiscControls></MiscControls>
               <Define>ARMCMX CAPPUCCINO</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\armcmx\lpc11uxx;..\..\armcmx;..\inc;..\src;..\..\armcmx\tools\LCD;..\..\armcmx\tools\RTC;..\..\armcmx\tools\RFID;..\..\armcmx\tools\StringStream;..\..\armcmx\tools\Ethernet;..\..\armcmx\tools\Ethernet\utility</IncludePath>
+              <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\armcmx\lpc11uxx;..\..\armcmx;..\inc;..\src;..\..\armcmx\tools\LCD;..\..\armcmx\tools\RTC;..\..\armcmx\tools\RFID;..\..\armcmx\tools\StringStream;..\..\armcmx\tools\SDFatFs;..\..\armcmx\tools\SDFatFs\FatFs</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -472,6 +472,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\lpc11uxx\PWM0tone.c</FilePath>
             </File>
+            <File>
+              <FileName>SPI.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\SPI.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>spi_core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\lpc11uxx\spi_core.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -496,6 +506,41 @@
               <FileName>StringStream.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\armcmx\tools\StringStream\StringStream.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\diskio.h</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\ff.h</FilePath>
+            </File>
+            <File>
+              <FileName>ffconf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\ffconf.h</FilePath>
+            </File>
+            <File>
+              <FileName>integer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\integer.h</FilePath>
+            </File>
+            <File>
+              <FileName>SDFatFs.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\SDFatFs.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>SDFatFs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\SDFatFs.h</FilePath>
             </File>
           </Files>
         </Group>

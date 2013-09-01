@@ -55,9 +55,14 @@ typedef struct {
 /* SSP CR0 register */
 #define SSPCR0_DSS      (0x1<<0)
 #define SSPCR0_FRF      (0x1<<4)
-#define SSPCR0_SPO      (0x1<<6)
-#define SSPCR0_SPH      (0x1<<7)
-#define SSPCR0_SCR      (0x1<<8)
+//#define SSPCR0_SPO      (0x1<<6)
+//#define SSPCR0_SPH      (0x1<<7)
+//#define SSPCR0_SCR      (0x1<<8)
+
+#define SSPCR0_CPOL     (1UL<<6)
+#define SSPCR0_CPHA     (1UL<<7)
+#define SSPCR0_SCR      (1UL<<8)
+
 
 /* SSP CR1 register */
 #define SSPCR1_LBM      (0x1<<0)
@@ -88,6 +93,7 @@ typedef struct {
 #define SSPICR_RTIC     (0x1<<1)
 
 
+
 void SPI_reset(SPIDef * port);
 
 void SPI_init(SPIDef * port, GPIOPin clk, GPIOPin miso, GPIOPin mosi, GPIOPin ssel);
@@ -97,12 +103,20 @@ void SPI_start(SPIDef * port);
 void SPI_disable(SPIDef * port);
 
 
-#define SPIMODE_CPOL    (1<<6)
-#define SPIMODE_CPHA    (1<<7)
-#define SPIMODE_DIVSET  (1<<8)
+#define SPI_MODE0    0
+#define SPI_MODE1    1
+#define SPI_MODE2    2
+#define SPI_MODE3    3
 
-#define SPI_DSS_8BIT 0x07
+#define SPI_DSS_8BIT  0x07
 #define SPI_DSS_16BIT 0x0f
+
+#define SPI_CLOCK_DIV4  (4)
+#define SPI_CLOCK_DIV8  (8)
+#define SPI_CLOCK_DIV16  (16)
+#define SPI_CLOCK_DIV32  (32)
+#define SPI_CLOCK_DIV64  (64)
+
 
 void SPI_DataMode(SPIDef * port, uint32_t mode);
 void SPI_ClockDivier(SPIDef *, uint32_t);

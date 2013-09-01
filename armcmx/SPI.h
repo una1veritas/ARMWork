@@ -51,6 +51,10 @@ public:
   }
   */
   
+  inline void setDataSize(uint32_t dss) {
+    SPI_DataSize(SPIPort, dss);
+  }
+  
 	inline void setBitOrder(uint16_t bitOrder) {
 		//SPI_setBitOrder(port, bitOrder);
 	}

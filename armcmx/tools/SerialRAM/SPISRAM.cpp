@@ -73,8 +73,8 @@ void SPISRAM::write(const long & address, byte *buffer, const long & size) {
 
 void SPISRAM::setSPIMode(void) {
 //	SPIx.setBitOrder(MSBFIRST);
-//	SPIx.setClockDivider(SPI_CLOCK_DIV4);
-//	SPIx.setDataMode(SPI_MODE0);
+	SPIx.setDataMode(SPI_MODE0);
+  SPIx.setClockDivider(SPI_CLOCK_DIV4);
 }
 
 inline void SPISRAM::csLow() {

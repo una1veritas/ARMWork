@@ -8,7 +8,7 @@
 
 #include "armcmx.h"
 #include "USARTSerial.h"
-#include "SPIBus.h"
+#include "SPI.h"
 #include "I2CBus.h"
 #include "ST7032i.h"
 #include "RTC.h"
@@ -18,6 +18,8 @@
 #include "PWM0Tone.h"
 
 #include "StringStream.h"
+
+#include "SDFatFs.h"
 
 #define match(x,y)  (strcasecmp((char*)(x), (char*)(y)) == 0)
 
@@ -94,6 +96,9 @@ StringStream stream(streambuf, 64);
 char msg[32];
 uint8_t tmp[32];
 
+SDFatFile file(SD);
+void sd_test();
+
 struct {
   uint32 timer_master; 
   uint32 timer_serial;
@@ -151,6 +156,7 @@ void setup() {
   Serial.begin(115200, RXD2, TXD2);
   Serial.println("\nUSART Serial started. \nHello.");
 
+
   Serial.print("I2C Bus ");
   Wire.begin(); 	/* initialize I2c */
   if ( Wire.status == FALSE )
@@ -197,6 +203,23 @@ void setup() {
   // PIO1_6 USR LED //  GPIOSetDir(1, 6, 1 ); //  GPIOSetBitValue( 1, 6, 1);
   pinMode(LED_USER, OUTPUT);
   digitalWrite(LED_USER, HIGH);
+
+  //
+  Serial.print("result of get_fattime: ");
+  Serial.println(get_fattime(), HEX);
+  
+  SPI0.begin();
+  SD.begin();
+  if ( digitalRead(SW_SDDETECT) == HIGH ) {
+    Serial.println("SD slot is empty.");
+  } else {
+    Serial.println("Card is in SD slot.");
+    Serial.println("Performing tests...\n");
+    sd_test();
+  }
+	// sd_test();
+
+  Serial.println("\nSetup finished.\n");
 }
 
 
@@ -584,6 +607,81 @@ void displayIDData(uint8 type, IDData & iddata) {
   }
   //
   Serial.println();
+}
+
+
+void sd_test()
+{
+  static uint8_t buff[128];
+//	FRESULT rc;
+//  long swatch;
+  
+//	DIR dir;				/* Directory object */
+//	FILINFO fno;			/* File information object */
+//	UINT br, i, bw ;
+
+//	f_mount(0, &Fatfs);		/* Register volume work area (never fails) */
+	/*
+	 * SDカードのMESSAGE.TXTを開いてI2C液晶に表示します。英数カナのみ
+	 * ２行分のみ
+	 */
+	//rc = f_open(&Fil, "MESSAGE.TXT", FA_READ);
+	file.open("MESSAGE.TXT", SDFatFile::FILE_READ); 
+  if ( !file.result() ) { //!rc){
+    USART_puts(&usart, "\nType the file content:\n\n");
+    for (;;) {
+      /* Read a chunk of file */
+      //if (rc || !f_gets((TCHAR*)buff, sizeof(buff), &Fil) ) break;			/* Error or end of file */
+      if ( file.gets((TCHAR*) buff, sizeof(buff)) == NULL || file.result() )
+        break;
+
+      USART_puts(&usart, (char*)buff);
+    }
+    if ( file.result() ) {
+      USART_puts(&usart, "\nFailed while reading.\n");
+      return;
+    }
+    //rc = f_close(&Fil);
+    file.close();
+
+#ifdef FATFS_TEST_WRITE
+//    rc = f_open(&Fil, "SD0001.TXT", FA_WRITE | FA_CREATE_ALWAYS);
+//    file.open("SD0001.TXT", SDFatFile::FILE_WRITE);
+    file.open("SD0001.TXT", SDFatFile::FILE_WRITE);
+    if ( file.result() ) { //rc) {
+      USART_puts(&usart, "\nCouldn't open SD0001.TXT.\n");
+      return;
+    }
+
+    swatch = millis();
+    // 無限ループでこの関数からは抜けない
+    while(1){
+      i = sprintf((char*)buff, "%08u ", millis());
+      //f_write(&Fil, buff, i, &bw);
+      file.write(buff, i);
+      //rc = f_write(&Fil, "Strawberry Linux\r\n", 18, &bw);
+      file.write((uint8_t *)"Strawberry Linux\r\n", 18);
+      //if (rc) 
+      if ( file.result() ) 
+        break;
+      // SDカードに書き出します。
+     // f_sync(&Fil);
+      file.flush();
+      USART_puts(&usart, (const char*)buff);
+      USART_puts(&usart, "\n");
+      if ( swatch + 000 < millis() ) 
+        break;
+    }
+    //f_close(&Fil);
+    file.close();
+    USART_puts(&usart, "\nSD File IO test finished.\n");
+  	return;
+#endif
+  }
+
+  if ( file.result() == FR_NOT_READY ) //rc == FR_NOT_READY )
+    USART_puts(&usart, "\nCouldn't open MESSAGE.TXT.\n");
+
 }
 
 /******************************************************************************

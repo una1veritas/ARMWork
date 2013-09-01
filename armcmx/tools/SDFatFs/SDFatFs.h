@@ -11,8 +11,16 @@
 
 #include "SPI.h"
 
-#include "diskio.h"
-#include "ff.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "FatFs/diskio.h"
+#include "FatFs/ff.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 // volume
 class SDFatFs {
@@ -32,14 +40,43 @@ class SDFatFs {
 public:
   FRESULT rescode;
   
-  static uint32_t fattime(uint32_t cal, uint32_t time);
+  static uint32 date, time;
+  static uint32_t fattime(uint32_t c, uint32_t t);
+  inline static uint32 fattime() { return fattime(date, time); }
 
 public:
   SDFatFs(SPIBus & bus, GPIOPin cs, GPIOPin detect = PIN_NOT_DEFINED, GPIOPin led = PIN_NOT_DEFINED) 
     : spibus(bus), pin_cs(cs), pin_detect(detect), pin_busyled(led) {}
   
   void begin(void);
+  void end() { spibus.end(); }
+      
+  inline void setClockDivider(uint8 div) { spibus.setClockDivider(div); }
+  inline uint16 transfer(uint16 d) { return spibus.transfer(d); }
   
+  int wait_ready (uint32 wt) {
+    wt += millis();
+    while ( wt > millis() ) {
+      if ( transfer(0xff) == 0xff )
+        return 1;
+    }
+    return 0;
+  }
+
+  inline void deselect() { 
+    digitalWrite(pin_cs, HIGH);
+    spibus.transfer(0xFF);
+  }
+  inline uint8 select() { 
+    digitalWrite(pin_cs, LOW);
+    spibus.setClockDivider(SPI_CLOCK_DIV4);
+    spibus.transfer(0xFF);	/* Dummy clock (force DO enabled) */
+    if ( wait_ready(500) ) //wait_ready(500)) 
+      return 1;	/* OK */
+    deselect();
+    return 0;	/* Timeout */
+  }
+  inline void setDataSize(uint32 dss) { spibus.setDataSize(dss); } 
 };
 
 
@@ -89,5 +126,7 @@ public:
     sdfs.rescode = f_sync(&file);
   }
 };
+
+extern SDFatFs SD;
 
 #endif
