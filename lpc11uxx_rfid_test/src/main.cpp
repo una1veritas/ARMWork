@@ -33,28 +33,11 @@
 __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #endif
 
+#include "main.h"
 
 /*******************************************************************************
 **   Main Function  main()
 *******************************************************************************/
-
-// Strawberry Linux original lpclcd port maps
-
-#if defined(LPCLCD)
-#define LCD_RST     PIO1_25
-#define NFC_IRQ     PIO1_5
-#define NFC_RSTPD   PIN_NOT_DEFINED
-#define LED_USER    PIO1_6
-#define LED_LCDBKLT PIO1_3
-#define SW_USERBTN  PIO0_1
-#define RXD2        PIO0_18
-#define TXD2        PIO0_19
-#elif defined (CAPPUCCINO)
-#include "cappuccino.h"
-#define NFC_RSTPD   PIN_NOT_DEFINED
-#define NFC_IRQ     PIO0_17
-#define LED_USER    LED_SDBUSY
-#endif
 
 
 ST7032i i2clcd(Wire, LED_LCDBKLT, LCD_RST);
@@ -65,23 +48,8 @@ const byte NFCPolling[] = {
   NFC::BAUDTYPE_106K_A,
 };
 
-uint8 readIDInfo(ISO14443 & card, IDData & data);
-uint8 writeIDInfo(ISO14443 & card, IDData & data);
-void displayIDData(uint8 cardtype, IDData &);
-
-uint8 get_MifareBlock(ISO14443 & card, IDData & data, const uint8_t * key);
-uint8 get_FCFBlock(ISO14443 & card, IDData & data);
-
-const static byte IizukaKey_b[] = {
-  0xBB, 0x63, 0x45, 0x74, 0x55, 0x79, 0x4B };
-const static byte factory_a[] = {
-  0xaa, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
 byte mykey[8];
 
-
-#define ACCESSBITS(x)     ( ((x)[8])<<4 & 0xff0L | ((x)[7])>>4 & 0x000fL )
-#define TRAILERBITS(x)    ((((x)&1L)<<3)<<8 | (((x)>>1&1L)<<3)<<4 | (((x)>>2&1L)<<3))
-#define DATABLOCKBITS(x, b)    ((((x)&1L)<<(b&3))<<8 | (((x)>>1&1L)<<(b&3))<<4 | (((x)>>2&1L)<<(b&3)))
 
 void init() {
   SystemInit();
@@ -99,56 +67,8 @@ uint8_t tmp[32];
 SDFatFile file(SD);
 void sd_test();
 
-struct {
-  uint32 timer_master; 
-  uint32 timer_serial;
-  uint32 timer_rtc;
-  uint32 timer_nfc; 
-  uint32 timer_lcdlight;
-  
-  boolean master() {
-    if ( timer_master != millis() ) {
-      timer_master = millis();
-      return true;
-    }
-    return false;
-  }
-  
-  boolean serial() {
-    if ( timer_serial > 0 )
-      return false;
-    timer_serial = 3;
-    return true;
-  }
-  
-  boolean rtc() {
-    if ( timer_rtc > 0 )
-      return false;
-    timer_rtc = 73;
-    return true;
-  }
-  
-  boolean nfc() {
-    if ( timer_nfc > 0 )
-      return false;
-    timer_nfc = 667;
-    return true;
-  }
-  
-  boolean lcdlight() {
-    if ( timer_lcdlight > 0 )
-      return false;
-    timer_lcdlight = 1000;
-    return true;
-  }
-  
-} task;
-
-enum CMDSTATUS {
-  IDLE = 0,
-  WRITE,
-  READ
-};
+CMDSTATUS cmdstatus = IDLE;
+uint32 swatch = 0;
 
 void setup() {
   pinMode(SW_USERBTN, INPUT);
@@ -165,12 +85,10 @@ void setup() {
   pinMode(PIO0_7, OUTPUT); // pull up by 4k7
   digitalWrite(PIO0_7, LOW);
   
-  // I2C液晶を初期化します
+  // I2C lcd
   Serial.print("I2C LCD ");
   while(1)
-    //if(!i2clcd_init(0x27)) break;   // 初期化完了ならwhileを抜ける
     if ( i2clcd.begin() ) break;
-    // 失敗したら初期化を永遠に繰り返す
   Serial.println("started.");
   i2clcd.clear();
   i2clcd.print("Hello.");
@@ -178,7 +96,6 @@ void setup() {
   Serial.print("I2C RTC ");
   while(1)
     if ( rtc.begin() ) break;
-    // 失敗したら初期化を永遠に繰り返す
   Serial.println("started.");
   rtc.updateTime();
   Serial.println(rtc.time, HEX);
@@ -217,21 +134,18 @@ void setup() {
     Serial.println("Performing tests...\n");
     sd_test();
   }
-	// sd_test();
 
   Serial.println("\nSetup finished.\n");
 }
 
 
 int main (void) {
-	long lastread = 0, swatch = 0, lasttime = 0;
+	long lastread = 0, lasttime = 0;
   ISO14443 card, lastcard;
   IDData iddata;
   int i;
   char c;
   
-  uint8 cmdstatus = IDLE;
-
   init();
   PWM0_tone(PIO1_13, 800, 250);
   setup();
@@ -248,17 +162,8 @@ int main (void) {
   
   while (1){    /* Loop forever */
 
-    if ( task.master() ) {
-      if ( task.timer_serial )
-        task.timer_serial--;
-      if ( task.timer_rtc ) 
-        task.timer_rtc--;
-      if ( task.timer_nfc )
-        task.timer_nfc--;
-      if ( task.timer_lcdlight )
-        task.timer_lcdlight--;
-    }
-
+    task.update();
+    
     // update clock values before polling cards
     if ( task.rtc() ) {
       rtc.updateTime();
@@ -277,7 +182,7 @@ int main (void) {
     }
     
 		if ( task.nfc() ) {
-      if ( cmdstatus == IDLE ) {
+      if ( cmdstatus == IDLE || cmdstatus == READ ) {
         if ( nfcreader.InAutoPoll(1, 1, NFCPolling, 2) and nfcreader.getAutoPollResponse(tmp) ) {
           // NbTg, type1, length1, [Tg, ...]
           card.set(nfcreader.target.NFCType, tmp);
@@ -347,59 +252,7 @@ int main (void) {
         Serial.print("Request: ");
         Serial.println(stream);
         //
-        stream.getToken((char*)tmp, 64);
-        if ( match(tmp, "TIME") ) {
-          Serial.println("SET TIME");
-          if ( stream.available() ) {
-            stream.getToken((char*)tmp, 64);
-            lasttime = strtol((char*) tmp, NULL, 16);
-            if ( lasttime ) {
-              Serial.println(lasttime, HEX);
-              rtc.setTime(lasttime);
-            }
-          } else {
-            Serial.println(rtc.time, HEX);
-          }
-        } else 
-        if ( match(tmp, "CAL") ) {
-          Serial.println("SET CALENDAR.");
-          if ( stream.available() ) {
-            stream.getToken((char*)tmp, 64);
-            lasttime = strtol((char*) tmp, NULL, 16);
-            if ( lasttime ) {
-              Serial.println(lasttime, HEX);
-              rtc.setCalendar(lasttime);
-            }
-          } else {
-            Serial.println(rtc.cal, HEX);
-          }
-        } else 
-        if ( match(tmp, "WRITE") ) {
-          cmdstatus = WRITE;
-          swatch = 0;
-          Serial.println("WRITE MODE.");
-        } else 
-        if ( match(tmp, "TIME") ) {
-          if ( stream.available() ) {
-            stream.getToken((char*)tmp, 64);
-            rtc.time = strtol((char*) tmp, NULL,16);
-            rtc.setTime(rtc.time);
-          } 
-        } else 
-        if ( match(tmp, "KEY") ) {
-          if ( stream.available() ) {
-            for(i = 0; i < 7 && stream.getToken((char*)tmp, 64); i++) {
-              if ( match(tmp, "iizuka") ) {
-                memcpy(mykey, IizukaKey_b, 7);
-                break;
-              }
-              mykey[i] = strtol((char*) tmp, NULL,16) & 0xff;
-            }
-          }
-          Serial.print("Current key: ");
-          Serial.printBytes((uint8*)mykey, 7);
-          Serial.println();
-        }
+        parse_do_command(stream);
         stream.flush();
       }
     }
@@ -682,6 +535,67 @@ void sd_test()
   if ( file.result() == FR_NOT_READY ) //rc == FR_NOT_READY )
     USART_puts(&usart, "\nCouldn't open MESSAGE.TXT.\n");
 
+}
+
+
+void parse_do_command(StringStream & stream) {
+  uint32 tmplong;
+  int i;
+  
+  stream.getToken((char*)tmp, 64);
+  if ( match(tmp, "TIME") ) {
+    Serial.println("SET TIME");
+    if ( stream.available() ) {
+      stream.getToken((char*)tmp, 64);
+      tmplong = strtol((char*) tmp, NULL, 16);
+      if ( tmplong ) {
+        Serial.println(tmplong, HEX);
+        rtc.setTime(tmplong);
+      }
+    } else {
+      Serial.println(rtc.time, HEX);
+    }
+  } else 
+  if ( match(tmp, "CAL") ) {
+    Serial.println("SET CALENDAR.");
+    if ( stream.available() ) {
+      stream.getToken((char*)tmp, 64);
+      tmplong = strtol((char*) tmp, NULL, 16);
+      if ( tmplong ) {
+        Serial.println(tmplong, HEX);
+        rtc.setCalendar(tmplong);
+      }
+    } else {
+      Serial.println(rtc.cal, HEX);
+    }
+  } else 
+  if ( match(tmp, "WRITE") ) {
+    cmdstatus = WRITE;
+    swatch = 0;
+    Serial.println("WRITE MODE.");
+  } else 
+  if ( match(tmp, "TIME") ) {
+    if ( stream.available() ) {
+      stream.getToken((char*)tmp, 64);
+      rtc.time = strtol((char*) tmp, NULL,16);
+      rtc.setTime(rtc.time);
+    } 
+  } else 
+  if ( match(tmp, "KEY") ) {
+    if ( stream.available() ) {
+      for(i = 0; i < 7 && stream.getToken((char*)tmp, 64); i++) {
+        if ( match(tmp, "iizuka") ) {
+          memcpy(mykey, IizukaKey_b, 7);
+          break;
+        }
+        mykey[i] = strtol((char*) tmp, NULL,16) & 0xff;
+      }
+    }
+    Serial.print("Current key: ");
+    Serial.printBytes((uint8*)mykey, 7);
+    Serial.println();
+  }
+  
 }
 
 /******************************************************************************
