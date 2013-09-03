@@ -274,6 +274,7 @@ uint8 writeIDInfo(ISO14443 & card, IDData & data) {
   && nfcreader.getCommandResponse(&res) && res == 0) {
     Serial.println("Authenticated.");
     if ( nfcreader.mifare_ReadAccessConditions(7>>2, tmp) ) {
+/*
       acc = ACCESSBITS(tmp);
       Serial.println("Original trailer cond.");
       Serial.printBytes(tmp, 16);
@@ -283,7 +284,6 @@ uint8 writeIDInfo(ISO14443 & card, IDData & data) {
       acc |=  TRAILERBITS(B011);
       acc &= ~(DATABLOCKBITS(B111, 0) | DATABLOCKBITS(B111, 1) | DATABLOCKBITS(B111, 2));
       acc |=  ( DATABLOCKBITS(B110, 0) | DATABLOCKBITS(B110, 1) | DATABLOCKBITS(B110, 2));
-/*
       if ( nfcreader.mifare_WriteAccessConditions(7>>2, acc, factory_a+1, IizukaKey_b+1) ) {
         Serial.println("Succeeded to write trailer block.");
         acc = nfcreader.mifare_ReadAccessConditions(7>>2, tmp);
@@ -305,7 +305,7 @@ uint8 writeIDInfo(ISO14443 & card, IDData & data) {
     }
     return 1;
   } else {
-    Serial.println("Auth block ack failed.");
+    Serial.println("Auth block failed.");
   }
   return 0;
 }
@@ -479,7 +479,7 @@ void sd_test()
 	 * ２行分のみ
 	 */
 	//rc = f_open(&Fil, "MESSAGE.TXT", FA_READ);
-	file.open("MESSAGE.TXT", SDFatFile::FILE_READ); 
+	file.open("CONFIG.TXT", SDFatFile::FILE_READ); 
   if ( !file.result() ) { //!rc){
     USART_puts(&usart, "\nType the file content:\n\n");
     for (;;) {
