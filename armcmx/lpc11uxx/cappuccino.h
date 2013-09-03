@@ -41,6 +41,8 @@
 #define RXD2    PIO1_26 
 #define TXD2    PIO1_27
 
+#define I2C_PULLUP      PIO0_7
+
 #define SSP0_CS_DEFAULT       PIO0_2
 #define SSP1_CS_DEFAULT       PIO1_23
 #define SPI SPI1

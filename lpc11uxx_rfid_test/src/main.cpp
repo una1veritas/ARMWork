@@ -82,8 +82,8 @@ void setup() {
   if ( Wire.status == FALSE )
   	while ( 1 );				/* Fatal error */
   Serial.println("started.");
-  pinMode(PIO0_7, OUTPUT); // pull up by 4k7
-  digitalWrite(PIO0_7, LOW);
+  pinMode(I2C_PULLUP, OUTPUT); // pull up by 4k7
+  digitalWrite(I2C_PULLUP, LOW);
   
   // I2C lcd
   Serial.print("I2C LCD ");
