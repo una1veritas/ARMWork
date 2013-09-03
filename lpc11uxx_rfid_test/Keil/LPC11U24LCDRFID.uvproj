@@ -348,7 +348,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARMCMX CAPPUCCINO</Define>
+              <Define>ARMCMX LPCLCD</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\armcmx\lpc11uxx;..\..\armcmx;..\inc;..\src;..\..\armcmx\tools\LCD;..\..\armcmx\tools\RTC;..\..\armcmx\tools\RFID;..\..\armcmx\tools\StringStream;..\..\armcmx\tools\SDFatFs;..\..\armcmx\tools\SDFatFs\FatFs</IncludePath>
             </VariousControls>
