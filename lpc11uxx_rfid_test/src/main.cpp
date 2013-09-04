@@ -60,10 +60,8 @@ void init() {
 
 uint8 task_serial(void);
 char buff[64];
-StringStream strm(buff, 64);
-
-char msg[32];
 uint8_t tmp[32];
+StringStream strm(buff, 64);
 
 SDFatFile file(SD);
 void SD_readparam();
@@ -76,6 +74,7 @@ CMDSTATUS cmdstatus = IDLE;
 uint32 swatch = 0;
 
 void setup() {
+  
   pinMode(SW_USERBTN, INPUT);
   
   Serial.begin(115200, RXD2, TXD2);
@@ -158,6 +157,7 @@ int main (void) {
   IDData iddata;
   int i;
   char c;
+//  char msg[32];
   
   init();
   PWM0_tone(PIO1_13, 800, 250);
@@ -165,10 +165,10 @@ int main (void) {
   // ---------------------------------------
   rtc.updateCalendar();
   rtc.updateTime();
-  sprintf(msg, "%02x:%02x:%02x\n%02x/%02x/'%02x\n", 
+  sprintf((char*)tmp, "%02x:%02x:%02x\n%02x/%02x/'%02x\n", 
                 rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f, 
                 rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.cal>>16&0xff);
-  Serial.print(msg);
+  Serial.print((char*)tmp);
 
   memcpy(mykey, IizukaKey_b, 7);
   lastread = millis();
@@ -256,14 +256,13 @@ int main (void) {
     if ( task.serial() && Serial.available() ) {
       strm.flush();
       lastread = millis();
-      lastread += 30000;
       do {
         while ( !Serial.available() );
         c = Serial.read();
         if ( c == '\n' || c == '\r' || c == 0 )
           break;
         strm.write(c);
-      } while ( lastread < millis() );
+      } while ( millis() < lastread + 10000 );
       if ( strm.length() > 0 ) {
         Serial.print("Request: ");
         Serial.println(strm);
@@ -481,10 +480,10 @@ void displayIDData(uint8 type, IDData & iddata) {
 
 void SD_readparam() {
   
-  strcpy(msg, "CONFIG.TXT");
-	file.open(msg, SDFatFile::FILE_READ); 
+  strcpy((char*) tmp, "CONFIG.TXT");
+	file.open((char*)tmp, SDFatFile::FILE_READ); 
   if ( !file.result() ) {
-    Serial << endl << "Contents of file " << msg  << ": " << endl;
+    Serial << endl << "Contents of file " << (char*)tmp  << ": " << endl;
     for (;;) {
       
       if ( file.gets((TCHAR*) buff, sizeof(buff)) == NULL || file.result() )
@@ -501,7 +500,7 @@ void SD_readparam() {
     }
     file.close();
   } else {
-    Serial << endl << "Couldn't open " << msg << ". " << endl;
+    Serial << endl << "Couldn't open " << (char*)tmp << ". " << endl;
     return;
   }  
 }
@@ -509,10 +508,10 @@ void SD_readparam() {
 void SD_readkeyid() {
   uint16 count = 0;
 
-  strcpy(buff, "KEYID.TXT");
-	file.open(buff, SDFatFile::FILE_READ); 
+  strcpy((char*)tmp, "KEYID.TXT");
+	file.open((char*)tmp, SDFatFile::FILE_READ); 
   if ( !file.result() ) {
-    Serial << endl << "Contents of file " << buff << ": " << endl;
+    Serial << endl << "Contents of file " << (char*)tmp << ": " << endl;
     for (;;) {
       /*
       if ( count == 354 ) {
@@ -536,7 +535,7 @@ void SD_readkeyid() {
     }
     file.close();
   } else {
-    Serial << endl << "Couldn't open " << buff << ". " << endl;
+    Serial << endl << "Couldn't open " << (char*)tmp << ". " << endl;
     return;
   }
 
