@@ -16,11 +16,11 @@
 #include <Stream.h>
 #include <Printable.h>
 
-class StringStream: public Stream, public Printable {
 	// constants
-public:
-	static const char endl = '\n';
-	static const char cr = '\r';
+static const char endl = '\n';
+static const char cr = '\r';
+
+class StringStream: public Stream, public Printable {
 
 	// members
 private:
@@ -33,19 +33,19 @@ public:
 	StringStream(char buf[], size_t lim);
 //	virtual ~StringStream() {}
 
-	void setstring(char str[], uint16_t sz) {
+	void set(char str[], uint16_t sz) {
 		buffer_array = (uint8_t *) str;
 		buffer_size = sz;
 		windex = strlen(str); rindex = 0;
-		count = 0;
+		count = windex;
 	}
   
   using Stream::write;
   
   virtual size_t write(uint8_t b);
-  virtual int available();
-  virtual inline int read();
-  virtual inline int peek();
+  virtual int available(void);
+  virtual int read(void);
+  virtual int peek(void);
 
   size_t readLineFrom(Stream &, size_t);
   size_t readLineFrom(char *, size_t);

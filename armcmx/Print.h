@@ -56,6 +56,7 @@ class Print
     void setWriteError(int err = 1) { write_error = err; }
 
 public:
+
     Print() : write_error(0) {}
   
     int getWriteError() { return write_error; }
@@ -68,7 +69,7 @@ public:
 //  size_t print(const __FlashStringHelper *);
 //  size_t print(const String &);
     size_t print(const char[]);
-
+    
     size_t print(char);
     size_t print(unsigned char, int = DEC);
     size_t print(int, int = DEC);

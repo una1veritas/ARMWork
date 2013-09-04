@@ -100,3 +100,29 @@ struct Tasks {
   
 } task;
 
+struct KeyIDRecord {
+  char keyid[11];  // 11
+  uint32 expdate;  // 4
+  uint8 xsum;
+  
+  uint8 set(char kid[11], uint32 date) {
+    int i;
+    memcpy(keyid, kid, 11);
+    expdate = date;
+    xsum = 0;
+    for (i = 0; i < 15; i++) {
+      xsum ^= ((uint8*)this)[i];
+    }
+    return xsum;
+  }
+  
+  uint8 checksum() {
+    int i;
+    uint8 chksum = 0;
+    for (i = 0; i < 16; i++) {
+      chksum ^= ((uint8*)this)[i];
+    }
+    return chksum == 0;
+  }
+  
+};

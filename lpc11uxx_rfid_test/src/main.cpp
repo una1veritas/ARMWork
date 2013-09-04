@@ -20,6 +20,7 @@
 #include "StringStream.h"
 
 #include "SDFatFs.h"
+#include "SPISRAM.h"
 
 #define match(x,y)  (strcasecmp((char*)(x), (char*)(y)) == 0)
 
@@ -58,14 +59,18 @@ void init() {
 }
 
 uint8 task_serial(void);
-char streambuf[64];
-StringStream stream(streambuf, 64);
+char buff[64];
+StringStream strm(buff, 64);
 
 char msg[32];
 uint8_t tmp[32];
 
 SDFatFile file(SD);
-void sd_test();
+void SD_readparam();
+void SD_readkeyid();
+
+#define SRAM_CS PIO1_23
+SPISRAM sram(SPI1, SRAM_CS, SPISRAM::BUS_23LC1024);
 
 CMDSTATUS cmdstatus = IDLE;
 uint32 swatch = 0;
@@ -121,9 +126,16 @@ void setup() {
   pinMode(LED_USER, OUTPUT);
   digitalWrite(LED_USER, HIGH);
 
+  SPI1.begin();
+  Serial.println("SPI1 Bus started.");
+  sram.begin();
+  Serial.println("SPI SRAM started.");
+  Serial.println();
   //
   Serial.print("result of get_fattime: ");
   Serial.println(get_fattime(), HEX);
+
+//  delay(5000);
   
   SPI0.begin();
   SD.begin();
@@ -132,7 +144,8 @@ void setup() {
   } else {
     Serial.println("Card is in SD slot.");
     Serial.println("Performing tests...\n");
-    sd_test();
+    SD_readparam();
+    SD_readkeyid();
   }
 
   Serial.println("\nSetup finished.\n");
@@ -242,18 +255,21 @@ int main (void) {
     }
     
     if ( task.serial() && Serial.available() ) {
-      while ( Serial.available() > 0 ) {
+      strm.flush();
+      lastread = millis();
+      lastread += 30000;
+      do {
+        while ( !Serial.available() );
         c = Serial.read();
         if ( c == '\n' || c == '\r' || c == 0 )
           break;
-        stream.write(c);
-      }
-      if ( (c == '\n' || c == '\r') && stream.length() > 0 ) {
+        strm.write(c);
+      } while ( lastread < millis() );
+      if ( strm.length() > 0 ) {
         Serial.print("Request: ");
-        Serial.println(stream);
+        Serial.println(strm);
         //
-        parse_do_command(stream);
-        stream.flush();
+        parse_do_command(strm);
       }
     }
     
@@ -463,40 +479,70 @@ void displayIDData(uint8 type, IDData & iddata) {
 }
 
 
-void sd_test()
-{
-  static uint8_t buff[128];
-//	FRESULT rc;
-//  long swatch;
+void SD_readparam() {
   
-//	DIR dir;				/* Directory object */
-//	FILINFO fno;			/* File information object */
-//	UINT br, i, bw ;
-
-//	f_mount(0, &Fatfs);		/* Register volume work area (never fails) */
-	/*
-	 * SDカードのMESSAGE.TXTを開いてI2C液晶に表示します。英数カナのみ
-	 * ２行分のみ
-	 */
-	//rc = f_open(&Fil, "MESSAGE.TXT", FA_READ);
-	file.open("CONFIG.TXT", SDFatFile::FILE_READ); 
-  if ( !file.result() ) { //!rc){
-    USART_puts(&usart, "\nType the file content:\n\n");
+  strcpy(msg, "CONFIG.TXT");
+	file.open(msg, SDFatFile::FILE_READ); 
+  if ( !file.result() ) {
+    Serial << endl << "Contents of file " << msg  << ": " << endl;
     for (;;) {
-      /* Read a chunk of file */
-      //if (rc || !f_gets((TCHAR*)buff, sizeof(buff), &Fil) ) break;			/* Error or end of file */
+      
       if ( file.gets((TCHAR*) buff, sizeof(buff)) == NULL || file.result() )
         break;
-
-      USART_puts(&usart, (char*)buff);
+      strm.set(buff, 64);
+      if ( strm.peek() == '#' ) {
+        Serial.println("Comment: ");
+      }
+      Serial << strm;
     }
     if ( file.result() ) {
-      USART_puts(&usart, "\nFailed while reading.\n");
+      Serial << endl << "Failed while reading." << endl;
       return;
     }
-    //rc = f_close(&Fil);
     file.close();
+  } else {
+    Serial << endl << "Couldn't open " << msg << ". " << endl;
+    return;
+  }  
+}
 
+void SD_readkeyid() {
+  uint16 count = 0;
+
+  strcpy(buff, "KEYID.TXT");
+	file.open(buff, SDFatFile::FILE_READ); 
+  if ( !file.result() ) {
+    Serial << endl << "Contents of file " << buff << ": " << endl;
+    for (;;) {
+      /*
+      if ( count == 354 ) {
+        Serial.println();
+      }
+      */
+      if ( file.gets((TCHAR*) buff, sizeof(buff)) == NULL)
+          break;
+      if ( file.result() )
+        break;
+      strm.set(buff, 64);
+      count++;
+      if ( count % 100 == 0 )
+        Serial << count << " " << strm;
+    }
+    if ( file.result() ) {
+      Serial << endl << "Failed while reading." << endl;
+      return;
+    } else {
+      Serial << "Total data count " << count << ". " << endl;
+    }
+    file.close();
+  } else {
+    Serial << endl << "Couldn't open " << buff << ". " << endl;
+    return;
+  }
+
+}
+
+void SD_writelog() {
 #ifdef FATFS_TEST_WRITE
 //    rc = f_open(&Fil, "SD0001.TXT", FA_WRITE | FA_CREATE_ALWAYS);
 //    file.open("SD0001.TXT", SDFatFile::FILE_WRITE);
@@ -530,10 +576,6 @@ void sd_test()
     USART_puts(&usart, "\nSD File IO test finished.\n");
   	return;
 #endif
-  }
-
-  if ( file.result() == FR_NOT_READY ) //rc == FR_NOT_READY )
-    USART_puts(&usart, "\nCouldn't open MESSAGE.TXT.\n");
 
 }
 
