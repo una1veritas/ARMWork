@@ -209,7 +209,6 @@ int main (void) {
                   rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.cal>>16&0xff);
             Serial.println((char*)tmp);
             //
-            iddata.clear();
             if ( readIDInfo(card, iddata) ) {
               displayIDData(card.type, iddata);
             } else {
@@ -327,6 +326,7 @@ uint8 writeIDInfo(ISO14443 & card, IDData & data) {
 }
 
 uint8 readIDInfo(ISO14443 & card, IDData & data) {
+  data.clear();
   switch (card.type) {
     case NFC::CARDTYPE_MIFARE:
       if ( get_MifareBlock(card, data, mykey) == 0 ) {

@@ -8,7 +8,7 @@
 #define LED_USER    PIO1_6
 #define LED_LCDBKLT PIO1_3
 #define SW_USERBTN  PIO0_1
-#define SW_SDDETECT   PIO1_16 
+#define SW_SDDETECT   PIO1_4 
 #define RXD2        PIO0_18
 #define TXD2        PIO0_19
 #define NFC_IRQ     PIO1_5
