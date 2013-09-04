@@ -22,6 +22,8 @@
 #include "SDFatFs.h"
 #include "SPISRAM.h"
 
+#include "main.h"
+
 #define match(x,y)  (strcasecmp((char*)(x), (char*)(y)) == 0)
 
 #ifdef _LPCXPRESSO_CRP_
@@ -34,7 +36,6 @@
 __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 #endif
 
-#include "main.h"
 
 /*******************************************************************************
 **   Main Function  main()
@@ -101,8 +102,9 @@ void setup() {
   while(1)
     if ( rtc.begin() ) break;
   Serial.println("started.");
-  rtc.updateTime();
+  rtc.update();
   Serial.println(rtc.time, HEX);
+  Serial.println(rtc.cal, HEX);
   
   Serial.print("I2C NFC PN532 ");
   nfcreader.begin();
@@ -128,16 +130,23 @@ void setup() {
   SPI1.begin();
   Serial.println("SPI1 Bus started.");
   sram.begin();
-  Serial.println("SPI SRAM started.");
-  Serial.println();
+  Serial.print("SPI SRAM ");
+  if ( sram.started() )
+    Serial.println("started.");
+  else
+    Serial.println("seems failed to start.");
   //
-  Serial.print("result of get_fattime: ");
-  Serial.println(get_fattime(), HEX);
-
+  
 //  delay(5000);
   
   SPI0.begin();
   SD.begin();
+
+  rtc.updateTime();
+  SD.settime(rtc.time, rtc.cal);
+  Serial.print("result of get_fattime: ");
+  Serial.println(get_fattime(), HEX);
+
   if ( digitalRead(SW_SDDETECT) == HIGH ) {
     Serial.println("SD slot is empty.");
   } else {
@@ -507,7 +516,9 @@ void SD_readparam() {
 
 void SD_readkeyid() {
   uint16 count = 0;
-
+  uint8 data[12];
+  KeyIDRecord keyid;
+  
   strcpy((char*)tmp, "KEYID.TXT");
 	file.open((char*)tmp, SDFatFile::FILE_READ); 
   if ( !file.result() ) {
@@ -523,6 +534,18 @@ void SD_readkeyid() {
       if ( file.result() )
         break;
       strm.set(buff, 64);
+      if ( buff[0] == '#' )
+        continue;
+      strm.getToken((char*)tmp, 32);
+      data[0] = tmp[0];
+      strm.getToken((char*)tmp, 32);
+      strncpy((char*)data+1, (char*)tmp, 8);
+      strm.getToken((char*)tmp, 32);
+      data[10] = tmp[0];
+      strm.getToken((char*)tmp, 32);
+      Serial.print((char*)tmp);
+      keyid.set((char*)data, 0);
+      Serial.println();
       count++;
       if ( count % 100 == 0 )
         Serial << count << " " << strm;

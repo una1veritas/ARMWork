@@ -25,7 +25,7 @@ void SPISRAM::init() {
 	csHigh();
 	//addr = 0;
 	select();
-	writeStatusRegister(SEQ_MODE);
+	writeStatus(SEQ_MODE);
 	deselect();
 }
 
@@ -41,7 +41,7 @@ byte SPISRAM::read(const long & address) {
 
 void SPISRAM::read(const long & address, byte *buffer, const long & size) {
 	select();
-	writeStatusRegister(SEQ_MODE);
+	writeStatus(SEQ_MODE);
   csHigh();
   csLow();
 	//
@@ -61,7 +61,7 @@ void SPISRAM::write(const long & address, byte data) {
 
 void SPISRAM::write(const long & address, byte *buffer, const long & size) {
 	select();
-	writeStatusRegister(SEQ_MODE);
+	writeStatus(SEQ_MODE);
   csHigh();
 	//
   csLow();
@@ -85,11 +85,19 @@ inline void SPISRAM::csHigh() {
 	digitalWrite(_csPin, HIGH);
 }
 
-void SPISRAM::select(void) {
+inline void SPISRAM::select(void) {
 	setSPIMode();
 	csLow();
 }
 
-void SPISRAM::deselect(void) {
+inline void SPISRAM::deselect(void) {
 	csHigh();
+}
+
+uint8 SPISRAM::started(void) {
+  uint8 res;
+  select();
+  res = readStatus();
+  deselect();
+  return (res & 0xc0) == 0x40;
 }

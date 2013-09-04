@@ -4,20 +4,14 @@
 // Strawberry Linux original lpclcd port maps
 
 #if defined(LPCLCD)
-#define LCD_RST     PIO1_25
-#define LED_USER    PIO1_6
-#define LED_LCDBKLT PIO1_3
-#define SW_USERBTN  PIO0_1
+#include "lpclcd.h"
 #define SW_SDDETECT   PIO1_4 
-#define RXD2        PIO0_18
-#define TXD2        PIO0_19
 #define NFC_IRQ     PIO1_5
 #define NFC_RSTPD   PIN_NOT_DEFINED
-#define I2C_PULLUP      PIO0_7
 #elif defined (CAPPUCCINO)
 #include "cappuccino.h"
-#define NFC_RSTPD   PIN_NOT_DEFINED
 #define NFC_IRQ     PIO0_17
+#define NFC_RSTPD   PIN_NOT_DEFINED
 #define LED_USER    LED_SDBUSY
 #endif
 

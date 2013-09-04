@@ -71,6 +71,7 @@ int main (void) {
   SPI.begin();
   sram.begin();
 
+  Serial.println(sram.started(), HEX);
   srand((uint16_t)micros());
   
   while ( 1 ) {

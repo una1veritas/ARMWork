@@ -36,13 +36,15 @@ class SDFatFs {
   
   //
   FATFS fatfs;		/* File system object */
+
+  static uint32 time;
+  static uint32 cal;
   
 public:
   FRESULT rescode;
   
-  static uint32 date, time;
-  static uint32_t fattime(uint32_t c, uint32_t t);
-  inline static uint32 fattime() { return fattime(date, time); }
+  static uint32 fattime();
+  static void settime(uint32 t, uint32 c) { time = t; cal = c; }
 
 public:
   SDFatFs(SPIBus & bus, GPIOPin cs, GPIOPin detect = PIN_NOT_DEFINED, GPIOPin led = PIN_NOT_DEFINED) 

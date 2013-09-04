@@ -5,8 +5,9 @@
 #include "SDFatFs.h"
 
 SDFatFs SD(SPI0, PIO0_2, PIO1_16, PIO1_19);
-uint32 SDFatFs::date = 0;
-uint32 SDFatFs::time = 0;
+
+uint32 SDFatFs::time;
+uint32 SDFatFs::cal;
 
 void SDFatFs::begin(void) {
   pinMode(pin_cs, OUTPUT);
@@ -18,7 +19,7 @@ void SDFatFs::begin(void) {
 }
   
 // for get_fattime
-uint32_t SDFatFs::fattime(uint32_t cal, uint32_t time) {
+uint32_t SDFatFs::fattime(void) {
   uint8_t y,m,d, hh, mm, ss;
   y = 20 + (cal>>16&0x0f) + (cal>>20&0x0f)*10;
   m = (cal>>8&0x0f) + (cal>>12&0x0f)*10;
