@@ -521,20 +521,14 @@ void SD_readparam() {
 void SD_readkeyid() {
   uint16 count = 0;
   size_t n;
-  uint8 data[12];
-  KeyIDRecord keyid;
+  KeyID id;
   uint32 yy, mm, dd, expdate;
-  
+    
   strcpy((char*)tmp, "KEYID.TXT");
 	file.open((char*)tmp, SDFatFile::FILE_READ); 
   if ( !file.result() ) {
     Serial << endl << "Contents of file " << (char*)tmp << ": " << endl;
     for (;;) {
-      /*
-      if ( count == 354 ) {
-        Serial.println();
-      }
-      */
       if ( file.gets((TCHAR*) buff, sizeof(buff)) == NULL)
           break;
       if ( file.result() )
@@ -544,27 +538,31 @@ void SD_readkeyid() {
         // its a comment line.
         continue;
       //
+      
       if ( strm.getToken((char*)tmp, 32) != 1 ) 
         continue;
-      data[0] = tmp[0]; // assumes 'S'
+      id.raw[0] = tmp[0]; // assumes 'S'
       n = strm.getToken((char*)tmp, 32);
       if ( n == 0 || n > 8 )
         continue;
-      sprintf((char*)data+1, "%08ld", atol((char*)tmp));
+      sprintf((char*)id.raw+1, "%08ld", atol((char*)tmp));
       if ( strm.getToken((char*)tmp, 32) != 1 )
         continue;
-      data[9] = tmp[0];
+      id.raw[9] = tmp[0];
       
-      yy = dec8tobcd(strm.parseInt() % 100);
-      mm = dec8tobcd(strm.parseInt() % 100);
-      dd = dec8tobcd(strm.parseInt() % 100);
-      expdate = (yy<<16) + (mm<<8) + dd;
-      keyid.set((char*)data, expdate);
-      for(int i = 0; i < 10; i++) {
-        Serial.print(keyid.keyid[i]);
+      expdate = dec8tobcd(strm.parseInt() % 100);
+      expdate = expdate<<8 | dec8tobcd(strm.parseInt() % 100);
+      expdate = expdate<<8 | dec8tobcd(strm.parseInt() % 100);
+      id.setdate(expdate);
+      id.setChecksum();
+      for(int i = 0; i < 16; i++) {
+        Serial.print(id.raw[i], HEX);
+        Serial.print(' ');
       }
-      Serial.print("-");
-      Serial.println(keyid.expdate, HEX);
+      
+      // write to sram,
+      // read then print from sram
+      Serial.println();
       count++;
       if ( count % 100 == 0 )
         Serial << count << " " << strm;
