@@ -98,7 +98,7 @@ struct KeyIDRecord {
   char keyid[11];  // 11
   uint32 expdate;  // 4
   uint8 xsum;
-  
+    
   uint8 set(char kid[11], uint32 date) {
     int i;
     memcpy(keyid, kid, 11);

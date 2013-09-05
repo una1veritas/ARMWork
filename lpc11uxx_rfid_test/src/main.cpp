@@ -42,6 +42,10 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 *******************************************************************************/
 
 
+uint8 dec8tobcd(uint8 d) {
+  return ((d/10%10)<<4) + (d%10);
+}
+
 ST7032i i2clcd(Wire, LED_LCDBKLT, LCD_RST);
 RTC rtc(Wire, RTC::ST_M41T62);
 PN532  nfcreader(Wire, PN532::I2C_ADDRESS, NFC_IRQ, NFC_RSTPD);
@@ -516,8 +520,10 @@ void SD_readparam() {
 
 void SD_readkeyid() {
   uint16 count = 0;
+  size_t n;
   uint8 data[12];
   KeyIDRecord keyid;
+  uint32 yy, mm, dd, expdate;
   
   strcpy((char*)tmp, "KEYID.TXT");
 	file.open((char*)tmp, SDFatFile::FILE_READ); 
@@ -535,17 +541,30 @@ void SD_readkeyid() {
         break;
       strm.set(buff, 64);
       if ( buff[0] == '#' )
+        // its a comment line.
         continue;
-      strm.getToken((char*)tmp, 32);
-      data[0] = tmp[0];
-      strm.getToken((char*)tmp, 32);
-      strncpy((char*)data+1, (char*)tmp, 8);
-      strm.getToken((char*)tmp, 32);
-      data[10] = tmp[0];
-      strm.getToken((char*)tmp, 32);
-      Serial.print((char*)tmp);
-      keyid.set((char*)data, 0);
-      Serial.println();
+      //
+      if ( strm.getToken((char*)tmp, 32) != 1 ) 
+        continue;
+      data[0] = tmp[0]; // assumes 'S'
+      n = strm.getToken((char*)tmp, 32);
+      if ( n == 0 || n > 8 )
+        continue;
+      sprintf((char*)data+1, "%08ld", atol((char*)tmp));
+      if ( strm.getToken((char*)tmp, 32) != 1 )
+        continue;
+      data[9] = tmp[0];
+      
+      yy = dec8tobcd(strm.parseInt() % 100);
+      mm = dec8tobcd(strm.parseInt() % 100);
+      dd = dec8tobcd(strm.parseInt() % 100);
+      expdate = (yy<<16) + (mm<<8) + dd;
+      keyid.set((char*)data, expdate);
+      for(int i = 0; i < 10; i++) {
+        Serial.print(keyid.keyid[i]);
+      }
+      Serial.print("-");
+      Serial.println(keyid.expdate, HEX);
       count++;
       if ( count % 100 == 0 )
         Serial << count << " " << strm;
