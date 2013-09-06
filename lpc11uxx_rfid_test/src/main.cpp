@@ -42,8 +42,14 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 *******************************************************************************/
 
 
-uint8 dec8tobcd(uint8 d) {
-  return ((d/10%10)<<4) + (d%10);
+uint32 dectobcd(uint32 val) {
+  uint32 t = 0;
+  int i;
+  for(i = 0; i < 8 && val > 0; i++) {
+    t |= (val % 10)<<(i*4);
+    val /= 10;
+  }
+  return t;
 }
 
 ST7032i i2clcd(Wire, LED_LCDBKLT, LCD_RST);
@@ -55,7 +61,7 @@ const byte NFCPolling[] = {
 };
 
 byte mykey[8];
-
+uint16 count = 0;
 
 void init() {
   SystemInit();
@@ -79,6 +85,8 @@ CMDSTATUS cmdstatus = IDLE;
 uint32 swatch = 0;
 
 void setup() {
+  KeyID id;
+  int n;
   
   pinMode(SW_USERBTN, INPUT);
   
@@ -158,6 +166,22 @@ void setup() {
     Serial.println("Performing tests...\n");
     SD_readparam();
     SD_readkeyid();
+    //
+    sram.read( 0, (uint8*) &count, sizeof(count) );
+    n = 0;
+    swatch = millis();
+    for(int i = 0; i < count; i++) {
+      sram.read(KEYID_TBL_BASE + (i<<4), id.raw, 16);
+      strncpy((char*)tmp, (char*)id.raw, 10);
+      tmp[10] = 0;
+      if ( ! id.check() ) 
+        n++;
+    }
+    swatch = millis() - swatch;
+    Serial.print("Scan time in millis: ");
+    Serial.println(swatch);
+    Serial.print("SRAM stored key checksum errors: ");
+    Serial.print(n);
   }
 
   Serial.println("\nSetup finished.\n");
@@ -519,11 +543,11 @@ void SD_readparam() {
 }
 
 void SD_readkeyid() {
-  uint16 count = 0;
   size_t n;
+  uint32 expdate;
   KeyID id;
-  uint32 yy, mm, dd, expdate;
     
+  count = 0;
   strcpy((char*)tmp, "KEYID.TXT");
 	file.open((char*)tmp, SDFatFile::FILE_READ); 
   if ( !file.result() ) {
@@ -549,23 +573,13 @@ void SD_readkeyid() {
       if ( strm.getToken((char*)tmp, 32) != 1 )
         continue;
       id.raw[9] = tmp[0];
-      
-      expdate = dec8tobcd(strm.parseInt() % 100);
-      expdate = expdate<<8 | dec8tobcd(strm.parseInt() % 100);
-      expdate = expdate<<8 | dec8tobcd(strm.parseInt() % 100);
+      expdate = dectobcd(strm.parseInt());
+      if ( expdate < 0x20000000 )
+        continue;
       id.setdate(expdate);
       id.setChecksum();
-      for(int i = 0; i < 16; i++) {
-        Serial.print(id.raw[i], HEX);
-        Serial.print(' ');
-      }
-      
-      // write to sram,
-      // read then print from sram
-      Serial.println();
+      sram.write(KEYID_TBL_BASE+ (count<<4), id.raw, 16);
       count++;
-      if ( count % 100 == 0 )
-        Serial << count << " " << strm;
     }
     if ( file.result() ) {
       Serial << endl << "Failed while reading." << endl;
@@ -574,6 +588,7 @@ void SD_readkeyid() {
       Serial << "Total data count " << count << ". " << endl;
     }
     file.close();
+    sram.write( 0, (uint8*) &count, sizeof(count) );
   } else {
     Serial << endl << "Couldn't open " << (char*)tmp << ". " << endl;
     return;

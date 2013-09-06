@@ -94,6 +94,9 @@ struct Tasks {
   
 } task;
 
+
+const uint32 KEYID_TBL_BASE = 0x000010;
+
 struct KeyID {
   uint8 raw[16];
   
