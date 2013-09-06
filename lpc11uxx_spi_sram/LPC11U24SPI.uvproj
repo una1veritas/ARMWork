@@ -165,7 +165,6 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
-          <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
@@ -349,7 +348,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARMCMX CAPPUCCINO</Define>
+              <Define>ARMCMX LPCLCD</Define>
               <Undefine></Undefine>
               <IncludePath>..\LPCLibrary\CMSISv2p00_LPC11Uxx\inc;..\armcmx\lpc11uxx;..\armcmx;..\armcmx\tools\SerialRAM;..\armcmx\tools\Ethernet</IncludePath>
             </VariousControls>

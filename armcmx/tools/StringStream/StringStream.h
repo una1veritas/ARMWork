@@ -36,9 +36,14 @@ public:
 	void set(char str[], uint16_t sz) {
 		buffer_array = (uint8_t *) str;
 		buffer_size = sz;
-		windex = strlen(str); rindex = 0;
+		windex = strlen(str); 
+    rindex = 0;
 		count = windex;
 	}
+  
+  void reset() {
+    
+  }
   
   using Stream::write;
   

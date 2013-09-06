@@ -8,17 +8,23 @@
 #define SW_SDDETECT   PIO1_4 
 #define NFC_IRQ     PIO1_5
 #define NFC_RSTPD   PIN_NOT_DEFINED
+
+#define SRAM_CS PIO1_23
+
 #elif defined (CAPPUCCINO)
 #include "cappuccino.h"
+
 #define NFC_IRQ     PIO0_17
 #define NFC_RSTPD   PIN_NOT_DEFINED
 #define LED_USER    LED_SDBUSY
+
+#define SRAM_CS PIO1_23
 #endif
 
 
 uint8 readIDInfo(ISO14443 & card, IDData & data);
 uint8 writeIDInfo(ISO14443 & card, IDData & data);
-void displayIDData(uint8 cardtype, IDData &);
+void displayIDData(char *, uint8 cardtype, IDData &);
 
 uint8 get_MifareBlock(ISO14443 & card, IDData & data, const uint8_t * key);
 uint8 get_FCFBlock(ISO14443 & card, IDData & data);
@@ -95,23 +101,33 @@ struct Tasks {
 } task;
 
 
-const uint32 KEYID_TBL_BASE = 0x000010;
 
 struct KeyID {
   uint8 raw[16];
   
+static const uint32 BASE_OFFSET_ADDR = 0x000010;
+
 KeyID() {
     memset(raw, 0x20, 10);
-    setdate(0);
+    setExpdate(0);
     raw[14] = 0;
     raw[15] = 0;
   }
   
-  void setdate(uint32 date) {
+  void setExpdate(uint32 date) {
     raw[10] = date>>24 & 0xff;
     raw[11] = date>>16 & 0xff;
     raw[12] = date>>8 & 0xff;
     raw[13] = date & 0xff;
+  }
+
+  uint32 getExpdate() {
+    uint32 d;
+    d = raw[10];
+    d = (d<<8) | raw[11];
+    d = (d<<8) | raw[12];
+    d = (d<<8) | raw[13];
+    return d;
   }
   
   uint8 setChecksum() {
@@ -132,5 +148,8 @@ KeyID() {
     }
     return chksum == 0;
   }
-  
+
+  uint32 storeAddress(uint16 num){
+    return (num<<4) + BASE_OFFSET_ADDR;
+  }
 };

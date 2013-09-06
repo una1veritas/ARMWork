@@ -38,8 +38,10 @@
 #include "SPISRAM.h"
 #include "USARTSerial.h"
 
-#include "cappuccino.h"
-
+//#include "cappuccino.h"
+#include "lpclcd.h"
+#define SPI_CS_DEFAULT PIO1_23
+#define SPI SPI1
 SPISRAM sram(SPI, SPI_CS_DEFAULT, SPISRAM::BUS_MBITS);
 
 /******************************************************************************
