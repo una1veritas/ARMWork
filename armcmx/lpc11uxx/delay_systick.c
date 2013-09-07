@@ -1,10 +1,11 @@
+#include <stdint.h>
 
 #include "LPC11uxx.h"			/* LPC11uxx Peripheral Registers */
 #include "type.h"
 #include "delay.h"
 
-volatile uint32 __counter_micros;
-volatile uint32 __counter_millis;
+volatile uint32_t __counter_micros;
+volatile uint32_t __counter_millis;
 
 // private
 // volatile uint32 SysTickPeriod;

@@ -16,34 +16,20 @@
 #include <Stream.h>
 #include <Printable.h>
 
-	// constants
-static const char endl = '\n';
-static const char cr = '\r';
-
 class StringStream: public Stream, public Printable {
 
 	// members
 private:
-	uint8_t * buffer_array;
-	uint16_t buffer_size;
-	uint16_t windex, rindex;
+	char * buffer_array;
+	size_t buffer_size;
 	uint16_t count;
 
 public:
-	StringStream(char buf[], size_t lim);
+
+  StringStream(char str[], size_t n);
 //	virtual ~StringStream() {}
 
-	void set(char str[], uint16_t sz) {
-		buffer_array = (uint8_t *) str;
-		buffer_size = sz;
-		windex = strlen(str); 
-    rindex = 0;
-		count = windex;
-	}
-  
-  void reset() {
-    
-  }
+	void init(char str[], uint16_t n);
   
   using Stream::write;
   
@@ -63,8 +49,6 @@ public:
   uint32_t parseHex();
 
   virtual void flush();
-  uint16_t writeindex() { return windex; }
-  uint16_t readindex() { return rindex; }
   size_t length() { return count; }
 
   using Stream::print;

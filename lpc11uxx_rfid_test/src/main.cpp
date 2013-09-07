@@ -232,7 +232,7 @@ int main (void) {
               displayIDData((char*)tmp, card.type, iddata);
               i2clcd.setCursor(0,0);
               i2clcd.print((char*)tmp);
-              Serial << (char*)tmp << endl;
+              Serial << (char*)tmp << nl;
               SD_writelog((char*)tmp);
             } else {
               Serial.println("UNKNOWN CARD.");
@@ -457,24 +457,24 @@ void SD_readparam() {
   strcpy((char*) tmp, "CONFIG.TXT");
 	file.open((char*)tmp, SDFatFile::FILE_READ); 
   if ( !file.result() ) {
-    Serial << endl << "Contents of file " << (char*)tmp  << ": " << endl;
+    Serial << nl << "Contents of file " << (char*)tmp  << ": " << nl;
     for (;;) {
       
       if ( file.gets((TCHAR*) buff, sizeof(buff)) == NULL || file.result() )
         break;
-      strm.set(buff, 64);
+      strm.init(buff, 64);
       if ( strm.peek() == '#' ) {
         Serial.println("Comment: ");
       }
       Serial << strm;
     }
     if ( file.result() ) {
-      Serial << endl << "Failed while reading." << endl;
+      Serial << nl << "Failed while reading." << nl;
       return;
     }
     file.close();
   } else {
-    Serial << endl << "Couldn't open " << (char*)tmp << ". " << endl;
+    Serial << nl << "Couldn't open " << (char*)tmp << ". " << nl;
     return;
   }  
 }
@@ -489,7 +489,7 @@ void SD_readkeyid() {
   strcpy((char*)tmp, "KEYID.TXT");
 	file.open((char*)tmp, SDFatFile::FILE_READ); 
   if ( !file.result() ) {
-    Serial << endl << "Contents of file " << (char*)tmp << ": " << endl;
+    Serial << nl << "Contents of file " << (char*)tmp << ": " << nl;
     for (;;) {
       if ( file.gets((TCHAR*) buff, sizeof(buff)) == NULL)
           break;
@@ -498,7 +498,7 @@ void SD_readkeyid() {
       if ( buff[0] == '#' )
         // its a comment line.
        continue;
-      strm.set(buff, 64);
+      strm.init(buff, 64);
       len = strm.getToken((char*)tmp, 32);
       if ( match(tmp, "REGKEY") ) {
         regkeyid = true;
@@ -526,18 +526,18 @@ void SD_readkeyid() {
       }
     }
     if ( file.result() ) {
-      Serial << endl << "Failed while reading." << endl;
+      Serial << nl << "Failed while reading." << nl;
       //regkeyid = false;
     }
     file.close();
       if ( regkeyid == true ) {
-        Serial << "Total data count " << count << ". " << endl;
+        Serial << "Total data count " << count << ". " << nl;
       } else {
         count = 0;
       }
       sram.write( 0, (uint8*) &count, sizeof(count) );
   } else {
-    Serial << endl << "Couldn't open " << (char*)tmp << ". " << endl;
+    Serial << nl << "Couldn't open " << (char*)tmp << ". " << nl;
     return;
   }
 
@@ -547,7 +547,7 @@ void SD_writelog(char * str)  {
   
   file.open("CARDLOG.TXT", SDFatFile::FILE_WRITE);
   if ( file.result() ) { //rc) {
-    Serial << endl << "Couldn't open CARDLOG.TXT." << endl;
+    Serial << nl << "Couldn't open CARDLOG.TXT." << nl;
     return;
   }
 
@@ -555,7 +555,7 @@ void SD_writelog(char * str)  {
   sprintf((char*)tmp, " [%02x:%02x:%02x %02x/%02x/20%02x]", 
         rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f, 
         rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.cal>>16&0xff);
-  Serial << str << endl;
+  Serial << str << nl;
   file.write(" ");
   file.write((char*)tmp);
   if ( file.result() == 0 ) {

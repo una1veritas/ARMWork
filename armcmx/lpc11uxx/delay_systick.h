@@ -5,13 +5,14 @@
 extern "C" {
 #endif
 
-#include "armcmx.h"
+#include <stdint.h>
+//#include "armcmx.h"
 
 //#define SYSTICK_DELAY		(SystemCoreClock/100)
 
 //extern volatile uint32_t __counter_systick;
-extern volatile uint32 __counter_micros;
-extern volatile uint32 __counter_millis;
+extern volatile uint32_t __counter_micros;
+extern volatile uint32_t __counter_millis;
   
 void init_systick_delay(void);
 //void enable_systick_delay(void);
@@ -25,8 +26,8 @@ void SysTick_Handler(void);
 uint32_t micros(void);
 uint32_t millis(void);
 	
-void delay_ms(uint32);
-void delay_us(uint32);
+void delay_ms(uint32_t);
+void delay_us(uint32_t);
 
 #define start_delay(x) init_systick_delay(x)
 #define delay(x)  delay_ms(x)

@@ -1,14 +1,14 @@
 /*
- * StringStream.cpp
+ * RingStream.cpp
  *
  *  Created on: 2013/05/11
  *      Author: sin
  */
 
 #include <ctype.h>
-#include "StringStream.h"
+#include "RingStream.h"
 
-StringStream::StringStream(char buf[], size_t n) :
+RingStream::RingStream(char buf[], size_t n) :
 		buffer_array((uint8_t*) buf), buffer_size(n) {
 	setTimeout(0);
 	//
@@ -19,14 +19,14 @@ StringStream::StringStream(char buf[], size_t n) :
 	setTimeout(0);
 }
 
-uint8_t StringStream::is_full() {
+uint8_t RingStream::is_full() {
 	if ((windex == rindex) && (count > 0)) {
 		return 1;
 	}
 	return 0;
 }
 
-size_t StringStream::write(uint8_t b) {
+size_t RingStream::write(uint8_t b) {
 	uint8_t n = 1;
 	if ( is_full() ) {
 		rindex++;
@@ -40,11 +40,11 @@ size_t StringStream::write(uint8_t b) {
 	return n;
 }
 
-int StringStream::available() {
+int RingStream::available() {
 	return count;
 }
 
-int StringStream::read() {
+int RingStream::read() {
 	int c;
 	if ( count == 0 )
 		return -1;
@@ -54,13 +54,13 @@ int StringStream::read() {
 	return c;
 }
 
-int StringStream::peek() {
+int RingStream::peek() {
 	if ( count == 0 )
 		return -1;
 	return buffer_array[rindex];
 }
 
-size_t StringStream::readLineFrom(Stream & src, size_t maxsize) {
+size_t RingStream::readLineFrom(Stream & src, size_t maxsize) {
 	int c;
 	size_t n = 0;
 	for (; n < maxsize; n++) {
@@ -87,7 +87,7 @@ size_t StringStream::readLineFrom(Stream & src, size_t maxsize) {
 }
 
 
-size_t StringStream::readLineFrom(char * src, size_t maxsize) {
+size_t RingStream::readLineFrom(char * src, size_t maxsize) {
 	char c;
 	size_t n = 0;
 	for (; n < maxsize - 1; n++) {
@@ -110,7 +110,7 @@ size_t StringStream::readLineFrom(char * src, size_t maxsize) {
 }
 
 
-size_t StringStream::getString(char * dst, size_t maxlen) {
+size_t RingStream::getString(char * dst, size_t maxlen) {
 	int i;
 	for (i = 0; i < maxlen && count > 0; i++) {
 		dst[i] = read();
@@ -119,7 +119,7 @@ size_t StringStream::getString(char * dst, size_t maxlen) {
 	return count;
 }
 
-size_t StringStream::getToken(char * dst, size_t maxlen) {
+size_t RingStream::getToken(char * dst, size_t maxlen) {
 	int c;
 	size_t n = 0;
 	do {
@@ -152,7 +152,7 @@ boolean ishexdigit(const char c) {
 	return isdigit(c) or ('a' <= c && c <= 'f') or ('A' <= c && c<= 'F');
 }
 
-uint32_t StringStream::parseHex() {
+uint32_t RingStream::parseHex() {
 	uint32_t tmp = 0;
 	int c;
 
@@ -180,12 +180,12 @@ uint32_t StringStream::parseHex() {
 	return tmp;
 }
 
-void StringStream::flush() {
+void RingStream::flush() {
 	rindex = windex;
 	count = 0;
 }
 
-size_t StringStream::printTo(Print& p) const {
+size_t RingStream::printTo(Print& p) const {
 	for (int i = 0; i < count; i++) {
 		p.print((char) buffer_array[(rindex + i) % buffer_size]);
 	}
