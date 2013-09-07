@@ -12,7 +12,7 @@
 /-------------------------------------------------------------------------*/
 
 #include "spi_core.h"
-#include "mmc_spi.h"
+#include "mmc_sd.h"
 
 //#define SSP_CH	0	/* SSP channel to use (0:SSP0, 1:SSP1) */
 

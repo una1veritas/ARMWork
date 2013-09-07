@@ -39,11 +39,9 @@ const static byte factory_a[] = {
 #define TRAILERBITS(x)    ((((x)&1L)<<3)<<8 | (((x)>>1&1L)<<3)<<4 | (((x)>>2&1L)<<3))
 #define DATABLOCKBITS(x, b)    ((((x)&1L)<<(b&3))<<8 | (((x)>>1&1L)<<(b&3))<<4 | (((x)>>2&1L)<<(b&3)))
 
-enum CMDSTATUS {
-  IDLE = 0,
-  WRITE,
-  READ
-};
+#define formattimedate(s, t, d)  (sprintf((char*)(s), " [%02x:%02x:%02x %02x/%02x/20%02x]", \
+                  t>>16&0x3f, t>>8&0x7f, t&0x7f, d>>8&0x1f, d&0x3f, d>>16&0xff) )
+
 
 void parse_do_command(StringStream & stream) ;
 

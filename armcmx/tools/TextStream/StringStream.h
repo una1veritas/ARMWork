@@ -23,17 +23,20 @@ private:
 	char * buffer_array;
 	size_t buffer_size;
 	uint16_t count;
+  uint16_t readhead;
 
 public:
 
   StringStream(char str[], size_t n);
 //	virtual ~StringStream() {}
+  void reset();
+  void clear();
+  void set(char str[], size_t n);
 
-	void init(char str[], uint16_t n);
-  
   using Stream::write;
   
   virtual size_t write(uint8_t b);
+  virtual size_t write(char * str);
   virtual int available(void);
   virtual int read(void);
   virtual int peek(void);

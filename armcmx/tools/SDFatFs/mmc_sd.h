@@ -1,3 +1,11 @@
+#ifndef _MMC_SD_H_
+#define _MMC_SD_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "integer.h"
 
 /* MMC/SD command */
 #define CMD0	(0)			/* GO_IDLE_STATE */
@@ -32,3 +40,9 @@ int xmit_datablock (	/* 1:OK, 0:Failed */
 	const BYTE *buff,	/* Ponter to 512 byte data to be sent */
 	BYTE token			/* Token */
 );
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif

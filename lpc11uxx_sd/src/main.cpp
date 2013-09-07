@@ -133,10 +133,6 @@ int main(void) {
 
 #define BCD8TODEC(n)  ( ((n)&>>4&0x0f)*10 + ((n)&0x0f) )
 
-DWORD get_fattime(void) {
-  return SDFatFs::fattime(rtc.cal, rtc.time);
-}
-
 
 //FATFS Fatfs;		/* File system object */
 //FIL Fil;			/* File object */
@@ -167,7 +163,7 @@ void sd_test()
 	 * ２行分のみ
 	 */
 	//rc = f_open(&Fil, "MESSAGE.TXT", FA_READ);
-	file.open("MESSAGE.TXT", SDFatFile::FILE_READ); 
+	file.open("KEYID.TXT", SDFatFile::FILE_READ); 
   if ( !file.result() ) { //!rc){
     USART_puts(&usart, "\nType the file content:\n\n");
     for (;;) {

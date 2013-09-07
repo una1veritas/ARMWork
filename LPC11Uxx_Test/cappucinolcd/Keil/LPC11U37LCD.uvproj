@@ -73,8 +73,8 @@
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </BeforeMake>
           <AfterMake>
-            <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
+            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg2>0</RunUserProg2>
             <UserProg1Name>C:\Keil\ARM\ARMCC\bin\fromelf.exe --bin "#L" -o "$Pfirmware.bin"</UserProg1Name>
             <UserProg2Name>C:\nxp\LPCXpresso_5.2.4\lpcxpresso\bin\checksum -p LPC11U37_401 -d "$Pfirmware.bin"</UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
@@ -165,6 +165,7 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
+          <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
@@ -350,7 +351,7 @@
               <MiscControls></MiscControls>
               <Define>ARMCMX</Define>
               <Undefine></Undefine>
-              <IncludePath>..\src;..\..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\..\LPCLibrary\armcmx\lpc11uxx;..\..\..\LPCLibrary\armcmx;..\..\..\STM32Libraries\armcmxtools\LCD</IncludePath>
+              <IncludePath>..\src;..\..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\..\armcmx\lpc11uxx;..\..\..\armcmx;..\..\..\armcmx\tools\LCD;..\..\..\armcmx\tools\TextStream</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -427,59 +428,54 @@
           <GroupName>armcmx</GroupName>
           <Files>
             <File>
+              <FileName>delay_systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\armcmx\lpc11uxx\delay_systick.c</FilePath>
+            </File>
+            <File>
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\LPCLibrary\armcmx\lpc11uxx\gpio.c</FilePath>
+              <FilePath>..\..\..\armcmx\lpc11uxx\gpio.c</FilePath>
             </File>
             <File>
               <FileName>i2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\LPCLibrary\armcmx\lpc11uxx\i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>nmi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\LPCLibrary\armcmx\lpc11uxx\nmi.c</FilePath>
+              <FilePath>..\..\..\armcmx\lpc11uxx\i2c.c</FilePath>
             </File>
             <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\LPCLibrary\armcmx\lpc11uxx\usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>USARTSerial.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\..\LPCLibrary\armcmx\USARTSerial.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Stream.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\..\LPCLibrary\armcmx\Stream.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Print.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\..\LPCLibrary\armcmx\Print.cpp</FilePath>
+              <FilePath>..\..\..\armcmx\lpc11uxx\usart.c</FilePath>
             </File>
             <File>
               <FileName>I2CBus.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\..\LPCLibrary\armcmx\I2CBus.cpp</FilePath>
+              <FilePath>..\..\..\armcmx\I2CBus.cpp</FilePath>
             </File>
             <File>
-              <FileName>delay_systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\LPCLibrary\armcmx\lpc11uxx\delay_systick.c</FilePath>
+              <FileName>Print.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\armcmx\Print.cpp</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lcd</GroupName>
-          <Files>
+            <File>
+              <FileName>USARTSerial.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\armcmx\USARTSerial.cpp</FilePath>
+            </File>
             <File>
               <FileName>ST7032i.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\..\STM32Libraries\armcmxtools\LCD\ST7032i.cpp</FilePath>
+              <FilePath>..\..\..\armcmx\tools\LCD\ST7032i.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>StringStream.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\armcmx\tools\TextStream\StringStream.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Stream.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\armcmx\Stream.cpp</FilePath>
             </File>
           </Files>
         </Group>

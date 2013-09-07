@@ -165,6 +165,7 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
+          <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
@@ -334,7 +335,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>4</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -343,7 +344,7 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>0</wLevel>
+            <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <VariousControls>
@@ -517,9 +518,9 @@
               <FilePath>..\..\armcmx\tools\RTC\RTC.cpp</FilePath>
             </File>
             <File>
-              <FileName>mmc_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\mmc_spi.c</FilePath>
+              <FileName>mmc_sd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\mmc_sd.h</FilePath>
             </File>
           </Files>
         </Group>

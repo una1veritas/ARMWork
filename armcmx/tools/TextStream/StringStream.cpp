@@ -8,17 +8,29 @@
 #include <ctype.h>
 #include "StringStream.h"
 
-void StringStream::init(char str[], uint16_t n) {
-  int16_t i;
-  buffer_array = str;
-  buffer_size = n;
-  for(i = 0; i < n && buffer_array[i]; i++);
-  count = i;
+void StringStream::reset() {
+  readhead = 0;
+}
+
+void StringStream::clear() {
+  readhead = 0;
+  count = 0;
+  buffer_array[count] = 0;
 }
 
 StringStream::StringStream(char buf[], size_t n) {
-  init(buf, n);
+  buffer_array = buf;
+  buffer_size = n;
+  readhead = 0;
+  count = 0;
+  buffer_array[count] = 0;
 	setTimeout(0);
+}
+
+void StringStream::set(char str[], size_t n) {
+  buffer_size = n;
+  buffer_array = str;
+  readhead = 0;
 }
 
 uint8_t StringStream::is_full() {
@@ -29,30 +41,36 @@ size_t StringStream::write(uint8_t b) {
 	if ( is_full() ) 
 		return 0;
 	buffer_array[count++] = b;
+  buffer_array[count] = 0;
 	return 1;
 }
 
+size_t StringStream::write(char * str) {
+  uint16_t n = 0;
+  while ( *str && !is_full() ) {
+    buffer_array[count++] = *str++;
+    n++;
+  }
+  buffer_array[count] = 0;
+	return n;
+}
+
 int StringStream::available() {
-	return count;
+	return readhead < count;
 }
 
 int StringStream::read() {
 	int c;
-	if ( count == 0 )
+	if ( !(readhead < count) )
 		return -1;
-	c = buffer_array[0];
-  for(count = 0; count < buffer_size; count++) {
-    buffer_array[count] = buffer_array[c+1];
-    if ( !buffer_array[count] )
-      break;
-  }
+	c = buffer_array[readhead++];
 	return c;
 }
 
 int StringStream::peek() {
-	if ( count == 0 )
+	if ( !(readhead < count) )
 		return -1;
-	return buffer_array[0];
+	return buffer_array[readhead];
 }
 
 size_t StringStream::readLineFrom(Stream & src, size_t maxsize) {
@@ -178,6 +196,7 @@ uint32_t StringStream::parseHex() {
 void StringStream::flush() {
 	count = 0;
   buffer_array[count] = 0;
+  readhead = 0;
 }
 
 size_t StringStream::printTo(Print& p) const {
