@@ -1,66 +1,34 @@
-/*
- * StringStream.h
- *
- *  Created on: 2013/05/11
- *      Author: sin
- */
+#ifndef _STRINGSTREAM_H_
+#define _STRINGSTREAM_H_
 
-#ifndef STRINGSTREAM_H_
-#define STRINGSTREAM_H_
-
-#if defined (ARDUINO)
-#include <Arduino.h>
-#elif defined (ARMCMX)
+#include <stdint.h>
+#include <string.h>
 #include "armcmx.h"
-#endif
-#include <Stream.h>
-#include <Printable.h>
 
-class StringStream: public Stream, public Printable {
-
-	// members
-private:
-	char * buffer_array;
-	size_t buffer_size;
-	uint16_t count;
-  uint16_t readhead;
-
-public:
-
-  StringStream(char str[], size_t n);
-//	virtual ~StringStream() {}
-  void reset();
-  void clear();
-  void set(char str[], size_t n);
-
-  using Stream::write;
+class StringStream {
+  char * _string;
+  uint16_t _size;
+  uint16_t _count;
   
-  virtual size_t write(uint8_t b);
-  virtual size_t write(char * str);
-  virtual int available(void);
-  virtual int read(void);
-  virtual int peek(void);
+  uint16_t _readhead;
+  
+public:
+  
+  StringStream(char * buf, uint16_t size);
 
-  size_t readLineFrom(Stream &, size_t);
-  size_t readLineFrom(char *, size_t);
+  void clear(void);
+  void reset(void);
 
-  uint8_t is_full();
+  size_t write(const char c) ;
+  size_t write(const char * str);
+  
+  inline boolean is_full(void) { return _count + 1 < _size; }
+  inline uint16_t length(void) { return _count; }
+  inline uint16_t available(void) { return _count; }
+  int read(void);
 
-  size_t getString(char * dst, size_t maxlen);
   size_t getToken(char * dst, size_t maxlen);
-
-  uint32_t parseHex();
-
-  virtual void flush();
-  size_t length() { return count; }
-
-  using Stream::print;
-
-  virtual size_t printTo(Print& p) const;
-
-//	size_t readLine(char *buffer, size_t length);
 
 };
 
-
-#endif /* STRINGSTREAM_H_ */
+#endif  /* _STRINGSTREAM_H_ */
