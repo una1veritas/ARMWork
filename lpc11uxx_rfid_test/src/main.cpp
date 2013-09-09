@@ -85,50 +85,45 @@ void init() {
 }
 
 SDFatFile file(SD);
-char str64[64];
-StringStream strm(str64, 64);
 void SD_readparam();
-void SD_readkeyid();
+void SD_readkeyid(const char[]);
 void SD_writelog(char *);
 
-#ifdef SRAM
+
 SPISRAM sram(SPI1, SRAM_CS, SPISRAM::BUS_23LC1024);
-#endif
 
 void setup() {
+  char str64[64];
   KeyID id;
 
   pinMode(SW_USERBTN, INPUT);
   
   Serial.begin(115200, RXD2, TXD2);
-  Serial.println("\nUSART Serial started. \nHello.");
+  Serial.println("\n\nUSART Serial started. \nHello.");
 
 
-  Serial.print("I2C Bus ");
+  Serial.print("Starting I2C Bus, ");
   Wire.begin(); 	/* initialize I2c */
   if ( Wire.status == FALSE )
   	while ( 1 );				/* Fatal error */
-  Serial.println("started.");
   pinMode(I2C_PULLUP, OUTPUT); // pull up by 4k7
   digitalWrite(I2C_PULLUP, LOW);
   
   // I2C lcd
-  Serial.print("I2C LCD ");
+  Serial.print("LCD, ");
   while(1)
     if ( i2clcd.begin() ) break;
-  Serial.println("started.");
   i2clcd.clear();
   i2clcd.print("Hello.");
   
-  Serial.print("I2C RTC ");
+  Serial.print("RTC, ");
   while(1)
     if ( rtc.begin() ) break;
-  Serial.println("started.");
   rtc.update();
-  Serial.println(rtc.time, HEX);
-  Serial.println(rtc.cal, HEX);
+  formattimedate(str64, rtc.time, rtc.cal);
+  Serial.println(str64);
   
-  Serial.print("I2C NFC PN532 ");
+  Serial.print("NFC PN532 ");
   nfcreader.begin();
   while (1) {
     if ( nfcreader.GetFirmwareVersion() && nfcreader.getCommandResponse((uint8_t*) tmp32) ) 
@@ -136,46 +131,44 @@ void setup() {
     delay(1000);
   }
   Serial << "ver. " << (char) tmp32[0] << " firm. " << tmp32[1] << " rev. " << tmp32[2];
-  Serial.print(" support ");
+  Serial.print(" supporting ");
   Serial.print(tmp32[3], BIN);
-  Serial.println(" started, ");
   if ( !nfcreader.SAMConfiguration() ) {
 		Serial.println("....SAMConfiguration failed. Halt.\n");
 		while (1);
 	}
-  Serial.println("SAM Configured.");
+  Serial.println(".\n");
   
   // PIO1_6 USR LED //  GPIOSetDir(1, 6, 1 ); //  GPIOSetBitValue( 1, 6, 1);
   pinMode(LED_USER, OUTPUT);
   digitalWrite(LED_USER, HIGH);
 
-#ifdef SRAM
   SPI1.begin();
-  Serial.println("SPI1 Bus started.");
+  Serial.println("Starting SPI1 Bus, ");
   sram.begin();
-  Serial.print("SPI SRAM ");
   if ( sram.started() )
-    Serial.println("started.");
+    Serial.print("Serial SRAM ");
   else
     Serial.println("seems failed to start.");
-#endif
   //
+  Serial.println(".");
   
 //  delay(5000);
   
   SPI0.begin();
+  Serial.println("Starting SPI0 Bus, ");
   SD.begin();
+  Serial.println("SD Card.");
 
   rtc.updateTime();
   SD.settime(rtc.time, rtc.cal);
-  Serial.print("result of get_fattime: ");
+  Serial.print("get_fattime returned ");
   Serial.println(get_fattime(), HEX);
 
   if ( digitalRead(SW_SDDETECT) == HIGH ) {
     Serial.println("SD slot is empty.");
   } else {
-    Serial.println("Card is in SD slot.");
-    Serial.println("Performing tests...\n");
+    Serial.println("Reading parameters from SD\n");
     SD_readparam();
   }
 
@@ -197,8 +190,8 @@ int main (void) {
   // ---------------------------------------
   rtc.updateCalendar();
   rtc.updateTime();
-  formattimedate(str64, rtc.time, rtc.cal);
-  Serial.print(str64);
+  formattimedate(tmp32, rtc.time, rtc.cal);
+  Serial.println((char*)tmp32);
 
   memcpy(authkey, IizukaKey_b, 7);
   lastread = millis();
@@ -459,7 +452,9 @@ void displayIDData(char * str, uint8 type, IDData & iddata) {
 
 
 void SD_readparam() {
-  
+  char str64[64];
+  StringStream stream(str64, 64);
+
   strcpy((char*) tmp32, "CONFIG.TXT");
 	file.open((char*)tmp32, SDFatFile::FILE_READ); 
   if ( !file.result() ) {
@@ -469,9 +464,21 @@ void SD_readparam() {
       
       if ( file.gets((TCHAR*) buf, sizeof(buf)) == NULL || file.result() )
         break;
-      if ( buf[0] == '#' ) 
+
+      stream.clear();
+      stream.write(buf);
+      
+      if ( ((char)stream.peek()) == '#' ) 
         continue;
-      Serial.println(buf);
+      if ( stream.getToken(buf, 32) ) {
+        Serial.print(buf);
+        Serial.print(": ");
+        while( stream.getToken(buf, 32) ) {
+          Serial.print(buf);
+          Serial.print(" ");
+        }
+        Serial.println();
+      }
     }
     if ( file.result() ) {
       Serial.println("\nFailed while reading.\n");
@@ -485,37 +492,49 @@ void SD_readparam() {
   }  
 }
 
-void SD_readkeyid() {
+void SD_readkeyid(const char fname[]) {
   uint32 expdate;
   KeyID id;
 //  boolean regkeyid = false;
-  
+  char str64[64];
+  StringStream stream(str64, 64);
+
   count = 0;
-	file.open((char*)"KEYID.TXT", SDFatFile::FILE_READ); 
+	file.open(fname, SDFatFile::FILE_READ); 
   if ( !file.result() ) {
     Serial << "Loading key ids." << nl;
     for (;;) {
-#ifdef DEBUG
-      if ( count == 389 ) {
-        Serial.print("!");
-      }
-#endif
       if ( file.gets((TCHAR*) buf, sizeof(buf)) == NULL) {
-#ifdef DEBUG
-        Serial << "gets" << nl;
-#endif
         break;
       }
       if ( file.result() ) {
-#ifdef DEBUG
-        Serial << "result " << (int) file.result() << nl;
-#endif
         break;
       }
-      if ( buf[0] == '#' )
-        // its a comment line.
-       continue;
-#ifdef DEBUG
+
+      stream.clear();
+      stream.write(buf);
+      
+      if ( ((char)stream.peek()) == '#' ) 
+        continue;
+
+      if ( stream.getToken(buf, 32) ) {
+        // buf contains dvi
+        if ( count % 100 == 0 ) {
+          Serial.print(count);
+          Serial.print(" ");
+          Serial.print(buf);
+        }
+        stream.getToken(buf, 32);
+        // buf contains date
+        expdate = strtol(buf, 0, 16);
+        if ( count % 100 == 0 ) {
+          Serial.print(" ");
+          Serial.println(expdate, HEX);
+        }
+      }
+      count++;
+
+/*
       strm.clear();
       strm.write(buf);
       if ( strm.getToken((char*)tmp32, 32) == 10 ) {
@@ -537,10 +556,7 @@ void SD_readkeyid() {
       } else {
         Serial.println("Error!");
       }
-#else
-      Serial.println(buf);
-      count++;
-#endif
+      */
     }
     if ( file.result() ) {
       Serial << nl << "Failed while reading." << nl;
@@ -548,11 +564,9 @@ void SD_readkeyid() {
     }
     file.close();
     Serial << "Total data count " << count << ". " << nl;
-#ifdef SRAM
     sram.write( 0, (uint8*) &count, sizeof(count) ); // count == 0 means no data ve been read
-#endif
     } else {
-    Serial << nl << "Couldn't open " << (char*)tmp32 << ". " << nl;
+      Serial << nl << "Couldn't open " << fname << ". " << nl;
     return;
   }
 
@@ -621,9 +635,8 @@ void parse_do_command(StringStream & stream) {
   } else 
   if ( match(tmp32, "LOADKEYID") ) {
     Serial.println("Loading Key IDs from SD.");
-    SD_readkeyid();
+    SD_readkeyid("KEYID.TXT");
     //
-#ifdef SRAM
     sram.read( 0, (uint8*) &count, sizeof(count) );
     n = 0;
     swatch = millis();
@@ -639,7 +652,6 @@ void parse_do_command(StringStream & stream) {
     Serial.println(swatch);
     Serial.print("SRAM stored key checksum errors: ");
     Serial.print(n);
-#endif
   } else 
   if ( match(tmp32, "AUTHKEY") ) {
     if ( stream.available() ) {

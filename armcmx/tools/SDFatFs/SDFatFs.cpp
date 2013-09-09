@@ -114,7 +114,7 @@ BYTE CardType;			/* Card type flags */
 
 /* Receive multiple byte */
 
-static void rcvr_spi_multi(BYTE *buff,	UINT btr /* Number of bytes to receive (16, 64 or 512) */ ) {
+/*static */ void rcvr_spi_multi(BYTE *buff,	UINT btr /* Number of bytes to receive (16, 64 or 512) */ ) {
   int i;
 
   SD.setDataSize(SPI_DSS_8BIT);
@@ -125,13 +125,13 @@ static void rcvr_spi_multi(BYTE *buff,	UINT btr /* Number of bytes to receive (1
     while ( !(SPI0Def.SSPx->SR & SSPSR_RNE) || (SPI0Def.SSPx->SR & SSPSR_BSY) );
     buff[i] = SPI0Def.SSPx->DR;
     */ 
-    buff[i] = SPI_transfer(&SPI0Def, 0xff);
+    buff[i] = SD.transfer(0xff);
   }
 }
 
 
 /* Send multiple byte */
-static
+/*static */
 void xmit_spi_multi (
 	const BYTE *buff,	/* Pointer to the data */
 	UINT btx			/* Number of bytes to send (512) */
@@ -236,7 +236,7 @@ DSTATUS disk_initialize (
 /* Send a command packet to the MMC                                      */
 /*-----------------------------------------------------------------------*/
 
-static
+// static
 BYTE send_cmd (		/* Return value: R1 resp (bit7==1:Failed to send) */
 	BYTE cmd,		/* Command index */
 	DWORD arg		/* Argument */
@@ -283,7 +283,7 @@ BYTE send_cmd (		/* Return value: R1 resp (bit7==1:Failed to send) */
 /* Receive a data packet from the MMC                                    */
 /*-----------------------------------------------------------------------*/
 
-static
+//static
 int rcvr_datablock (	/* 1:OK, 0:Error */
 	BYTE *buff,			/* Data buffer */
 	UINT btr			/* Data block length (byte) */
@@ -310,7 +310,7 @@ int rcvr_datablock (	/* 1:OK, 0:Error */
 /* Wait for card ready                                                   */
 /*-----------------------------------------------------------------------*/
 
-static
+//static
 int wait_ready (	/* 1:Ready, 0:Timeout */
 	UINT wt			/* Timeout [ms] */
 )

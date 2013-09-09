@@ -24,8 +24,9 @@ public:
   
   inline boolean is_full(void) { return _count + 1 < _size; }
   inline uint16_t length(void) { return _count; }
-  inline uint16_t available(void) { return _count; }
+  inline uint16_t available(void) { return _count - _readhead; }
   int read(void);
+  int peek(void) { return _string[_readhead]; }
 
   size_t getToken(char * dst, size_t maxlen);
 
