@@ -91,7 +91,9 @@ void SD_readparam();
 void SD_readkeyid();
 void SD_writelog(char *);
 
-//SPISRAM sram(SPI1, SRAM_CS, SPISRAM::BUS_23LC1024);
+#ifdef SRAM
+SPISRAM sram(SPI1, SRAM_CS, SPISRAM::BUS_23LC1024);
+#endif
 
 void setup() {
   KeyID id;
