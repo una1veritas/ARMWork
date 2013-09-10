@@ -61,6 +61,7 @@ void sd_test()
         if(i==0x10) i2c_cmd(0xC0);
         i2c_data(buff[i]);
       }
+      xprintf("%s\n", buff);
     }
     if (rc) die(rc);
     rc = f_close(&Fil);
@@ -71,14 +72,15 @@ void sd_test()
 
     rc = f_open(&Fil, "SD0001.TXT", FA_WRITE | FA_CREATE_ALWAYS);
     if (rc) die(rc);
-
+    i = 0;
     // 無限ループでこの関数からは抜けない
-      while(1){
+      while(i < 100){
         rc = f_write(&Fil, "Strawberry Linux\r\n", 18, &bw);
         if (rc) die(rc);
 
         // SDカードに書き出します。
         f_sync(&Fil);
+        i++;
       }
 //	return;
 }

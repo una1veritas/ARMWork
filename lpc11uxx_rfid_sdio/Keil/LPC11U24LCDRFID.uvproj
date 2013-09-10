@@ -165,7 +165,7 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
-          <bUseTDR>0</bUseTDR>
+          <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3></Flash3>
           <Flash4></Flash4>
@@ -349,7 +349,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARMCMX  CAPPUCCINO</Define>
+              <Define>ARMCMX  LPCLCD</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\armcmx\lpc11uxx;..\..\armcmx;..\inc;..\src;..\..\armcmx\tools\LCD;..\..\armcmx\tools\RTC;..\..\armcmx\tools\RFID;..\..\armcmx\tools\TextStream;..\..\armcmx\tools\SDFatFs;..\..\armcmx\tools\SDFatFs\FatFs;..\..\armcmx\tools\SerialRAM</IncludePath>
             </VariousControls>

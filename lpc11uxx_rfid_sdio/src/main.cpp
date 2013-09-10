@@ -242,16 +242,19 @@ void SD_readparam() {
     Serial.println((char*)tmp32);
     for (;;) {
       
-      if ( file.gets((TCHAR*) buf, sizeof(buf)) == NULL || file.result() )
+      if ( file.gets((TCHAR*) buf, 64) == NULL || file.result() )
         break;
+      Serial.print(buf);
       if ( buf[0] == '#' ) 
         continue;
+      /*
       stream.clear();
       stream.write(buf);
       while( stream.getToken(buf, 32) ) {
         Serial.print(buf);
         Serial.print(" ");
       }
+      */
       Serial.println();
     }
     if ( file.result() ) {

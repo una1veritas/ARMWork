@@ -33,7 +33,6 @@ uint32_t SDFatFs::fattime(void) {
 
 
 void SDFatFile::open(const char * fname, const uint8_t mode) {
-  digitalWrite(PIO1_19, LOW);
   peeked = false;
   sdfs.rescode = f_open(&file, fname, mode);
   if (mode == FILE_WRITE && !sdfs.rescode ) {
@@ -43,7 +42,6 @@ void SDFatFile::open(const char * fname, const uint8_t mode) {
 
 void SDFatFile::close(void) {
   sdfs.rescode = f_close(&file);
-  digitalWrite(PIO1_19, LOW);
 }
 
 size_t SDFatFile::write(const uint8_t * buf, size_t num) {
@@ -114,8 +112,8 @@ BYTE CardType;			/* Card type flags */
 
 /* Receive multiple byte */
 
-/*static */ void rcvr_spi_multi(BYTE *buff,	UINT btr /* Number of bytes to receive (16, 64 or 512) */ ) {
-  int i;
+static void rcvr_spi_multi(BYTE *buff,	UINT btr /* Number of bytes to receive (16, 64 or 512) */ ) {
+  UINT i;
 
   SD.setDataSize(SPI_DSS_8BIT);
 
@@ -127,11 +125,12 @@ BYTE CardType;			/* Card type flags */
     */ 
     buff[i] = SD.transfer(0xff);
   }
+  return;
 }
 
 
 /* Send multiple byte */
-/*static */
+static
 void xmit_spi_multi (
 	const BYTE *buff,	/* Pointer to the data */
 	UINT btx			/* Number of bytes to send (512) */
@@ -236,7 +235,7 @@ DSTATUS disk_initialize (
 /* Send a command packet to the MMC                                      */
 /*-----------------------------------------------------------------------*/
 
-// static
+static
 BYTE send_cmd (		/* Return value: R1 resp (bit7==1:Failed to send) */
 	BYTE cmd,		/* Command index */
 	DWORD arg		/* Argument */
@@ -283,7 +282,7 @@ BYTE send_cmd (		/* Return value: R1 resp (bit7==1:Failed to send) */
 /* Receive a data packet from the MMC                                    */
 /*-----------------------------------------------------------------------*/
 
-//static
+static
 int rcvr_datablock (	/* 1:OK, 0:Error */
 	BYTE *buff,			/* Data buffer */
 	UINT btr			/* Data block length (byte) */
@@ -310,7 +309,7 @@ int rcvr_datablock (	/* 1:OK, 0:Error */
 /* Wait for card ready                                                   */
 /*-----------------------------------------------------------------------*/
 
-//static
+static
 int wait_ready (	/* 1:Ready, 0:Timeout */
 	UINT wt			/* Timeout [ms] */
 )

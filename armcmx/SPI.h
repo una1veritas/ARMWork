@@ -34,6 +34,7 @@ public:
 //  inline static void detachInterrupt(); // Default
 
   void begin(); // Default
+  void begin(GPIOPin pinsck, GPIOPin pinmiso, GPIOPin pinmosi, GPIOPin pinnss);
   void end();
 
 	inline uint16 transfer(uint16 _data) {

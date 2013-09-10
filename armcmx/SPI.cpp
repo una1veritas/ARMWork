@@ -17,6 +17,14 @@ void SPIBus::begin() {
   SPI_init(SPIPort, sck, miso, mosi, nss); 
 }
 
+void SPIBus::begin(GPIOPin pinsck, GPIOPin pinmiso, GPIOPin pinmosi, GPIOPin pinnss) {  
+  sck = pinsck;
+  miso = pinmiso;
+  mosi = pinmosi;
+  nss = pinnss;
+  SPI_init(SPIPort, sck, miso, mosi, nss); 
+}
+
 void SPIBus::end() {
 	SPI_disable(SPIPort);
 }

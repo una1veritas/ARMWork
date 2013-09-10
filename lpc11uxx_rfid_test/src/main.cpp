@@ -84,6 +84,8 @@ void init() {
   start_delay(); // for delay
 }
 
+
+//SDFatFs SD(SD_SPI, SD_CS, SD_DETECT, LED_USER);
 SDFatFile file(SD);
 void SD_readparam();
 void SD_readkeyid(const char[]);
@@ -155,7 +157,8 @@ void setup() {
   
 //  delay(5000);
   
-  SPI0.begin();
+//  SPI0.begin();
+  SD_SPI.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
   Serial.println("Starting SPI0 Bus, ");
   SD.begin();
   Serial.println("SD Card.");
@@ -165,7 +168,7 @@ void setup() {
   Serial.print("get_fattime returned ");
   Serial.println(get_fattime(), HEX);
 
-  if ( digitalRead(SW_SDDETECT) == HIGH ) {
+  if ( digitalRead(SD_DETECT) == HIGH ) {
     Serial.println("SD slot is empty.");
   } else {
     Serial.println("Reading parameters from SD\n");

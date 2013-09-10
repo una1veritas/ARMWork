@@ -5,7 +5,14 @@
 
 #if defined(LPCLCD)
 #include "lpclcd.h"
-#define SW_SDDETECT   PIO1_4 
+
+#define SD_SPI  SPI0
+#define SD_SCK  PIO1_29
+#define SD_MISO PIO0_8
+#define SD_MOSI PIO0_9
+#define SD_CS   PIO0_2
+#define SD_DETECT   PIO1_4 
+
 #define NFC_IRQ     PIO1_5
 #define NFC_RSTPD   PIN_NOT_DEFINED
 
