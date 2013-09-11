@@ -18,7 +18,6 @@
 #include "PWM0Tone.h"
 
 #include "StringStream.h"
-
 #include "SDFatFs.h"
 #include "SPISRAM.h"
 
@@ -69,6 +68,10 @@ uint32 dectobcd(uint32 val) {
   return t;
 }
 
+char str64[64];
+StringStream stream(str64, 64);
+
+
 ST7032i i2clcd(Wire, LED_LCDBKLT, LCD_RST);
 RTC rtc(Wire, RTC::ST_M41T62);
 PN532  nfcreader(Wire, PN532::I2C_ADDRESS, NFC_IRQ, NFC_RSTPD);
@@ -90,7 +93,6 @@ SDFatFile file(SD);
 void SD_readparam();
 void SD_readkeyid(const char[]);
 void SD_writelog(char *);
-
 
 SPISRAM sram(SPI1, SRAM_CS, SPISRAM::BUS_23LC1024);
 
@@ -455,9 +457,6 @@ void displayIDData(char * str, uint8 type, IDData & iddata) {
 
 
 void SD_readparam() {
-  char str64[64];
-  StringStream stream(str64, 64);
-
   strcpy((char*) tmp32, "CONFIG.TXT");
 	file.open((char*)tmp32, SDFatFile::FILE_READ); 
   if ( !file.result() ) {
@@ -465,23 +464,22 @@ void SD_readparam() {
     Serial.println((char*)tmp32);
     for (;;) {
       
-      if ( file.gets((TCHAR*) buf, sizeof(buf)) == NULL || file.result() )
+      if ( file.gets((TCHAR*) buf, 64) == NULL || file.result() )
         break;
-
+      if ( buf[0] == '#' ) 
+        continue;
       stream.clear();
       stream.write(buf);
-      
-      if ( ((char)stream.peek()) == '#' ) 
-        continue;
-      if ( stream.getToken(buf, 32) ) {
+      stream.getToken(buf, 32);
+      Serial.print(buf);
+      Serial.print(": ");
+      /*
+      while( stream.getToken(buf, 32) ) {
         Serial.print(buf);
-        Serial.print(": ");
-        while( stream.getToken(buf, 32) ) {
-          Serial.print(buf);
-          Serial.print(" ");
-        }
-        Serial.println();
+        Serial.print(" ");
       }
+      */
+      Serial.println();
     }
     if ( file.result() ) {
       Serial.println("\nFailed while reading.\n");
@@ -499,8 +497,6 @@ void SD_readkeyid(const char fname[]) {
   uint32 expdate;
   KeyID id;
 //  boolean regkeyid = false;
-  char str64[64];
-  StringStream stream(str64, 64);
 
   count = 0;
 	file.open(fname, SDFatFile::FILE_READ); 

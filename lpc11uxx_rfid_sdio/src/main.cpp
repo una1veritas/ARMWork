@@ -43,21 +43,26 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 *******************************************************************************/
 
 // status variables
-namespace global {
-  static uint16 count = 0;
-  static byte authkey[8];
-  char buf[64];
-  uint8_t tmp32[32];
-  uint32 swatch = 0;
+static uint16 count = 0;
+static byte authkey[8];
+KeyID id;
+char buf[64];
+uint8_t tmp32[32];
+char str64[64];
+StringStream stream(str64, 64);
   
-  enum CMDSTATUS {
-    IDLE = 0,
-    WRITE,
-    READ
-  } cmdstatus = IDLE;
-};
+enum CMDSTATUS {
+  IDLE = 0,
+  WRITE,
+  READ
+} cmdstatus = IDLE;
 
-using namespace global;
+SDFatFile file(SD);
+void SD_readparam(const char fname[]);
+void SD_readkeyid(const char fname[]);
+void SD_writelog(char *);
+
+SPISRAM sram(SPI1, SRAM_CS, SPISRAM::BUS_23LC1024);
 
 uint32 dectobcd(uint32 val) {
   uint32 t = 0;
@@ -72,31 +77,15 @@ uint32 dectobcd(uint32 val) {
 ST7032i i2clcd(Wire, LED_LCDBKLT, LCD_RST);
 RTC rtc(Wire, RTC::ST_M41T62);
 
-
 void init() {
   SystemInit();
   GPIOInit();
   start_delay(); // for delay
 }
 
-#define STRINGSTREAM
-#ifdef STRINGSTREAM
-char str64[64];
-StringStream stream(str64, sizeof(str64));
-#endif
-
-SDFatFile file(SD);
-void SD_readparam();
-void SD_readkeyid();
-void SD_writelog(char *);
-
-#define SRAM
-#ifdef SRAM
-SPISRAM sram(SPI1, SRAM_CS, SPISRAM::BUS_23LC1024);
-#endif
 
 void setup() {
-  KeyID id;
+//  KeyID id;
 
   pinMode(SW_USERBTN, INPUT);
   
@@ -108,19 +97,17 @@ void setup() {
   Wire.begin(); 	/* initialize I2c */
   if ( Wire.status == FALSE )
   	while ( 1 );				/* Fatal error */
-  Serial.println("started.");
   pinMode(I2C_PULLUP, OUTPUT); // pull up by 4k7
   digitalWrite(I2C_PULLUP, LOW);
   
   // I2C lcd
-  Serial.print("I2C LCD ");
+  Serial.print("LCD ");
   while(1)
     if ( i2clcd.begin() ) break;
-  Serial.println("started.");
   i2clcd.clear();
   i2clcd.print("Hello.");
   
-  Serial.print("I2C RTC ");
+  Serial.print("RTC ");
   while(1)
     if ( rtc.begin() ) break;
   Serial.println("started.");
@@ -133,32 +120,30 @@ void setup() {
   pinMode(LED_USER, OUTPUT);
   digitalWrite(LED_USER, HIGH);
 
-#ifdef SRAM
   SPI1.begin();
-  Serial.println("SPI1 Bus started.");
+  Serial.print("SPI1 Bus ");
   sram.begin();
-  Serial.print("SPI SRAM ");
+  Serial.print("Serial SRAM ");
   if ( sram.started() )
     Serial.println("started.");
   else
-    Serial.println("seems failed to start.");
+    Serial.println("start failed.");
   //
-#endif
   
+  Serial.print("SPI0 Bus ");
   SPI0.begin();
   SD.begin();
-
-  rtc.updateTime();
-  SD.settime(rtc.time, rtc.cal);
-  Serial.print("result of get_fattime: ");
-  Serial.println(get_fattime(), HEX);
+  Serial.println("SD started.");
+  //rtc.updateTime();
+  //SD.settime(rtc.time, rtc.cal);
+  //Serial.print("result of get_fattime: ");
+  //Serial.println(get_fattime(), HEX);
 
   if ( digitalRead(SW_SDDETECT) == HIGH ) {
     Serial.println("SD slot is empty.");
   } else {
-    Serial.println("Card is in SD slot.");
-    Serial.println("Performing tests...\n");
-    SD_readparam();
+    Serial.println("Performing SD tests...\n");
+    SD_readparam("CONFIG.TXT");
   }
 
   Serial.println("\nSetup finished.\n");
@@ -172,13 +157,13 @@ int main (void) {
   StringStream cmdline(line, sizeof(line));
   
   init();
-
   setup();
+  PWM0_tone(PIO1_13, 1240, 250);
   // ---------------------------------------
   rtc.updateCalendar();
   rtc.updateTime();
   formattimedate(str64, rtc.time, rtc.cal);
-  Serial.print(str64);
+  Serial.println(str64);
 
   lastread = millis();
   
@@ -233,23 +218,23 @@ int main (void) {
 
 
 
-void SD_readparam() {
-  
-  strcpy((char*) tmp32, "CONFIG.TXT");
-	file.open((char*)tmp32, SDFatFile::FILE_READ); 
+void SD_readparam(const char fname[]) {
+ 	file.open(fname, SDFatFile::FILE_READ);
   if ( !file.result() ) {
-    Serial.print("Contents of file ");
-    Serial.println((char*)tmp32);
+    Serial.print(fname);
+    Serial.println(": ");
     for (;;) {
       
       if ( file.gets((TCHAR*) buf, 64) == NULL || file.result() )
         break;
-      Serial.print(buf);
       if ( buf[0] == '#' ) 
         continue;
-      /*
       stream.clear();
       stream.write(buf);
+      stream.getToken(buf, 32);
+      Serial.print(buf);
+      Serial.print(": ");
+      /*
       while( stream.getToken(buf, 32) ) {
         Serial.print(buf);
         Serial.print(" ");
@@ -264,76 +249,56 @@ void SD_readparam() {
     file.close();
   } else {
     Serial.print("\nCouldn't open ");
-    Serial.println((char*)tmp32);
+    Serial.println(fname);
     return;
   }  
 }
 
-void SD_readkeyid() {
-  uint32 expdate;
-  KeyID id;
-//  boolean regkeyid = false;
+void SD_readkeyid(const char fname[]) {
+  uint32 goodthru;
   
   count = 0;
-	file.open((char*)"KEYID.TXT", SDFatFile::FILE_READ); 
+  sram.write( KeyID::COUNT_ADDR, (uint8*) &count, sizeof(count) ); // count == 0 means no data ve been read
+	file.open(fname, SDFatFile::FILE_READ); 
   if ( !file.result() ) {
-    Serial << "Loading key ids." << nl;
+    Serial << fname << ": " << nl;
     for (;;) {
       if ( file.gets((TCHAR*) buf, sizeof(buf)) == NULL) {
-        Serial << "gets" << nl;
+        Serial << "gets failed." << nl;
         break;
       }
       if ( file.result() ) {
-        Serial << "result " << (int) file.result() << nl;
+        Serial << "error result " << (int) file.result() << nl;
         break;
       }
       if ( buf[0] == '#' )
         // its a comment line.
        continue;
-#ifdef DEBUG
-      strm.clear();
-      strm.write(buf);
-      if ( strm.getToken((char*)tmp32, 32) == 10 ) {
-        strncpy((char*)id.raw, (char*) tmp32, 10);
-        expdate = dectobcd(strm.parseInt());
-        if ( expdate < 0x20000000 )
-          continue;
-        id.setExpdate(expdate);
-        id.setChecksum();
-        sram.write(id.storeAddress(count), id.raw, 16);
-        Serial.print(count);
-        Serial.print(" ");
-        for(int i = 0; i < 10; i++) {
-          Serial.print((char) id.raw[i]);
-        //  Serial.print(' ');
-        }
-        Serial.println();
-        count++;
-      } else {
-        Serial.println("Error!");
-      }
-#else
       stream.clear();
       stream.write(buf);
-      stream.getToken(buf, 32);
-      count++;
-      if ( count % 100 == 0 ) {
-        Serial << count << '\t' << buf;
+      if ( stream.getToken(buf, 32) == 10 ) {
+        strncpy((char*)id.raw, buf, 10);
         stream.getToken(buf, 32);
-        Serial << ' ' << buf << nl;
+        goodthru = strtol(buf, 0, 16);
+        id.setExpdate(goodthru);
+        id.setChecksum();
+        sram.write(count<<4, id.raw, 16);
       }
-#endif
+      count++;
+      if ( count % 100 == 1 ) {
+        id.printTo(Serial);
+        Serial.println();
+      }
     }
     if ( file.result() ) {
       Serial << nl << "Failed while reading." << nl;
       //regkeyid = false;
+    } else {
+      Serial << "Total data count " << count << ". " << nl;
+      sram.write( KeyID::COUNT_ADDR, (uint8*) &count, sizeof(count) );
     }
     file.close();
-    Serial << "Total data count " << count << ". " << nl;
-#ifdef SRAM
-    sram.write( 0, (uint8*) &count, sizeof(count) ); // count == 0 means no data ve been read
-#endif
-    } else {
+  } else {
     Serial << nl << "Couldn't open " << (char*)tmp32 << ". " << nl;
     return;
   }
@@ -345,50 +310,78 @@ void SD_writelog(char * str)  {
   file.open("CARDLOG.TXT", SDFatFile::FILE_WRITE);
   if ( file.result() ) { //rc) {
     Serial << nl << "Couldn't open CARDLOG.TXT." << nl;
-    return;
+  } else {
+    formattimedate(tmp32, rtc.time, rtc.cal);
+    Serial << str << " " << (char*) tmp32 << nl;
+    file.write(str);
+    file.write(" ");
+    file.write((char*)tmp32);
+    if ( file.result() == 0 ) {
+      file.flush();
+    }
+    file.close();
   }
-
-  formattimedate(tmp32, rtc.time, rtc.cal);
-  Serial << str << " " << (char*) tmp32 << nl;
-  file.write(str);
-  file.write(" ");
-  file.write((char*)tmp32);
-  if ( file.result() == 0 ) {
-    file.flush();
-  }
-  file.close();
   return;
 }
 
 
 void parse_do_command(StringStream & stream) {
-  uint32 tmplong;
-  int i, n;
-  KeyID id;
+  uint32 tl;
+  uint32 i, n;
   
-  Serial.print("> ");  
+  Serial << "> " << stream << nl;
   stream.getToken((char*)tmp32, 32);
-  if ( match(tmp32, "LOADKEYID") ) {
-    Serial.println("Loading Key IDs from SD.");
-    SD_readkeyid();
-    //
-#ifdef SRAM
-    sram.read( 0, (uint8*) &count, sizeof(count) );
-    n = 0;
-    swatch = millis();
-    for(i = 0; i < count; i++) {
-      sram.read(id.storeAddress(i), id.raw, 16);
-      strncpy((char*) tmp32, (char*)id.raw, 10);
-      tmp32[10] = 0;
-      if ( ! id.check() ) 
-        n++;
+  if ( match(tmp32, "TIME") ) {
+    Serial.println("Time");
+    if ( stream.available() ) {
+      Serial.println(" set ");
+      stream.getToken((char*)tmp32, 32);
+      tl = strtol((char*) tmp32, NULL, 16);
+      if ( tl ) {
+        Serial.println(tl, HEX);
+        rtc.setTime(tl);
+      }
+    } else {
+      Serial.println(rtc.time, HEX);
     }
-    swatch = millis() - swatch;
-    Serial.print("Scan time in millis: ");
-    Serial.println(swatch);
-    Serial.print("SRAM stored key checksum errors: ");
-    Serial.print(n);
-#endif
+  } else 
+  if ( match(tmp32, "CAL") ) {
+    Serial.println("Calendar");
+    if ( stream.available() ) {
+      Serial.println(" set ");
+      stream.getToken((char*) tmp32, 64);
+      tl = strtol((char*) tmp32, NULL, 16);
+      if ( tl ) {
+        Serial.println(tl, HEX);
+        rtc.setCalendar(tl);
+      }
+    } else {
+      Serial.println(rtc.cal, HEX);
+    }
+  } else 
+  if ( match(tmp32, "LOADKEYID") ) {
+    Serial << "Loading..." << nl;
+    SD_readkeyid("KEYID.TXT");
+    //
+    sram.read( KeyID::COUNT_ADDR, (uint8*) &count, sizeof(count) );
+    Serial << "Key ID count: " << count << nl;
+    n = 0;
+    tl = millis();
+    for(i = 0; i < count; i++) {
+      sram.read(i<<4, id.raw, 16);
+      if ( ! id.check() ) {
+        n++;
+        Serial.print(n);
+        Serial.print(' ');
+        id.printTo(Serial);
+        Serial.println();
+      }
+    }
+    tl = millis() - tl;
+    Serial << tl << " millis, checksum errors " << n << nl;
+  } else 
+  if ( match(tmp32, "WRITELOG") ) {
+    SD_writelog("Hey!");
   } else {
     Serial.println("?");
   }

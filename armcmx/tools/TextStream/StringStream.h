@@ -4,8 +4,9 @@
 #include <stdint.h>
 #include <string.h>
 #include "armcmx.h"
+#include "Print.h"
 
-class StringStream {
+class StringStream : public Printable {
   char * _string;
   uint16_t _size;
   uint16_t _count;
@@ -30,6 +31,9 @@ public:
 
   size_t getToken(char * dst, size_t maxlen);
 
+  virtual size_t printTo(Print & pr) const {
+    return pr.print(_string + _readhead);
+  }
 };
 
 #endif  /* _STRINGSTREAM_H_ */

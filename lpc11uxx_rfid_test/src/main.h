@@ -21,6 +21,13 @@
 #elif defined (CAPPUCCINO)
 #include "cappuccino.h"
 
+#define SD_SPI  SPI0
+#define SD_SCK  PIO1_29
+#define SD_MISO PIO0_8
+#define SD_MOSI PIO0_9
+#define SD_CS   PIO0_2
+#define SD_DETECT   PIO1_16 
+
 #define NFC_IRQ     PIO0_17
 #define NFC_RSTPD   PIN_NOT_DEFINED
 #define LED_USER    LED_SDBUSY

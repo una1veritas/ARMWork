@@ -1,5 +1,6 @@
 
 #include "armcmx.h"
+#include "Print.h"
 
 // Strawberry Linux original lpclcd port maps
 
@@ -82,10 +83,10 @@ struct Tasks {
 
 
 
-struct KeyID {
+struct KeyID : public Printable {
   uint8 raw[16];
   
-static const uint32 BASE_OFFSET_ADDR = 0x000010;
+static const uint32 COUNT_ADDR = 0x10000;
 
 KeyID() {
     memset(raw, 0x20, 10);
@@ -129,7 +130,18 @@ KeyID() {
     return chksum == 0;
   }
 
-  uint32 storeAddress(uint16 num){
-    return (num<<4) + BASE_OFFSET_ADDR;
+  virtual size_t printTo(Print & pr) const {
+    int i;
+    for(i = 0; i < 9; i++)
+      pr.print((char)raw[i]);
+    pr.print('-');
+    pr.print((char)raw[9]);
+    pr.print('-');
+    for(i = 10; i < 14; i++) {
+      pr.print((int)raw[i]>>4, HEX);
+      pr.print((int)raw[i]&0x0f, HEX);
+    }
+    return 19;
   }
+  
 };

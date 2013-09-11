@@ -65,6 +65,7 @@ void sd_test()
     }
     if (rc) die(rc);
     rc = f_close(&Fil);
+  }
   /*
    *	ファイル書き込みテスト
    *	SD0001.TXTファイルを作成し、Strawberry Linuxの文字を永遠に書き込む
@@ -86,13 +87,3 @@ void sd_test()
 }
 
 
-
-
-
-
-
-
-
-
-
-}

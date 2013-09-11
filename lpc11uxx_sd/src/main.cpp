@@ -42,7 +42,8 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 
 SDFatFs sd(SPI0, PIO0_2, PIO1_16, PIO1_19);
 SDFatFile file(sd);
-void sd_test(void);
+void sd_read_test(void);
+void sd_write_test(void);
 
 ST7032i lcd(Wire, LED_LCDBKLT);
 RTC rtc(RTC::ST_M41T62);
@@ -108,7 +109,8 @@ int main(void) {
   } else {
     Serial.println("Card is in SD slot.");
   }
-	sd_test();
+	sd_read_test();
+	sd_write_test();
 /*
  * i2C液晶のテスト（エンドレス）
  */
@@ -148,14 +150,12 @@ static uint8_t buff[128];
 /*
  * SDカードのサンプル
  */
-void sd_test()
+void sd_read_test()
 {
 //	FRESULT rc;
-  long swatch;
-  
+
 //	DIR dir;				/* Directory object */
 //	FILINFO fno;			/* File information object */
-	UINT br, i, bw ;
 
 //	f_mount(0, &Fatfs);		/* Register volume work area (never fails) */
 	/*
@@ -165,21 +165,35 @@ void sd_test()
 	//rc = f_open(&Fil, "MESSAGE.TXT", FA_READ);
 	file.open("KEYID.TXT", SDFatFile::FILE_READ); 
   if ( !file.result() ) { //!rc){
-    USART_puts(&usart, "\nType the file content:\n\n");
+    Serial.print("\nType the file content:\n\n");
     for (;;) {
       /* Read a chunk of file */
       //if (rc || !f_gets((TCHAR*)buff, sizeof(buff), &Fil) ) break;			/* Error or end of file */
       if ( file.gets((TCHAR*) buff, sizeof(buff)) == NULL || file.result() )
         break;
 
-      USART_puts(&usart, (char*)buff);
+      Serial.print((char*)buff);
     }
     if ( file.result() ) {
-      USART_puts(&usart, "\nFailed while reading.\n");
-      return;
+      Serial.println("\nFailed while reading.\n");
     }
     //rc = f_close(&Fil);
     file.close();
+  } else 
+  if ( file.result() == FR_NO_FILE ) { 
+    Serial.println("\nCouldn't find MESSAGE.TXT.\n");
+  }
+}
+
+void sd_write_test()
+{
+//	FRESULT rc;
+  long swatch;
+  
+//	DIR dir;				/* Directory object */
+//	FILINFO fno;			/* File information object */
+	UINT i;
+
     /*
      *	ファイル書き込みテスト
      *	SD0001.TXTファイルを作成し、Strawberry Linuxの文字を永遠に書き込む
@@ -187,38 +201,29 @@ void sd_test()
 
 //    rc = f_open(&Fil, "SD0001.TXT", FA_WRITE | FA_CREATE_ALWAYS);
 //    file.open("SD0001.TXT", SDFatFile::FILE_WRITE);
-    file.open("SD0001.TXT", SDFatFile::FILE_WRITE);
-    if ( file.result() ) { //rc) {
-      USART_puts(&usart, "\nCouldn't open SD0001.TXT.\n");
-      return;
-    }
-
-    swatch = millis();
-    // 無限ループでこの関数からは抜けない
-    while(1){
-      i = sprintf((char*)buff, "%08u ", millis());
-      //f_write(&Fil, buff, i, &bw);
-      file.write(buff, i);
-      //rc = f_write(&Fil, "Strawberry Linux\r\n", 18, &bw);
-      file.write((uint8_t *)"Strawberry Linux\r\n", 18);
-      //if (rc) 
-      if ( file.result() ) 
-        break;
-      // SDカードに書き出します。
-     // f_sync(&Fil);
-      file.flush();
-      USART_puts(&usart, (const char*)buff);
-      USART_puts(&usart, "\n");
-      if ( swatch + 000 < millis() ) 
-        break;
-    }
-    //f_close(&Fil);
-    file.close();
-    USART_puts(&usart, "\nSD File IO test finished.\n");
-  	return;
-
+  file.open("SD0001.TXT", SDFatFile::FILE_WRITE);
+  if ( file.result() == FR_NO_FILE ) { //rc) {
+    Serial.println("\nCouldn't find SD0001.TXT.");
+    return;
   }
-  if ( file.result() == FR_NOT_READY ) //rc == FR_NOT_READY )
-    USART_puts(&usart, "\nCouldn't open MESSAGE.TXT.\n");
-
+  swatch = millis();
+  // 無限ループでこの関数からは抜けない
+  while( millis() < swatch + 1000 ){
+    i = sprintf((char*)buff, "%08u ", millis());
+    //f_write(&Fil, buff, i, &bw);
+    file.write(buff, i);
+    //rc = f_write(&Fil, "Strawberry Linux\r\n", 18, &bw);
+    file.write((uint8_t *)"Strawberry Linux\r\n", 18);
+    //if (rc) 
+    if ( file.result() ) 
+      break;
+    // SDカードに書き出します。
+   // f_sync(&Fil);
+    file.flush();
+    Serial.println((char*)buff);
+  }
+  //f_close(&Fil);
+  file.close();
+  Serial.println("\nSD File IO test finished.\n");
+  return;
 }
