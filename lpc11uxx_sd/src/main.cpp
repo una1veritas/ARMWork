@@ -25,7 +25,14 @@
 
 #include "PWM0Tone.h"
 
+#define LPCLCD
+#if defined LPCLCD
+#include "lpclcd.h"
+#define LED_SDBUSY LED_USER
+#define SD_DETECT  PIO1_4
+#elif defined CAPPUCCINO
 #include "cappuccino.h"
+#endif
 
 #ifdef _LPCXPRESSO_CRP_
 #include <cr_section_macros.h>
@@ -104,7 +111,7 @@ int main(void) {
   //SPI_init(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, SSP_CS0);
   SPI0.begin();
   sd.begin();
-  if ( digitalRead(SW_SDDETECT) == HIGH ) {
+  if ( digitalRead(SD_DETECT) == HIGH ) {
     Serial.println("SD slot is empty.");
   } else {
     Serial.println("Card is in SD slot.");
@@ -163,7 +170,7 @@ void sd_read_test()
 	 * ２行分のみ
 	 */
 	//rc = f_open(&Fil, "MESSAGE.TXT", FA_READ);
-	file.open("KEYID.TXT", SDFatFile::FILE_READ); 
+	file.open("KEYID.TXT", FA_READ | FA_OPEN_EXISTING); 
   if ( !file.result() ) { //!rc){
     Serial.print("\nType the file content:\n\n");
     for (;;) {
@@ -201,7 +208,7 @@ void sd_write_test()
 
 //    rc = f_open(&Fil, "SD0001.TXT", FA_WRITE | FA_CREATE_ALWAYS);
 //    file.open("SD0001.TXT", SDFatFile::FILE_WRITE);
-  file.open("SD0001.TXT", SDFatFile::FILE_WRITE);
+  file.open("SD0001.TXT", FA_WRITE | FA_OPEN_ALWAYS);
   if ( file.result() == FR_NO_FILE ) { //rc) {
     Serial.println("\nCouldn't find SD0001.TXT.");
     return;
@@ -211,9 +218,9 @@ void sd_write_test()
   while( millis() < swatch + 1000 ){
     i = sprintf((char*)buff, "%08u ", millis());
     //f_write(&Fil, buff, i, &bw);
-    file.write(buff, i);
+    file.write((char*)buff);
     //rc = f_write(&Fil, "Strawberry Linux\r\n", 18, &bw);
-    file.write((uint8_t *)"Strawberry Linux\r\n", 18);
+    file.write((char *)"Strawberry Linux\r\n");
     //if (rc) 
     if ( file.result() ) 
       break;

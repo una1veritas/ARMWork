@@ -219,7 +219,7 @@ int main (void) {
 
 
 void SD_readparam(const char fname[]) {
- 	file.open(fname, SDFatFile::FILE_READ);
+ 	file.open(fname, FA_READ | FA_OPEN_EXISTING );
   if ( !file.result() ) {
     Serial.print(fname);
     Serial.println(": ");
@@ -259,7 +259,7 @@ void SD_readkeyid(const char fname[]) {
   
   count = 0;
   sram.write( KeyID::COUNT_ADDR, (uint8*) &count, sizeof(count) ); // count == 0 means no data ve been read
-	file.open(fname, SDFatFile::FILE_READ); 
+	file.open(fname, FA_READ | FA_OPEN_EXISTING); 
   if ( !file.result() ) {
     Serial << fname << ": " << nl;
     for (;;) {
@@ -307,7 +307,7 @@ void SD_readkeyid(const char fname[]) {
 
 void SD_writelog(char * str)  {
   
-  file.open("CARDLOG.TXT", SDFatFile::FILE_WRITE);
+  file.open("CARDLOG.TXT", FA_WRITE | FA_OPEN_ALWAYS);
   if ( file.result() ) { //rc) {
     Serial << nl << "Couldn't open CARDLOG.TXT." << nl;
   } else {

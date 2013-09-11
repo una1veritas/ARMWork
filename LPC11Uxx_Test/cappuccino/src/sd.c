@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <string.h>
 
 #include "LPC11Uxx.h"
 #include "type.h"
@@ -42,6 +44,7 @@ void sd_test()
 //	DIR dir;				/* Directory object */
 //	FILINFO fno;			/* File information object */
 	UINT bw, br, i;
+  char tmp[64];
 
 	f_mount(0, &Fatfs);		/* Register volume work area (never fails) */
 
@@ -71,19 +74,22 @@ void sd_test()
    *	SD0001.TXTファイルを作成し、Strawberry Linuxの文字を永遠に書き込む
    */
 
-    rc = f_open(&Fil, "SD0001.TXT", FA_WRITE | FA_CREATE_ALWAYS);
+    rc = f_open(&Fil, "SD0001.TXT", FA_WRITE | FA_OPEN_ALWAYS);
+    f_lseek(&Fil, f_size(&Fil));
     if (rc) die(rc);
     i = 0;
     // 無限ループでこの関数からは抜けない
       while(i < 100){
-        rc = f_write(&Fil, "Strawberry Linux\r\n", 18, &bw);
+        sprintf(tmp, "Strawberry Linux %d\r\n", i);
+        rc = f_write(&Fil, tmp, strlen(tmp), &bw);
         if (rc) die(rc);
-
+        xprintf("%s\n", tmp);
         // SDカードに書き出します。
         f_sync(&Fil);
         i++;
       }
 //	return;
+    f_mount(0, NULL);
 }
 
 

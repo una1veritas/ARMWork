@@ -552,6 +552,11 @@
               <FileType>8</FileType>
               <FilePath>..\..\armcmx\tools\SerialRAM\SPISRAM.cpp</FilePath>
             </File>
+            <File>
+              <FileName>mmc_sd.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\mmc_sd.cpp</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
