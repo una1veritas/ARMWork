@@ -261,7 +261,7 @@ int main (void) {
           //nfcreader.printBytes(tmp, 16);
           
           strcpy((char*)iddata.iizuka.division, "1S");
-          strcpy((char*)iddata.iizuka.pid, "82831626");
+          strcpy((char*)iddata.iizuka.pid, "82541854");
           iddata.iizuka.issue = '1';
           writeIDInfo(card, iddata);
           //
