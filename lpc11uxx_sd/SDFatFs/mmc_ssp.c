@@ -21,14 +21,15 @@
 #define	INS			(!(LPC_GPIO->PIN[1] & _BV(16)))	/* Socket status (true:Inserted, false:Empty) */
 #define	WP			0 /* Card write protection (true:yes, false:no) */
 
+
 #if SSP_CH == 0
 #define	SSPxDR		LPC_SSP0->DR
 #define	SSPxSR		LPC_SSP0->SR
 #define	SSPxCR0		LPC_SSP0->CR0
 #define	SSPxCR1		LPC_SSP0->CR1
 #define	SSPxCPSR	LPC_SSP0->CPSR
-#define	CS_LOW()	{ LPC_GPIO->CLR[0] = _BV(2); LPC_GPIO->CLR[1] = _BV(19); }	/* Set P0.2 low */
-#define	CS_HIGH()	{ LPC_GPIO->SET[0] = _BV(2); LPC_GPIO->SET[1] = _BV(19); }	/* Set P0.2 high */
+#define	CS_LOW()	{ LPC_GPIO->CLR[0] = _BV(2); LPC_GPIO->CLR[1] = _BV(19); }	// Set P0.2 low //
+#define	CS_HIGH()	{ LPC_GPIO->SET[0] = _BV(2); LPC_GPIO->SET[1] = _BV(19); }	// Set P0.2 high //
 #define PCSSPx		PCSSP0
 #define	PCLKSSPx	PCLK_SSP0
 #elif SSP_CH == 1
@@ -37,8 +38,8 @@
 #define	SSPxCR0		SSP1CR0
 #define	SSPxCR1		SSP1CR1
 #define	SSPxCPSR	SSP1CPSR
-#define	CS_LOW()	{ LPC_GPIO->CLR[0] = _BV(2);}	/* Set P0.2 low */
-#define	CS_HIGH()	{ LPC_GPIO->SET[0] = _BV(2);}	/* Set P0.2 high */
+#define	CS_LOW()	{ LPC_GPIO->CLR[0] = _BV(2);}	// Set P0.2 low //
+#define	CS_HIGH()	{ LPC_GPIO->SET[0] = _BV(2);}	// Set P0.2 high //
 #define PCSSPx		PCSSP1
 #define	PCLKSSPx	PCLK_SSP1
 #endif
@@ -76,6 +77,7 @@
 //#include "cappuccino.h"
 
 //#include "ssp.h"
+#include "spi_core.h"
 
 /* MMC/SD command */
 #define CMD0	(0)			/* GO_IDLE_STATE */
@@ -116,16 +118,19 @@ BYTE CardType;			/* Card type flags */
 /*-----------------------------------------------------------------------*/
 
 /* Exchange a byte */
+#if defined (ORIGINAL)
 static
 BYTE xchg_spi (
-	BYTE dat	/* Data to send */
+	BYTE dat	// Data to send //
 )
 {
 	SSPxDR = dat;
 	while (SSPxSR & 0x10) ;
 	return SSPxDR;
 }
-
+#else
+#define xchg_spi(d)  SPI_transfer(&SPI0Def, (d))
+#endif
 
 /* Receive multiple byte */
 static
@@ -133,6 +138,7 @@ void rcvr_spi_multi (
 	BYTE *buff,		/* Pointer to data buffer */
 	UINT btr		/* Number of bytes to receive (16, 64 or 512) */
 )
+#if defined(ORIGINAL)
 {
 	UINT n = 512;
 	WORD d;
@@ -160,7 +166,13 @@ void rcvr_spi_multi (
 
 	SSPxCR0 = 0x0007;				/* Select 8-bit mode */
 }
-
+#else
+{
+  for ( ; btr > 0; btr-- ) {
+    *buff++ = SPI_transfer(&SPI0Def, 0xff);
+  }
+}
+#endif
 
 #if _USE_WRITE
 /* Send multiple byte */
@@ -169,6 +181,7 @@ void xmit_spi_multi (
 	const BYTE *buff,	/* Pointer to the data */
 	UINT btx			/* Number of bytes to send (512) */
 )
+#if defined ORIGINAL
 {
 	UINT n = 512;
 	WORD d;
@@ -195,6 +208,14 @@ void xmit_spi_multi (
 
 	SSPxCR0 = 0x0007;			/* Select 8-bit mode */
 }
+#else
+{
+  for ( ; btx > 0; btx-- ) {
+    SPI_transfer(&SPI0Def, *buff++);
+  }
+}
+#endif // ORIGINAL
+
 #endif
 
 

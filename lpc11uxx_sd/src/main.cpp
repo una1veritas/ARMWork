@@ -24,12 +24,11 @@
 
 #include "PWM0Tone.h"
 
-#define LPCLCD
-#if defined LPCLCD
+#if defined(LPCLCD)
 #include "lpclcd.h"
 #define LED_SDBUSY LED_USER
 #define SD_DETECT  PIO1_4
-#elif defined CAPPUCCINO
+#elif defined(CAPPUCCINO)
 #include "cappuccino.h"
 #endif
 
@@ -48,9 +47,14 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 
 #ifdef __cplusplus
 extern "C" {
-  void sd_test(void);
+#endif
+
+void sd_test(void);
+  
+#ifdef __cplusplus
 }
 #endif
+
 
 ST7032i lcd(Wire, LED_LCDBKLT);
 RTC rtc(RTC::ST_M41T62);
@@ -87,7 +91,7 @@ int main(void) {
 
   Wire.begin();
   lcd.begin();
-  lcd.backlightHigh();
+  lcd.backlightLow();
   lcd.print("Let's start LCD!");
 
   rtc.begin();
@@ -105,6 +109,7 @@ int main(void) {
  /*
   * SDカードのデモ（エンドレス）
   */
+  
   Serial.print("result of get_fattime: ");
   Serial.println(get_fattime(), HEX);
   
