@@ -51,7 +51,7 @@ public:
     : spibus(bus), pin_cs(cs), pin_detect(detect), pin_busyled(led) {}
   
   void begin(void);
-  void end() { spibus.end(); }
+  void end(void);
       
   inline void setClockDivider(uint8 div) { spibus.setClockDivider(div); }
   inline uint16 transfer(uint16 d) { return spibus.transfer(d); }
@@ -83,6 +83,7 @@ public:
 
 
 class SDFatFile : public Stream {
+  public:
   FIL file;			/* File object */
   SDFatFs & sdfs;
   

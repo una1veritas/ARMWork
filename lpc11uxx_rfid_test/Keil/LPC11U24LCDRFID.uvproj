@@ -557,6 +557,11 @@
               <FileType>5</FileType>
               <FilePath>..\..\armcmx\tools\TextStream\StringStream.h</FilePath>
             </File>
+            <File>
+              <FileName>mmc_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\mmc_spi.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

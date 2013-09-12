@@ -19,6 +19,7 @@
 
 #include "StringStream.h"
 
+#include "ff.h"
 #include "SDFatFs.h"
 #include "SPISRAM.h"
 
@@ -264,7 +265,7 @@ void SD_readkeyid(const char fname[]) {
     Serial << fname << ": " << nl;
     for (;;) {
       if ( file.gets((TCHAR*) buf, sizeof(buf)) == NULL) {
-        Serial << "gets failed." << nl;
+        //Serial << "gets failed." << nl;
         break;
       }
       if ( file.result() ) {
@@ -305,8 +306,8 @@ void SD_readkeyid(const char fname[]) {
 
 }
 
+/*
 void SD_writelog(char * str)  {
-  
   file.open("CARDLOG.TXT", FA_WRITE | FA_OPEN_ALWAYS);
   if ( file.result() ) { //rc) {
     Serial << nl << "Couldn't open CARDLOG.TXT." << nl;
@@ -322,6 +323,37 @@ void SD_writelog(char * str)  {
     file.close();
   }
   return;
+}*/
+
+void SD_writelog(char * str) {
+  FRESULT rc;
+  int i;
+  uint8_t bw;
+  rc = f_open(&file.file, "SD0001.TXT", FA_WRITE | FA_OPEN_ALWAYS);
+  f_lseek(&file.file, f_size(&file.file));
+  if (rc) {
+    Serial.print("f_open or f_lseek error ");
+    Serial.println(rc);
+    goto close_and_exit;
+  }
+  i = 0;
+  // 無限ループでこの関数からは抜けない
+  while(i < 100){
+    sprintf((char*)tmp32, "Strawberry Linux %d\r\n", i);
+    rc = f_write(&file.file, (char*)tmp32, strlen((char*)tmp32), (UINT*)&bw);
+    if (rc) {
+      Serial.print("f_write error ");
+      Serial.println(rc);
+      goto close_and_exit;
+    }
+    Serial.println((char*)tmp32);
+    // SDカードに書き出します。
+    f_sync(&file.file);
+    i++;
+  }
+  //	return;
+close_and_exit:
+  f_close(&file.file);
 }
 
 

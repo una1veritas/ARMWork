@@ -101,12 +101,12 @@
         <DllOption>
           <SimDllName>SARMCM3.DLL</SimDllName>
           <SimDllArguments></SimDllArguments>
-          <SimDlgDll>DARMP1.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pLPC11U24</SimDlgDllArguments>
+          <SimDlgDll>DARMCM1.DLL</SimDlgDll>
+          <SimDlgDllArguments>-pCM0</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
-          <TargetDlgDll>TARMP1.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pLPC11U24</TargetDlgDllArguments>
+          <TargetDlgDll>TARMCM1.DLL</TargetDlgDll>
+          <TargetDlgDllArguments>-pCM0</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -351,7 +351,7 @@
               <MiscControls></MiscControls>
               <Define>ARMCMX</Define>
               <Undefine></Undefine>
-              <IncludePath>.\;..\inc;..\..\armcmx\lpc11uxx;..\..\armcmx;..\..\..\LPCLibrary\CMSISv2p00_LPC11Uxx\inc;..\..\armcmx\tools\LCD;..\..\armcmx\tools\RTC;..\..\armcmx\tools\SerialRAM;..\..\armcmx\tools\SDFatFs\FatFs;..\..\armcmx\tools\SDFatFs</IncludePath>
+              <IncludePath>.\;..\inc;..\..\armcmx\lpc11uxx;..\..\armcmx;..\..\..\LPCLibrary\CMSISv2p00_LPC11Uxx\inc;..\..\armcmx\tools\LCD;..\..\armcmx\tools\RTC;..\..\armcmx\tools\SerialRAM;..\SDFatFs</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -493,39 +493,54 @@
           <GroupName>tools</GroupName>
           <Files>
             <File>
-              <FileName>SDFatFs.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\SDFatFs.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>SDFatFs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\SDFatFs.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\ff.c</FilePath>
-            </File>
-            <File>
-              <FileName>ffconf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\ffconf.h</FilePath>
-            </File>
-            <File>
               <FileName>RTC.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\armcmx\tools\RTC\RTC.cpp</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>SDFatFs</GroupName>
+          <Files>
             <File>
-              <FileName>mmc_sd.h</FileName>
+              <FileName>diskio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\mmc_sd.h</FilePath>
+              <FilePath>..\SDFatFs\diskio.h</FilePath>
             </File>
             <File>
-              <FileName>mmc_sd.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\mmc_sd.cpp</FilePath>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SDFatFs\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SDFatFs\ff.h</FilePath>
+            </File>
+            <File>
+              <FileName>ffconf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SDFatFs\ffconf.h</FilePath>
+            </File>
+            <File>
+              <FileName>mmc_ssp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SDFatFs\mmc_ssp.c</FilePath>
+            </File>
+            <File>
+              <FileName>sd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SDFatFs\sd.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SDFatFs\ssp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SDFatFs\ssp.h</FilePath>
             </File>
           </Files>
         </Group>
