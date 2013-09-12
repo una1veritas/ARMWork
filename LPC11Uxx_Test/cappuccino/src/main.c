@@ -50,7 +50,7 @@ int main(void) {
 	  /*
 	   * UARTを初期化します。ポートはPIO1_13を指定します。全部で４種類指定が可能
 	   */
-	  UARTInit(115200, 0x019); //0x127); //0x118);	// PIO1_13
+	  UARTInit(115200, 0x127); //0x019); //0x118);	// PIO1_13
 
 	  if ( I2CInit( (uint32_t)I2CMASTER ) == FALSE ){	/* initialize I2c */
 	  	while ( 1 );				/* Fatal error */

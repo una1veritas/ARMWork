@@ -11,29 +11,24 @@
 /
 /-------------------------------------------------------------------------*/
 
-#include "spi_core.h"
-#include "mmc_sd.h"
-
-//#define SSP_CH	0	/* SSP channel to use (0:SSP0, 1:SSP1) */
+#define SSP_CH	0	/* SSP channel to use (0:SSP0, 1:SSP1) */
 
 #define	CCLK		100000000UL	/* cclk frequency [Hz] */
 #define PCLK_SSP	50000000UL	/* PCLK frequency for SSP [Hz] */
 #define SCLK_FAST	25000000UL	/* SCLK frequency under normal operation [Hz] */
 #define	SCLK_SLOW	400000UL	/* SCLK frequency under initialization [Hz] */
 
-#define	INS			digitalRead(PIO1_16)
-//(!(LPC_GPIO->PIN[1] & _BV(16)))	/* Socket status (true:Inserted, false:Empty) */
+#define	INS			(!(LPC_GPIO->PIN[1] & _BV(16)))	/* Socket status (true:Inserted, false:Empty) */
 #define	WP			0 /* Card write protection (true:yes, false:no) */
 
-/*
 #if SSP_CH == 0
 #define	SSPxDR		LPC_SSP0->DR
 #define	SSPxSR		LPC_SSP0->SR
 #define	SSPxCR0		LPC_SSP0->CR0
 #define	SSPxCR1		LPC_SSP0->CR1
 #define	SSPxCPSR	LPC_SSP0->CPSR
-#define	CS_LOW()	{ LPC_GPIO->CLR[0] = _BV(2); LPC_GPIO->CLR[1] = _BV(19); }	// Set P0.2 low 
-#define	CS_HIGH()	{ LPC_GPIO->SET[0] = _BV(2); LPC_GPIO->SET[1] = _BV(19); }	// Set P0.2 high 
+#define	CS_LOW()	{ LPC_GPIO->CLR[0] = _BV(2); LPC_GPIO->CLR[1] = _BV(19); }	/* Set P0.2 low */
+#define	CS_HIGH()	{ LPC_GPIO->SET[0] = _BV(2); LPC_GPIO->SET[1] = _BV(19); }	/* Set P0.2 high */
 #define PCSSPx		PCSSP0
 #define	PCLKSSPx	PCLK_SSP0
 #elif SSP_CH == 1
@@ -42,16 +37,13 @@
 #define	SSPxCR0		SSP1CR0
 #define	SSPxCR1		SSP1CR1
 #define	SSPxCPSR	SSP1CPSR
-#define	CS_LOW()	{ LPC_GPIO->CLR[0] = _BV(2);}	// Set P0.2 low 
-#define	CS_HIGH()	{ LPC_GPIO->SET[0] = _BV(2);}	// Set P0.2 high 
+#define	CS_LOW()	{ LPC_GPIO->CLR[0] = _BV(2);}	/* Set P0.2 low */
+#define	CS_HIGH()	{ LPC_GPIO->SET[0] = _BV(2);}	/* Set P0.2 high */
 #define PCSSPx		PCSSP1
 #define	PCLKSSPx	PCLK_SSP1
 #endif
-*/
 
-#define CS_HIGH()  { digitalWrite(PIO0_2, HIGH); }
-#define CS_LOW()   { digitalWrite(PIO0_2, LOW); }
-#define SD_SLOTEMPTY()  digitalRead(SW_SDDETECT)
+
 
 #if PCLK_SSP * 1 == CCLK
 #define PCLKDIV_SSP	PCLKDIV_1
@@ -66,10 +58,10 @@
 #endif
 
 
-#define FCLK_FAST() { SPI0Def.SSPx->CPSR = (PCLK_SSP / SCLK_FAST) & ~1; }
-#define FCLK_SLOW() { SPI0Def.SSPx->CPSR = (PCLK_SSP / SCLK_SLOW) & ~1; }
+#define FCLK_FAST() { SSPxCPSR = (PCLK_SSP / SCLK_FAST) & ~1; }
+#define FCLK_SLOW() { SSPxCPSR = (PCLK_SSP / SCLK_SLOW) & ~1; }
 
-//#define	_BV(n)		(1<<(n))
+#define	_BV(n)		(1<<(n))
 
 /*--------------------------------------------------------------------------
 
@@ -78,9 +70,10 @@
 ---------------------------------------------------------------------------*/
 
 #include "LPC11uxx.h"
-#include "armcmx.h"
-#include "cappuccino.h"
 #include "diskio.h"
+#include "cappuccino.h"
+
+#include "ssp.h"
 
 /* MMC/SD command */
 #define CMD0	(0)			/* GO_IDLE_STATE */
@@ -121,74 +114,51 @@ BYTE CardType;			/* Card type flags */
 /*-----------------------------------------------------------------------*/
 
 /* Exchange a byte */
-/*
 static
 BYTE xchg_spi (
-	BYTE dat	// Data to send 
+	BYTE dat	/* Data to send */
 )
 {
 	SSPxDR = dat;
 	while (SSPxSR & 0x10) ;
 	return SSPxDR;
 }
-*/
-#define xchg_spi(x)  SPI_transfer(&SPI0Def, (x))
+
 
 /* Receive multiple byte */
-//#define _ORIGINAL_CODE
-#ifdef _ORIGINAL_CODE
 static
 void rcvr_spi_multi (
 	BYTE *buff,		/* Pointer to data buffer */
 	UINT btr		/* Number of bytes to receive (16, 64 or 512) */
 )
 {
-	UINT n; // = 512;
+	UINT n = 512;
 	WORD d;
 
-	//SPI0Def.SSPx->CR0 = 0x000F; //SSPxCR0 = 0x000F;				/* Select 16-bit mode */
-  SPI_DataSize(&SPI0Def, SPI_DSS_16BIT);
-  
+
+	SSPxCR0 = 0x000F;				/* Select 16-bit mode */
+
 	for (n = 0; n < 8; n++)			/* Push 8 frames into pipeline  */
-		SPI0Def.SSPx->DR = 0xFFFF;
+		SSPxDR = 0xFFFF;
 	btr -= 16;
 	while (btr) {					/* Receive the data block into buffer */
-		while (!(SPI0Def.SSPx->SR & SSPSR_RNE /*_BV(2)*/)) ;
-		d = SPI0Def.SSPx->DR;
-		SPI0Def.SSPx->DR = 0xFFFF;
+		while (!(SSPxSR & _BV(2))) ;
+		d = SSPxDR;
+		SSPxDR = 0xFFFF;
 		*buff++ = d >> 8;
 		*buff++ = d;
 		btr -= 2;
 	}
 	for (n = 0; n < 8; n++) {		/* Pop remaining frames from pipeline */
-		while (!(SPI0Def.SSPx->SR & SSPSR_RNE /*_BV(2)*/)) ;  // while RNE is off
-		d = SPI0Def.SSPx->DR;
+		while (!(SSPxSR & _BV(2))) ;
+		d = SSPxDR;
 		*buff++ = d >> 8;
 		*buff++ = d;
 	}
 
-	//SPI0Def.SSPx->CR0 = 0x0007;				/* Select 8-bit mode */
-  SPI_DataSize(&SPI0Def, SPI_DSS_8BIT);
+	SSPxCR0 = 0x0007;				/* Select 8-bit mode */
 }
 
-#else
-
-static void rcvr_spi_multi(BYTE *buff,	UINT btr /* Number of bytes to receive (16, 64 or 512) */ ) {
-  int i;
-
-  SPI_DataSize(&SPI0Def, SPI_DSS_8BIT);
-
-  for ( i = 0; i < btr; i++) {
-    /*
-    SPI0Def.SSPx->DR = 0xff; //buff[i];
-    while ( !(SPI0Def.SSPx->SR & SSPSR_RNE) || (SPI0Def.SSPx->SR & SSPSR_BSY) );
-    buff[i] = SPI0Def.SSPx->DR;
-    */ 
-    buff[i] = SPI_transfer(&SPI0Def, 0xff);
-  }
-}
-
-#endif
 
 #if _USE_WRITE
 /* Send multiple byte */
@@ -198,39 +168,30 @@ void xmit_spi_multi (
 	UINT btx			/* Number of bytes to send (512) */
 )
 {
-	UINT n; // = 512;
+	UINT n = 512;
 	WORD d;
 
-	//SPI0Def.SSPx->CR0 = 0x000F;			/* Select 16-bit mode */
-  SPI_DataSize(&SPI0Def, SPI_DSS_16BIT);
 
-  /*
-	for (n = 0; n < 8; n++) {	// Push 8 frames into pipeline
+	SSPxCR0 = 0x000F;			/* Select 16-bit mode */
+
+	for (n = 0; n < 8; n++) {	/* Push 8 frames into pipeline  */
 		d = *buff++;
 		d = (d << 8) | *buff++;
-		SPI0Def.SSPx->DR = d;
+		SSPxDR = d;
 	}
 	btx -= 16;
-	do {						// Transmit data block 
+	do {						/* Transmit data block */
 		d = *buff++;
 		d = (d << 8) | *buff++;
-		while (!(SPI0Def.SSPx->SR & SSPSR_RNE )); // _BV(2) )) ;
-		SPI0Def.SSPx->DR; SPI0Def.SSPx->DR = d;
+		while (!(SSPxSR & _BV(2))) ;
+		SSPxDR; SSPxDR = d;
 	} while (btx -= 2);
 	for (n = 0; n < 8; n++) {
-		while (!(SPI0Def.SSPx->SR & SSPSR_RNE )); //_BV(2) )) ;
-		SPI0Def.SSPx->DR;
+		while (!(SSPxSR & _BV(2))) ;
+		SSPxDR;
 	}
-  */
-  for(n = 0; n < btx; n++) {
-    d = *buff++;
-    d <<= 8;
-    d |= *buff++;
-    d = SPI_transfer(&SPI0Def, 0xff);
-  }
-  
-	//SPI0Def.SSPx->CR0 = 0x0007;			// Select 8-bit mode 
-  SPI_DataSize(&SPI0Def, SPI_DSS_8BIT);
+
+	SSPxCR0 = 0x0007;			/* Select 8-bit mode */
 }
 #endif
 
@@ -293,11 +254,10 @@ int select (void)	/* 1:OK, 0:Timeout */
 /* Control SPI module (Platform dependent)                               */
 /*-----------------------------------------------------------------------*/
 
-#ifdef __ORIGINAL_DEPRICATED_CODE
-
 static
 void power_on (void)	/* Enable SSP module and attach it to I/O pads */
 {
+  
   
 #if 0
 	__set_PCONP(PCSSPx, 1);		/* Enable SSP module */
@@ -312,8 +272,8 @@ void power_on (void)	/* Enable SSP module and attach it to I/O pads */
 //	__set_PINSEL(0, 15, 2);		/* Attach SCK0 to I/O pad */
 //	__set_PINSEL(0, 16, 2);		/* Attach MISO0 to I/O pad */
 //	__set_PINSEL(0, 17, 2);		/* Attach MOSI0 to I/O pad */
-        pinMode(PIO0_2, OUTPUT);
-        pinMode(PIO1_19, OUTPUT);
+        GPIOSetDir(0, 2, 1);
+        GPIOSetDir(1, 19, 1);
         
         //	FIO0DIR |= _BV(18);	/* Set CS# as output */
 #elif SSP_CH == 1
@@ -324,36 +284,9 @@ void power_on (void)	/* Enable SSP module and attach it to I/O pads */
 #endif
 	CS_HIGH();					/* Set CS# high */
 
-        delay(10);
+        wait_ms(10);
 //	for (Timer1 = 10; Timer1; ) ;	/* 10ms */
 }
-
-#endif // __ORIGINAL_DEPRICATED_CODE
-
-static
-void power_on (void)	/* Enable SSP module and attach it to I/O pads */
-{
-  
-  
-#if 0
-	__set_PCONP(PCSSPx, 1);		/* Enable SSP module */
-	__set_PCLKSEL(PCLKSSPx, PCLKDIV_SSP);	/* Select PCLK frequency for SSP */
-	SSPxCR0 = 0x0007;			/* Set mode: SPI mode 0, 8-bit */
-	SSPxCR1 = 0x2;				/* Enable SSP with Master */
-#endif    
-//        SSP_IOConfig( 0 );
-//        SSP_Init(0);
-          
-	CS_HIGH();					/* Set CS# high */
-  delay(10);
-//	for (Timer1 = 10; Timer1; ) ;	/* 10ms */
-  if ( SD_SLOTEMPTY() ) {
-    Stat |= STA_NODISK;
-  } else {
-    Stat &= ~STA_NODISK;
-  }
-}
-
 
 
 static
@@ -493,8 +426,7 @@ DSTATUS disk_initialize (
 	if (Stat & STA_NODISK) return Stat;	/* Is card existing in the soket? */
 
 	FCLK_SLOW();
-	for (n = 10; n; n--) 
-    xchg_spi(0xFF);	/* Send 80 dummy clocks */
+	for (n = 10; n; n--) xchg_spi(0xFF);	/* Send 80 dummy clocks */
 
 	ty = 0;
 	if (send_cmd(CMD0, 0) == 1) {			/* Put the card SPI/Idle state */
@@ -782,16 +714,3 @@ void disk_timerproc (void)
 	Stat = s;
 }
 
-static uint32 cal, time;
-
-uint32_t get_fattime(void) {
-  uint8_t y,m,d, hh, mm, ss;
-  y = 20 + (cal>>16&0x0f) + (cal>>20&0x0f)*10;
-  m = (cal>>8&0x0f) + (cal>>12&0x0f)*10;
-  d = (cal&0x0f) + (cal>>4&0x0f)*10;
-  hh = (time>>16&0x0f) + (time>>20&0x0f)*10;
-  mm = (time>>8&0x0f) + (time>>12&0x0f)*10;
-  ss = (time&0x0f) + (time>>4&0x0f)*10;
-  
-  return ((uint32_t)y<<25) | m<<21 | d<<16 | hh << 11 | mm<<5 | ss>>1;
-}

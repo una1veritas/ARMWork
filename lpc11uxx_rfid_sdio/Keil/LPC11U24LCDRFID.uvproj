@@ -473,14 +473,14 @@
               <FilePath>..\..\armcmx\SPI.cpp</FilePath>
             </File>
             <File>
-              <FileName>spi_core.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\lpc11uxx\spi_core.c</FilePath>
-            </File>
-            <File>
               <FileName>PWM0tone.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\lpc11uxx\PWM0tone.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi_core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\lpc11uxx\spi_core.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -553,9 +553,9 @@
               <FilePath>..\..\armcmx\tools\SerialRAM\SPISRAM.cpp</FilePath>
             </File>
             <File>
-              <FileName>mmc_sd.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\mmc_sd.cpp</FilePath>
+              <FileName>mmc_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\mmc_spi.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -41,6 +41,8 @@ int xmit_datablock (	/* 1:OK, 0:Failed */
 	BYTE token			/* Token */
 );
 
+static uint32 cal, time;
+
 #ifdef __cplusplus
 }
 #endif
