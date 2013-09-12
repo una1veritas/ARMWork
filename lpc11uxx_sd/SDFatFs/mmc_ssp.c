@@ -71,9 +71,11 @@
 
 #include "LPC11uxx.h"
 #include "diskio.h"
-#include "cappuccino.h"
 
-#include "ssp.h"
+#include "armcmx.h"
+//#include "cappuccino.h"
+
+//#include "ssp.h"
 
 /* MMC/SD command */
 #define CMD0	(0)			/* GO_IDLE_STATE */
@@ -272,8 +274,8 @@ void power_on (void)	/* Enable SSP module and attach it to I/O pads */
 //	__set_PINSEL(0, 15, 2);		/* Attach SCK0 to I/O pad */
 //	__set_PINSEL(0, 16, 2);		/* Attach MISO0 to I/O pad */
 //	__set_PINSEL(0, 17, 2);		/* Attach MOSI0 to I/O pad */
-        GPIOSetDir(0, 2, 1);
-        GPIOSetDir(1, 19, 1);
+        pinMode(PIO0_2, OUTPUT); //GPIOSetDir(0, 2, 1);
+        pinMode(PIO1_19, OUTPUT); //GPIOSetDir(1, 19, 1);
         
         //	FIO0DIR |= _BV(18);	/* Set CS# as output */
 #elif SSP_CH == 1
@@ -284,7 +286,7 @@ void power_on (void)	/* Enable SSP module and attach it to I/O pads */
 #endif
 	CS_HIGH();					/* Set CS# high */
 
-        wait_ms(10);
+        delay(10); //wait_ms(10);
 //	for (Timer1 = 10; Timer1; ) ;	/* 10ms */
 }
 

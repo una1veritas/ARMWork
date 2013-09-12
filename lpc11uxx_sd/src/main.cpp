@@ -46,7 +46,11 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 //SPIBus SPI0(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, PIO0_2); // sck, miso, mosi, cs
 //SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
 
-void sd_test(void);
+#ifdef __cplusplus
+extern "C" {
+  void sd_test(void);
+}
+#endif
 
 ST7032i lcd(Wire, LED_LCDBKLT);
 RTC rtc(RTC::ST_M41T62);

@@ -101,12 +101,12 @@
         <DllOption>
           <SimDllName>SARMCM3.DLL</SimDllName>
           <SimDllArguments></SimDllArguments>
-          <SimDlgDll>DARMCM1.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pCM0</SimDlgDllArguments>
+          <SimDlgDll>DARMP1.DLL</SimDlgDll>
+          <SimDlgDllArguments>-pLPC11U24</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
-          <TargetDlgDll>TARMCM1.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pCM0</TargetDlgDllArguments>
+          <TargetDlgDll>TARMP1.DLL</TargetDlgDll>
+          <TargetDlgDllArguments>-pLPC11U24</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>

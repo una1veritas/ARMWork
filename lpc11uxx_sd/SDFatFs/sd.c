@@ -12,6 +12,9 @@
 #include "ff.h"
 //#include "cappuccino.h"
 
+#include "armcmx.h"
+#include "usart.h"
+
 DWORD get_fattime()
 {
   return 0;
@@ -54,17 +57,18 @@ void sd_test()
 	 */
 	rc = f_open(&Fil, "MESSAGE.TXT", FA_READ);
 	if (!rc){
-		 i2c_cmd(0x80);
+		 USART_puts(&usart, "Type the file content."); //i2c_cmd(0x80);
 //	xprintf("\nType the file content.\n");
     for (;;) {
       rc = f_read(&Fil, buff, sizeof(buff), &br);	/* Read a chunk of file */
       if (rc || !br) break;			/* Error or end of file */
-
+/*
       for (i = 0; i < br; i++){
-        if(i==0x10) i2c_cmd(0xC0);
-        i2c_data(buff[i]);
+        if(i==0x10) Serial.println(); //i2c_cmd(0xC0);
+        Serial.print(buff[i]); //i2c_data(buff[i]);
       }
-      xprintf("%s\n", buff);
+      */
+      USART_puts(&usart, (char*) buff); //xprintf("%s\n", buff);
     }
     if (rc) die(rc);
     rc = f_close(&Fil);
@@ -83,7 +87,7 @@ void sd_test()
         sprintf(tmp, "Strawberry Linux %d\r\n", i);
         rc = f_write(&Fil, tmp, strlen(tmp), &bw);
         if (rc) die(rc);
-        xprintf("%s\n", tmp);
+        USART_puts(&usart, (char*)tmp); //xprintf("%s\n", tmp);
         // SDカードに書き出します。
         f_sync(&Fil);
         i++;
