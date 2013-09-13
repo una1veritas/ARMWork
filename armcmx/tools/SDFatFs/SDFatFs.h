@@ -51,7 +51,7 @@ public:
     : spibus(bus), pin_cs(cs), pin_detect(detect), pin_busyled(led) {}
   
   void begin(void);
-  void end() { spibus.end(); }
+  void end(void);
       
   inline void setClockDivider(uint8 div) { spibus.setClockDivider(div); }
   inline uint16 transfer(uint16 d) { return spibus.transfer(d); }
@@ -83,6 +83,7 @@ public:
 
 
 class SDFatFile : public Stream {
+  public:
   FIL file;			/* File object */
   SDFatFs & sdfs;
   
@@ -90,20 +91,16 @@ class SDFatFile : public Stream {
   boolean peeked;
   
 //  uint8_t readbuff[], writebuff[];
-public:
-  const static BYTE FILE_READ =  FA_OPEN_EXISTING | FA_READ;
-  const static BYTE FILE_WRITE = FA_OPEN_ALWAYS | FA_READ | FA_WRITE;
 
 public:
   SDFatFile(SDFatFs & sdfs) : sdfs(sdfs) {}
 
-    FRESULT result(void) { return sdfs.rescode; }
+  FRESULT result(void) { return sdfs.rescode; }
     
-  void open(const char * fname, const uint8_t mode = FILE_READ);
-  
+  void open(const char * fname, const uint8_t mode);
   char * gets(char * buff, size_t sz);
-  
   void close(void);
+  void seek(uint16_t offset);
   
   inline virtual size_t write(uint8_t c) {
     return write(&c, 1);
@@ -119,9 +116,7 @@ public:
       return 0;
     return f_size(&file) - f_tell(&file);
   }
-
   virtual int read(void);
-  
   virtual int peek(void);
 
   virtual void flush() {

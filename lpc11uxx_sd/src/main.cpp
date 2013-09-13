@@ -21,11 +21,16 @@
 #include "RTC.h"
 #include "SPI.h"
 #include "SPISRAM.h"
-#include "SDFatFs.h"
 
 #include "PWM0Tone.h"
 
+#if defined(LPCLCD)
+#include "lpclcd.h"
+#define LED_SDBUSY LED_USER
+#define SD_DETECT  PIO1_4
+#elif defined(CAPPUCCINO)
 #include "cappuccino.h"
+#endif
 
 #ifdef _LPCXPRESSO_CRP_
 #include <cr_section_macros.h>
@@ -40,10 +45,16 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 //SPIBus SPI0(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, PIO0_2); // sck, miso, mosi, cs
 //SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
 
-SDFatFs sd(SPI0, PIO0_2, PIO1_16, PIO1_19);
-SDFatFile file(sd);
-void sd_read_test(void);
-void sd_write_test(void);
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void sd_test(void);
+  
+#ifdef __cplusplus
+}
+#endif
+
 
 ST7032i lcd(Wire, LED_LCDBKLT);
 RTC rtc(RTC::ST_M41T62);
@@ -80,7 +91,7 @@ int main(void) {
 
   Wire.begin();
   lcd.begin();
-  lcd.backlightHigh();
+  lcd.backlightLow();
   lcd.print("Let's start LCD!");
 
   rtc.begin();
@@ -98,19 +109,19 @@ int main(void) {
  /*
   * SDカードのデモ（エンドレス）
   */
+  
   Serial.print("result of get_fattime: ");
   Serial.println(get_fattime(), HEX);
   
   //SPI_init(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, SSP_CS0);
   SPI0.begin();
-  sd.begin();
-  if ( digitalRead(SW_SDDETECT) == HIGH ) {
+  if ( digitalRead(SD_DETECT) == HIGH ) {
     Serial.println("SD slot is empty.");
   } else {
     Serial.println("Card is in SD slot.");
   }
-	sd_read_test();
-	sd_write_test();
+
+	sd_test();
 /*
  * i2C液晶のテスト（エンドレス）
  */
@@ -130,100 +141,4 @@ int main(void) {
 	  }
 
 //	return 0 ;
-}
-
-
-#define BCD8TODEC(n)  ( ((n)&>>4&0x0f)*10 + ((n)&0x0f) )
-
-
-//FATFS Fatfs;		/* File system object */
-//FIL Fil;			/* File object */
-static uint8_t buff[128];
-
-
-/*
- * SDカードからMESSAGE.TXTのファイルを読み込んでI2C液晶に表示します。
- * (先頭32文字だけ)
- * その後、SD0001.TXTというファイルを作成して、LPCcappuccino!+CR+LFという文字を永遠に書き込みます
- */
-
-/*
- * SDカードのサンプル
- */
-void sd_read_test()
-{
-//	FRESULT rc;
-
-//	DIR dir;				/* Directory object */
-//	FILINFO fno;			/* File information object */
-
-//	f_mount(0, &Fatfs);		/* Register volume work area (never fails) */
-	/*
-	 * SDカードのMESSAGE.TXTを開いてI2C液晶に表示します。英数カナのみ
-	 * ２行分のみ
-	 */
-	//rc = f_open(&Fil, "MESSAGE.TXT", FA_READ);
-	file.open("KEYID.TXT", SDFatFile::FILE_READ); 
-  if ( !file.result() ) { //!rc){
-    Serial.print("\nType the file content:\n\n");
-    for (;;) {
-      /* Read a chunk of file */
-      //if (rc || !f_gets((TCHAR*)buff, sizeof(buff), &Fil) ) break;			/* Error or end of file */
-      if ( file.gets((TCHAR*) buff, sizeof(buff)) == NULL || file.result() )
-        break;
-
-      Serial.print((char*)buff);
-    }
-    if ( file.result() ) {
-      Serial.println("\nFailed while reading.\n");
-    }
-    //rc = f_close(&Fil);
-    file.close();
-  } else 
-  if ( file.result() == FR_NO_FILE ) { 
-    Serial.println("\nCouldn't find MESSAGE.TXT.\n");
-  }
-}
-
-void sd_write_test()
-{
-//	FRESULT rc;
-  long swatch;
-  
-//	DIR dir;				/* Directory object */
-//	FILINFO fno;			/* File information object */
-	UINT i;
-
-    /*
-     *	ファイル書き込みテスト
-     *	SD0001.TXTファイルを作成し、Strawberry Linuxの文字を永遠に書き込む
-     */
-
-//    rc = f_open(&Fil, "SD0001.TXT", FA_WRITE | FA_CREATE_ALWAYS);
-//    file.open("SD0001.TXT", SDFatFile::FILE_WRITE);
-  file.open("SD0001.TXT", SDFatFile::FILE_WRITE);
-  if ( file.result() == FR_NO_FILE ) { //rc) {
-    Serial.println("\nCouldn't find SD0001.TXT.");
-    return;
-  }
-  swatch = millis();
-  // 無限ループでこの関数からは抜けない
-  while( millis() < swatch + 1000 ){
-    i = sprintf((char*)buff, "%08u ", millis());
-    //f_write(&Fil, buff, i, &bw);
-    file.write(buff, i);
-    //rc = f_write(&Fil, "Strawberry Linux\r\n", 18, &bw);
-    file.write((uint8_t *)"Strawberry Linux\r\n", 18);
-    //if (rc) 
-    if ( file.result() ) 
-      break;
-    // SDカードに書き出します。
-   // f_sync(&Fil);
-    file.flush();
-    Serial.println((char*)buff);
-  }
-  //f_close(&Fil);
-  file.close();
-  Serial.println("\nSD File IO test finished.\n");
-  return;
 }

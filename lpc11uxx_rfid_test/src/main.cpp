@@ -260,9 +260,15 @@ int main (void) {
           //get_MifareBlock(card, (IDData &) tmp, mykey);
           //nfcreader.printBytes(tmp, 16);
           
+<<<<<<< HEAD
+          strcpy((char*)iddata.iizuka.division, "1G");
+          strcpy((char*)iddata.iizuka.pid, "10000002");
+          iddata.iizuka.issue = '2';
+=======
           strcpy((char*)iddata.iizuka.division, "1S");
           strcpy((char*)iddata.iizuka.pid, "82541854");
           iddata.iizuka.issue = '1';
+>>>>>>> ea2df371496c2a42d9f58d0a240ff2a604d89693
           writeIDInfo(card, iddata);
           //
           cmdstatus = IDLE;
@@ -458,7 +464,7 @@ void displayIDData(char * str, uint8 type, IDData & iddata) {
 
 void SD_readparam() {
   strcpy((char*) tmp32, "CONFIG.TXT");
-	file.open((char*)tmp32, SDFatFile::FILE_READ); 
+	file.open((char*)tmp32, FA_READ); 
   if ( !file.result() ) {
     Serial.print("Contents of file ");
     Serial.println((char*)tmp32);
@@ -499,7 +505,7 @@ void SD_readkeyid(const char fname[]) {
 //  boolean regkeyid = false;
 
   count = 0;
-	file.open(fname, SDFatFile::FILE_READ); 
+	file.open(fname, FA_READ); 
   if ( !file.result() ) {
     Serial << "Loading key ids." << nl;
     for (;;) {
@@ -573,7 +579,7 @@ void SD_readkeyid(const char fname[]) {
 
 void SD_writelog(char * str)  {
   
-  file.open("CARDLOG.TXT", SDFatFile::FILE_WRITE);
+  file.open("CARDLOG.TXT",FA_WRITE);
   if ( file.result() ) { //rc) {
     Serial << nl << "Couldn't open CARDLOG.TXT." << nl;
     return;
