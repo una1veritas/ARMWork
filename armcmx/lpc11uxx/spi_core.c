@@ -24,18 +24,18 @@ uint32_t SPI_transfer(SPIDef * port, uint32_t data) {
 
 
 void SPI_init(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin ncs) {  
-  SPI_reset(port);
-  SPI_config(port, sck, miso, mosi, ncs);
+  SPI_enable(port);
+  SPI_IOconfig(port, sck, miso, mosi, ncs);
   SPI_start(port);
 }
 
 
-void SPI_config(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin ncs) {
+void SPI_IOconfig(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin ncs) {
   port->pin_SSPCS = ncs;
 
   if ( port->SSPx == LPC_SSP0 ) {
-    LPC_SYSCON->PRESETCTRL |= (0x1<<0);  //SSP0 reset off
-    LPC_SYSCON->SYSAHBCLKCTRL |= (0x1<<11); // power on
+//  this is done in SPI_reset() //  LPC_SYSCON->PRESETCTRL |= (0x1<<0);  //SSP0 reset off
+//    LPC_SYSCON->SYSAHBCLKCTRL |= (0x1<<11); // power on
     LPC_SYSCON->SSP0CLKDIV = 0x2;			/* Divided by 2 */
 
     LPC_IOCON->PIO0_8 &= ~0x07;		/*  SSP I/O config */
@@ -70,7 +70,7 @@ void SPI_config(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin 
   }
   else if (port->SSPx == LPC_SSP1) 		/* port number 1 */
   {
-    LPC_SYSCON->PRESETCTRL |= (0x1<<2);  // SSP1 reset off
+//    LPC_SYSCON->PRESETCTRL |= (0x1<<2);  // SSP1 reset off
     LPC_SYSCON->SYSAHBCLKCTRL |= (1<<18);  // power on
     LPC_SYSCON->SSP1CLKDIV = 0x02;			/* Divided by 2 */
     if ( sck == PIO1_20 ) {
@@ -151,20 +151,32 @@ void SPI_start(SPIDef * port) {
   return;
 }
 
-
-void SPI_reset(SPIDef * port) {
- if ( port->SSPx == LPC_SSP0 ) {
+void SPI_enable(SPIDef * port) {
+  if ( port->SSPx == LPC_SSP0 ) {
     LPC_SYSCON->PRESETCTRL &= ~SSP0_RST_N;
-   __nop();
+    __nop();
+    //
+    LPC_SYSCON->SYSAHBCLKCTRL |= SSP0_SYSCLK; // power on
+    LPC_SYSCON->SSP0CLKDIV = 0x2;			/* Divided by 2 */      
     LPC_SYSCON->PRESETCTRL |= SSP0_RST_N;
- } else if ( port->SSPx == LPC_SSP1 ) {
+  } else if (port->SSPx == LPC_SSP1) 		/* port number 1 */
+  {
     LPC_SYSCON->PRESETCTRL &= ~SSP1_RST_N;
-   __nop();
+    __nop();
+    //
+    LPC_SYSCON->SYSAHBCLKCTRL |= SSP1_SYSCLK;  // power on
+    LPC_SYSCON->SSP1CLKDIV = 0x02;			/* Divided by 2 */
     LPC_SYSCON->PRESETCTRL |= SSP1_RST_N;
- }
+  }
 }
 
 void SPI_disable(SPIDef * port) {
+  if ( port->SSPx == LPC_SSP0 ) {
+    LPC_SYSCON->SYSAHBCLKCTRL &= ~SSP0_SYSCLK; // power ogg
+  } else if (port->SSPx == LPC_SSP1) 		/* port number 1 */
+  {
+    LPC_SYSCON->SYSAHBCLKCTRL &= ~SSP1_SYSCLK;  // power off
+  }
 }
 
 void SPI_ClockDivier(SPIDef * port, uint32_t div) {

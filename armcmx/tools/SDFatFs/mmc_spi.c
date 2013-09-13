@@ -51,7 +51,7 @@
 
 #define CS_HIGH()  { digitalWrite(PIO0_2, HIGH); }
 #define CS_LOW()   { digitalWrite(PIO0_2, LOW); }
-#define SD_SLOTEMPTY()  digitalRead(SW_SDDETECT)
+#define SD_SLOTEMPTY()  digitalRead(SD_DETECT)
 
 #if PCLK_SSP * 1 == CCLK
 #define PCLKDIV_SSP	PCLKDIV_1

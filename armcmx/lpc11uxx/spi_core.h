@@ -40,6 +40,9 @@ typedef struct {
 #define SSP0_RST_N (1<<0)
 #define SSP1_RST_N (1<<2)
 
+#define SSP0_SYSCLK (1L<<11)
+#define SSP1_SYSCLK (1L<<18)
+
 /* SPI read and write buffer size */
 #define SSP_BUFSIZE     16
 #define FIFOSIZE        8
@@ -95,13 +98,11 @@ typedef struct {
 #define SSPICR_RTIC     (0x1<<1)
 
 
-
-void SPI_reset(SPIDef * port);
-
 void SPI_init(SPIDef * port, GPIOPin clk, GPIOPin miso, GPIOPin mosi, GPIOPin ssel);
-void SPI_config(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin ncs);
+void SPI_IOconfig(SPIDef * port, GPIOPin sck, GPIOPin miso, GPIOPin mosi, GPIOPin ncs);
 void SPI_start(SPIDef * port);
 
+void SPI_enable(SPIDef * port);
 void SPI_disable(SPIDef * port);
 
 

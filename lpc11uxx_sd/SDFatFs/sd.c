@@ -14,7 +14,23 @@ static SDFatFs SD;
 
 DWORD get_fattime()
 {
-  return 0;
+  uint32_t cal = SD.cal;
+  uint32_t time = SD.time;
+  
+  uint8_t y,m,d, hh, mm, ss;
+  y = 20 + (cal>>16&0x0f) + (cal>>20&0x0f)*10;
+  m = (cal>>8&0x0f) + (cal>>12&0x0f)*10;
+  d = (cal&0x0f) + (cal>>4&0x0f)*10;
+  hh = (time>>16&0x0f) + (time>>20&0x0f)*10;
+  mm = (time>>8&0x0f) + (time>>12&0x0f)*10;
+  ss = (time&0x0f) + (time>>4&0x0f)*10;
+  
+  return ((uint32_t)y<<25) | m<<21 | d<<16 | hh << 11 | mm<<5 | ss>>1;
+}
+
+void set_fattime(uint32_t date, uint32_t time) {
+  SD.time = time;
+  SD.cal = date;
 }
 
 #ifdef ORGINAL
@@ -47,18 +63,18 @@ void sd_test()
 	UINT bw, br, i;
   char tmp[64];
 
-	f_mount(0, &SD.Fatfs);		/* Register volume work area (never fails) */
+	f_mount(0, &SD.fatfs);		/* Register volume work area (never fails) */
 
 	/*
 	 * SDカードのMESSAGE.TXTを開いてI2C液晶に表示します。英数カナのみ
 	 * ２行分のみ
 	 */
-	rc = f_open(&SD.Fil, "MESSAGE.TXT", FA_READ);
+	rc = f_open(&SD.file, "MESSAGE.TXT", FA_READ);
 	if (!rc){
 		 USART_puts(&usart, "Type the file content."); //i2c_cmd(0x80);
 //	xprintf("\nType the file content.\n");
     for (;;) {
-      rc = f_read(&SD.Fil, SD.buff, sizeof(SD.buff), &br);	/* Read a chunk of file */
+      rc = f_read(&SD.file, SD.buff, sizeof(SD.buff), &br);	/* Read a chunk of file */
       if (rc ) break;			/* Error or end of file */
       if ( br < sizeof(SD.buff) ) {
         SD.buff[br] = 0;
@@ -74,29 +90,35 @@ void sd_test()
         break;
     }
     if (rc) die(rc);
-    rc = f_close(&SD.Fil);
+    rc = f_close(&SD.file);
+    USART_puts(&usart, "\n\nFile read test finished.\n\n");
+  } else {
+		 USART_puts(&usart, "Read file open failed.\n"); 
   }
-
-  USART_puts(&usart, "\n\nFile read test finished.\n\n");
   /*
    *	ファイル書き込みテスト
    *	SD0001.TXTファイルを作成し、Strawberry Linuxの文字を永遠に書き込む
    */
 
-    rc = f_open(&SD.Fil, "LOG.TXT", FA_WRITE | FA_OPEN_ALWAYS);
-    f_lseek(&SD.Fil, f_size(&SD.Fil));
+  rc = f_open(&SD.file, "LOG.TXT", FA_WRITE | FA_OPEN_ALWAYS);
+  if ( !rc ) {
+    f_lseek(&SD.file, f_size(&SD.file));
     if (rc) die(rc);
     i = 0;
     // 無限ループでこの関数からは抜けない
-      while(i < 50){
-        sprintf(tmp, "Strawberry Linux %d\r\n", i);
-        rc = f_write(&SD.Fil, tmp, strlen(tmp), &bw);
-        if (rc) die(rc);
-        USART_puts(&usart, (char*)tmp); //xprintf("%s\n", tmp);
-        // SDカードに書き出します。
-        f_sync(&SD.Fil);
-        i++;
-      }
+    while(i < 50){
+      sprintf(tmp, "%06u %06u Strawberry Linux %d\r\n", SD.cal, SD.time, i);
+      rc = f_write(&SD.file, tmp, strlen(tmp), &bw);
+      if (rc) die(rc);
+      USART_puts(&usart, (char*)tmp); //xprintf("%s\n", tmp);
+      // SDカードに書き出します。
+      f_sync(&SD.file);
+      i++;
+    }
+    USART_puts(&usart, "\n\nWrite file test finished.\n\n");
+  } else {
+    USART_puts(&usart, "Write file open failed.\n"); //i2c_cmd(0x80);
+  }
 //	return;
     f_mount(0, NULL);
 }

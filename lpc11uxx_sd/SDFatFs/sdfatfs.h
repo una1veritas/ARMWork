@@ -9,9 +9,12 @@ struct SDFatFs {
   GPIOPin detect;
   GPIOPin led;
   
-  FATFS Fatfs;		/* File system object */
-  FIL Fil;			/* File object */
+  FATFS fatfs;		/* File system object */
+  FIL file;			/* File object */
   uint8_t buff[32];
+  
+  FRESULT errcode;
+  uint32_t time, cal;
 } 
 SDFatFs;
 

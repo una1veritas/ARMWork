@@ -19,8 +19,7 @@
 #include "I2Cbus.h"
 #include "ST7032i.h"
 #include "RTC.h"
-#include "SPI.h"
-#include "SPISRAM.h"
+#include "spi_core.h"
 
 #include "PWM0Tone.h"
 
@@ -50,6 +49,7 @@ extern "C" {
 #endif
 
 void sd_test(void);
+void set_fattime(uint32_t date, uint32_t time);
   
 #ifdef __cplusplus
 }
@@ -110,17 +110,17 @@ int main(void) {
   * SDカードのデモ（エンドレス）
   */
   
+  set_fattime(rtc.cal, rtc.time);
   Serial.print("result of get_fattime: ");
   Serial.println(get_fattime(), HEX);
   
-  //SPI_init(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, SSP_CS0);
-  SPI0.begin();
+  SPI_init(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, SSP0_CS_DEFAULT);
+  //SPI0.begin();
   if ( digitalRead(SD_DETECT) == HIGH ) {
     Serial.println("SD slot is empty.");
   } else {
     Serial.println("Card is in SD slot.");
   }
-
 	sd_test();
 /*
  * i2C液晶のテスト（エンドレス）
