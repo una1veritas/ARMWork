@@ -260,9 +260,21 @@ int main (void) {
           //get_MifareBlock(card, (IDData &) tmp, mykey);
           //nfcreader.printBytes(tmp, 16);
           
+<<<<<<< HEAD
           strcpy((char*)iddata.iizuka.division, "1G");
           strcpy((char*)iddata.iizuka.pid, "10000002");
           iddata.iizuka.issue = '2';
+=======
+<<<<<<< HEAD
+          strcpy((char*)iddata.iizuka.division, "1G");
+          strcpy((char*)iddata.iizuka.pid, "10000002");
+          iddata.iizuka.issue = '2';
+=======
+          strcpy((char*)iddata.iizuka.division, "1S");
+          strcpy((char*)iddata.iizuka.pid, "82541854");
+          iddata.iizuka.issue = '1';
+>>>>>>> ea2df371496c2a42d9f58d0a240ff2a604d89693
+>>>>>>> master
           writeIDInfo(card, iddata);
           //
           cmdstatus = IDLE;
