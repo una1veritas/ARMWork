@@ -281,16 +281,18 @@ static
 void power_on (void)	/* Enable SSP module and attach it to I/O pads */
 {
   
-  
+#ifdef ORIGINAL
 #if 0
 	__set_PCONP(PCSSPx, 1);		/* Enable SSP module */
 	__set_PCLKSEL(PCLKSSPx, PCLKDIV_SSP);	/* Select PCLK frequency for SSP */
 	SSPxCR0 = 0x0007;			/* Set mode: SPI mode 0, 8-bit */
 	SSPxCR1 = 0x2;				/* Enable SSP with Master */
-#endif    
-        SSP_IOConfig( 0 );
-        SSP_Init(0);
-          
+#endif
+#endif
+        SPI_init(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, PIO0_2); //SSP_IOConfig( 0 );
+        //SSP_Init(0);
+        SPI_ClockDivier(&SPI0Def, SPI_CLOCK_DIV8);
+#ifdef ORIGINAL
 #if SSP_CH == 0
 //	__set_PINSEL(0, 15, 2);		/* Attach SCK0 to I/O pad */
 //	__set_PINSEL(0, 16, 2);		/* Attach MISO0 to I/O pad */
@@ -304,6 +306,7 @@ void power_on (void)	/* Enable SSP module and attach it to I/O pads */
 //	__set_PINSEL(0, 8, 2);		/* Attach MISO1 to I/O pad */
 //	__set_PINSEL(0, 9, 2);		/* Attach MOSI1 to I/O pad */
 //	FIO0DIR |= _BV(6);	/* Set CS# as output */
+#endif
 #endif
 	CS_HIGH();					/* Set CS# high */
 

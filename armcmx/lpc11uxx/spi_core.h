@@ -33,6 +33,8 @@ typedef struct {
   LPC_SSPx_Type * SSPx;
   GPIOPin pin_SSPCS;
   //
+  // GPIOPin pin_SCLK, pin_MISO, pin_MOSI;
+  // uint8_t mode, bitwidth, divider;
 } SPIDef;
 
 #define SSP0_RST_N (1<<0)
