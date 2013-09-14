@@ -1,23 +1,46 @@
 #ifndef _SDFATFS_H_
 #define _SDFATFS_H_
 
+#include <stdint.h>
+#include "ff.h"
+
 #include "armcmx.h"
+#include "SPI.h"
 
-typedef 
-struct SDFatFs {
-  GPIOPin cs;
-  GPIOPin detect;
-  GPIOPin led;
-  
+
+class SDFatFs {
   FATFS fatfs;		/* File system object */
-  FIL file;			/* File object */
-  uint8_t buff[32];
-  
-  FRESULT errcode;
-  uint32_t time, cal;
-} 
-SDFatFs;
+//public:
+//  FIL file;			/* File object */  
 
-static SDFatFs SD;
+private:
+  SPIBus & bus;
+  GPIOPin chipselect;
+  GPIOPin carddetect, busyled;
+
+public:
+  SDFatFs(SPIBus & spibus, GPIOPin cs, GPIOPin detect = PIN_NOT_DEFINED, GPIOPin busy = PIN_NOT_DEFINED) 
+    : bus(spibus), chipselect(cs), carddetect(detect), busyled(busy) {}
+
+  void mount(void) {
+    f_mount(0, &fatfs);		/* Register volume work area (never fails) */
+
+  }
+  void unmount(void) {
+    f_mount(0, NULL);
+  }
+};
+
+class SDFile {
+  FRESULT errcode;
+  
+public:
+  FIL * file;
+
+  SDFile(FIL * f) : file(f) {}
+  
+};
+
+extern SDFatFs SD;
 
 #endif
