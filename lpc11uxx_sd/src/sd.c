@@ -10,8 +10,6 @@
 #include "sdfatfs.h"
 
 
-static SDFatFs SD;
-
 DWORD get_fattime()
 {
   uint32_t cal = SD.cal;

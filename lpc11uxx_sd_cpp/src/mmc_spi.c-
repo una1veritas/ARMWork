@@ -11,7 +11,9 @@
 /
 /-------------------------------------------------------------------------*/
 
-#define SSP_CH	0	/* SSP channel to use (0:SSP0, 1:SSP1) */
+#include "spi.h"
+
+//#define SSP_CH	0	/* SSP channel to use (0:SSP0, 1:SSP1) */
 
 #define	CCLK		100000000UL	/* cclk frequency [Hz] */
 #define PCLK_SSP	50000000UL	/* PCLK frequency for SSP [Hz] */
@@ -21,15 +23,15 @@
 #define	INS			(!(LPC_GPIO->PIN[1] & _BV(16)))	/* Socket status (true:Inserted, false:Empty) */
 #define	WP			0 /* Card write protection (true:yes, false:no) */
 
-
+/*
 #if SSP_CH == 0
 #define	SSPxDR		LPC_SSP0->DR
 #define	SSPxSR		LPC_SSP0->SR
 #define	SSPxCR0		LPC_SSP0->CR0
 #define	SSPxCR1		LPC_SSP0->CR1
 #define	SSPxCPSR	LPC_SSP0->CPSR
-#define	CS_LOW()	{ LPC_GPIO->CLR[0] = _BV(2); LPC_GPIO->CLR[1] = _BV(19); }	// Set P0.2 low //
-#define	CS_HIGH()	{ LPC_GPIO->SET[0] = _BV(2); LPC_GPIO->SET[1] = _BV(19); }	// Set P0.2 high //
+#define	CS_LOW()	{ LPC_GPIO->CLR[0] = _BV(2); LPC_GPIO->CLR[1] = _BV(19); }	// Set P0.2 low 
+#define	CS_HIGH()	{ LPC_GPIO->SET[0] = _BV(2); LPC_GPIO->SET[1] = _BV(19); }	// Set P0.2 high 
 #define PCSSPx		PCSSP0
 #define	PCLKSSPx	PCLK_SSP0
 #elif SSP_CH == 1
@@ -38,13 +40,15 @@
 #define	SSPxCR0		SSP1CR0
 #define	SSPxCR1		SSP1CR1
 #define	SSPxCPSR	SSP1CPSR
-#define	CS_LOW()	{ LPC_GPIO->CLR[0] = _BV(2);}	// Set P0.2 low //
-#define	CS_HIGH()	{ LPC_GPIO->SET[0] = _BV(2);}	// Set P0.2 high //
+#define	CS_LOW()	{ LPC_GPIO->CLR[0] = _BV(2);}	// Set P0.2 low 
+#define	CS_HIGH()	{ LPC_GPIO->SET[0] = _BV(2);}	// Set P0.2 high 
 #define PCSSPx		PCSSP1
 #define	PCLKSSPx	PCLK_SSP1
 #endif
+*/
 
-
+#define CS_HIGH()  digitalWrite(PIO0_2, HIGH)
+#define CS_LOW()  digitalWrite(PIO0_2, LOW)
 
 #if PCLK_SSP * 1 == CCLK
 #define PCLKDIV_SSP	PCLKDIV_1
@@ -59,8 +63,8 @@
 #endif
 
 
-#define FCLK_FAST() { SSPxCPSR = (PCLK_SSP / SCLK_FAST) & ~1; }
-#define FCLK_SLOW() { SSPxCPSR = (PCLK_SSP / SCLK_SLOW) & ~1; }
+#define FCLK_FAST() { SPI0Def.SSPx->CPSR = (PCLK_SSP / SCLK_FAST) & ~1; }
+#define FCLK_SLOW() { SPI0Def.SSPx->CPSR = (PCLK_SSP / SCLK_SLOW) & ~1; }
 
 #define	_BV(n)		(1<<(n))
 
@@ -71,13 +75,12 @@
 ---------------------------------------------------------------------------*/
 
 #include "LPC11uxx.h"
+#include "gpio.h"
+#include "delay.h"
 #include "diskio.h"
+#include "cappuccino.h"
 
-#include "armcmx.h"
-//#include "cappuccino.h"
-
-//#include "ssp.h"
-#include "spi_core.h"
+#include "ssp.h"
 
 /* MMC/SD command */
 #define CMD0	(0)			/* GO_IDLE_STATE */
@@ -118,19 +121,17 @@ BYTE CardType;			/* Card type flags */
 /*-----------------------------------------------------------------------*/
 
 /* Exchange a byte */
-#if defined (ORIGINAL)
+/*
 static
 BYTE xchg_spi (
-	BYTE dat	// Data to send //
+	BYTE dat	// Data to send 
 )
 {
 	SSPxDR = dat;
 	while (SSPxSR & 0x10) ;
 	return SSPxDR;
 }
-#else
-#define xchg_spi(d)  SPI_transfer(&SPI0Def, (d))
-#endif
+*/
 
 /* Receive multiple byte */
 static
@@ -138,41 +139,34 @@ void rcvr_spi_multi (
 	BYTE *buff,		/* Pointer to data buffer */
 	UINT btr		/* Number of bytes to receive (16, 64 or 512) */
 )
-#if defined(ORIGINAL)
 {
 	UINT n = 512;
 	WORD d;
 
 
-	SSPxCR0 = 0x000F;				/* Select 16-bit mode */
+	SPI0Def.SSPx->CR0 = 0x000F; //SSPxCR0 = 0x000F;				/* Select 16-bit mode */
 
 	for (n = 0; n < 8; n++)			/* Push 8 frames into pipeline  */
-		SSPxDR = 0xFFFF;
+		SPI0Def.SSPx->DR = 0xFFFF;
 	btr -= 16;
 	while (btr) {					/* Receive the data block into buffer */
-		while (!(SSPxSR & _BV(2))) ;
-		d = SSPxDR;
-		SSPxDR = 0xFFFF;
+		while (!(SPI0Def.SSPx->SR & _BV(2))) ;
+		d = SPI0Def.SSPx->DR;
+		SPI0Def.SSPx->DR = 0xFFFF;
 		*buff++ = d >> 8;
 		*buff++ = d;
 		btr -= 2;
 	}
 	for (n = 0; n < 8; n++) {		/* Pop remaining frames from pipeline */
-		while (!(SSPxSR & _BV(2))) ;
-		d = SSPxDR;
+		while (!(SPI0Def.SSPx->SR & _BV(2))) ;
+		d = SPI0Def.SSPx->DR;
 		*buff++ = d >> 8;
 		*buff++ = d;
 	}
 
-	SSPxCR0 = 0x0007;				/* Select 8-bit mode */
+	SPI0Def.SSPx->CR0 = 0x0007;				/* Select 8-bit mode */
 }
-#else
-{
-  for ( ; btr > 0; btr-- ) {
-    *buff++ = SPI_transfer(&SPI0Def, 0xff);
-  }
-}
-#endif
+
 
 #if _USE_WRITE
 /* Send multiple byte */
@@ -181,41 +175,32 @@ void xmit_spi_multi (
 	const BYTE *buff,	/* Pointer to the data */
 	UINT btx			/* Number of bytes to send (512) */
 )
-#if defined ORIGINAL
 {
 	UINT n = 512;
 	WORD d;
 
 
-	SSPxCR0 = 0x000F;			/* Select 16-bit mode */
+	SPI0Def.SSPx->CR0 = 0x000F;			/* Select 16-bit mode */
 
 	for (n = 0; n < 8; n++) {	/* Push 8 frames into pipeline  */
 		d = *buff++;
 		d = (d << 8) | *buff++;
-		SSPxDR = d;
+		SPI0Def.SSPx->DR = d;
 	}
 	btx -= 16;
 	do {						/* Transmit data block */
 		d = *buff++;
 		d = (d << 8) | *buff++;
-		while (!(SSPxSR & _BV(2))) ;
-		SSPxDR; SSPxDR = d;
+		while (!(SPI0Def.SSPx->SR & _BV(2))) ;
+		SPI0Def.SSPx->DR; SPI0Def.SSPx->DR = d;
 	} while (btx -= 2);
 	for (n = 0; n < 8; n++) {
-		while (!(SSPxSR & _BV(2))) ;
-		SSPxDR;
+		while (!(SPI0Def.SSPx->SR & _BV(2))) ;
+		SPI0Def.SSPx->DR;
 	}
 
-	SSPxCR0 = 0x0007;			/* Select 8-bit mode */
+	SPI0Def.SSPx->CR0 = 0x0007;			/* Select 8-bit mode */
 }
-#else
-{
-  for ( ; btx > 0; btx-- ) {
-    SPI_transfer(&SPI0Def, *buff++);
-  }
-}
-#endif // ORIGINAL
-
 #endif
 
 
@@ -233,7 +218,7 @@ int wait_ready (	/* 1:Ready, 0:Timeout */
 
 	Timer2 = wt;
 	do {
-		d = xchg_spi(0xFF);
+		d = SPI_transfer(&SPI0Def, 0xff); //xchg_spi(0xFF);
 		/* This loop takes a time. Insert rot_rdq() here for multitask envilonment. */
 	} while (d != 0xFF && Timer2);	/* Wait for card goes ready or timeout */
 
@@ -250,7 +235,7 @@ static
 void deselect (void)
 {
 	CS_HIGH();		/* CS = H */
-	xchg_spi(0xFF);	/* Dummy clock (force DO hi-z for multiple slave SPI) */
+	SPI_transfer(&SPI0Def, 0xff); //xchg_spi(0xFF);	/* Dummy clock (force DO hi-z for multiple slave SPI) */
 
 }
 
@@ -264,7 +249,7 @@ static
 int select (void)	/* 1:OK, 0:Timeout */
 {
 	CS_LOW();
-	xchg_spi(0xFF);	/* Dummy clock (force DO enabled) */
+	SPI_transfer(&SPI0Def, 0xff); //xchg_spi(0xFF);	/* Dummy clock (force DO enabled) */
 
 	if (wait_ready(500)) return 1;	/* OK */
 	deselect();
@@ -277,28 +262,27 @@ int select (void)	/* 1:OK, 0:Timeout */
 /* Control SPI module (Platform dependent)                               */
 /*-----------------------------------------------------------------------*/
 
+#ifdef __ORIGINAL
+
 static
 void power_on (void)	/* Enable SSP module and attach it to I/O pads */
 {
   
-#ifdef ORIGINAL
 #if 0
 	__set_PCONP(PCSSPx, 1);		/* Enable SSP module */
 	__set_PCLKSEL(PCLKSSPx, PCLKDIV_SSP);	/* Select PCLK frequency for SSP */
 	SSPxCR0 = 0x0007;			/* Set mode: SPI mode 0, 8-bit */
 	SSPxCR1 = 0x2;				/* Enable SSP with Master */
-#endif
-#endif
-        SPI_init(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, PIO0_2); //SSP_IOConfig( 0 );
-        //SSP_Init(0);
-        SPI_clock(&SPI0Def, SPI_CLOCK_DIV8);
-#ifdef ORIGINAL
+#endif    
+        SSP_IOConfig( 0 );
+        SSP_Init(0);
+          
 #if SSP_CH == 0
 //	__set_PINSEL(0, 15, 2);		/* Attach SCK0 to I/O pad */
 //	__set_PINSEL(0, 16, 2);		/* Attach MISO0 to I/O pad */
 //	__set_PINSEL(0, 17, 2);		/* Attach MOSI0 to I/O pad */
-        pinMode(PIO0_2, OUTPUT); //GPIOSetDir(0, 2, 1);
-        pinMode(PIO1_19, OUTPUT); //GPIOSetDir(1, 19, 1);
+        pinMode(PIO0_2, OUTPUT);
+        pinMode(PIO1_19, OUTPUT);
         
         //	FIO0DIR |= _BV(18);	/* Set CS# as output */
 #elif SSP_CH == 1
@@ -307,12 +291,33 @@ void power_on (void)	/* Enable SSP module and attach it to I/O pads */
 //	__set_PINSEL(0, 9, 2);		/* Attach MOSI1 to I/O pad */
 //	FIO0DIR |= _BV(6);	/* Set CS# as output */
 #endif
-#endif
 	CS_HIGH();					/* Set CS# high */
 
-        delay(10); //wait_ms(10);
+        delay(10);
 //	for (Timer1 = 10; Timer1; ) ;	/* 10ms */
 }
+
+#endif
+
+static
+void mode_on (void)	/* Enable SSP module and attach it to I/O pads */
+{
+  
+  
+#if 0
+	__set_PCONP(PCSSPx, 1);		/* Enable SSP module */
+	__set_PCLKSEL(PCLKSSPx, PCLKDIV_SSP);	/* Select PCLK frequency for SSP */
+	SSPxCR0 = 0x0007;			/* Set mode: SPI mode 0, 8-bit */
+	SSPxCR1 = 0x2;				/* Enable SSP with Master */
+#endif    
+//        SSP_IOConfig( 0 );
+//        SSP_Init(0);
+          
+	CS_HIGH();					/* Set CS# high */
+  delay(10);
+//	for (Timer1 = 10; Timer1; ) ;	/* 10ms */
+}
+
 
 
 static
@@ -339,13 +344,13 @@ int rcvr_datablock (	/* 1:OK, 0:Error */
 
 	Timer1 = 200;
 	do {							/* Wait for DataStart token in timeout of 200ms */
-		token = xchg_spi(0xFF);
+		token = SPI_transfer(&SPI0Def, 0xff); //xchg_spi(0xFF);
 		/* This loop will take a time. Insert rot_rdq() here for multitask envilonment. */
 	} while ((token == 0xFF) && Timer1);
 	if(token != 0xFE) return 0;		/* Function fails if invalid DataStart token or timeout */
 
 	rcvr_spi_multi(buff, btr);		/* Store trailing data to the buffer */
-	xchg_spi(0xFF); xchg_spi(0xFF);			/* Discard CRC */
+	SPI_transfer(&SPI0Def, 0xff); SPI_transfer(&SPI0Def, 0xff); //xchg_spi(0xFF); xchg_spi(0xFF);			/* Discard CRC */
 
 	return 1;						/* Function succeeded */
 }
@@ -368,12 +373,12 @@ int xmit_datablock (	/* 1:OK, 0:Failed */
 
 	if (!wait_ready(500)) return 0;		/* Wait for card ready */
 
-	xchg_spi(token);					/* Send token */
+	SPI_transfer(&SPI0Def, token); //xchg_spi(token);					/* Send token */
 	if (token != 0xFD) {				/* Send data if token is other than StopTran */
 		xmit_spi_multi(buff, 512);		/* Data */
-		xchg_spi(0xFF); xchg_spi(0xFF);	/* Dummy CRC */
+		SPI_transfer(&SPI0Def, 0xff); SPI_transfer(&SPI0Def, 0xff); //xchg_spi(0xFF); xchg_spi(0xFF);	/* Dummy CRC */
 
-		resp = xchg_spi(0xFF);				/* Receive data resp */
+		resp = SPI_transfer(&SPI0Def, 0xff); //xchg_spi(0xFF);				/* Receive data resp */
 		if ((resp & 0x1F) != 0x05)		/* Function fails if the data packet was not accepted */
 			return 0;
 	}
@@ -406,21 +411,21 @@ BYTE send_cmd (		/* Return value: R1 resp (bit7==1:Failed to send) */
 	if (!select()) return 0xFF;
 
 	/* Send command packet */
-	xchg_spi(0x40 | cmd);				/* Start + command index */
-	xchg_spi((BYTE)(arg >> 24));		/* Argument[31..24] */
-	xchg_spi((BYTE)(arg >> 16));		/* Argument[23..16] */
-	xchg_spi((BYTE)(arg >> 8));			/* Argument[15..8] */
-	xchg_spi((BYTE)arg);				/* Argument[7..0] */
+	SPI_transfer(&SPI0Def, 0x40 | cmd); //xchg_spi(0x40 | cmd);				/* Start + command index */
+	SPI_transfer(&SPI0Def, arg>>24); //xchg_spi((BYTE)(arg >> 24));		/* Argument[31..24] */
+	SPI_transfer(&SPI0Def, arg>>16); //xchg_spi((BYTE)(arg >> 16));		/* Argument[23..16] */
+	SPI_transfer(&SPI0Def, arg >> 8 ); //xchg_spi((BYTE)(arg >> 8));			/* Argument[15..8] */
+	SPI_transfer(&SPI0Def, arg); //xchg_spi((BYTE)arg);				/* Argument[7..0] */
 	n = 0x01;							/* Dummy CRC + Stop */
 	if (cmd == CMD0) n = 0x95;			/* Valid CRC for CMD0(0) */
 	if (cmd == CMD8) n = 0x87;			/* Valid CRC for CMD8(0x1AA) */
-	xchg_spi(n);
+	SPI_transfer(&SPI0Def, n); //xchg_spi(n);
 
 	/* Receive command resp */
-	if (cmd == CMD12) xchg_spi(0xFF);	/* Diacard following one byte when CMD12 */
+	if (cmd == CMD12) SPI_transfer(&SPI0Def, 0xff); //xchg_spi(0xFF);	/* Diacard following one byte when CMD12 */
 	n = 10;								/* Wait for response (10 bytes max) */
 	do
-		res = xchg_spi(0xFF);
+		res = SPI_transfer(&SPI0Def, 0xff); //xchg_spi(0xFF);
 	while ((res & 0x80) && --n);
 
 	return res;							/* Return received response */
@@ -447,22 +452,23 @@ DSTATUS disk_initialize (
 
 
 	if (drv) return STA_NOINIT;			/* Supports only drive 0 */
-	power_on();							/* Initialize SPI */
+	mode_on(); //power_on();							/* Initialize SPI */
 
 	if (Stat & STA_NODISK) return Stat;	/* Is card existing in the soket? */
 
 	FCLK_SLOW();
-	for (n = 10; n; n--) xchg_spi(0xFF);	/* Send 80 dummy clocks */
+	for (n = 10; n; n--) 
+    SPI_transfer(&SPI0Def, 0xff); //xchg_spi(0xFF);	/* Send 80 dummy clocks */
 
 	ty = 0;
 	if (send_cmd(CMD0, 0) == 1) {			/* Put the card SPI/Idle state */
 		Timer1 = 1000;						/* Initialization timeout = 1 sec */
 		if (send_cmd(CMD8, 0x1AA) == 1) {	/* SDv2? */
-			for (n = 0; n < 4; n++) ocr[n] = xchg_spi(0xFF);	/* Get 32 bit return value of R7 resp */
+			for (n = 0; n < 4; n++) ocr[n] = SPI_transfer(&SPI0Def, 0xff); //xchg_spi(0xFF);	/* Get 32 bit return value of R7 resp */
 			if (ocr[2] == 0x01 && ocr[3] == 0xAA) {				/* Is the card supports vcc of 2.7-3.6V? */
 				while (Timer1 && send_cmd(ACMD41, 1UL << 30)) ;	/* Wait for end of initialization with ACMD41(HCS) */
 				if (Timer1 && send_cmd(CMD58, 0) == 0) {		/* Check CCS bit in the OCR */
-					for (n = 0; n < 4; n++) ocr[n] = xchg_spi(0xFF);
+					for (n = 0; n < 4; n++) ocr[n] = SPI_transfer(&SPI0Def, 0xff); //xchg_spi(0xFF);
 					ty = (ocr[0] & 0x40) ? CT_SD2 | CT_BLOCK : CT_SD2;	/* Card id SDv2 */
 				}
 			}
@@ -634,9 +640,9 @@ DRESULT disk_ioctl (
 	case GET_BLOCK_SIZE :	/* Get erase block size in unit of sector (DWORD) */
 		if (CardType & CT_SD2) {	/* SDC ver 2.00 */
 			if (send_cmd(ACMD13, 0) == 0) {	/* Read SD status */
-				xchg_spi(0xFF);
+				SPI_transfer(&SPI0Def, 0xff); //xchg_spi(0xFF);
 				if (rcvr_datablock(csd, 16)) {				/* Read partial block */
-					for (n = 64 - 16; n; n--) xchg_spi(0xFF);	/* Purge trailing data */
+					for (n = 64 - 16; n; n--) SPI_transfer(&SPI0Def, 0xff); //xchg_spi(0xFF);	/* Purge trailing data */
 					*(DWORD*)buff = 16UL << (csd[10] >> 4);
 					res = RES_OK;
 				}
@@ -686,14 +692,14 @@ DRESULT disk_ioctl (
 
 	case MMC_GET_OCR :		/* Read OCR (4 bytes) */
 		if (send_cmd(CMD58, 0) == 0) {	/* READ_OCR */
-			for (n = 4; n; n--) *ptr++ = xchg_spi(0xFF);
+			for (n = 4; n; n--) *ptr++ = SPI_transfer(&SPI0Def, 0xff); //xchg_spi(0xFF);
 			res = RES_OK;
 		}
 		break;
 
 	case MMC_GET_SDSTAT :	/* Read SD status (64 bytes) */
 		if (send_cmd(ACMD13, 0) == 0) {	/* SD_STATUS */
-			xchg_spi(0xFF);
+			SPI_transfer(&SPI0Def, 0xff); //xchg_spi(0xFF);
 			if (rcvr_datablock(ptr, 64))
 				res = RES_OK;
 		}
