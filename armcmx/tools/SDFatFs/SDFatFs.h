@@ -86,6 +86,7 @@ class SDFile {
   int peek(void);
   
   size_t write(uint8_t * p, size_t n);
+  size_t write(char * p) { return write((uint8_t*)p, strlen(p)); }
   
   void flush(void) { f_sync(&file); }
   

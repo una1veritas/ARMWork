@@ -89,7 +89,7 @@ void init() {
 
 
 //SDFatFs SD(SD_SPI, SD_CS, SD_DETECT, LED_USER);
-SDFatFile file(SD);
+SDFile file(SD);
 void SD_readparam();
 void SD_readkeyid(const char[]);
 void SD_writelog(char *);
@@ -166,7 +166,7 @@ void setup() {
   Serial.println("SD Card.");
 
   rtc.updateTime();
-  SD.settime(rtc.time, rtc.cal);
+  SD.set_datetime(rtc.cal, rtc.time);
   Serial.print("get_fattime returned ");
   Serial.println(get_fattime(), HEX);
 
@@ -457,14 +457,15 @@ void displayIDData(char * str, uint8 type, IDData & iddata) {
 
 
 void SD_readparam() {
+  SD.mount();
   strcpy((char*) tmp32, "CONFIG.TXT");
-	file.open((char*)tmp32, FA_READ); 
-  if ( !file.result() ) {
+	file.open((char*)tmp32, FA_READ | FA_OPEN_EXISTING ); 
+  if ( !file.error() ) {
     Serial.print("Contents of file ");
     Serial.println((char*)tmp32);
     for (;;) {
       
-      if ( file.gets((TCHAR*) buf, 64) == NULL || file.result() )
+      if ( file.getLine((TCHAR*) buf, 64, SDFile::EOL_CRNL) == 0 || file.error() )
         break;
       if ( buf[0] == '#' ) 
         continue;
@@ -481,16 +482,15 @@ void SD_readparam() {
       */
       Serial.println();
     }
-    if ( file.result() ) {
+    if ( file.error() ) {
       Serial.println("\nFailed while reading.\n");
-      return;
     }
     file.close();
   } else {
     Serial.print("\nCouldn't open ");
     Serial.println((char*)tmp32);
-    return;
   }  
+  SD.unmount();
 }
 
 void SD_readkeyid(const char fname[]) {
@@ -498,15 +498,16 @@ void SD_readkeyid(const char fname[]) {
   KeyID id;
 //  boolean regkeyid = false;
 
+  SD.mount();
   count = 0;
-	file.open(fname, FA_READ); 
-  if ( !file.result() ) {
+	file.open(fname, FA_READ | FA_OPEN_EXISTING ); 
+  if ( !file.error() ) {
     Serial << "Loading key ids." << nl;
     for (;;) {
-      if ( file.gets((TCHAR*) buf, sizeof(buf)) == NULL) {
+      if ( file.getLine((TCHAR*) buf, sizeof(buf)) == 0) {
         break;
       }
-      if ( file.result() ) {
+      if ( file.error() ) {
         break;
       }
 
@@ -557,24 +558,24 @@ void SD_readkeyid(const char fname[]) {
       }
       */
     }
-    if ( file.result() ) {
+    if ( file.error() ) {
       Serial << nl << "Failed while reading." << nl;
       //regkeyid = false;
     }
     file.close();
     Serial << "Total data count " << count << ". " << nl;
     sram.write( 0, (uint8*) &count, sizeof(count) ); // count == 0 means no data ve been read
-    } else {
-      Serial << nl << "Couldn't open " << fname << ". " << nl;
-    return;
+  } else {
+    Serial << nl << "Couldn't open " << fname << ". " << nl;
   }
-
+  SD.unmount();
 }
 
 void SD_writelog(char * str)  {
   
-  file.open("CARDLOG.TXT",FA_WRITE);
-  if ( file.result() ) { //rc) {
+  SD.mount();
+  file.open("CARDLOG.TXT", FA_WRITE | FA_OPEN_ALWAYS);
+  if ( file.error() ) { //rc) {
     Serial << nl << "Couldn't open CARDLOG.TXT." << nl;
     return;
   }
@@ -582,12 +583,13 @@ void SD_writelog(char * str)  {
   formattimedate(tmp32, rtc.time, rtc.cal);
   Serial << str << " " << (char*) tmp32 << nl;
   file.write(str);
-  file.write(" ");
+  file.write((char*)" ");
   file.write((char*)tmp32);
-  if ( file.result() == 0 ) {
+  if ( file.error() == 0 ) {
     file.flush();
   }
   file.close();
+  SD.unmount();
   return;
 }
 

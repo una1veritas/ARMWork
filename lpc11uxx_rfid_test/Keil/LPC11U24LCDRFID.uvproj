@@ -503,31 +503,6 @@
               <FilePath>..\..\armcmx\tools\RFID\PN532_I2C.cpp</FilePath>
             </File>
             <File>
-              <FileName>ff.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\ff.c</FilePath>
-            </File>
-            <File>
-              <FileName>diskio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\diskio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\ff.h</FilePath>
-            </File>
-            <File>
-              <FileName>ffconf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\ffconf.h</FilePath>
-            </File>
-            <File>
-              <FileName>integer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\FatFs\integer.h</FilePath>
-            </File>
-            <File>
               <FileName>SDFatFs.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\armcmx\tools\SDFatFs\SDFatFs.cpp</FilePath>
@@ -558,9 +533,19 @@
               <FilePath>..\..\armcmx\tools\TextStream\StringStream.h</FilePath>
             </File>
             <File>
-              <FileName>mmc_spi.c</FileName>
+              <FileName>ff.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\mmc_spi.c</FilePath>
+              <FilePath>..\..\armcmx\tools\SDFatFs\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>mmc_ssp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\mmc_ssp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\ssp.c</FilePath>
             </File>
           </Files>
         </Group>
