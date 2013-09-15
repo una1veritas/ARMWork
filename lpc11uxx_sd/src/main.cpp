@@ -13,6 +13,7 @@
 
 #include "integer.h"
 #include "ff.h"
+#include "SDFatFs.h"
 
 #include "armcmx.h"
 #include "USARTSerial.h"
@@ -116,7 +117,7 @@ int main(void) {
     Serial.println("Seems sram start failed. ");
   }
   
-  set_fattime(rtc.cal, rtc.time);
+  SD.set_datetime(rtc.cal, rtc.time);
   Serial.print("result of get_fattime: ");
   Serial.println(get_fattime(), HEX);
   
@@ -127,7 +128,7 @@ int main(void) {
   } else {
     Serial.println("Card is in SD slot.");
     sd_test();
-    //sd_load();
+    sd_load();
   }
 /*
  * i2C液晶のテスト（エンドレス）

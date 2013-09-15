@@ -58,7 +58,7 @@ enum CMDSTATUS {
   READ
 } cmdstatus = IDLE;
 
-SDFatFile file(SD);
+SDFile file(SD);
 void SD_readparam(const char fname[]);
 void SD_readkeyid(const char fname[]);
 void SD_writelog(char *);
@@ -140,13 +140,6 @@ void setup() {
   //Serial.print("result of get_fattime: ");
   //Serial.println(get_fattime(), HEX);
 
-  if ( digitalRead(SW_SDDETECT) == HIGH ) {
-    Serial.println("SD slot is empty.");
-  } else {
-    Serial.println("Performing SD tests...\n");
-    SD_readparam("CONFIG.TXT");
-  }
-
   Serial.println("\nSetup finished.\n");
 }
 
@@ -165,6 +158,13 @@ int main (void) {
   rtc.updateTime();
   formattimedate(str64, rtc.time, rtc.cal);
   Serial.println(str64);
+
+  if ( digitalRead(SD_DETECT) == HIGH ) {
+    Serial.println("SD slot is empty.");
+  } else {
+    Serial.println("Performing SD tests...\n");
+    SD_readparam("CONFIG.TXT");
+  }
 
   lastread = millis();
   
@@ -220,14 +220,22 @@ int main (void) {
 
 
 void SD_readparam(const char fname[]) {
+  int i = 0;
+
+  SD.mount();
  	file.open(fname, FA_READ | FA_OPEN_EXISTING );
-  if ( !file.result() ) {
+  if ( !file.error() ) {
     Serial.print(fname);
     Serial.println(": ");
     for (;;) {
       
-      if ( file.gets((TCHAR*) buf, 64) == NULL || file.result() )
+      if ( file.getLine((TCHAR*) buf, 64) == 0 || file.error() )
         break;
+      Serial.print("line ");
+      Serial.print(i++);
+      Serial.print(": ");
+      Serial.println(buf);
+      /*
       if ( buf[0] == '#' ) 
         continue;
       stream.clear();
@@ -235,7 +243,7 @@ void SD_readparam(const char fname[]) {
       stream.getToken(buf, 32);
       Serial.print(buf);
       Serial.print(": ");
-      /*
+      
       while( stream.getToken(buf, 32) ) {
         Serial.print(buf);
         Serial.print(" ");
@@ -243,33 +251,34 @@ void SD_readparam(const char fname[]) {
       */
       Serial.println();
     }
-    if ( file.result() ) {
+    if ( file.error() ) {
       Serial.println("\nFailed while reading.\n");
-      return;
     }
     file.close();
   } else {
     Serial.print("\nCouldn't open ");
     Serial.println(fname);
-    return;
-  }  
+  }
+  SD.unmount();
+  return;
 }
 
 void SD_readkeyid(const char fname[]) {
   uint32 goodthru;
   
+  SD.mount();
   count = 0;
   sram.write( KeyID::COUNT_ADDR, (uint8*) &count, sizeof(count) ); // count == 0 means no data ve been read
 	file.open(fname, FA_READ | FA_OPEN_EXISTING); 
-  if ( !file.result() ) {
+  if ( !file.error() ) {
     Serial << fname << ": " << nl;
     for (;;) {
-      if ( file.gets((TCHAR*) buf, sizeof(buf)) == NULL) {
+      if ( file.getLine((TCHAR*) buf, sizeof(buf)) == 0) {
         //Serial << "gets failed." << nl;
         break;
       }
-      if ( file.result() ) {
-        Serial << "error result " << (int) file.result() << nl;
+      if ( file.error() ) {
+        Serial << "error result " << (int) file.error() << nl;
         break;
       }
       if ( buf[0] == '#' )
@@ -291,7 +300,7 @@ void SD_readkeyid(const char fname[]) {
         Serial.println();
       }
     }
-    if ( file.result() ) {
+    if ( file.error() ) {
       Serial << nl << "Failed while reading." << nl;
       //regkeyid = false;
     } else {
@@ -301,9 +310,8 @@ void SD_readkeyid(const char fname[]) {
     file.close();
   } else {
     Serial << nl << "Couldn't open " << (char*)tmp32 << ". " << nl;
-    return;
   }
-
+  SD.unmount();
 }
 
 /*
@@ -329,9 +337,12 @@ void SD_writelog(char * str) {
   FRESULT rc;
   int i;
   uint8_t bw;
-  rc = f_open(&file.file, "SD0001.TXT", FA_WRITE | FA_OPEN_ALWAYS);
-  f_lseek(&file.file, f_size(&file.file));
-  if (rc) {
+
+  SD.mount();
+  
+  rc = file.open("SD0001.TXT", FA_WRITE | FA_OPEN_ALWAYS);
+  file.seek(file.size());
+  if (file.error()) {
     Serial.print("f_open or f_lseek error ");
     Serial.println(rc);
     goto close_and_exit;
@@ -340,20 +351,22 @@ void SD_writelog(char * str) {
   // 無限ループでこの関数からは抜けない
   while(i < 100){
     sprintf((char*)tmp32, "Strawberry Linux %d\r\n", i);
-    rc = f_write(&file.file, (char*)tmp32, strlen((char*)tmp32), (UINT*)&bw);
-    if (rc) {
+    bw = file.write((uint8_t*)tmp32, strlen((char*)tmp32));
+    if (file.error()) {
       Serial.print("f_write error ");
-      Serial.println(rc);
+      Serial.println(file.error());
       goto close_and_exit;
     }
     Serial.println((char*)tmp32);
     // SDカードに書き出します。
-    f_sync(&file.file);
+    file.flush();
     i++;
   }
   //	return;
 close_and_exit:
-  f_close(&file.file);
+  file.close();
+  
+  SD.unmount();
 }
 
 

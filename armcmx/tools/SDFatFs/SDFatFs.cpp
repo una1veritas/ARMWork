@@ -1,88 +1,105 @@
- /*
-  * Wrapper for FatFs by ChaN
-  */
-  
+/*
+*
+*
+*/
+#include <ctype.h>
 #include "SDFatFs.h"
 
-SDFatFs SD(SPI0, PIO0_2, PIO1_16, PIO1_19);
+#if defined (CAPPUCCINO)
+#include "cappuccino.h"
+SDFatFs SD(SPI0, PIO0_2, SD_DETECT, SD_BUSYLED);
 
-uint32 SDFatFs::time;
-uint32 SDFatFs::cal;
+#elif defined (LPCLCD)
+#include "lpclcd.h"
+SDFatFs SD(SPI0, PIO0_2);
 
-void SDFatFs::begin(void) {
-  pinMode(pin_cs, OUTPUT);
-  if ( pin_detect != NOT_A_PIN || pin_detect != PIN_NOT_DEFINED )
-    pinMode(pin_detect, INPUT);
-  if ( pin_busyled != NOT_A_PIN || pin_busyled != PIN_NOT_DEFINED )
-    pinMode(pin_busyled, OUTPUT);
+#endif
 
-  f_mount(0, &fatfs );		/* Register volume work area (never fails) */
+FRESULT SDFile::open(const TCHAR * fpath, BYTE mode) {
+  ferr = f_open(&file, fpath, mode);
+  fatfs.busyOn();
+  return ferr;
 }
 
-void SDFatFs::end() { 
-  f_mount(0, NULL);		/* Register volume work area (never fails) */
-  spibus.end(); 
+FRESULT SDFile::close() {
+  flush();
+  ferr = f_close(&file);
+  fatfs.busyOff();
+  return ferr;
 }
 
-// for get_fattime
-uint32_t SDFatFs::fattime(void) {
-  uint8_t y,m,d, hh, mm, ss;
-  y = 20 + (cal>>16&0x0f) + (cal>>20&0x0f)*10;
-  m = (cal>>8&0x0f) + (cal>>12&0x0f)*10;
-  d = (cal&0x0f) + (cal>>4&0x0f)*10;
-  hh = (time>>16&0x0f) + (time>>20&0x0f)*10;
-  mm = (time>>8&0x0f) + (time>>12&0x0f)*10;
-  ss = (time&0x0f) + (time>>4&0x0f)*10;
-  
-  return ((uint32_t)y<<25) | m<<21 | d<<16 | hh << 11 | mm<<5 | ss>>1;
+size_t SDFile::readBlock(void) {
+  UINT n;
+  ferr = f_read(&file, ring, BUFFER_SIZE, &n);
+  rhead = 0;
+  count = n;
+  return (size_t) n;
 }
 
-void SDFatFile::open(const char * fname, const uint8_t mode) {
-  peeked = false;
-  sdfs.rescode = f_open(&file, fname, mode);
-  if ( !sdfs.rescode && (mode & FA_OPEN_ALWAYS) ) {
-    sdfs.rescode = f_lseek(&file, f_size(&file));
+int SDFile::read(void) {
+  UINT n;
+  if ( buffer_is_empty() ) {
+    n = readBlock();
+    if ( n == 0 )
+      return -1;
   }
+  return ring[rhead++];
 }
 
-void SDFatFile::close(void) {
-  sdfs.rescode = f_close(&file);
-}
-
-size_t SDFatFile::write(const uint8_t * buf, size_t num) {
-  UINT count;
-  sdfs.rescode = f_write(&file, buf, num, &count);
-  return count;
-}
-
-int SDFatFile::read(void) {
-  UINT n = 0;
-  if ( !peeked )
-    sdfs.rescode = f_read(&file, &rbuf, 1, &n);
-  peeked = false;
-  return rbuf;
-}
-
-int SDFatFile::peek(void) {
-  UINT n = 0;
-  if ( !peeked ) 
-    sdfs.rescode = f_read(&file, &rbuf, 1, &n);
-  peeked = true;
-  return rbuf;
-}
-
-void SDFatFile::seek(uint16_t offset) {
-  sdfs.rescode = f_lseek(&file, (DWORD)offset);
-}
-
-char * SDFatFile::gets(char * buff, size_t sz) {
-  if ( peeked ) {
-    peeked = false;
-    *buff = rbuf;
-    return f_gets((TCHAR*)buff+1, sz-1, &file);      
-  } else {
-    return f_gets((TCHAR*)buff, sz, &file);
+int SDFile::peek(void) {
+  UINT n;
+  if ( buffer_is_empty() ) {
+    n = readBlock();
+    if ( n == 0 )
+      return -1;
   }
+  return ring[rhead];
 }
 
+size_t SDFile::write(uint8_t * p, size_t n) {
+  UINT wn;
+  ferr = f_write(&file, p, n, &wn);
+  return wn;
+}
 
+bool SDFile::eof(void) {
+  // both cache and file is at the end.
+  return buffer_is_empty() && f_eof(&file);
+}
+
+size_t SDFile::getToken(char * t, size_t lim, const CHARCLASS sep) {
+  size_t i = 0;
+  bool isdelim;
+  while ( i < lim ) {
+    if ( buffer_is_empty() ) { // cache had been at the end,
+      if ( f_eof(&file) ) // and the file is at the end.
+        break;
+      readBlock(); // no, there may be still some bytes remained in the file.
+      if ( ferr )
+        break;
+    }
+    t[i] = ring[rhead++];
+    switch(sep) {
+      case SPACE:
+        isdelim = isspace(t[i]);
+        break;
+      case EOL_NL:
+      case EOL_CRNL:
+        isdelim = (t[i] == '\n' ? true : false );
+        if ( isdelim && sep == EOL_CRNL && (i > 0 && t[i-1] == '\r') )
+          i--;
+        break;
+      case EOL_CR:
+        isdelim = (t[i] == '\r' ? true : false );
+        break;        
+      default:
+        isdelim = false;
+      break;
+    }
+    if ( isdelim ) 
+      break;
+    i++;
+  }
+  t[i] = 0;
+  return i;
+}

@@ -27,7 +27,6 @@
 
 #define LED_LCDBKLT   PIO0_3
 #define LED_SDBUSY    PIO1_19   // As a sink
-#define SD_DETECT     PIO1_16    // High at slot empty
 
 #define LCD_RST  PIO1_25
 #define SW_USERBTN PIO0_1
@@ -47,9 +46,13 @@
 #define SSP1_CS_DEFAULT       PIO1_23
 #define SPI SPI1
 #define SPI_CS_DEFAULT PIO1_23
+
 #define RXD RXD2
 #define TXD TXD2
 
+#define SD_DETECT     PIO1_16
+#define SD_CS         PIO0_2
+#define SD_BUSYLED    PIO1_19
 
 #endif /* end __CAPPUCCINO_H */
 /*****************************************************************************

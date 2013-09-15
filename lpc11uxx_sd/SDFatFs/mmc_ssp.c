@@ -119,8 +119,8 @@ UINT Timer1, Timer2;	/* 1kHz decrement timer stopped at zero (disk_timerproc()) 
 static
 BYTE CardType;			/* Card type flags */
 
-static uint32 time;
-static uint32 date;
+uint32 time;
+uint32 date;
 
 /*-----------------------------------------------------------------------*/
 /* Send/Receive data to the MMC  (Platform dependent)                    */
@@ -678,9 +678,4 @@ DWORD get_fattime()
   ss = (time&0x0f) + (time>>4&0x0f)*10;
   
   return ((uint32_t)y<<25) | m<<21 | d<<16 | hh << 11 | mm<<5 | ss>>1;
-}
-
-void set_fattime(uint32_t d, uint32_t t) {
-  time = t;
-  date = d;
 }
