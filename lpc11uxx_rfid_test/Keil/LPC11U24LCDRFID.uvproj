@@ -43,8 +43,8 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\Obj\</OutputDirectory>
-          <OutputName>LPC11U24LCDRFID</OutputName>
+          <OutputDirectory>.\</OutputDirectory>
+          <OutputName>LPC11U37_CAPPUCCINO</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -167,7 +167,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>
@@ -335,10 +335,10 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>1</OneElfS>
+            <OneElfS>0</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
@@ -406,6 +406,16 @@
               <FileName>main.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\src\main.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Task.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\src\Task.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\src\Task.h</FilePath>
             </File>
           </Files>
         </Group>

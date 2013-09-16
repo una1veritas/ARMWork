@@ -38,7 +38,7 @@
 
 uint8 readIDInfo(ISO14443 & card, IDData & data);
 uint8 writeIDInfo(ISO14443 & card, IDData & data);
-void displayIDData(char *, uint8 cardtype, IDData &);
+void IDDataString(char *, const uint8 cardtype, const IDData &);
 
 uint8 get_MifareBlock(ISO14443 & card, IDData & data, const uint8_t * key);
 uint8 get_FCFBlock(ISO14443 & card, IDData & data);
@@ -57,111 +57,18 @@ const static byte factory_a[] = {
                   t>>16&0x3f, t>>8&0x7f, t&0x7f, d>>8&0x1f, d&0x3f, d>>16&0xff) )
 
 
-void parse_do_command(StringStream & stream) ;
-
-struct Tasks {
-  uint32 timer_master; 
-  uint32 timer_serial;
-  uint32 timer_rtc;
-  uint32 timer_nfc; 
-  uint32 timer_lcdlight;
-  
-  boolean update() {
-    if ( timer_master != millis() ) {
-      timer_master = millis();
-      if ( timer_serial )
-        timer_serial--;
-      if ( timer_rtc ) 
-        timer_rtc--;
-      if ( timer_nfc )
-        timer_nfc--;
-      if ( timer_lcdlight )
-        timer_lcdlight--;
-      return true;
-    }
-    return false;
-  }
-  
-  boolean serial() {
-    if ( timer_serial > 0 )
-      return false;
-    timer_serial = 3;
-    return true;
-  }
-  
-  boolean rtc() {
-    if ( timer_rtc > 0 )
-      return false;
-    timer_rtc = 73;
-    return true;
-  }
-  
-  boolean nfc() {
-    if ( timer_nfc > 0 )
-      return false;
-    timer_nfc = 667;
-    return true;
-  }
-  
-  boolean lcdlight() {
-    if ( timer_lcdlight > 0 )
-      return false;
-    timer_lcdlight = 1000;
-    return true;
-  }
-  
-} task;
+void parse_do_command(StringStream & stream);
 
 
 
 struct KeyID {
   uint8 raw[16];
-  
-static const uint32 BASE_OFFSET_ADDR = 0x000010;
 
-KeyID() {
-    memset(raw, 0x20, 10);
-    setExpdate(0);
-    raw[14] = 0;
-    raw[15] = 0;
-  }
+  KeyID();
+  void setExpdate(uint32 date);
+  uint32 getExpdate();  
+  uint8 setChecksum();  
+  uint8 check();
   
-  void setExpdate(uint32 date) {
-    raw[10] = date>>24 & 0xff;
-    raw[11] = date>>16 & 0xff;
-    raw[12] = date>>8 & 0xff;
-    raw[13] = date & 0xff;
-  }
-
-  uint32 getExpdate() {
-    uint32 d;
-    d = raw[10];
-    d = (d<<8) | raw[11];
-    d = (d<<8) | raw[12];
-    d = (d<<8) | raw[13];
-    return d;
-  }
-  
-  uint8 setChecksum() {
-    int i;
-    uint8 xsum = 0;
-    for (i = 0; i < 15; i++) {
-      xsum ^= raw[i];
-    }
-    raw[15] = xsum;
-    return raw[15];
-  }
-  
-  uint8 check() {
-    int i;
-    uint8 chksum = 0;
-    for (i = 0; i < 16; i++) {
-      chksum ^= raw[i];
-    }
-    return chksum == 0;
-  }
-
-  uint32 storeAddress(uint16 num){
-    return (num<<4) + BASE_OFFSET_ADDR;
-  }
-};
+  inline uint32 size() { return 16; }
+} keyid;
