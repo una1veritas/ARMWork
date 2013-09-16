@@ -74,7 +74,7 @@ const byte NFCPolling[] = {
 //SDFatFs SD(SD_SPI, SD_CS, SD_DETECT, LED_USER);
 SDFile file(SD);
 void SD_readParams();
-void SD_loadKeyID();
+uint32 SD_loadKeyID();
 void SD_writelog();
 
 SPISRAM sram(SPI1, SRAM_CS, SPISRAM::BUS_23LC1024);
@@ -496,7 +496,7 @@ void SD_readParams() {
   SD.unmount();
 }
 
-void SD_loadKeyID() {
+uint32 SD_loadKeyID() {
   uint32 expdate;
   uint32 count = 0;
   KeyID id;
@@ -520,46 +520,18 @@ void SD_loadKeyID() {
       if ( ((char)stream.peek()) == '#' ) 
         continue;
 
-      if ( stream.getToken(buf, 32) ) {
-        // buf contains dvi
-        if ( count % 100 == 0 ) {
-          Serial.print(count);
-          Serial.print(" ");
-          Serial.print(buf);
-        }
-        stream.getToken(buf, 32);
-        // buf contains date
-        expdate = strtol(buf, 0, 16);
-        if ( count % 100 == 0 ) {
-          Serial.print(" ");
-          Serial.println(expdate, HEX);
-        }
-      }
-      count++;
-
-/*
-      strm.clear();
-      strm.write(buf);
-      if ( strm.getToken((char*)tmp32, 32) == 10 ) {
-        strncpy((char*)id.raw, (char*) tmp32, 10);
-        expdate = dectobcd(strm.parseInt());
-        if ( expdate < 0x20000000 )
-          continue;
-        id.setExpdate(expdate);
-        id.setChecksum();
-        sram.write(id.storeAddress(count), id.raw, 16);
-        Serial.print(count);
-        Serial.print(" ");
-        for(int i = 0; i < 10; i++) {
-          Serial.print((char) id.raw[i]);
-        //  Serial.print(' ');
-        }
-        Serial.println();
-        count++;
+      if ( stream.getToken((char*)keyid.raw, 10)
+        && stream.getToken(buf, 8) ) {
+          expdate = strtol(buf, 0, 16);
+          
+          keyid.setExpdate(expdate);
+          keyid.setChecksum();
+          count++;
+          sram.write(count*16, keyid.raw, 16);
       } else {
-        Serial.println("Error!");
+        Serial.print("Key ID parse error on ");
+        Serial.println(count);
       }
-      */
     }
     if ( file.error() ) {
       Serial << nl << "Failed while reading." << nl;
@@ -567,11 +539,15 @@ void SD_loadKeyID() {
     }
     file.close();
     Serial << "Total data count " << count << ". " << nl;
-    sram.write( 0, (uint8*) &count, sizeof(count) ); // count == 0 means no data ve been read
+    strncpy((char*)keyid.raw, "DCOUNT0000", 10);
+    keyid.setExpdate(count);
+    keyid.setChecksum();
+    sram.write(0, (uint8*) &keyid, 16); // count == 0 means no data ve been read
   } else {
     Serial << nl << "Couldn't open KEYID.TXT. " << nl;
   }
   SD.unmount();
+  return count;
 }
 
 void SD_writelog()  {
@@ -595,15 +571,67 @@ void SD_writelog()  {
 }
 
 
+void scanKeyDB(const char id[10]) {
+  uint32 count = 0;
+  uint32 start, end, i;
+  int errorno;
+  int diff;
+  char buf[16];
+  
+  swatch = millis();
+  for(i = 0; i < 32; i++) {
+    sram.read( 0, (uint8*) &keyid, sizeof(keyid) );
+    if ( strncmp((char*)keyid.raw, "DCOUNT", 6) == 0 ) {
+      count = keyid.getExpdate();
+      break;
+    }
+  }
+  if ( count == 0 )
+    return;
+  errorno = 0;
+  start = 0;
+  end = count;
+  while ( start < end ) {
+    i = (start + end)>>1;
+    sram.read(keyid.size()*i, keyid.raw, 16);
+    if ( keyid.check() )
+      diff = strncmp((char*)keyid.raw, id, 10);
+    else {
+      errorno++;
+      break;
+    }
+    if ( diff < 0 ) {
+      start = i + 1;
+    } else if ( diff > 0 ) {
+      end = i;
+    } else
+    if ( diff == 0 ) {
+      strncpy(buf, (char*) keyid.raw, 10);
+      buf[10] = 0;
+      Serial.print(buf);
+      Serial.print(" ");
+      Serial.print(keyid.getExpdate(), HEX);
+      Serial.println();
+      break;
+    }
+  }
+  swatch = millis() - swatch;
+  Serial.print("Scan time in millis: ");
+  Serial.println(swatch);
+  Serial.print("SRAM stored key checksum errors: ");
+  Serial.print(errorno);
+  Serial.println("\n");
+}
+
 void parse_do_command(StringStream & stream) {
   uint32 tmplong;
-  int i, n;
-  uint32 count;
+  int i;
+  uint32 n;
   
-  Serial.print("> ");  
+  Serial.print("> ");
+  Serial.println(stream);
   stream.getToken((char*)tmp32, 32);
   if ( match(tmp32, "TIME") ) {
-    Serial.println("Time");
     if ( stream.available() ) {
       Serial.println(" set ");
       stream.getToken((char*)tmp32, 32);
@@ -617,7 +645,6 @@ void parse_do_command(StringStream & stream) {
     }
   } else 
   if ( match(tmp32, "CAL") ) {
-    Serial.println("Calendar");
     if ( stream.available() ) {
       Serial.println(" set ");
       stream.getToken((char*) tmp32, 64);
@@ -635,26 +662,20 @@ void parse_do_command(StringStream & stream) {
     swatch = 0;
     Serial.println("Into write mode.");
   } else 
-  if ( match(tmp32, "LOADKEYID") ) {
-    Serial.println("Loading Key IDs from SD.");
-    SD_loadKeyID();
-    //
-    sram.read( 0, (uint8*) &keyid, sizeof(keyid) );
-    count = keyid.getExpdate();
-    n = 0;
-    swatch = millis();
-    for(i = 0; i < count; i++) {
-      sram.read(keyid.size()*i, keyid.raw, 16);
-      strncpy((char*) tmp32, (char*)keyid.raw, 10);
-      tmp32[10] = 0;
-      if ( ! keyid.check() ) 
-        n++;
-    }
-    swatch = millis() - swatch;
-    Serial.print("Scan time in millis: ");
-    Serial.println(swatch);
-    Serial.print("SRAM stored key checksum errors: ");
+  if ( match(tmp32, "LOADKEYS") ) {
+    n = SD_loadKeyID();
+    Serial.print("Loaded ");
     Serial.print(n);
+    Serial.println(" key IDs.");
+  } else 
+  if ( match(tmp32, "FIND") ) {
+    if ( stream.available() ) {
+      if ( stream.getToken((char*)tmp32, 16) ) {
+        Serial.print("Search ");
+        Serial.println((char*)tmp32);
+        scanKeyDB((char*)tmp32);
+      }
+    }
   } else 
   if ( match(tmp32, "AUTHKEY") ) {
     if ( stream.available() ) {
@@ -675,7 +696,7 @@ void parse_do_command(StringStream & stream) {
 }
 
 
-
+/****/
 
 KeyID::KeyID() {
   memset(raw, 0x20, 10);
