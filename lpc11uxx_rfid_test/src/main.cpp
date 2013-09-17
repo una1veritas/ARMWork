@@ -127,7 +127,7 @@ void setup() {
     if ( rtc.begin() ) break;
   rtc.update();
   formattimedate(str64, rtc.time, rtc.cal);
-  Serial.println(str64);
+  Serial.print(str64);
   
   Serial.print(", NFC PN532 ");
   nfcreader.begin();
@@ -150,8 +150,8 @@ void setup() {
   pinMode(LED_USER, OUTPUT);
   digitalWrite(LED_USER, HIGH);
 
+  Serial.print("Starting SPI1...");
   SPI1.begin();
-  Serial.println("Starting SPI1...");
   Serial.print(" Serial SRAM");
   sram.begin();
   if ( sram.started() )
@@ -162,11 +162,11 @@ void setup() {
   
 //  delay(5000);
   
+  Serial.println("Starting SPI0...");
 //  SPI0.begin();
   SD_SPI.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
-  Serial.println("Starting SPI0...");
-  SD.begin();
   Serial.println(" SD Card.");
+  SD.begin();
 
   rtc.updateTime();
   SD.set_datetime(rtc.cal, rtc.time);
@@ -199,9 +199,7 @@ int main (void) {
   // ---------------------------------------
   rtc.updateCalendar();
   rtc.updateTime();
-  formattimedate(tmp32, rtc.time, rtc.cal);
-  Serial.println((char*)tmp32);
-
+  
   memcpy(authkey, IizukaKey_b, 7);
   lastread = millis();
   
@@ -464,8 +462,7 @@ void SD_readParams() {
   SD.mount();
 	file.open("CONFIG.TXT", FA_READ | FA_OPEN_EXISTING ); 
   if ( !file.error() ) {
-    Serial.print("Contents of file ");
-    Serial.println((char*)tmp32);
+    Serial.println("Contents of file: ");
     for (;;) {
       
       if ( file.getLine((TCHAR*) buf, 64, SDFile::EOL_CRNL) == 0 || file.error() )
@@ -476,7 +473,6 @@ void SD_readParams() {
       stream.write(buf);
       stream.getToken(buf, 32);
       Serial.print(buf);
-      Serial.print(": ");
       /*
       while( stream.getToken(buf, 32) ) {
         Serial.print(buf);
@@ -490,8 +486,7 @@ void SD_readParams() {
     }
     file.close();
   } else {
-    Serial.print("\nCouldn't open ");
-    Serial.println((char*)tmp32);
+    Serial.print("\nCouldn't open file.");
   }  
   SD.unmount();
 }
