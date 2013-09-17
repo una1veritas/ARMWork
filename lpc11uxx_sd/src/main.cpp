@@ -13,13 +13,16 @@
 
 #include "integer.h"
 #include "ff.h"
+#include "SDFatFs.h"
 
 #include "armcmx.h"
 #include "USARTSerial.h"
 #include "I2Cbus.h"
 #include "ST7032i.h"
 #include "RTC.h"
-#include "spi_core.h"
+//#include "spi_core.h"
+#include "SPI.h"
+#include "SPISRAM.h"
 
 #include "PWM0Tone.h"
 
@@ -44,22 +47,25 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 //SPIBus SPI0(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, PIO0_2); // sck, miso, mosi, cs
 //SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
 
+
+void sd_test(void);
+void sd_load(void);
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void sd_test(void);
 void set_fattime(uint32_t date, uint32_t time);
   
 #ifdef __cplusplus
 }
 #endif
 
-
 ST7032i lcd(Wire, LED_LCDBKLT);
 RTC rtc(RTC::ST_M41T62);
 //SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
-//SPISRAM sram(SPI1, PIO1_23, SPISRAM::BUS_MBITS);
+
+SPISRAM sram(SPI1, PIO1_23, SPISRAM::BUS_MBITS);
 
 
 int main(void) {
@@ -104,13 +110,14 @@ int main(void) {
   Serial.println(rtc.time, HEX);
 //	 下記は不要な部分はコメントアウトしてお試しください。
 
-//  SPI1.begin();
-//  sram.begin();
- /*
-  * SDカードのデモ（エンドレス）
-  */
+  SPI1.begin();
+  sram.begin();
   
-  set_fattime(rtc.cal, rtc.time);
+  if ( !sram.started() ) {
+    Serial.println("Seems sram start failed. ");
+  }
+  
+  SD.set_datetime(rtc.cal, rtc.time);
   Serial.print("result of get_fattime: ");
   Serial.println(get_fattime(), HEX);
   
@@ -120,8 +127,9 @@ int main(void) {
     Serial.println("SD slot is empty.");
   } else {
     Serial.println("Card is in SD slot.");
+    sd_test();
+    sd_load();
   }
-	sd_test();
 /*
  * i2C液晶のテスト（エンドレス）
  */
@@ -142,3 +150,5 @@ int main(void) {
 
 //	return 0 ;
 }
+
+

@@ -482,6 +482,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\lpc11uxx\spi_core.c</FilePath>
             </File>
+            <File>
+              <FileName>SPI.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\SPI.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -491,6 +496,16 @@
               <FileName>RTC.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\armcmx\tools\RTC\RTC.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>SPISRAM.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\SerialRAM\SPISRAM.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>SPISRAM.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\SerialRAM\SPISRAM.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -523,19 +538,19 @@
               <FilePath>..\SDFatFs\mmc_ssp.c</FilePath>
             </File>
             <File>
-              <FileName>sd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\SDFatFs\sd.c</FilePath>
-            </File>
-            <File>
               <FileName>ssp.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\SDFatFs\ssp.h</FilePath>
             </File>
             <File>
-              <FileName>sdfatfs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\SDFatFs\sdfatfs.h</FilePath>
+              <FileName>SDFatFs.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\SDFatFs\SDFatFs.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>sd.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\src\sd.cpp</FilePath>
             </File>
           </Files>
         </Group>

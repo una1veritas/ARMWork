@@ -239,6 +239,7 @@ union IDData {
   void clear() {
     memset(raw, 0, 64);
   }
+  
 };
 
 #endif /* NFCCARD_H_ */

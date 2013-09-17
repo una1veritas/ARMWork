@@ -121,9 +121,9 @@ void SPI_disable(SPIDef * port);
 #define SPI_CLOCK_DIV64  (64)
 
 
-void SPI_DataMode(SPIDef * port, uint32_t mode);
-void SPI_ClockDivier(SPIDef *, uint32_t);
-void SPI_DataSize(SPIDef * port, uint32_t dss);
+void SPI_mode(SPIDef * port, uint32_t mode);
+void SPI_clock(SPIDef *, uint32_t);
+void SPI_datasize(SPIDef * port, uint32_t dss);
 
 uint32_t SPI_transfer(SPIDef * port, uint32_t data); // uint16 may be enough
 
