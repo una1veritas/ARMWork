@@ -62,22 +62,12 @@ size_t SDFile::write(uint8_t * p, size_t n) {
   return wn;
 }
 
-bool SDFile::eof(void) {
-  // both cache and file is at the end.
-  return buffer_is_empty() && f_eof(&file);
-}
-
 size_t SDFile::getToken(char * t, size_t lim, const CHARCLASS sep) {
   size_t i = 0;
   bool isdelim;
   while ( i < lim ) {
-    if ( buffer_is_empty() ) { // cache had been at the end,
-      if ( f_eof(&file) ) // and the file is at the end.
-        break;
-      readBlock(); // no, there may be still some bytes remained in the file.
-      if ( ferr )
-        break;
-    }
+    if ( buffer_is_empty() )
+      readBlock();
     t[i] = ring[rhead++];
     switch(sep) {
       case SPACE:

@@ -179,7 +179,7 @@ void SPI_disable(SPIDef * port) {
   }
 }
 
-void SPI_ClockDivier(SPIDef * port, uint32_t div) {
+void SPI_clock(SPIDef * port, uint32_t div) {
   // assumes SSP_PCLK = 24 MHz
   uint32 scrval, cpsval;
   switch(div) {
@@ -221,12 +221,12 @@ void IP_SSP_Set_ClockRate(IP_SSP_001_T *pSSP, uint32_t clk_rate, uint32_t presca
 }
 */
 
-void SPI_DataSize(SPIDef * port, uint32_t dss) {
+void SPI_datasize(SPIDef * port, uint32_t dss) {
     port->SSPx->CR0 &= ~((uint32_t)0x0f);
     port->SSPx->CR0 |= (0x0F & dss);				/* Set dss value for select data size */
 }
 
-void SPI_DataMode(SPIDef * port, uint32_t mode) {
+void SPI_mode(SPIDef * port, uint32_t mode) {
   port->SSPx->CR0 &= ~(SSPCR0_CPOL | SSPCR0_CPHA);
   if ( mode & 1 )
     port->SSPx->CR0 |= SSPCR0_CPOL;

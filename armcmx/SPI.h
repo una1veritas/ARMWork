@@ -53,7 +53,7 @@ public:
   */
   
   inline void setDataSize(uint32_t dss) {
-    SPI_DataSize(SPIPort, dss);
+    SPI_datasize(SPIPort, dss);
   }
   
 	inline void setBitOrder(uint16_t bitOrder) {
@@ -61,11 +61,11 @@ public:
 	}
 
 	inline void setDataMode(uint16_t mode) {
-		SPI_DataMode(SPIPort, mode);
+		SPI_mode(SPIPort, mode);
 	}
 
 	inline void setClockDivider(uint8_t rate) {
-		SPI_ClockDivier(SPIPort, rate);
+		SPI_clock(SPIPort, rate);
 	}
 	
 	inline void setMode(uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst) {

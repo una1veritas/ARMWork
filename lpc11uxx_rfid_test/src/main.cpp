@@ -22,6 +22,8 @@
 #include "SPISRAM.h"
 
 #include "main.h"
+#include "Task.h"
+
 
 #define match(x,y)  (strcasecmp((char*)(x), (char*)(y)) == 0)
 #define matchn(x,y,n)  (strcasencmp((char*)(x), (char*)(y), (n)) == 0)
@@ -43,7 +45,7 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 
 // status variables
 namespace global {
-  static uint16 count = 0;
+  static Task task;
   static byte authkey[8];
   char buf[64];
   uint8_t tmp32[32];
@@ -55,18 +57,7 @@ namespace global {
     READ
   } cmdstatus = IDLE;
 };
-
 using namespace global;
-
-uint32 dectobcd(uint32 val) {
-  uint32 t = 0;
-  int i;
-  for(i = 0; i < 8 && val > 0; i++) {
-    t |= (val % 10)<<(i*4);
-    val /= 10;
-  }
-  return t;
-}
 
 char str64[64];
 StringStream stream(str64, 64);
@@ -80,6 +71,25 @@ const byte NFCPolling[] = {
   NFC::BAUDTYPE_106K_A,
 };
 
+//SDFatFs SD(SD_SPI, SD_CS, SD_DETECT, LED_USER);
+SDFile file(SD);
+void SD_readParams();
+uint32 SD_loadKeyID();
+void SD_writelog();
+
+SPISRAM sram(SPI1, SRAM_CS, SPISRAM::BUS_23LC1024);
+
+
+uint32 dectobcd(uint32 val) {
+  uint32 t = 0;
+  int i;
+  for(i = 0; i < 8 && val > 0; i++) {
+    t |= (val % 10)<<(i*4);
+    val /= 10;
+  }
+  return t;
+}
+
 
 void init() {
   SystemInit();
@@ -87,14 +97,6 @@ void init() {
   start_delay(); // for delay
 }
 
-
-//SDFatFs SD(SD_SPI, SD_CS, SD_DETECT, LED_USER);
-SDFatFile file(SD);
-void SD_readparam();
-void SD_readkeyid(const char[]);
-void SD_writelog(char *);
-
-SPISRAM sram(SPI1, SRAM_CS, SPISRAM::BUS_23LC1024);
 
 void setup() {
   char str64[64];
@@ -106,7 +108,7 @@ void setup() {
   Serial.println("\n\nUSART Serial started. \nHello.");
 
 
-  Serial.print("Starting I2C Bus, ");
+  Serial.print("Starting I2C...");
   Wire.begin(); 	/* initialize I2c */
   if ( Wire.status == FALSE )
   	while ( 1 );				/* Fatal error */
@@ -114,29 +116,30 @@ void setup() {
   digitalWrite(I2C_PULLUP, LOW);
   
   // I2C lcd
-  Serial.print("LCD, ");
+  Serial.print(" LCD");
   while(1)
     if ( i2clcd.begin() ) break;
   i2clcd.clear();
   i2clcd.print("Hello.");
   
-  Serial.print("RTC, ");
+  Serial.print(", RTC");
   while(1)
     if ( rtc.begin() ) break;
   rtc.update();
   formattimedate(str64, rtc.time, rtc.cal);
   Serial.println(str64);
   
-  Serial.print("NFC PN532 ");
+  Serial.print(", NFC PN532 ");
   nfcreader.begin();
   while (1) {
     if ( nfcreader.GetFirmwareVersion() && nfcreader.getCommandResponse((uint8_t*) tmp32) ) 
       break;
     delay(1000);
   }
-  Serial << "ver. " << (char) tmp32[0] << " firm. " << tmp32[1] << " rev. " << tmp32[2];
+  Serial << "[ver. " << (char) tmp32[0] << " firm. " << tmp32[1] << " rev. " << tmp32[2];
   Serial.print(" supporting ");
   Serial.print(tmp32[3], BIN);
+  Serial << "]";
   if ( !nfcreader.SAMConfiguration() ) {
 		Serial.println("....SAMConfiguration failed. Halt.\n");
 		while (1);
@@ -148,33 +151,34 @@ void setup() {
   digitalWrite(LED_USER, HIGH);
 
   SPI1.begin();
-  Serial.println("Starting SPI1 Bus, ");
+  Serial.println("Starting SPI1...");
+  Serial.print(" Serial SRAM");
   sram.begin();
   if ( sram.started() )
-    Serial.print("Serial SRAM ");
+    Serial.println(".");
   else
-    Serial.println("seems failed to start.");
+    Serial.println("... seems failed starting.");
   //
-  Serial.println(".");
   
 //  delay(5000);
   
 //  SPI0.begin();
   SD_SPI.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
-  Serial.println("Starting SPI0 Bus, ");
+  Serial.println("Starting SPI0...");
   SD.begin();
-  Serial.println("SD Card.");
+  Serial.println(" SD Card.");
 
   rtc.updateTime();
-  SD.settime(rtc.time, rtc.cal);
-  Serial.print("get_fattime returned ");
-  Serial.println(get_fattime(), HEX);
+  SD.set_datetime(rtc.cal, rtc.time);
+  Serial << "get_fattime returned ";
+  Serial.print(get_fattime(), HEX);
+  Serial.println(". ");
 
   if ( digitalRead(SD_DETECT) == HIGH ) {
     Serial.println("SD slot is empty.");
   } else {
-    Serial.println("Reading parameters from SD\n");
-    SD_readparam();
+    Serial.println("Reading parameters... ");
+    SD_readParams();
   }
 
   Serial.println("\nSetup finished.\n");
@@ -236,11 +240,11 @@ int main (void) {
             Serial.println((char*)tmp32);
             //
             if ( readIDInfo(card, iddata) ) {
-              displayIDData((char*)tmp32, card.type, iddata);
+              IDDataString((char*)tmp32, card.type, iddata);
               i2clcd.setCursor(0,0);
               i2clcd.print((char*)tmp32);
               Serial << (char*)tmp32 << nl;
-              SD_writelog((char*)tmp32);
+              SD_writelog();
             } else {
               Serial.println("UNKNOWN CARD.");
             }
@@ -433,38 +437,38 @@ uint8 get_MifareBlock(ISO14443 & card, IDData & data, const uint8_t * key) {
   return 0;
 }
 
-void displayIDData(char * str, uint8 type, IDData & iddata) {
-  int i;
-  if (type == NFC::CARDTYPE_FELICA_212K ) {
-    *str++ = iddata.fcf.division[0];
-    *str++ = '-';
-    for(i = 0; i < 8; i++)
-      *str++ = iddata.fcf.pid[i];
-    *str++ = '-';
-    *str++ = iddata.fcf.issue;
-  } else if (type == NFC::CARDTYPE_MIFARE ) {
-    *str++ = iddata.iizuka.division[0];
-    *str++ = iddata.iizuka.division[1];
-    *str++ = '-';
-    for(i = 0; i < 8; i++)
-      *str++ = iddata.iizuka.pid[i];
-    *str++ = '-';
-    *str++ = iddata.iizuka.issue;
+  void IDDataString(char * str, const uint8 type, const IDData & iddata) {
+    int i;
+    if ( type == NFC::CARDTYPE_FELICA_212K ) {
+      *str++ = iddata.fcf.division[0];
+      *str++ = '-';
+      for(i = 0; i < 8; i++)
+        *str++ = iddata.fcf.pid[i];
+      *str++ = '-';
+      *str++ = iddata.fcf.issue;
+    } else if ( type == NFC::CARDTYPE_MIFARE ) {
+      *str++ = iddata.iizuka.division[0];
+      *str++ = iddata.iizuka.division[1];
+      *str++ = '-';
+      for(i = 0; i < 8; i++)
+        *str++ = iddata.iizuka.pid[i];
+      *str++ = '-';
+      *str++ = iddata.iizuka.issue;
+    }
+    *str = 0;
+    //
   }
-  *str = 0;
-  //
-}
 
 
-void SD_readparam() {
-  strcpy((char*) tmp32, "CONFIG.TXT");
-	file.open((char*)tmp32, FA_READ); 
-  if ( !file.result() ) {
+void SD_readParams() {
+  SD.mount();
+	file.open("CONFIG.TXT", FA_READ | FA_OPEN_EXISTING ); 
+  if ( !file.error() ) {
     Serial.print("Contents of file ");
     Serial.println((char*)tmp32);
     for (;;) {
       
-      if ( file.gets((TCHAR*) buf, 64) == NULL || file.result() )
+      if ( file.getLine((TCHAR*) buf, 64, SDFile::EOL_CRNL) == 0 || file.error() )
         break;
       if ( buf[0] == '#' ) 
         continue;
@@ -481,32 +485,32 @@ void SD_readparam() {
       */
       Serial.println();
     }
-    if ( file.result() ) {
+    if ( file.error() ) {
       Serial.println("\nFailed while reading.\n");
-      return;
     }
     file.close();
   } else {
     Serial.print("\nCouldn't open ");
     Serial.println((char*)tmp32);
-    return;
   }  
+  SD.unmount();
 }
 
-void SD_readkeyid(const char fname[]) {
+uint32 SD_loadKeyID() {
   uint32 expdate;
+  uint32 count = 0;
   KeyID id;
 //  boolean regkeyid = false;
 
-  count = 0;
-	file.open(fname, FA_READ); 
-  if ( !file.result() ) {
+  SD.mount();
+	file.open("KEYID.TXT", FA_READ | FA_OPEN_EXISTING ); 
+  if ( !file.error() ) {
     Serial << "Loading key ids." << nl;
     for (;;) {
-      if ( file.gets((TCHAR*) buf, sizeof(buf)) == NULL) {
+      if ( file.getLine((TCHAR*) buf, sizeof(buf)) == 0) {
         break;
       }
-      if ( file.result() ) {
+      if ( file.error() ) {
         break;
       }
 
@@ -516,91 +520,118 @@ void SD_readkeyid(const char fname[]) {
       if ( ((char)stream.peek()) == '#' ) 
         continue;
 
-      if ( stream.getToken(buf, 32) ) {
-        // buf contains dvi
-        if ( count % 100 == 0 ) {
-          Serial.print(count);
-          Serial.print(" ");
-          Serial.print(buf);
-        }
-        stream.getToken(buf, 32);
-        // buf contains date
-        expdate = strtol(buf, 0, 16);
-        if ( count % 100 == 0 ) {
-          Serial.print(" ");
-          Serial.println(expdate, HEX);
-        }
-      }
-      count++;
-
-/*
-      strm.clear();
-      strm.write(buf);
-      if ( strm.getToken((char*)tmp32, 32) == 10 ) {
-        strncpy((char*)id.raw, (char*) tmp32, 10);
-        expdate = dectobcd(strm.parseInt());
-        if ( expdate < 0x20000000 )
-          continue;
-        id.setExpdate(expdate);
-        id.setChecksum();
-        sram.write(id.storeAddress(count), id.raw, 16);
-        Serial.print(count);
-        Serial.print(" ");
-        for(int i = 0; i < 10; i++) {
-          Serial.print((char) id.raw[i]);
-        //  Serial.print(' ');
-        }
-        Serial.println();
-        count++;
+      if ( stream.getToken((char*)keyid.raw, 10)
+        && stream.getToken(buf, 8) ) {
+          expdate = strtol(buf, 0, 16);
+          
+          keyid.setExpdate(expdate);
+          keyid.setChecksum();
+          count++;
+          sram.write(count*16, keyid.raw, 16);
       } else {
-        Serial.println("Error!");
+        Serial.print("Key ID parse error on ");
+        Serial.println(count);
       }
-      */
     }
-    if ( file.result() ) {
+    if ( file.error() ) {
       Serial << nl << "Failed while reading." << nl;
       //regkeyid = false;
     }
     file.close();
     Serial << "Total data count " << count << ". " << nl;
-    sram.write( 0, (uint8*) &count, sizeof(count) ); // count == 0 means no data ve been read
-    } else {
-      Serial << nl << "Couldn't open " << fname << ". " << nl;
-    return;
+    strncpy((char*)keyid.raw, "DCOUNT0000", 10);
+    keyid.setExpdate(count);
+    keyid.setChecksum();
+    sram.write(0, (uint8*) &keyid, 16); // count == 0 means no data ve been read
+  } else {
+    Serial << nl << "Couldn't open KEYID.TXT. " << nl;
   }
-
+  SD.unmount();
+  return count;
 }
 
-void SD_writelog(char * str)  {
+void SD_writelog()  {
   
-  file.open("CARDLOG.TXT",FA_WRITE);
-  if ( file.result() ) { //rc) {
+  SD.mount();
+  file.open("CARDLOG.TXT", FA_WRITE | FA_OPEN_ALWAYS);
+  if ( file.error() ) { //rc) {
     Serial << nl << "Couldn't open CARDLOG.TXT." << nl;
     return;
   }
 
   formattimedate(tmp32, rtc.time, rtc.cal);
-  Serial << str << " " << (char*) tmp32 << nl;
-  file.write(str);
-  file.write(" ");
+  Serial << "CARDLOG.TXT" << (char*) tmp32 << nl;
   file.write((char*)tmp32);
-  if ( file.result() == 0 ) {
+  if ( file.error() == 0 ) {
     file.flush();
   }
   file.close();
+  SD.unmount();
   return;
 }
 
 
+void scanKeyDB(const char id[10]) {
+  uint32 count = 0;
+  uint32 start, end, i;
+  int errorno;
+  int diff;
+  char buf[16];
+  
+  swatch = millis();
+  for(i = 0; i < 32; i++) {
+    sram.read( 0, (uint8*) &keyid, sizeof(keyid) );
+    if ( strncmp((char*)keyid.raw, "DCOUNT", 6) == 0 ) {
+      count = keyid.getExpdate();
+      break;
+    }
+  }
+  if ( count == 0 )
+    return;
+  errorno = 0;
+  start = 0;
+  end = count;
+  while ( start < end ) {
+    i = (start + end)>>1;
+    sram.read(keyid.size()*i, keyid.raw, 16);
+    if ( keyid.check() )
+      diff = strncmp((char*)keyid.raw, id, 10);
+    else {
+      errorno++;
+      break;
+    }
+    if ( diff < 0 ) {
+      start = i + 1;
+    } else if ( diff > 0 ) {
+      end = i;
+    } else
+    if ( diff == 0 ) {
+      strncpy(buf, (char*) keyid.raw, 10);
+      buf[10] = 0;
+      Serial.print(buf);
+      Serial.print(" ");
+      Serial.print(keyid.getExpdate(), HEX);
+      Serial.println();
+      break;
+    }
+  }
+  swatch = millis() - swatch;
+  Serial.print("Scan time in millis: ");
+  Serial.println(swatch);
+  Serial.print("SRAM stored key checksum errors: ");
+  Serial.print(errorno);
+  Serial.println("\n");
+}
+
 void parse_do_command(StringStream & stream) {
   uint32 tmplong;
-  int i, n;
-  KeyID id;
+  int i;
+  uint32 n;
   
-  Serial.print("> ");  
+  Serial.print("> ");
+  Serial.println(stream);
   stream.getToken((char*)tmp32, 32);
   if ( match(tmp32, "TIME") ) {
-    Serial.println("Time");
     if ( stream.available() ) {
       Serial.println(" set ");
       stream.getToken((char*)tmp32, 32);
@@ -614,7 +645,6 @@ void parse_do_command(StringStream & stream) {
     }
   } else 
   if ( match(tmp32, "CAL") ) {
-    Serial.println("Calendar");
     if ( stream.available() ) {
       Serial.println(" set ");
       stream.getToken((char*) tmp32, 64);
@@ -632,25 +662,20 @@ void parse_do_command(StringStream & stream) {
     swatch = 0;
     Serial.println("Into write mode.");
   } else 
-  if ( match(tmp32, "LOADKEYID") ) {
-    Serial.println("Loading Key IDs from SD.");
-    SD_readkeyid("KEYID.TXT");
-    //
-    sram.read( 0, (uint8*) &count, sizeof(count) );
-    n = 0;
-    swatch = millis();
-    for(i = 0; i < count; i++) {
-      sram.read(id.storeAddress(i), id.raw, 16);
-      strncpy((char*) tmp32, (char*)id.raw, 10);
-      tmp32[10] = 0;
-      if ( ! id.check() ) 
-        n++;
-    }
-    swatch = millis() - swatch;
-    Serial.print("Scan time in millis: ");
-    Serial.println(swatch);
-    Serial.print("SRAM stored key checksum errors: ");
+  if ( match(tmp32, "LOADKEYS") ) {
+    n = SD_loadKeyID();
+    Serial.print("Loaded ");
     Serial.print(n);
+    Serial.println(" key IDs.");
+  } else 
+  if ( match(tmp32, "FIND") ) {
+    if ( stream.available() ) {
+      if ( stream.getToken((char*)tmp32, 16) ) {
+        Serial.print("Search ");
+        Serial.println((char*)tmp32);
+        scanKeyDB((char*)tmp32);
+      }
+    }
   } else 
   if ( match(tmp32, "AUTHKEY") ) {
     if ( stream.available() ) {
@@ -668,6 +693,51 @@ void parse_do_command(StringStream & stream) {
   } else {
     Serial.println("?");
   }
+}
+
+
+/****/
+
+KeyID::KeyID() {
+  memset(raw, 0x20, 10);
+  setExpdate(0);
+  raw[14] = 0;
+  raw[15] = 0;
+}
+
+void KeyID::setExpdate(uint32 date) {
+  raw[10] = date>>24 & 0xff;
+  raw[11] = date>>16 & 0xff;
+  raw[12] = date>>8 & 0xff;
+  raw[13] = date & 0xff;
+}
+
+uint32 KeyID::getExpdate() {
+  uint32 d;
+  d = raw[10];
+  d = (d<<8) | raw[11];
+  d = (d<<8) | raw[12];
+  d = (d<<8) | raw[13];
+  return d;
+}
+
+uint8 KeyID::setChecksum() {
+  int i;
+  uint8 xsum = 0;
+  for (i = 0; i < 15; i++) {
+    xsum ^= raw[i];
+  }
+  raw[15] = xsum;
+  return raw[15];
+}
+
+uint8 KeyID::check() {
+  int i;
+  uint8 chksum = 0;
+  for (i = 0; i < 16; i++) {
+    chksum ^= raw[i];
+  }
+  return chksum == 0;
 }
 
 /******************************************************************************

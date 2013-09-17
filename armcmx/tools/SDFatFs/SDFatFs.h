@@ -1,127 +1,111 @@
 #ifndef _SDFATFS_H_
 #define _SDFATFS_H_
 
- /*
-  * Wrapper for FatFs by ChaN
-  */
+#include <stdint.h>
+#include "ff.h"
+#include "mmc_ssp.h"
 
 #include "armcmx.h"
-#include "Print.h"
-#include "Stream.h"
-
 #include "SPI.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include "FatFs/diskio.h"
-#include "FatFs/ff.h"
-
-#ifdef __cplusplus
-}
-#endif
-
-// volume
 class SDFatFs {
-  SPIBus & spibus;
-
-//  static volatile DSTATUS Stat;	/* Physical drive status */
-//  static volatile UINT Timer1, Timer2;	/* 1kHz decrement timer stopped at zero (disk_timerproc()) */
-//  static BYTE CardType;			/* Card type flags */
-
-  GPIOPin pin_cs;
-  GPIOPin pin_detect;
-  GPIOPin pin_busyled;
-  
-  //
   FATFS fatfs;		/* File system object */
+//public:
+//  FIL file;			/* File object */  
 
-  static uint32 time;
-  static uint32 cal;
-  
-public:
-  FRESULT rescode;
-  
-  static uint32 fattime();
-  static void settime(uint32 t, uint32 c) { time = t; cal = c; }
+private:
+  SPIBus & bus;
+  GPIOPin chipselect;
+  GPIOPin carddetect, busyled;
 
 public:
-  SDFatFs(SPIBus & bus, GPIOPin cs, GPIOPin detect = PIN_NOT_DEFINED, GPIOPin led = PIN_NOT_DEFINED) 
-    : spibus(bus), pin_cs(cs), pin_detect(detect), pin_busyled(led) {}
-  
-  void begin(void);
-  void end(void);
-      
-  inline void setClockDivider(uint8 div) { spibus.setClockDivider(div); }
-  inline uint16 transfer(uint16 d) { return spibus.transfer(d); }
-  
-  int wait_ready (uint32 wt) {
-    wt += millis();
-    while ( wt > millis() ) {
-      if ( transfer(0xff) == 0xff )
-        return 1;
+  SDFatFs(SPIBus & spibus, GPIOPin cs, GPIOPin detect = PIN_NOT_DEFINED, GPIOPin busy = PIN_NOT_DEFINED) 
+    : bus(spibus), chipselect(cs), carddetect(detect), busyled(busy) {}
+
+  void begin(void) {
+    pinMode(chipselect, OUTPUT);
+    digitalWrite(chipselect, HIGH);
+    if ( carddetect != PIN_NOT_DEFINED) 
+      pinMode(carddetect, INPUT);
+    if ( busyled != PIN_NOT_DEFINED) { 
+      pinMode(busyled, OUTPUT);
+      busyOff();
     }
-    return 0;
+  }
+  
+  void set_datetime(uint32_t d, uint32_t t) {
+    date = d;
+    time = t;
   }
 
-  inline void deselect() { 
-    digitalWrite(pin_cs, HIGH);
-    spibus.transfer(0xFF);
+  void mount(void) {
+    f_mount(0, &fatfs);		/* Register volume work area (never fails) */
+
   }
-  inline uint8 select() { 
-    digitalWrite(pin_cs, LOW);
-    spibus.setClockDivider(SPI_CLOCK_DIV4);
-    spibus.transfer(0xFF);	/* Dummy clock (force DO enabled) */
-    if ( wait_ready(500) ) //wait_ready(500)) 
-      return 1;	/* OK */
-    deselect();
-    return 0;	/* Timeout */
+  void unmount(void) {
+    f_mount(0, NULL);
   }
-  inline void setDataSize(uint32 dss) { spibus.setDataSize(dss); } 
+  
+  void busyOn(void) {
+    if ( busyled != PIN_NOT_DEFINED ) 
+      digitalWrite(busyled, LOW);
+  }
+
+  void busyOff(void) {
+    if ( busyled != PIN_NOT_DEFINED ) 
+      digitalWrite(busyled, HIGH);
+  }
+
 };
 
+class SDFile {
+  FIL file;
+  FRESULT ferr;
+  SDFatFs & fatfs;
+  
+  static const int BUFFER_SIZE = 64;
+  char ring[BUFFER_SIZE];
+  uint16 rhead, count;
+  
+  size_t readBlock(void);
 
-class SDFatFile : public Stream {
   public:
-  FIL file;			/* File object */
-  SDFatFs & sdfs;
-  
-  int16_t rbuf;
-  boolean peeked;
-  
-//  uint8_t readbuff[], writebuff[];
 
-public:
-  SDFatFile(SDFatFs & sdfs) : sdfs(sdfs) {}
-
-  FRESULT result(void) { return sdfs.rescode; }
-    
-  void open(const char * fname, const uint8_t mode);
-  char * gets(char * buff, size_t sz);
-  void close(void);
-  void seek(uint16_t offset);
+  SDFile(SDFatFs & fs) : fatfs(fs) {
+    rhead = 0;
+    count = 0;
+  }
   
-  inline virtual size_t write(uint8_t c) {
-    return write(&c, 1);
-  }
-  virtual size_t write(const uint8_t * buf, size_t num);
-  inline virtual size_t write(char * str) {
-    return write((const uint8_t *) str, strlen(str));
-  }
-  using Print::write;
+  FIL * operator() (void) { return &file; }
+  FRESULT error(void) { return ferr; }
   
-  virtual int available() {
-    if ( f_eof(&file) )
-      return 0;
-    return f_size(&file) - f_tell(&file);
-  }
-  virtual int read(void);
-  virtual int peek(void);
-
-  virtual void flush() {
-    sdfs.rescode = f_sync(&file);
-  }
+  FRESULT open(const TCHAR * fpath, BYTE mode);
+  FRESULT close();
+ 
+  int read(void);
+  int peek(void);
+  
+  size_t write(uint8_t * p, size_t n);
+  size_t write(char * p) { return write((uint8_t*)p, strlen(p)); }
+  
+  void flush(void) { f_sync(&file); }
+  
+  void seek(int32_t ofs) { f_lseek(&file, (DWORD)ofs); }
+  size_t size() { return f_size(&file); }
+  bool eof();
+  
+  /* *** */
+  enum CHARCLASS {
+    EOL_CRNL = 0,
+    EOL_NL = 0x0A,
+    EOL_CR = 0x0D,
+    SPACE = 0x20,
+  };
+  size_t getToken(char * t, size_t lim, const CHARCLASS sep = SPACE);
+  size_t getLine(char * t, size_t lim, const CHARCLASS sep = EOL_NL) { return getToken(t, lim, sep); }
+  
+  bool buffer_is_full() { return count == BUFFER_SIZE; }
+  bool buffer_is_empty() { return !(rhead < count); }
 };
 
 extern SDFatFs SD;
