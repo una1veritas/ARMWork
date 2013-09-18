@@ -14,7 +14,7 @@ SPIBus SPI0(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, PIO0_2); // sck, miso, mosi, cs
 SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
 
 void SPIBus::begin() {
-  SPI_init(SPIPort, sck, miso, mosi, nss); 
+  SPI_init(SPIx, sck, miso, mosi, nss); 
 }
 
 void SPIBus::begin(GPIOPin pinsck, GPIOPin pinmiso, GPIOPin pinmosi, GPIOPin pinnss) {  
@@ -22,10 +22,10 @@ void SPIBus::begin(GPIOPin pinsck, GPIOPin pinmiso, GPIOPin pinmosi, GPIOPin pin
   miso = pinmiso;
   mosi = pinmosi;
   nss = pinnss;
-  SPI_init(SPIPort, sck, miso, mosi, nss); 
+  SPI_init(SPIx, sck, miso, mosi, nss); 
 }
 
 void SPIBus::end() {
-	SPI_disable(SPIPort);
+	SPI_disable(SPIx);
 }
 

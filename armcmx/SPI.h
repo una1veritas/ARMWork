@@ -20,13 +20,13 @@
 #include "spi_core.h"
 
 class SPIBus {
-	SPIDef * SPIPort;
+	SPIDef * SPIx;
 	GPIOPin sck, miso, mosi, nss;
 	
 public:
 	SPIBus(SPIDef * port, 
 		GPIOPin sckpin, GPIOPin misopin, GPIOPin mosipin, GPIOPin nsspin) : 
-    SPIPort(port), sck(sckpin), miso(misopin), mosi(mosipin), nss(nsspin)  {}
+    SPIx(port), sck(sckpin), miso(misopin), mosi(mosipin), nss(nsspin)  {}
 
   // SPI Configuration methods
 
@@ -37,11 +37,12 @@ public:
   void begin(GPIOPin pinsck, GPIOPin pinmiso, GPIOPin pinmosi, GPIOPin pinnss);
   void end();
 
-	inline uint16 transfer(uint16 _data) {
-    return SPI_transfer(SPIPort, _data);
+	
+  uint16 transfer(uint16 _data) {
+    return SPI_transfer(SPIx, _data);
     //return SPI_receive(SPIPort, _data);
 	}
-
+  
   /*
   inline uint16 send(uint16 _data) {
     return SPI_send(SPIPort, _data);
@@ -53,7 +54,7 @@ public:
   */
   
   inline void setDataSize(uint32_t dss) {
-    SPI_datasize(SPIPort, dss);
+    SPI_datasize(SPIx, dss);
   }
   
 	inline void setBitOrder(uint16_t bitOrder) {
@@ -61,11 +62,11 @@ public:
 	}
 
 	inline void setDataMode(uint16_t mode) {
-		SPI_mode(SPIPort, mode);
+		SPI_mode(SPIx, mode);
 	}
 
 	inline void setClockDivider(uint8_t rate) {
-		SPI_clock(SPIPort, rate);
+		SPI_clock(SPIx, rate);
 	}
 	
 	inline void setMode(uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst) {

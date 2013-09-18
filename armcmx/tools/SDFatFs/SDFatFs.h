@@ -7,6 +7,7 @@
 
 #include "armcmx.h"
 #include "SPI.h"
+#include "Stream.h"
 
 class SDFatFs {
   FATFS fatfs;		/* File system object */
@@ -58,7 +59,7 @@ public:
 
 };
 
-class SDFile {
+class SDFile : public Stream {
   FIL file;
   FRESULT ferr;
   SDFatFs & fatfs;
@@ -82,15 +83,17 @@ class SDFile {
   FRESULT open(const TCHAR * fpath, BYTE mode);
   FRESULT close();
  
-  int read(void);
-  int peek(void);
+  virtual int read(void);
+  virtual int peek(void);
   
-  size_t write(uint8_t * p, size_t n);
-  size_t write(char * p) { return write((uint8_t*)p, strlen(p)); }
+  virtual size_t write(uint8_t c) { UINT n; f_write(&file, &c, 1, &n); return n; }
+  virtual size_t write(const uint8_t * p, size_t n);
+  using Print::write;
   
-  void flush(void) { f_sync(&file); }
+  virtual int available(void);
+  virtual void flush(void) { f_sync(&file); }
   
-  void seek(int32_t ofs) { f_lseek(&file, (DWORD)ofs); }
+  FRESULT seek(int32_t ofs) { return f_lseek(&file, (DWORD)ofs); }
   size_t size() { return f_size(&file); }
   bool eof();
   

@@ -133,9 +133,9 @@ BYTE xchg_spi (
 	BYTE dat	// Data to send //
 )
 {
-	SSPxDR = dat;
-	while (SSPxSR & 0x10) ;
-	return SSPxDR;
+	LPC_SSP0->DR = dat;
+	while (LPC_SSP0->SR & 0x10) ;
+	return LPC_SSP0->DR;
 }
 #else
 /*
@@ -275,13 +275,7 @@ int rcvr_datablock (	/* 1:OK, 0:Error */
 		/* This loop will take a time. Insert rot_rdq() here for multitask envilonment. */
 	} while ((token == 0xFF) && Timer1);
 	if(token != 0xFE) return 0;		/* Function fails if invalid DataStart token or timeout */
-#ifdef 1 or ORIGINAL
 	rcvr_spi_multi(buff, btr);		/* Store trailing data to the buffer */
-#else
-  for ( ; btr > 0; btr-- ) {
-    *buff++ = SPI_transfer(&SPI0Def, 0xff);
-  }
-#endif
 	xchg_spi(0xFF); xchg_spi(0xFF);			/* Discard CRC */
 
 	return 1;						/* Function succeeded */
@@ -462,17 +456,9 @@ DRESULT disk_read (
 	if (!(CardType & CT_BLOCK)) sector *= 512;	/* LBA ot BA conversion (byte addressing cards) */
 
 	if (count == 1) {	/* Single sector read */
-#ifdef 1 or ORIGINAL
 		if ((send_cmd(CMD17, sector) == 0)	/* READ_SINGLE_BLOCK */
 			&& rcvr_datablock(buff, 512))
 			count = 0;
-#else /* modified */
-    if ( send_cmd(CMD17, sector) != 0)	/* READ_SINGLE_BLOCK */
-      goto _exit;
-    
-		if ( rcvr_datablock(buff, 512) )
-			count = 0;
-#endif /* ORIGINAL */
 	}
 	else {				/* Multiple sector read */
 		if (send_cmd(CMD18, sector) == 0) {	/* READ_MULTIPLE_BLOCK */
@@ -484,7 +470,6 @@ DRESULT disk_read (
 		}
 	}
   
-_exit:
 	deselect();
 
 	return count ? RES_ERROR : RES_OK;	/* Return result */

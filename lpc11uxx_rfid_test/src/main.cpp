@@ -50,7 +50,7 @@ namespace global {
   char buf[64];
   uint8_t tmp32[32];
   uint32 swatch = 0;
-  
+  bool logon = false;
   enum CMDSTATUS {
     IDLE = 0,
     WRITE,
@@ -75,7 +75,7 @@ const byte NFCPolling[] = {
 SDFile file(SD);
 void SD_readParams();
 uint32 SD_loadKeyID();
-void SD_writelog();
+void SD_writelog(const char *, const ISO14443 &);
 
 SPISRAM sram(SPI1, SRAM_CS, SPISRAM::BUS_23LC1024);
 
@@ -107,7 +107,6 @@ void setup() {
   Serial.begin(115200, RXD2, TXD2);
   Serial.println("\n\nUSART Serial started. \nHello.");
 
-
   Serial.print("Starting I2C...");
   Wire.begin(); 	/* initialize I2c */
   if ( Wire.status == FALSE )
@@ -127,7 +126,9 @@ void setup() {
     if ( rtc.begin() ) break;
   rtc.update();
   formattimedate(str64, rtc.time, rtc.cal);
+  Serial.print(" [");
   Serial.print(str64);
+  Serial.print("] ");
   
   Serial.print(", NFC PN532 ");
   nfcreader.begin();
@@ -136,10 +137,7 @@ void setup() {
       break;
     delay(1000);
   }
-  Serial << "[ver. " << (char) tmp32[0] << " firm. " << tmp32[1] << " rev. " << tmp32[2];
-  Serial.print(" supporting ");
-  Serial.print(tmp32[3], BIN);
-  Serial << "]";
+  Serial << "[ver. " << (char) tmp32[0] << " firm. " << tmp32[1] << " rev. " << tmp32[2] << "]";
   if ( !nfcreader.SAMConfiguration() ) {
 		Serial.println("....SAMConfiguration failed. Halt.\n");
 		while (1);
@@ -242,7 +240,8 @@ int main (void) {
               i2clcd.setCursor(0,0);
               i2clcd.print((char*)tmp32);
               Serial << (char*)tmp32 << nl;
-              SD_writelog();
+              if ( logon )
+                SD_writelog((char*)tmp32, card);
             } else {
               Serial.println("UNKNOWN CARD.");
             }
@@ -435,16 +434,16 @@ uint8 get_MifareBlock(ISO14443 & card, IDData & data, const uint8_t * key) {
   return 0;
 }
 
-  void IDDataString(char * str, const uint8 type, const IDData & iddata) {
+  void IDDataString(char * str, const uint8 cardtype, const IDData & iddata) {
     int i;
-    if ( type == NFC::CARDTYPE_FELICA_212K ) {
+    if ( cardtype == NFC::CARDTYPE_FELICA_212K ) {
       *str++ = iddata.fcf.division[0];
       *str++ = '-';
       for(i = 0; i < 8; i++)
         *str++ = iddata.fcf.pid[i];
       *str++ = '-';
       *str++ = iddata.fcf.issue;
-    } else if ( type == NFC::CARDTYPE_MIFARE ) {
+    } else if ( cardtype == NFC::CARDTYPE_MIFARE ) {
       *str++ = iddata.iizuka.division[0];
       *str++ = iddata.iizuka.division[1];
       *str++ = '-';
@@ -473,12 +472,13 @@ void SD_readParams() {
       stream.write(buf);
       stream.getToken(buf, 32);
       Serial.print(buf);
-      /*
-      while( stream.getToken(buf, 32) ) {
-        Serial.print(buf);
-        Serial.print(" ");
+      if ( match(buf, "logging") && stream.getToken(buf, 32) > 0 ) {
+        if ( match(buf, "on") ) {
+          logon = true;
+        } else {
+          logon = false;
+        }
       }
-      */
       Serial.println();
     }
     if ( file.error() ) {
@@ -545,18 +545,25 @@ uint32 SD_loadKeyID() {
   return count;
 }
 
-void SD_writelog()  {
-  
+void SD_writelog(const char * msg, const ISO14443 & card)  {
+  SD.set_datetime(rtc.cal, rtc.time);
   SD.mount();
   file.open("CARDLOG.TXT", FA_WRITE | FA_OPEN_ALWAYS);
-  if ( file.error() ) { //rc) {
-    Serial << nl << "Couldn't open CARDLOG.TXT." << nl;
+  if ( file.error() ) {
+    Serial.println("Open file CARDLOG.TXT failed.");
     return;
   }
-
+  file.seek(file.size());
+  if ( file.error() ) 
+    Serial.println("Seek error.");
   formattimedate(tmp32, rtc.time, rtc.cal);
-  Serial << "CARDLOG.TXT" << (char*) tmp32 << nl;
+  Serial << (char*) tmp32 << " " << msg << " " << card << nl;
   file.write((char*)tmp32);
+  file.write(' ');
+  file.print(msg);
+  file.write(' ');
+  file.print(card);
+  file.write("\r\n");
   if ( file.error() == 0 ) {
     file.flush();
   }
@@ -569,6 +576,7 @@ void SD_writelog()  {
 void scanKeyDB(const char id[10]) {
   uint32 count = 0;
   uint32 start, end, i;
+  int length;
   int errorno;
   int diff;
   char buf[16];
@@ -583,6 +591,8 @@ void scanKeyDB(const char id[10]) {
   }
   if ( count == 0 )
     return;
+  length = strlen(id);
+  length = (length > 10 ? 10 : length);
   errorno = 0;
   start = 0;
   end = count;
@@ -590,7 +600,7 @@ void scanKeyDB(const char id[10]) {
     i = (start + end)>>1;
     sram.read(keyid.size()*i, keyid.raw, 16);
     if ( keyid.check() )
-      diff = strncmp((char*)keyid.raw, id, 10);
+      diff = strncmp((char*)keyid.raw, id, length);
     else {
       errorno++;
       break;
@@ -672,6 +682,19 @@ void parse_do_command(StringStream & stream) {
       }
     }
   } else 
+  if ( match(tmp32, "LOG" ) ) {
+    if ( stream.available() ) {
+      if ( stream.getToken((char*)tmp32, 16) ) {
+        if ( match(tmp32, "ON") ) {
+          logon = true;
+          Serial.println("Card logging on.");
+        } else {
+          logon = false;
+          Serial.println("Card logging off.");
+        }
+      }
+    }    
+  } else
   if ( match(tmp32, "AUTHKEY") ) {
     if ( stream.available() ) {
       for(i = 0; i < 7 && stream.getToken((char*)tmp32, 64); i++) {

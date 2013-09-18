@@ -56,7 +56,7 @@ int SDFile::peek(void) {
   return ring[rhead];
 }
 
-size_t SDFile::write(uint8_t * p, size_t n) {
+size_t SDFile::write(const uint8_t * p, size_t n) {
   UINT wn;
   ferr = f_write(&file, p, n, &wn);
   return wn;
@@ -65,6 +65,16 @@ size_t SDFile::write(uint8_t * p, size_t n) {
 bool SDFile::eof(void) {
   // both cache and file is at the end.
   return buffer_is_empty() && f_eof(&file);
+}
+
+int SDFile::available(void) {
+  if ( buffer_is_empty() ) {
+    if ( f_eof(&file) ) 
+      return 0;
+    return 1;
+  } else {
+    return count;
+  }
 }
 
 size_t SDFile::getToken(char * t, size_t lim, const CHARCLASS sep) {
