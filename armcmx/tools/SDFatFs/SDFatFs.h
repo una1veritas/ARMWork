@@ -72,13 +72,11 @@ class SDFile : public Stream {
 
   public:
 
-  SDFile(SDFatFs & fs) : fatfs(fs) {
-    rhead = 0;
-    count = 0;
+  SDFile(SDFatFs & fs) : fatfs(fs), rhead(0), count(0) {
   }
   
   FIL * operator() (void) { return &file; }
-  FRESULT error(void) { return ferr; }
+  inline FRESULT error(void) { return ferr; }
   
   FRESULT open(const TCHAR * fpath, BYTE mode);
   FRESULT close();
@@ -91,10 +89,10 @@ class SDFile : public Stream {
   using Print::write;
   
   virtual int available(void);
-  virtual void flush(void) { f_sync(&file); }
+  virtual inline void flush(void) { f_sync(&file); }
   
-  FRESULT seek(int32_t ofs) { return f_lseek(&file, (DWORD)ofs); }
-  size_t size() { return f_size(&file); }
+  inline FRESULT seek(int32_t ofs) { return f_lseek(&file, (DWORD)ofs); }
+  inline size_t size() { return f_size(&file); }
   bool eof();
   
   /* *** */
@@ -105,10 +103,10 @@ class SDFile : public Stream {
     SPACE = 0x20,
   };
   size_t getToken(char * t, size_t lim, const CHARCLASS sep = SPACE);
-  size_t getLine(char * t, size_t lim, const CHARCLASS sep = EOL_NL) { return getToken(t, lim, sep); }
+  inline size_t getLine(char * t, size_t lim, const CHARCLASS sep = EOL_NL) { return getToken(t, lim, sep); }
   
-  bool buffer_is_full() { return count == BUFFER_SIZE; }
-  bool buffer_is_empty() { return !(rhead < count); }
+  inline bool buffer_is_full() { return count == BUFFER_SIZE; }
+  inline bool buffer_is_empty() { return !(rhead < count); }
 };
 
 extern SDFatFs SD;

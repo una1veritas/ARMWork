@@ -210,6 +210,7 @@ struct ISO14443 : public Printable {
 };
 
 
+// Translation template data structure
 
 union IDData {
   struct {
@@ -235,10 +236,6 @@ union IDData {
     uint8 reserved2;
   } iizuka;
   uint8 raw[64];
-  
-  void clear() {
-    memset(raw, 0, 64);
-  }
   
 };
 
