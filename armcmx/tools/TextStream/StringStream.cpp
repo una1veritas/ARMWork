@@ -25,7 +25,7 @@ int StringStream::read(void) {
   return -1;
 }
 
-size_t StringStream::write(const char c) {
+size_t StringStream::write(uint8_t c) {
   if ( _count + 1 < _size )
     _string[_count++] = c;
   _string[_count] = 0;

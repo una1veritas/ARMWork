@@ -146,25 +146,4 @@ uint8 get_MifareBlock(ISO14443 & card, IDData & data, const uint8_t * key) {
   return 0;
 }
 
-  void IDDataString(char * str, const uint8 cardtype, const IDData & iddata) {
-    int i;
-    if ( cardtype == NFC::CARDTYPE_FELICA_212K ) {
-      *str++ = iddata.fcf.division[0];
-      *str++ = '-';
-      for(i = 0; i < 8; i++)
-        *str++ = iddata.fcf.pid[i];
-      *str++ = '-';
-      *str++ = iddata.fcf.issue;
-    } else if ( cardtype == NFC::CARDTYPE_MIFARE ) {
-      *str++ = iddata.iizuka.division[0];
-      *str++ = iddata.iizuka.division[1];
-      *str++ = '-';
-      for(i = 0; i < 8; i++)
-        *str++ = iddata.iizuka.pid[i];
-      *str++ = '-';
-      *str++ = iddata.iizuka.issue;
-    }
-    *str = 0;
-    //
-  }
 

@@ -9,7 +9,7 @@ extern const byte NFCPolling[];
 
 uint8 getIDInfo(ISO14443 & card, IDData & data, const byte authkey[8]);
 uint8 putIDInfo(ISO14443 & card, IDData & data, const byte authkey[8]);
-void IDDataString(char *, const uint8 cardtype, const IDData &);
+//void IDDataString(char *, const uint8 cardtype, const IDData &);
 
 uint8 get_MifareBlock(ISO14443 & card, IDData & data, const uint8_t * key);
 uint8 get_FCFBlock(ISO14443 & card, IDData & data);

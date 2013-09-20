@@ -4,7 +4,8 @@
 #include <stdint.h>
 #include <string.h>
 #include "armcmx.h"
-#include "Print.h"
+#include "Printable.h"
+#include "Stream.h"
 
 class StringStream : public Printable {
   char * _string;
@@ -20,15 +21,17 @@ public:
   void clear(void);
   void reset(void);
 
-  size_t write(const char c) ;
+  char * string(void) { return _string; }
+
+  size_t write(uint8_t c) ;
   size_t write(const char * str);
   
   inline boolean is_full(void) { return _count + 1 < _size; }
-  inline uint16_t length(void) { return _count; }
-  inline uint16_t available(void) { return _count - _readhead; }
+  inline int length(void) { return _count; }
+  inline int available(void) { return _count - _readhead; }
   int read(void);
   int peek(void) { return _string[_readhead]; }
-
+  void flush(void) { return clear(); }
   size_t getToken(char * dst, size_t maxlen);
 
   virtual size_t printTo(Print & pr) const {

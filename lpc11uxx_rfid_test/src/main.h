@@ -39,9 +39,6 @@
 
 #include "StringStream.h"
 
-#define formattimedate(s, d, t)  (sprintf((char*)(s), "20%02x/%02x/%02x-%02x:%02x:%02x", \
-        d>>16&0xff, d>>8&0x1f, d&0x3f, t>>16&0x3f, t>>8&0x7f, t&0x7f ) )
-
 
 void parse_do_command(StringStream & stream);
 

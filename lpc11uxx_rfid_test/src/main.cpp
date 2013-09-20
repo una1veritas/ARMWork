@@ -3,6 +3,7 @@
  *
  */
 
+#include <string.h>
 #include "LPC11Uxx.h"
 //#include "type.h"
 
@@ -85,7 +86,7 @@ RTC rtc(Wire, RTC::ST_M41T62);
 SDFile file(SD);
 void SD_readParams();
 uint32 SD_loadKeyID();
-void SD_writelog(uint32 date, uint32 time, const char *);
+void SD_writelog(uint32 date, uint32 time, const char * msg);
 
 SPISRAM sram(SPI1, SRAM_CS, SPISRAM::BUS_23LC1024);
 
@@ -109,7 +110,6 @@ void init() {
 
 
 void setup() {
-  char str64[64];
   KeyID id;
 
   pinMode(SW_USERBTN, INPUT);
@@ -135,9 +135,9 @@ void setup() {
   while(1)
     if ( rtc.begin() ) break;
   rtc.update();
-  formattimedate(str64, rtc.time, rtc.cal);
+  sprintf((char*)tmp32, "20%02x/%02x/%02x-%02x:%02x:%02x", rtc.cal>>16&0xff, rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f );
   Serial.print(" [");
-  Serial.print(str64);
+  Serial.print((char*)tmp32);
   Serial.print("] ");
   
   Serial.print(", NFC PN532 ");
@@ -241,17 +241,26 @@ int main (void) {
           if ( cmdstatus == IDLE and (millis() - lastread > 2000 and (millis() - lastread > 5000 or lastcard != card)) ) {
             lastread = millis();
             lastcard = card;
+            /*
             Serial.print(card);
-            formattimedate(tmp32, rtc.time, rtc.cal);
+            Serial.print(' ');
+            sprintf((char*)tmp32, "20%02x/%02x/%02x-%02x:%02x:%02x", rtc.cal>>16&0xff, rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f );
             Serial.println((char*)tmp32);
-            //
+            */ //
             if ( getIDInfo(card, iddata, authkey) ) {
-              IDDataString((char*)tmp32, card.type, iddata);
+              iddata.printOn(buf, card.type);
               i2clcd.setCursor(0,0);
-              i2clcd.print((char*)tmp32);
-              Serial << (char*)tmp32 << nl;
+              i2clcd.print((char*)buf);
+              //stream.clear();
+              //stream.write((char*)buf);
+              sprintf((char*)tmp32, "20%02x/%02x/%02x-%02x:%02x:%02x", rtc.cal>>16&0xff, rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f );
+              Serial.print((char*)tmp32);
+              Serial.print(" ");
+              Serial.print(buf);
+              Serial.print(" ");
+              Serial.println(card);
               if ( logon )
-                SD_writelog(rtc.cal, rtc.time, (char*) tmp32);
+                SD_writelog(date, time, buf);
             } else {
               Serial.println("UNKNOWN CARD.");
             }
@@ -416,19 +425,18 @@ void SD_writelog(uint32 date, uint32 time, const char * msg)  {
   file.seek(file.size());
   if ( file.error() ) 
     Serial.println("Seek error.");
-  formattimedate(buf, date, time);
-  Serial.write((char*)buf);
-  Serial.write(' ');
-  Serial.write(msg);
-  Serial.write("\r\n");
+  sprintf(buf, "20%02x/%02x/%02x-%02x:%02x:%02x", date>>16&0xff, date>>8&0x1f, date&0x3f, time>>16&0x3f, time>>8&0x7f, time&0x7f );
+  Serial.print((char*)buf);
+  Serial.print(' ');
+  Serial.print(msg);
+  Serial.print("\r\n");
 
-  file.write((char*)buf);
-  file.write(' ');
-  file.write((char*)msg);
-  file.write("\r\n");
-  if ( file.error() == 0 ) {
+  file.print((char*)buf);
+  file.print(' ');
+  file.print(msg);
+  file.print("\r\n");
+  if ( file.error() == 0 ) 
     file.flush();
-  }
   file.close();
   SD.unmount();
   return;

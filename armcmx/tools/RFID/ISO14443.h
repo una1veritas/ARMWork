@@ -210,6 +210,28 @@ union IDData {
     uint8 reserved2;
   } iizuka;
   uint8 raw[64];
+
+  void printOn(char * str, const uint8 type) const {
+    int i;
+    
+    if ( type == NFC::CARDTYPE_FELICA_212K ) {
+      *str++ = fcf.division[0];
+      *str++ = '-';
+      for(i = 0; i < 8; i++)
+        *str++ = fcf.pid[i];
+      *str++ ='-';
+      *str++ = fcf.issue;
+    } else if ( type == NFC::CARDTYPE_MIFARE ) {
+      *str++ = iizuka.division[0];
+      *str++ = iizuka.division[1];
+      *str++ = '-';
+      for(i = 0; i < 8; i++)
+        *str++ = iizuka.pid[i];
+      *str++ = '-';
+      *str++ = iizuka.issue;
+    }
+    *str = 0;
+   }
   
 };
 
