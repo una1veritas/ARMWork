@@ -122,33 +122,6 @@ struct ISO14443 : public Printable {
 		}
 	}
 
-  /*
-	void setPassiveTarget(const byte tp, const byte * raw) {
-    int n = raw[0]; // the number of detected targets
-    int base = 1;
-		type = tp;
-    if ( type == NFC::CARDTYPE_MIFARE ) {
-      atqa = raw[1]<<8 | raw[2];
-      sak = raw[3];
-      IDLength = raw[4];
-      memcpy(ID, raw+5, IDLength);
-      switch (atqa) {
-      case NFC::ATQA_MIFARE_CLASSIC1K:
-      case NFC::ATQA_MIFARE_CLASSIC4K:
-      case NFC::ATQA_MIFARE_ULTRALIGHT:
-      case NFC::ATQA_MIFARE_DESFIRE:
-        type = NFC::CARDTYPE_MIFARE;
-        break;
-      }
-    } else if ( type == NFC::CARDTYPE_FELICA_212K ) {
-      atqa = 0;
-      sak = 0;
-      IDLength = 8;
-      memcpy(ID, raw+3, IDLength);
-    }
-	}
-*/
-
 	virtual size_t printTo(Print & pr) const {
 		int cnt = 0;
 		switch(type) {
@@ -187,8 +160,9 @@ struct ISO14443 : public Printable {
 			cnt += 3;
 		}
 		return cnt;
-	}
-
+  }
+  
+  
 	void clear() {
 		type = NFC::CARDTYPE_EMPTY;
 		IDLength = 0;
