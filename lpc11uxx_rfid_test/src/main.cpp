@@ -18,7 +18,7 @@
 
 #include "PWM0Tone.h"
 
-#include "StringStream.h"
+#include "StringBuffer.h"
 #include "SDFatFs.h"
 #include "SPISRAM.h"
 
@@ -62,7 +62,7 @@ namespace global {
 using namespace global;
 
 char str64[64];
-StringStream stream(str64, 64);
+StringBuffer stream(str64, 64);
 
 
 struct KeyID {
@@ -87,6 +87,7 @@ SDFile file(SD);
 void SD_readParams();
 uint32 SD_loadKeyID();
 void SD_writelog(uint32 date, uint32 time, const char * msg);
+void printIDCard(char * str, uint16 len, const ISO14443 & card, const IDCardFormat & id);
 
 SPISRAM sram(SPI1, SRAM_CS, SPISRAM::BUS_23LC1024);
 
@@ -196,10 +197,10 @@ void setup() {
 int main (void) {
 	long lastread = 0, lasttime = 0;
   ISO14443 card, lastcard;
-  IDData iddata;
+  IDCardFormat iddata;
   char c;
   char line[64];
-  StringStream cmdline(line, 64);
+  StringBuffer cmdline(line, 64);
   
   init();
   PWM0_tone(PIO1_13, 800, 250);
@@ -241,24 +242,17 @@ int main (void) {
           if ( cmdstatus == IDLE and (millis() - lastread > 2000 and (millis() - lastread > 5000 or lastcard != card)) ) {
             lastread = millis();
             lastcard = card;
-            /*
-            Serial.print(card);
-            Serial.print(' ');
-            sprintf((char*)tmp32, "20%02x/%02x/%02x-%02x:%02x:%02x", rtc.cal>>16&0xff, rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f );
-            Serial.println((char*)tmp32);
-            */ //
+            //
             if ( getIDInfo(card, iddata, authkey) ) {
-              iddata.printOn(buf, card.type);
+              printIDCard(buf, 64, card, iddata);
               i2clcd.setCursor(0,0);
-              i2clcd.print((char*)buf);
+              i2clcd.write((uint8*)buf, 13);
               //stream.clear();
               //stream.write((char*)buf);
               sprintf((char*)tmp32, "20%02x/%02x/%02x-%02x:%02x:%02x", rtc.cal>>16&0xff, rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f );
               Serial.print((char*)tmp32);
               Serial.print(" ");
-              Serial.print(buf);
-              Serial.print(" ");
-              Serial.println(card);
+              Serial.println(buf);
               if ( logon )
                 SD_writelog(date, time, buf);
             } else {
@@ -340,9 +334,10 @@ void SD_readParams() {
       stream.write(buf);
       stream.getToken(buf, 32);
       Serial.print(buf);
-      if ( match(buf, "logging") && stream.getToken(buf, 32) > 0 ) {
+      if ( match(buf, "log") && stream.getToken(buf, 32) > 0 ) {
         if ( match(buf, "on") ) {
           logon = true;
+          Serial.print(" on");
         } else {
           logon = false;
         }
@@ -426,11 +421,6 @@ void SD_writelog(uint32 date, uint32 time, const char * msg)  {
   if ( file.error() ) 
     Serial.println("Seek error.");
   sprintf(buf, "20%02x/%02x/%02x-%02x:%02x:%02x", date>>16&0xff, date>>8&0x1f, date&0x3f, time>>16&0x3f, time>>8&0x7f, time&0x7f );
-  Serial.print((char*)buf);
-  Serial.print(' ');
-  Serial.print(msg);
-  Serial.print("\r\n");
-
   file.print((char*)buf);
   file.print(' ');
   file.print(msg);
@@ -498,7 +488,7 @@ void scanKeyDB(const char id[10]) {
   Serial.println("\n");
 }
 
-void parse_do_command(StringStream & stream) {
+void parse_do_command(StringBuffer & stream) {
   uint32 tmplong;
   int i;
   uint32 n;
@@ -553,17 +543,18 @@ void parse_do_command(StringStream & stream) {
     }
   } else 
   if ( match(tmp32, "LOG" ) ) {
-    if ( stream.available() ) {
-      if ( stream.getToken((char*)tmp32, 16) ) {
-        if ( match(tmp32, "ON") ) {
-          logon = true;
-          Serial.println("Card logging on.");
-        } else {
-          logon = false;
-          Serial.println("Card logging off.");
-        }
-      }
-    }    
+    if ( stream.available() && stream.getToken((char*)tmp32, 16) ) {
+      if ( match(tmp32, "ON") ) 
+        logon = true;
+      else
+        logon = false;
+    }
+    Serial.print("Card logging ");
+    if ( logon ) 
+      Serial.println("on.");
+    else
+      Serial.println("off.");
+    
   } else
   if ( match(tmp32, "AUTHKEY") ) {
     if ( stream.available() ) {
@@ -575,7 +566,7 @@ void parse_do_command(StringStream & stream) {
         authkey[i] = strtol((char*) tmp32, NULL,16) & 0xff;
       }
     }
-    Serial.print("Card authentication key: ");
+    Serial.print("Card auth. key: ");
     Serial.printBytes(authkey, 7);
     Serial.println();
   } else {
@@ -626,6 +617,65 @@ uint8 KeyID::check() {
     chksum ^= raw[i];
   }
   return chksum == 0;
+}
+
+
+void printIDCard(char * str, uint16 len, const ISO14443 & card, const IDCardFormat & id) {
+  StringBuffer sbuf(str, len);
+  int i;
+  if ( card.type == NFC::CARDTYPE_FELICA_212K ) {
+    sbuf.write(id.fcf.division[0]);
+    sbuf.write('-');
+    for(i = 0; i < 8; i++)
+      sbuf.write(id.fcf.pid[i]);
+    sbuf.write('-');
+    sbuf.write(id.fcf.issue);
+  } else if ( card.type == NFC::CARDTYPE_MIFARE ) {
+    //sbuf.write(id.iizuka.division[0]);
+    sbuf.write(id.iizuka.division[1]);
+    sbuf.write('-');
+    for(i = 0; i < 8; i++)
+      sbuf.write(id.iizuka.pid[i]);
+    sbuf.write('-');
+    sbuf.write(id.iizuka.issue);
+  }
+  //*str = 0;
+  sbuf.write(' ');
+  
+  switch(card.type) {
+  case NFC::CARDTYPE_MIFARE:
+  case NFC::CARDTYPE_MIFARE_DESFIRE:
+    sbuf.write("Mifare");
+    if ( card.type == NFC::CARDTYPE_MIFARE_DESFIRE ) 
+      sbuf.write(" DESFire");
+    else if ( card.atqa == NFC::ATQA_MIFARE_ULTRALIGHT )
+      sbuf.write(" Ultralight");
+    else if ( card.atqa == NFC::ATQA_MIFARE_CLASSIC1K )
+      sbuf.write(" Classic");
+    else if ( card.atqa == NFC::ATQA_MIFARE_CLASSIC4K )
+      sbuf.write(" Classic 4k");
+    break;
+  case NFC::CARDTYPE_FELICA_212K:
+    sbuf.write("FeliCa 212kb");
+    break;
+  case NFC::CARDTYPE_FELICA_424K:
+    sbuf.write("FeliCa 424kb");
+    break;
+  case NFC::CARDTYPE_EMPTY:
+    sbuf.write("Type Empty");
+    break;
+  default:
+    sbuf.write("Unknown (");
+    sbuf.print(card.type, DEC);
+    sbuf.write(")");
+    break;
+  }
+  sbuf.write(' ');
+  for(int i = 0; i < card.IDLength; i++) {
+    if ( i > 0 ) sbuf.write('-');
+    sbuf.print(card.ID[i]>>4, HEX);
+    sbuf.print(card.ID[i]&0x0f, HEX);
+  }
 }
 
 /******************************************************************************

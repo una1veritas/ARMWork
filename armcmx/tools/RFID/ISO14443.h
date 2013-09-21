@@ -184,56 +184,7 @@ struct ISO14443 : public Printable {
 };
 
 
-// Translation template data structure
 
-union IDData {
-  struct {
-    uint8 division[2];
-    uint8 pid[12];
-    uint8 issue;
-    uint8 gender;
-    uint8 namekana[16];
-    uint8 orgid[8];
-    uint8 dofissue[8];
-    uint8 goodthru[8];
-    uint8 issuerdata[8];
-  } fcf;
-  struct {
-    uint8 division[2];
-    uint8 pid[8];
-    uint8 issue;
-    uint8 reserved1[5];
-    uint8 namesjis[16];
-    uint8 dofbirth[7];
-    uint8 gender;
-    uint8 dofissue[7];
-    uint8 reserved2;
-  } iizuka;
-  uint8 raw[64];
-
-  void printOn(char * str, const uint8 type) const {
-    int i;
-    
-    if ( type == NFC::CARDTYPE_FELICA_212K ) {
-      *str++ = fcf.division[0];
-      *str++ = '-';
-      for(i = 0; i < 8; i++)
-        *str++ = fcf.pid[i];
-      *str++ ='-';
-      *str++ = fcf.issue;
-    } else if ( type == NFC::CARDTYPE_MIFARE ) {
-      *str++ = iizuka.division[0];
-      *str++ = iizuka.division[1];
-      *str++ = '-';
-      for(i = 0; i < 8; i++)
-        *str++ = iizuka.pid[i];
-      *str++ = '-';
-      *str++ = iizuka.issue;
-    }
-    *str = 0;
-   }
-  
-};
 
 #endif /* NFCCARD_H_ */
 

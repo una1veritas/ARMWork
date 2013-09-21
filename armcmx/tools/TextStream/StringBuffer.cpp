@@ -1,38 +1,37 @@
 
 #include <ctype.h>
-#include "StringStream.h"
+#include "StringBuffer.h"
 
-StringStream::StringStream(char * buf, uint16_t size) {
+StringBuffer::StringBuffer(char * buf, int size) {
   _string = buf;
-  _size = size;
-  _count = 0;
-  _readhead = 0;
+  _size = (uint16_t) size;
+  clear();
 }
 
-void StringStream::clear(void) {
+void StringBuffer::clear(void) {
   _count = 0;
   _readhead = 0;
   _string[0] = 0;
 }
 
-void StringStream::reset(void) {
+void StringBuffer::reset(void) {
   _readhead = 0;
 }
 
-int StringStream::read(void) {
+int StringBuffer::read(void) {
   if ( _readhead < _count )
     return _string[_readhead++];
   return -1;
 }
 
-size_t StringStream::write(uint8_t c) {
+size_t StringBuffer::write(uint8_t c) {
   if ( _count + 1 < _size )
     _string[_count++] = c;
   _string[_count] = 0;
   return 1;
 }
 
-size_t StringStream::write(const char * str) {
+size_t StringBuffer::write(const char * str) {
   size_t n = 0;
   while ( str[n] && _count + 1 < _size ) 
     _string[_count++] = str[n++];
@@ -44,7 +43,7 @@ size_t StringStream::write(const char * str) {
  *
  */
 
-size_t StringStream::getToken(char * dst, size_t maxlen) {
+size_t StringBuffer::getToken(char * dst, size_t maxlen) {
 	int c;
 	size_t n = 0;
   

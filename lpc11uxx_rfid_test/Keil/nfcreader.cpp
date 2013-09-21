@@ -16,7 +16,7 @@ const byte NFCPolling[] = {
   NFC::BAUDTYPE_106K_A,
 };
 
-uint8 getIDInfo(ISO14443 & card, IDData & data, const byte authkey[8]) {
+uint8 getIDInfo(ISO14443 & card, IDCardFormat & data, const byte authkey[8]) {
   memset(data.raw, 0x20, sizeof(data.raw));
   switch (card.type) {
     case NFC::CARDTYPE_MIFARE:
@@ -42,7 +42,7 @@ uint8 getIDInfo(ISO14443 & card, IDData & data, const byte authkey[8]) {
 }
 
 
-uint8 putIDInfo(ISO14443 & card, IDData & data, const byte authkey[8]) {
+uint8 putIDInfo(ISO14443 & card, IDCardFormat & data, const byte authkey[8]) {
   uint8 res;
   uint8 tmp[4];
   
@@ -89,7 +89,7 @@ uint8 putIDInfo(ISO14443 & card, IDData & data, const byte authkey[8]) {
   return 0;
 }
 
-uint8 get_FCFBlock(ISO14443 & card, IDData & data) {
+uint8 get_FCFBlock(ISO14443 & card, IDCardFormat & data) {
   word syscode = 0x00FE;
   int len;
   byte c;
@@ -124,7 +124,7 @@ uint8 get_FCFBlock(ISO14443 & card, IDData & data) {
 }
 
 
-uint8 get_MifareBlock(ISO14443 & card, IDData & data, const uint8_t * key) {
+uint8 get_MifareBlock(ISO14443 & card, IDCardFormat & data, const uint8_t * key) {
   uint8 res;
   nfcreader.targetSet(0x10, card.ID, card.IDLength);
          /* Note !!! Once failed to authentication, card's state will be back to the initial state, 

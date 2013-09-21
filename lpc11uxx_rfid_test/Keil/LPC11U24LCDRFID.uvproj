@@ -335,7 +335,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>3</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -538,16 +538,6 @@
               <FilePath>..\..\armcmx\tools\SerialRAM\SPISRAM.h</FilePath>
             </File>
             <File>
-              <FileName>StringStream.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\armcmx\tools\TextStream\StringStream.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>StringStream.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\armcmx\tools\TextStream\StringStream.h</FilePath>
-            </File>
-            <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\tools\SDFatFs\ff.c</FilePath>
@@ -561,6 +551,16 @@
               <FileName>ssp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\tools\SDFatFs\ssp.c</FilePath>
+            </File>
+            <File>
+              <FileName>StringBuffer.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\TextStream\StringBuffer.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>StringBuffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\TextStream\StringBuffer.h</FilePath>
             </File>
           </Files>
         </Group>

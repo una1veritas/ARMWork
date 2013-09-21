@@ -7,12 +7,12 @@
 extern PN532 nfcreader;
 extern const byte NFCPolling[];
 
-uint8 getIDInfo(ISO14443 & card, IDData & data, const byte authkey[8]);
-uint8 putIDInfo(ISO14443 & card, IDData & data, const byte authkey[8]);
+uint8 getIDInfo(ISO14443 & card, IDCardFormat & data, const byte authkey[8]);
+uint8 putIDInfo(ISO14443 & card, IDCardFormat & data, const byte authkey[8]);
 //void IDDataString(char *, const uint8 cardtype, const IDData &);
 
-uint8 get_MifareBlock(ISO14443 & card, IDData & data, const uint8_t * key);
-uint8 get_FCFBlock(ISO14443 & card, IDData & data);
+uint8 get_MifareBlock(ISO14443 & card, IDCardFormat & data, const uint8_t * key);
+uint8 get_FCFBlock(ISO14443 & card, IDCardFormat & data);
 
 extern const byte IizukaKey_b[7];
 extern const byte factory_a[7];

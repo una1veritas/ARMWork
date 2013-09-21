@@ -1,5 +1,5 @@
-#ifndef _STRINGSTREAM_H_
-#define _STRINGSTREAM_H_
+#ifndef _STRINGBUFFER_H_
+#define _STRINGBUFFER_H_
 
 #include <stdint.h>
 #include <string.h>
@@ -7,7 +7,7 @@
 #include "Printable.h"
 #include "Stream.h"
 
-class StringStream : public Printable {
+class StringBuffer : public Print, public Printable {
   char * _string;
   uint16_t _size;
   uint16_t _count;
@@ -16,16 +16,17 @@ class StringStream : public Printable {
   
 public:
   
-  StringStream(char * buf, uint16_t size);
+  StringBuffer(char * buf, int size);
 
   void clear(void);
   void reset(void);
 
   char * string(void) { return _string; }
 
-  size_t write(uint8_t c) ;
-  size_t write(const char * str);
-  
+  virtual size_t write(uint8_t c) ;
+  virtual size_t write(const char * str);
+  using Print::write;
+
   inline boolean is_full(void) { return _count + 1 < _size; }
   inline int length(void) { return _count; }
   inline int available(void) { return _count - _readhead; }
@@ -39,4 +40,4 @@ public:
   }
 };
 
-#endif  /* _STRINGSTREAM_H_ */
+#endif  /* _STRINGBUFFER_H_ */
