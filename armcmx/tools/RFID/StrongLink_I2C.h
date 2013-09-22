@@ -1,6 +1,7 @@
 #ifndef	StrongLinkI2C_h
 #define	StrongLinkI2C_h
 
+#if defined(ARDUINO)
 #if ARDUINO >= 100
 #include <Arduino.h>
 #define twiwrite(x) 	Wire.write(x)
@@ -10,8 +11,16 @@
 #define twiwrite(x) 	Wire.send(x)
 #define twiread(x) 		Wire.receive(x)
 #endif
+#elif defined (ARMCMX)
+#define twiwrite(x) Wire.write(x)
+#define twiread(x)  Wire.read(x)
+#define PROGMEM 
+#define prog_char char
+//#define pgm_read_byte(x)  *((uint8_t *)(x))
+//#define strcpy_P(d,s) strcpy(d,s)
+#endif
 
-class StrongLinkI2C {
+class StrongLink_I2C {
 	// constants
 private:
 	static const byte CMD_IDLE = 0x00;
@@ -111,7 +120,7 @@ public:
 public:
 	const static byte SL018_ADDRESS = 0x50;
 
-	StrongLinkI2C(byte addr = SL018_ADDRESS, byte tag_pin = 0xff,
+	StrongLink_I2C(byte addr = SL018_ADDRESS, byte tag_pin = 0xff,
 			byte wakeup_pin = 0xff);
 	void init();
 	void begin() {
@@ -160,7 +169,7 @@ public:
 	boolean set_led(const byte onoff);
 
 	boolean get_firmware_version(char buf[]);
-	const byte firmware_version();
+	byte firmware_version();
 
 	boolean login_sector(const byte, const byte *);
 	boolean read_block(byte baddr, byte blk[]);

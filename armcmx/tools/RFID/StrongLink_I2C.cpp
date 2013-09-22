@@ -1,6 +1,7 @@
 /*
  *
  */
+#if defined (ARDUINO)
 #include <avr/pgmspace.h>
 #if ARDUINO >= 100
 #include <Arduino.h>
@@ -8,40 +9,52 @@
 #include "WProgram.h"
 #endif
 #include <Wire.h>
-#include "StrongLinkI2C.h"
+#elif defined (ARMCMX)
+#include "armcmx.h"
+#include "I2CBus.h"
+#endif
+#include "StrongLink_I2C.h"
 
-PROGMEM const prog_char StrongLinkI2C::Type_Names[] =
+PROGMEM const prog_char StrongLink_I2C::Type_Names[] =
 		"\0Standard 1k\0Standard 7 Byte UID 1k\0UltraLight\0Standard 4k\0Standard 7 Byte UID 4k\0DesFire\0\0\0\0\0Unknown";
-PROGMEM const prog_char StrongLinkI2C::Transport_key_A[7] = { 0xAA, 0xA0, 0xA1,
+PROGMEM const prog_char StrongLink_I2C::Transport_key_A[7] = { 0xAA, 0xA0, 0xA1,
 		0xA2, 0xA3, 0xA4, 0xA5 };
-PROGMEM const prog_char StrongLinkI2C::Transport_key_B[7] = { 0xBB, 0xB0, 0xB1,
+PROGMEM const prog_char StrongLink_I2C::Transport_key_B[7] = { 0xBB, 0xB0, 0xB1,
 		0xB2, 0xB3, 0xB4, 0xB5 };
-PROGMEM const prog_char StrongLinkI2C::Philips_key[7] = { 0xAA, 0xFF, 0xFF,
+PROGMEM const prog_char StrongLink_I2C::Philips_key[7] = { 0xAA, 0xFF, 0xFF,
 		0xFF, 0xFF, 0xFF, 0xFF };
 
-StrongLinkI2C::StrongLinkI2C(byte addr, byte tag_pin, byte wakeup_pin) {
+StrongLink_I2C::StrongLink_I2C(byte addr, byte tag_pin, byte wakeup_pin) {
 	address = addr;
 	pin_tag = tag_pin;
 	pin_input = wakeup_pin;
 }
 
-void StrongLinkI2C::init() {
+void StrongLink_I2C::init() {
 	card.type = 0;
 	card.uid_length = 0;
 	packet.status = 0;
-	if (pin_tag != 0xff)
+	if (pin_tag != PIN_NOT_DEFINED)
 		pinMode(pin_tag, INPUT);
+  if ( pin_input != PIN_NOT_DEFINED ) {
+    pinMode(pin_input, OUTPUT);
+    digitalWrite(pin_input, HIGH);
+    delay(100);
+    digitalWrite(pin_input, LOW);
+    delay(100);
+    digitalWrite(pin_input, HIGH);
+  }
 //  event_millis = millis();
 //  event_wait = 20;
 }
 
-void StrongLinkI2C::send_command(byte cmd, byte len) {
+void StrongLink_I2C::send_command(byte cmd, byte len) {
 	packet.length = len + 1;
 	packet.command = cmd;
 	transmit();
 }
 
-void StrongLinkI2C::transmit() {
+void StrongLink_I2C::transmit() {
 	// wait until at least 20ms passed since last I2C transmission
 //	while(t > millis());
 //	t = millis() + 20;
@@ -57,7 +70,7 @@ void StrongLinkI2C::transmit() {
 	Wire.endTransmission();
 }
 
-byte StrongLinkI2C::receive(byte len) {
+byte StrongLink_I2C::receive(byte len) {
 	// wait until at least 20ms passed since last I2C transmission
 	//	while(t > millis());
 	//	t = millis() + 20;
@@ -67,6 +80,7 @@ byte StrongLinkI2C::receive(byte len) {
 	// read response
 	do {
 		Wire.requestFrom(address, len);
+    
 		delay(5);
 		i++;
 	} while (i < 7 && Wire.available() == 0);
@@ -87,7 +101,7 @@ byte StrongLinkI2C::receive(byte len) {
 	return 0;
 }
 
-boolean StrongLinkI2C::select() {
+boolean StrongLink_I2C::select() {
 	send_command(CMD_SELECT);
 	delay(20);
 	receive(8);
@@ -108,17 +122,25 @@ boolean StrongLinkI2C::select() {
 	return packet.status == Operation_succeed;
 }
 
-char* StrongLinkI2C::get_type_name(char * buf, const byte tp) {
+char* StrongLink_I2C::get_type_name(char * buf, const byte tp) {
 	int i, p;
 	for (i = 0, p = 0; i < tp; p++) {
+#if defined(ARDUINO)
 		if (pgm_read_byte(Type_Names + p) == 0)
+#elif defined (ARMCMX)
+		if ( *(Type_Names + p) == 0)
+#endif
 			i++;
 	}
+#if defined(ARDUINO)
 	strcpy_P(buf, Type_Names + p);
+#elif defined (ARMCMX)
+	strcpy(buf, Type_Names + p);
+#endif
 	return buf;
 }
 
-boolean StrongLinkI2C::set_led(const byte onoff) {
+boolean StrongLink_I2C::set_led(const byte onoff) {
 	packet.data[0] = (byte) (onoff != 0);
 	send_command(CMD_SET_LED, 1);
 	delay(20);
@@ -126,7 +148,7 @@ boolean StrongLinkI2C::set_led(const byte onoff) {
 	return packet.status == Operation_succeed;
 }
 
-boolean StrongLinkI2C::login_sector(const byte sec, const byte * typekey) {
+boolean StrongLink_I2C::login_sector(const byte sec, const byte * typekey) {
 	byte *p = packet.data;
 	*p++ = sec;
 	memcpy(p, typekey, 7);
@@ -136,7 +158,7 @@ boolean StrongLinkI2C::login_sector(const byte sec, const byte * typekey) {
 	return packet.status == Login_succeed;
 }
 
-boolean StrongLinkI2C::write_master_key(const byte sec, const byte * typekey) {
+boolean StrongLink_I2C::write_master_key(const byte sec, const byte * typekey) {
 	byte *p = packet.data;
 	*p++ = sec;
 	if (*typekey != 0xAA) {
@@ -150,7 +172,7 @@ boolean StrongLinkI2C::write_master_key(const byte sec, const byte * typekey) {
 	return packet.status == Operation_succeed;
 }
 
-boolean StrongLinkI2C::read_block(byte baddr, byte blk[]) {
+boolean StrongLink_I2C::read_block(byte baddr, byte blk[]) {
 	packet.data[0] = baddr;
 	send_command(CMD_READ16, 1);
 	delay(20);
@@ -159,7 +181,7 @@ boolean StrongLinkI2C::read_block(byte baddr, byte blk[]) {
 	return packet.status == Operation_succeed;
 }
 
-boolean StrongLinkI2C::write_block(byte baddr, const byte blk[]) {
+boolean StrongLink_I2C::write_block(byte baddr, const byte blk[]) {
 	packet.data[0] = baddr;
 	// the first byte of data is block number, after that 16 bytes follow.
 	memcpy((void*) (packet.data + 1), (void*) blk, 16);
@@ -169,7 +191,7 @@ boolean StrongLinkI2C::write_block(byte baddr, const byte blk[]) {
 	return packet.status == Operation_succeed;
 }
 
-boolean StrongLinkI2C::read_value(byte baddr, long & lval) {
+boolean StrongLink_I2C::read_value(byte baddr, long & lval) {
 	packet.data[0] = baddr;
 	send_command(CMD_READ_VALUE, 1);
 	delay(20);
@@ -178,7 +200,7 @@ boolean StrongLinkI2C::read_value(byte baddr, long & lval) {
 	return packet.status == Operation_succeed;
 }
 
-boolean StrongLinkI2C::manipulate_value(byte cmd, byte baddr, long & lval) {
+boolean StrongLink_I2C::manipulate_value(byte cmd, byte baddr, long & lval) {
 	packet.data[0] = baddr;
 	memcpy((void*) (packet.data + 1), (void*) &lval, 4);
 	send_command(cmd, 5);
@@ -188,7 +210,7 @@ boolean StrongLinkI2C::manipulate_value(byte cmd, byte baddr, long & lval) {
 	return packet.status == Operation_succeed;
 }
 
-boolean StrongLinkI2C::copy_value(byte addra, byte addrb) {
+boolean StrongLink_I2C::copy_value(byte addra, byte addrb) {
 	packet.data[0] = addra;
 	packet.data[1] = addrb;
 	send_command(CMD_COPY_VALUE, 2);
@@ -203,10 +225,10 @@ boolean StrongLinkI2C::copy_value(byte addra, byte addrb) {
  }
  */
 
-boolean StrongLinkI2C::read_access_condition(byte blk, byte mode[]) {
+boolean StrongLink_I2C::read_access_condition(uint8_t blk, byte mode[]) {
 	byte trailer_bytes[16];
 	byte c1, c2, c3;
-	blk &= ~(0b11);
+	blk &= ~(0x03); //0b11);
 	blk += 3;
 	if (!read_block(blk, trailer_bytes))
 		return false;
@@ -229,7 +251,7 @@ boolean StrongLinkI2C::read_access_condition(byte blk, byte mode[]) {
 	return true;
 }
 
-boolean StrongLinkI2C::write_trailer(const byte blk, const byte typekey_a[7],
+boolean StrongLink_I2C::write_trailer(const byte blk, const byte typekey_a[7],
 		const byte mode[4], const byte typekey_b[7]) {
 	byte trailer_bytes[16];
 	byte c1 = 0, c2 = 0, c3 = 0;
@@ -239,7 +261,7 @@ boolean StrongLinkI2C::write_trailer(const byte blk, const byte typekey_a[7],
 		packet.status = 0x0C;
 		return false;
 	}
-	if (!read_block((blk & ~(0b11)) | 0b11, trailer_bytes))
+	if (!read_block((blk & ~0x03 /*(0b11)*/ ) | 0x03 /*0b11*/, trailer_bytes))
 		return false;
 
 	memcpy(trailer_bytes, typekey_a + 1, 6);
@@ -267,7 +289,7 @@ boolean StrongLinkI2C::write_trailer(const byte blk, const byte typekey_a[7],
 	trailer_bytes[7] = (~c3 & 0x0f) | (c1 << 4 & 0xf0);
 	trailer_bytes[8] = (c2 & 0x0f) | (c3 << 4 & 0xf0);
 
-	write_block((blk & ~(0b11)) | 0b11, trailer_bytes);
+	write_block((blk & ~0x03 /*(0b11)*/) | 0x03 /*0b11*/, trailer_bytes);
 	/*
 	 for (int i = 0; i < 16; i++) {
 	 Serial.print(trailer_bytes[i]>>4 & 0x0f, HEX);
@@ -280,7 +302,7 @@ boolean StrongLinkI2C::write_trailer(const byte blk, const byte typekey_a[7],
 	return packet.status == Operation_succeed;
 }
 
-boolean StrongLinkI2C::get_firmware_version(char buf[]) {
+boolean StrongLink_I2C::get_firmware_version(char buf[]) {
 	send_command(CMD_GET_FIRMWARE_VERSION);
 	delay(20);
 	receive(16);
@@ -288,7 +310,7 @@ boolean StrongLinkI2C::get_firmware_version(char buf[]) {
 	return packet.status == Operation_succeed;
 }
 
-const byte StrongLinkI2C::firmware_version() {
+byte StrongLink_I2C::firmware_version() {
 	char tmp[16];
 	if ( get_firmware_version(tmp) ) {
 		return (tmp[6] - 0x30)*10 + tmp[8]-0x30;

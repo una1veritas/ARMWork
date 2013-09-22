@@ -335,7 +335,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>2</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -407,21 +407,6 @@
               <FileType>8</FileType>
               <FilePath>..\src\main.cpp</FilePath>
             </File>
-            <File>
-              <FileName>Task.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\src\Task.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\src\Task.h</FilePath>
-            </File>
-            <File>
-              <FileName>nfcreader.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\nfcreader.cpp</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -487,16 +472,6 @@
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\lpc11uxx\PWM0tone.c</FilePath>
             </File>
-            <File>
-              <FileName>SPI.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\armcmx\SPI.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>spi_core.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\lpc11uxx\spi_core.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -511,46 +486,6 @@
               <FileName>RTC.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\armcmx\tools\RTC\RTC.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>PN532_I2C.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\armcmx\tools\RFID\PN532_I2C.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>SDFatFs.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\SDFatFs.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>SDFatFs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\SDFatFs.h</FilePath>
-            </File>
-            <File>
-              <FileName>SPISRAM.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\armcmx\tools\SerialRAM\SPISRAM.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>SPISRAM.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\armcmx\tools\SerialRAM\SPISRAM.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\ff.c</FilePath>
-            </File>
-            <File>
-              <FileName>mmc_ssp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\mmc_ssp.c</FilePath>
-            </File>
-            <File>
-              <FileName>ssp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\ssp.c</FilePath>
             </File>
             <File>
               <FileName>StringBuffer.cpp</FileName>
