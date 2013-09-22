@@ -27,7 +27,7 @@ public:
   virtual size_t write(const char * str);
   using Print::write;
 
-  inline boolean is_full(void) { return _count + 1 < _size; }
+  inline boolean is_full(void) { return !(_count + 1 < _size); }
   inline int length(void) { return _count; }
   inline int available(void) { return _count - _readhead; }
   int read(void);

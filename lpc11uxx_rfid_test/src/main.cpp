@@ -203,7 +203,7 @@ int main (void) {
   StringBuffer cmdline(line, 64);
   
   init();
-  PWM0_tone(PIO1_13, 800, 250);
+  PWM0_tone(PIO1_13, 880, 250);
   setup();
   // ---------------------------------------
   rtc.updateCalendar();
@@ -255,6 +255,8 @@ int main (void) {
               Serial.println(buf);
               if ( logon )
                 SD_writelog(date, time, buf);
+              PWM0_tone(PIO1_13, 1047, 100);
+              PWM0_tone(PIO1_13, 1318, 100);
             } else {
               Serial.println("UNKNOWN CARD.");
             }
@@ -300,8 +302,10 @@ int main (void) {
     if ( task.serial() && Serial.available() ) {
       while ( Serial.available() ) {
         c = Serial.read();
-        if ( c == '\n' || c == '\r' || c == 0 )
+        if ( c == 0 )
           break;
+        if ( c == '\n' && cmdline.peek() == '\r' ) 
+          break;        
         cmdline.write(c);
         if ( cmdline.is_full() )
           break;
@@ -494,38 +498,35 @@ void parse_do_command(StringBuffer & stream) {
   uint32 n;
   
   Serial.print("> ");
-  Serial.println(stream);
   stream.getToken((char*)tmp32, 32);
+  Serial.print((char*)tmp32);
+  Serial.print(' ');
   if ( match(tmp32, "TIME") ) {
-    if ( stream.available() ) {
-      Serial.println(" set ");
-      stream.getToken((char*)tmp32, 32);
+    if ( stream.available() && stream.getToken((char*)tmp32, 32) ) {
+      Serial.println((char*)tmp32);
       tmplong = strtol((char*) tmp32, NULL, 16);
-      if ( tmplong ) {
-        Serial.println(tmplong, HEX);
+      if ( tmplong ) 
         rtc.setTime(tmplong);
-      }
-    } else {
-      Serial.println(rtc.time, HEX);
     }
+    rtc.updateTime();
+    Serial.println();
+    Serial.println(rtc.time, HEX);
   } else 
   if ( match(tmp32, "CAL") ) {
-    if ( stream.available() ) {
-      Serial.println(" set ");
-      stream.getToken((char*) tmp32, 64);
+    if ( stream.available() && stream.getToken((char*) tmp32, 64) ) {
+      Serial.print((char*)tmp32);
       tmplong = strtol((char*) tmp32, NULL, 16);
-      if ( tmplong ) {
-        Serial.println(tmplong, HEX);
+      if ( tmplong ) 
         rtc.setCalendar(tmplong);
-      }
-    } else {
-      Serial.println(rtc.cal, HEX);
     }
+    rtc.updateCalendar();
+    Serial.println();
+    Serial.println(rtc.cal, HEX);
   } else 
   if ( match(tmp32, "WRITE") ) {
     cmdstatus = WRITE;
     swatch = 0;
-    Serial.println("Into write mode.");
+    Serial.println();
   } else 
   if ( match(tmp32, "LOADKEYS") ) {
     n = SD_loadKeyID();
@@ -534,12 +535,10 @@ void parse_do_command(StringBuffer & stream) {
     Serial.println(" key IDs.");
   } else 
   if ( match(tmp32, "FIND") ) {
-    if ( stream.available() ) {
-      if ( stream.getToken((char*)tmp32, 16) ) {
-        Serial.print("Search ");
-        Serial.println((char*)tmp32);
-        scanKeyDB((char*)tmp32);
-      }
+    if ( stream.available() && stream.getToken((char*)tmp32, 16) ) {
+      Serial.print("Search ");
+      Serial.println((char*)tmp32);
+      scanKeyDB((char*)tmp32);
     }
   } else 
   if ( match(tmp32, "LOG" ) ) {
@@ -548,6 +547,7 @@ void parse_do_command(StringBuffer & stream) {
         logon = true;
       else
         logon = false;
+      Serial.println();
     }
     Serial.print("Card logging ");
     if ( logon ) 
@@ -568,6 +568,8 @@ void parse_do_command(StringBuffer & stream) {
     }
     Serial.print("Card auth. key: ");
     Serial.printBytes(authkey, 7);
+    Serial.println();
+  } else if ( strlen((char*)tmp32) == 0 ) {
     Serial.println();
   } else {
     Serial.println("?");
