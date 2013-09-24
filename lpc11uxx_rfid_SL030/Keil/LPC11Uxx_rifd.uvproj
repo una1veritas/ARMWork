@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>lpclcdrfid</TargetName>
+      <TargetName>cappuccino</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -43,8 +43,8 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\Obj\</OutputDirectory>
-          <OutputName>LPC11U24LCDRFID</OutputName>
+          <OutputDirectory>.\</OutputDirectory>
+          <OutputName>LPC11U37_CAPPUCCINO</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -167,7 +167,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>
@@ -335,7 +335,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -407,6 +407,21 @@
               <FileType>8</FileType>
               <FilePath>..\src\main.cpp</FilePath>
             </File>
+            <File>
+              <FileName>Task.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\src\Task.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\src\Task.h</FilePath>
+            </File>
+            <File>
+              <FileName>nfcreader.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\nfcreader.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -468,14 +483,14 @@
               <FilePath>..\..\armcmx\lpc11uxx\usart.c</FilePath>
             </File>
             <File>
-              <FileName>SPI.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\armcmx\SPI.cpp</FilePath>
-            </File>
-            <File>
               <FileName>PWM0tone.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\lpc11uxx\PWM0tone.c</FilePath>
+            </File>
+            <File>
+              <FileName>SPI.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\SPI.cpp</FilePath>
             </File>
             <File>
               <FileName>spi_core.c</FileName>
@@ -498,24 +513,24 @@
               <FilePath>..\..\armcmx\tools\RTC\RTC.cpp</FilePath>
             </File>
             <File>
-              <FileName>PN532_I2C.cpp</FileName>
+              <FileName>SDFatFs.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\armcmx\tools\RFID\PN532_I2C.cpp</FilePath>
+              <FilePath>..\..\armcmx\tools\SDFatFs\SDFatFs.cpp</FilePath>
             </File>
             <File>
-              <FileName>StringStream.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\armcmx\tools\TextStream\StringStream.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>StringStream.h</FileName>
+              <FileName>SDFatFs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\armcmx\tools\TextStream\StringStream.h</FilePath>
+              <FilePath>..\..\armcmx\tools\SDFatFs\SDFatFs.h</FilePath>
             </File>
             <File>
               <FileName>SPISRAM.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\armcmx\tools\SerialRAM\SPISRAM.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>SPISRAM.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\SerialRAM\SPISRAM.h</FilePath>
             </File>
             <File>
               <FileName>ff.c</FileName>
@@ -528,14 +543,34 @@
               <FilePath>..\..\armcmx\tools\SDFatFs\mmc_ssp.c</FilePath>
             </File>
             <File>
-              <FileName>SDFatFs.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\SDFatFs.cpp</FilePath>
-            </File>
-            <File>
               <FileName>ssp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\tools\SDFatFs\ssp.c</FilePath>
+            </File>
+            <File>
+              <FileName>StringBuffer.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\TextStream\StringBuffer.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>StringBuffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\TextStream\StringBuffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>StrongLink_I2C.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\RFID\StrongLink_I2C.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>ISO14443.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\RFID\ISO14443.h</FilePath>
+            </File>
+            <File>
+              <FileName>StrongLink_I2C.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\RFID\StrongLink_I2C.h</FilePath>
             </File>
           </Files>
         </Group>

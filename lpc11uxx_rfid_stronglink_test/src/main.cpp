@@ -54,8 +54,7 @@ StringBuffer stream(str64, 64);
 #define SL030_WAKEUP PIO0_16
 
 StrongLink_I2C rfid(0x50, SL030_TAGDETECT, SL030_WAKEUP);
-int uid_length = 0;
-byte uid[StrongLink_I2C::UID_MAXLENGTH];
+ISO14443CardInfo lastcard;
 
 ST7032i i2clcd(Wire, LED_LCDBKLT, LCD_RST);
 RTC rtc(Wire, RTC::ST_M41T62);
@@ -94,29 +93,27 @@ void init() {
 
 void loop() {
   int i;
-  char str[StrongLink_I2C::TYPENAME_MAXLENGTH];
+  char str[ISO14443CardInfo::TYPENAME_MAXLENGTH];
 
   // start seek mode
-  if ( rfid.select() ) {
-    if ( memcmp( uid, rfid.uid(), sizeof(uid)) ) {
-      uid_length = rfid.uid_length();
-      rfid.get_uid(uid);
-      for ( i = 0; i < uid_length; i++) {
-        Serial.print(uid[i]>>4&0x0f, HEX);
-        Serial.print(uid[i]&0x0f, HEX);
+  if ( rfid.detect() && rfid.select() ) {
+    if ( lastcard != rfid.card ) {
+      lastcard = rfid.card;
+      for ( i = 0; i < lastcard.IDLength; i++) {
+        Serial.print(lastcard.ID[i]>>4&0x0f, HEX);
+        Serial.print(lastcard.ID[i]&0x0f, HEX);
         Serial.print(" ");
       }
-      if ( rfid.card_type() ) {
+      if ( lastcard.type ) {
         Serial.print(" type: ");
-        rfid.get_type_name(str);
+        lastcard.get_type_name(str);
         Serial.println(str);
       }
     }
   } 
   else {
-    if ( uid_length != 0 ) {
-      memset(uid, 0, uid_length);
-      uid_length = 0;
+    if ( lastcard.IDLength != 0 ) {
+      lastcard.clear();
       Serial.println("Lost.");
       delay(500);
     }
@@ -146,7 +143,7 @@ void setup() {
     if ( i2clcd.begin() ) break;
   i2clcd.clear();
   i2clcd.print("Hello.");
-  /*
+  
   Serial.print(", RTC");
   while(1)
     if ( rtc.begin() ) break;
@@ -155,8 +152,8 @@ void setup() {
   Serial.print(" [");
   Serial.print((char*)tmp32);
   Serial.print("] ");
-  */
-  Serial.print("rfid");
+  
+  Serial.print(" StrongLink 030");
   rfid.begin();
   Serial.println(".\n");
   

@@ -42,54 +42,37 @@ static const word FELICA_SERVICE_EDY = 0x170F;
 static const word FELICA_SERVICE_FCF = 0x1a8b;
 };
 
-struct ISO14443 : public Printable {
+struct ISO14443CardInfo : public Printable {
 
-	static const byte NFCID_size = 8;
+	const static byte NFCID_MAXLENGTH = 10;
+	const static byte CARDINFO_LENGTH = NFCID_MAXLENGTH + 2;
+	const static byte TYPENAME_MAXLENGTH = 12;
+
+	const static char Type_Names[];
+
 	//
 	byte type;
 	byte IDLength;
-	union {
-		byte UID[7];
-		byte NUID[7];
-		byte IDm[8];
-		byte ID[NFCID_size];
-	};
+  byte ID[NFCID_MAXLENGTH];
+  //
 	word atqa;
 	byte sak;
 
-	ISO14443() {
+public:
+
+  ISO14443CardInfo() {
 		clear();
 	}
 
-	ISO14443(const byte * raw) {
+	ISO14443CardInfo(const byte * raw) {
 		set(raw);
 	}
 
-	ISO14443(const byte & card) {
+	ISO14443CardInfo(const byte & card) {
 		set(card);
 	}
 
-	void set(const ISO14443 & card) {
-		type = card.type;
-		IDLength = card.IDLength;
-		switch (type) {
-		case NFC::CARDTYPE_FELICA_212K: // Felica
-			memcpy(IDm, card.IDm, IDLength);
-			break;
-		default: // Mifare
-			memcpy(UID, card.UID, IDLength);
-			break;
-		}
-		atqa = 0;
-		sak = 0;
-	}
-
-	ISO14443 & operator=(const ISO14443 & c) {
-		set(c);
-		return *this;
-	}
-
-	void set(const byte tp, const byte *data, const byte len) {
+  void set(const byte tp, const byte *data, const byte len) {
 		type = tp;
 		IDLength = len;
 		memcpy(ID, data, len);
@@ -97,6 +80,35 @@ struct ISO14443 : public Printable {
 		sak = 0;
 	}
 
+	void set(const ISO14443CardInfo & card) {
+		type = card.type;
+		IDLength = card.IDLength;
+    memcpy(ID, card.ID, NFCID_MAXLENGTH);
+
+		atqa = card.atqa;
+		sak  = card.sak;
+	}
+
+	ISO14443CardInfo & operator=(const ISO14443CardInfo & c) {
+		set(c);
+		return *this;
+	}
+  
+  void clear(void) {
+    IDLength = 0;
+    memset(ID, 0, NFCID_MAXLENGTH);
+    type = NFC::CARDTYPE_EMPTY;
+  }
+  
+  bool operator==(const ISO14443CardInfo & c) {
+    if ( type == c.type && IDLength == c.IDLength ) {
+      return memcmp(ID, c.ID, NFCID_MAXLENGTH) == 0;
+    }
+    return false;
+  }
+  
+  inline bool operator!=(const ISO14443CardInfo & c) { return !(*this == c); }
+  
 	void set(const byte tp, const byte * raw) {
 		type = tp;
 //		byte len;
@@ -105,7 +117,7 @@ struct ISO14443 : public Printable {
 		case NFC::CARDTYPE_FELICA_424K:
 			IDLength = 8;
 //			len = raw[1];
-			memcpy(IDm, raw + 3, 8);
+			memcpy(ID, raw + 3, 8);
 //			memcpy(PMm, raw + 11, 8);
 //			if (len == 20)
 //				memcpy(SysCode, raw + 19, 2);
@@ -117,7 +129,7 @@ struct ISO14443 : public Printable {
       atqa = raw[1]<<8 | raw[2];
       sak = raw[3];
 			IDLength = raw[4];
-			memcpy(UID, raw + 5, IDLength);
+			memcpy(ID, raw + 5, IDLength);
 			break;
 		}
 	}
@@ -161,26 +173,10 @@ struct ISO14443 : public Printable {
 		}
 		return cnt;
   }
-  
-  
-	void clear() {
-		type = NFC::CARDTYPE_EMPTY;
-		IDLength = 0;
-		memset(ID, 0, 8);
-		atqa = 0;
-		sak = 0;
-	}
 
-	boolean operator==(const ISO14443 & c) const {
-		if (type == c.type && IDLength == c.IDLength) {
-			return memcmp(ID, c.ID, IDLength) == 0;
-		}
-		return false;
-	}
-
-	inline boolean operator!=(const ISO14443 & c) const {
-		return !(operator==(c));
-	}
+	char * get_type_name(char * s, const byte tp);
+	char* get_type_name(char * s) { return get_type_name(s, type); }
+  
 };
 
 

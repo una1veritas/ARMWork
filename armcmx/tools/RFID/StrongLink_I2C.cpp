@@ -1,5 +1,6 @@
 /*
- *
+ * StrongLink I2C based Mifare Reader
+ * SL030 (3v3), SL018 (5v)
  */
 #if defined (ARDUINO)
 #include <avr/pgmspace.h>
@@ -15,8 +16,8 @@
 #endif
 #include "StrongLink_I2C.h"
 
-PROGMEM const prog_char StrongLink_I2C::Type_Names[] =
-		"\0Standard 1k\0Standard 7 Byte UID 1k\0UltraLight\0Standard 4k\0Standard 7 Byte UID 4k\0DesFire\0\0\0\0\0Unknown";
+
+
 PROGMEM const prog_char StrongLink_I2C::Transport_key_A[7] = { 0xAA, 0xA0, 0xA1,
 		0xA2, 0xA3, 0xA4, 0xA5 };
 PROGMEM const prog_char StrongLink_I2C::Transport_key_B[7] = { 0xBB, 0xB0, 0xB1,
@@ -31,8 +32,6 @@ StrongLink_I2C::StrongLink_I2C(byte addr, byte tag_pin, byte wakeup_pin) {
 }
 
 void StrongLink_I2C::init() {
-	card.type = 0;
-	card.uid_length = 0;
 	packet.status = 0;
 	if (pin_tag != PIN_NOT_DEFINED)
 		pinMode(pin_tag, INPUT);
@@ -44,6 +43,7 @@ void StrongLink_I2C::init() {
     delay(100);
     digitalWrite(pin_input, HIGH);
   }
+	card.clear();
 //  event_millis = millis();
 //  event_wait = 20;
 }
@@ -107,37 +107,16 @@ boolean StrongLink_I2C::select() {
 	receive(8);
 	byte i;
 	if (packet.status != Operation_succeed) {
-		card.type = 0;
-		card.uid_length = 0;
-		for (i = 0; i < UID_MAXLENGTH; i++)
-			card.uid[i] = 0;
+    card.clear();
 		return false;
 	}
-	card.uid_length = packet.length - 1;
-	for (i = 0; i < card.uid_length; i++)
-		card.uid[i] = packet.data[i];
+	card.IDLength = packet.length - 1;
+	for (i = 0; i < ISO14443CardInfo::NFCID_MAXLENGTH; i++)
+		card.ID[i] = packet.data[i];
 	card.type = packet.data[i++];
-	for (; i < UID_MAXLENGTH; i++)
-		card.uid[i] = 0;
+	for (; i < ISO14443CardInfo::NFCID_MAXLENGTH; i++)
+		card.ID[i] = 0;
 	return packet.status == Operation_succeed;
-}
-
-char* StrongLink_I2C::get_type_name(char * buf, const byte tp) {
-	int i, p;
-	for (i = 0, p = 0; i < tp; p++) {
-#if defined(ARDUINO)
-		if (pgm_read_byte(Type_Names + p) == 0)
-#elif defined (ARMCMX)
-		if ( *(Type_Names + p) == 0)
-#endif
-			i++;
-	}
-#if defined(ARDUINO)
-	strcpy_P(buf, Type_Names + p);
-#elif defined (ARMCMX)
-	strcpy(buf, Type_Names + p);
-#endif
-	return buf;
 }
 
 boolean StrongLink_I2C::set_led(const byte onoff) {

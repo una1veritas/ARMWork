@@ -502,6 +502,11 @@
               <FileType>8</FileType>
               <FilePath>..\..\armcmx\tools\RFID\StrongLink_I2C.cpp</FilePath>
             </File>
+            <File>
+              <FileName>ISO14443.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\RFID\ISO14443.cpp</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

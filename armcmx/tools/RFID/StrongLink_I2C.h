@@ -12,6 +12,7 @@
 #define twiread(x) 		Wire.receive(x)
 #endif
 #elif defined (ARMCMX)
+#include "armcmx.h"
 #define twiwrite(x) Wire.write(x)
 #define twiread(x)  Wire.read(x)
 #define PROGMEM 
@@ -19,6 +20,49 @@
 //#define pgm_read_byte(x)  *((uint8_t *)(x))
 //#define strcpy_P(d,s) strcpy(d,s)
 #endif
+
+#include "ISO14443.h"
+/*
+// card
+struct CardInfo {
+
+	const static byte UID_MAXLENGTH = 10;
+	const static byte CARDINFO_LENGTH = UID_MAXLENGTH + 2;
+	const static byte TYPENAME_MAXLENGTH = 12;
+
+	PROGMEM static const prog_char Type_Names[];
+
+  byte uid_length;
+  byte uid[UID_MAXLENGTH];
+  byte type;
+
+  CardInfo & operator=(const CardInfo & c) {
+    uid_length = c.uid_length;
+    memcpy(uid, c.uid, UID_MAXLENGTH);
+    type = c.type;
+    return *this;
+  }
+  
+  void clear(void) {
+    uid_length = 0;
+    memset(uid, 0, UID_MAXLENGTH);
+    type = 0;
+  }
+  
+  bool operator==(const CardInfo & c) {
+    if ( type == c.type && uid_length == c.uid_length ) {
+      return memcmp(uid, c.uid, UID_MAXLENGTH) == 0;
+    }
+    return false;
+  }
+  
+  inline bool operator!=(const CardInfo & c) { return !(*this == c); }
+  
+	char * get_type_name(char * s, const byte tp);
+	char* get_type_name(char * s) { return get_type_name(s, type); }
+
+};
+*/
 
 class StrongLink_I2C {
 	// constants
@@ -71,8 +115,6 @@ private:
 	static const byte Checksum_error = 0xF0;
 	static const byte Command_code_error = 0xF1;
 
-	PROGMEM static const prog_char Type_Names[];
-
 public:
 	static const byte MIFARE_1K = 1;
 	static const byte MIFARE_1K_UIDX = 2;
@@ -81,10 +123,6 @@ public:
 	static const byte MIFARE_4K_UIDX = 5;
 	static const byte MIFARE_DESFIRE = 6;
 	static const byte MIFARE_OTHER = 10;
-
-	const static byte UID_MAXLENGTH = 10;
-	const static byte CARDINFO_LENGTH = UID_MAXLENGTH + 2;
-	const static byte TYPENAME_MAXLENGTH = 12;
 
 	PROGMEM static const prog_char Transport_key_A[7];
 	PROGMEM static const prog_char Transport_key_B[7];
@@ -110,18 +148,14 @@ private:
 	byte receive(byte);
 
 public:
-	// card
-	struct CardInfo {
-		byte uid_length;
-		byte uid[UID_MAXLENGTH];
-		byte type;
-	} card;
+	
+  ISO14443CardInfo card;
 
 public:
 	const static byte SL018_ADDRESS = 0x50;
+	const static byte SL030_ADDRESS = 0x50;
 
-	StrongLink_I2C(byte addr = SL018_ADDRESS, byte tag_pin = 0xff,
-			byte wakeup_pin = 0xff);
+	StrongLink_I2C(byte addr = SL018_ADDRESS, byte tag_pin = PIN_NOT_DEFINED, byte wakeup_pin = PIN_NOT_DEFINED);
 	void init();
 	void begin() {
 		init();
@@ -137,34 +171,21 @@ public:
 		return packet.status == Login_succeed;
 	}
 	boolean detect() {
-		if (pin_tag == 0xff)
-			return false;
-		return !digitalRead(pin_tag);
+		if (pin_tag == PIN_NOT_DEFINED)
+      return true;
+    return !digitalRead(pin_tag);
 	}
 	boolean select();
-	byte * uid() {
-		return card.uid;
-	}
-	byte uid_length() {
-		return card.uid_length;
-	}
-	byte card_type() {
-		return card.type;
-	}
-	CardInfo & card_info() {
-		return card;
-	}
-	char * get_type_name(char * s, const byte tp);
-	char* get_type_name(char * s) { return get_type_name(s, card.type); }
+
 
 	void get_uid(byte * buf) {
-		memcpy(buf, card.uid, UID_MAXLENGTH);
+		memcpy(buf, card.ID, ISO14443CardInfo::NFCID_MAXLENGTH);
 	}
-	void get_card_info(CardInfo & buf) {
-		memcpy((void*) &buf, (void*) &card, CARDINFO_LENGTH);
+	void get_card_info(ISO14443CardInfo & buf) {
+		memcpy((void*) &buf, (void*) &card, ISO14443CardInfo::CARDINFO_LENGTH);
 	}
-	boolean identical(CardInfo & c) {
-		return memcmp((void*) &c, (void*) &card, CARDINFO_LENGTH) == 0;
+	boolean identical(ISO14443CardInfo & c) {
+		return memcmp((void*) &c, (void*) &card, ISO14443CardInfo::CARDINFO_LENGTH) == 0;
 	}
 	boolean set_led(const byte onoff);
 
