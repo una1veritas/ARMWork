@@ -122,12 +122,12 @@ size_t Print::println(const __FlashStringHelper *ifsh)
   n += println();
   return n;
 }
-*/
+
 size_t Print::print(const Printable& x)
 {
   return x.printTo(*this);
 }
-
+*/
 size_t Print::printBytes(uint8_t * p, uint8_t length, char sep) {
 	size_t n = 0;
 	for( ; length; length--) {
@@ -228,13 +228,14 @@ size_t Print::println(float num, int digits)
   return n;
 }
 
-
+/*
 size_t Print::println(const Printable& x)
 {
   size_t n = print(x);
   n += println();
   return n;
 }
+*/
 
 // Private Methods /////////////////////////////////////////////////////////////
 

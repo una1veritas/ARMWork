@@ -47,14 +47,48 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 *******************************************************************************/
 
 
-char str64[64];
-StringBuffer stream(str64, 64);
+union IDCardFormat {
+  struct {
+    uint8 division[2];
+    uint8 pid[8];
+    uint8 issue;
+    uint8 reserved1[5];
+    uint8 namesjis[16];
+    uint8 dofbirth[7];
+    uint8 gender;
+    uint8 dofissue[7];
+    uint8 reserved2;
+  } Iizuka;
+  uint8 raw[48];
+  
+  void printOn(Print & p) {
+    int i;
+    p.print((char)Iizuka.division[1]);
+    p.print('-');
+    for (i = 0; i < 8; i++) {
+      p.print((char)Iizuka.pid[i]);
+    }
+    p.print('-');
+    p.print((char)Iizuka.issue);
+  }
+  
+} idcard;
+
+//char str64[64];
+//StringBuffer stream(str64, 64);
+
+uint8 key[] = {
+  0xBB, 0x63, 0x45, 0x74, 0x55, 0x79, 0x4B };
+uint8 factory_a[] = {
+  0xaa, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
 
 #define SL030_TAGDETECT PIO0_17
 #define SL030_WAKEUP PIO0_16
 
-StrongLink_I2C rfid(0x50, SL030_TAGDETECT, SL030_WAKEUP);
+StrongLink_I2C reader(0x50, SL030_TAGDETECT, SL030_WAKEUP);
 ISO14443CardInfo lastcard;
+uint32 lastread;
+uint8 data[64];
 
 ST7032i i2clcd(Wire, LED_LCDBKLT, LCD_RST);
 RTC rtc(Wire, RTC::ST_M41T62);
@@ -93,33 +127,52 @@ void init() {
 
 void loop() {
   int i;
-  char str[ISO14443CardInfo::TYPENAME_MAXLENGTH];
-
+  bool result;
+  
   // start seek mode
-  if ( rfid.detect() && rfid.select() ) {
-    if ( lastcard != rfid.card ) {
-      lastcard = rfid.card;
-      for ( i = 0; i < lastcard.IDLength; i++) {
-        Serial.print(lastcard.ID[i]>>4&0x0f, HEX);
-        Serial.print(lastcard.ID[i]&0x0f, HEX);
-        Serial.print(" ");
+  if ( (millis() > lastread + 1000) ) {
+    if ( reader.detect() && reader.select() && lastcard != reader.card ) {
+      lastcard = reader.card;
+      lastread = millis();
+      lastcard.printOn(Serial);
+      Serial.println();
+      if ( lastcard.type != NFC::CARDTYPE_EMPTY ) {
+        if ( lastcard.type == NFC::CARDTYPE_MIFARE ) {
+          Serial.print("Trying to auth...");
+          if ( reader.auth_sector(4>>2, key) ) {
+            Serial.print(" auth succeeded, ");
+            delay(20);
+            i = 0;
+            do {
+              result = true;
+              result = reader.read_block(4, data);
+              //delay(20);
+              result = result && reader.read_block(5, data+16);
+              //delay(20);
+              result = result && reader.read_block(6, data+32);
+              //delay(20);
+              if ( !result ) {
+                Serial.println("Read data blocks failed. ");
+              }
+              delay(50);
+              i++;
+            } while (i < 10 && !result);
+            Serial.println("blocks red.");
+            memcpy(idcard.raw, data, 48);
+            idcard.printOn(Serial);
+            Serial.println();
+          }
+        }
       }
-      if ( lastcard.type ) {
-        Serial.print(" type: ");
-        lastcard.get_type_name(str);
-        Serial.println(str);
+    } else if ( millis() > lastread + 5000 ) {
+      if ( !lastcard.is_empty() ) {
+        lastcard.clear();
+        Serial.println("Idle.");
       }
+      delay(100);
     }
-  } 
-  else {
-    if ( lastcard.IDLength != 0 ) {
-      lastcard.clear();
-      Serial.println("Lost.");
-      delay(500);
-    }
-  } 
-  delay(50);
-  //  }
+  }    
+
 }
 
 
@@ -154,13 +207,15 @@ void setup() {
   Serial.print("] ");
   
   Serial.print(" StrongLink 030");
-  rfid.begin();
+  reader.begin();
   Serial.println(".\n");
   
   // PIO1_6 USR LED //  GPIOSetDir(1, 6, 1 ); //  GPIOSetBitValue( 1, 6, 1);
   pinMode(LED_USER, OUTPUT);
   digitalWrite(LED_USER, HIGH);
 
+  lastread = millis();
+  
   Serial.println("\nSetup finished.\n");
 }
 

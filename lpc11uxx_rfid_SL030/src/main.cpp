@@ -3,6 +3,8 @@
  *
  */
 
+#define NOT_USE_SD
+
 #include <string.h>
 #include "LPC11Uxx.h"
 //#include "type.h"
@@ -15,15 +17,17 @@
 #include "RTC.h"
 
 #include "ISO14443.h"
+#include "StrongLink_I2C.h"
 
 #include "PWM0Tone.h"
 
 #include "StringBuffer.h"
+#ifndef NOT_USE_SD
 #include "SDFatFs.h"
+#endif
 #include "SPISRAM.h"
 
 #include "main.h"
-#include "nfcreader.h"
 #include "Task.h"
 
 
@@ -77,16 +81,26 @@ struct KeyID {
   inline uint32 size() { return 16; }
 } keyid;
 
+#define SL030_TAGDETECT PIO0_17
+#define SL030_WAKEUP PIO0_16
+
+byte IizukaKey_b[] = {
+  0xBB, 0x63, 0x45, 0x74, 0x55, 0x79, 0x4B };
+byte factory_a[] = {
+  0xaa, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
 
 ST7032i i2clcd(Wire, LED_LCDBKLT, LCD_RST);
 RTC rtc(Wire, RTC::ST_M41T62);
+StrongLink_I2C nfcreader(StrongLink_I2C::SL030_ADDRESS, SL030_TAGDETECT, SL030_WAKEUP);
 
-
-//SDFatFs SD(SD_SPI, SD_CS, SD_DETECT, LED_USER);
+#ifndef NOT_USE_SD
+SDFatFs SD(SD_SPI, SD_CS, SD_DETECT, LED_USER);
 SDFile file(SD);
 void SD_readParams();
 uint32 SD_loadKeyID();
 void SD_writelog(uint32 date, uint32 time, const char * msg);
+#endif
+bool getIDInfo(ISO14443CardInfo & , IDDataFormat &, uint8_t *);
 void printIDCard(char * str, uint16 len, const ISO14443CardInfo & card, const IDCardFormat & id);
 
 SPISRAM sram(SPI1, SRAM_CS, SPISRAM::BUS_23LC1024);
@@ -173,6 +187,7 @@ void setup() {
   
 //  delay(5000);
   
+#ifndef NOT_USE_SD
   Serial.println("Starting SPI0...");
 //  SPI0.begin();
   SD_SPI.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
@@ -191,14 +206,14 @@ void setup() {
     Serial.println("Reading parameters... ");
     SD_readParams();
   }
-
+#endif
   Serial.println("\nSetup finished.\n");
 }
 
 
 int main (void) {
 	long lastread = 0, lasttime = 0;
-  ISO14443CardInfo card, lastcard;
+  ISO14443CardInfo lastcard; //, card;
   IDCardFormat iddata;
   char c;
   char line[64];
@@ -237,20 +252,26 @@ int main (void) {
     
 		if ( task.nfc() ) {
       if ( cmdstatus == IDLE || cmdstatus == READ ) {
+/*
 #if defined (USE_PN532)
         if ( nfcreader.InAutoPoll(1, 1, NFCPolling, 2) and nfcreader.getAutoPollResponse(tmp32) ) {
 #elif  defined(USE_SL030)
         if ( nfcreader.detect() and nfcreader.select() ) {
 #endif
-          // NbTg, type1, length1, [Tg, ...]
-          lastcard = nfcreader.card;
+*/
+        if ( nfcreader.detect() and nfcreader.select() ) {
+        // NbTg, type1, length1, [Tg, ...]
+          Serial.println("detected.");
           i2clcd.backlightLow();
-          if ( cmdstatus == IDLE and (millis() - lastread > 2000 and (millis() - lastread > 5000 or lastcard != card)) ) {
+          if ( millis() > lastread + 2000 and (millis() - lastread > 5000 or lastcard != nfcreader.card) ) {
             lastread = millis();
-            lastcard = card;
+            lastcard = nfcreader.card;
+            lastcard.printOn(Serial);
+            Serial.println();
             //
-            if ( getIDInfo(card, iddata, authkey) ) {
-              printIDCard(buf, 64, card, iddata);
+            if ( getIDInfo(lastcard, iddata, authkey) ) {
+              Serial.println("getIDInfo");
+              printIDCard(buf, 64, lastcard, iddata);
               i2clcd.setCursor(0,0);
               i2clcd.write((uint8*)buf, 13);
               //stream.clear();
@@ -259,47 +280,17 @@ int main (void) {
               Serial.print((char*)tmp32);
               Serial.print(" ");
               Serial.println(buf);
+#ifndef NOT_USE_SD
               if ( logon )
                 SD_writelog(date, time, buf);
+#endif
               PWM0_tone(PIO1_13, 1047, 100);
               PWM0_tone(PIO1_13, 1318, 100);
-            } else {
-              Serial.println("UNKNOWN CARD.");
             }
+            Serial.println("if out.");
           }
         }
-      } else if ( cmdstatus == WRITE ) {
-        if ( swatch == 0 ) {
-          Serial.println("Enters into write mode.");
-          swatch = millis();
-        }
-        /*
-        if ( nfcreader.InListPassiveTarget(1,NFC::BAUDTYPE_106K_A, tmp32, 0) 
-        and (nfcreader.getListPassiveTarget(tmp32) > 0) ) {
-          // tmp must be +1 ed.
-          Serial.printBytes(tmp32, 16);
-          card.set(NFC::CARDTYPE_MIFARE, tmp32+1);
-          Serial.println(card);
-          //get_MifareBlock(card, (IDData &) tmp, mykey);
-          //nfcreader.printBytes(tmp, 16);
-          
-          strcpy((char*)iddata.iizuka.division, "1S");
-          strcpy((char*)iddata.iizuka.pid, "82541854");
-          iddata.iizuka.issue = '1';
-          putIDInfo(card, iddata, authkey);
-          //
-        
-          cmdstatus = IDLE;
-        } else {
-          if ( swatch + 10000 < millis() ) {
-            Serial.println("Write mode timed out.");
-            cmdstatus = IDLE;
-          }
-        }
-        */
-        cmdstatus = IDLE;
-
-      }
+      } 
     }
     
     if ( task.lcdlight() ) {
@@ -333,7 +324,7 @@ int main (void) {
 }
 
 /*--------*/
-
+#ifndef NOT_USE_SD
 void SD_readParams() {
   SD.mount();
 	file.open("CONFIG.TXT", FA_READ | FA_OPEN_EXISTING ); 
@@ -446,7 +437,7 @@ void SD_writelog(uint32 date, uint32 time, const char * msg)  {
   SD.unmount();
   return;
 }
-
+#endif
 
 void scanKeyDB(const char id[10]) {
   uint32 count = 0;
@@ -506,7 +497,7 @@ void scanKeyDB(const char id[10]) {
 void parse_do_command(StringBuffer & stream) {
   uint32 tmplong;
   int i;
-  uint32 n;
+//  uint32 n;
   
   Serial.print("> ");
   stream.getToken((char*)tmp32, 32);
@@ -539,12 +530,14 @@ void parse_do_command(StringBuffer & stream) {
     swatch = 0;
     Serial.println();
   } else 
+#ifndef NOT_USE_SD
   if ( match(tmp32, "LOADKEYS") ) {
     n = SD_loadKeyID();
     Serial.print("Loaded ");
     Serial.print(n);
     Serial.println(" key IDs.");
   } else 
+#endif
   if ( match(tmp32, "FIND") ) {
     if ( stream.available() && stream.getToken((char*)tmp32, 16) ) {
       Serial.print("Search ");

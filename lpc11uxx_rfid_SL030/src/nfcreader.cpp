@@ -30,6 +30,7 @@ uint8 getIDInfo(ISO14443CardInfo & card, IDCardFormat & data, const byte authkey
         return 0;
       }
       break;
+      /*
     case NFC::CARDTYPE_FELICA_212K:
       if ( get_FCFBlock(card, data) == 0 ) {
         Serial.println("Unknown FeliCa, not an FCF.");
@@ -37,6 +38,7 @@ uint8 getIDInfo(ISO14443CardInfo & card, IDCardFormat & data, const byte authkey
         return 0;
       }
       break;
+      */
     default:
       Serial.println("Not supported as ID card.");
       card.clear();
@@ -53,11 +55,12 @@ uint8 putIDInfo(ISO14443CardInfo & card, IDCardFormat & data, const byte authkey
   if ( card.type != NFC::CARDTYPE_MIFARE )
     return 0;
   
-  if ( nfcreader.mifare_AuthenticateBlock(4, authkey) 
-  && nfcreader.getCommandResponse(&res) && res == 0) {
+  if ( nfcreader.auth_sector(4>>2, authkey) 
+  /* && nfcreader.getCommandResponse(&res) && res == 0 */) {
     Serial.println("Authenticated.");
-    if ( nfcreader.mifare_ReadAccessConditions(7>>2, tmp) ) {
 /*
+    if ( nfcreader.mifare_ReadAccessConditions(7>>2, tmp) ) {
+
       acc = ACCESSBITS(tmp);
       Serial.println("Original trailer cond.");
       Serial.printBytes(tmp, 16);
@@ -74,18 +77,19 @@ uint8 putIDInfo(ISO14443CardInfo & card, IDCardFormat & data, const byte authkey
         Serial.println("Trailer block write failed.");
         return 0;
       }
-  */    
+
       if ( nfcreader.mifare_WriteBlock(4, data.raw) )
         Serial.println("Write to data block succeeded.");
       else {
         Serial.println("Data block write failed.");
         return 0;
       }
-      
+
     } else {
       Serial.println("Read trailer block failed.");
       return 0;
     }
+    */
     return 1;
   } else {
     Serial.println("Auth block failed.");
@@ -93,58 +97,25 @@ uint8 putIDInfo(ISO14443CardInfo & card, IDCardFormat & data, const byte authkey
   return 0;
 }
 
-uint8 get_FCFBlock(ISO14443 & card, IDCardFormat & data) {
-  word syscode = 0x00FE;
-  int len;
-  byte c;
 
-  // Polling command, with system code request.
-  len = nfcreader.felica_Polling(data.raw, syscode);
-  if ( len == 0 ) 
-    return 0;
-  
-  // low-byte first service code.
-  // Suica, Nimoca, etc. 0x090f system 0x0300
-  // Edy service 0x170f (0x1317), system 0x00FE // 8280
-  // FCF 1a8b
-  word servcode = 0x1a8b;
-  word scver = nfcreader.felica_RequestService(servcode);
-#ifdef DEBUG
-  Serial.print("scver = ");
-  Serial.println(scver, HEX);
-#endif
-  if ( scver == 0xffff ) 
-    return 0;
-  //
-  //printf("%04x ver %04x.\n", servcode, scver);
-  word blist[] = { 0, 1, 2, 3};
-  c = nfcreader.felica_ReadBlocksWithoutEncryption(data.raw, servcode, (byte) 4, blist);
-  if ( c == 0 ) {
-    //printf("\nfailed reading FCF blocks. \n");
-    return 0;
-  }
-//  printf("\n--- End of FCF reading ---\n\n");
-  return 1;
-}
-
-
-uint8 get_MifareBlock(ISO14443 & card, IDCardFormat & data, const uint8_t * key) {
-  uint8 res;
-  nfcreader.targetSet(0x10, card.ID, card.IDLength);
+uint8 get_MifareBlock(ISO14443CardInfo & card, IDCardFormat & data, const uint8_t * key) {
+  bool result = true;
+  //nfcreader.targetSet(0x10, card.ID, card.IDLength);
          /* Note !!! Once failed to authentication, card's state will be back to the initial state, 
         So the InListPassivTarget or InAutoPoll should be issued again. */
 
-  if ( nfcreader.mifare_AuthenticateBlock(4, key) 
-  && nfcreader.getCommandResponse(&res) && res == 0) {
+  if ( nfcreader.auth_sector(4>>2, key) /*
+  && nfcreader.getCommandResponse(&res) && res == 0 */) {
 #ifdef DEBUG
     Serial.println("Auth succeeded.");
 #endif
-    if ( nfcreader.mifare_ReadBlock(4, data.raw)
-      && nfcreader.mifare_ReadBlock(5, data.raw+16)
-      && nfcreader.mifare_ReadBlock(6, data.raw+32)
-      && nfcreader.mifare_ReadBlock(7, data.raw+48) )
-        return 1;
+    result = nfcreader.read_block(4, data.raw);
+    result = result && nfcreader.read_block(5, data.raw+16);
+    result = result && nfcreader.read_block(6, data.raw+32);
+    if ( result )
+      return 1;
     Serial.println("Read data blocks failed. ");
+    return 0;
   } 
   Serial.println("Authentication failure.");
   return 0;

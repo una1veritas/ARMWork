@@ -177,7 +177,7 @@ public:
 	}
 	boolean select();
 
-
+/*
 	void get_uid(byte * buf) {
 		memcpy(buf, card.ID, ISO14443CardInfo::NFCID_MAXLENGTH);
 	}
@@ -187,13 +187,14 @@ public:
 	boolean identical(ISO14443CardInfo & c) {
 		return memcmp((void*) &c, (void*) &card, ISO14443CardInfo::CARDINFO_LENGTH) == 0;
 	}
+  */
 	boolean set_led(const byte onoff);
 
 	boolean get_firmware_version(char buf[]);
 	byte firmware_version();
 
-	boolean login_sector(const byte, const byte *);
-	boolean read_block(byte baddr, byte blk[]);
+	boolean auth_sector(const byte, const byte *);
+	boolean read_block(byte blkaddr, byte blk[]);
 	boolean write_block(byte baddr, const byte blk[]);
 	boolean read_value(byte baddr, long & lval);
 	//  byte * get_data() { return transdata; }

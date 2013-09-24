@@ -1,8 +1,6 @@
 #ifndef _NFCREADER_H_
 #define _NFCREADER_H_
 
-#define USE_SL030
-
 #if defined (USE_PN532)
 
 #include "PN532_I2C.h"

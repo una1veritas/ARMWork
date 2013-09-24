@@ -167,7 +167,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>
@@ -338,7 +338,7 @@
             <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>1</OneElfS>
+            <OneElfS>0</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
@@ -349,7 +349,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARMCMX  CAPPUCCINO</Define>
+              <Define>ARMCMX  CAPPUCCINO USE_SL030</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\armcmx\lpc11uxx;..\..\armcmx;..\inc;..\src;..\..\armcmx\tools\LCD;..\..\armcmx\tools\RTC;..\..\armcmx\tools\RFID;..\..\armcmx\tools\TextStream;..\..\armcmx\tools\SDFatFs;..\..\armcmx\tools\SDFatFs\FatFs;..\..\armcmx\tools\SerialRAM</IncludePath>
             </VariousControls>
@@ -416,11 +416,6 @@
               <FileName>Task.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\src\Task.h</FilePath>
-            </File>
-            <File>
-              <FileName>nfcreader.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>.\nfcreader.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -571,6 +566,11 @@
               <FileName>StrongLink_I2C.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\armcmx\tools\RFID\StrongLink_I2C.h</FilePath>
+            </File>
+            <File>
+              <FileName>ISO14443.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\RFID\ISO14443.cpp</FilePath>
             </File>
           </Files>
         </Group>

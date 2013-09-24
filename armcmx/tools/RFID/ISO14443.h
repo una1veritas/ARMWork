@@ -8,8 +8,8 @@
 #ifndef ISO14443_H_
 #define ISO14443_H_
 
-//#include <Print.h>
-#include <Printable.h>
+#include <Print.h>
+//#include <Printable.h>
 
 namespace NFC {
 static const byte BAUDTYPE_106K_A = 0x00;
@@ -26,6 +26,7 @@ static const byte CARDTYPE_MIFARE = 0x10;
 static const byte CARDTYPE_FELICA_212K = 0x11;
 static const byte CARDTYPE_FELICA_424K = 0x12;
 static const byte CARDTYPE_MIFARE_DESFIRE = 0x20;
+static const byte CARDTYPE_UNKNOWN = 0x80;
 static const byte CARDTYPE_EMPTY = 0xff;
 
 
@@ -42,7 +43,7 @@ static const word FELICA_SERVICE_EDY = 0x170F;
 static const word FELICA_SERVICE_FCF = 0x1a8b;
 };
 
-struct ISO14443CardInfo : public Printable {
+struct ISO14443CardInfo /*: public Printable */ {
 
 	const static byte NFCID_MAXLENGTH = 10;
 	const static byte CARDINFO_LENGTH = NFCID_MAXLENGTH + 2;
@@ -72,110 +73,23 @@ public:
 		set(card);
 	}
 
-  void set(const byte tp, const byte *data, const byte len) {
-		type = tp;
-		IDLength = len;
-		memcpy(ID, data, len);
-		atqa = 0;
-		sak = 0;
-	}
+  void set(const byte tp, const byte *data, const byte len);
 
-	void set(const ISO14443CardInfo & card) {
-		type = card.type;
-		IDLength = card.IDLength;
-    memcpy(ID, card.ID, NFCID_MAXLENGTH);
+	void set(const ISO14443CardInfo & card);
 
-		atqa = card.atqa;
-		sak  = card.sak;
-	}
-
-	ISO14443CardInfo & operator=(const ISO14443CardInfo & c) {
-		set(c);
-		return *this;
-	}
+	ISO14443CardInfo & operator=(const ISO14443CardInfo & c);
   
-  void clear(void) {
-    IDLength = 0;
-    memset(ID, 0, NFCID_MAXLENGTH);
-    type = NFC::CARDTYPE_EMPTY;
-  }
+  void clear(void);
   
-  bool operator==(const ISO14443CardInfo & c) {
-    if ( type == c.type && IDLength == c.IDLength ) {
-      return memcmp(ID, c.ID, NFCID_MAXLENGTH) == 0;
-    }
-    return false;
-  }
+  bool is_empty();
   
-  inline bool operator!=(const ISO14443CardInfo & c) { return !(*this == c); }
+  bool operator==(const ISO14443CardInfo & c) const;
+  inline bool operator!=(const ISO14443CardInfo & c) { return !(*this ==(c)); }
   
-	void set(const byte tp, const byte * raw) {
-		type = tp;
-//		byte len;
-		switch (type) {
-		case NFC::CARDTYPE_FELICA_212K:
-		case NFC::CARDTYPE_FELICA_424K:
-			IDLength = 8;
-//			len = raw[1];
-			memcpy(ID, raw + 3, 8);
-//			memcpy(PMm, raw + 11, 8);
-//			if (len == 20)
-//				memcpy(SysCode, raw + 19, 2);
-      atqa = 0;
-      sak = 0;
-			break;
-		case NFC::CARDTYPE_MIFARE:
-		default: // Mifare 106k TypeA
-      atqa = raw[1]<<8 | raw[2];
-      sak = raw[3];
-			IDLength = raw[4];
-			memcpy(ID, raw + 5, IDLength);
-			break;
-		}
-	}
+	void set(const byte tp, const byte * raw);
 
-	virtual size_t printTo(Print & pr) const {
-		int cnt = 0;
-		switch(type) {
-		case NFC::CARDTYPE_MIFARE:
-		case NFC::CARDTYPE_MIFARE_DESFIRE:
-			cnt += pr.print("Mifare");
-      if ( type == NFC::CARDTYPE_MIFARE_DESFIRE ) 
-        cnt += pr.print(" DESFire");
-      else if ( atqa == NFC::ATQA_MIFARE_ULTRALIGHT )
-				cnt += pr.print(" Ultralight");
-			else if ( atqa == NFC::ATQA_MIFARE_CLASSIC1K )
-				cnt += pr.print(" Classic 1k");
-			else if ( atqa == NFC::ATQA_MIFARE_CLASSIC4K )
-				cnt += pr.print(" Classic 4k");
-			break;
-		case NFC::CARDTYPE_FELICA_212K:
-			cnt += pr.print("FeliCa 212kb");
-			break;
-		case NFC::CARDTYPE_FELICA_424K:
-			cnt += pr.print("FeliCa 424kb");
-			break;
-		case NFC::CARDTYPE_EMPTY:
-			cnt += pr.print("Type Empty");
-			break;
-		default:
-			cnt += pr.print("Unknown (");
-			cnt += pr.print((int)type, DEC);
-			cnt += pr.print(")");
-			break;
-		}
-    pr.print(' ');
-		for(int i = 0; i < IDLength; i++) {
-			if ( i > 0 ) pr.print('-');
-			pr.print(ID[i]>>4, HEX);
-			pr.print(ID[i]&0x0f, HEX);
-			cnt += 3;
-		}
-		return cnt;
-  }
-
-	char * get_type_name(char * s, const byte tp);
-	char* get_type_name(char * s) { return get_type_name(s, type); }
+//	virtual size_t printTo(Print & pr) const;
+	size_t printOn(Print & pr) const;
   
 };
 
