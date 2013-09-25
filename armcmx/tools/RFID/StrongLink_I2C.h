@@ -149,7 +149,7 @@ private:
 
 public:
 	
-  ISO14443CardInfo card;
+  ISO14443Card card;
 
 public:
 	const static byte SL018_ADDRESS = 0x50;

@@ -167,7 +167,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>
@@ -338,7 +338,7 @@
             <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>0</OneElfS>
+            <OneElfS>1</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
@@ -349,7 +349,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARMCMX  CAPPUCCINO USE_SL030</Define>
+              <Define>ARMCMX  CAPPUCCINO</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\armcmx\lpc11uxx;..\..\armcmx;..\inc;..\src;..\..\armcmx\tools\LCD;..\..\armcmx\tools\RTC;..\..\armcmx\tools\RFID;..\..\armcmx\tools\TextStream;..\..\armcmx\tools\SDFatFs;..\..\armcmx\tools\SDFatFs\FatFs;..\..\armcmx\tools\SerialRAM</IncludePath>
             </VariousControls>
@@ -416,6 +416,11 @@
               <FileName>Task.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\src\Task.h</FilePath>
+            </File>
+            <File>
+              <FileName>nfcreader.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\src\nfcreader.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -508,6 +513,11 @@
               <FilePath>..\..\armcmx\tools\RTC\RTC.cpp</FilePath>
             </File>
             <File>
+              <FileName>PN532_I2C.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\RFID\PN532_I2C.cpp</FilePath>
+            </File>
+            <File>
               <FileName>SDFatFs.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\armcmx\tools\SDFatFs\SDFatFs.cpp</FilePath>
@@ -556,21 +566,6 @@
               <FileName>StrongLink_I2C.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\armcmx\tools\RFID\StrongLink_I2C.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>ISO14443.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\armcmx\tools\RFID\ISO14443.h</FilePath>
-            </File>
-            <File>
-              <FileName>StrongLink_I2C.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\armcmx\tools\RFID\StrongLink_I2C.h</FilePath>
-            </File>
-            <File>
-              <FileName>ISO14443.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\armcmx\tools\RFID\ISO14443.cpp</FilePath>
             </File>
           </Files>
         </Group>

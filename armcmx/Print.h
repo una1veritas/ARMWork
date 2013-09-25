@@ -35,7 +35,7 @@ extern "C" {
 
 #if defined (ARMCMX)
 #include "armcmx.h"
-//#include "Printable.h"
+#include "Printable.h"
 #elif defined (ARDUINO)
 #include "WString.h"
 #include "Printable.h"
@@ -78,7 +78,7 @@ public:
     size_t print(unsigned long, int = DEC);
 		//
     size_t print(float, const int = 2);
-//    size_t print(const Printable&);
+    size_t print(const Printable&);
     
 		size_t printBytes(uint8_t * array, uint8_t length, char sep = ' ');
 
@@ -94,7 +94,7 @@ public:
     size_t println(unsigned long, int = DEC);
 		//
     size_t println(float, const int = 2);
-//    size_t println(const Printable&);
+    size_t println(const Printable&);
     size_t println(void);
 };
 

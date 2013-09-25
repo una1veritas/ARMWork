@@ -19,7 +19,7 @@
 #include "USARTSerial.h"
 #endif
 
-  void ISO14443CardInfo::set(const byte tp, const byte *data, const byte len) {
+  void ISO14443Card::set(const byte tp, const byte *data, const byte len) {
 		type = tp;
 		IDLength = len;
 		memcpy(ID, data, len);
@@ -27,7 +27,7 @@
 		sak = 0;
 	}
 
-	void ISO14443CardInfo::set(const ISO14443CardInfo & card) {
+	void ISO14443Card::set(const ISO14443Card & card) {
 		type = card.type;
 		IDLength = card.IDLength;
     memcpy(ID, card.ID, NFCID_MAXLENGTH);
@@ -36,23 +36,23 @@
 		sak  = card.sak;
 	}
 
-	ISO14443CardInfo & ISO14443CardInfo::operator=(const ISO14443CardInfo & c) {
+	ISO14443Card & ISO14443Card::operator=(const ISO14443Card & c) {
 		set(c);
 		return *this;
 	}
   
-  void ISO14443CardInfo::clear(void) {
+  void ISO14443Card::clear(void) {
     IDLength = 0;
     memset(ID, 0, NFCID_MAXLENGTH);
     type = NFC::CARDTYPE_EMPTY;
   }
   
-  bool ISO14443CardInfo::is_empty() {
+  bool ISO14443Card::is_empty() {
     return IDLength == 0;
   }
   
   
-	void ISO14443CardInfo::set(const byte tp, const byte * raw) {
+	void ISO14443Card::set(const byte tp, const byte * raw) {
 		type = tp;
 //		byte len;
 		switch (type) {
@@ -77,15 +77,15 @@
 		}
 	}
 
-bool ISO14443CardInfo::operator==(const ISO14443CardInfo & c) const {
+bool ISO14443Card::operator==(const ISO14443Card & c) const {
   if ( type == c.type && IDLength == c.IDLength ) {
     return memcmp(ID, c.ID, NFCID_MAXLENGTH) == 0;
   }
   return false;
 }
 
-//size_t ISO14443CardInfo::printTo(Print & pr) const {
-size_t ISO14443CardInfo::printOn(Print & pr) const {
+size_t ISO14443Card::printTo(Print & pr) const {
+//size_t ISO14443Card::printOn(Print & pr) const {
   int cnt = 0;
 
   switch(type) {

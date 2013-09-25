@@ -22,6 +22,7 @@ public:
   void reset(void);
 
   char * string(void) { return _string; }
+  uint16_t capacity() { return _size - 1; }
 
   virtual size_t write(uint8_t c) ;
   virtual size_t write(const char * str);

@@ -9,7 +9,7 @@
 #define ISO14443_H_
 
 #include <Print.h>
-//#include <Printable.h>
+#include <Printable.h>
 
 namespace NFC {
 static const byte BAUDTYPE_106K_A = 0x00;
@@ -43,7 +43,7 @@ static const word FELICA_SERVICE_EDY = 0x170F;
 static const word FELICA_SERVICE_FCF = 0x1a8b;
 };
 
-struct ISO14443CardInfo /*: public Printable */ {
+struct ISO14443Card : public Printable  {
 
 	const static byte NFCID_MAXLENGTH = 10;
 	const static byte CARDINFO_LENGTH = NFCID_MAXLENGTH + 2;
@@ -61,35 +61,35 @@ struct ISO14443CardInfo /*: public Printable */ {
 
 public:
 
-  ISO14443CardInfo() {
+  ISO14443Card() {
 		clear();
 	}
 
-	ISO14443CardInfo(const byte * raw) {
+	ISO14443Card(const byte * raw) {
 		set(raw);
 	}
 
-	ISO14443CardInfo(const byte & card) {
+	ISO14443Card(const byte & card) {
 		set(card);
 	}
 
   void set(const byte tp, const byte *data, const byte len);
 
-	void set(const ISO14443CardInfo & card);
+	void set(const ISO14443Card & card);
 
-	ISO14443CardInfo & operator=(const ISO14443CardInfo & c);
+	ISO14443Card & operator=(const ISO14443Card & c);
   
   void clear(void);
   
   bool is_empty();
   
-  bool operator==(const ISO14443CardInfo & c) const;
-  inline bool operator!=(const ISO14443CardInfo & c) { return !(*this ==(c)); }
+  bool operator==(const ISO14443Card & c) const;
+  inline bool operator!=(const ISO14443Card & c) { return !(*this ==(c)); }
   
 	void set(const byte tp, const byte * raw);
 
-//	virtual size_t printTo(Print & pr) const;
-	size_t printOn(Print & pr) const;
+	virtual size_t printTo(Print & pr) const;
+//	size_t printOn(Print & pr) const;
   
 };
 

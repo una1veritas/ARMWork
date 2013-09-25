@@ -38,12 +38,18 @@
 #endif
 
 #include "StringBuffer.h"
+#include "ISO14443.h"
+
+#if defined(USE_PN532)
+#include "PN532_I2C.h"
+#elif defined(USE_SL030)
+#include "StrongLink_I2C.h"
+#endif
 
 void parse_do_command(StringBuffer & sbuf);
 
-// Translation template data structure
 
-union IDCardFormat {
+union IDFormat {
   struct {
     uint8 division[2];
     uint8 pid[12];
@@ -68,5 +74,28 @@ union IDCardFormat {
   } iizuka;
   uint8 raw[64];
 };
+
+// Translation template data structure
+
+#if defined(USE_PN532)
+extern PN532 nfcreader;
+extern const byte NFCPolling[];
+#elif defined(USE_SL030)
+extern StrongLink_I2C nfcreader;
+#endif
+
+uint8 getIDInfo(ISO14443Card & card, IDFormat & data, const byte authkey[8]);
+uint8 putIDInfo(ISO14443Card & card, IDFormat & data, const byte authkey[8]);
+//void IDDataString(char *, const uint8 cardtype, const IDData &);
+
+uint8 get_MifareBlock(ISO14443Card & card, IDFormat & data, const uint8_t * key);
+uint8 get_FCFBlock(ISO14443Card & card, IDFormat & data);
+
+extern const byte IizukaKey_b[7];
+extern const byte factory_a[7];
+
+#define ACCESSBITS(x)     ( ((x)[8])<<4 & 0xff0L | ((x)[7])>>4 & 0x000fL )
+#define TRAILERBITS(x)    ((((x)&1L)<<3)<<8 | (((x)>>1&1L)<<3)<<4 | (((x)>>2&1L)<<3))
+#define DATABLOCKBITS(x, b)    ((((x)&1L)<<(b&3))<<8 | (((x)>>1&1L)<<(b&3))<<4 | (((x)>>2&1L)<<(b&3)))
 
 #endif

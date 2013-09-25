@@ -420,7 +420,7 @@
             <File>
               <FileName>nfcreader.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>.\nfcreader.cpp</FilePath>
+              <FilePath>..\src\nfcreader.cpp</FilePath>
             </File>
           </Files>
         </Group>

@@ -160,7 +160,7 @@ boolean StrongLink_I2C::select() {
       card.atqa = 0;
       break;
   }
-	for (; i < ISO14443CardInfo::NFCID_MAXLENGTH; i++)
+	for (; i < ISO14443Card::NFCID_MAXLENGTH; i++)
 		card.ID[i] = 0;
 #ifdef DEBUG
   Serial << " type set. " << nl;
