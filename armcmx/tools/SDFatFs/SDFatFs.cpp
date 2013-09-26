@@ -5,6 +5,7 @@
 #include <ctype.h>
 #include "SDFatFs.h"
 
+/*
 #if defined (CAPPUCCINO)
 #include "cappuccino.h"
 SDFatFs SD(SPI0, PIO0_2, SD_DETECT, SD_BUSYLED);
@@ -14,20 +15,22 @@ SDFatFs SD(SPI0, PIO0_2, SD_DETECT, SD_BUSYLED);
 SDFatFs SD(SPI0, PIO0_2);
 
 #endif
+*/
 
 FRESULT SDFile::open(const TCHAR * fpath, BYTE mode) {
-  ferr = f_open(&file, fpath, mode);
+  error = f_open(&file, fpath, mode);
   fatfs.busyOn();
-  return ferr;
+  return error;
 }
 
 FRESULT SDFile::close() {
   flush();
-  ferr = f_close(&file);
+  error = f_close(&file);
   fatfs.busyOff();
-  return ferr;
+  return error;
 }
 
+/*
 size_t SDFile::readBlock(void) {
   UINT n;
   ferr = f_read(&file, ring, BUFFER_SIZE, &n);
@@ -35,81 +38,43 @@ size_t SDFile::readBlock(void) {
   count = n;
   return (size_t) n;
 }
+*/
 
 int SDFile::read(void) {
   UINT n;
-  if ( buffer_is_empty() ) {
-    n = readBlock();
-    if ( n == 0 )
-      return -1;
+  char buf;
+  error = f_read(&file, &buf, 1, &n);
+  if ( n == 1 ) {
+    return (int) buf;
   }
-  return ring[rhead++];
+  return -1;
 }
 
 int SDFile::peek(void) {
-  UINT n;
-  if ( buffer_is_empty() ) {
-    n = readBlock();
-    if ( n == 0 )
-      return -1;
-  }
-  return ring[rhead];
+  int c = read();
+  f_lseek(&file, f_tell(&file)-1);
+  return c;
+}
+
+
+size_t SDFile::write(const uint8_t c) {
+  return ( f_putc((TCHAR)c, &file) == 1 ? 1 : 0); 
 }
 
 size_t SDFile::write(const uint8_t * p, size_t n) {
   UINT wn;
-  ferr = f_write(&file, p, n, &wn);
+  error = f_write(&file, p, n, &wn);
   return wn;
 }
 
 bool SDFile::eof(void) {
   // both cache and file is at the end.
-  return buffer_is_empty() && f_eof(&file);
+  return f_eof(&file);
 }
 
 int SDFile::available(void) {
-  if ( buffer_is_empty() ) {
-    if ( f_eof(&file) ) 
-      return 0;
-    return 1;
-  } else {
-    return count;
-  }
+  if ( f_eof(&file) ) 
+    return 0;
+  return f_size(&file) - f_tell(&file);
 }
 
-size_t SDFile::getToken(char * t, size_t lim, const CHARCLASS sep) {
-  size_t i = 0;
-  bool isdelim;
-  while ( i < lim ) {
-    if ( buffer_is_empty() ) { // cache had been at the end,
-      if ( f_eof(&file) ) // and the file is at the end.
-        break;
-      readBlock(); // no, there may be still some bytes remained in the file.
-      if ( ferr )
-        break;
-    }
-    t[i] = ring[rhead++];
-    switch(sep) {
-      case SPACE:
-        isdelim = isspace(t[i]);
-        break;
-      case EOL_NL:
-      case EOL_CRNL:
-        isdelim = (t[i] == '\n' ? true : false );
-        if ( isdelim && sep == EOL_CRNL && (i > 0 && t[i-1] == '\r') )
-          i--;
-        break;
-      case EOL_CR:
-        isdelim = (t[i] == '\r' ? true : false );
-        break;        
-      default:
-        isdelim = false;
-      break;
-    }
-    if ( isdelim ) 
-      break;
-    i++;
-  }
-  t[i] = 0;
-  return i;
-}

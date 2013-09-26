@@ -1,0 +1,30 @@
+#######################################
+# Syntax Coloring Map For PaSoRi
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+PaSoRi	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+begin	KEYWORD2
+task	KEYWORD2
+poll	KEYWORD2
+getIDm	KEYWORD2
+getPMm	KEYWORD2
+read_without_encryption02	KEYWORD2
+mobile_felica_push_url	KEYWORD2
+send_packet	KEYWORD2
+send	KEYWORD2
+recv	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################

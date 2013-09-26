@@ -61,30 +61,33 @@ public:
 
 class SDFile : public Stream {
   FIL file;
-  FRESULT ferr;
   SDFatFs & fatfs;
   
-  static const int BUFFER_SIZE = 64;
-  char ring[BUFFER_SIZE];
-  uint16 rhead, count;
+//  static const int BUFFER_SIZE = 64;
+//  char ring[BUFFER_SIZE];
+//  uint16 rhead, count;
   
-  size_t readBlock(void);
+//  size_t readBlock(void);
 
-  public:
+public:
+  FRESULT error;
+  
+public:
 
-  SDFile(SDFatFs & fs) : fatfs(fs), rhead(0), count(0) {
+  SDFile(SDFatFs & fs) : fatfs(fs) { //, rhead(0), count(0) {
   }
   
   FIL * operator() (void) { return &file; }
-  inline FRESULT error(void) { return ferr; }
   
   FRESULT open(const TCHAR * fpath, BYTE mode);
   FRESULT close();
- 
+
+  inline int ferror(void) { return f_error(&file); }
+  
   virtual int read(void);
   virtual int peek(void);
   
-  virtual size_t write(uint8_t c) { UINT n; f_write(&file, &c, 1, &n); return n; }
+  virtual size_t write(uint8_t c);
   virtual size_t write(const uint8_t * p, size_t n);
   using Print::write;
   
@@ -95,18 +98,10 @@ class SDFile : public Stream {
   inline size_t size() { return f_size(&file); }
   bool eof();
   
-  /* *** */
-  enum CHARCLASS {
-    EOL_CRNL = 0,
-    EOL_NL = 0x0A,
-    EOL_CR = 0x0D,
-    SPACE = 0x20,
-  };
-  size_t getToken(char * t, size_t lim, const CHARCLASS sep = SPACE);
-  inline size_t getLine(char * t, size_t lim, const CHARCLASS sep = EOL_NL) { return getToken(t, lim, sep); }
+  inline bool getLine(TCHAR * t, size_t lim) { return f_gets(t, lim, &file) != NULL; }
   
-  inline bool buffer_is_full() { return count == BUFFER_SIZE; }
-  inline bool buffer_is_empty() { return !(rhead < count); }
+//  inline bool buffer_is_full() { return count == BUFFER_SIZE; }
+//  inline bool buffer_is_empty() { return !(rhead < count); }
 };
 
 extern SDFatFs SD;
