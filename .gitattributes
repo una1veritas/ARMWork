@@ -1,2 +1,6 @@
 # Disable LF normalization for all files
 * -text
+
+*.uvgui.* binary
+*.uvopt   binary
+*.uvproj  binary
