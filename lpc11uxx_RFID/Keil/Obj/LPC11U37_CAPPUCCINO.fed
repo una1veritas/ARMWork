@@ -1,0 +1,222 @@
+;#<FEEDBACK># ARM Linker, 5.03 [Build 76]: Last Updated: Fri Sep 27 01:07:17 2013
+;VERSION 0.2
+;FILE delay_systick.o
+__asm___15_delay_systick_c_b672aa62____REV16 <= USED 0
+__asm___15_delay_systick_c_b672aa62____REVSH <= USED 0
+delay_us <= USED 0
+micros <= USED 0
+start_systick_delay <= USED 0
+stop_systick_delay <= USED 0
+;FILE ff.o
+f_chmod <= USED 0
+f_getfree <= USED 0
+f_mkdir <= USED 0
+f_opendir <= USED 0
+f_printf <= USED 0
+f_puts <= USED 0
+f_readdir <= USED 0
+f_rename <= USED 0
+f_stat <= USED 0
+f_truncate <= USED 0
+f_unlink <= USED 0
+f_utime <= USED 0
+;FILE gpio.o
+__asm___6_gpio_c_GPIOInit____REV16 <= USED 0
+__asm___6_gpio_c_GPIOInit____REVSH <= USED 0
+digitalToggle <= USED 0
+;FILE i2c.o
+I2C_read <= USED 0
+I2C_start <= USED 0
+I2C_stop <= USED 0
+I2C_write16 <= USED 0
+__asm___5_i2c_c_930b201d____REV16 <= USED 0
+__asm___5_i2c_c_930b201d____REVSH <= USED 0
+;FILE i2cbus.o
+_ZN6I2CBus4peekEv <= USED 0
+__asm___10_I2CBus_cpp_Wire___Z7__REV16j <= USED 0
+__asm___10_I2CBus_cpp_Wire___Z7__REVSHi <= USED 0
+;FILE iso14443.o
+_ZN12ISO14443Card3setEhPKh <= USED 0
+_ZN12ISO14443Card3setEhPKhh <= USED 0
+_ZN12ISO14443Card8is_emptyEv <= USED 0
+__asm___12_ISO14443_cpp_a813e819___Z7__REV16j <= USED 0
+__asm___12_ISO14443_cpp_a813e819___Z7__REVSHi <= USED 0
+;FILE main.o
+_Z8dectobcdj <= USED 0
+__asm___8_main_cpp_1f8c7307___Z7__REV16j <= USED 0
+__asm___8_main_cpp_1f8c7307___Z7__REVSHi <= USED 0
+;FILE mmc_ssp.o
+__asm___9_mmc_ssp_c_b3252454____REV16 <= USED 0
+__asm___9_mmc_ssp_c_b3252454____REVSH <= USED 0
+disk_timerproc <= USED 0
+;FILE nfcreader.o
+_Z9putIDInfoR12ISO14443CardR8IDFormatPKh <= USED 0
+__asm___13_nfcreader_cpp_c630d73a___Z7__REV16j <= USED 0
+__asm___13_nfcreader_cpp_c630d73a___Z7__REVSHi <= USED 0
+;FILE pn532_i2c.o
+_ZN5PN53210InAutoPollEhhPKhh <= USED 0
+_ZN5PN53210sendpacketEh <= USED 0
+_ZN5PN53211targetClearEv <= USED 0
+_ZN5PN53213WriteRegisterEth <= USED 0
+_ZN5PN53213checkACKframeEl <= USED 0
+_ZN5PN53213receivepacketEi <= USED 0
+_ZN5PN53213receivepacketEv <= USED 0
+_ZN5PN53214InDataExchangeEhPKhh <= USED 0
+_ZN5PN53214InDataExchangeEhhhPKhh <= USED 0
+_ZN5PN53214felica_PollingEPht <= USED 0
+_ZN5PN53216GetGeneralStatusEv <= USED 0
+_ZN5PN53216SAMConfigurationEhhh <= USED 0
+_ZN5PN53216mifare_ReadBlockEhPh <= USED 0
+_ZN5PN53217InCommunicateThruEPKhh <= USED 0
+_ZN5PN53217mifare_WriteBlockEhPh <= USED 0
+_ZN5PN53218GetFirmwareVersionEv <= USED 0
+_ZN5PN53218getCommandResponseEPhRKl <= USED 0
+_ZN5PN53219InListPassiveTargetEhhPhh <= USED 0
+_ZN5PN53219getAutoPollResponseEPh <= USED 0
+_ZN5PN53220getListPassiveTargetEPh <= USED 0
+_ZN5PN53221felica_RequestServiceEPhPKth <= USED 0
+_ZN5PN53221felica_RequestServiceEt <= USED 0
+_ZN5PN53224felica_RequestSystemCodeEPh <= USED 0
+_ZN5PN53224mifare_AuthenticateBlockEtPKh <= USED 0
+_ZN5PN53226getCommunicateThruResponseEPh <= USED 0
+_ZN5PN53227mifare_ReadAccessConditionsEhPh <= USED 0
+_ZN5PN53228felica_ReadWithoutEncryptionEPhthPKt <= USED 0
+_ZN5PN53228mifare_WriteAccessConditionsEhjPKhS1_ <= USED 0
+_ZN5PN53234felica_ReadBlocksWithoutEncryptionEPhthPKt <= USED 0
+_ZN5PN5324initEv <= USED 0
+_ZN5PN5324sendEh <= USED 0
+_ZN5PN5327receiveEv <= USED 0
+_ZN5PN5328IRQ_waitEl <= USED 0
+_ZN5PN5328send_ackEv <= USED 0
+_ZN5PN5329IRQ_readyEv <= USED 0
+_ZN5PN5329PowerDownEhh <= USED 0
+_ZN5PN5329send_nackEv <= USED 0
+_ZN5PN5329targetSetEhPKhh <= USED 0
+_ZN5PN532C1ER6I2CBushhh <= USED 0
+__asm___13_PN532_I2C_cpp_e638f8e2___Z7__REV16j <= USED 0
+__asm___13_PN532_I2C_cpp_e638f8e2___Z7__REVSHi <= USED 0
+;FILE print.o
+_ZN5Print10printFloatEfh <= USED 0
+_ZN5Print5printERK9Printable <= USED 0
+_ZN5Print5printEfi <= USED 0
+_ZN5Print7printlnERK9Printable <= USED 0
+_ZN5Print7printlnEc <= USED 0
+_ZN5Print7printlnEfi <= USED 0
+_ZN5Print7printlnEhi <= USED 0
+_ZN5Print7printlnEii <= USED 0
+_ZN5Print7printlnEli <= USED 0
+_ZN5Print7printlnEmi <= USED 0
+__asm___9_Print_cpp_47532680___Z7__REV16j <= USED 0
+__asm___9_Print_cpp_47532680___Z7__REVSHi <= USED 0
+;FILE pwm0tone.o
+__asm___10_PWM0tone_c_39661c92____REV16 <= USED 0
+__asm___10_PWM0tone_c_39661c92____REVSH <= USED 0
+;FILE rtc.o
+_Z11integerPartf <= USED 0
+_Z14fractionalPartf <= USED 0
+_Z4signf <= USED 0
+_ZN3RTC10getSecondsEv <= USED 0
+_ZN3RTC12CalendarDateEf <= USED 0
+_ZN3RTC12readRegisterEh <= USED 0
+_ZN3RTC13writeRegisterEhh <= USED 0
+_ZN3RTC4stopEv <= USED 0
+_ZN3RTC6JD2000ERKl <= USED 0
+_ZN3RTC6JD2000Ehhh <= USED 0
+_ZN3RTC9dayOfWeekEv <= USED 0
+__asm___7_RTC_cpp_a184ba6f___Z7__REV16j <= USED 0
+__asm___7_RTC_cpp_a184ba6f___Z7__REVSHi <= USED 0
+;FILE sdfatfs.o
+_ZN6SDFile3eofEv <= USED 0
+__asm___11_SDFatFs_cpp_aa17dc5e___Z7__REV16j <= USED 0
+__asm___11_SDFatFs_cpp_aa17dc5e___Z7__REVSHi <= USED 0
+;FILE spi.o
+_ZN6SPIBus3endEv <= USED 0
+_ZN6SPIBus5beginEhhhh <= USED 0
+__asm___7_SPI_cpp_SPI0___Z7__REV16j <= USED 0
+__asm___7_SPI_cpp_SPI0___Z7__REVSHi <= USED 0
+;FILE spi_core.o
+SPI_datasize <= USED 0
+SPI_disable <= USED 0
+SPI_select <= USED 0
+__asm___10_spi_core_c_SPI0Def____REV16 <= USED 0
+__asm___10_spi_core_c_SPI0Def____REVSH <= USED 0
+;FILE spisram.o
+_ZN7SPISRAM4readERKl <= USED 0
+_ZN7SPISRAM5writeERKlh <= USED 0
+__asm___11_SPISRAM_cpp_2fba2f69___Z7__REV16j <= USED 0
+__asm___11_SPISRAM_cpp_2fba2f69___Z7__REVSHi <= USED 0
+;FILE ssp.o
+SSP_IOConfig <= USED 0
+SSP_Init <= USED 0
+SSP_Init_Ex <= USED 0
+SSP_Receive <= USED 0
+SSP_Send <= USED 0
+__asm___5_ssp_c_0d7ffe18____REV16 <= USED 0
+__asm___5_ssp_c_0d7ffe18____REVSH <= USED 0
+;FILE st7032i.o
+_ZN7ST7032i10createCharEhPh <= USED 0
+_ZN7ST7032i11setContrastEh <= USED 0
+__asm___11_ST7032i_cpp_32e1a089___Z7__REV16j <= USED 0
+__asm___11_ST7032i_cpp_32e1a089___Z7__REVSHi <= USED 0
+;FILE startup_lpc11uxx.o
+;FILE stream.o
+_ZN6Stream10parseFloatEc <= USED 0
+_ZN6Stream10parseFloatEv <= USED 0
+_ZN6Stream10readStringEPc <= USED 0
+_ZN6Stream10setTimeoutEm <= USED 0
+_ZN6Stream13peekNextDigitEv <= USED 0
+_ZN6Stream14readBytesUntilEcPcj <= USED 0
+_ZN6Stream15readStringUntilEPcc <= USED 0
+_ZN6Stream4findEPc <= USED 0
+_ZN6Stream4findEPcj <= USED 0
+_ZN6Stream8parseIntEc <= USED 0
+_ZN6Stream8parseIntEv <= USED 0
+_ZN6Stream9findUntilEPcS0_ <= USED 0
+_ZN6Stream9findUntilEPcjS0_j <= USED 0
+_ZN6Stream9readBytesEPcj <= USED 0
+_ZN6Stream9timedPeekEv <= USED 0
+_ZN6Stream9timedReadEv <= USED 0
+__asm___10_Stream_cpp_bdaaf411___Z7__REV16j <= USED 0
+__asm___10_Stream_cpp_bdaaf411___Z7__REVSHi <= USED 0
+;FILE stringbuffer.o
+_ZN12StringBuffer4readEv <= USED 0
+__asm___16_StringBuffer_cpp_d0ff4c46___Z7__REV16j <= USED 0
+__asm___16_StringBuffer_cpp_d0ff4c46___Z7__REVSHi <= USED 0
+;FILE stronglink_i2c.o
+_ZN14StrongLink_I2C10copy_valueEhh <= USED 0
+_ZN14StrongLink_I2C10read_valueEhRl <= USED 0
+_ZN14StrongLink_I2C11write_blockEhPKh <= USED 0
+_ZN14StrongLink_I2C13write_trailerEhPKhS1_S1_ <= USED 0
+_ZN14StrongLink_I2C16firmware_versionEv <= USED 0
+_ZN14StrongLink_I2C16manipulate_valueEhhRl <= USED 0
+_ZN14StrongLink_I2C16write_master_keyEhPKh <= USED 0
+_ZN14StrongLink_I2C20get_firmware_versionEPc <= USED 0
+_ZN14StrongLink_I2C21read_access_conditionEhPh <= USED 0
+_ZN14StrongLink_I2C7set_ledEh <= USED 0
+__asm___18_StrongLink_I2C_cpp_5a478d04___Z7__REV16j <= USED 0
+__asm___18_StrongLink_I2C_cpp_5a478d04___Z7__REVSHi <= USED 0
+;FILE system_lpc11uxx.o
+__asm___17_system_LPC11Uxx_c_5d646a67____REV16 <= USED 0
+__asm___17_system_LPC11Uxx_c_5d646a67____REVSH <= USED 0
+;FILE task.o
+__asm___8_Task_cpp_248ce684___Z7__REV16j <= USED 0
+__asm___8_Task_cpp_248ce684___Z7__REVSHi <= USED 0
+;FILE usart.o
+USART_close <= USED 0
+USART_flush <= USED 0
+USART_gets <= USED 0
+USART_linestate <= USED 0
+USART_peek <= USED 0
+USART_polling_read <= USED 0
+USART_polling_write <= USED 0
+USART_puts <= USED 0
+__asm___7_usart_c_6d57c09f____REV16 <= USED 0
+__asm___7_usart_c_6d57c09f____REVSH <= USED 0
+uart_set_divisors <= USED 0
+;FILE usartserial.o
+_ZN11USARTSerial4peekEv <= USED 0
+_ZN11USARTSerial4readEv <= USED 0
+_ZN11USARTSerial5flushEv <= USED 0
+_ZN11USARTSerial9availableEv <= USED 0
+__asm___15_USARTSerial_cpp_Serial___Z7__REV16j <= USED 0
+__asm___15_USARTSerial_cpp_Serial___Z7__REVSHi <= USED 0

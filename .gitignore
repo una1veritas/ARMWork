@@ -5,6 +5,8 @@
 *.elf
 *.hex
 *.axf
+*.iex
+*.bin
 *.d
 *.lst
 *.map
@@ -18,10 +20,10 @@
 
 #MDK-ARM
 *.__i
+*._2i
 *.htm
 #*.uvgui.*
 #*.uvopt
-*.axf
 
 #Eclipse
 .metadata
