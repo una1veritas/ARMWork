@@ -115,15 +115,16 @@ size_t I2CBus::write(const uint8_t *data, size_t quantity)
   }
   return quantity;
 }
-
+*/
 // must be called in:
 // slave rx event callback
 // or after requestFrom(address, numBytes)
-size_t I2CBus::available(void)
+int I2CBus::available(void)
 {
-  return rxBufferLength - rxBufferIndex;
+  int d = rxlength - rxposition;
+  return (d < 0? 0 : d);
 }
-
+/*
 // must be called in:
 // slave rx event callback
 // or after requestFrom(address, numBytes)

@@ -236,6 +236,7 @@ size_t Print::println(const Printable& x)
   return n;
 }
 
+
 // Private Methods /////////////////////////////////////////////////////////////
 
 size_t Print::printNumber(unsigned long n, uint8_t base) {

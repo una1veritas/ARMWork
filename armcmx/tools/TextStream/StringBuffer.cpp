@@ -15,6 +15,7 @@ void StringBuffer::clear(void) {
 }
 
 void StringBuffer::reset(void) {
+  _count = strlen(_string);
   _readhead = 0;
 }
 

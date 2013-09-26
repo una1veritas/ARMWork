@@ -39,11 +39,8 @@ class I2CBus : public Stream
 		uint8_t requestFrom(uint8_t addr, uint16_t qtty) { return receiveFrom(addr, qtty); } 
 	
     virtual size_t write(uint8_t);
-		virtual inline size_t write(int v) { return write((uint8_t) v); }
-		virtual int available(void) {
-		uint16_t d = (rxlength - rxposition);
-			return (d>0? (size_t)d: 0);
-		}
+		inline virtual size_t write(int v) { return write((uint8_t) v); }
+		virtual int available(void);
     virtual int read(void) {
 			return rxbuffer[rxposition++];
 		}
