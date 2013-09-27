@@ -17,7 +17,7 @@
 *.dep
 
 #MDK-ARM
-*.__i
+*._2i
 *.htm
 #*.uvgui.*
 #*.uvopt
