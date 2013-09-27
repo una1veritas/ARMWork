@@ -1,0 +1,22 @@
+--cpu Cortex-M0
+".\startup_lpc11uxx.o"
+".\main.o"
+".\system_lpc11uxx.o"
+".\core_cm0.o"
+".\gpio.o"
+".\delay_systick.o"
+".\i2c.o"
+".\i2cbus.o"
+".\print.o"
+".\stream.o"
+".\usartserial.o"
+".\usart.o"
+".\pwm0tone.o"
+".\st7032i.o"
+".\rtc.o"
+".\stringbuffer.o"
+".\stronglink_i2c.o"
+".\iso14443.o"
+--library_type=microlib --ro-base 0x00000000 --entry 0x00000000 --rw-base 0x10000000 --entry Reset_Handler --first __Vectors --strict --summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Obj\LPC11U37_CAPPUCCINO.map" -o .\LPC11U37_CAPPUCCINO.axf

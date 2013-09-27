@@ -86,7 +86,7 @@ uint8 factory_a[] = {
 #define SL030_WAKEUP PIO0_16
 
 StrongLink_I2C reader(0x50, SL030_TAGDETECT, SL030_WAKEUP);
-ISO14443CardInfo lastcard;
+ISO14443Card lastcard;
 uint32 lastread;
 uint8 data[64];
 
@@ -134,7 +134,7 @@ void loop() {
     if ( reader.detect() && reader.select() && lastcard != reader.card ) {
       lastcard = reader.card;
       lastread = millis();
-      lastcard.printOn(Serial);
+      Serial.print(lastcard);
       Serial.println();
       if ( lastcard.type != NFC::CARDTYPE_EMPTY ) {
         if ( lastcard.type == NFC::CARDTYPE_MIFARE ) {
