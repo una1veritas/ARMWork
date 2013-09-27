@@ -17,12 +17,12 @@ typedef uint8_t GPIOPin;
 
 enum PIOName_Def {
 	Not_A_Port = 0,
-	PIO0 = 1,
-	PIO1 = 2,
-  PORT_NOT_DEFINED = 0xff,
+	PIO0 = 1<<0,
+	PIO1 = 1<<1,
 };
 
-#define PIONumber(p)  ( (p) == PIO0 ? 0 : ( (p) == PIO1 ? 1 : PORT_NOT_DEFINED ))
+//#define PIONumber(p)  ( (p) == PIO0 ? 0 : ( (p) == PIO1 ? 1 : PORT_NOT_DEFINED ))
+#define PIOx(p)  ((p)>>6)
 
 enum _GPIOPin_Def {
 	NOT_A_PIN = 0,

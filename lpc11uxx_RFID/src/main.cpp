@@ -140,7 +140,7 @@ void setup() {
   Serial.print((char*)tmp32);
   Serial.print("] ");
   
-  Serial.print(", NFC PN532 ");
+  Serial.print(", NFC Reader ");
   nfcreader.begin();
 #if defined(USE_PN532)
   while (1) {
@@ -241,10 +241,10 @@ int main (void) {
 #if defined(USE_PN532)
         if ( nfcreader.InAutoPoll(1, 1, NFCPolling, 2) and nfcreader.getAutoPollResponse(tmp32) ) {
           // NbTg, type1, length1, [Tg, ...]
-          card.set(nfcreader.target.NFCType, tmp32);
+          card.set(nfcreader.target.type, tmp32);
 #elif defined(USE_SL030)
         if ( nfcreader.detect() && nfcreader.select() ) {
-          card = nfcreader.card;
+          card = nfcreader.target;
 #endif
           i2clcd.backlightLow();
           if ( cmdstatus == IDLE and (millis() - lastread > 2000 and (millis() - lastread > 5000 or lastcard != card)) ) {

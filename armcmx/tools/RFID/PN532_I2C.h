@@ -115,6 +115,7 @@ class PN532 {
 //	boolean sendCommand(byte cmd, long timeout = 1000);
 public:
 
+/*
 	struct TargetID {
 		byte NFCType;
 		byte IDLength;
@@ -123,6 +124,8 @@ public:
 			byte UID[7];
 		};
 	} target;
+*/
+	ISO14443Card target;
 
 	static const byte I2C_ADDRESS = (0x48 >> 1);
 

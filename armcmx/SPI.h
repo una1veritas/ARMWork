@@ -38,7 +38,7 @@ public:
   void end();
 
 	
-  uint16 transfer(uint16 _data) {
+  uint32 transfer(uint32 _data) {
     return SPI_transfer(SPIx, _data);
     //return SPI_receive(SPIPort, _data);
 	}
@@ -53,23 +53,23 @@ public:
   }
   */
   
-  inline void setDataSize(uint32_t dss) {
+  inline void setDataSize(uint32 dss) {
     SPI_datasize(SPIx, dss);
   }
   
-	inline void setBitOrder(uint16_t bitOrder) {
+	inline void setBitOrder(uint32 bitOrder) {
 		//SPI_setBitOrder(port, bitOrder);
 	}
 
-	inline void setDataMode(uint16_t mode) {
+	inline void setDataMode(uint32 mode) {
 		SPI_mode(SPIx, mode);
 	}
 
-	inline void setClockDivider(uint8_t rate) {
+	inline void setClockDivider(uint32 rate) {
 		SPI_clock(SPIx, rate);
 	}
 	
-	inline void setMode(uint16 clkdiv, uint16 cpol, uint16 cpha, uint16 msbfirst) {
+	inline void setMode(uint32 clkdiv, uint32 cpol, uint32 cpha, uint32 msbfirst) {
 		//SPI_setMode(port, clkdiv, cpol, cpha, msbfirst);
 	}
 	

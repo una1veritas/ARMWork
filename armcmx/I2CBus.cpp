@@ -34,7 +34,7 @@ void I2CBus::beginTransmission(uint8_t address) {
 	txlength = 0;
 }
 
-uint8_t I2CBus::receiveFrom(uint8_t address, uint16 quantity) {
+uint32 I2CBus::receiveFrom(uint8_t address, uint32 quantity) {
   // clamp to buffer length
   if(quantity > BUFFER_LENGTH)
     quantity = BUFFER_LENGTH;
@@ -58,7 +58,7 @@ uint8_t I2CBus::receiveFrom(uint8_t address, uint16 quantity) {
 //	no call to endTransmission(true) is made. Some I2C
 //	devices will behave oddly if they do not see a STOP.
 //
-uint8_t I2CBus::endTransmission(uint8_t sendStop)
+uint32 I2CBus::endTransmission(bool sendStop)
 {
 	//  int8_t ret = 0;
   // transmit buffer (blocking)
@@ -77,7 +77,7 @@ uint8_t I2CBus::endTransmission(uint8_t sendStop)
 //	This provides backwards compatibility with the original
 //	definition, and expected behaviour, of endTransmission
 //
-uint8_t I2CBus::endRequest() {
+uint32 I2CBus::endRequest() {
   return endTransmission(false);
 }
 
