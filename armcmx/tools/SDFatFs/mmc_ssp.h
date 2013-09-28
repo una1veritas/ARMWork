@@ -11,8 +11,8 @@ extern "C" {
   
 DWORD get_fattime(void);
 
-extern uint32_t time;
-extern uint32_t date;
+extern uint32_t fatfs_time;
+extern uint32_t fatfs_date;
 
 #ifdef __cplusplus
 }

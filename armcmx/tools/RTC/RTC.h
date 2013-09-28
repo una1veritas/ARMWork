@@ -84,11 +84,12 @@ public:
 	};
 
 public:
-	uint32 time, cal;
+	// cache
+	uint32 time, date;
 
-	RTC(I2CBus & w, uint8 chip = MAXIM_DS1307) : wire(w), chipID(chip), time(0), cal(0) { }
+	RTC(I2CBus & w, uint8 chip = MAXIM_DS1307) : wire(w), chipID(chip), time(0), date(0) { }
 
-	RTC(uint8 chip = MAXIM_DS1307) : wire(Wire), chipID(chip), time(0), cal(0) {	}
+	RTC(uint8 chip = MAXIM_DS1307) : wire(Wire), chipID(chip), time(0), date(0) {	}
 
 	void init() {
 		start();
@@ -121,7 +122,7 @@ public:
 	byte dayOfWeek();
   
   inline long JD2000(void) {
-    return this->JD2000(cal);
+    return this->JD2000(date);
   }
 	static long JD2000(byte y, byte m, byte d);
 	static long JD2000(const long & yymmdd);

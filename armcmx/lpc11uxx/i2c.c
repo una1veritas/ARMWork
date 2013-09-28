@@ -80,11 +80,11 @@ void I2C_IRQHandler(void) {
 	switch (StatValue) {
 	case 0x08: /* A Start condition is issued. */
 		i2c.WrIndex = 0;
-		i2c.RdIndex = 0;
-		LPC_I2C->DAT = i2c.Buffer[i2c.WrIndex++];
-		LPC_I2C->CONCLR = (I2CONCLR_SIC | I2CONCLR_STAC);
-		break;
-
+//		i2c.RdIndex = 0;
+//		LPC_I2C->DAT = i2c.Buffer[i2c.WrIndex++];
+//		LPC_I2C->CONCLR = (I2CONCLR_SIC | I2CONCLR_STAC);
+//		break;
+//
 	case 0x10: /* A repeated started is issued */
 		i2c.RdIndex = 0;
 		/* Send SLA with R bit set, */

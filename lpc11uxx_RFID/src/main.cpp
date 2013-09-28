@@ -135,7 +135,8 @@ void setup() {
   while(1)
     if ( rtc.begin() ) break;
   rtc.update();
-  sprintf((char*)tmp32, "20%02x/%02x/%02x-%02x:%02x:%02x", rtc.cal>>16&0xff, rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f );
+  sprintf((char*)tmp32, "20%02x/%02x/%02x-%02x:%02x:%02x", 
+			rtc.date>>16&0xff, rtc.date>>8&0x1f, rtc.date&0x3f, rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f );
   Serial.print(" [");
   Serial.print((char*)tmp32);
   Serial.print("] ");
@@ -167,7 +168,7 @@ void setup() {
   if ( sram.started() )
     Serial.println(".");
   else
-    Serial.println("... seems failed starting.");
+    Serial.println("... seems failed.");
   //
   
 //  delay(5000);
@@ -178,7 +179,7 @@ void setup() {
   Serial.println(" SD Card.");
 
   rtc.updateTime();
-  SD.set_datetime(rtc.cal, rtc.time);
+  SD.set_datetime(rtc.date, rtc.time);
   Serial << "get_fattime returned ";
   Serial.print(get_fattime(), HEX);
   Serial.println(". ");
@@ -231,7 +232,7 @@ int main (void) {
           sprintf((char*)tmp32, "%02x:%02x", rtc.time>>16&0x3f, rtc.time>>8&0x7f);
         }
         i2clcd.print((char*)tmp32);
-        sprintf((char*)tmp32, " %02x/%02x/20%02x", rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.cal>>16&0xff);
+        sprintf((char*)tmp32, " %02x/%02x/20%02x", rtc.date>>8&0x1f, rtc.date&0x3f, rtc.date>>16&0xff);
         i2clcd.print((char*)tmp32);
       }
     }
@@ -257,12 +258,13 @@ int main (void) {
               i2clcd.write((uint8*)buf, 13);
               //stream.clear();
               //stream.write((char*)buf);
-              sprintf((char*)tmp32, "20%02x/%02x/%02x-%02x:%02x:%02x", rtc.cal>>16&0xff, rtc.cal>>8&0x1f, rtc.cal&0x3f, rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f );
+              sprintf((char*)tmp32, "20%02x/%02x/%02x-%02x:%02x:%02x", 
+									rtc.date>>16&0xff, rtc.date>>8&0x1f, rtc.date&0x3f, rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f );
               Serial.print((char*)tmp32);
               Serial.print(" ");
               Serial.println(buf);
               if ( logon )
-                SD_writelog(date, time, buf);
+                SD_writelog(rtc.date, rtc.time, buf);
               PWM0_tone(PIO1_13, 1047, 100);
               PWM0_tone(PIO1_13, 1318, 100);
             } else {
@@ -528,7 +530,7 @@ void parse_do_command(StringBuffer & stream) {
     }
     rtc.updateCalendar();
     Serial.println();
-    Serial.println(rtc.cal, HEX);
+    Serial.println(rtc.date, HEX);
   } else 
   if ( match(tmp32, "WRITE") ) {
     cmdstatus = WRITE;

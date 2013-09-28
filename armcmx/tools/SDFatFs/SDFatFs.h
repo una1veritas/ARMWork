@@ -35,8 +35,8 @@ public:
   }
   
   void set_datetime(uint32_t d, uint32_t t) {
-    date = d;
-    time = t;
+    fatfs_date = d;
+    fatfs_time = t;
   }
 
   void mount(void) {

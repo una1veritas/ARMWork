@@ -119,8 +119,8 @@ UINT Timer1, Timer2;	/* 1kHz decrement timer stopped at zero (disk_timerproc()) 
 static
 BYTE CardType;			/* Card type flags */
 
-uint32 time;
-uint32 date;
+uint32 fatfs_time;
+uint32 fatfs_date;
 
 /*-----------------------------------------------------------------------*/
 /* Send/Receive data to the MMC  (Platform dependent)                    */
@@ -675,12 +675,12 @@ void disk_timerproc (void)
 DWORD get_fattime()
 { 
   uint8_t y,m,d, hh, mm, ss;
-  y = 20 + (date>>16&0x0f) + (date>>20&0x0f)*10;
-  m = (date>>8&0x0f) + (date>>12&0x0f)*10;
-  d = (date&0x0f) + (date>>4&0x0f)*10;
-  hh = (time>>16&0x0f) + (time>>20&0x0f)*10;
-  mm = (time>>8&0x0f) + (time>>12&0x0f)*10;
-  ss = (time&0x0f) + (time>>4&0x0f)*10;
+  y = 20 + (fatfs_date>>16&0x0f) + (fatfs_date>>20&0x0f)*10;
+  m = (fatfs_date>>8&0x0f) + (fatfs_date>>12&0x0f)*10;
+  d = (fatfs_date&0x0f) + (fatfs_date>>4&0x0f)*10;
+  hh = (fatfs_time>>16&0x0f) + (fatfs_time>>20&0x0f)*10;
+  mm = (fatfs_time>>8&0x0f) + (fatfs_time>>12&0x0f)*10;
+  ss = (fatfs_time&0x0f) + (fatfs_time>>4&0x0f)*10;
   
   return ((uint32_t)y<<25) | m<<21 | d<<16 | hh << 11 | mm<<5 | ss>>1;
 }
