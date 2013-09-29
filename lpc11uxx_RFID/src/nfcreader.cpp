@@ -21,11 +21,10 @@ const byte NFCPolling[] = {
 StrongLink_I2C nfcreader(StrongLink_I2C::SL030_ADDRESS, SL030_TAGDETECT, SL030_WAKEUP);
 #endif
 
-uint8 getIDInfo(ISO14443Card & card, IDFormat & data, const byte authkey[8]) {
-  memset(data.raw, 0x20, sizeof(data.raw));
+uint8 getIDInfo(ISO14443Card & card, const byte authkey[8], char data[64]) {
   switch (card.type) {
     case NFC::CARDTYPE_MIFARE:
-      if ( get_MifareBlock(card, data, authkey) == 0 ) {
+      if ( get_MifareBlock(card, authkey, data) == 0 ) {
         Serial.println("Unknown Mifare, not an ID.");
         card.clear();
         return 0;
@@ -49,7 +48,7 @@ uint8 getIDInfo(ISO14443Card & card, IDFormat & data, const byte authkey[8]) {
 }
 
 
-uint8 putIDInfo(ISO14443Card & card, IDFormat & data, const byte authkey[8]) {
+uint8 putIDInfo(ISO14443Card & card, const byte authkey[8], char data[64]) {
   uint8 res;
   uint8 tmp[4];
   
@@ -86,9 +85,9 @@ uint8 putIDInfo(ISO14443Card & card, IDFormat & data, const byte authkey[8]) {
       }
   */    
 #if defined(USE_PN532)  
-      if ( nfcreader.mifare_WriteBlock(4, data.raw) )
+      if ( nfcreader.mifare_WriteBlock(4, data) )
 #elif defined(USE_SL030)
-      if ( nfcreader.write_block(4, data.raw) )
+      if ( nfcreader.write_block(4, (uint8*) data) )
 #endif
         Serial.println("Write to data block succeeded.");
       else {
@@ -107,7 +106,7 @@ uint8 putIDInfo(ISO14443Card & card, IDFormat & data, const byte authkey[8]) {
   return 0;
 }
 #if defined (USE_PN532)
-uint8 get_FCFBlock(ISO14443Card & card, IDFormat & data) {
+uint8 get_FCFBlock(ISO14443Card & card, char data[64]) {
   word syscode = 0x00FE;
   int len;
   byte c;
@@ -142,7 +141,7 @@ uint8 get_FCFBlock(ISO14443Card & card, IDFormat & data) {
 }
 #endif
 
-uint8 get_MifareBlock(ISO14443Card & card, IDFormat & data, const uint8_t * key) {
+uint8 get_MifareBlock(ISO14443Card & card, const uint8_t * key, char data[64]) {
   uint8 res;
 #if defined(USE_PN532)
   nfcreader.targetSet(0x10, card.ID, card.IDLength);
@@ -159,15 +158,17 @@ uint8 get_MifareBlock(ISO14443Card & card, IDFormat & data, const uint8_t * key)
     Serial.println("Auth succeeded.");
 #endif
 #if defined(USE_PN532)
-    if ( nfcreader.mifare_ReadBlock(4, data.raw)
-      && nfcreader.mifare_ReadBlock(5, data.raw+16)
-      && nfcreader.mifare_ReadBlock(6, data.raw+32)
-      && nfcreader.mifare_ReadBlock(7, data.raw+48) )
+    if ( nfcreader.mifare_ReadBlock(4, data)
+      && nfcreader.mifare_ReadBlock(5, data+16)
+      && nfcreader.mifare_ReadBlock(6, data+32)
+//      && nfcreader.mifare_ReadBlock(7, data+48) 
+		)
 #elif defined (USE_SL030)
-    if ( nfcreader.read_block(4, data.raw)
-      && nfcreader.read_block(5, data.raw+16)
-      && nfcreader.read_block(6, data.raw+32)
-      && nfcreader.read_block(7, data.raw+48) )
+    if ( nfcreader.read_block(4, (uint8*) data)
+      && nfcreader.read_block(5, (uint8*) data+16)
+      && nfcreader.read_block(6, (uint8*) data+32)
+//      && nfcreader.read_block(7, (uint8*) data+48) 
+		)
 #endif
       return 1;
     Serial.println("Read data blocks failed. ");

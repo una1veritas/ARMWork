@@ -413,7 +413,7 @@ byte PN532::getCommandResponse(byte * resp, const long & wmillis) {
 	return count;
 }
 
-byte PN532::getAutoPollResponse(byte * respo) {
+byte PN532::getAutoPollResponse(void) {
 	if (!getCommandResponse(packet)) {
 		comm_status = RESP_FAILED;
 		return 0;
@@ -422,13 +422,13 @@ byte PN532::getAutoPollResponse(byte * respo) {
 
 	// ignore the tag no. 2 or greater
 	if ( packet[0] > 0 ) { // count
-		memcpy(respo, packet+3, packet[2]); // length
+//		memcpy(respo, packet+3, packet[2]); // length
 		switch (packet[1]) { // type
 		case NFC::CARDTYPE_FELICA_212K:
-			targetSet(NFC::CARDTYPE_FELICA_212K, respo+3, 8);
+			targetSet(NFC::CARDTYPE_FELICA_212K, packet+3+3, 8); //respo+3, 8);
 			break;
 		case NFC::CARDTYPE_MIFARE:
-			targetSet(NFC::CARDTYPE_MIFARE, respo+5, respo[4]);
+			targetSet(NFC::CARDTYPE_MIFARE, packet+3+5, packet[7]); //respo[4]);
 			break;
 		}
 	} else {

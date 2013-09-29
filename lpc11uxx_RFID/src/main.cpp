@@ -86,7 +86,7 @@ SDFile file(SD);
 void SD_readParams();
 uint32 SD_loadKeyID();
 void SD_writelog(uint32 date, uint32 time, const char * msg);
-void printIDCard(char * str, uint16 len, const ISO14443Card & card, const IDFormat & id);
+void printIDCard(char * str, uint16 len, const ISO14443Card & card, const char iddata[64]);
 
 SPISRAM sram(SPI1, SRAM_CS, SPISRAM::BUS_23LC1024);
 
@@ -197,8 +197,8 @@ void setup() {
 
 int main (void) {
 	long lastread = 0, lasttime = 0;
-  ISO14443Card card, lastcard;
-  IDFormat iddata;
+  ISO14443Card lastcard;
+  char iddata[64];
   char c;
   char line[64];
   StringBuffer cmdline(line, 64);
@@ -240,20 +240,20 @@ int main (void) {
 		if ( task.nfc() ) {
       if ( cmdstatus == IDLE || cmdstatus == READ ) {
 #if defined(USE_PN532)
-        if ( nfcreader.InAutoPoll(1, 1, NFCPolling, 2) and nfcreader.getAutoPollResponse(tmp32) ) {
+        if ( nfcreader.InAutoPoll(1, 1, NFCPolling, 2) and nfcreader.getAutoPollResponse() ) {
           // NbTg, type1, length1, [Tg, ...]
-          card.set(nfcreader.target.type, tmp32);
 #elif defined(USE_SL030)
         if ( nfcreader.detect() && nfcreader.select() ) {
-          card = nfcreader.target;
 #endif
           i2clcd.backlightLow();
-          if ( cmdstatus == IDLE and (millis() - lastread > 2000 and (millis() - lastread > 5000 or lastcard != card)) ) {
+          if ( cmdstatus == IDLE and (millis() - lastread > 2000 and (millis() - lastread > 5000 or lastcard != nfcreader.target)) ) {
             lastread = millis();
-            lastcard = card;
+            lastcard = nfcreader.target;
             //
-            if ( getIDInfo(card, iddata, authkey) ) {
-              printIDCard(buf, 64, card, iddata);
+            if ( getIDInfo(lastcard, authkey, iddata) ) {
+              PWM0_tone(PIO1_13, 1047, 100);
+              PWM0_tone(PIO1_13, 1318, 100);
+              printIDCard(buf, 64, lastcard, iddata);
               i2clcd.setCursor(0,0);
               i2clcd.write((uint8*)buf, 13);
               //stream.clear();
@@ -265,8 +265,6 @@ int main (void) {
               Serial.println(buf);
               if ( logon )
                 SD_writelog(rtc.date, rtc.time, buf);
-              PWM0_tone(PIO1_13, 1047, 100);
-              PWM0_tone(PIO1_13, 1318, 100);
             } else {
               Serial.println("UNKNOWN CARD.");
             }
@@ -631,24 +629,25 @@ uint8 KeyID::check() {
 }
 
 
-void printIDCard(char * str, uint16 len, const ISO14443Card & card, const IDFormat & id) {
+void printIDCard(char * str, uint16 len, const ISO14443Card & card, const char iddata[64]) {
   StringBuffer sbuf(str, len);
+	IDFormat * id = (IDFormat *) iddata;
   int i;
   if ( card.type == NFC::CARDTYPE_FELICA_212K ) {
-    sbuf.write(id.fcf.division[0]);
+    sbuf.write(id->fcf.division[0]);
     sbuf.write('-');
     for(i = 0; i < 8; i++)
-      sbuf.write(id.fcf.pid[i]);
+      sbuf.write(id->fcf.pid[i]);
     sbuf.write('-');
-    sbuf.write(id.fcf.issue);
+    sbuf.write(id->fcf.issue);
   } else if ( card.type == NFC::CARDTYPE_MIFARE ) {
     //sbuf.write(id.iizuka.division[0]);
-    sbuf.write(id.iizuka.division[1]);
+    sbuf.write(id->iizuka.division[1]);
     sbuf.write('-');
     for(i = 0; i < 8; i++)
-      sbuf.write(id.iizuka.pid[i]);
+      sbuf.write(id->iizuka.pid[i]);
     sbuf.write('-');
-    sbuf.write(id.iizuka.issue);
+    sbuf.write(id->iizuka.issue);
   }
   //*str = 0;
   sbuf.write(' ');

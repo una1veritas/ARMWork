@@ -209,7 +209,8 @@ public:
 			const byte * data, const byte datalen);
 
 	byte getCommandResponse(byte * resp, const long & wait = 1000);
-	byte getAutoPollResponse(byte * respo);
+//	byte getAutoPollResponse(byte * respo);
+	byte getAutoPollResponse(void);
 	byte getListPassiveTarget(byte * data);
 
 	void targetSet(const byte cardtype, const byte * uid, const byte uidLen);
