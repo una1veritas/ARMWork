@@ -115,6 +115,7 @@ class PN532 {
 //	boolean sendCommand(byte cmd, long timeout = 1000);
 public:
 
+/*
 	struct TargetID {
 		byte NFCType;
 		byte IDLength;
@@ -123,6 +124,8 @@ public:
 			byte UID[7];
 		};
 	} target;
+*/
+	ISO14443Card target;
 
 	static const byte I2C_ADDRESS = (0x48 >> 1);
 
@@ -206,7 +209,8 @@ public:
 			const byte * data, const byte datalen);
 
 	byte getCommandResponse(byte * resp, const long & wait = 1000);
-	byte getAutoPollResponse(byte * respo);
+//	byte getAutoPollResponse(byte * respo);
+	byte getAutoPollResponse(void);
 	byte getListPassiveTarget(byte * data);
 
 	void targetSet(const byte cardtype, const byte * uid, const byte uidLen);

@@ -5,6 +5,7 @@
 *.elf
 *.hex
 *.axf
+*.bin
 *.d
 *.lst
 *.map
@@ -16,14 +17,19 @@
 *.bak
 *.dep
 
-#MDK-ARM
+#MDK-ARM and other ARM 
 *.__i
 *._2i
+<<<<<<< HEAD
 *.fed
+=======
+>>>>>>> origin/@home
 *.htm
+*.fed
 #*.uvgui.*
 #*.uvopt
-*.axf
+*.iex
+*.dfu
 
 #Eclipse
 .metadata

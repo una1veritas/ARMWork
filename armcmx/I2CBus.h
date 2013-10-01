@@ -19,24 +19,24 @@ class I2CBus : public Stream
 		uint8_t dstaddress;
 		uint8_t rxbuffer[I2C_BUFFER_SIZE];
 		uint8_t txbuffer[I2C_BUFFER_SIZE];
-		int16_t rxposition, txposition;
-		int16_t rxlength, txlength;
+		uint32 rxposition, txposition;
+		uint32 rxlength, txlength;
   
   public:
-    uint32_t status;
+    uint32 status;
 	
   public:
     I2CBus(I2CDef * I2Cx, GPIOPin scl = 0, GPIOPin sda = 0) : i2cx(I2Cx), sclpin(scl), sdapin(sda) {
 		}
-    void begin(uint32_t clk = 100000);
+    void begin(uint32 clk = 100000);
 	
-    void beginTransmission(uint8_t);
+    void beginTransmission(uint8);
 //    void beginRequest(uint8);
-		uint8_t endTransmission(uint8_t = true);
-		uint8_t endRequest(void);
+		uint32 endTransmission(bool = true);
+		uint32 endRequest(void);
 
-		uint8_t receiveFrom(uint8_t, uint16_t);
-		uint8_t requestFrom(uint8_t addr, uint16_t qtty) { return receiveFrom(addr, qtty); } 
+		uint32 receiveFrom(uint8_t, uint32);
+		uint32 requestFrom(uint8_t addr, uint32 qtty) { return receiveFrom(addr, qtty); } 
 	
     virtual size_t write(uint8_t);
 		inline virtual size_t write(int v) { return write((uint8_t) v); }

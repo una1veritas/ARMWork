@@ -413,7 +413,7 @@ byte PN532::getCommandResponse(byte * resp, const long & wmillis) {
 	return count;
 }
 
-byte PN532::getAutoPollResponse(byte * respo) {
+byte PN532::getAutoPollResponse(void) {
 	if (!getCommandResponse(packet)) {
 		comm_status = RESP_FAILED;
 		return 0;
@@ -422,13 +422,13 @@ byte PN532::getAutoPollResponse(byte * respo) {
 
 	// ignore the tag no. 2 or greater
 	if ( packet[0] > 0 ) { // count
-		memcpy(respo, packet+3, packet[2]); // length
+//		memcpy(respo, packet+3, packet[2]); // length
 		switch (packet[1]) { // type
 		case NFC::CARDTYPE_FELICA_212K:
-			targetSet(NFC::CARDTYPE_FELICA_212K, respo+3, 8);
+			targetSet(NFC::CARDTYPE_FELICA_212K, packet+3+3, 8); //respo+3, 8);
 			break;
 		case NFC::CARDTYPE_MIFARE:
-			targetSet(NFC::CARDTYPE_MIFARE, respo+5, respo[4]);
+			targetSet(NFC::CARDTYPE_MIFARE, packet+3+5, packet[7]); //respo[4]);
 			break;
 		}
 	} else {
@@ -533,15 +533,15 @@ byte PN532::InDataExchange(const byte Tg, const byte micmd, const byte blkaddr,
 }
 
 void PN532::targetSet(const byte cardtype, const byte * uid, const byte uidLen) {
-	target.NFCType = cardtype;
+	target.type = cardtype;
 	target.IDLength = uidLen;
-	memcpy(target.UID, uid, uidLen);
+	memcpy(target.ID, uid, target.IDLength);
 }
 
 void PN532::targetClear() {
-	target.NFCType = NFC::CARDTYPE_EMPTY;
+	target.type = NFC::CARDTYPE_EMPTY;
 	target.IDLength = 0;
-	target.UID[0] = 0;
+	target.ID[0] = 0;
 }
 
 byte PN532::mifare_AuthenticateBlock(word blkn, const byte * keyData) {
@@ -555,7 +555,7 @@ byte PN532::mifare_AuthenticateBlock(word blkn, const byte * keyData) {
 	// Prepare the authentication command //
 	memcpy(tmp, keyData + 1, 6);
 //	memcpy(tmp + 6, uid, max(4, uidLen));
-	memcpy(tmp + 6, target.UID, max(4, target.IDLength));
+	memcpy(tmp + 6, target.ID, max(4, target.IDLength));
 
 	byte authcmd;
 //	byte rescount;
@@ -722,11 +722,11 @@ byte PN532::felica_Polling(byte * resp, const word syscode) {
 #endif
 	if (resp[0] == FELICA_CMD_POLLING + 1) {
 		target.IDLength = 8;
-		memcpy(target.IDm, resp + 1, target.IDLength);
-		target.NFCType = NFC::CARDTYPE_FELICA_212K;
+		memcpy(target.ID, resp + 1, target.IDLength);
+		target.type = NFC::CARDTYPE_FELICA_212K;
 		return result;
 	}
-	target.NFCType = NFC::CARDTYPE_EMPTY;
+	target.type = NFC::CARDTYPE_EMPTY;
 	target.IDLength = 0;
 	return 0;
 }
@@ -760,7 +760,7 @@ byte PN532::felica_RequestService(byte * resp, const word servcodes[],
   Serial.println("felica_RequestService");
 #endif
 	resp[0] = FELICA_CMD_REQUESTSERVICE;
-	memcpy(resp + 1, target.IDm, 8);
+	memcpy(resp + 1, target.ID, 8);
 	resp[9] = servnum;
 	for (int i = 0; i < servnum; i++) {
 		resp[10 + 2 * i] = servcodes[i] & 0xff;
@@ -790,7 +790,7 @@ byte PN532::felica_RequestSystemCode(byte * resp) {
   Serial.println("felica_RequestSystemCode");
   #endif
   resp[0] = FELICA_CMD_REQUESTSYSTEMCODE;
-	memcpy(resp + 1, target.IDm, 8);
+	memcpy(resp + 1, target.ID, 8);
 	InCommunicateThru(resp, 9);
 	if (getCommunicateThruResponse(resp) == 0)
 		return 0;
@@ -806,7 +806,7 @@ byte PN532::felica_ReadWithoutEncryption(byte * resp, const word servcode,
   Serial.println("felica_ReadBlocksWithoutEncryption");
 #endif
   resp[0] = FELICA_CMD_READWITHOUTENCRYPTION;
-	memcpy(resp + 1, target.IDm, 8);
+	memcpy(resp + 1, target.ID, 8);
 	resp[9] = 1;
 	resp[10] = servcode & 0xff;
 	resp[11] = servcode >> 8 & 0xff;
@@ -838,7 +838,7 @@ byte PN532::felica_ReadBlocksWithoutEncryption(byte * resp, const word servcode,
   byte mess[40];
 	for (int bno = 0; bno < blknum; bno++) {
 		mess[0] = FELICA_CMD_READWITHOUTENCRYPTION;
-		memcpy(mess + 1, target.IDm, 8);
+		memcpy(mess + 1, target.ID, 8);
 		mess[9] = 1;
 		mess[10] = servcode & 0xff;
 		mess[11] = servcode >> 8 & 0xff;

@@ -88,10 +88,10 @@ boolean RTC::updateTime() {
 }
 
 boolean RTC::updateCalendar() {
-  uint32 tmp = cal;
-	readRegisters((byte) DS1307_DATE, (byte *) &cal, 3);
-	cal &= ((unsigned long)BITS_YR<<16 | (unsigned long)BITS_MTH<<8 | BITS_DATE);
-  if ( tmp != cal ) 
+  uint32 tmp = date;
+	readRegisters((byte) DS1307_DATE, (byte *) &date, 3);
+	date &= ((unsigned long)BITS_YR<<16 | (unsigned long)BITS_MTH<<8 | BITS_DATE);
+  if ( tmp != date ) 
     return true;
   return false;
 }
@@ -115,7 +115,7 @@ void RTC::setCalendar(const long & p) {
 }
 
 byte RTC::dayOfWeek() {
-	return  (JD2000(cal) + 1) % 7;
+	return  (JD2000(date) + 1) % 7;
 }
 
 long RTC::JD2000(const long & yymmdd) {

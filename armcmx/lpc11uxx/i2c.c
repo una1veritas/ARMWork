@@ -234,7 +234,7 @@ uint32_t I2C_stop(I2CDef * i2c) {
  **				interrupt handler was not installed correctly
  ** 
  *****************************************************************************/
-uint8_t I2C_init(I2CDef * i2c, uint32_t I2cMode) {
+uint32 I2C_init(I2CDef * i2c, uint32_t I2cMode) {
 	LPC_SYSCON->PRESETCTRL |= (0x1 << 1); // I2C reset off
 	LPC_SYSCON->SYSAHBCLKCTRL |= (1 << 5); // Power and Peripheral clock on
 	LPC_IOCON->PIO0_4 &= ~0x3F; /*  I2C I/O config */
@@ -253,7 +253,7 @@ uint8_t I2C_init(I2CDef * i2c, uint32_t I2cMode) {
   return (TRUE);
 }
 
-uint8_t I2C_begin(I2CDef * i2c) {
+uint32 I2C_begin(I2CDef * i2c) {
 	/*--- Clear flags ---*/
 	LPC_I2C->CONCLR = I2CONCLR_AAC | I2CONCLR_SIC | I2CONCLR_STAC
 			| I2CONCLR_I2ENC;
@@ -323,7 +323,7 @@ uint32_t I2C_Engine(I2CDef * i2c) {
 	return (i2c->State);
 }
 
-uint8_t I2C_write(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t length) {
+uint32 I2C_write(I2CDef * i2c, uint8_t addr, uint8_t * data, uint32 length) {
 	i2c->WriteLength = length + 1;
 	i2c->ReadLength = 0;
   i2c->Mode = I2C_MODE_WRITE;
@@ -332,14 +332,14 @@ uint8_t I2C_write(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t length) {
 	return I2C_Engine(i2c);
 }
 
-uint8_t I2C_write16(I2CDef * i2c, uint8_t addr, uint16_t data) {
+uint32 I2C_write16(I2CDef * i2c, uint8_t addr, uint16_t data) {
 	uint8_t buf[2];
 	buf[0] = data >> 8;
 	buf[1] = data & 0xff;
 	return I2C_write(i2c, addr, buf, 2);
 }
 
-uint8_t I2C_read(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen,
+uint32 I2C_read(I2CDef * i2c, uint8_t addr, uint8_t * data, uint32 reqlen,
 		size_t rcvlen) {
 	int i;
       uint8_t res;
@@ -360,7 +360,7 @@ uint8_t I2C_read(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen,
 	return res;
 }
 
-uint8_t I2C_request(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t length) {
+uint32 I2C_request(I2CDef * i2c, uint8_t addr, uint8_t * data, uint32 length) {
 	i2c->WriteLength = length + 1;
 	i2c->ReadLength = 0;
   i2c->Mode = I2C_MODE_REQUEST;
@@ -369,7 +369,7 @@ uint8_t I2C_request(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t length) {
 	return I2C_Engine(i2c);
 }
 
-uint8_t I2C_receive(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t length) {
+uint32 I2C_receive(I2CDef * i2c, uint8_t addr, uint8_t * data, uint32 length) {
   int i;
   uint8_t res;
 	/* Write SLA(W), address, SLA(R), and read one byte back. */

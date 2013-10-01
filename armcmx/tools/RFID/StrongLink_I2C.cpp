@@ -46,7 +46,7 @@ void StrongLink_I2C::init() {
     delay(100);
     digitalWrite(pin_input, HIGH);
   }
-	card.clear();
+	target.clear();
 //  event_millis = millis();
 //  event_wait = 20;
 }
@@ -118,7 +118,7 @@ boolean StrongLink_I2C::select() {
 	receive(8);
 	byte i;
 	if (packet.status != Operation_succeed) {
-    card.clear();
+    target.clear();
 #ifdef DEBUG
   Serial << " failed; ";
   Serial.flush();
@@ -129,39 +129,39 @@ boolean StrongLink_I2C::select() {
   Serial << " received; ";
   Serial.flush();
 #endif
-	card.IDLength = packet.length - 1;
-	for (i = 0; i < card.IDLength; i++) {
-		card.ID[i] = packet.data[i];
+	target.IDLength = packet.length - 1;
+	for (i = 0; i < target.IDLength; i++) {
+		target.ID[i] = packet.data[i];
   }
   // type is the next byte to the last of ID
-  switch(packet.data[card.IDLength]) {
+  switch(packet.data[target.IDLength]) {
     case 0x01:
-      card.type = NFC::CARDTYPE_MIFARE;
-      card.atqa = NFC::ATQA_MIFARE_CLASSIC1K;
+      target.type = NFC::CARDTYPE_MIFARE;
+      target.atqa = NFC::ATQA_MIFARE_CLASSIC1K;
       break;
     case 0x03:
-      card.type = NFC::CARDTYPE_MIFARE;
-      card.atqa = NFC::ATQA_MIFARE_ULTRALIGHT;
+      target.type = NFC::CARDTYPE_MIFARE;
+      target.atqa = NFC::ATQA_MIFARE_ULTRALIGHT;
       break;
     case 0x04:
-      card.type = NFC::CARDTYPE_MIFARE;
-      card.atqa = NFC::ATQA_MIFARE_CLASSIC4K;
+      target.type = NFC::CARDTYPE_MIFARE;
+      target.atqa = NFC::ATQA_MIFARE_CLASSIC4K;
       break;
     case 0x06:
-      card.type = NFC::CARDTYPE_MIFARE_DESFIRE;
-      card.atqa = NFC::ATQA_MIFARE_DESFIRE;
+      target.type = NFC::CARDTYPE_MIFARE_DESFIRE;
+      target.atqa = NFC::ATQA_MIFARE_DESFIRE;
       break;
     case 0x0a:
-      card.type = NFC::CARDTYPE_MIFARE;
-      card.atqa = 0;
+      target.type = NFC::CARDTYPE_MIFARE;
+      target.atqa = 0;
       break;
     default:
-      card.type = NFC::CARDTYPE_UNKNOWN;
-      card.atqa = 0;
+      target.type = NFC::CARDTYPE_UNKNOWN;
+      target.atqa = 0;
       break;
   }
 	for (; i < ISO14443Card::NFCID_MAXLENGTH; i++)
-		card.ID[i] = 0;
+		target.ID[i] = 0;
 #ifdef DEBUG
   Serial << " type set. " << nl;
   Serial.flush();

@@ -72,8 +72,8 @@ union IDFormat {
     uint8 dofissue[7];
     uint8 reserved2;
   } iizuka;
-  uint8 raw[64];
 };
+
 
 // Translation template data structure
 
@@ -84,12 +84,12 @@ extern const byte NFCPolling[];
 extern StrongLink_I2C nfcreader;
 #endif
 
-uint8 getIDInfo(ISO14443Card & card, IDFormat & data, const byte authkey[8]);
-uint8 putIDInfo(ISO14443Card & card, IDFormat & data, const byte authkey[8]);
+uint8 getIDInfo(ISO14443Card & card, const byte authkey[8], char data[64]);
+uint8 putIDInfo(ISO14443Card & card, const byte authkey[8], char data[64]);
 //void IDDataString(char *, const uint8 cardtype, const IDData &);
 
-uint8 get_MifareBlock(ISO14443Card & card, IDFormat & data, const uint8_t * key);
-uint8 get_FCFBlock(ISO14443Card & card, IDFormat & data);
+uint8 get_MifareBlock(ISO14443Card & card, const uint8_t * key, char data[64]);
+uint8 get_FCFBlock(ISO14443Card & card, char data[64]);
 
 extern const byte IizukaKey_b[7];
 extern const byte factory_a[7];
