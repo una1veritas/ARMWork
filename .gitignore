@@ -20,7 +20,10 @@
 #MDK-ARM and other ARM 
 *.__i
 *._2i
+<<<<<<< HEAD
 *.fed
+=======
+>>>>>>> origin/@home
 *.htm
 *.fed
 #*.uvgui.*
