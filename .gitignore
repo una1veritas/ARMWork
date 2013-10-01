@@ -18,6 +18,8 @@
 
 #MDK-ARM
 *.__i
+*._2i
+*.fed
 *.htm
 #*.uvgui.*
 #*.uvopt
