@@ -90,6 +90,7 @@ void printIDCard(char * str, uint16 len, const ISO14443Card & card, const char i
 
 SPISRAM sram(SPI1, SRAM_CS, SPISRAM::BUS_23LC1024);
 
+static const char FORMAT_TIMESTAMP[] = "20%02x/%02x/%02x-%02x:%02x:%02x";
 
 uint32 dectobcd(uint32 val) {
   uint32 t = 0;
@@ -115,9 +116,11 @@ void setup() {
   pinMode(SW_USERBTN, INPUT);
   
   Serial.begin(115200, RXD2, TXD2);
-  Serial.println("\n\nUSART Serial started. \nHello.");
+	static const char msg1[] = "\n\nUSART Serial started. \nHello.";
+  Serial.println(msg1);
 
-  Serial.print("Starting I2C...");
+	static const char msg2[] =	"Starting I2C...";
+  Serial.print(msg2);
   Wire.begin(); 	/* initialize I2c */
   if ( Wire.status == FALSE )
   	while ( 1 );				/* Fatal error */
@@ -135,7 +138,7 @@ void setup() {
   while(1)
     if ( rtc.begin() ) break;
   rtc.update();
-  sprintf((char*)tmp32, "20%02x/%02x/%02x-%02x:%02x:%02x", 
+  sprintf((char*)tmp32, FORMAT_TIMESTAMP, 
 			rtc.date>>16&0xff, rtc.date>>8&0x1f, rtc.date&0x3f, rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f );
   Serial.print(" [");
   Serial.print((char*)tmp32);
@@ -150,8 +153,9 @@ void setup() {
     delay(1000);
   }
   Serial << "[ver. " << (char) tmp32[0] << " firm. " << tmp32[1] << " rev. " << tmp32[2] << "]";
+	static const char msg3[] = "....SAMConfiguration failed. Halt.\n";
   if ( !nfcreader.SAMConfiguration() ) {
-		Serial.println("....SAMConfiguration failed. Halt.\n");
+		Serial.println(msg3);
 		while (1);
 	}
 #endif
@@ -161,9 +165,11 @@ void setup() {
   pinMode(LED_USER, OUTPUT);
   digitalWrite(LED_USER, HIGH);
 
-  Serial.print("Starting SPI1...");
+	static const char msg4[] = "Starting SPI1...";
+  Serial.print(msg4);
   SPI1.begin();
-  Serial.print(" Serial SRAM");
+	static const char msg5[] = " Serial SRAM";
+  Serial.print( msg5 );
   sram.begin();
   if ( sram.started() )
     Serial.println(".");
@@ -173,25 +179,30 @@ void setup() {
   
 //  delay(5000);
   
-  Serial.println("Starting SPI0...");
+	static const char msg6[] = "Starting SPI0...";
+  Serial.println(msg6);
   SPI0.begin();
   SD.begin();
   Serial.println(" SD Card.");
 
+	static const char msg7[] = "get_fattime returned ";
   rtc.updateTime();
   SD.set_datetime(rtc.date, rtc.time);
-  Serial << "get_fattime returned ";
+  Serial << msg7;
   Serial.print(get_fattime(), HEX);
   Serial.println(". ");
 
+	static const char msg8[] = "SD slot is empty.";
   if ( digitalRead(SD_DETECT) == HIGH ) {
-    Serial.println("SD slot is empty.");
+    Serial.println(msg8);
   } else {
-    Serial.println("Reading parameters... ");
+		static const char msg9[] = "Reading parameters... ";
+    Serial.println(msg9);
     SD_readParams();
   }
 
-  Serial.println("\nSetup finished.\n");
+	static const char msg10[] = "\nSetup finished.\n";
+  Serial.println(msg10);
 }
 
 
@@ -258,7 +269,7 @@ int main (void) {
               i2clcd.write((uint8*)buf, 13);
               //stream.clear();
               //stream.write((char*)buf);
-              sprintf((char*)tmp32, "20%02x/%02x/%02x-%02x:%02x:%02x", 
+              sprintf((char*)tmp32, FORMAT_TIMESTAMP, 
 									rtc.date>>16&0xff, rtc.date>>8&0x1f, rtc.date&0x3f, rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f );
               Serial.print((char*)tmp32);
               Serial.print(" ");
@@ -292,8 +303,9 @@ int main (void) {
           //
           cmdstatus = IDLE;
         } else {
+					static const char msg[] = "Write mode timed out.";
           if ( swatch + 10000 < millis() ) {
-            Serial.println("Write mode timed out.");
+            Serial.println(msg);
             cmdstatus = IDLE;
           }
         }
@@ -373,10 +385,15 @@ uint32 SD_loadKeyID() {
   KeyID id;
 //  boolean regkeyid = false;
 
+	static const char msg1[] = "Loading key ids.\n";
+  static const char msg2[] = "Key ID parse error on ";
+  static const char msg3[] = "\nFailed while reading.\n";
+  static const char msg4[] = "\nCouldn't open KEYID.TXT. \n";
+
   SD.mount();
 	file.open("KEYID.TXT", FA_READ | FA_OPEN_EXISTING ); 
   if ( !file.error ) {
-    Serial << "Loading key ids." << nl;
+    Serial << msg1;
     for (;;) {
       if ( !file.getLine((TCHAR*) stream.string(), stream.capacity()) ) {
         break;
@@ -398,12 +415,12 @@ uint32 SD_loadKeyID() {
           count++;
           sram.write(count*16, keyid.raw, 16);
       } else {
-        Serial.print("Key ID parse error on ");
+        Serial.print(msg2);
         Serial.println(count);
       }
     }
     if ( file.error ) {
-      Serial << nl << "Failed while reading." << nl;
+      Serial << msg3;
       //regkeyid = false;
     }
     file.close();
@@ -413,7 +430,7 @@ uint32 SD_loadKeyID() {
     keyid.setChecksum();
     sram.write(0, (uint8*) &keyid, 16); // count == 0 means no data ve been read
   } else {
-    Serial << nl << "Couldn't open KEYID.TXT. " << nl;
+    Serial << msg4;
   }
   SD.unmount();
   return count;
@@ -424,14 +441,15 @@ void SD_writelog(uint32 date, uint32 time, const char * msg)  {
   SD.set_datetime(date, time);
   SD.mount();
   file.open("CARDLOG.TXT", FA_WRITE | FA_OPEN_ALWAYS);
+	static const char errmsg[] = "Open file CARDLOG.TXT failed.";
   if ( file.error ) {
-    Serial.println("Open file CARDLOG.TXT failed.");
+    Serial.println(errmsg);
     return;
   }
   file.seek(file.size());
   if ( file.error ) 
     Serial.println("Seek error.");
-  sprintf(buf, "20%02x/%02x/%02x-%02x:%02x:%02x", date>>16&0xff, date>>8&0x1f, date&0x3f, time>>16&0x3f, time>>8&0x7f, time&0x7f );
+  sprintf(buf, FORMAT_TIMESTAMP, date>>16&0xff, date>>8&0x1f, date&0x3f, time>>16&0x3f, time>>8&0x7f, time&0x7f );
   file.print((char*)buf);
   file.print(' ');
   file.print(msg);
@@ -491,10 +509,12 @@ void scanKeyDB(const char id[10]) {
       break;
     }
   }
+	static const char msg1[] = "Scan time in millis: ";
+	static const char msg2[] = "SRAM stored key checksum errors: ";
   swatch = millis() - swatch;
-  Serial.print("Scan time in millis: ");
+  Serial.print(msg1);
   Serial.println(swatch);
-  Serial.print("SRAM stored key checksum errors: ");
+  Serial.print(msg2);
   Serial.print(errorno);
   Serial.println("\n");
 }

@@ -69,8 +69,8 @@ public:
   PROGMEM const static char NameOfDay[36];
   PROGMEM const static char NameOfMonth[60];
 #else
-  const static char NameOfDay[36];
-  const static char NameOfMonth[60];
+  static const char NameOfDay[36];
+  static const char NameOfMonth[60];
 #endif
 
 	enum DAYINDEX {
