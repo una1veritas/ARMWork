@@ -1,0 +1,66 @@
+/*
+ * StringStream.h
+ *
+ *  Created on: 2013/05/11
+ *      Author: sin
+ */
+
+#ifndef STRINGSTREAM_H_
+#define STRINGSTREAM_H_
+
+#if defined (ARDUINO)
+#include <Arduino.h>
+#elif defined (ARMCMX)
+#include "armcmx.h"
+#endif
+#include <Stream.h>
+#include <Printable.h>
+
+class StringStream: public Stream, public Printable {
+
+	// members
+private:
+	char * buffer_array;
+	size_t buffer_size;
+	uint16_t count;
+  uint16_t readhead;
+
+public:
+
+  StringStream(char str[], size_t n);
+//	virtual ~StringStream() {}
+  void reset();
+  void clear();
+  void set(char str[], size_t n);
+
+  using Stream::write;
+  
+  virtual size_t write(uint8_t b);
+  virtual size_t write(char * str);
+  virtual int available(void);
+  virtual int read(void);
+  virtual int peek(void);
+
+  size_t readLineFrom(Stream &, size_t);
+  size_t readLineFrom(char *, size_t);
+
+  uint8_t is_full();
+
+  size_t getString(char * dst, size_t maxlen);
+  size_t getToken(char * dst, size_t maxlen);
+
+  uint32_t parseHex();
+
+  virtual void flush();
+  size_t length() { return count; }
+
+  using Stream::print;
+
+  virtual size_t printTo(Print& p) const;
+
+//	size_t readLine(char *buffer, size_t length);
+
+};
+
+
+#endif /* STRINGSTREAM_H_ */

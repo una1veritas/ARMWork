@@ -36,6 +36,7 @@ void TIMER16_0_IRQHandler(void)
 
 void PWM0_toneOff(void) {
   LPC_CT16B0->TCR = 0;
+  LPC_SYSCON->SYSAHBCLKCTRL &= ~(1UL<<7);
 }
 
 void PWM0_tone(GPIOPin outpin, uint32_t freq, uint32_t duration) {
@@ -44,8 +45,9 @@ void PWM0_tone(GPIOPin outpin, uint32_t freq, uint32_t duration) {
 
   LPC_CT16B0->TCR = 0;
 
-  LPC_SYSCON->SYSAHBCLKCTRL |= (1<<7);  
+  LPC_SYSCON->SYSAHBCLKCTRL |= (1<<7);
   /* Setup the outputs */
+  
   if ( outpin == PIO0_8 ) {
     match_enable = MATCH0;
     LPC_IOCON->PIO0_8           &= ~0x07;	
@@ -105,7 +107,7 @@ void PWM0_tone(GPIOPin outpin, uint32_t freq, uint32_t duration) {
   LPC_CT16B0->TCR = 1; //enable_timer16_0();
   if ( duration ) {
     delay(duration);
-    LPC_CT16B0->TCR = 0; //disable_timer16_0();
+    PWM0_toneOff(); // LPC_CT16B0->TCR = 0; //disable_timer16_0();
   }
 }
 

@@ -34,18 +34,14 @@
 //#include "type.h"
 
 #include "armcmx.h"
-#include "SPIBus.h"
+#include "SPI.h"
 #include "SPISRAM.h"
+#include "Ethernet.h"
 #include "USARTSerial.h"
 
+#include "cappuccino.h"
 
-//#define SSP_CS0       PIO0_2
-//#define SSP_CS1       PIO1_23
-#define LED_SD_BUSY   PIO1_19
-
-//SPIBus SPI0(&SPI0Def, PIO1_29, PIO0_8, PIO0_9, SSP_CS0); // sck, miso, mosi, cs
-SPIBus SPI1(&SPI1Def, PIO1_20, PIO1_21, PIO1_22, PIO1_23); // sck, miso, mosi, cs
-SPISRAM sram(SPI1, PIO1_23, SPISRAM::BUS_MBITS);
+SPISRAM sram(SPI1, SSP1_CS_DEFAULT, SPISRAM::BUS_MBITS);
 
 /******************************************************************************
 **   Main Function  main()
@@ -58,6 +54,21 @@ char text[] = "Awake, arise, or be for ever fall'n. \n"
     "Rouse and bestir themselves ere well awake.";
 int n = strlen(text);
 
+// Enter a MAC address and IP address for your controller below.
+// The IP address will be dependent on your local network:
+byte mac[] = {  
+  0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+IPAddress ip(192,168,1,177);
+
+// Enter the IP address of the server you're connecting to:
+IPAddress server(192,168,24,51); 
+
+// Initialize the Ethernet client library
+// with the IP address and port of the server 
+// that you want to connect to (port 23 is default for telnet;
+// if you're using Processing's ChatServer, use  port 10002):
+EthernetClient client;
+
 int main (void) {
   uint32_t t = 0;
   uint32_t addr = 0;
@@ -67,20 +78,36 @@ int main (void) {
   SystemCoreClockUpdate();
   start_delay();
 
+  Serial.pinconfig(RXD, TXD);
   Serial.begin(115200);
   Serial.println("Hello.");
   Serial.print("Text length is ");
   Serial.println(strlen(text));
   
-  SPI1.begin();
+  SPI.begin();
   sram.begin();
 
+  // start the Ethernet connection:
+  Ethernet.begin(mac, ip);
+  // give the Ethernet shield a second to initialize:
+  delay(1000);
+  Serial.println("connecting...");
+
+  // if you get a connection, report back via serial:
+  if (client.connect(server, 10002)) {
+    Serial.println("connected");
+  } 
+  else {
+    // if you didn't get a connection to the server:
+    Serial.println("connection failed");
+  }
+  
   srand((uint16_t)micros());
   
   while ( 1 ) {
     if ( t == 0 )
       addr = rand() & 0x1ffff;
-    Serial.printByte(addr);
+    Serial.print(addr, HEX);
     Serial.println(":");
     sram.write((long) addr, (uint8_t*)text, (long) n);
     sram.read(addr, (uint8_t*) strbuf, n);

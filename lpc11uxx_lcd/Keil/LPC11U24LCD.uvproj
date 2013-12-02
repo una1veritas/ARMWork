@@ -165,7 +165,7 @@
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
-          <bUseTDR>0</bUseTDR>
+          <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
@@ -349,7 +349,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARMCMX</Define>
+              <Define>ARMCMX DELAY_SYSTICK</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\armcmx\lpc11uxx;..\..\armcmx;..\inc;..\src;..\..\armcmx\tools\LCD;..\..\armcmx\tools\RTC</IncludePath>
             </VariousControls>
@@ -406,11 +406,6 @@
               <FileName>main.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\src\main.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>cappuccino.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\inc\cappuccino.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -470,12 +465,26 @@
             <File>
               <FileName>I2CBus.cpp</FileName>
               <FileType>8</FileType>
+<<<<<<< HEAD:lpc11uxx_lcd/Keil/LPC11U24LCD.uvproj
               <FilePath>..\..\armcmx\I2CBus.cpp</FilePath>
             </File>
             <File>
               <FileName>delay_systick.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\lpc11uxx\delay_systick.c</FilePath>
+=======
+              <FilePath>..\..\armcmx\SPI.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>PWM0tone.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\lpc11uxx\PWM0tone.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi_core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\lpc11uxx\spi_core.c</FilePath>
+>>>>>>> uv:lpc11uxx_rfid_sdio/Keil/LPC11U24LCDRFID.uvproj
             </File>
           </Files>
         </Group>
@@ -493,14 +502,19 @@
           <GroupName>RTC</GroupName>
           <Files>
             <File>
-              <FileName>I2CRTC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\armcmx\tools\RTC\I2CRTC.h</FilePath>
+              <FileName>RTC.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\RTC\RTC.cpp</FilePath>
             </File>
             <File>
-              <FileName>I2CRTC.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\armcmx\tools\RTC\I2CRTC.cpp</FilePath>
+              <FileName>RTC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\tools\RTC\RTC.h</FilePath>
+            </File>
+            <File>
+              <FileName>mmc_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\tools\SDFatFs\mmc_spi.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -205,7 +205,7 @@ byte PN532::receivepacket() {
 	Serial.print("receivepacket Len = ");
 	Serial.print(n, DEC);
 	Serial.print(", ");
-	Serial.printBytes(packet, n + 7);
+	printBytes(packet, n + 7);
 	Serial.println();
 	Serial.print("xsum: ");
 	Serial.print(chksum, HEX);
@@ -339,9 +339,9 @@ byte PN532::InListPassiveTarget(const byte maxtg, const byte brty, byte * data,
 	if (length > 0) {
 		memcpy(packet + 3, data, length);
 	}
-#ifdef PN532DEBUG
+#ifdef PN532COMM
 	Serial.print("InListPassiveTarget << ");
-	Serial.printBytes(packet, length + 3);
+	printBytes(packet, length + 3);
 	Serial.println();
 #endif
 	sendpacket(3 + length);
@@ -351,7 +351,7 @@ byte PN532::InListPassiveTarget(const byte maxtg, const byte brty, byte * data,
 		comm_status = ACK_NOT_RECEIVED;
 		return 0;
 	}
-#ifdef PN532DEBUG
+#ifdef PN532COMM
 	Serial.println("ACKed.");
 #endif
 	comm_status = ACK_FRAME_RECEIVED;
@@ -368,7 +368,7 @@ byte PN532::InAutoPoll(const byte numop, const byte period, const byte * types,
 	memcpy(packet + 3, types, N);
 #ifdef PN532DEBUG
 	Serial.print("<< InAutoPoll ");
-	Serial.printBytes(packet, typeslen + 3);
+	printBytes(packet, typeslen + 3);
 	Serial.println(",\n");
 #endif
 	last_command = COMMAND_InAutoPoll;
@@ -396,7 +396,7 @@ byte PN532::getCommandResponse(byte * resp, const long & wmillis) {
 	byte count = receivepacket();
 #ifdef PN532COMM
 	Serial.print("CommandResp. >> ");
-	Serial.printBytes(packet, count);
+	printBytes(packet, count);
 	Serial.println('\n');
 #endif
 //#undef PN532DEBUG
@@ -413,7 +413,7 @@ byte PN532::getCommandResponse(byte * resp, const long & wmillis) {
 	return count;
 }
 
-byte PN532::getAutoPollResponse(byte * respo) {
+byte PN532::getAutoPollResponse(void) {
 	if (!getCommandResponse(packet)) {
 		comm_status = RESP_FAILED;
 		return 0;
@@ -422,13 +422,13 @@ byte PN532::getAutoPollResponse(byte * respo) {
 
 	// ignore the tag no. 2 or greater
 	if ( packet[0] > 0 ) { // count
-		memcpy(respo, packet+3, packet[2]); // length
+//		memcpy(respo, packet+3, packet[2]); // length
 		switch (packet[1]) { // type
 		case NFC::CARDTYPE_FELICA_212K:
-			targetSet(NFC::CARDTYPE_FELICA_212K, respo+3, 8);
+			targetSet(NFC::CARDTYPE_FELICA_212K, packet+3+3, 8); //respo+3, 8);
 			break;
 		case NFC::CARDTYPE_MIFARE:
-			targetSet(NFC::CARDTYPE_MIFARE, respo+5, respo[4]);
+			targetSet(NFC::CARDTYPE_MIFARE, packet+3+5, packet[7]); //respo[4]);
 			break;
 		}
 	} else {
@@ -470,7 +470,7 @@ byte PN532::InDataExchange(const byte Tg, const byte * data,
 	memcpy(packet + 2, data, length);
 
 #ifdef MIFAREDEBUG
-	printHexString(packet, length + 2);
+	printBytes(packet, length+2);
 	Serial.println();
 #endif
 	sendpacket(length + 2);
@@ -518,7 +518,7 @@ byte PN532::InDataExchange(const byte Tg, const byte micmd, const byte blkaddr,
 
 #ifdef MIFAREDEBUG
 	Serial.print("Sending in InDataExchange: ");
-	printHexString(packet, datalen + 4);
+	printBytes(packet, datalen+4);
 	Serial.println();
 #endif
 	sendpacket(datalen + 4);
@@ -533,15 +533,15 @@ byte PN532::InDataExchange(const byte Tg, const byte micmd, const byte blkaddr,
 }
 
 void PN532::targetSet(const byte cardtype, const byte * uid, const byte uidLen) {
-	target.NFCType = cardtype;
+	target.type = cardtype;
 	target.IDLength = uidLen;
-	memcpy(target.UID, uid, uidLen);
+	memcpy(target.ID, uid, target.IDLength);
 }
 
 void PN532::targetClear() {
-	target.NFCType = NFC::CARDTYPE_EMPTY;
+	target.type = NFC::CARDTYPE_EMPTY;
 	target.IDLength = 0;
-	target.UID[0] = 0;
+	target.ID[0] = 0;
 }
 
 byte PN532::mifare_AuthenticateBlock(word blkn, const byte * keyData) {
@@ -555,7 +555,7 @@ byte PN532::mifare_AuthenticateBlock(word blkn, const byte * keyData) {
 	// Prepare the authentication command //
 	memcpy(tmp, keyData + 1, 6);
 //	memcpy(tmp + 6, uid, max(4, uidLen));
-	memcpy(tmp + 6, target.UID, max(4, target.IDLength));
+	memcpy(tmp + 6, target.ID, max(4, target.IDLength));
 
 	byte authcmd;
 //	byte rescount;
@@ -579,7 +579,7 @@ byte PN532::mifare_AuthenticateBlock(word blkn, const byte * keyData) {
 	return InDataExchange(1, authcmd, blkn, tmp, target.IDLength + 6);
 }
 
-byte PN532::mifare_ReadDataBlock(uint8_t blockNumber, uint8_t * data) {
+byte PN532::mifare_ReadBlock(uint8_t blockNumber, uint8_t * data) {
 #ifdef MIFAREDEBUG
 	Serial.print("Try to read 16 bytes from block ");
 	Serial.println(blockNumber);
@@ -598,7 +598,7 @@ byte PN532::mifare_ReadDataBlock(uint8_t blockNumber, uint8_t * data) {
 	if (! c) {
 #ifdef MIFAREDEBUG
 		Serial.println("Unexpected response");
-		printHexString(packet, 26);
+		printBytes(packet, 26);
 		Serial.println();
 #endif
 		return 0;
@@ -606,7 +606,7 @@ byte PN532::mifare_ReadDataBlock(uint8_t blockNumber, uint8_t * data) {
 //#define MIFAREDEBUG
 #ifdef MIFAREDEBUG
 	Serial.print("Packet ");
-	printHexString(packet, c);
+	printBytes(packet, c);
 	Serial.println();
 #endif
 	if (packet[0] != 0) {
@@ -617,13 +617,44 @@ byte PN532::mifare_ReadDataBlock(uint8_t blockNumber, uint8_t * data) {
 #ifdef MIFAREDEBUG
 	Serial.print("data ");
 	Serial.println(blockNumber);
-	printHexString(data, 16);
+	printBytes(data, 16);
 	Serial.println();
 #endif
 //#undef MIFAREDEBUG
 	return 16;
 }
 
+byte PN532::mifare_WriteBlock(uint8_t blockNumber, uint8_t * data) {
+	Serial.print("Try to write a block ");
+	Serial.println(blockNumber);
+
+	if (!InDataExchange(1, MIFARE_CMD_WRITE, blockNumber, data, 16)) {
+		Serial.println("Failed to receive ACK for write command");
+	}
+	byte c = getCommandResponse(packet);
+	if (! c) {
+		Serial.println("Unexpected response");
+		Serial.printBytes(packet, 26);
+		Serial.println();
+		return 0;
+	}
+
+	Serial.print("Packet ");
+	Serial.printBytes(packet, c);
+	Serial.println();
+
+	if (packet[0] != 0) {
+		// error.
+		return 0;
+	}
+	memcpy(data, packet + 1, 16);
+	Serial.print("data ");
+	Serial.println(blockNumber);
+	Serial.printBytes(data, 16);
+	Serial.println();
+
+	return 16;
+}
 /*
  byte PN532::felica_DataExchange(const byte cmd, const byte * data,
  const byte len) {
@@ -691,11 +722,11 @@ byte PN532::felica_Polling(byte * resp, const word syscode) {
 #endif
 	if (resp[0] == FELICA_CMD_POLLING + 1) {
 		target.IDLength = 8;
-		memcpy(target.IDm, resp + 1, target.IDLength);
-		target.NFCType = NFC::CARDTYPE_FELICA_212K;
+		memcpy(target.ID, resp + 1, target.IDLength);
+		target.type = NFC::CARDTYPE_FELICA_212K;
 		return result;
 	}
-	target.NFCType = NFC::CARDTYPE_EMPTY;
+	target.type = NFC::CARDTYPE_EMPTY;
 	target.IDLength = 0;
 	return 0;
 }
@@ -729,7 +760,7 @@ byte PN532::felica_RequestService(byte * resp, const word servcodes[],
   Serial.println("felica_RequestService");
 #endif
 	resp[0] = FELICA_CMD_REQUESTSERVICE;
-	memcpy(resp + 1, target.IDm, 8);
+	memcpy(resp + 1, target.ID, 8);
 	resp[9] = servnum;
 	for (int i = 0; i < servnum; i++) {
 		resp[10 + 2 * i] = servcodes[i] & 0xff;
@@ -759,7 +790,7 @@ byte PN532::felica_RequestSystemCode(byte * resp) {
   Serial.println("felica_RequestSystemCode");
   #endif
   resp[0] = FELICA_CMD_REQUESTSYSTEMCODE;
-	memcpy(resp + 1, target.IDm, 8);
+	memcpy(resp + 1, target.ID, 8);
 	InCommunicateThru(resp, 9);
 	if (getCommunicateThruResponse(resp) == 0)
 		return 0;
@@ -775,7 +806,7 @@ byte PN532::felica_ReadWithoutEncryption(byte * resp, const word servcode,
   Serial.println("felica_ReadBlocksWithoutEncryption");
 #endif
   resp[0] = FELICA_CMD_READWITHOUTENCRYPTION;
-	memcpy(resp + 1, target.IDm, 8);
+	memcpy(resp + 1, target.ID, 8);
 	resp[9] = 1;
 	resp[10] = servcode & 0xff;
 	resp[11] = servcode >> 8 & 0xff;
@@ -807,7 +838,7 @@ byte PN532::felica_ReadBlocksWithoutEncryption(byte * resp, const word servcode,
   byte mess[40];
 	for (int bno = 0; bno < blknum; bno++) {
 		mess[0] = FELICA_CMD_READWITHOUTENCRYPTION;
-		memcpy(mess + 1, target.IDm, 8);
+		memcpy(mess + 1, target.ID, 8);
 		mess[9] = 1;
 		mess[10] = servcode & 0xff;
 		mess[11] = servcode >> 8 & 0xff;
@@ -845,3 +876,39 @@ boolean PN532::WriteRegister(word addr, byte val) {
 	comm_status = ACK_FRAME_RECEIVED;
 	return 1;
 }
+
+/*
+void PN532::printBytes(uint8_t * p, size_t n) {
+  while ( n-- > 0 ) {
+    Serial.printBytes(*p++);
+    Serial.print(" ");
+  }
+  return;
+}
+*/
+
+byte PN532::mifare_WriteAccessConditions(uint8_t sector, uint32_t acc, const uint8_t keya[6], const uint8_t keyb[6]) {
+  uint8_t blknum = (sector + 1) * 4 - 1;
+  uint8_t data[16];
+  memcpy(data, keya, 6);
+  memcpy(data+10, keyb, 6);  
+  acc |= acc<<12;
+  acc ^= 0x00000fff;
+  data[8] = acc>>16 & 0xff;
+  data[7] = acc>>8 & 0xff;
+  data[6] = acc & 0xff;
+  
+  Serial.println("modified ");
+  Serial.println(blknum);
+      Serial.printBytes(data, 16);
+      Serial.println();
+      Serial.println("New acc. cond.");
+      Serial.println(ACCESSBITS(data), BIN);
+  return mifare_WriteBlock(blknum, data);
+}
+
+uint32_t PN532::mifare_ReadAccessConditions(uint8_t sector, uint8_t * data) {
+  return mifare_ReadBlock((sector+1)*4-1, data);
+}
+
+

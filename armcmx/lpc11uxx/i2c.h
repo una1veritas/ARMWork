@@ -77,8 +77,8 @@ For board to board test, this flag can be turned on. */
 
 #define I2DAT_I2C           0x00000000  /* I2C Data Reg */
 #define I2ADR_I2C           0x00000000  /* I2C Slave Address Reg */
-#define I2SCLH_SCLH         0x00000180  /* I2C SCL Duty Cycle High Reg */
-#define I2SCLL_SCLL         0x00000180  /* I2C SCL Duty Cycle Low Reg */
+#define I2SCLH_SCLH         46 //0x00000180  /* I2C SCL Duty Cycle High Reg */
+#define I2SCLL_SCLL         46 //0x00000180  /* I2C SCL Duty Cycle Low Reg */
 #define I2SCLH_HS_SCLH		0x00000015  /* Fast Plus I2C SCL Duty Cycle High Reg */
 #define I2SCLL_HS_SCLL		0x00000015  /* Fast Plus I2C SCL Duty Cycle Low Reg */
 
@@ -123,19 +123,19 @@ boolean i2c_receive(i2c * I2Cbuf, uint8_t * data, uint16_t lim);
 */
 
 void I2C_IRQHandler( void );
-uint8_t I2C_init(I2CDef * i2c, uint32 I2cMode );
-uint8_t I2C_begin(I2CDef * i2c);
+uint32 I2C_init(I2CDef * i2c, uint32 I2cMode );
+uint32 I2C_begin(I2CDef * i2c);
 
 uint32 I2C_start(I2CDef * i2c);
 uint32 I2C_stop(I2CDef * i2c);
 uint32 I2C_Engine(I2CDef * i2c);
+// returns false if issuing the start condition has been timed out.  
+uint32 I2C_write(I2CDef * i2c, uint8 addr, uint8 * data, uint32_t length);
+uint32 I2C_read(I2CDef * i2c, uint8 addr, uint8 * data, uint32_t reqlen, uint32_t reclen);
+uint32 I2C_request(I2CDef * i2c, uint8_t addr, uint8_t * data, uint32_t reqlen);
+uint32 I2C_receive(I2CDef * i2c, uint8_t addr, uint8_t * data, uint32_t reclen);
 //
-uint8 I2C_write(I2CDef * i2c, uint8 addr, uint8 * data, size_t length);
-uint8 I2C_read(I2CDef * i2c, uint8 addr, uint8 * data, size_t reqlen, size_t reclen);
-uint8_t I2C_request(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen);
-uint8_t I2C_receive(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reclen);
-//
-uint8 I2C_write16(I2CDef * i2c, uint8 addr, uint16 data);
+uint32 I2C_write16(I2CDef * i2c, uint8 addr, uint16 data);
 
 #ifdef __cplusplus
 }

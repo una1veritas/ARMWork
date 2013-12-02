@@ -5,24 +5,27 @@
 extern "C" {
 #endif
 
-#include "armcmx.h"
+#include <stdint.h>
+#include "LPC11Uxx.h"			/* LPC11xx Peripheral Registers */
 
 #define OUTPUT 1
 #define INPUT  0
 #define HIGH   1
 #define LOW    0
 
-enum PIONameDef {
-	Not_A_Port = 0xff,
+typedef uint8_t GPIOPin;
+
+enum PIOName_Def {
+	Not_A_Port = 0,
 	PIO0 = 1<<0,
 	PIO1 = 1<<1,
-  PORT_NOT_DEFINED = 0xff,
 };
 
-static uint8_t PIONumber[] = { Not_A_Port, 0, 1, PORT_NOT_DEFINED }; 
+//#define PIONumber(p)  ( (p) == PIO0 ? 0 : ( (p) == PIO1 ? 1 : PORT_NOT_DEFINED ))
+#define PIOx(p)  ((p)>>6)
 
 enum _GPIOPin_Def {
-	NOT_A_PIN = 0xff,
+	NOT_A_PIN = 0,
   PIO0_0 = (PIO0 <<5) | ((uint8_t)0),
   PIO0_1 = (PIO0 <<5) | ((uint8_t)1),
   PIO0_2 = (PIO0 <<5) | ((uint8_t)2),
@@ -34,7 +37,14 @@ enum _GPIOPin_Def {
   PIO0_8 = (PIO0 <<5) | ((uint8_t)8),
   PIO0_9 = (PIO0 <<5) | ((uint8_t)9),
   PIO0_10 = (PIO0 <<5) | ((uint8_t)10),
+  PIO0_11 = (PIO0 <<5) | ((uint8_t)11),
+  PIO0_12 = (PIO0 <<5) | ((uint8_t)12),
+  PIO0_13 = (PIO0 <<5) | ((uint8_t)13),
+  PIO0_14 = (PIO0 <<5) | ((uint8_t)14),
+  PIO0_15 = (PIO0 <<5) | ((uint8_t)15),
 
+  PIO0_16 = (PIO0 <<5) | ((uint8_t)16),
+  PIO0_17 = (PIO0 <<5) | ((uint8_t)17),
   PIO0_18 = (PIO0 <<5) | ((uint8_t)18),
   PIO0_19 = (PIO0 <<5) | ((uint8_t)19),
 

@@ -19,26 +19,40 @@
 #ifndef __CAPPUCCINO_H
 #define __CAPPUCCINO_H
 
-#define SSP_CS0       PIO0_2
-#define SSP_CS1       PIO1_23
-
 // Strawberry Linux original lpclcd port maps
 
+#ifndef CAPPUCCINO
 #define CAPPUCCINO
+#endif
 
 #define LED_LCDBKLT   PIO0_3
 #define LED_SDBUSY    PIO1_19   // As a sink
 
-#define SW_SDDETECT   PIO1_16    // High at slot empty
-
-#define LCDRST  PIO1_25
+#define LCD_RST  PIO1_25
 #define SW_USERBTN PIO0_1
-#define RXD_C    PIO0_18
-#define TXD_C    PIO0_19
-#define RXD_A    PIO1_26
-#define TXD_A    PIO1_27
-#define RXD_E    PIO1_17
-#define TXD_E    PIO1_18
+/* C-Connect */
+#define RXD0    PIO0_18
+#define TXD0    PIO0_19
+/* EXT Port E */
+#define RXD1    PIO1_17
+#define TXD1    PIO1_18
+/* EXT Port A */
+#define RXD2    PIO1_26 
+#define TXD2    PIO1_27
+
+#define I2C_PULLUP      PIO0_7
+
+#define SSP0_CS_DEFAULT       PIO0_2
+#define SSP1_CS_DEFAULT       PIO1_23
+#define SPI SPI1
+#define SPI_CS_DEFAULT PIO1_23
+
+#define RXD RXD2
+#define TXD TXD2
+
+#define SD_DETECT     PIO1_16
+#define SD_CS         PIO0_2
+#define SD_BUSYLED    PIO1_19
 
 #endif /* end __CAPPUCCINO_H */
 /*****************************************************************************

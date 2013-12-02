@@ -5,6 +5,7 @@
 *.elf
 *.hex
 *.axf
+*.bin
 *.d
 *.lst
 *.map
@@ -16,15 +17,21 @@
 *.bak
 *.dep
 
-#MDK-ARM
+#MDK-ARM and other ARM 
 *.__i
+*._2i
+*.fed
 *.htm
-*.uvgui.*
-*.uvopt
-*.axf
+#*.uvgui.*
+#*.uvopt
+*.iex
+*.dfu
 
 #Eclipse
 .metadata
 
 #Mac
 .DS_Store
+
+#downloaded artifacts
+

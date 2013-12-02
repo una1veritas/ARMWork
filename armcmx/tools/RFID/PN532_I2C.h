@@ -24,6 +24,10 @@
 
 #include "ISO14443.h"
 
+#define ACCESSBITS(x)     ( ((x)[8])<<4 & 0xff0L | ((x)[7])>>4 & 0x000fL )
+#define TRAILERBITS(x)    ((((x)&1L)<<3)<<8 | (((x)>>1&1L)<<3)<<4 | (((x)>>2&1L)<<3))
+#define DATABLOCKBITS(x, b)    ((((x)&1L)<<(b&3))<<8 | (((x)>>1&1L)<<(b&3))<<4 | (((x)>>2&1L)<<(b&3)))
+
 class PN532 {
 /*
 	static const byte I2C_READBIT = (0x01);
@@ -107,10 +111,11 @@ class PN532 {
 
 	void send_ack();
 	void send_nack();
-
+  
 //	boolean sendCommand(byte cmd, long timeout = 1000);
 public:
 
+/*
 	struct TargetID {
 		byte NFCType;
 		byte IDLength;
@@ -119,6 +124,8 @@ public:
 			byte UID[7];
 		};
 	} target;
+*/
+	ISO14443Card target;
 
 	static const byte I2C_ADDRESS = (0x48 >> 1);
 
@@ -191,6 +198,7 @@ public:
 		return WriteRegister(0x02fc, (mode == 0 ? 0x00 : 0x02) ); // p. 12/200, User Manual Rev. 02
 	}
 
+
 	byte InListPassiveTarget(const byte maxtg, const byte BaudModType, byte * data, const byte initlen);
 	byte InAutoPoll(const byte numop, const byte per, const byte * types,
 			const byte length);
@@ -201,16 +209,20 @@ public:
 			const byte * data, const byte datalen);
 
 	byte getCommandResponse(byte * resp, const long & wait = 1000);
-	byte getAutoPollResponse(byte * respo);
+//	byte getAutoPollResponse(byte * respo);
+	byte getAutoPollResponse(void);
 	byte getListPassiveTarget(byte * data);
 
 	void targetSet(const byte cardtype, const byte * uid, const byte uidLen);
 	void targetClear();
 
 	byte mifare_AuthenticateBlock(word blockNumber, const byte * keyData);
-	byte mifare_ReadDataBlock(uint8_t blockNumber, uint8_t * data);
+	byte mifare_ReadBlock(uint8_t blockNumber, uint8_t * data);
+	byte mifare_WriteBlock(uint8_t blockNumber, uint8_t * data);
+  byte mifare_WriteAccessConditions(uint8_t sector, uint32_t acc, const uint8_t keya[6], const uint8_t keyb[6]);
+  uint32_t mifare_ReadAccessConditions(uint8_t sector, uint8_t * data);
 
-	boolean InCommunicateThru(const byte * data, const byte len);
+  boolean InCommunicateThru(const byte * data, const byte len);
 	byte getCommunicateThruResponse(byte * data);
 
 	//	byte felica_DataExchange(const byte cmd, const byte * data, const byte len);
@@ -225,6 +237,11 @@ public:
 			const byte blknum, const word blklist[]);
 	byte felica_ReadBlocksWithoutEncryption(byte * resp, const word servcode,
 			const byte blknum, const word blklist[]);
+  
+  // utility function
+  static void printAccessBits(uint8_t trailer[16]);
+  // void printBytes(uint8_t *, size_t);
+
 };
 
 #endif /* PN532_I2C_H_ */

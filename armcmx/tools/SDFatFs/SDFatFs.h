@@ -1,121 +1,109 @@
 #ifndef _SDFATFS_H_
 #define _SDFATFS_H_
 
- /*
-  * Wrapper for FatFs by ChaN
-  */
+#include <stdint.h>
+#include "ff.h"
+#include "mmc_ssp.h"
 
 #include "armcmx.h"
-#include "Print.h"
+#include "SPI.h"
 #include "Stream.h"
 
-#include "SPIBus.h"
-
-#include "diskio.h"
-#include "ff.h"
-
-static uint32_t FatFsTimeStamp;
-
-// volume
 class SDFatFs {
-  SPIBus & spibus;
-
-//  static volatile DSTATUS Stat;	/* Physical drive status */
-//  static volatile UINT Timer1, Timer2;	/* 1kHz decrement timer stopped at zero (disk_timerproc()) */
-//  static BYTE CardType;			/* Card type flags */
-
-  GPIOPin pin_cs;
-  GPIOPin pin_detect;
-  GPIOPin pin_busyled;
-  
-  //
   FATFS fatfs;		/* File system object */
-  
-public:
-  FRESULT rescode;
-  
-  static uint32_t fattime(uint32_t cal, uint32_t time);
+//public:
+//  FIL file;			/* File object */  
+
+private:
+  SPIBus & bus;
+  GPIOPin chipselect;
+  GPIOPin carddetect, busyled;
 
 public:
-  SDFatFs(SPIBus & bus, GPIOPin cs, GPIOPin detect = PIO1_16, GPIOPin led = PIO1_19) 
-    : spibus(bus), pin_cs(cs), pin_detect(detect), pin_busyled(led) {}
+  SDFatFs(SPIBus & spibus, GPIOPin cs, GPIOPin detect = PIN_NOT_DEFINED, GPIOPin busy = PIN_NOT_DEFINED) 
+    : bus(spibus), chipselect(cs), carddetect(detect), busyled(busy) {}
+
+  void begin(void) {
+    pinMode(chipselect, OUTPUT);
+    digitalWrite(chipselect, HIGH);
+    if ( carddetect != PIN_NOT_DEFINED) 
+      pinMode(carddetect, INPUT);
+    if ( busyled != PIN_NOT_DEFINED) { 
+      pinMode(busyled, OUTPUT);
+      busyOff();
+    }
+  }
   
-  void begin(void);
+  void set_datetime(uint32_t d, uint32_t t) {
+    fatfs_date = d;
+    fatfs_time = t;
+  }
+
+  void mount(void) {
+    f_mount(0, &fatfs);		/* Register volume work area (never fails) */
+
+  }
+  void unmount(void) {
+    f_mount(0, NULL);
+  }
   
+  void busyOn(void) {
+    if ( busyled != PIN_NOT_DEFINED ) 
+      digitalWrite(busyled, LOW);
+  }
+
+  void busyOff(void) {
+    if ( busyled != PIN_NOT_DEFINED ) 
+      digitalWrite(busyled, HIGH);
+  }
+
 };
 
-class SDFatFile : public Stream {
-  FIL file;			/* File object */
-  SDFatFs & sdfs;
+class SDFile : public Stream {
+  FIL file;
+  SDFatFs & fatfs;
   
-  int16_t rbuf;
-  boolean peeked;
+//  static const int BUFFER_SIZE = 64;
+//  char ring[BUFFER_SIZE];
+//  uint16 rhead, count;
   
-//  uint8_t readbuff[], writebuff[];
-public:
-  const static BYTE FILE_READ =  FA_OPEN_EXISTING | FA_READ;
-  const static BYTE FILE_WRITE = FA_OPEN_ALWAYS | FA_READ | FA_WRITE;
+//  size_t readBlock(void);
 
 public:
-  SDFatFile(SDFatFs & sdfs) : sdfs(sdfs) {}
+  FRESULT error;
+  
+public:
 
-    FRESULT result(void) { return sdfs.rescode; }
-    
-  void open(const char * fname, const uint8_t mode = FILE_READ) {
-    peeked = false;
-  	sdfs.rescode = f_open(&file, fname, mode);
-    if (mode == FILE_WRITE && !sdfs.rescode ) {
-      sdfs.rescode = f_lseek(&file, f_size(&file));
-    }
+  SDFile(SDFatFs & fs) : fatfs(fs) { //, rhead(0), count(0) {
   }
   
-  char * gets(char * buff, size_t sz) {
-    if ( peeked ) {
-      peeked = false;
-      *buff = rbuf;
-      return f_gets((TCHAR*)buff+1, sz-1, &file);      
-    } else {
-      return f_gets((TCHAR*)buff, sz, &file);
-    }
-  }
+  FIL * operator() (void) { return &file; }
   
-  void close(void) {
-    sdfs.rescode = f_close(&file);
-  }
+  FRESULT open(const TCHAR * fpath, BYTE mode);
+  FRESULT close();
+
+  inline int ferror(void) { return f_error(&file); }
   
-  inline virtual size_t write(uint8_t c) {
-    return write(&c, 1);
-  }
-  virtual size_t write(const uint8_t * buf, size_t num);
-  inline virtual size_t write(char * str) {
-    return write((const uint8_t *) str, strlen(str));
-  }
+  virtual int read(void);
+  virtual int peek(void);
+  
+  virtual size_t write(uint8_t c);
+  virtual size_t write(const uint8_t * p, size_t n);
   using Print::write;
   
-  virtual size_t available() {
-    if ( f_eof(&file) )
-      return 0;
-    return f_size(&file) - f_tell(&file);
-  }
-
-  virtual int16_t read() {
-    UINT n = 0;
-    if ( !peeked )
-      sdfs.rescode = f_read(&file, &rbuf, 1, &n);
-    peeked = false;
-    return rbuf;
-  }
-  virtual int16_t peek() {
-    UINT n = 0;
-    if ( !peeked ) 
-      sdfs.rescode = f_read(&file, &rbuf, 1, &n);
-    peeked = true;
-    return rbuf;
-  }
-
-  virtual void flush() {
-    sdfs.rescode = f_sync(&file);
-  }
+  virtual int available(void);
+  virtual inline void flush(void) { f_sync(&file); }
+  
+  inline FRESULT seek(int32_t ofs) { return f_lseek(&file, (DWORD)ofs); }
+  inline size_t size() { return f_size(&file); }
+  bool eof();
+  
+  inline bool getLine(TCHAR * t, size_t lim) { return f_gets(t, lim, &file) != NULL; }
+  
+//  inline bool buffer_is_full() { return count == BUFFER_SIZE; }
+//  inline bool buffer_is_empty() { return !(rhead < count); }
 };
+
+extern SDFatFs SD;
 
 #endif

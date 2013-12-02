@@ -10,7 +10,7 @@
 #if defined (ARDUINO)
 #include <SPI.h>
 #elif defined (ARMCMX)
-#include "SPIBus.h"
+#include "SPI.h"
 #endif
 
 #include "SPISRAM.h"
@@ -23,10 +23,9 @@ SPISRAM::SPISRAM(SPIBus & spi, const byte csPin, const byte addr_width) :
 void SPISRAM::init() {
 	pinMode(_csPin, OUTPUT);
 	csHigh();
-	//
 	//addr = 0;
 	select();
-	writeStatusRegister(SEQ_MODE);
+	writeStatus(SEQ_MODE);
 	deselect();
 }
 
@@ -42,7 +41,7 @@ byte SPISRAM::read(const long & address) {
 
 void SPISRAM::read(const long & address, byte *buffer, const long & size) {
 	select();
-	writeStatusRegister(SEQ_MODE);
+	writeStatus(SEQ_MODE);
   csHigh();
   csLow();
 	//
@@ -62,7 +61,7 @@ void SPISRAM::write(const long & address, byte data) {
 
 void SPISRAM::write(const long & address, byte *buffer, const long & size) {
 	select();
-	writeStatusRegister(SEQ_MODE);
+	writeStatus(SEQ_MODE);
   csHigh();
 	//
   csLow();
@@ -74,23 +73,31 @@ void SPISRAM::write(const long & address, byte *buffer, const long & size) {
 
 void SPISRAM::setSPIMode(void) {
 //	SPIx.setBitOrder(MSBFIRST);
-//	SPIx.setClockDivider(SPI_CLOCK_DIV4);
-//	SPIx.setDataMode(SPI_MODE0);
+	SPIx.setDataMode(SPI_MODE0);
+  SPIx.setClockDivider(SPI_CLOCK_DIV4);
 }
 
-void SPISRAM::csLow() {
+inline void SPISRAM::csLow() {
 	digitalWrite(_csPin, LOW);
 }
 
-void SPISRAM::csHigh() {
+inline void SPISRAM::csHigh() {
 	digitalWrite(_csPin, HIGH);
 }
 
-void SPISRAM::select(void) {
+inline void SPISRAM::select(void) {
 	setSPIMode();
 	csLow();
 }
 
-void SPISRAM::deselect(void) {
+inline void SPISRAM::deselect(void) {
 	csHigh();
+}
+
+uint8 SPISRAM::started(void) {
+  uint8 res;
+  select();
+  res = readStatus();
+  deselect();
+  return (res & 0xc0) == 0x40;
 }

@@ -16,11 +16,10 @@
 
 #if defined (ARDUINO)
 #include <Arduino.h>
-#include <SPI.h>
 #elif defined (ARMCMX)
 #include "armcmx.h"
-#include "SPIBus.h"
 #endif
+#include <SPI.h>
 
 class SPISRAM {
 private:
@@ -38,8 +37,8 @@ private:
 	// EDIO
 	// EQIO
 	// RSTIO
-	static const byte RDSR = 0x05; // Read Status register
-	static const byte WRSR = 0x01; // Write Status register
+	static const byte RDSR = 0x05; // Read Status/Mode register
+	static const byte WRSR = 0x01; // Write Status/Mode register
 
 	// STATUS REGISTER
 	static const byte BYTE_MODE = 0x00;
@@ -54,13 +53,14 @@ private:
 		SPIx.transfer(address & 0xff);
 	}
 
-	void writeStatusRegister(byte stat) {
+	void writeStatus(byte stat) {
 		SPIx.transfer(WRSR);
 		SPIx.transfer(stat);
 	}
 
-	byte readStatusRegister() {
-		return SPIx.transfer(RDSR);
+	byte readStatus() {
+    SPIx.transfer(RDSR);
+    return SPIx.transfer(0xff);
 	}
 
 public:
@@ -78,6 +78,8 @@ public:
 	inline void begin() {
 		init();
 	}
+  boolean started(void);
+  
 	inline void setSPIMode();
 
 	byte read(const long & address);
@@ -85,10 +87,10 @@ public:
 	void write(const long & address, byte data);
 	void write(const long & address, byte *buffer, const long & size);
 
-	inline void csLow();
-	inline void csHigh();
-	inline void select(void);
-	inline void deselect(void);
+	void csLow();
+	void csHigh();
+	void select(void);
+	void deselect(void);
 };
 
 #endif

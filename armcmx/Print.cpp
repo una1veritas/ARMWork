@@ -129,14 +129,17 @@ size_t Print::print(const Printable& x)
 }
 
 size_t Print::printBytes(uint8_t * p, uint8_t length, char sep) {
-	size_t i, n = 0;
-	for(i = 0; i < length; i++) {
-		n += printByte(p[i]);
+	size_t n = 0;
+	for( ; length; length--) {
+		n += print(*p>>4&0x0f, HEX);
+		n += print(*p&0x0f, HEX);
+    p++;
 		n += print(sep);
 	}
 	return n;
 }
 
+/*
 size_t Print::printByte(uint8_t val) {
 	size_t n = 0;
 	n += print(long(val>>4), HEX);
@@ -152,7 +155,7 @@ size_t Print::printByte(uint32_t val) {
 	n += printByte((uint8_t)val);
 	return n;
 }
-
+*/
 
 size_t Print::println(void)
 {
@@ -225,14 +228,15 @@ size_t Print::println(float num, int digits)
   return n;
 }
 
-/*
+
 size_t Print::println(const Printable& x)
 {
   size_t n = print(x);
   n += println();
   return n;
 }
-*/
+
+
 // Private Methods /////////////////////////////////////////////////////////////
 
 size_t Print::printNumber(unsigned long n, uint8_t base) {

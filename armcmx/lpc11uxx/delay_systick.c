@@ -1,3 +1,4 @@
+#include <stdint.h>
 
 #include "LPC11uxx.h"			/* LPC11uxx Peripheral Registers */
 #include "type.h"
@@ -6,7 +7,8 @@
 volatile uint32_t __counter_micros;
 volatile uint32_t __counter_millis;
 
-uint32_t SysTickPeriod;
+// private
+// volatile uint32 SysTickPeriod;
 
 /* SysTick interrupt happens every 10 ms */
 void SysTick_Handler(void)
@@ -17,9 +19,8 @@ void SysTick_Handler(void)
 
 void init_systick_delay() {  
   SystemCoreClockUpdate();
-  SysTickPeriod = SystemCoreClock/1000L;
   // systick initialize
-  SysTick_Config(SysTickPeriod);
+  SysTick_Config(SystemCoreClock/1000L);
   // Clear SysTick Counter 
   SysTick->VAL = 0;
   // Enable the SysTick Counter 
@@ -65,7 +66,8 @@ void stop_systick_delay(void) {
 
 uint32_t micros(void) {
 // 	return __counter_micros + (1000 - SysTick->VAL/48);
-	return __counter_micros + (1024 - ((SysTick->VAL*21)>> 10));
+  return __counter_micros + (1000 - ((SysTick->VAL*5)>> 8));
+  //__counter_micros + ( 3000 - (SysTick->VAL >> 4) ) / 3;
 }
 
 uint32_t millis(void) {

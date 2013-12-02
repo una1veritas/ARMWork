@@ -5,7 +5,10 @@
 extern "C" {
 #endif
 
-#define SYSTICK_DELAY		(SystemCoreClock/100)
+#include <stdint.h>
+//#include "armcmx.h"
+
+//#define SYSTICK_DELAY		(SystemCoreClock/100)
 
 //extern volatile uint32_t __counter_systick;
 extern volatile uint32_t __counter_micros;

@@ -234,10 +234,9 @@ uint32_t I2C_stop(I2CDef * i2c) {
  **				interrupt handler was not installed correctly
  ** 
  *****************************************************************************/
-uint8_t I2C_init(I2CDef * i2c, uint32_t I2cMode) {
-	LPC_SYSCON->PRESETCTRL |= (0x1 << 1);
-
-	LPC_SYSCON->SYSAHBCLKCTRL |= (1 << 5);
+uint32 I2C_init(I2CDef * i2c, uint32_t I2cMode) {
+	LPC_SYSCON->PRESETCTRL |= (0x1 << 1); // I2C reset off
+	LPC_SYSCON->SYSAHBCLKCTRL |= (1 << 5); // Power and Peripheral clock on
 	LPC_IOCON->PIO0_4 &= ~0x3F; /*  I2C I/O config */
 	LPC_IOCON->PIO0_4 |= 0x01; /* I2C SCL */
 	LPC_IOCON->PIO0_5 &= ~0x3F;
@@ -254,13 +253,14 @@ uint8_t I2C_init(I2CDef * i2c, uint32_t I2cMode) {
   return (TRUE);
 }
 
-uint8_t I2C_begin(I2CDef * i2c) {
+uint32 I2C_begin(I2CDef * i2c) {
 	/*--- Clear flags ---*/
 	LPC_I2C->CONCLR = I2CONCLR_AAC | I2CONCLR_SIC | I2CONCLR_STAC
 			| I2CONCLR_I2ENC;
 
 	/*--- Reset registers ---*/
-#if FAST_MODE_PLUS
+  /*
+#if 1 || FAST_MODE_PLUS
 	LPC_IOCON->PIO0_4 |= (0x1<<9);
 	LPC_IOCON->PIO0_5 |= (0x1<<9);
 	LPC_I2C->SCLL = I2SCLL_HS_SCLL;
@@ -269,7 +269,11 @@ uint8_t I2C_begin(I2CDef * i2c) {
 	LPC_I2C->SCLL = I2SCLL_SCLL;
 	LPC_I2C->SCLH = I2SCLH_SCLH;
 #endif
-
+*/
+  // standard 100kHz clock
+	LPC_I2C->SCLL = 232; //I2SCLL_SCLL;
+	LPC_I2C->SCLH = 232; //I2SCLH_SCLH;
+  
 // set initial value idle
 	i2c->State = I2C_IDLE;
 //	i2c->SlaveState = I2C_IDLE;
@@ -319,25 +323,26 @@ uint32_t I2C_Engine(I2CDef * i2c) {
 	return (i2c->State);
 }
 
-uint8_t I2C_write(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t length) {
+uint32 I2C_write(I2CDef * i2c, uint8_t addr, uint8_t * data, uint32 length) {
 	i2c->WriteLength = length + 1;
 	i2c->ReadLength = 0;
   i2c->Mode = I2C_MODE_WRITE;
 	i2c->Buffer[0] = addr<<1;
 	memcpy((void*) (i2c->Buffer + 1), data, length);
-	return !I2C_Engine(i2c);
+	return I2C_Engine(i2c);
 }
 
-uint8_t I2C_write16(I2CDef * i2c, uint8_t addr, uint16_t data) {
+uint32 I2C_write16(I2CDef * i2c, uint8_t addr, uint16_t data) {
 	uint8_t buf[2];
 	buf[0] = data >> 8;
 	buf[1] = data & 0xff;
 	return I2C_write(i2c, addr, buf, 2);
 }
 
-uint8_t I2C_read(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen,
+uint32 I2C_read(I2CDef * i2c, uint8_t addr, uint8_t * data, uint32 reqlen,
 		size_t rcvlen) {
 	int i;
+      uint8_t res;
 	/* Write SLA(W), address, SLA(R), and read one byte back. */
 	i2c->WriteLength = reqlen+1;
 	i2c->ReadLength = rcvlen;
@@ -345,40 +350,41 @@ uint8_t I2C_read(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t reqlen,
   i2c->Mode = I2C_MODE_READ;
 	memcpy((void*) (i2c->Buffer + 1), data, reqlen);
   i2c->Buffer[reqlen+1] = (addr<<1) | RD_BIT;
-	I2C_Engine(i2c);
+	res = I2C_Engine(i2c);
 	//if(!I2CEngine()) return -1;
 
 	i = 0;
 	while (rcvlen--) {
 		*data++ = i2c->Buffer[i++];
 	}
-	return 0;
+	return res;
 }
 
-uint8_t I2C_request(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t length) {
+uint32 I2C_request(I2CDef * i2c, uint8_t addr, uint8_t * data, uint32 length) {
 	i2c->WriteLength = length + 1;
 	i2c->ReadLength = 0;
   i2c->Mode = I2C_MODE_REQUEST;
 	i2c->Buffer[0] = addr<<1;
 	memcpy((void*) (i2c->Buffer + 1), data, length);
-	return !I2C_Engine(i2c);
+	return I2C_Engine(i2c);
 }
 
-uint8_t I2C_receive(I2CDef * i2c, uint8_t addr, uint8_t * data, size_t length) {
+uint32 I2C_receive(I2CDef * i2c, uint8_t addr, uint8_t * data, uint32 length) {
   int i;
+  uint8_t res;
 	/* Write SLA(W), address, SLA(R), and read one byte back. */
 	i2c->WriteLength = 0;
 	i2c->ReadLength = length;
   i2c->Mode = I2C_MODE_READ;
   i2c->Buffer[0] = (addr<<1) | RD_BIT;
-	I2C_Engine(i2c);
+	res = I2C_Engine(i2c);
 	//if(!I2CEngine()) return -1;
 
 	i = 0;
 	while (length--) {
 		*data++ = i2c->Buffer[i++];
 	}
-	return 0;
+	return res;
 }
 
 

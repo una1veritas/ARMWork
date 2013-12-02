@@ -20,12 +20,13 @@
 #ifndef __SSP_H__
 #define __SSP_H__
 
-#include "spi.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#include "armcmx.h"
+  
 /* There are there modes in SSP: loopback, master or slave. */
 /* Here are the combination of all the tests. 
 (1) LOOPBACK test:		LOOPBACK_MODE=1, TX_RX_ONLY=0, USE_CS=1;

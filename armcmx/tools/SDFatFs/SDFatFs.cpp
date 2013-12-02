@@ -1,32 +1,80 @@
- /*
-  * Wrapper for FatFs by ChaN
-  */
-  
+/*
+*
+*
+*/
+#include <ctype.h>
 #include "SDFatFs.h"
 
-void SDFatFs::begin(void) {
-  pinMode(pin_cs, OUTPUT);
-  pinMode(pin_detect, INPUT);
-  pinMode(pin_busyled, OUTPUT);
-  f_mount(0, &fatfs);		/* Register volume work area (never fails) */
-}
-  
-// for get_fattime
-uint32_t SDFatFs::fattime(uint32_t cal, uint32_t time) {
-  uint8_t y,m,d, hh, mm, ss;
-  y = 20 + (cal>>16&0x0f) + (cal>>20&0x0f)*10;
-  m = (cal>>8&0x0f) + (cal>>12&0x0f)*10;
-  d = (cal&0x0f) + (cal>>4&0x0f)*10;
-  hh = (time>>16&0x0f) + (time>>20&0x0f)*10;
-  mm = (time>>8&0x0f) + (time>>12&0x0f)*10;
-  ss = (time&0x0f) + (time>>4&0x0f)*10;
-  
-  return ((uint32_t)y<<25) | m<<21 | d<<16 | hh << 11 | mm<<5 | ss>>1;
+/*
+#if defined (CAPPUCCINO)
+#include "cappuccino.h"
+SDFatFs SD(SPI0, PIO0_2, SD_DETECT, SD_BUSYLED);
+
+#elif defined (LPCLCD)
+#include "lpclcd.h"
+SDFatFs SD(SPI0, PIO0_2);
+
+#endif
+*/
+
+FRESULT SDFile::open(const TCHAR * fpath, BYTE mode) {
+  error = f_open(&file, fpath, mode);
+  fatfs.busyOn();
+  return error;
 }
 
-size_t SDFatFile::write(const uint8_t * buf, size_t num) {
-  UINT count;
-  sdfs.rescode = f_write(&file, buf, num, &count);
-  return count;
+FRESULT SDFile::close() {
+  flush();
+  error = f_close(&file);
+  fatfs.busyOff();
+  return error;
+}
+
+/*
+size_t SDFile::readBlock(void) {
+  UINT n;
+  ferr = f_read(&file, ring, BUFFER_SIZE, &n);
+  rhead = 0;
+  count = n;
+  return (size_t) n;
+}
+*/
+
+int SDFile::read(void) {
+  UINT n;
+  char buf;
+  error = f_read(&file, &buf, 1, &n);
+  if ( n == 1 ) {
+    return (int) buf;
+  }
+  return -1;
+}
+
+int SDFile::peek(void) {
+  int c = read();
+  f_lseek(&file, f_tell(&file)-1);
+  return c;
+}
+
+
+size_t SDFile::write(const uint8_t c) {
+  return ( f_putc((TCHAR)c, &file) == 1 ? 1 : 0); 
+}
+
+size_t SDFile::write(const uint8_t * p, size_t n) {
+  UINT wn;
+  error = f_write(&file, p, n, &wn);
+  return wn;
+}
+
+bool SDFile::eof(void) {
+  // both cache and file is at the end.
+  return f_eof(&file);
+}
+
+int SDFile::available(void) {
+  if ( f_eof(&file) ) 
+    return 0;
+  return f_size(&file) - f_tell(&file);
 }
 

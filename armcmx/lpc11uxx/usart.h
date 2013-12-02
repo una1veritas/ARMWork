@@ -24,6 +24,7 @@
 extern "C" {
 #endif
 
+#include <stdio.h>
 #include "gpio.h"
 
 /* Synchronous mode control register definition. */

@@ -8,7 +8,7 @@
 #include <string.h>
 
 #include "LPC11Uxx.h"
-#include "type.h"
+//#include "type.h"
 
 //#define DELAY_TIMER16_1
 //DELAY_SYSTICK
@@ -19,6 +19,8 @@
 #include "USARTSerial.h"
 #include "I2CBus.h"
 #include "ST7032i.h"
+
+#include "StringStream.h"
 
 #ifdef _LPCXPRESSO_CRP_
 #include <cr_section_macros.h>
@@ -53,6 +55,11 @@ int main (void) {
   char str[32];
   int i;
   
+  int c;
+  uint32 lastread;
+  char buf[64];
+  StringStream strm(buf, 64);
+  
   SystemInit();
   GPIOInit();
   start_delay();
@@ -63,6 +70,9 @@ int main (void) {
   digitalWrite(LPCLCDBKLT, LOW);
   
   pinMode(USERBTN, INPUT);
+  
+  Serial.begin(115200);
+  Serial.println("Testing serial out.");
   
   Wire.begin();
   if ( Wire.status == FALSE ) 
@@ -104,6 +114,33 @@ int main (void) {
       
       while ( digitalRead(USERBTN) == LOW);
     }
+    
+    
+    if ( Serial.available() ) {
+      strm.flush();
+      lastread = millis();
+      do {
+        while ( !Serial.available() ) {
+          if ( millis() > lastread + 10000 ) break;
+        }
+        c = Serial.read();
+        if ( c == -1 ) 
+          break;
+        if ( c == '\n' || c == '\r' || c == 0 )
+          break;
+        strm.write(c);
+        lastread = millis();
+      } while ( millis() < lastread + 10000 );
+      Serial << "length = " << strm.length() << nl;
+      if ( strm.length() > 0 ) {
+        Serial.print("Request: ");
+        Serial.println(strm);
+        //
+        Serial << "strm = " << '"' << strm << '"' << nl;
+        Serial << "buf = " << '"' << buf << '"' << nl;
+      }
+    }
+
   }
   
 }

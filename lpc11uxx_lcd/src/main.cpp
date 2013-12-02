@@ -13,9 +13,8 @@
 #include "armcmx.h"
 #include "USARTSerial.h"
 #include "I2CBus.h"
-#include "i2clcd.h"
 #include "ST7032i.h"
-#include "I2CRTC.h"
+#include "RTC.h"
 
 #include "cappuccino.h"
 
@@ -35,7 +34,7 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 *******************************************************************************/
 
 ST7032i i2clcd(Wire, LED_LCDBKLT, LCDRST);
-I2CRTC rtc(Wire, I2CRTC::CHIP_M41T62);
+RTC rtc(Wire, RTC::CHIP_M41T62);
 
 int task_serial(void);
 char rxbuff[64];
@@ -43,7 +42,7 @@ int rxindex = 0;
 
 int main (void) {
   long ontime = 0; //, offtime;
-  uint32_t val;
+  uint32 val;
   char str[32];
   char buf[4];
   char * ptr;
@@ -56,6 +55,9 @@ int main (void) {
     uint32_t serial;
     uint32_t button;
   } task = { 0, 0, 0, 0 };
+  
+  uint32 prevmicros;
+  
   
   SystemInit();
   GPIOInit();
@@ -107,6 +109,7 @@ int main (void) {
   i2clcd.print("Hi, everybody!");
   
   task.master = millis();
+  prevmicros = micros();
   //
   while (1){    /* Loop forever */
     
@@ -117,6 +120,7 @@ int main (void) {
         task.button--;
       if ( task.serial )
         task.serial--;
+      task.master = millis();
     }
     
     if ( !task.rtc ) {
@@ -126,10 +130,13 @@ int main (void) {
           rtc.copyNameOfDay(buf, rtc.dayOfWeek()), rtc.cal>>8&0x1f, rtc.cal&0x3f );
       i2clcd.print(str);
       i2clcd.setCursor(0, 1);
-      sprintf(str, "%02x:%02x:%02x        ", rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f);
+      
+      prevmicros = micros() - prevmicros;
+      sprintf(str, "%02x:%02x:%02x  %06u", rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f, prevmicros);
+      prevmicros = micros();
       i2clcd.print(str);
       //
-      task.rtc = 33;
+      task.rtc = 31;
     }
     
     if ( !task.button ) {
