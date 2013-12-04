@@ -494,14 +494,14 @@
               <FilePath>..\..\armcmx\stm32f30x\delay.c</FilePath>
             </File>
             <File>
-              <FileName>armcmx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\stm32f30x\armcmx.c</FilePath>
-            </File>
-            <File>
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\stm32f30x\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>armcmx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\armcmx.c</FilePath>
             </File>
           </Files>
         </Group>

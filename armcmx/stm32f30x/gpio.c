@@ -5,6 +5,7 @@
  *      Author: sin
  */
 
+#include "armcmx.h"
 #include "gpio.h"
 
 uint32_t PortPeriph[] = {
@@ -71,11 +72,6 @@ uint8_t digitalRead(GPIOPin portpin) {
 	return (GPIO_ReadInputDataBit(port, PinBit(portpin)) ? SET : RESET);
 }
 
-uint16_t GPIORead(GPIO_TypeDef * port, uint16_t bitmasks) {
-	uint16_t data = GPIO_ReadInputDataBit(port, bitmasks);
-	return data;
-}
-
 /*
 #define OUTPUT		GPIO_Mode_OUT // 1
 #define INPUT			GPIO_Mode_IN  // 0
@@ -126,6 +122,13 @@ void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
 	GPIO_Init(port, &GPIO_InitStructure);
 }
 
+uint16_t GPIORead(GPIO_TypeDef * port) {
+	return GPIO_ReadInputData(port);
+}
+
+void GPIOWrite(GPIO_TypeDef * port, uint16_t bits) {
+	GPIO_Write(port, bits);
+}
 
 void GPIOAltFunc(GPIO_TypeDef * port, uint16_t pinbits, uint8_t pinaf) {
 	int i;
@@ -134,12 +137,6 @@ void GPIOAltFunc(GPIO_TypeDef * port, uint16_t pinbits, uint8_t pinaf) {
 			GPIO_PinAFConfig(port, PinSource(i), pinaf);
 	}
 }
-/*
-void GPIOWrite(GPIO_TypeDef * port, uint16_t maskbits, uint16_t bits) {
-	uint16_t data = GPIO_ReadOutputDataBit(port, 0xffff);
-	GPIO_Write(port, (data & ~maskbits) | (bits & maskbits) );
-}
-*/
 /*
 void digitalToggle(GPIOPin portpin) {
   if ( GPIO_ReadOutputDataBit(PinPort(portpin), PinBit(portpin)) == 0 )

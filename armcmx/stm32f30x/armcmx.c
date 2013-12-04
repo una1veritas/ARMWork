@@ -19,7 +19,7 @@
 #endif
 #endif
 
-void armcmx_init() {
+void armcmx_init(void) {
 	// starting delay/millis system by timer2
 	TIM2_delaytimer_start();
 #ifdef STDSERIAL
