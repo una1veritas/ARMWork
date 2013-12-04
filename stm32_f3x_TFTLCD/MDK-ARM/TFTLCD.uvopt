@@ -153,7 +153,7 @@
       <DebugFlag>
         <trace>0</trace>
         <periodic>0</periodic>
-        <aLwin>1</aLwin>
+        <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
@@ -180,12 +180,24 @@
       <LintConfigFile></LintConfigFile>
       <SystemViewers>
         <Entry>
+          <Name>System Viewer\COMP</Name>
+          <WinId>35901</WinId>
+        </Entry>
+        <Entry>
           <Name>System Viewer\GPIOB</Name>
           <WinId>35905</WinId>
         </Entry>
         <Entry>
           <Name>System Viewer\GPIOD</Name>
           <WinId>35904</WinId>
+        </Entry>
+        <Entry>
+          <Name>System Viewer\PWR</Name>
+          <WinId>35903</WinId>
+        </Entry>
+        <Entry>
+          <Name>System Viewer\TIM2</Name>
+          <WinId>35902</WinId>
         </Entry>
       </SystemViewers>
     </TargetOption>
@@ -205,7 +217,7 @@
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>172</TopLine>
+      <TopLine>169</TopLine>
       <CurrentLine>179</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\STM32Libraries\CMSIS\STM32F30x\startup\arm\startup_stm32f30x.s</PathWithFileName>
@@ -403,10 +415,10 @@
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>2</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>6</TopLine>
-      <CurrentLine>24</CurrentLine>
+      <TopLine>29</TopLine>
+      <CurrentLine>39</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\main.cpp</PathWithFileName>
       <FilenameWithoutPath>main.cpp</FilenameWithoutPath>
@@ -427,10 +439,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>15</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>92</TopLine>
-      <CurrentLine>103</CurrentLine>
+      <TopLine>117</TopLine>
+      <CurrentLine>131</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\armcmx\stm32f30x\gpio.c</PathWithFileName>
       <FilenameWithoutPath>gpio.c</FilenameWithoutPath>
@@ -563,10 +575,10 @@
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>30</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>304</TopLine>
-      <CurrentLine>314</CurrentLine>
+      <TopLine>46</TopLine>
+      <CurrentLine>64</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\armcmx\tools\TFTLCD\TFTLCD.cpp</PathWithFileName>
       <FilenameWithoutPath>TFTLCD.cpp</FilenameWithoutPath>
