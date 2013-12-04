@@ -5,28 +5,7 @@
 #include "main.h"
 #include "armcmx.h"
 
-/** @addtogroup STM32F3_Discovery_Peripheral_Examples
-  * @{
-  */
 
-/** @addtogroup GPIO_IOToggle
-  * @{
-  */ 
-
-/* Private typedef -----------------------------------------------------------*/
-/* Private define ------------------------------------------------------------*/
-#define BSRR_VAL 0xC000
-/* Private macro -------------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
-GPIO_InitTypeDef        GPIO_InitStructure;
-/* Private function prototypes -----------------------------------------------*/
-/* Private functions ---------------------------------------------------------*/
-
-/**
-  * @brief  Main program.
-  * @param  None
-  * @retval None
-  */
 int main(void)
 {
   int32 interval = 500;
