@@ -12,18 +12,12 @@
 extern "C" {
 #endif
 
-#if defined(STM32F4XX)
-#include "stm32f4xx.h"
-#include "stm32f4xx_gpio.h"
-#include "stm32f4xx_rcc.h"
-#elif defined(STM32F30X)
 #include "stm32f30x.h"
 #include "stm32f30x_gpio.h"
 #include "stm32f30x_rcc.h"
-#endif
 
 static GPIO_TypeDef * Port[] =
-		{ 0, GPIOA, GPIOB, GPIOC, GPIOD, GPIOE, GPIOF, GPIOG, GPIOH, GPIOI };
+		{ 0, GPIOA, GPIOB, GPIOC, GPIOD, GPIOE, GPIOF };
 
 #define OUTPUT		GPIO_Mode_OUT // 1
 #define INPUT			GPIO_Mode_IN  // 0
@@ -148,9 +142,6 @@ typedef enum _GPIOPin_Def {
 	PE15 = (PortE <<4) | ((uint8_t)15),
 
 	PF0 = (PortF <<4) | ((uint8_t)0),
-	PG0 = (PortG <<4) | ((uint8_t)0),
-	PH0 = (PortH <<4) | ((uint8_t)0),
-	PI0 = (PortI <<4) | ((uint8_t)0),
 
 	PIN_NOT_DEFINED = (uint8_t)0xff
 } GPIOPin_Def;
@@ -170,7 +161,7 @@ uint8_t PinSource(GPIOPin portpin);
 void GPIOMode(GPIO_TypeDef * port, uint16_t pinbits, GPIOMode_TypeDef mode,
               GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd);
 void GPIOAltFunc(GPIO_TypeDef * port, uint16_t pinbits, uint8_t GPIOType_AF);
-void digitalToggle(GPIOPin);
+//void digitalToggle(GPIOPin);
 
 #ifdef __cplusplus
 }
