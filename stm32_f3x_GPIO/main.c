@@ -12,17 +12,15 @@ int main(void)
   int i;
   
   armcmx_init();
+  usart_begin(&stdserial, 57600);
   
   pinMode(PE14, OUTPUT);
   pinMode(PE15, OUTPUT);
-  pinMode(PD0, OUTPUT);
+  
+  usart_print(&stdserial, "Hello!\n");
   
   while (1)
   {
-    if ( digitalRead(PD0) == HIGH )
-      digitalWrite(PD0, LOW);
-    else
-      digitalWrite(PD0, HIGH);
     for(i = 0; i < 1000/abs(interval) * 4; i++) {
       if ( digitalRead(PE14) == LOW ) {
         digitalWrite(PE14, HIGH);

@@ -147,6 +147,7 @@ typedef enum _GPIOPin_Def {
 } GPIOPin_Def;
 typedef uint8_t 	GPIOPin;
 
+void pinDisable(GPIOPin);
 void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode);
 void digitalWrite(GPIOPin portpin, uint8_t bit);
 uint8_t digitalRead(GPIOPin portpin);
@@ -156,6 +157,9 @@ GPIO_TypeDef * PinPort(GPIOPin portpin);
 uint16_t PinBit(GPIOPin portpin);
 uint8_t PinSource(GPIOPin portpin);
 */
+
+void GPIOEnable(GPIO_TypeDef * port);
+void GPIODisable(GPIO_TypeDef * port);
 
 uint16_t GPIORead(GPIO_TypeDef * port);
 void GPIOWrite(GPIO_TypeDef * port, uint16_t bits);

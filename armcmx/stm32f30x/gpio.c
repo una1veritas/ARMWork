@@ -25,10 +25,15 @@ uint16_t Pin[] = { GPIO_Pin_0, GPIO_Pin_1, GPIO_Pin_2, GPIO_Pin_3,
 		GPIO_Pin_15, GPIO_Pin_All };
 
 
+void pinDisable(GPIOPin portpin) {
+	RCC_AHBPeriphClockCmd(PortPeriph[portpin>>4 & 0x0f], DISABLE);
+}
+
 void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode) {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
 	RCC_AHBPeriphClockCmd(PortPeriph[portpin>>4 & 0x0f], ENABLE);
+  
 	GPIO_StructInit(&GPIO_InitStructure);
 	GPIO_InitStructure.GPIO_Pin = PinBit(portpin);
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -90,11 +95,7 @@ uint8_t digitalRead(GPIOPin portpin) {
 #define LOW			RESET
 */
 
-void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
-              GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd) {
-		GPIO_InitTypeDef GPIO_InitStructure;
-	
-								
+void GPIOEnable(GPIO_TypeDef * port) {
 	if ( port == GPIOA ) {
 		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
 	} else if ( port == GPIOB ) {
@@ -111,7 +112,32 @@ void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
 	// else NOT_A_PORT
 		return;
 	}		
-	// assumes port is already waked up.
+}
+
+void GPIODisable(GPIO_TypeDef * port) {
+	if ( port == GPIOA ) {
+		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, DISABLE);
+	} else if ( port == GPIOB ) {
+		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, DISABLE);
+	} else if ( port == GPIOC ) {
+		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, DISABLE);
+	} else if ( port == GPIOD ) {
+		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOD, DISABLE);
+	} else if ( port == GPIOE ) {
+		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOE, DISABLE);
+	} else if ( port == GPIOF ) {
+		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOF, DISABLE);
+	} else {
+	// else NOT_A_PORT
+		return;
+	}		
+}
+
+void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
+              GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd) {
+		GPIO_InitTypeDef GPIO_InitStructure;
+
+  // assumes port is already waked up.
 
 	GPIO_InitStructure.GPIO_Pin = pinbit;
 	GPIO_InitStructure.GPIO_Mode = mode;

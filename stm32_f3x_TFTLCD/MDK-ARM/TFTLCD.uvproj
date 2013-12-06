@@ -355,7 +355,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARMCMX USE_STDPERIPH_DRIVER STM32F30X STDSERIAL=3</Define>
+              <Define>ARMCMX USE_STDPERIPH_DRIVER STM32F30X</Define>
               <Undefine></Undefine>
               <IncludePath>.\..\;..\..\STM32Libraries\CMSIS\Device\ST\STM32F30x\Include;..\..\STM32Libraries\STM32F30x_StdPeriph_Driver\inc;..\..\STM32Libraries\Utilities\STM32F3_Discovery;..\..\armcmx;..\..\armcmx\stm32f30x;..\..\armcmx\tools\TFTLCD;..\..\armcmx\tools\Adafruit_GFX</IncludePath>
             </VariousControls>
@@ -506,7 +506,17 @@
             <File>
               <FileName>armcmx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\armcmx\stm32f30x\armcmx.c</FilePath>
+              <FilePath>..\..\armcmx\armcmx.c</FilePath>
+            </File>
+            <File>
+              <FileName>Stream.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\Stream.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>USARTSerial.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\USARTSerial.cpp</FilePath>
             </File>
           </Files>
         </Group>

@@ -5,6 +5,7 @@
 #include "main.h"
 #include "armcmx.h"
 
+#include "USARTSerial.h"
 #include "TFTLCD.h"
 
 #define	BLACK   0x0000
@@ -31,13 +32,15 @@ unsigned long testCircles(uint8_t radius, uint16_t color);
 unsigned long testTriangles();
 unsigned long testFilledCircles(uint8_t radius, uint16_t color);
 
-  
-TFTLCD tft(PB3, PB4, PB5, PB6, PB7);
+
+USARTSerial Serial(&stdserial, USART3, PC11, PC10);
+
+TFTLCD tft(PB4, PB5, PB6, PB7, PC12);
 
 int main(void)
 {
   armcmx_init();
-
+  GPIOEnable(GPIOD);
   setup();
   
   while (1) {
@@ -47,6 +50,10 @@ int main(void)
 
 void setup(void) {
 
+  Serial.begin(57600);
+  Serial.println("Hello! Hi, hi!\n");
+  Serial.flush();
+  
   tft.reset();
 
 //  uint16_t identifier = tft.readID();

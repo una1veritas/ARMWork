@@ -14,6 +14,7 @@
 
 #include "armcmx.h"
 
+
 enum {
 	USART1Serial = 0,
 	USART2Serial,
@@ -116,6 +117,8 @@ void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx) {
 		txring[UART5Serial] = &usx->txring;
 	} 
 
+  GPIOEnable(PinPort(rx));
+  GPIOEnable(PinPort(tx));
 	GPIOMode(PinPort(rx), PinBit(rx), GPIO_Mode_AF, GPIO_Speed_50MHz,
 						GPIO_OType_PP, GPIO_PuPd_NOPULL);
 	GPIOMode(PinPort(tx), PinBit(tx), GPIO_Mode_AF, GPIO_Speed_50MHz,
