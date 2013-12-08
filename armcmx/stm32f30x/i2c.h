@@ -10,7 +10,7 @@
 
 #include "armcmx.h"
 //#include <stm32f4xx_i2c.h>
-#include <stm32f4xx_i2c.h>
+#include <stm32f30x_i2c.h>
 
 
 #ifdef __cplusplus

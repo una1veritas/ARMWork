@@ -50,12 +50,8 @@ void digitalWrite(GPIOPin portpin, uint8_t bit) {
 	uint8_t mode = (port->MODER) >> (PinSource(portpin) * 2) & 0x03;
 	if (mode == GPIO_Mode_OUT) {
 #endif
-		if (bit) {
-		//? Bit_SET : Bit_RESET ));
-			GPIO_SetBits(port, PinBit(portpin));
-		} else {
-			GPIO_ResetBits(port, PinBit(portpin));
-		}
+    GPIO_WriteBit(port, PinBit(portpin), ( bit ? Bit_SET : Bit_RESET) );
+    
 #ifdef USE_DIGITALWRITE_PULLUP
 	} else {
 		GPIO_StructInit(&GPIO_InitStructure);
@@ -95,49 +91,19 @@ uint8_t digitalRead(GPIOPin portpin) {
 #define LOW			RESET
 */
 
-void GPIOEnable(GPIO_TypeDef * port) {
-	if ( port == GPIOA ) {
-		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
-	} else if ( port == GPIOB ) {
-		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
-	} else if ( port == GPIOC ) {
-		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);
-	} else if ( port == GPIOD ) {
-		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOD, ENABLE);
-	} else if ( port == GPIOE ) {
-		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOE, ENABLE);
-	} else if ( port == GPIOF ) {
-		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOF, ENABLE);
-	} else {
-	// else NOT_A_PORT
-		return;
-	}		
+void portEnable(GPIOPin portpins) {
+  RCC_AHBPeriphClockCmd(PortPeriph[portpins>>4 & 0x0f], ENABLE);
 }
 
-void GPIODisable(GPIO_TypeDef * port) {
-	if ( port == GPIOA ) {
-		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, DISABLE);
-	} else if ( port == GPIOB ) {
-		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, DISABLE);
-	} else if ( port == GPIOC ) {
-		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, DISABLE);
-	} else if ( port == GPIOD ) {
-		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOD, DISABLE);
-	} else if ( port == GPIOE ) {
-		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOE, DISABLE);
-	} else if ( port == GPIOF ) {
-		RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOF, DISABLE);
-	} else {
-	// else NOT_A_PORT
-		return;
-	}		
+void portDisable(GPIOPin portpins) {
+  RCC_AHBPeriphClockCmd(PortPeriph[portpins>>4 & 0x0f], DISABLE);
 }
 
-void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
+void portMode(GPIOPin portpins, uint16_t pinbit, GPIOMode_TypeDef mode,
               GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd) {
 		GPIO_InitTypeDef GPIO_InitStructure;
 
-  // assumes port is already waked up.
+  RCC_AHBPeriphClockCmd(PortPeriph[portpins>>4 & 0x0f], ENABLE);
 
 	GPIO_InitStructure.GPIO_Pin = pinbit;
 	GPIO_InitStructure.GPIO_Mode = mode;
@@ -145,22 +111,22 @@ void GPIOMode(GPIO_TypeDef * port, uint16_t pinbit, GPIOMode_TypeDef mode,
 	GPIO_InitStructure.GPIO_PuPd = pupd;
 	GPIO_InitStructure.GPIO_Speed = clk;
 	//
-	GPIO_Init(port, &GPIO_InitStructure);
+	GPIO_Init(PinPort(portpins), &GPIO_InitStructure);
 }
 
-uint16_t GPIORead(GPIO_TypeDef * port) {
-	return GPIO_ReadInputData(port);
+uint16_t portRead(GPIOPin portpins) {
+	return GPIO_ReadInputData(PinPort(portpins));
 }
 
-void GPIOWrite(GPIO_TypeDef * port, uint16_t bits) {
-	GPIO_Write(port, bits);
+void portWrite(GPIOPin portpins, uint16_t bits) {
+	GPIO_Write(PinPort(portpins), bits);
 }
 
-void GPIOAltFunc(GPIO_TypeDef * port, uint16_t pinbits, uint8_t pinaf) {
+void pinAltFunc(GPIOPin portpins, uint16_t pinbits, uint8_t pinaf) {
 	int i;
 	for(i = 0; (pinbits>>i) != 0 ; i++) {
 		if ( pinbits>>i & 1)
-			GPIO_PinAFConfig(port, PinSource(i), pinaf);
+			GPIO_PinAFConfig(PinPort(portpins), PinSource(i), pinaf);
 	}
 }
 /*

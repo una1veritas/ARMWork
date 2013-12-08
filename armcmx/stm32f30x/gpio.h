@@ -72,6 +72,7 @@ typedef enum _GPIOPin_Def {
 	PA13 = (PortA <<4) | ((uint8_t)13),
 	PA14 = (PortA <<4) | ((uint8_t)14),
 	PA15 = (PortA <<4) | ((uint8_t) 15),
+	PA_ALL = (PortA <<4) | ((uint8_t) 0x0f),
 
 	PB0 = (PortB <<4) | ((uint8_t)0),
 	PB1 = (PortB <<4) | ((uint8_t)1),
@@ -89,6 +90,7 @@ typedef enum _GPIOPin_Def {
 	PB13 = (PortB <<4) | ((uint8_t)13),
 	PB14 = (PortB <<4) | ((uint8_t)14),
 	PB15 = (PortB <<4) | ((uint8_t)15),
+	PB_ALL = (PortB <<4) | ((uint8_t) 0x0f),
 
 	PC0 = (PortC <<4) | ((uint8_t)0),
 	PC1 = (PortC <<4) | ((uint8_t)1),
@@ -106,6 +108,7 @@ typedef enum _GPIOPin_Def {
 	PC13 = (PortC <<4) | ((uint8_t)13),
 	PC14 = (PortC <<4) | ((uint8_t)14),
 	PC15 = (PortC <<4) | ((uint8_t)15),
+	PC_ALL = (PortC <<4) | ((uint8_t) 0x0f),
 
 	PD0 = (PortD <<4) | ((uint8_t)0),
 	PD1 = (PortD <<4) | ((uint8_t)1),
@@ -123,6 +126,7 @@ typedef enum _GPIOPin_Def {
 	PD13 = (PortD <<4) | ((uint8_t)13),
 	PD14 = (PortD <<4) | ((uint8_t)14),
 	PD15 = (PortD <<4) | ((uint8_t)15),
+	PD_ALL = (PortD <<4) | ((uint8_t) 0x0f),
 
 	PE0 = (PortE <<4) | ((uint8_t)0),
 	PE1 = (PortE <<4) | ((uint8_t)1),
@@ -140,8 +144,10 @@ typedef enum _GPIOPin_Def {
 	PE13 = (PortE <<4) | ((uint8_t)13),
 	PE14 = (PortE <<4) | ((uint8_t)14),
 	PE15 = (PortE <<4) | ((uint8_t)15),
+	PE_ALL = (PortE <<4) | ((uint8_t) 0x0f),
 
 	PF0 = (PortF <<4) | ((uint8_t)0),
+	PF_ALL = (PortF <<4) | ((uint8_t) 0x0f),
 
 	PIN_NOT_DEFINED = (uint8_t)0xff
 } GPIOPin_Def;
@@ -158,15 +164,15 @@ uint16_t PinBit(GPIOPin portpin);
 uint8_t PinSource(GPIOPin portpin);
 */
 
-void GPIOEnable(GPIO_TypeDef * port);
-void GPIODisable(GPIO_TypeDef * port);
+void portEnable(GPIOPin portpins);
+void portDisable(GPIOPin portpins);
 
-uint16_t GPIORead(GPIO_TypeDef * port);
-void GPIOWrite(GPIO_TypeDef * port, uint16_t bits);
+uint16_t portRead(GPIOPin portpins);
+void portWrite(GPIOPin portpins, uint16_t bits);
 
-void GPIOMode(GPIO_TypeDef * port, uint16_t pinbits, GPIOMode_TypeDef mode,
+void portMode(GPIOPin portpins, uint16_t pinbits, GPIOMode_TypeDef mode,
               GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd);
-void GPIOAltFunc(GPIO_TypeDef * port, uint16_t pinbits, uint8_t GPIOType_AF);
+void pinAltFunc(GPIOPin portpins, uint16_t pinbits, uint8_t GPIOType_AF);
 //void digitalToggle(GPIOPin);
 
 #ifdef __cplusplus

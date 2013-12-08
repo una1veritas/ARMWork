@@ -6,101 +6,54 @@
  */
 
 #include <string.h>
-
+//stm32f30x
+#include "stm32f37x_i2c_cpal.h"
 #include "i2c.h"
 
 // for IRQ Handler
 I2CBuffer * I2CBuf[3];
 
-void i2c_init(i2c * i2cptr, I2C_TypeDef * I2Cx, GPIOPin scl, GPIOPin sda) {
+void i2c_config(i2c * i2cptr, I2C_TypeDef * I2Cx, GPIOPin scl, GPIOPin sda) {
+
 	if ( I2Cx == I2C2 ) {
 		i2cptr->I2Cx = I2C2;
 		i2cptr->scl = scl;
 		i2cptr->sda = sda;
 		I2CBuf[1] = & i2cptr->I2CBuf;
-	} else if ( I2Cx == I2C3 ) {
-		i2cptr->I2Cx = I2C3;
-		i2cptr->scl = scl;
-		i2cptr->sda = sda;
-		I2CBuf[2] = & i2cptr->I2CBuf;
 	} else { // default 
 		i2cptr->I2Cx = I2C1;
 		i2cptr->scl = scl;
 		i2cptr->sda = sda;
 		I2CBuf[0] = & i2cptr->I2CBuf;
 	}
+  
+    LM75_StructInit ();
 }
+
 
 boolean i2c_begin(i2c * wire, uint32_t clk) {
 	I2C_InitTypeDef I2C_InitStructure;
-	NVIC_InitTypeDef NVIC_InitStructure; 
+
 	uint8_t pinaf;// = GPIO_AF_I2C1;
 	uint32_t periph; // = RCC_APB1Periph_I2C1;
 	IRQn_Type irqn_ev, irqn_er;
 	
 	if ( wire->I2Cx == I2C2 ) {
-			pinaf = GPIO_AF_I2C2;
+			pinaf = GPIO_AF_4;
 			periph = RCC_APB1Periph_I2C2;
 		irqn_ev = I2C2_EV_IRQn;
 		irqn_er = I2C2_ER_IRQn;
-	} else if ( wire->I2Cx == I2C3 ) {
-			pinaf = GPIO_AF_I2C3;
-			periph = RCC_APB1Periph_I2C3;
-		irqn_ev = I2C3_EV_IRQn;
-		irqn_er = I2C3_ER_IRQn;
-	} else { // default 
-			pinaf = GPIO_AF_I2C1;
+  } else { // default 
+			pinaf = GPIO_AF_4;
 			periph = RCC_APB1Periph_I2C1;
 		irqn_ev = I2C1_EV_IRQn;
 		irqn_er = I2C1_ER_IRQn;
 	}
 
-	/* I2C Periph clock enable */
-	RCC_APB1PeriphClockCmd(periph, ENABLE); //  RCC_APB1PeriphClockCmd(I2C1_RCC, ENABLE);
-	/* GPIO Periph clock enable */
-	//RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE); // PB5 (SMBA), PB6 (SCL), PB9 (SDA)  // RCC_APB2PeriphClockCmd(I2C1_GPIO_RCC, ENABLE);
-	GPIOMode(PinPort(wire->scl), PinBit(wire->scl), GPIO_Mode_AF, GPIO_Speed_50MHz, GPIO_OType_OD, GPIO_PuPd_UP);
-	GPIOMode(PinPort(wire->sda), PinBit(wire->sda), GPIO_Mode_AF, GPIO_Speed_50MHz, GPIO_OType_OD, GPIO_PuPd_UP);
 
-	/* Configure I2C pins: SCL and SDA */
-	GPIO_PinAFConfig(PinPort(wire->scl), PinSource(wire->scl), pinaf); //GPIO_AF_I2C1 );
-	GPIO_PinAFConfig(PinPort(wire->sda), PinSource(wire->sda), pinaf); //GPIO_AF_I2C1 );
-
-	switch (clk) {
-	case 100000:
-	case 400000:
-		break;
-	default:
-		clk = 100000;
-		break;
-	}
-	/* I2C configuration */
-	I2C_InitStructure.I2C_Mode = I2C_Mode_I2C;
-	I2C_InitStructure.I2C_DutyCycle = I2C_DutyCycle_2;
-	I2C_InitStructure.I2C_Ack = I2C_Ack_Enable;
-	I2C_InitStructure.I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit;
-	I2C_InitStructure.I2C_ClockSpeed = clk;
-
-	/* Apply I2C configuration after enabling it */
-	I2C_Init(wire->I2Cx, &I2C_InitStructure);
-	
-	NVIC_InitStructure.NVIC_IRQChannel = irqn_ev;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; // this sets the priority group of the interrupts
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0; // this sets the subpriority inside the group
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;	// the interrupts are globally enabled
-	NVIC_Init(&NVIC_InitStructure);	// the properties are passed to the NVIC_Init function which takes care of the low level stuff
-	NVIC_Init(&NVIC_InitStructure); 
-	NVIC_InitStructure.NVIC_IRQChannel = irqn_er; 
-	NVIC_Init(&NVIC_InitStructure); 
-	//
-	/* I2C Peripheral Enable */
-	I2C_Cmd(wire->I2Cx, ENABLE);
-	
-	wire->I2CBuf.flagstatus = 0;
-	wire->I2CBuf.mode = I2C_MODE_IDLE;
-	wire->irqmode = false;
-//	wirebuf->waitfinish = true;
-	I2C_ITConfig(wire->I2Cx, I2C_IT_EVT | I2C_IT_ERR | I2C_IT_BUF, DISABLE );
+    /* Initialize CPAL peripheral */
+  CPAL_I2C_Init(&LM75_DevStructure);
+  
 	return true;
 }
 

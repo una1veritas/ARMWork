@@ -39,12 +39,12 @@ extern usart stdserial;
 #define STDUSART 	USART3
 #define STDRX 		PC11
 #define STDTX 		PC10
-#warning "using STDSERIAL USART3 for STM32F3 Discovery"
+//#warning "using STDSERIAL USART3 for STM32F3 Discovery"
 #elif (STDSERIAL == 1)
 #define STDUSART 	USART1
 #define STDRX 		PC5
 #define STDTX 		PC4
-#warning "using STDSERIAL USART1"
+//#warning "using STDSERIAL USART1"
 #endif
 #endif
 

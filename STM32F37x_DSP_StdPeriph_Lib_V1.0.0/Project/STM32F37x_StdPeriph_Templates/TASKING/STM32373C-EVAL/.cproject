@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?>
+
+<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="com.tasking.config.arm.abs.debug.1585263443">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.tasking.config.arm.abs.debug.1585263443" moduleId="org.eclipse.cdt.core.settings" name="Debug">
+				<externalSettings/>
+				<extensions>
+					<extension id="com.tasking.managedbuilder.TASKING_ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="com.tasking.managedbuilder.TskRegexErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactExtension="abs" artifactName="STM32373C-EVAL" buildArtefactType="com.tasking.arm.buildArtefactType.elf" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=com.tasking.arm.buildArtefactType.elf" cleanCommand="&quot;${PRODDIR}/bin/rm&quot; -rf" description="" id="com.tasking.config.arm.abs.debug.1585263443" name="Debug" parent="com.tasking.config.arm.abs.debug">
+					<folderInfo id="com.tasking.config.arm.abs.debug.1585263443." name="/" resourcePath="">
+						<toolChain id="com.tasking.arm.abs.debug.1204838435" name="TASKING VX-toolset for ARM" superClass="com.tasking.arm.abs.debug">
+							<option id="com.tasking.arm.pluginVersion.1594082914" name="Plugin version" superClass="com.tasking.arm.pluginVersion" value="1.86.0.0" valueType="string"/>
+							<option id="com.tasking.arm.prodDir.924968085" name="Product directory:" superClass="com.tasking.arm.prodDir" value="${eclipse_home}/.." valueType="string"/>
+							<option id="com.tasking.arm.cpu.938916442" name="Processor:" superClass="com.tasking.arm.cpu" value="stm32f373vc" valueType="string"/>
+							<targetPlatform archList="all" binaryParser="com.tasking.managedbuilder.TASKING_ELF" id="com.tasking.arm.platform.abs.debug.1896385303" name="Debug" osList="" superClass="com.tasking.arm.platform.abs.debug"/>
+							<builder buildPath="${workspace_loc:/STM320518-EVAL/Debug}" id="com.tasking.arm.builder.abs.debug.500904762" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="TASKING ARM Makefile generator" parallelBuildOn="true" parallelizationNumber="-1" superClass="com.tasking.arm.builder.abs.debug"/>
+							<tool id="com.tasking.arm.cc.abs.debug.336902313" name="C/C++ Compiler" superClass="com.tasking.arm.cc.abs.debug">
+								<option id="com.tasking.arm.cc.pr36858.1176340375" name="workaround for PR36858" superClass="com.tasking.arm.cc.pr36858" value="true" valueType="string"/>
+								<option id="com.tasking.arm.cc.optimize.7082591" name="Optimization level:" superClass="com.tasking.arm.cc.optimize" value="com.tasking.arm.cc.optimize.3" valueType="enumerated"/>
+								<option id="com.tasking.arm.cc.includePaths.1168244891" name="Include paths" superClass="com.tasking.arm.cc.includePaths" valueType="includePath">
+									<listOptionValue builtIn="false" value="..\..\.."/>
+									<listOptionValue builtIn="false" value="..\..\..\..\..\Libraries\CMSIS\Include"/>
+									<listOptionValue builtIn="false" value="..\..\..\..\..\Libraries\CMSIS\Device\ST\STM32F37x\Include"/>
+									<listOptionValue builtIn="false" value="..\..\..\..\..\Libraries\STM32F37x_I2C_CPAL_Driver\inc"/>
+									<listOptionValue builtIn="false" value="..\..\..\..\..\Libraries\STM32F37x_StdPeriph_Driver\inc"/>
+									<listOptionValue builtIn="false" value="..\..\..\..\..\Utilities\STM32_EVAL"/>
+									<listOptionValue builtIn="false" value="..\..\..\..\..\Utilities\STM32_EVAL\Common"/>
+									<listOptionValue builtIn="false" value="..\..\..\..\..\Utilities\STM32_EVAL\STM32373C_EVAL"/>
+								</option>
+								<option id="com.tasking.arm.cc.definedSymbols.1082198059" name="Defined symbols" superClass="com.tasking.arm.cc.definedSymbols" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>
+									<listOptionValue builtIn="false" value="USE_DEFAULT_TIMEOUT_CALLBACK"/>
+									<listOptionValue builtIn="false" value="STM32F37X"/>
+									<listOptionValue builtIn="false" value="USE_STM32373C_EVAL"/>
+								</option>
+								<option id="com.tasking.arm.cc.globalTypeChecking.256529028" name="Perform global type checking on C code" superClass="com.tasking.arm.cc.globalTypeChecking" value="false" valueType="boolean"/>
+								<option id="com.tasking.arm.cc.cert.checking.236574304" name="CERT C secure code checking:" superClass="com.tasking.arm.cc.cert.checking" value="com.tasking.arm.cc.cert.checking.disabled" valueType="enumerated"/>
+								<option id="com.tasking.arm.cc.nowarnings.526219837" name="Suppress all warnings" superClass="com.tasking.arm.cc.nowarnings" value="false" valueType="boolean"/>
+								<option id="com.tasking.arm.cc.optimize.controlFlowSimplification.3366652" name="Control flow simplification" superClass="com.tasking.arm.cc.optimize.controlFlowSimplification" value="false" valueType="boolean"/>
+								<option id="com.tasking.arm.cc.nowarning.322820925" name="Suppress C compiler warnings" superClass="com.tasking.arm.cc.nowarning" valueType="stringList">
+									<listOptionValue builtIn="false" value="588"/>
+									<listOptionValue builtIn="false" value="529"/>
+									<listOptionValue builtIn="false" value="570"/>
+									<listOptionValue builtIn="false" value="557"/>
+								</option>
+								<option id="com.tasking.arm.cc.cmsisIncludePaths.1518590270" name="Add CMSIS include paths" superClass="com.tasking.arm.cc.cmsisIncludePaths" value="false" valueType="boolean"/>
+								<inputType id="com.tasking.arm.cppInputType.645387117" name="C++" superClass="com.tasking.arm.cppInputType"/>
+								<inputType id="com.tasking.arm.cpp.cInputType.1792972020" name="C" superClass="com.tasking.arm.cpp.cInputType"/>
+								<inputType id="com.tasking.arm.cc.msInputType.1281848353" name="MS" superClass="com.tasking.arm.cc.msInputType"/>
+							</tool>
+							<tool id="com.tasking.arm.as.abs.debug.133028972" name="Assembler" superClass="com.tasking.arm.as.abs.debug">
+								<inputType id="com.tasking.arm.asmInputType.1796053507" name="ASM" superClass="com.tasking.arm.asmInputType"/>
+							</tool>
+							<tool id="com.tasking.arm.lk.abs.debug.597545172" name="Linker" superClass="com.tasking.arm.lk.abs.debug">
+								<option id="com.tasking.arm.lk.lslFile.704180096" name="Linker script file:" superClass="com.tasking.arm.lk.lslFile" value="../TASKING/stm32f37x.lsl" valueType="string"/>
+								<option id="com.tasking.arm.lk.misc.longBranchVeneers.1369831959" name="Generate long-branch veneers" superClass="com.tasking.arm.lk.misc.longBranchVeneers" value="true" valueType="boolean"/>
+								<inputType id="com.tasking.arm.lkObjInputType.2110348335" name="OBJ" superClass="com.tasking.arm.lkObjInputType"/>
+								<inputType id="com.tasking.arm.lkLibInputType.1701424942" name="LIB" superClass="com.tasking.arm.lkLibInputType"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="Startup/ST/STM32L1xx/system_stm32l1xx.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+			<storageModule moduleId="com.tasking.toolInfo">
+				<toolInfo>TASKING VX-toolset for ARM Cortex: C compiler (TRIAL VERSION v4.3rb Build 680</toolInfo>
+				<toolInfo>TASKING VX-toolset for ARM Cortex: assembler v4.3rb Build 148</toolInfo>
+				<toolInfo>TASKING VX-toolset for ARM Cortex: control program v4.3rb Build 120</toolInfo>
+				<toolInfo>TASKING VX-toolset for ARM Cortex: object linker (TRIAL VERS v4.3rb Build 142</toolInfo>
+				<toolInfo>TASKING program builder v4.3rb Build 067</toolInfo>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+			<storageModule addStartupFiles="false" moduleId="com.tasking.processor"/>
+		</cconfiguration>
+		<cconfiguration id="com.tasking.config.arm.abs.release.1688983012">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.tasking.config.arm.abs.release.1688983012" moduleId="org.eclipse.cdt.core.settings" name="Release">
+				<externalSettings/>
+				<extensions>
+					<extension id="com.tasking.managedbuilder.TASKING_ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="com.tasking.managedbuilder.TskRegexErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactExtension="abs" artifactName="STM320518-EVAL" buildArtefactType="com.tasking.arm.buildArtefactType.elf" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=com.tasking.arm.buildArtefactType.elf" cleanCommand="&quot;${PRODDIR}/bin/rm&quot; -rf" description="" id="com.tasking.config.arm.abs.release.1688983012" name="Release" parent="com.tasking.config.arm.abs.release">
+					<folderInfo id="com.tasking.config.arm.abs.release.1688983012." name="/" resourcePath="">
+						<toolChain id="com.tasking.arm.abs.release.15817535" name="TASKING VX-toolset for ARM" superClass="com.tasking.arm.abs.release">
+							<option id="com.tasking.arm.pluginVersion.614444870" name="Plugin version" superClass="com.tasking.arm.pluginVersion" value="1.86.0.0" valueType="string"/>
+							<option id="com.tasking.arm.prodDir.282327544" name="Product directory:" superClass="com.tasking.arm.prodDir" value="${eclipse_home}/.." valueType="string"/>
+							<option id="com.tasking.arm.cpu.1009682772" name="Processor:" superClass="com.tasking.arm.cpu" value="stm32l152zd" valueType="string"/>
+							<targetPlatform archList="all" binaryParser="com.tasking.managedbuilder.TASKING_ELF" id="com.tasking.arm.platform.abs.release.760927223" name="Release" osList="" superClass="com.tasking.arm.platform.abs.release"/>
+							<builder buildPath="${workspace_loc:/STM320518-EVAL/Release}" id="com.tasking.arm.builder.abs.debug.100106550" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="TASKING ARM Makefile generator" parallelBuildOn="true" parallelizationNumber="-1" superClass="com.tasking.arm.builder.abs.debug"/>
+							<tool id="com.tasking.arm.cc.abs.release.574751451" name="C/C++ Compiler" superClass="com.tasking.arm.cc.abs.release">
+								<option id="com.tasking.arm.cc.pr36858.1352297960" name="workaround for PR36858" superClass="com.tasking.arm.cc.pr36858" value="true" valueType="string"/>
+								<inputType id="com.tasking.arm.cppInputType.633526104" name="C++" superClass="com.tasking.arm.cppInputType"/>
+								<inputType id="com.tasking.arm.cpp.cInputType.1086431123" name="C" superClass="com.tasking.arm.cpp.cInputType"/>
+								<inputType id="com.tasking.arm.cc.msInputType.1578125815" name="MS" superClass="com.tasking.arm.cc.msInputType"/>
+							</tool>
+							<tool id="com.tasking.arm.as.abs.release.1261424949" name="Assembler" superClass="com.tasking.arm.as.abs.release">
+								<inputType id="com.tasking.arm.asmInputType.659827573" name="ASM" superClass="com.tasking.arm.asmInputType"/>
+							</tool>
+							<tool id="com.tasking.arm.lk.abs.release.1443628435" name="Linker" superClass="com.tasking.arm.lk.abs.release">
+								<inputType id="com.tasking.arm.lkObjInputType.885347580" name="OBJ" superClass="com.tasking.arm.lkObjInputType"/>
+								<inputType id="com.tasking.arm.lkLibInputType.1726037036" name="LIB" superClass="com.tasking.arm.lkLibInputType"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="Startup/ST/STM32F0xx/system_stm32f0xx.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="STM320518-EVAL.com.tasking.arm.target.abs.1029710514" name="TASKING ARM Application" projectType="com.tasking.arm.target.abs"/>
+	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="com.tasking.config.arm.abs.debug.1585263443;com.tasking.config.arm.abs.debug.1585263443.">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.tasking.arm.TskARMScannerInfo"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.tasking.config.arm.abs.release.1688983012;com.tasking.config.arm.abs.release.1688983012.">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.tasking.arm.TskARMScannerInfo"/>
+		</scannerConfigBuildInfo>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.language.mapping">
+		<project-mappings>
+			<content-type-mapping configuration="" content-type="org.eclipse.cdt.core.cHeader" language="com.tasking.arm.clanguage"/>
+			<content-type-mapping configuration="" content-type="org.eclipse.cdt.core.cSource" language="com.tasking.arm.clanguage"/>
+			<content-type-mapping configuration="" content-type="org.eclipse.cdt.core.cxxHeader" language="com.tasking.arm.cpplanguage"/>
+			<content-type-mapping configuration="" content-type="org.eclipse.cdt.core.cxxSource" language="com.tasking.arm.cpplanguage"/>
+		</project-mappings>
+	</storageModule>
+	<storageModule moduleId="refreshScope" versionNumber="1">
+		<resource resourceType="PROJECT" workspacePath="/STM320518-EVAL"/>
+	</storageModule>
+</cproject>
