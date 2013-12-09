@@ -7,10 +7,8 @@
 
 #include "i2c_cpal.h"
 
-#define TEMPERATURE_THYS     31
-#define TEMPERATURE_TOS      32
 #define LM75_I2C                         I2C1
-#define LM75_I2C_CLK                     RCC_APB1Periph_I2C1
+//#define LM75_I2C_CLK                     RCC_APB1Periph_I2C1
 
 static void NVIC_Config(void);
 
@@ -30,9 +28,9 @@ int main(void)
   delay(1000);
   
     /* Initialize the Temperature Sensor */
-  LM75_Config();
+  i2c_begin();
   
-  if (LM75_GetStatus() != SUCCESS) {
+  if (i2c_GetStatus() != SUCCESS) {
     usart_print(&stdserial, "Sensor get status failed.\n");
     while (1) {}
   } else {
@@ -42,11 +40,13 @@ int main(void)
     - Thermostat mode Interrupt
     - Fault tolerance: 00
     */
-    LM75_WriteConfReg(0x02);
+		tmpstr[0] = 0x04;
+		tmpstr[1] = 0x60;
+    i2c_transmit(0x98, (uint8_t *) tmpstr, 2);
     
     /* Configure the THYS and TOS in order to use the SMbus alert interrupt */
-    LM75_WriteReg(LM75_REG_THYS, TEMPERATURE_THYS << 8);  /*31у*/
-    LM75_WriteReg(LM75_REG_TOS, TEMPERATURE_TOS << 8);   /*32у*/
+//    LM75_WriteReg(LM75_REG_THYS, TEMPERATURE_THYS << 8);  /*31у*/
+//    LM75_WriteReg(LM75_REG_TOS, TEMPERATURE_TOS << 8);   /*32у*/
     
     /* Enables the I2C SMBus Alert feature */
    // I2C_SMBusAlertCmd(LM75_I2C, ENABLE);    
@@ -59,17 +59,14 @@ int main(void)
   }
   while (1)
   {
-     if (LM75_GetStatus() == SUCCESS)
+     if (i2c_GetStatus() == SUCCESS)
        {
          /* Get temperature value */     
-         tempvalue = LM75_ReadTemp()<<7;
-         temperaturecelsius = tempvalue/256.0f;
+         tempvalue = (int16_t) i2c_ReadTemp() & 0xfffc;
+         temperaturecelsius = tempvalue/128.0f;
          
-         /* Display temperature value in celsius */
-         sprintf((char*)tmpstr, "       %2.1f C       ", temperaturecelsius);
-         usart_print(&stdserial, tmpstr);
-         /* Display temperature value in fahrenheit */
-         sprintf((char*)tmpstr, "       %2.1f F       ", 1.8f * temperaturecelsius + 32);
+         /* Display temperature value in celsius & fahrenheit  */
+         sprintf((char*)tmpstr, "%2.2f C, %2.2f F\n", temperaturecelsius, 1.8f * temperaturecelsius + 32);
          usart_print(&stdserial, tmpstr);
        }
      delay(5000);

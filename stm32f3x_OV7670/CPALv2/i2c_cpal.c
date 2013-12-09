@@ -53,35 +53,38 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
-#define LM75_SD_SET      0x01 /*!< Set SD bit in the configuration register */
-#define LM75_SD_RESET    0xFE /*!< Reset SD bit in the configuration register */
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-  
-CPAL_TransferTypeDef  Wire_RXTransfer = { 
-                        /* Initialize TX Transfer structure */
-                        pNULL,
-                        0,
-                        0,
-                        0};
 
-CPAL_TransferTypeDef  Wire_TXTransfer = {
+#ifdef ORIGINAL
+
+CPAL_TransferTypeDef  I2C_CPAL_RXTransfer = { 
                         /* Initialize RX Transfer structure */
                         pNULL,
                         0,
                         0,
                         0};
 
-uint8_t LM75_Buffer[2] = {0x00,0x00}; 
+CPAL_TransferTypeDef  I2C_CPAL_TXTransfer = {
+                        /* Initialize TX Transfer structure */
+                        pNULL,
+                        0,
+                        0,
+                        0};
+
+uint8_t I2C_CPAL_Buffer[I2C_BUFFER_SIZE] = { 0x00 }; 
 
 //extern CPAL_InitTypeDef Wire_Structure;
 
+__IO uint32_t  I2C_CPAL_Timeout = I2C_CPAL_TIMEOUT; 
 
-__IO uint32_t  LM75_Timeout = LM75_TIMEOUT; 
+#endif
+
+i2c i2c1;
 
 /* Private function prototypes -----------------------------------------------*/
-static void LM75_StructInit(void);
+static void I2C_CPAL_StructInit(void);
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -90,10 +93,21 @@ static void LM75_StructInit(void);
   * @param  None
   * @retval None
   */
-void LM75_Config(void)
+void i2c_begin(void)
 {
-  LM75_StructInit ();
-  LM75_Init();
+	i2c1.RXTransfer.pbBuffer = pNULL;
+	i2c1.RXTransfer.wAddr1 = 0;
+	i2c1.RXTransfer.wAddr2 = 0;
+	i2c1.RXTransfer.wNumData = 0;
+	i2c1.TXTransfer.pbBuffer = pNULL;
+	i2c1.TXTransfer.wAddr1 = 0;
+	i2c1.TXTransfer.wAddr2 = 0;
+	i2c1.TXTransfer.wNumData = 0;
+	i2c1.Timeout = I2C_CPAL_TIMEOUT;
+	i2c1.pDevStructure = & I2C1_DevStructure;
+	
+  I2C_CPAL_StructInit ();
+  i2c_init();
 }
 
 /**
@@ -101,10 +115,10 @@ void LM75_Config(void)
   * @param  None
   * @retval None
   */
-void LM75_DeInit(void)
+void i2c_deinit(void)
 {
     /* Initialize CPAL peripheral */
-  CPAL_I2C_DeInit(&Wire_DevStructure);
+    CPAL_I2C_DeInit(i2c1.pDevStructure); //CPAL_I2C_DeInit(&I2C_CPAL_DevStructure);
 }
 
 /**
@@ -112,10 +126,10 @@ void LM75_DeInit(void)
   * @param  None
   * @retval None
   */
-void LM75_Init(void)
+void i2c_init(void)
 {
   /* Initialize CPAL peripheral */
-  CPAL_I2C_Init(&Wire_DevStructure);
+  CPAL_I2C_Init(i2c1.pDevStructure); //CPAL_I2C_Init(&I2C_CPAL_DevStructure);
 }
 
 /**
@@ -123,30 +137,30 @@ void LM75_Init(void)
   * @param  None
   * @retval None
   */
-static void LM75_StructInit(void)
+static void I2C_CPAL_StructInit(void)
 {
   /* Set CPAL structure parameters to their default values */  
-  CPAL_I2C_StructInit(&Wire_DevStructure);
+  CPAL_I2C_StructInit(i2c1.pDevStructure); //CPAL_I2C_StructInit(&I2C_CPAL_DevStructure);
   
-  Wire_DevStructure.pCPAL_I2C_Struct->I2C_Timing = Wire_I2C_TIMING;   /* Set I2C clock speed */
+  i2c1.pDevStructure->pCPAL_I2C_Struct->I2C_Timing = I2C_CPAL_TIMING;   /* Set I2C clock speed */
   			 
-#ifdef LM75_IT
-  Wire_DevStructure.CPAL_ProgModel = CPAL_PROGMODEL_INTERRUPT; /* Select Interrupt programming model */
+#ifdef I2C_IT
+  i2c1.pDevStructure->CPAL_ProgModel = CPAL_PROGMODEL_INTERRUPT; /* Select Interrupt programming model */
 #else
-  Wire_DevStructure.CPAL_ProgModel = CPAL_PROGMODEL_DMA;   /* Select DMA programming model */
+  i2c1.pDevStructure->CPAL_ProgModel = CPAL_PROGMODEL_DMA;   /* Select DMA programming model */
 #endif /* LM75_IT */    
-  Wire_DevStructure.wCPAL_Options  = 0;  /* Disable all options */
+  i2c1.pDevStructure->wCPAL_Options  = 0;  /* Disable all options */
   /* point to CPAL_TransferTypeDef structure */
-  Wire_DevStructure.pCPAL_TransferTx = &Wire_TXTransfer;
-  Wire_DevStructure.pCPAL_TransferRx = &Wire_RXTransfer;
+  i2c1.pDevStructure->pCPAL_TransferTx = &i2c1.TXTransfer;
+  i2c1.pDevStructure->pCPAL_TransferRx = &i2c1.RXTransfer;
 }
 
-static uint32_t LM75_Status (void)
+static uint32_t I2C_CPAL_Status (void)
 {
-  Wire_DevStructure.pCPAL_TransferTx = &Wire_TXTransfer;     
-  Wire_DevStructure.pCPAL_TransferTx->wAddr1 = (uint32_t)LM75_ADDR;
+  i2c1.pDevStructure->pCPAL_TransferTx = &i2c1.TXTransfer;     
+  i2c1.pDevStructure->pCPAL_TransferTx->wAddr1 = (uint32_t)LM75_ADDR;
   
-  return CPAL_I2C_IsDeviceReady(&Wire_DevStructure);
+  return CPAL_I2C_IsDeviceReady(i2c1.pDevStructure);
 }
 
 /**
@@ -154,16 +168,16 @@ static uint32_t LM75_Status (void)
   * @param  None
   * @retval ErrorStatus: LM75 Status (ERROR or SUCCESS).
   */
-ErrorStatus LM75_GetStatus(void)
+ErrorStatus i2c_GetStatus(void)
 {  
   /* Test if LM75 is ready */
-  while ((LM75_Status() == CPAL_FAIL) && LM75_Timeout)  
+  while ((I2C_CPAL_Status() == CPAL_FAIL) && i2c1.Timeout)  
   {
-    LM75_Timeout--;
+    i2c1.Timeout--;
   }
   
   /* If LM75 is not responding return ERROR */
-  if (LM75_Timeout == 0)
+  if (i2c1.Timeout == 0)
   {
     return ERROR;
   }
@@ -184,31 +198,31 @@ uint16_t LM75_ReadReg(uint8_t RegName)
 {   
   uint16_t tmp = 0;
   
-  LM75_Buffer[0] = 0;
-  LM75_Buffer[1] = 0;
+  i2c1.Buffer[0] = 0;
+  i2c1.Buffer[1] = 0;
   
   /* Disable all options */
-  Wire_DevStructure.wCPAL_Options = 0;
+  i2c1.pDevStructure->wCPAL_Options = 0;
 
   /* point to CPAL_TransferTypeDef structure */
-  Wire_DevStructure.pCPAL_TransferRx = &Wire_RXTransfer;
+  i2c1.pDevStructure->pCPAL_TransferRx = &i2c1.RXTransfer;
   
   /* Configure transfer parameters */  
-  Wire_DevStructure.pCPAL_TransferRx->wNumData = 2;
-  Wire_DevStructure.pCPAL_TransferRx->pbBuffer = LM75_Buffer ;
-  Wire_DevStructure.pCPAL_TransferRx->wAddr1   = (uint32_t)LM75_ADDR;
-  Wire_DevStructure.pCPAL_TransferRx->wAddr2   = (uint32_t)RegName;
+  i2c1.pDevStructure->pCPAL_TransferRx->wNumData = 2;
+  i2c1.pDevStructure->pCPAL_TransferRx->pbBuffer = i2c1.Buffer ;
+  i2c1.pDevStructure->pCPAL_TransferRx->wAddr1   = (uint32_t)LM75_ADDR;
+  i2c1.pDevStructure->pCPAL_TransferRx->wAddr2   = (uint32_t)RegName;
   
   /* Read Operation */
-  if(CPAL_I2C_Read(&Wire_DevStructure) == CPAL_PASS)
+  if(CPAL_I2C_Read(i2c1.pDevStructure) == CPAL_PASS)
   {
-    while ((Wire_DevStructure.CPAL_State != CPAL_STATE_READY) && (Wire_DevStructure.CPAL_State != CPAL_STATE_ERROR) )
+    while ((i2c1.pDevStructure->CPAL_State != CPAL_STATE_READY) && (i2c1.pDevStructure->CPAL_State != CPAL_STATE_ERROR) )
     { }
   }
   
   /* Store LM75_I2C received data */
-  tmp = (uint16_t)(LM75_Buffer[0] << 8);
-  tmp |= LM75_Buffer[1];
+  tmp = (uint16_t)(i2c1.Buffer[0] << 8);
+  tmp |= i2c1.Buffer[1];
   
   /* return a Reg value */
   return (uint16_t)tmp;  
@@ -223,40 +237,40 @@ uint16_t LM75_ReadReg(uint8_t RegName)
   * @param  RegValue: value to be written to LM75 register.  
   * @retval None
   */
-uint8_t LM75_WriteReg(uint8_t RegName, uint16_t RegValue)
+uint8_t i2c_WriteReg(uint8_t RegName, uint16_t RegValue)
 {   
-  LM75_Buffer[0] = (uint8_t)(RegValue >> 8);
-  LM75_Buffer[1] = (uint8_t)(RegValue);
+  i2c1.Buffer[0] = (uint8_t)(RegValue >> 8);
+  i2c1.Buffer[1] = (uint8_t)(RegValue);
      
   /* Disable all options */
-  Wire_DevStructure.wCPAL_Options = 0;
+  i2c1.pDevStructure->wCPAL_Options = 0;
   
   /* point to CPAL_TransferTypeDef structure */
-  Wire_DevStructure.pCPAL_TransferTx = &Wire_TXTransfer;
+  i2c1.pDevStructure->pCPAL_TransferTx = &i2c1.TXTransfer;
   
   /* Configure transfer parameters */  
-  Wire_DevStructure.pCPAL_TransferTx->wNumData = 2;
-  Wire_DevStructure.pCPAL_TransferTx->pbBuffer = LM75_Buffer ;
-  Wire_DevStructure.pCPAL_TransferTx->wAddr1   = (uint32_t)LM75_ADDR;
-  Wire_DevStructure.pCPAL_TransferTx->wAddr2   = (uint32_t)RegName;
+  i2c1.pDevStructure->pCPAL_TransferTx->wNumData = 2;
+  i2c1.pDevStructure->pCPAL_TransferTx->pbBuffer = i2c1.Buffer ;
+  i2c1.pDevStructure->pCPAL_TransferTx->wAddr1   = (uint32_t)LM75_ADDR;
+  i2c1.pDevStructure->pCPAL_TransferTx->wAddr2   = (uint32_t)RegName;
   
   /* Write Operation */
-  if(CPAL_I2C_Write(&Wire_DevStructure) == CPAL_PASS)
+  if(CPAL_I2C_Write(i2c1.pDevStructure) == CPAL_PASS)
   {
-    while ((Wire_DevStructure.CPAL_State != CPAL_STATE_READY) && (Wire_DevStructure.CPAL_State != CPAL_STATE_ERROR) )
+    while ((i2c1.pDevStructure->CPAL_State != CPAL_STATE_READY) && (i2c1.pDevStructure->CPAL_State != CPAL_STATE_ERROR) )
     { }
     
-    if (Wire_DevStructure.CPAL_State == CPAL_STATE_ERROR)
+    if (i2c1.pDevStructure->CPAL_State == CPAL_STATE_ERROR)
     {
-      return LM75_FAIL;
+      return I2C_CPAL_FAIL;
     }
   }
   else
   {
-    return LM75_FAIL;
+    return I2C_CPAL_FAIL;
   }
   
-  return LM75_OK;
+  return I2C_CPAL_OK;
 }
 
 /**
@@ -264,38 +278,38 @@ uint8_t LM75_WriteReg(uint8_t RegName, uint16_t RegValue)
   * @param  None
   * @retval LM75 measured temperature value.
   */
-uint16_t LM75_ReadTemp(void)
+uint16_t i2c_ReadTemp(void)
 {   
   uint16_t tmp = 0;
   
-  LM75_Buffer[0] = 0;
-  LM75_Buffer[1] = 0;
+  i2c1.Buffer[0] = 0;
+  i2c1.Buffer[1] = 0;
   
   /* Disable all options */
-  Wire_DevStructure.wCPAL_Options = 0;
+  i2c1.pDevStructure->wCPAL_Options = 0;
 
   /* point to CPAL_TransferTypeDef structure */
-  Wire_DevStructure.pCPAL_TransferRx = &Wire_RXTransfer;
+  i2c1.pDevStructure->pCPAL_TransferRx = &i2c1.RXTransfer;
   
   /* Configure transfer parameters */  
-  Wire_DevStructure.pCPAL_TransferRx->wNumData = 2;
-  Wire_DevStructure.pCPAL_TransferRx->pbBuffer = LM75_Buffer ;
-  Wire_DevStructure.pCPAL_TransferRx->wAddr1   = (uint32_t)LM75_ADDR;
-  Wire_DevStructure.pCPAL_TransferRx->wAddr2   = (uint32_t)LM75_REG_TEMP;
+  i2c1.pDevStructure->pCPAL_TransferRx->wNumData = 2;
+  i2c1.pDevStructure->pCPAL_TransferRx->pbBuffer = i2c1.Buffer ;
+  i2c1.pDevStructure->pCPAL_TransferRx->wAddr1   = (uint32_t)LM75_ADDR;
+  i2c1.pDevStructure->pCPAL_TransferRx->wAddr2   = (uint32_t)LM75_REG_TEMP;
   
   /* Read Operation */
-  if(CPAL_I2C_Read(&Wire_DevStructure) == CPAL_PASS)
+  if(CPAL_I2C_Read(i2c1.pDevStructure) == CPAL_PASS)
   {
-    while ((Wire_DevStructure.CPAL_State != CPAL_STATE_READY) && (Wire_DevStructure.CPAL_State != CPAL_STATE_ERROR) )
+    while ((i2c1.pDevStructure->CPAL_State != CPAL_STATE_READY) && (i2c1.pDevStructure->CPAL_State != CPAL_STATE_ERROR) )
     { }
   }
   
   /* Store LM75_I2C received data */
-  tmp = (uint16_t)(LM75_Buffer[0] << 8);
-  tmp |= LM75_Buffer[1];    
+  tmp = (uint16_t)(i2c1.Buffer[0] << 8);
+  tmp |= i2c1.Buffer[1];    
   
   /* Return Temperature value */
-  return (uint16_t)(tmp >> 7);
+  return tmp;
 }
 
 /**
@@ -303,31 +317,31 @@ uint16_t LM75_ReadTemp(void)
   * @param  None
   * @retval LM75 configuration register value.
   */
-uint8_t LM75_ReadConfReg(void)
+uint8_t i2c_ReadConfReg(void)
 {    
-  LM75_Buffer[0] = 0;
+  i2c1.Buffer[0] = 0;
   
   /* Disable all options */
-  Wire_DevStructure.wCPAL_Options = 0;
+  i2c1.pDevStructure->wCPAL_Options = 0;
   
   /* point to CPAL_TransferTypeDef structure */
-  Wire_DevStructure.pCPAL_TransferRx = &Wire_RXTransfer;
+  i2c1.pDevStructure->pCPAL_TransferRx = &i2c1.RXTransfer;
   
   /* Configure transfer parameters */  
-  Wire_DevStructure.pCPAL_TransferRx->wNumData = 1;
-  Wire_DevStructure.pCPAL_TransferRx->pbBuffer = LM75_Buffer ;
-  Wire_DevStructure.pCPAL_TransferRx->wAddr1   = (uint32_t)LM75_ADDR;
-  Wire_DevStructure.pCPAL_TransferRx->wAddr2   = (uint32_t)LM75_REG_CONF;
+  i2c1.pDevStructure->pCPAL_TransferRx->wNumData = 1;
+  i2c1.pDevStructure->pCPAL_TransferRx->pbBuffer = i2c1.Buffer ;
+  i2c1.pDevStructure->pCPAL_TransferRx->wAddr1   = (uint32_t)LM75_ADDR;
+  i2c1.pDevStructure->pCPAL_TransferRx->wAddr2   = (uint32_t)LM75_REG_CONF;
   
   /* Read Operation */
-  if(CPAL_I2C_Read(&Wire_DevStructure) == CPAL_PASS)
+  if(CPAL_I2C_Read(i2c1.pDevStructure) == CPAL_PASS)
   {
-    while ((Wire_DevStructure.CPAL_State != CPAL_STATE_READY) && (Wire_DevStructure.CPAL_State != CPAL_STATE_ERROR) )
+    while ((i2c1.pDevStructure->CPAL_State != CPAL_STATE_READY) && (i2c1.pDevStructure->CPAL_State != CPAL_STATE_ERROR) )
     { }
   }
   
   /* Return Temperature value */
-  return (uint8_t)LM75_Buffer[0];
+  return (uint8_t)i2c1.Buffer[0];
 }
 
 /**
@@ -336,116 +350,41 @@ uint8_t LM75_ReadConfReg(void)
   *         register.
   * @retval None
   */
-uint8_t LM75_WriteConfReg(uint8_t RegValue)
+uint8_t i2c_transmit(uint8_t addr, uint8_t * data, size_t n)
 {   
-  LM75_Buffer[0] = (uint8_t)(RegValue);
+  memcpy(i2c1.Buffer, data+1, n-1);
     
   /* Disable all options */
-  Wire_DevStructure.wCPAL_Options = 0;
+  i2c1.pDevStructure->wCPAL_Options = 0;
   
   /* point to CPAL_TransferTypeDef structure */
-  Wire_DevStructure.pCPAL_TransferTx = &Wire_TXTransfer;
+  i2c1.pDevStructure->pCPAL_TransferTx = &i2c1.TXTransfer;
   
   /* Configure transfer parameters */  
-  Wire_DevStructure.pCPAL_TransferTx->wNumData = 1;
-  Wire_DevStructure.pCPAL_TransferTx->pbBuffer = LM75_Buffer ;
-  Wire_DevStructure.pCPAL_TransferTx->wAddr1   = (uint32_t)LM75_ADDR;
-  Wire_DevStructure.pCPAL_TransferTx->wAddr2   = (uint32_t)LM75_REG_CONF;
+  i2c1.pDevStructure->pCPAL_TransferTx->wNumData = n-1;
+  i2c1.pDevStructure->pCPAL_TransferTx->pbBuffer = i2c1.Buffer ;
+  i2c1.pDevStructure->pCPAL_TransferTx->wAddr1   = (uint32_t) addr;
+  i2c1.pDevStructure->pCPAL_TransferTx->wAddr2   = (uint32_t) data[0];
   
   /* Write Operation */
-  if(CPAL_I2C_Write(&Wire_DevStructure) == CPAL_PASS)
+  if(CPAL_I2C_Write(i2c1.pDevStructure) == CPAL_PASS)
   {
-    while ((Wire_DevStructure.CPAL_State != CPAL_STATE_READY) && (Wire_DevStructure.CPAL_State != CPAL_STATE_ERROR) )
+    while ((i2c1.pDevStructure->CPAL_State != CPAL_STATE_READY) && (i2c1.pDevStructure->CPAL_State != CPAL_STATE_ERROR) )
     { }
     
-    if (Wire_DevStructure.CPAL_State == CPAL_STATE_ERROR)
+    if (i2c1.pDevStructure->CPAL_State == CPAL_STATE_ERROR)
     {
-      return LM75_FAIL;
+      return I2C_CPAL_FAIL;
     }
   }
   else
   {
-    return LM75_FAIL;
+    return I2C_CPAL_FAIL;
   }
   
-  return LM75_OK;
+  return I2C_CPAL_OK;
   
 }
 
-/**
-  * @brief  Enables or disables the LM75.
-  * @param  NewState: specifies the LM75 new status. This parameter can be ENABLE
-  *         or DISABLE.  
-  * @retval None
-  */
-uint8_t LM75_ShutDown(FunctionalState NewState)
-{   
-  __IO uint8_t RegValue = 0;    
-  
-  LM75_Buffer[0] = 0;
-  		  
-  /* Disable all options */
-  Wire_DevStructure.wCPAL_Options = 0;
-
-  /* point to CPAL_TransferTypeDef structure */
-  Wire_DevStructure.pCPAL_TransferRx = &Wire_RXTransfer;
-  
-  /* Configure transfer parameters */  
-  Wire_DevStructure.pCPAL_TransferRx->wNumData = 1;
-  Wire_DevStructure.pCPAL_TransferRx->pbBuffer = LM75_Buffer ;
-  Wire_DevStructure.pCPAL_TransferRx->wAddr1   = (uint32_t)LM75_ADDR;
-  Wire_DevStructure.pCPAL_TransferRx->wAddr2   = (uint32_t)LM75_REG_CONF;
-  
-  /* Read Operation */
-  if(CPAL_I2C_Read(&Wire_DevStructure) == CPAL_PASS)
-  {
-    while ((Wire_DevStructure.CPAL_State != CPAL_STATE_READY) && (Wire_DevStructure.CPAL_State != CPAL_STATE_ERROR) )
-    { }
-  }
-  
-  /* Get received data */
-  RegValue = (uint8_t)LM75_Buffer[0];
-  
-  /*---------------------------- Transmission Phase ---------------------------*/
-  
-  /* Enable or disable SD bit */
-  if (NewState != DISABLE)
-  {
-    /* Enable LM75 */
-    LM75_Buffer[0] = RegValue & LM75_SD_RESET;
-  }
-  else
-  {
-    /* Disable LM75 */
-    LM75_Buffer[0] = RegValue | LM75_SD_SET;
-  }  
-  
-  /* point to CPAL_TransferTypeDef structure */
-  Wire_DevStructure.pCPAL_TransferTx = &Wire_TXTransfer;
-  
-  /* Configure transfer parameters */  
-  Wire_DevStructure.pCPAL_TransferTx->wNumData = 1;
-  Wire_DevStructure.pCPAL_TransferTx->pbBuffer = LM75_Buffer ;
-  Wire_DevStructure.pCPAL_TransferTx->wAddr1   = (uint32_t)LM75_ADDR;
-  Wire_DevStructure.pCPAL_TransferTx->wAddr2   = (uint32_t)LM75_REG_CONF;
-  
-  /* Write Operation */
-  if(CPAL_I2C_Write(&Wire_DevStructure) == CPAL_PASS)
-  {
-    while ((Wire_DevStructure.CPAL_State != CPAL_STATE_READY) && (Wire_DevStructure.CPAL_State != CPAL_STATE_ERROR) )
-    { }
-    
-    if (Wire_DevStructure.CPAL_State == CPAL_STATE_ERROR)
-    {
-      return LM75_FAIL;
-    }
-  }
-  else
-  {
-    return LM75_FAIL;
-  }
-  
-  return LM75_OK;
-}
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

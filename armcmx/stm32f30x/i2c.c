@@ -7,7 +7,7 @@
 
 #include <string.h>
 //stm32f30x
-#include "stm32f37x_i2c_cpal.h"
+#include "stm32f30x_i2c_cpal.h"
 #include "i2c.h"
 
 // for IRQ Handler

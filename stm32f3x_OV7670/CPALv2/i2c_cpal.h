@@ -37,7 +37,9 @@
    
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f30x_i2c_cpal.h"
-   
+
+#include "armcmx.h"
+
 /* Exported types ------------------------------------------------------------*/
 
 /** 
@@ -45,23 +47,52 @@
   */ 
 typedef enum
 {
-  LM75_OK = 0,
-  LM75_FAIL
-}LM75_Status_TypDef;
+  I2C_CPAL_OK = 0,
+  I2C_CPAL_FAIL
+} I2C_CPAL_Status_TypDef;
+
+#define I2C_BUFFER_SIZE 256
+	/*
+typedef struct {
+	uint8 rx[I2C_BUFFER_SIZE];
+	uint8 tx[I2C_BUFFER_SIZE];
+	uint16 rxcount, txcount;
+//	boolean waitfinish;
+//	__IO I2C_Mode mode;
+//	__IO uint16_t position;
+	__IO uint16_t count;
+	__IO uint32 flagstatus;
+	__IO uint32 watch;
+} I2CBuffer;
+	*/
+
+typedef struct {
+	I2C_TypeDef * I2Cx;
+	GPIOPin scl, sda;
+	
+	CPAL_TransferTypeDef RXTransfer;
+	CPAL_TransferTypeDef TXTransfer;
+	uint8_t Buffer[I2C_BUFFER_SIZE];
+	
+	CPAL_InitTypeDef * pDevStructure;
+	
+	__IO uint32_t  Timeout; 
+} i2c;
+
 
 /* Exported constants --------------------------------------------------------*/
     
 /*====================== CPAL Structure configuration ========================*/ 
 /* Select I2C device (uncomment relative define) */
 
-#define Wire_DevStructure I2C1_DevStructure
+//#define I2C_CPAL_DevStructure I2C1_DevStructure
    
 /*============== TIMING Configuration ==========================*/
 /* I2C TIMING Register define when I2C clock source is SYSCLK */
 /* I2C TIMING is calculated in case of the I2C Clock source is the SYSCLK = 72 MHz */
 /* set TIMING to 0xC062121F to reach 100 KHz speed (Rise time = 640ns, Fall time = 20ns) */
 
-#define Wire_I2C_TIMING              0xC062121F
+#define I2C_CPAL_TIMING              0xC062121F
 
 
 /*=================== Programming model Configuration ========================*/
@@ -72,7 +103,7 @@ typedef enum
 
 /* Maximum Timeout values for waiting until device is ready for communication.*/
    
-#define LM75_TIMEOUT        ((uint32_t)0x3FFFF)
+#define I2C_CPAL_TIMEOUT        ((uint32_t)0x3FFFF)
 
 /**
   * @brief  Internal register Memory
@@ -81,23 +112,23 @@ typedef enum
 #define LM75_REG_CONF       0x01  /*!< Configuration Register of LM75 */
 #define LM75_REG_THYS       0x02  /*!< Temperature Register of LM75 */
 #define LM75_REG_TOS        0x03  /*!< Over-temp Shutdown threshold Register of LM75 */
-#define LM75_ADDR           0x90   /*!< LM75 address */
+#define LM75_ADDR           0x98   /*!< LM75 address */
    
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */ 
 
-void LM75_DeInit(void);
-void LM75_Config(void);
-void LM75_Init(void);
+void i2c_deinit(void);
+void i2c_begin(void);
+void i2c_init(void);
 
-ErrorStatus LM75_GetStatus(void);
-uint16_t LM75_ReadTemp(void);
-uint16_t LM75_ReadReg(uint8_t RegName);
-uint8_t LM75_WriteReg(uint8_t RegName, uint16_t RegValue);
-uint8_t LM75_ReadConfReg(void);
-uint8_t LM75_WriteConfReg(uint8_t RegValue);
-uint8_t LM75_ShutDown(FunctionalState NewState);
+ErrorStatus i2c_GetStatus(void);
+uint16_t i2c_ReadTemp(void);
+uint16_t i2c_ReadReg(uint8_t RegName);
+uint8_t i2c_WriteReg(uint8_t RegName, uint16_t RegValue);
+uint8_t i2c_ReadConfReg(void);
+uint8_t i2c_transmit(uint8_t addr, uint8_t * data, size_t numbyte);
+uint8_t i2c_ShutDown(FunctionalState NewState);
 
 
  
