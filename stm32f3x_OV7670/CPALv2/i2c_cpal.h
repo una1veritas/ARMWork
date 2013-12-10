@@ -27,8 +27,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32373C_EVAL_I2C_TSENSOR_CPAL_H
-#define __STM32373C_EVAL_I2C_TSENSOR_CPAL_H
+#ifndef __I2C_CPAL_H
+#define __I2C_CPAL_H
 
 #ifdef __cplusplus
  extern "C" {
@@ -107,27 +107,27 @@ typedef struct {
 
 /**
   * @brief  Internal register Memory
-  */
-#define LM75_REG_TEMP       0x00  /*!< Temperature Register of LM75 */
-#define LM75_REG_CONF       0x01  /*!< Configuration Register of LM75 */
-#define LM75_REG_THYS       0x02  /*!< Temperature Register of LM75 */
-#define LM75_REG_TOS        0x03  /*!< Over-temp Shutdown threshold Register of LM75 */
-#define LM75_ADDR           0x98   /*!< LM75 address */
-   
+  */   
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */ 
+
+extern i2c i2c1;
 
 void i2c_deinit(void);
 void i2c_begin(void);
 void i2c_init(void);
 
-ErrorStatus i2c_GetStatus(void);
-uint16_t i2c_ReadTemp(void);
-uint16_t i2c_ReadReg(uint8_t RegName);
-uint8_t i2c_WriteReg(uint8_t RegName, uint16_t RegValue);
-uint8_t i2c_ReadConfReg(void);
-uint8_t i2c_transmit(uint8_t addr, uint8_t * data, size_t numbyte);
+ErrorStatus i2c_getstatus(i2c * bus, uint8_t addr);
+
+uint8_t i2c_read8(i2c * bus, uint8_t addr, uint8_t reg);
+uint8_t i2c_write8(i2c * bus, uint8_t addr, uint8_t reg, uint8_t val);
+uint16_t i2c_read16(i2c * bus, uint8_t addr, uint8_t reg);
+uint8_t i2c_write16(i2c * bus, uint8_t addr, uint8_t reg, uint16_t val);
+
+uint8_t i2c_transmit(i2c * bus, uint8_t addr, uint8_t * data, uint32_t numbyte);
+boolean i2c_readfrom(i2c * bus, uint8_t addr, uint8_t * data, uint16_t len);
+//boolean i2c_receive(i2c * I2Cbuf, uint8_t * data, uint16_t lim);
 uint8_t i2c_ShutDown(FunctionalState NewState);
 
 
@@ -136,7 +136,7 @@ uint8_t i2c_ShutDown(FunctionalState NewState);
 }
 #endif
 
-#endif /* __STM32373C_EVAL_I2C_TSENSOR_CPAL_H */
+#endif /* __I2C_CPAL_H */
 /**
   * @}
   */

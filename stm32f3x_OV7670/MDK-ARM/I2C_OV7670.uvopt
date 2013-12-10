@@ -425,10 +425,10 @@
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>22</ColumnNumber>
+      <ColumnNumber>48</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>26</TopLine>
-      <CurrentLine>45</CurrentLine>
+      <TopLine>48</TopLine>
+      <CurrentLine>65</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\main.cpp</PathWithFileName>
       <FilenameWithoutPath>main.cpp</FilenameWithoutPath>
@@ -537,10 +537,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>53</ColumnNumber>
+      <ColumnNumber>57</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>342</TopLine>
-      <CurrentLine>370</CurrentLine>
+      <TopLine>222</TopLine>
+      <CurrentLine>252</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\CPALv2\i2c_cpal.c</PathWithFileName>
       <FilenameWithoutPath>i2c_cpal.c</FilenameWithoutPath>
