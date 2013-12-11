@@ -477,16 +477,6 @@
               <FileType>8</FileType>
               <FilePath>..\main.cpp</FilePath>
             </File>
-            <File>
-              <FileName>sccb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\sccb.h</FilePath>
-            </File>
-            <File>
-              <FileName>sccb.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\sccb.cpp</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
