@@ -502,11 +502,6 @@
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\armcmx.c</FilePath>
             </File>
-            <File>
-              <FileName>i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\armcmx\stm32f30x\i2c.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>

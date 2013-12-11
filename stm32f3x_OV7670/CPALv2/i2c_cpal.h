@@ -92,7 +92,10 @@ typedef struct {
 /* I2C TIMING is calculated in case of the I2C Clock source is the SYSCLK = 72 MHz */
 /* set TIMING to 0xC062121F to reach 100 KHz speed (Rise time = 640ns, Fall time = 20ns) */
 
-#define I2C_CPAL_TIMING              0xC062121F
+#define I2C_CPAL_TIMING              0x00902025
+// STM32F3 Discovery f30x 8MHz RC
+// 0xC062121F		11.9 kHz
+// 0x00902025		100 kHz
 
 
 /*=================== Programming model Configuration ========================*/
@@ -127,7 +130,8 @@ uint8_t i2c_write16(i2c * bus, uint8_t addr, uint8_t reg, uint16_t val);
 
 uint8_t i2c_transmit(i2c * bus, uint8_t addr, uint8_t * data, uint32_t numbyte);
 boolean i2c_readfrom(i2c * bus, uint8_t addr, uint8_t * data, uint16_t len);
-//boolean i2c_receive(i2c * I2Cbuf, uint8_t * data, uint16_t lim);
+boolean i2c_request(i2c * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t len);
+boolean i2c_receive(i2c * I2Cbuf, uint8_t * data, uint16_t lim);
 uint8_t i2c_ShutDown(FunctionalState NewState);
 
 

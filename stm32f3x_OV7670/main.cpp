@@ -8,12 +8,15 @@
 #include "i2c_cpal.h"
 
 #define LM73_1		0x98
-//#define LM75_I2C_CLK                     RCC_APB1Periph_I2C1
+#define OV7670 		(0x21<<1)
+#define REG_COM7        0x12
+#define COM7_RESET      0x80    /* Register reset */
 
 static void NVIC_Config(void);
 
 int main(void)
 {
+	uint8_t result;
   float temperaturecelsius = 0;
   int16_t tempvalue = 0;
   char tmpstr[32];
@@ -30,7 +33,7 @@ int main(void)
     /* Initialize the Temperature Sensor */
   i2c_begin();
   
-  if (i2c_getstatus(&i2c1, LM73_1) != SUCCESS) {
+  if (i2c_getstatus(&i2c1, OV7670) != SUCCESS) {
     usart_print(&stdserial, "Sensor get status failed.\n");
     while (1) {}
   } else {
@@ -40,10 +43,8 @@ int main(void)
     - Thermostat mode Interrupt
     - Fault tolerance: 00
     */
-    i2c_write8(&i2c1, LM73_1, 0x04, 0x60);
-		
-		sprintf((char*)tmpstr, "Config register: %02x\n", i2c_read8(&i2c1, LM73_1, 0x04));
-		usart_print(&stdserial, tmpstr);
+		i2c_write8(&i2c1, OV7670, 0x12, 0x80);
+		while (i2c_getstatus(&i2c1, OV7670) != SUCCESS);
 
     /* Configure the THYS and TOS in order to use the SMbus alert interrupt */
 //    LM75_WriteReg(LM75_REG_THYS, TEMPERATURE_THYS << 8);  /*31у*/
@@ -58,12 +59,24 @@ int main(void)
     /* Enable SMBus Alert interrupt */
     I2C_ITConfig(i2c1.I2Cx, I2C_IT_ERRI, ENABLE);
   
+		tmpstr[0] = 0x0;
+			i2c_request(&i2c1, OV7670, (uint8_t*) tmpstr,  1);
+			i2c_receive(&i2c1, (uint8_t*) &result, 2);
+		
+		sprintf((char*)tmpstr, "Config register: %02x\n", result);
+		usart_print(&stdserial, tmpstr);
+
+while (1);
 		while (1)
 		{
-			 
-			 /* Get temperature value */
-			 tempvalue = i2c_read16(&i2c1, LM73_1, 0);
-			 tempvalue &= 0xfffc;
+			/* Get temperature value */
+			tmpstr[0] = 0;
+			i2c_request(&i2c1, LM73_1, (uint8_t*) tmpstr,  1);
+			i2c_receive(&i2c1, (uint8_t*) tmpstr, 2);
+			tempvalue = tmpstr[0];
+			tempvalue <<= 8;
+			tempvalue |= tmpstr[1];
+			tempvalue &= 0xfffc;
 			 temperaturecelsius = tempvalue/128.0f;
 			 
 			 /* Display temperature value in celsius & fahrenheit  */

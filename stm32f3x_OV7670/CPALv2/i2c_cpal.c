@@ -197,7 +197,8 @@ ErrorStatus i2c_getstatus(i2c * bus, uint8_t addr)
   * @retval LM75 register value.
   */
 uint8_t i2c_read8(i2c * bus, uint8_t addr, uint8_t reg)
-{     
+{ 
+	uint8_t resp;
   bus->Buffer[0] = 0;
   bus->Buffer[1] = 0;
   
@@ -208,7 +209,7 @@ uint8_t i2c_read8(i2c * bus, uint8_t addr, uint8_t reg)
   bus->pDevStructure->pCPAL_TransferRx = &bus->RXTransfer;
   
   /* Configure transfer parameters */  
-  bus->pDevStructure->pCPAL_TransferRx->wNumData = 1;
+  bus->pDevStructure->pCPAL_TransferRx->wNumData = 2;
   bus->pDevStructure->pCPAL_TransferRx->pbBuffer = bus->Buffer ;
   bus->pDevStructure->pCPAL_TransferRx->wAddr1   = (uint32_t)addr;
   bus->pDevStructure->pCPAL_TransferRx->wAddr2   = (uint32_t)reg;
@@ -219,9 +220,10 @@ uint8_t i2c_read8(i2c * bus, uint8_t addr, uint8_t reg)
     while ((bus->pDevStructure->CPAL_State != CPAL_STATE_READY) && (bus->pDevStructure->CPAL_State != CPAL_STATE_ERROR) )
     { }
   }
-  
+
+	resp = bus->Buffer[0];
   /* return a Reg value */
-  return bus->Buffer[0];  
+  return resp;  
 }
 
 uint16_t i2c_read16(i2c * bus, uint8_t addr, uint8_t reg)
@@ -369,6 +371,43 @@ uint8_t i2c_transmit(i2c * bus, uint8_t addr, uint8_t * data, uint32_t n)
   
   return I2C_CPAL_OK;
   
+}
+
+boolean i2c_request(i2c * I2Cbus, uint8_t addr, uint8_t * data, uint16_t len) {
+	
+  memset(I2Cbus->Buffer, 0, len);
+  
+  /* Disable all options */
+  I2Cbus->pDevStructure->wCPAL_Options = 0;
+
+  /* point to CPAL_TransferTypeDef structure */
+  I2Cbus->pDevStructure->pCPAL_TransferRx = &I2Cbus->RXTransfer;
+  
+  /* Configure transfer parameters */  
+  I2Cbus->pDevStructure->pCPAL_TransferRx->wNumData = len;
+  I2Cbus->pDevStructure->pCPAL_TransferRx->pbBuffer = I2Cbus->Buffer ;
+  I2Cbus->pDevStructure->pCPAL_TransferRx->wAddr1   = (uint32_t)addr;
+  I2Cbus->pDevStructure->pCPAL_TransferRx->wAddr2   = (uint32_t)data[0];
+
+	return true;  
+}
+
+boolean i2c_receive(i2c * I2Cbus, uint8_t * data, uint16_t len) {
+
+	I2Cbus->pDevStructure->pCPAL_TransferRx->wNumData = len;
+//  I2Cbus->pDevStructure->wCPAL_Options = CPAL_OPT_I2C_ERRIT_DISABLE;
+	
+  /* Read Operation */
+  if(CPAL_I2C_Read(I2Cbus->pDevStructure) == CPAL_PASS)
+  {
+    while ((I2Cbus->pDevStructure->CPAL_State != CPAL_STATE_READY) && (I2Cbus->pDevStructure->CPAL_State != CPAL_STATE_ERROR) )
+    { }
+  }
+  
+	memcpy(data, I2Cbus->Buffer, len);
+  /* return a Reg value */
+  return len - I2Cbus->pDevStructure->pCPAL_TransferRx->wNumData;  
+	
 }
 
 
