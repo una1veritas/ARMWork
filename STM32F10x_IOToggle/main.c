@@ -21,7 +21,13 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
+//#include "stm32f1_discovery.h"
+#include "stm32f10x_conf.h"
+#include "stm32f10x_it.h"
+
 //#include "stm32_eval.h"
+
+#include "armcmx.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Examples
   * @{
@@ -71,54 +77,11 @@ int main(void)
   while (1)
   {
     /* Set PD0 and PD2 */
-    GPIOD->BSRR = 0x00000005;
+    GPIOD->BSRR = (1<<3) | (1<<13);
+		delay(250);
     /* Reset PD0 and PD2 */
-    GPIOD->BRR  = 0x00000005;
-
-    /* Set PD0 and PD2 */
-    GPIOD->BSRR = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BRR  = 0x00000005;
-
-    /* Set PD0 and PD2 */
-    GPIOD->BSRR = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BRR  = 0x00000005;
-
-    /* Set PD0 and PD2 */
-    GPIOD->BSRR = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BRR  = 0x00000005;
-
-    /* Set PD0 and PD2 */
-    GPIOD->BSRR = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BRR  = 0x00000005;
-
-    /* Set PD0 and PD2 */
-    GPIOD->BSRR = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BRR  = 0x00000005;
-
-    /* Set PD0 and PD2 */
-    GPIOD->BSRR = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BRR  = 0x00000005;
-
-    /* Set PD0 and PD2 */
-    GPIOD->BSRR = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BRR  = 0x00000005;
-
-    /* Set PD0 and PD2 */
-    GPIOD->BSRR = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BRR  = 0x00000005;
-
-    /* Set PD0 and PD2 */
-    GPIOD->BSRR = 0x00000005;
-    /* Reset PD0 and PD2 */
-    GPIOD->BRR  = 0x00000005;
+    GPIOD->BRR  = (1<<3) | (1<<13);
+		delay(250);
   }
 }
 

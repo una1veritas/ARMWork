@@ -95,7 +95,8 @@ typedef struct {
 #define I2C_CPAL_TIMING              0x00902025
 // STM32F3 Discovery f30x 8MHz RC
 // 0xC062121F		11.9 kHz
-// 0x00902025		100 kHz
+// 0x00902025		Standard mode 100 kHz
+// 0x0010020A   Fast mode 400 kHz
 
 
 /*=================== Programming model Configuration ========================*/

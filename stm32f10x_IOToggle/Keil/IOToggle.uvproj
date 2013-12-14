@@ -43,14 +43,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\Olimexino\</OutputDirectory>
-          <OutputName>Olimexino</OutputName>
+          <OutputDirectory>.\IOToggle\</OutputDirectory>
+          <OutputName>IOToggle</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\Olimexino\</ListingPath>
+          <ListingPath>.\IOToggle\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -349,9 +349,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>STM32F10X_MD ARMCMX</Define>
+              <Define>STM32F10X_MD ARMCMX USE_STDPERIPH</Define>
               <Undefine></Undefine>
-              <IncludePath>..\STM32F10x_Olimexino;..\armcmx</IncludePath>
+              <IncludePath>..\..\STM32F10x_IOToggle;..\..\armcmx;..\..\STM32Libraries\STM32F10x_StdPeriph_Driver\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -395,12 +395,7 @@
             <File>
               <FileName>startup_stm32f10x_md.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\STM32Libraries\CMSIS\Device\ST\STM32F10x\Source\Templates\arm\startup_stm32f10x_md.s</FilePath>
-            </File>
-            <File>
-              <FileName>system_stm32f10x.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\STM32Libraries\CMSIS\Device\ST\STM32F10x\Source\Templates\system_stm32f10x.c</FilePath>
+              <FilePath>..\..\STM32Libraries\CMSIS\Device\ST\STM32F10x\Source\Templates\arm\startup_stm32f10x_md.s</FilePath>
             </File>
           </Files>
         </Group>
@@ -408,9 +403,29 @@
           <GroupName>User</GroupName>
           <Files>
             <File>
+              <FileName>system_stm32f10x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\CMSIS\Device\ST\STM32F10x\Source\Templates\system_stm32f10x.c</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\main.c</FilePath>
+              <FilePath>..\main.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>StdPeriph</GroupName>
+          <Files>
+            <File>
+              <FileName>stm32f10x_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.c</FilePath>
             </File>
           </Files>
         </Group>
