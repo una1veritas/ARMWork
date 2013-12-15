@@ -117,8 +117,8 @@ void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx) {
 		txring[UART5Serial] = &usx->txring;
 	} 
 
-  portEnable(rx);
-  portEnable(tx);
+  GPIOEnable(rx);
+  GPIOEnable(tx);
 	GPIOMode(rx, PinBit(rx), GPIO_Mode_AF, GPIO_Speed_50MHz,
 						GPIO_OType_PP, GPIO_PuPd_NOPULL);
 	GPIOMode(tx, PinBit(tx), GPIO_Mode_AF, GPIO_Speed_50MHz,
