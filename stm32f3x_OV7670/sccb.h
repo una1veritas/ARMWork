@@ -37,12 +37,16 @@ public:
   Cam(const GPIOPin vsync, const GPIOPin href, const GPIOPin wen, const GPIOPin rrst, const GPIOPin oe, const GPIOPin rclk) 
     :  VSYNC(vsync), HREF(href), WEN(wen), RRST(rrst), OE(oe), RCLK(rclk) {}
 
-  void outEnable() { digitalWrite(OE, LOW); }
-  void outDisable() { digitalWrite(OE, HIGH); }
-	void writeEnable() { digitalWrite(WEN, LOW); }
-	void writeDisable() { digitalWrite(WEN, HIGH); }
-	void readReset(uint8_t val) { digitalWrite(RRST,val); }
-  void clock(uint8_t val) { digitalWrite(RCLK, val); }
+  inline void outEnable() { digitalWrite(OE, LOW); }
+  inline void outDisable() { digitalWrite(OE, HIGH); }
+	inline void writeEnable() { digitalWrite(WEN, LOW); }
+	inline void writeDisable() { digitalWrite(WEN, HIGH); }
+	inline void readReset(uint8_t val) { digitalWrite(RRST,val); }
+  inline void clock(uint8_t val) { digitalWrite(RCLK, val); }
+	
+	inline void waitVSYNCFalling() { while (digitalRead(VSYNC) == LOW); while (digitalRead(VSYNC) == HIGH); }
+	inline void waitVSYNCHigh() { while (digitalRead(VSYNC) == HIGH);  }
+	inline void waitHREFPulse() { while (digitalRead(HREF) == LOW); }
 };
 
 #endif /* _sccb_H */

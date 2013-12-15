@@ -164,11 +164,11 @@ uint16_t PinBit(GPIOPin portpin);
 uint8_t PinSource(GPIOPin portpin);
 */
 
-void portEnable(GPIOPin portpins);
-void portDisable(GPIOPin portpins);
+void GPIOEnable(GPIOPin portpins);
+void GPIODisable(GPIOPin portpins);
 
-uint16_t GPIORead(GPIOPin portpins);
-void GPIOWrite(GPIOPin portpins, uint16_t bits);
+#define GPIORead(portpins) GPIO_ReadInputData(PinPort(portpins))
+#define GPIOWrite(portpins, bits)	GPIO_Write(PinPort(portpins), (bits))
 
 void GPIOMode(GPIOPin portpins, uint16_t pinbits, GPIOMode_TypeDef mode,
               GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd);
