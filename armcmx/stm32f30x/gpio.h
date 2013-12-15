@@ -167,12 +167,12 @@ uint8_t PinSource(GPIOPin portpin);
 void portEnable(GPIOPin portpins);
 void portDisable(GPIOPin portpins);
 
-uint16_t portRead(GPIOPin portpins);
-void portWrite(GPIOPin portpins, uint16_t bits);
+uint16_t GPIORead(GPIOPin portpins);
+void GPIOWrite(GPIOPin portpins, uint16_t bits);
 
-void portMode(GPIOPin portpins, uint16_t pinbits, GPIOMode_TypeDef mode,
+void GPIOMode(GPIOPin portpins, uint16_t pinbits, GPIOMode_TypeDef mode,
               GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd);
-void pinAltFunc(GPIOPin portpins, uint16_t pinbits, uint8_t GPIOType_AF);
+void GPIOAltFunc(GPIOPin portpins, uint16_t pinbits, uint8_t GPIOType_AF);
 //void digitalToggle(GPIOPin);
 
 #ifdef __cplusplus

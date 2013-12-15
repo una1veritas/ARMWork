@@ -35,7 +35,7 @@ void TIM2_delaytimer_start(void) {
 	RCC_ClocksTypeDef RCC_Clocks;
 	RCC_GetClocksFreq(&RCC_Clocks);
 
-	TimeBaseStructure.TIM_Prescaler = (RCC_Clocks.SYSCLK_Frequency>>1)/1000000L ;
+	TimeBaseStructure.TIM_Prescaler = (RCC_Clocks.SYSCLK_Frequency)/1000000L ;
 	TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	TimeBaseStructure.TIM_Period = 1000 - 1;
 	TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;

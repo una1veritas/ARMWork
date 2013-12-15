@@ -1,34 +1,50 @@
 #ifndef _sccb_H
 #define _sccb_H
 
-#define SCCB_SIC     PB4
-#define SCCB_SID     PB5
+#define sic_H()     digitalWrite(sic, HIGH)
+#define sic_L()     digitalWrite(sic, LOW)
 
-#define SCCB_SIC_H()     digitalWrite(SCCB_SIC, HIGH)
-#define SCCB_SIC_L()     digitalWrite(SCCB_SIC, LOW)
-
-#define SCCB_SID_H()     digitalWrite(SCCB_SID, HIGH)
-#define SCCB_SID_L()     digitalWrite(SCCB_SID, LOW)
+#define sid_H()     digitalWrite(sid, HIGH)
+#define sid_L()     digitalWrite(sid, LOW)
 /**/
-#define SCCB_SID_IN      portMode(SCCB_SID, PinBit(SCCB_SID), INPUT, GPIO_Speed_50MHz, GPIO_OType_OD, GPIO_PuPd_UP)
-#define SCCB_SID_OUT     pinMode(SCCB_SID, OUTPUT)
 
-#define SCCB_SID_STATE	 digitalRead(SCCB_SID)
+#define sid_STATE	 digitalRead(sid)
 
-///////////////////////////////////////////
-void SCCB_GPIO_Config(void);
-void SCCB_SID_GPIO_OUTPUT(void);
-void SCCB_SID_GPIO_INPUT(void);
-void startSCCB(void);
-void stopSCCB(void);
-void noAck(void);
-unsigned char SCCBwriteByte(unsigned char m_data);
-unsigned char SCCBreadByte(void);
+class SCCBus {
+  const GPIOPin sic, sid;
+  
+public:
+  SCCBus(const GPIOPin clk, const GPIOPin data) : sic(clk), sid(data) {} 
+  
+  void GPIO_Config(void);
+  void SID_OUTPUT(void);
+  void SID_INPUT(void);
+  void start(void);
+  void stop(void);
+  void noAck(void);
+  unsigned char write(uint8_t data);
+  unsigned char read(void);
 
-unsigned char Sensor_init(void);
-unsigned char rd_Sensor_Reg(unsigned char regID, unsigned char *regDat);
-unsigned char wr_Sensor_Reg(unsigned char regID, unsigned char regDat);
+  uint8_t init(void);
+  unsigned char readRegister(unsigned char regID, unsigned char *regDat);
+  unsigned char writeRegister(unsigned char regID, unsigned char regDat);
+};
 
-#endif /* _IIC_H */
+class Cam {
+  const GPIOPin VSYNC, HREF, WEN, RRST, OE, RCLK;
+  
+public:
+  Cam(const GPIOPin vsync, const GPIOPin href, const GPIOPin wen, const GPIOPin rrst, const GPIOPin oe, const GPIOPin rclk) 
+    :  VSYNC(vsync), HREF(href), WEN(wen), RRST(rrst), OE(oe), RCLK(rclk) {}
+
+  void outEnable() { digitalWrite(OE, LOW); }
+  void outDisable() { digitalWrite(OE, HIGH); }
+	void writeEnable() { digitalWrite(WEN, LOW); }
+	void writeDisable() { digitalWrite(WEN, HIGH); }
+	void readReset(uint8_t val) { digitalWrite(RRST,val); }
+  void clock(uint8_t val) { digitalWrite(RCLK, val); }
+};
+
+#endif /* _sccb_H */
 
 

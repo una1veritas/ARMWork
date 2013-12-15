@@ -119,9 +119,9 @@ void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx) {
 
   portEnable(rx);
   portEnable(tx);
-	portMode(rx, PinBit(rx), GPIO_Mode_AF, GPIO_Speed_50MHz,
+	GPIOMode(rx, PinBit(rx), GPIO_Mode_AF, GPIO_Speed_50MHz,
 						GPIO_OType_PP, GPIO_PuPd_NOPULL);
-	portMode(tx, PinBit(tx), GPIO_Mode_AF, GPIO_Speed_50MHz,
+	GPIOMode(tx, PinBit(tx), GPIO_Mode_AF, GPIO_Speed_50MHz,
 						GPIO_OType_PP, GPIO_PuPd_NOPULL);
 
 	GPIO_PinAFConfig(PinPort(rx), PinSource(rx), af);

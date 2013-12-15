@@ -99,7 +99,7 @@ void portDisable(GPIOPin portpins) {
   RCC_AHBPeriphClockCmd(PortPeriph[portpins>>4 & 0x0f], DISABLE);
 }
 
-void portMode(GPIOPin portpins, uint16_t pinbit, GPIOMode_TypeDef mode,
+void GPIOMode(GPIOPin portpins, uint16_t pinbit, GPIOMode_TypeDef mode,
               GPIOSpeed_TypeDef clk, GPIOOType_TypeDef otype, GPIOPuPd_TypeDef pupd) {
 		GPIO_InitTypeDef GPIO_InitStructure;
 
@@ -114,15 +114,15 @@ void portMode(GPIOPin portpins, uint16_t pinbit, GPIOMode_TypeDef mode,
 	GPIO_Init(PinPort(portpins), &GPIO_InitStructure);
 }
 
-uint16_t portRead(GPIOPin portpins) {
+uint16_t GPIORead(GPIOPin portpins) {
 	return GPIO_ReadInputData(PinPort(portpins));
 }
 
-void portWrite(GPIOPin portpins, uint16_t bits) {
+void GPIOWrite(GPIOPin portpins, uint16_t bits) {
 	GPIO_Write(PinPort(portpins), bits);
 }
 
-void pinAltFunc(GPIOPin portpins, uint16_t pinbits, uint8_t pinaf) {
+void GPIOAltFunc(GPIOPin portpins, uint16_t pinbits, uint8_t pinaf) {
 	int i;
 	for(i = 0; (pinbits>>i) != 0 ; i++) {
 		if ( pinbits>>i & 1)
