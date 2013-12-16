@@ -33,7 +33,8 @@
 #include "gpio.h"
 #include "usart.h"
 
-USARTDef usart;
+usart stdserial;
+USART_TypeDef USART0 = NULL;
 
 /*****************************************************************************
 ** Function name:		UART_IRQHandler
@@ -61,7 +62,7 @@ void UART_IRQHandler(void) {
     {
       /* There are errors or break interrupt */
       /* Read LSR will clear the interrupt */
-      usart.Status = LSRValue;
+      stdserial.Status = LSRValue;
       Dummy = LPC_USART->RBR;	/* Dummy read on RX to clear 
 								interrupt, then bail out */
       return;
@@ -70,34 +71,34 @@ void UART_IRQHandler(void) {
     {
       /* If no error on RLS, normal ready, save into the data buffer. */
       /* Note: read RBR will clear the interrupt */
-      usart.Buffer[(usart.Tail+usart.Count)%USART_BUFSIZE] = LPC_USART->RBR;
-      usart.Count++;
-      if (usart.Count == USART_BUFSIZE)
+      stdserial.Buffer[(stdserial.Tail+stdserial.Count)%USART_BUFSIZE] = LPC_USART->RBR;
+      stdserial.Count++;
+      if (stdserial.Count == USART_BUFSIZE)
       {
 //        uart.Count = 0;		/* buffer overflow */
-        usart.Tail++;
-        usart.Tail %= USART_BUFSIZE;
-        usart.Count--;
+        stdserial.Tail++;
+        stdserial.Tail %= USART_BUFSIZE;
+        stdserial.Count--;
       }	
     }
   }
   else if (IIRValue == IIR_RDA)	/* Receive Data Available */
   {
     /* Receive Data Available */
-    usart.Buffer[(usart.Count+usart.Tail) % USART_BUFSIZE] = LPC_USART->RBR;
-    usart.Count++;
-    if (usart.Count == USART_BUFSIZE)
+    stdserial.Buffer[(stdserial.Count+stdserial.Tail) % USART_BUFSIZE] = LPC_USART->RBR;
+    stdserial.Count++;
+    if (stdserial.Count == USART_BUFSIZE)
     {
 //      uart.Count = 0;		/* buffer overflow */
-      usart.Tail++;
-      usart.Tail %= USART_BUFSIZE;
-      usart.Count--;
+      stdserial.Tail++;
+      stdserial.Tail %= USART_BUFSIZE;
+      stdserial.Count--;
     }
   }
   else if (IIRValue == IIR_CTI)	/* Character timeout indicator */
   {
     /* Character Time-out indicator */
-    usart.Status |= 0x100;		/* Bit 9 as the CTI error */
+    stdserial.Status |= 0x100;		/* Bit 9 as the CTI error */
   }
   else if (IIRValue == IIR_THRE)	/* THRE, transmit holding register empty */
   {
@@ -106,11 +107,11 @@ void UART_IRQHandler(void) {
 								valid data in U0THR or not */
     if (LSRValue & LSR_THRE)
     {
-      usart.TxEmpty = 1;
+      stdserial.TxEmpty = 1;
     }
     else
     {
-      usart.TxEmpty = 0;
+      stdserial.TxEmpty = 0;
     }
   }
 #if AUTOBAUD_ENABLE
@@ -130,7 +131,7 @@ void UART_IRQHandler(void) {
   }
 #endif
 
-  usart.Status &= 0xff1E;        // update linestate
+  stdserial.Status &= 0xff1E;        // update linestate
 
   return;
 }
@@ -270,7 +271,7 @@ uint32_t uart_set_divisors(uint32_t UARTClk, uint32_t baudrate)
 }
 
 
-void USART_init(USARTDef * uart, const GPIOPin rx, const GPIOPin tx) {
+void usart_init(usart * uart, USART_TypeDef * USARTx, const GPIOPin rx, const GPIOPin tx) {
 
   NVIC_DisableIRQ(UART_IRQn);
     /* Select only one location from below. */
@@ -309,7 +310,7 @@ void USART_init(USARTDef * uart, const GPIOPin rx, const GPIOPin tx) {
 ** Returned value:		None
 ** 
 *****************************************************************************/
-void USART_begin(USARTDef * uart, uint32_t baudrate)
+void usart_begin(usart * uart, uint32_t baudrate)
 {
 #if !AUTOBAUD_ENABLE
   uint32_t Fdiv;
@@ -374,7 +375,7 @@ void USART_begin(USARTDef * uart, uint32_t baudrate)
 /*----------------------------------------------------------------------------
   close the serial port
  *---------------------------------------------------------------------------*/
-void USART_close (USARTDef * usart) {
+void usart_close (usart * usart) {
   LPC_IOCON->PIO0_18 &= ~0x07;    /*  UART I/O config */
   LPC_IOCON->PIO0_19 &= ~0x07;
   
@@ -400,7 +401,7 @@ void USART_close (USARTDef * usart) {
 ** Returned value:	None
 ** 
 *****************************************************************************/
-size_t USART_write(USARTDef * uart, uint8_t c)
+size_t usart_write(usart * uart, uint16_t c)
 {
   
   /* THRE status, contain valid data */
@@ -417,7 +418,7 @@ size_t USART_write(USARTDef * uart, uint8_t c)
   return 1;
 }
 
-size_t USART_polling_write(USARTDef * uart, uint8_t c)
+size_t usart_polling_write(usart * uart, uint8_t c)
 {
   
   /* THRE status, contain valid data */
@@ -436,7 +437,7 @@ size_t USART_polling_write(USARTDef * uart, uint8_t c)
 ** Returned value:		none.
 ** 
 *****************************************************************************/
-size_t USART_puts(USARTDef * uart, const char *ptr ) {
+size_t usart_puts(usart * uart, const char *ptr ) {
   size_t n = 0;
   while(*ptr) {
     while((LPC_USART->LSR & 0x60) != 0x60);
@@ -448,7 +449,7 @@ size_t USART_puts(USARTDef * uart, const char *ptr ) {
 }
 
 /*
-size_t USART_print(USARTDef * uart, const char * ptr) {
+size_t USART_print(usart * uart, const char * ptr) {
   size_t n = 0;
   while (*ptr) {
     n += USART_write(uart, *ptr++);
@@ -465,7 +466,7 @@ size_t USART_print(USARTDef * uart, const char * ptr) {
 ** Returned value:		character, zero is none.
 ** 
 *****************************************************************************/
-int16_t USART_polling_read(USARTDef * uart)
+int16_t usart_polling_read(usart * uart)
 {
   uint8_t dummy;
   
@@ -486,11 +487,11 @@ int16_t USART_polling_read(USARTDef * uart)
 ******************************************************************************/
 // enhanced by me.
 
-size_t USART_available(USARTDef * uart) {
+size_t usart_available(usart * uart) {
   return uart->Count;
 }
 
-int16_t USART_read(USARTDef * uart) {
+int16_t usart_read(usart * uart) {
   int16_t c;
   if ( uart->Count > 0 ) {
     c = uart->Buffer[uart->Tail];
@@ -504,7 +505,7 @@ int16_t USART_read(USARTDef * uart) {
 }
 
 
-size_t USART_gets(USARTDef * uart, char * buf) {
+size_t usart_gets(usart * uart, char * buf) {
   size_t n = 0;
   while ( uart->Count > 0 ) {
     buf[n++] = (char) uart->Buffer[uart->Tail];
@@ -517,11 +518,11 @@ size_t USART_gets(USARTDef * uart, char * buf) {
 }
 
 
-void USART_flush(USARTDef *uart) {
+void usart_flush(usart *uart) {
   return;
 }
 
-int16_t USART_peek(USARTDef * uart) {
+int16_t usart_peek(usart * uart) {
   int16_t c;
   if ( uart->Count > 0 ) {
     c = uart->Buffer[uart->Tail];
@@ -532,7 +533,7 @@ int16_t USART_peek(USARTDef * uart) {
 }
 
 
-uint16_t USART_linestate(USARTDef * uart) {
+uint16_t usart_linestate(usart * uart) {
   uint16_t s = uart->Status;
   uart->Status = 0;
   return s;

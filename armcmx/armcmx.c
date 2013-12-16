@@ -5,7 +5,9 @@
 
 void armcmx_init(void) {
 	// starting delay/millis system by timer2
+#ifndef LPC11UXX
 	TIM2_delaytimer_start();
+#endif
 #ifdef STDSERIAL
 	usart_init(&stdserial, STDUSART, STDRX, STDTX);
 #else

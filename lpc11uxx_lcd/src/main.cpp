@@ -33,8 +33,10 @@ __CRP const unsigned int CRP_WORD = CRP_NO_CRP ;
 **   Main Function  main()
 *******************************************************************************/
 
-ST7032i i2clcd(Wire, LED_LCDBKLT, LCDRST);
-RTC rtc(Wire, RTC::CHIP_M41T62);
+USARTSerial Serial(&stdserial, &USART0, PIO1_26, PIO1_27);
+
+ST7032i i2clcd(Wire, LED_LCDBKLT, LCD_RST);
+RTC rtc(Wire, RTC::ST_M41T62);
 
 int task_serial(void);
 char rxbuff[64];
@@ -91,8 +93,8 @@ int main (void) {
   // PIO1_6 USR LED //  GPIOSetDir(1, 6, 1 ); //  GPIOSetBitValue( 1, 6, 1);
   pinMode(LED_SDBUSY, OUTPUT);
   digitalWrite(LED_SDBUSY, HIGH);
-  pinMode(SW_SDDETECT, INPUT);
-  laststate = digitalRead(SW_SDDETECT);
+  pinMode(SD_DETECT, INPUT);
+  laststate = digitalRead(SD_DETECT);
     
   Serial.print("Hello!\n");
   
@@ -101,7 +103,7 @@ int main (void) {
 //  sprintf(str, "%02x:%02x:%02x\n%s\n%02x/%02x/'%02x\n", rtc.time>>16&0x3f, rtc.time>>8&0x7f, rtc.time&0x7f, 
 //      day[rtc.cal&0x07], rtc.cal>>16&0x1f, rtc.cal>>8&0x3f, rtc.cal>>16);
   Serial.println(rtc.time, HEX);
-  Serial.println(rtc.cal, HEX);
+  Serial.println(rtc.date, HEX);
   //Serial.print(str);
 
   i2clcd.print("I was an lpclcd.");
@@ -127,7 +129,7 @@ int main (void) {
       rtc.update();
       i2clcd.setCursor(0, 0);
       sprintf(str, "%s %02x/%02x       ", 
-          rtc.copyNameOfDay(buf, rtc.dayOfWeek()), rtc.cal>>8&0x1f, rtc.cal&0x3f );
+          rtc.copyNameOfDay(buf, rtc.dayOfWeek()), rtc.date>>8&0x1f, rtc.date&0x3f );
       i2clcd.print(str);
       i2clcd.setCursor(0, 1);
       
@@ -140,8 +142,8 @@ int main (void) {
     }
     
     if ( !task.button ) {
-      if ( laststate != digitalRead(SW_SDDETECT) ) {
-        laststate = digitalRead(SW_SDDETECT);
+      if ( laststate != digitalRead(SD_DETECT) ) {
+        laststate = digitalRead(SD_DETECT);
         if ( laststate ) {
           Serial.println("SD DETECT is HIGH");
           digitalWrite(LED_SDBUSY, HIGH);
@@ -202,7 +204,7 @@ int main (void) {
         Serial.print("time = ");
         Serial.print(rtc.time, HEX);
         Serial.print(", calendar = ");
-        Serial.print(rtc.cal, HEX);
+        Serial.print(rtc.date, HEX);
         Serial.println();
       }
       //

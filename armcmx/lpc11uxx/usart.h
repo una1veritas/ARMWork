@@ -86,6 +86,8 @@ extern "C" {
 #define RS485_DCTRL		(0x1<<4)
 #define RS485_OINV		(0x1<<5)
 
+typedef uint32_t* USART_TypeDef;
+
 typedef struct {
   volatile uint32_t Status;
   volatile uint8_t  TxEmpty; // = 1;
@@ -97,30 +99,32 @@ typedef struct {
   volatile uint32_t AutoBaud = 0, 
   volatile uint32_t AutoBaudTimeout = 0;
   #endif
-} USARTDef;
+} usart;
 
 // Global, unique for M0
-extern USARTDef usart;
+extern usart stdserial;
+
+extern USART_TypeDef USART0;
 
 // original irq handler
 void UART_IRQHandler(void);
 
 //void ModemInit( void );
-void USART_init(USARTDef *, const GPIOPin rx, const GPIOPin tx);
-void USART_begin(USARTDef *, const uint32_t baudrate);
-void USART_close(USARTDef *);
-size_t USART_write(USARTDef * usart, uint8_t c);
-size_t USART_puts(USARTDef *, const char *);
-size_t USART_available(USARTDef * usart);
-int16_t USART_read(USARTDef *);
-size_t USART_gets(USARTDef * uart, char * buf);
-size_t USART_polling_write(USARTDef * usart, uint8_t c );
-int16_t USART_polling_read(USARTDef *);
-uint16_t USART_linestate(USARTDef *);
+void usart_init(usart *, USART_TypeDef *, const GPIOPin rx, const GPIOPin tx);
+void usart_begin(usart *, const uint32_t baudrate);
+void usart_close(usart *);
+size_t usart_write(usart * , uint16_t c);
+size_t usart_puts(usart *, const char *);
+size_t usart_available(usart * );
+int16_t usart_read(usart *);
+size_t usart_gets(usart * , char * buf);
+size_t usart_polling_write(usart * , uint8_t c );
+int16_t usart_polling_read(usart *);
+uint16_t usart_linestate(usart *);
 
 
-void USART_flush(USARTDef *);
-int16_t USART_peek(USARTDef *);
+void usart_flush(usart *);
+int16_t usart_peek(usart *);
 
 /* stm32 versioin
 void usart_init(usart * usx, USART_TypeDef * usartx, const GPIOPin rx, const GPIOPin tx);
