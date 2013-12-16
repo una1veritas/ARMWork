@@ -11,7 +11,7 @@
     <View>
       <WinId>38003</WinId>
       <ViewName>Registers</ViewName>
-      <TableColWidths>115 65</TableColWidths>
+      <TableColWidths>115 81</TableColWidths>
     </View>
     <View>
       <WinId>346</WinId>
@@ -21,7 +21,7 @@
     <View>
       <WinId>204</WinId>
       <ViewName>Performance Analyzer</ViewName>
-      <TableColWidths>600 99 99 100</TableColWidths>
+      <TableColWidths>898</TableColWidths>
     </View>
   </SECTreeCtrl>
 
@@ -62,13 +62,13 @@
     <WinId>1938</WinId>
     <ViewName>Run Time Environment</ViewName>
     <UserString></UserString>
-    <TableColWidths>0 250 30 60 60 500 -1 21844 -21846</TableColWidths>
+    <TableColWidths>300 250 30 60 60 500 -1 21844 -21846</TableColWidths>
   </RtePane>
 
   <WindowSettings>
     <LogicAnalizer>
-      <ShowLACursor>1</ShowLACursor>
-      <ShowSignalInfo>1</ShowSignalInfo>
+      <ShowLACursor>0</ShowLACursor>
+      <ShowSignalInfo>0</ShowSignalInfo>
       <ShowCycles>0</ShowCycles>
     </LogicAnalizer>
   </WindowSettings>
@@ -88,17 +88,17 @@
         <yPos>-1</yPos>
       </MaxPosition>
       <NormalPosition>
-        <Top>9</Top>
+        <Top>66</Top>
         <Left>100</Left>
-        <Right>1350</Right>
-        <Bottom>839</Bottom>
+        <Right>1371</Right>
+        <Bottom>980</Bottom>
       </NormalPosition>
     </WindowPosition>
     <MDIClientArea>
       <RegID>0</RegID>
       <MDITabState>
-        <Len>256</Len>
-        <Data>0100000004000000010000000100000001000000010000000000000002000000000000000100000001000000000000002800000028000000010000000100000000000000010000003A433A5C55736572735C73696E5C446F63756D656E74735C41524D576F726B5C4C504331315578785F546573745C42757A7A5C6D61696E2E63707000000000086D61696E2E637070000000005FC3CF00FFFFFFFF0100000010000000C5D4F200FFDC7800BECEA100F0A0A100BCA8E1009CC1B600F7B88600D9ADC200A5C2D700B3A6BE00EAD6A300F6FA7D00B5E99D005FC3CF00C1838300CACAD5000100000000000000020000002E010000760000003E050000B3020000</Data>
+        <Len>261</Len>
+        <Data>0100000004000000010000000100000001000000010000000000000002000000000000000100000001000000000000002800000028000000010000000100000000000000010000003C433A5C55736572735C53696E5C446F63756D656E74735C41524D576F726B5C4C504331315578785F546573745C50574D5C50574D3136746573742E63000000000B50574D3136746573742E6300000000FFDC7800FFFFFFFF0100000010000000C5D4F200FFDC7800BECEA100F0A0A100BCA8E1009CC1B600F7B88600D9ADC200A5C2D700B3A6BE00EAD6A300F6FA7D00B5E99D005FC3CF00C1838300CACAD5000100000000000000020000003E010000AF0000005305000040030000</Data>
       </MDITabState>
     </MDIClientArea>
     <ViewEx>
@@ -1365,23 +1365,5 @@
   </WinLayoutEx>
 
   <AlienFiles/>
-
-  <MDIGroups>
-    <Orientation>1</Orientation>
-    <ActiveMDIGroup>0</ActiveMDIGroup>
-    <MDIGroup>
-      <Size>100</Size>
-      <ActiveTab>0</ActiveTab>
-      <Doc>
-        <Name>.\main.cpp</Name>
-        <ColumnNumber>0</ColumnNumber>
-        <TopLine>55</TopLine>
-        <CurrentLine>86</CurrentLine>
-        <Folding>1</Folding>
-        <ContractedFolders></ContractedFolders>
-        <PaneID>0</PaneID>
-      </Doc>
-    </MDIGroup>
-  </MDIGroups>
 
 </ProjectGui>
