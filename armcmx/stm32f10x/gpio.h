@@ -19,8 +19,8 @@ extern "C" {
 static GPIO_TypeDef * Port[] =
 		{ 0, GPIOA, GPIOB, GPIOC, GPIOD, GPIOE, GPIOF };
 
-#define OUTPUT		GPIO_Mode_OUT // 1
-#define INPUT			GPIO_Mode_IN  // 0
+#define OUTPUT		GPIO_Mode_Out_PP // 1
+#define INPUT			GPIO_Mode_IPU  // 0
 #define ALTFUNC		GPIO_Mode_AF  // 2  AN 3
 #define PUSHPULL 		GPIO_OType_PP
 #define OPENDRAIN 	GPIO_OType_OD

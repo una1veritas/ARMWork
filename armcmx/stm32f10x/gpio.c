@@ -26,13 +26,13 @@ uint16_t Pin[] = { GPIO_Pin_0, GPIO_Pin_1, GPIO_Pin_2, GPIO_Pin_3,
 
 
 void pinDisable(GPIOPin portpin) {
-	RCC_AHBPeriphClockCmd(PortPeriph[portpin>>4 & 0x0f], DISABLE);
+	RCC_APB2PeriphClockCmd(PortPeriph[portpin>>4 & 0x0f], DISABLE);
 }
 
 void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode) {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	RCC_AHBPeriphClockCmd(PortPeriph[portpin>>4 & 0x0f], ENABLE);
+	RCC_APB2PeriphClockCmd(PortPeriph[portpin>>4 & 0x0f], ENABLE);
   
 	GPIO_StructInit(&GPIO_InitStructure);
 	GPIO_InitStructure.GPIO_Pin = PinBit(portpin);
@@ -92,18 +92,18 @@ uint8_t digitalRead(GPIOPin portpin) {
 */
 
 void portEnable(GPIOPin portpins) {
-  RCC_AHBPeriphClockCmd(PortPeriph[portpins>>4 & 0x0f], ENABLE);
+  RCC_APB2PeriphClockCmd(PortPeriph[portpins>>4 & 0x0f], ENABLE);
 }
 
 void portDisable(GPIOPin portpins) {
-  RCC_AHBPeriphClockCmd(PortPeriph[portpins>>4 & 0x0f], DISABLE);
+  RCC_APB2PeriphClockCmd(PortPeriph[portpins>>4 & 0x0f], DISABLE);
 }
 
 void portMode(GPIOPin portpins, uint16_t pinbit, GPIOMode_TypeDef mode,
               GPIOSpeed_TypeDef clk) {
 		GPIO_InitTypeDef GPIO_InitStructure;
 
-  RCC_AHBPeriphClockCmd(PortPeriph[portpins>>4 & 0x0f], ENABLE);
+  RCC_APB2PeriphClockCmd(PortPeriph[portpins>>4 & 0x0f], ENABLE);
 
 	GPIO_InitStructure.GPIO_Pin = pinbit;
 	GPIO_InitStructure.GPIO_Mode = mode;

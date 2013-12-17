@@ -2,8 +2,14 @@
 
 #include "armcmx.h"
 
-void main(void) {
+int main(void) {
 	armcmx_init();
 	
-	while(1);
+	pinMode(PA5, OUTPUT);
+	while(1) {
+		digitalWrite(PA5, HIGH);
+		delay(500);
+		digitalWrite(PA5, LOW);
+		delay(500);
+	}
 }
