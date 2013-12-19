@@ -45,7 +45,7 @@ typedef enum { FAILED = 0, PASSED = !FAILED} TestStatus;
 
 /* Private variables ---------------------------------------------------------*/
 USART_InitTypeDef USART_InitStructure;
-uint8_t TxBuffer1[] = "USART Interrupt Example: USARTy -> USARTz using Interrupt. Heeee.";
+uint8_t TxBuffer1[] = "USART Interrupt Example: USARTy -> USARTz using Interrupt";
 uint8_t TxBuffer2[] = "USART Interrupt Example: USARTz -> USARTy using Interrupt";
 uint8_t RxBuffer1[RxBufferSize1];
 uint8_t RxBuffer2[RxBufferSize2];

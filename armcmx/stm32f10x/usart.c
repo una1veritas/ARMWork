@@ -149,7 +149,7 @@ size_t usart_write(usart * usx, const uint16_t w) {
 	while ( waitcount > 0 &&
 				((ring_count(&usx->txring) > 0 && iscntrl(w))
 				|| ring_is_full(&usx->txring) ) ) {
-		delay_us(667);
+		//delay_us(667);
 		waitcount--;
 	}
 	USART_ITConfig(usx->USARTx, USART_IT_TXE, DISABLE);

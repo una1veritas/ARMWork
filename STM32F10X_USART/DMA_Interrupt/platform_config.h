@@ -32,9 +32,9 @@
 #if !defined (USE_STM32100B_EVAL) && !defined (USE_STM3210B_EVAL) &&  !defined (USE_STM3210E_EVAL) &&  !defined (USE_STM32100E_EVAL) 
  //#define USE_STM32100B_EVAL
  //#define USE_STM3210B_EVAL
- //#define USE_STM3210E_EVAL
+ #define USE_STM3210E_EVAL
  //#define USE_STM32100E_EVAL
- #define USE_STM3210C_EVAL 
+ //#define USE_STM3210C_EVAL 
 #endif
 
 /* Define the STM32F10x hardware depending on the used evaluation board */
