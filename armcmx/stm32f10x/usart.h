@@ -22,8 +22,8 @@ extern "C" {
 #define USART_BUFFER_SIZE 128
 typedef struct {
 	uint16_t buf[USART_BUFFER_SIZE];
-	int16_t head, tail;
-	uint16_t count;
+	__IO int16_t head, tail;
+	__IO uint16_t count;
 } USARTRing;
 
 typedef struct {

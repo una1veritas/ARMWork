@@ -29,16 +29,59 @@ void pinDisable(GPIOPin portpin) {
 	RCC_APB2PeriphClockCmd(PortPeriph[portpin>>4 & 0x0f], DISABLE);
 }
 
-void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode) {
+void pinMode(GPIOPin portpin, uint8_t modes) {
 	GPIO_InitTypeDef GPIO_InitStructure;
 
 	RCC_APB2PeriphClockCmd(PortPeriph[portpin>>4 & 0x0f], ENABLE);
   
 	GPIO_StructInit(&GPIO_InitStructure);
 	GPIO_InitStructure.GPIO_Pin = PinBit(portpin);
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode = mode;
-	//
+	if ( (modes & 0x03) == INPUT ) {
+		switch (modes & (3<<3)) {
+			case NOPULL:
+				GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+			break;
+			case PULLUP:
+				GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+			break;
+			case PULLDOWN:
+				GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+			break;
+		}
+	} else if ( (modes & 0x03) == OUTPUT ) {
+		switch (modes & (1<<2)) {
+			case PUSHPULL:
+				GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+			break;
+			case OPENDRAIN:
+				GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
+			break;
+		}
+	} else if ( (modes & 0x03) == ALTFUNC ) {
+		switch (modes & (1<<2)) {
+			case PUSHPULL:
+				GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+			break;
+			case OPENDRAIN:
+				GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_OD;
+			break;
+		}
+	} else if ( (modes & 0x03) == ANALOGIN ) {
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+	}
+	
+	switch (modes & (3<<5)) {
+		case LOWSPEED:
+			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
+		break;
+		case MEDSPEED:
+			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
+		break;
+		case FASTSPEED:
+		case HIGHSPEED:
+			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+		break;
+	}
 	GPIO_Init(PinPort(portpin), &GPIO_InitStructure);
 }
 
@@ -73,43 +116,71 @@ uint8_t digitalRead(GPIOPin portpin) {
 	return (GPIO_ReadInputDataBit(port, PinBit(portpin)) ? SET : RESET);
 }
 
-/*
-#define OUTPUT		GPIO_Mode_OUT // 1
-#define INPUT			GPIO_Mode_IN  // 0
-#define ALTFUNC		GPIO_Mode_AF  // 2  AN 3
-#define PUSHPULL 	GPIO_OType_PP
-#define ODRAIN 		GPIO_OType_OD
-#define NOPULL		GPIO_PuPd_NOPULL
-#define PULLUP		GPIO_PuPd_UP
-#define PULLDOWN	GPIO_PuPd_DOWN
-#define LOWSPEED 	GPIO_Speed_2MHz
-#define MEDSPEED 	GPIO_Speed_25MHz
-#define FASTSPEED 	GPIO_Speed_50MHz
-#define HIGHSPEED 	GPIO_Speed_100MHz
 
-#define HIGH		SET
-#define LOW			RESET
-*/
-
-void portEnable(GPIOPin portpins) {
+void GPIOEnable(GPIOPin portpins) {
   RCC_APB2PeriphClockCmd(PortPeriph[portpins>>4 & 0x0f], ENABLE);
 }
 
-void portDisable(GPIOPin portpins) {
+void GPIODisable(GPIOPin portpins) {
   RCC_APB2PeriphClockCmd(PortPeriph[portpins>>4 & 0x0f], DISABLE);
 }
 
-void portMode(GPIOPin portpins, uint16_t pinbit, GPIOMode_TypeDef mode,
-              GPIOSpeed_TypeDef clk) {
-		GPIO_InitTypeDef GPIO_InitStructure;
+void GPIOMode(GPIOPin portpins, uint16_t pinbit, uint8_t modes) {
+	GPIO_InitTypeDef GPIO_InitStructure;
 
   RCC_APB2PeriphClockCmd(PortPeriph[portpins>>4 & 0x0f], ENABLE);
 
 	GPIO_InitStructure.GPIO_Pin = pinbit;
-	GPIO_InitStructure.GPIO_Mode = mode;
+//	GPIO_InitStructure.GPIO_Mode = mode;
 //	GPIO_InitStructure.GPIO_OType = otype;
 //	GPIO_InitStructure.GPIO_PuPd = pupd;
-	GPIO_InitStructure.GPIO_Speed = clk;
+//	GPIO_InitStructure.GPIO_Speed = clk;
+	if ( (modes & 0x03) == INPUT ) {
+		switch (modes & (3<<3)) {
+			case NOPULL:
+				GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+			break;
+			case PULLUP:
+				GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+			break;
+			case PULLDOWN:
+				GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD;
+			break;
+		}
+	} else if ( (modes & 0x03) == OUTPUT ) {
+		switch (modes & (1<<2)) {
+			case PUSHPULL:
+				GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+			break;
+			case OPENDRAIN:
+				GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
+			break;
+		}
+	} else if ( (modes & 0x03) == ALTFUNC ) {
+		switch (modes & (1<<2)) {
+			case PUSHPULL:
+				GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+			break;
+			case OPENDRAIN:
+				GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_OD;
+			break;
+		}
+	} else if ( (modes & 0x03) == ANALOGIN ) {
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+	}
+	
+	switch (modes & (3<<5)) {
+		case LOWSPEED:
+			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
+		break;
+		case MEDSPEED:
+			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
+		break;
+		case FASTSPEED:
+		case HIGHSPEED:
+			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+		break;
+	}
 	//
 	GPIO_Init(PinPort(portpins), &GPIO_InitStructure);
 }

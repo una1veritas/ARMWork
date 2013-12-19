@@ -5,11 +5,11 @@
 int main(void) {
 	armcmx_init();
 	
-	pinMode(PA5, OUTPUT);
+	pinMode(PA5, OUTPUT | MEDSPEED);
 	while(1) {
 		digitalWrite(PA5, HIGH);
-		delay(500);
+		delay(1000);
 		digitalWrite(PA5, LOW);
-		delay(500);
+		delay(1000);
 	}
 }

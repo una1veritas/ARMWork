@@ -9,19 +9,16 @@
 #include <stm32f10x.h>
 //#include <stm32f4xx_gpio.h>
 //#include <stm32f4xx_rcc.h>
-//#include <stm32f4xx_usart.h>
+#include <stm32f10x_usart.h>
 //#include <misc.h>
 
 #include "armcmx.h"
-
+#include "usart.h"
 
 enum {
 	USART1Serial = 0,
 	USART2Serial,
 	USART3Serial,
-	UART4Serial,
-	UART5Serial,
-	USART6Serial
 };
 
 usart stdserial;
@@ -73,19 +70,19 @@ uint16_t ring_peek(USARTRing * r) {
 
 void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx) {
 	//
-	uint8_t af = GPIO_AF_7; //GPIO_AF_USART1;
+	uint32_t af = GPIO_Remap_USART1;
 	usx->USARTx = USARTx;
 
 	if ( usx->USARTx == USART1) {
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
-		af = GPIO_AF_7; //GPIO_AF_USART1;
+		af = GPIO_Remap_USART1; //GPIO_AF_USART1;
 		usx->irqn = USART1_IRQn;
 //		usx->usid = USART1Serial;
 		rxring[USART1Serial] = &usx->rxring;
 		txring[USART1Serial] = &usx->txring;
 	} else if (usx->USARTx == USART2) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
-		af = GPIO_AF_7; //GPIO_AF_USART2;
+		af = GPIO_Remap_USART2; //GPIO_AF_USART2;
 		usx->irqn = USART2_IRQn;
 //		usx->usid = USART2Serial;
 //		usx->USARTx = USART2;
@@ -93,39 +90,20 @@ void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx) {
 		txring[USART2Serial] = &usx->txring;
 	} else if (usx->USARTx == USART3) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
-		af = GPIO_AF_7; //GPIO_AF_USART3;
+		af = GPIO_FullRemap_USART3; //GPIO_AF_USART3;
 		usx->irqn = USART3_IRQn;
 //		usx->usid = USART3Serial;
 //		usx->USARTx = USART3;
 		rxring[USART3Serial] = &usx->rxring;
 		txring[USART3Serial] = &usx->txring;
-	} else if (usx->USARTx == UART4) {
-		RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);
-		af = GPIO_AF_5; //GPIO_AF_UART4;
-		usx->irqn = UART4_IRQn;
-//		usx->usid = UART4Serial;
-//		usx->USARTx = UART4;
-		rxring[UART4Serial] = &usx->rxring;
-		txring[UART4Serial] = &usx->txring;
-	} else if (usx->USARTx == UART5) {
-		RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART5, ENABLE);
-		af = GPIO_AF_5; //GPIO_AF_UART5;
-		usx->irqn = UART5_IRQn;
-//		usx->usid = UART5Serial;
-//		usx->USARTx = UART5;
-		rxring[UART5Serial] = &usx->rxring;
-		txring[UART5Serial] = &usx->txring;
 	} 
+  GPIOEnable(rx);
+  GPIOEnable(tx);
+	GPIOMode(rx, PinBit(rx), ALTFUNC | NOPULL | FASTSPEED);
+	GPIOMode(tx, PinBit(tx), ALTFUNC | PUSHPULL | FASTSPEED);
 
-  portEnable(rx);
-  portEnable(tx);
-	portMode(rx, PinBit(rx), GPIO_Mode_AF, GPIO_Speed_50MHz,
-						GPIO_OType_PP, GPIO_PuPd_NOPULL);
-	portMode(tx, PinBit(tx), GPIO_Mode_AF, GPIO_Speed_50MHz,
-						GPIO_OType_PP, GPIO_PuPd_NOPULL);
-
-	GPIO_PinAFConfig(PinPort(rx), PinSource(rx), af);
-	GPIO_PinAFConfig(PinPort(tx), PinSource(tx), af);
+	// f1	
+  GPIO_PinRemapConfig(af, ENABLE);
 }
 
 void usart_begin(usart * usx, uint32_t baud) {
@@ -294,19 +272,5 @@ void USART3_IRQHandler(void) {
 	}
 }
 
-void UART4_IRQHandler(void) {
-	if (USART_GetITStatus(UART4, USART_IT_RXNE )) {
-		ring_enque(txring[UART4Serial], USART_ReceiveData(UART4 ));
-	}
-
-	if (USART_GetITStatus(UART4, USART_IT_TXE )) {
-		if (txring[UART4Serial]->count == 0) {
-			USART_ITConfig(UART4, USART_IT_TXE, (FunctionalState) DISABLE);
-			USART_ClearITPendingBit(UART4, USART_IT_TXE );
-		} else {
-			USART_SendData(UART4, ring_deque(txring[UART4Serial]));
-		}
-	}
-}
 
 
