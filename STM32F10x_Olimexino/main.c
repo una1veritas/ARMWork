@@ -4,15 +4,12 @@
 
 #include "armcmx.h"
 
-void usart_init(usart * usx, USART_TypeDef * usartx, const GPIOPin rx, const GPIOPin tx);
-void usart_begin(usart * usx, const uint32_t baud);
 
 int main(void) {
 	int16_t c;
 	
 	armcmx_init();
 	
-	usart_init(&stdserial, USART2, PA2, PA1);
 	usart_begin(&stdserial, 115200);
 	usart_print(&stdserial, "Hello, welcome to the world of F1!\n");
 	pinMode(PA5, OUTPUT | MEDSPEED);

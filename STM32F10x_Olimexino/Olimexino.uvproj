@@ -349,7 +349,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>STM32F10X_MD ARMCMX USE_STDPERIPH_DRIVER</Define>
+              <Define>STM32F10X_MD ARMCMX USE_STDPERIPH_DRIVER STDSERIAL=2</Define>
               <Undefine></Undefine>
               <IncludePath>..\STM32Libraries\STM32F10x_StdPeriph_Driver\inc;..\STM32F10x_Olimexino;..\armcmx\stm32f10x;..\armcmx;..\STM32F10x_Olimexino</IncludePath>
             </VariousControls>
@@ -447,6 +447,16 @@
               <FileType>1</FileType>
               <FilePath>..\STM32Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f10x_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\STM32Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\STM32Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -471,6 +481,16 @@
               <FileName>usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\armcmx\stm32f10x\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\armcmx\stm32f10x\systick.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\armcmx\stm32f10x\spi.c</FilePath>
             </File>
           </Files>
         </Group>

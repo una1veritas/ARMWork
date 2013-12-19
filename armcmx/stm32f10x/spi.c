@@ -118,39 +118,37 @@ void spi_init(spi * port, SPI_TypeDef * SPIx, GPIOPin sck, GPIOPin miso, GPIOPin
 }
 							
 void spi_begin(spi * port) {	
-	uint8_t af; // = GPIO_AF_SPI1;
+//	uint8_t af; // = GPIO_AF_SPI1;
 
 	/* PCLK2 = HCLK/2 */
 	//RCC_PCLK2Config(RCC_HCLK_Div2);
 	if ( port->SPIx == SPI2 ) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
-		af = GPIO_AF_SPI2;
+//		af = GPIO_AF_SPI2;
 		port->SPIx = SPI2;
 		// PB12, 13, 14, 15
 	} else if ( port->SPIx == SPI3 ) {
 		// SPI3
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI3, ENABLE);
-		af = GPIO_AF_SPI3;
+//		af = GPIO_AF_SPI3;
 		port->SPIx = SPI3;
 	}	else { //if (SPIx == SPI1) {
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, ENABLE);
-		af = GPIO_AF_SPI1;
+//		af = GPIO_AF_SPI1;
 		port->SPIx = SPI1;
 		// sck = PA5 / PB3, miso = PA6/ PB4, mosi = PA7 / PB5, nSS = PA4 / PA15
 	} 
 
-	GPIOMode(PinPort(port->sck), PinBit(port->sck), GPIO_Mode_AF, GPIO_Speed_50MHz,
-			GPIO_OType_PP, GPIO_PuPd_UP);
-	GPIOMode(PinPort(port->miso), PinBit(port->miso), GPIO_Mode_AF, GPIO_Speed_50MHz,
-			GPIO_OType_PP, GPIO_PuPd_UP);
-	GPIOMode(PinPort(port->mosi), PinBit(port->mosi), GPIO_Mode_AF, GPIO_Speed_50MHz,
-			GPIO_OType_PP, GPIO_PuPd_UP);
+	GPIOMode(port->sck, PinBit(port->sck), ALTFUNC | MEDSPEED | PUSHPULL | PULLUP);
+	GPIOMode(port->miso, PinBit(port->miso), ALTFUNC | MEDSPEED | NOPULL | NOPULL);
+	GPIOMode(port->mosi, PinBit(port->mosi), ALTFUNC | MEDSPEED | PUSHPULL | PULLUP);
+	/*
 	GPIO_PinAFConfig(PinPort(port->sck), PinSource(port->sck), af);
 	GPIO_PinAFConfig(PinPort(port->miso), PinSource(port->miso), af);
 	GPIO_PinAFConfig(PinPort(port->mosi), PinSource(port->mosi), af);
+	*/
 	// nSS by software
-	GPIOMode(PinPort(port->nss), PinBit(port->nss), GPIO_Mode_OUT, GPIO_Speed_50MHz,
-			GPIO_OType_PP, GPIO_PuPd_UP);
+	GPIOMode(port->nss, PinBit(port->nss), OUTPUT | MEDSPEED | PUSHPULL | PULLUP);
 	//GPIO_PinAFConfig(PinPort(nss), PinSource(nss), af);
 	
 	// setup has completed

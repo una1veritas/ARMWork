@@ -34,16 +34,16 @@ typedef struct {
 
 extern usart stdserial;
 
-#if defined (STDSERIAL)
-#if (STDSERIAL == 3)
-#define STDUSART 	USART3
-#define STDRX 		PC11
-#define STDTX 		PC10
+#if defined (STDSERIAL) && defined(STM32F10X_MD)
+#if (STDSERIAL == 2)
+#define STDUSART 	USART2
+#define STDRX 		PA2
+#define STDTX 		PA1
 //#warning "using STDSERIAL USART3 for STM32F3 Discovery"
 #elif (STDSERIAL == 1)
 #define STDUSART 	USART1
-#define STDRX 		PC5
-#define STDTX 		PC4
+#define STDRX 		PA10
+#define STDTX 		PA9
 //#warning "using STDSERIAL USART1"
 #endif
 #endif
