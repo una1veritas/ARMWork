@@ -89,6 +89,8 @@ void armcmx_init(void);
 #include "delay.h"
 #include "usart.h"
 
+extern usart stdserial;
+
 #ifdef __cplusplus
 }
 #endif

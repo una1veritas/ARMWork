@@ -351,7 +351,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_MD ARMCMX USE_STDPERIPH_DRIVER STDSERIAL=2</Define>
               <Undefine></Undefine>
-              <IncludePath>..\STM32Libraries\STM32F10x_StdPeriph_Driver\inc;..\STM32F10x_Olimexino;..\armcmx\stm32f10x;..\armcmx;..\STM32F10x_Olimexino</IncludePath>
+              <IncludePath>..\STM32Libraries\STM32F10x_StdPeriph_Driver\inc;..\STM32F10x_Olimexino;..\armcmx\stm32f10x;..\armcmx;..\STM32F10x_Olimexino;..\armcmx\stm32f10x\utility</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

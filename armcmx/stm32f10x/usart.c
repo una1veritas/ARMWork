@@ -21,29 +21,28 @@ enum {
 	USART3Serial,
 };
 
-usart stdserial;
-
 // for irq handlers
-USARTRing * rxring[6], * txring[6];
+USARTRingBuffer * rxring[6], * txring[6];
 
-void ring_clear(USARTRing * r) {
+
+void ring_clear(USARTRingBuffer * r) {
 	r->head = 0;
 	r->tail = 0;
 	r->count = 0;
 }
 
-uint16_t ring_count(USARTRing * r) {
+uint16_t ring_count(USARTRingBuffer * r) {
 	return r->count;
 }
 
-uint8_t ring_is_full(USARTRing * r) {
+uint8_t ring_is_full(USARTRingBuffer * r) {
 	if ((r->head == r->tail) && (r->count > 0)) {
 		return 1;
 	}
 	return 0;
 }
 
-uint16_t ring_enque(USARTRing * r, uint16_t w) {
+uint16_t ring_enque(USARTRingBuffer * r, uint16_t w) {
 	if (ring_is_full(r))
 		return 0xffff;
 	r->buf[r->head++] = w;
@@ -52,7 +51,7 @@ uint16_t ring_enque(USARTRing * r, uint16_t w) {
 	return w;
 }
 
-uint16_t ring_deque(USARTRing * r) {
+uint16_t ring_deque(USARTRingBuffer * r) {
 	uint16_t w;
 	if (ring_count(r) == 0)
 		return 0xffff;
@@ -62,16 +61,15 @@ uint16_t ring_deque(USARTRing * r) {
 	return w;
 }
 
-uint16_t ring_peek(USARTRing * r) {
+uint16_t ring_peek(USARTRingBuffer * r) {
 	if (ring_count(r) == 0)
 		return 0xffff;
 	return r->buf[r->tail];
 }
 
-void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx) {
+void usart_init(usart * usx) {
 	//
 	uint32_t af = GPIO_Remap_USART1;
-	usx->USARTx = USARTx;
 
 	if ( usx->USARTx == USART1) {
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
@@ -97,10 +95,10 @@ void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx) {
 		rxring[USART3Serial] = &usx->rxring;
 		txring[USART3Serial] = &usx->txring;
 	} 
-  GPIOEnable(rx);
-  GPIOEnable(tx);
-	GPIOMode(rx, PinBit(rx), ALTFUNC | NOPULL | FASTSPEED);
-	GPIOMode(tx, PinBit(tx), ALTFUNC | PUSHPULL | FASTSPEED);
+  GPIOEnable(usx->rx);
+  GPIOEnable(usx->tx);
+	GPIOMode(usx->rx, PinBit(usx->rx), ALTFUNC | NOPULL | FASTSPEED);
+	GPIOMode(usx->tx, PinBit(usx->tx), ALTFUNC | PUSHPULL | FASTSPEED);
 
 	// f1	
   GPIO_PinRemapConfig(af, ENABLE);
@@ -110,11 +108,18 @@ void usart_begin(usart * usx, uint32_t baud) {
 	USART_InitTypeDef USART_InitStruct; // this is for the USART1 initilization
 	NVIC_InitTypeDef NVIC_InitStructure; // this is used to configure the NVIC (nested vector interrupt controller)
 
-	USART_InitStruct.USART_BaudRate = baud;	// the baudrate is set to the value we passed into this init function
-	USART_InitStruct.USART_WordLength = USART_WordLength_8b;// we want the data frame size to be 8 bits (standard)
-	USART_InitStruct.USART_StopBits = USART_StopBits_1;	// we want 1 stop bit (standard)
-	USART_InitStruct.USART_Parity = USART_Parity_No;// we don't want a parity bit (standard)
-	USART_InitStruct.USART_HardwareFlowControl = USART_HardwareFlowControl_None; // we don't want flow control (standard)
+	usx->baud = baud;
+	
+	USART_InitStruct.USART_BaudRate = usx->baud;	// the baudrate is set to the value we passed into this init function
+	USART_InitStruct.USART_WordLength = (usx->mode & WORDLENGTH_9BIT ? USART_WordLength_9b : USART_WordLength_8b);// we want the data frame size to be 8 bits (standard)
+	USART_InitStruct.USART_StopBits = ((usx->mode & STOPBITS_15) == STOPBITS_15 ? USART_StopBits_1_5 :
+																			((usx->mode & STOPBITS_2) == STOPBITS_2 ? USART_StopBits_2 : 
+																			((usx->mode & STOPBITS_05) == STOPBITS_05 ? USART_StopBits_0_5 : USART_StopBits_1)));	// we want 1 stop bit (standard)
+	USART_InitStruct.USART_Parity = ( usx->mode & PARITY_ODD ? USART_Parity_Odd : (usx->mode & PARITY_EVEN ? USART_Parity_Even : USART_Parity_No));// we don't want a parity bit (standard)
+	USART_InitStruct.USART_HardwareFlowControl = ((usx->mode & (FLOW_RTS | FLOW_CTS)) == (FLOW_RTS | FLOW_CTS) ? USART_HardwareFlowControl_RTS_CTS :
+																			(usx->mode & FLOW_RTS ? USART_HardwareFlowControl_RTS :
+																			(usx->mode & FLOW_CTS ? USART_HardwareFlowControl_CTS : USART_HardwareFlowControl_None))); 
+														// we don't want flow control (standard)
 	USART_InitStruct.USART_Mode = USART_Mode_Tx | USART_Mode_Rx; // we want to enable the transmitter and the receiver
 
 	USART_Init(usx->USARTx, &USART_InitStruct); // again all the properties are passed to the USART_Init function which takes care of all the bit setting
