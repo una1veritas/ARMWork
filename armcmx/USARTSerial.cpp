@@ -10,11 +10,14 @@
 
 #include "USARTSerial.h"
 
-//USARTSerial Serial = USARTSerial(&usart, PIO1_26, PIO1_27);
+#ifdef STDSERIAL
+USARTSerial Serial = USARTSerial(&stdserial);
+#endif
 
 void USARTSerial::begin(const uint32_t baud) {
-	usart_init(port, USARTx, pinrx, pintx);
-  usart_begin(port, baud);
+	usart_init(port);
+	port->baud = baud;
+  usart_begin(port, port->baud);
 }
 
 size_t USARTSerial::write(const uint8_t w) {

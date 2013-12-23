@@ -75,29 +75,25 @@ void usart_init(usart * usx) {
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
 		af = GPIO_Remap_USART1; //GPIO_AF_USART1;
 		usx->irqn = USART1_IRQn;
-//		usx->usid = USART1Serial;
 		rxring[USART1Serial] = &usx->rxring;
 		txring[USART1Serial] = &usx->txring;
 	} else if (usx->USARTx == USART2) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
 		af = GPIO_Remap_USART2; //GPIO_AF_USART2;
 		usx->irqn = USART2_IRQn;
-//		usx->usid = USART2Serial;
-//		usx->USARTx = USART2;
 		rxring[USART2Serial] = &usx->rxring;
 		txring[USART2Serial] = &usx->txring;
 	} else if (usx->USARTx == USART3) {
 		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
 		af = GPIO_FullRemap_USART3; //GPIO_AF_USART3;
 		usx->irqn = USART3_IRQn;
-//		usx->usid = USART3Serial;
-//		usx->USARTx = USART3;
 		rxring[USART3Serial] = &usx->rxring;
 		txring[USART3Serial] = &usx->txring;
 	} 
   GPIOEnable(usx->rx);
   GPIOEnable(usx->tx);
-	GPIOMode(usx->rx, PinBit(usx->rx), ALTFUNC | NOPULL | FASTSPEED);
+	GPIOMode(usx->rx, PinBit(usx->rx), INPUT | NOPULL | FASTSPEED);
+//	GPIOMode(usx->rx, PinBit(usx->rx), ALTFUNC | NOPULL | FASTSPEED);
 	GPIOMode(usx->tx, PinBit(usx->tx), ALTFUNC | PUSHPULL | FASTSPEED);
 
 	// f1	

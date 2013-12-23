@@ -7,7 +7,7 @@
 #if defined(LPC11UXX)
 #elif defined(STM32F10X_MD)
 #if (STDSERIAL == 2)
-usart stdserial = { USART2, PA2, PA1, 57600, WORDLENGTH_8BIT | FLOW_NONE | PARITY_NONE | STOPBITS_1 };
+usart stdserial = { USART2, PA3, PA2, 57600, WORDLENGTH_8BIT | FLOW_NONE | PARITY_NONE | STOPBITS_1 };
 #elif (STDSERIAL == 1 )
 usart stdserial = { USART1, PA10, PA9, 57600, WORDLENGTH_8BIT | FLOW_NONE | PARITY_NONE | STOPBITS_1 };
 #endif

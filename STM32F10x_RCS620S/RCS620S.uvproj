@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>Target 1</TargetName>
+      <TargetName>RCS620S</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -43,14 +43,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\</OutputDirectory>
-          <OutputName>Olimexino</OutputName>
+          <OutputDirectory>.\RCS620S\</OutputDirectory>
+          <OutputName>RCS620S</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\</ListingPath>
+          <ListingPath>.\RCS620S\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -351,7 +351,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_MD ARMCMX USE_STDPERIPH_DRIVER STDSERIAL=2</Define>
               <Undefine></Undefine>
-              <IncludePath>..\STM32Libraries\STM32F10x_StdPeriph_Driver\inc;..\STM32F10x_Olimexino;..\armcmx\stm32f10x;..\armcmx;..\STM32F10x_Olimexino;..\armcmx\stm32f10x\utility</IncludePath>
+              <IncludePath>..\STM32Libraries\STM32F10x_StdPeriph_Driver\inc;..\STM32F10x_Olimexino;..\armcmx\stm32f10x;..\armcmx;..\STM32F10x_Olimexino;..\armcmx\stm32f10x\utility;..\armcmx\tools\RFID</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -403,11 +403,6 @@
           <GroupName>User</GroupName>
           <Files>
             <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\main.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f10x_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\stm32f10x_it.c</FilePath>
@@ -416,6 +411,11 @@
               <FileName>system_stm32f10x.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\system_stm32f10x.c</FilePath>
+            </File>
+            <File>
+              <FileName>main.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\main.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -447,16 +447,6 @@
               <FileType>1</FileType>
               <FilePath>..\STM32Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.c</FilePath>
             </File>
-            <File>
-              <FileName>stm32f10x_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\STM32Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f10x_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\STM32Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -483,9 +473,29 @@
               <FilePath>..\armcmx\stm32f10x\usart.c</FilePath>
             </File>
             <File>
-              <FileName>systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\armcmx\stm32f10x\systick.c</FilePath>
+              <FileName>Print.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\armcmx\Print.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Stream.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\armcmx\Stream.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>USARTSerial.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\armcmx\USARTSerial.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>RCS620S.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\armcmx\tools\RFID\RCS620S.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>ISO14443.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\armcmx\tools\RFID\ISO14443.cpp</FilePath>
             </File>
           </Files>
         </Group>

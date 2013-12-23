@@ -54,10 +54,10 @@ struct ISO14443Card : public Printable  {
 	//
 	byte type;
 	byte IDLength;
-  byte ID[NFCID_MAXLENGTH];
+	byte ID[NFCID_MAXLENGTH];
   //
-	word atqa;
-	byte sak;
+//	word atqa;
+//	byte sak;
 
 public:
 
@@ -92,8 +92,6 @@ public:
 //	size_t printOn(Print & pr) const;
   
 };
-
-
 
 
 #endif /* NFCCARD_H_ */

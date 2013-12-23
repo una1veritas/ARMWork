@@ -7,17 +7,21 @@
 #ifndef RCS620S_H_
 #define RCS620S_H_
 
+#include <stdio.h>
+#include <string.h>
 #include <inttypes.h>
 
+#if defined (ARDUINO)
 #if ARDUINO >= 100
 #include <Arduino.h>
 #else
 #include <Wprogram.h>
 #include <Print.h>
-#include <HardwareSerial.h>
 #endif
-
-#include <SoftwareSerial.h>
+#elif defined (ARMCMX)
+#include "armcmx.h"
+#include "USARTSerial.h"
+#endif
 
 #include "ISO14443.h"
 
@@ -34,19 +38,17 @@
 
 class RCS620S {
 public:
-    RCS620S();
     RCS620S(Stream & ser);
 
-    inline void begin() { init(); }
-    int init(void);
+    int start(void);
 //    int polling(const byte brtype = 0x01, uint16_t syscode = 0xffff);
 	byte listPassiveTarget(byte * data, const byte brty =
-			TypeA, const word syscode = 0xffff);
+			NFC::CARDTYPE_MIFARE, const word syscode = 0xffff);
 
     int CommunicateThruEx(uint8_t* command, uint8_t commandLen);
     int requestService(uint16_t);
     int readWithoutEncryption(uint16_t serviceCode, word blknum, byte* responce);
-    int rfOff(void);
+    int RFOff(void);
 
     int push(const uint8_t* data, uint8_t dataLen);
 
@@ -59,21 +61,17 @@ private:
         const uint8_t* data,
         uint16_t len);
 
-    void writeSerial(
+    void write(
         const uint8_t* data,
         uint16_t len);
-    int readSerial(
+    int read(
         uint8_t* data,
         uint16_t len);
-    void flushSerial(void);
+    void flush(void);
 
     int checkTimeout(unsigned long t0);
 
     Stream & port;
-    const enum {
-    	HARDWARESERIAL,
-    	SOFTWARESERIAL
-    } portType;
     int stat;
 public:
     unsigned long timeout;

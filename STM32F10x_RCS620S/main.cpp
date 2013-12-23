@@ -4,6 +4,12 @@
 
 #include "armcmx.h"
 #include "olimexino.h"
+#include "USARTSerial.h"
+#include "RCS620S.h"
+
+usart usart1 = { USART1, PA10, PA9, 115200, WORDLENGTH_8BIT | FLOW_NONE | PARITY_NONE | STOPBITS_1 };
+USARTSerial Serial1(&usart1);
+RCS620S nfcreader(Serial1);
 
 int main(void) {
 	int16_t c;
@@ -11,8 +17,12 @@ int main(void) {
 	
 	armcmx_init();
 	
+	Serial1.begin(115200);
+
 	usart_begin(&stdserial, 115200);
 	usart_print(&stdserial, "Hello, welcome to the world of F1!\n");
+	
+	nfcreader.start();
 	
 	pinMode(USERLED1, OUTPUT | MEDSPEED);
 	pinMode(USERLED2, OUTPUT | MEDSPEED);
