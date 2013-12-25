@@ -473,10 +473,10 @@
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>15</ColumnNumber>
+      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>274</TopLine>
-      <CurrentLine>312</CurrentLine>
+      <TopLine>154</TopLine>
+      <CurrentLine>15</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\armcmx\tools\RFID\RCS620S.cpp</PathWithFileName>
       <FilenameWithoutPath>RCS620S.cpp</FilenameWithoutPath>
