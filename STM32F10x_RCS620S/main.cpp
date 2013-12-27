@@ -12,7 +12,7 @@ USARTSerial Serial1(&usart1);
 RCS620S nfcreader(Serial1);
 
 #define COMMAND_TIMEOUT 400
-#define POLLING_INTERVAL 500
+#define POLLING_INTERVAL 1000
  
 int main(void) {
 	int16_t c;

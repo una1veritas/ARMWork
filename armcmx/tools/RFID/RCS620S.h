@@ -37,13 +37,12 @@
  * -------------------------------- */
 
 class RCS620S {
-public:
-    RCS620S(Stream & ser);
+	public:
+		RCS620S(Stream & ser);
 
     int start(void);
-//    int polling(const byte brtype = 0x01, uint16_t syscode = 0xffff);
-	byte listPassiveTarget(byte * data, const byte brty =
-			NFC::CARDTYPE_MIFARE, const word syscode = 0xffff);
+	//    int polling(const byte brtype = 0x01, uint16_t syscode = 0xffff);
+		byte listPassiveTarget(byte * data, const byte brty = NFC::CARDTYPE_MIFARE, const word syscode = 0xffff);
 
     int CommunicateThruEx(uint8_t* command, uint8_t commandLen);
     int requestService(uint16_t);
@@ -53,7 +52,10 @@ public:
     int push(const uint8_t* data, uint8_t dataLen);
 
 private:
-    word rwCommand(uint8_t* command, const word commandLen, const word maxresplen = RCS620S_MAX_RW_RESPONSE_LEN); //,
+	const static uint8_t ACKSEQ[6];
+
+	word command(uint8_t* com, const word len, const word resplen = RCS620S_MAX_RW_RESPONSE_LEN);
+	bool waitACK();
 //        uint8_t response[RCS620S_MAX_RW_RESPONSE_LEN],
  //       uint16_t* responseLen);
     void cancel(void);
