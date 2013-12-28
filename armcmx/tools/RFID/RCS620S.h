@@ -42,7 +42,7 @@ class RCS620S {
 
     int start(void);
 	//    int polling(const byte brtype = 0x01, uint16_t syscode = 0xffff);
-		byte listPassiveTarget(byte * data, const byte brty = NFC::CARDTYPE_MIFARE, const word syscode = 0xffff);
+		byte listPassiveTarget(byte * data, const byte brty = NFC::BAUDTYPE_212K_F, const word syscode = 0xffff);
 
     int CommunicateThruEx(uint8_t* command, uint8_t commandLen);
     int requestService(uint16_t);

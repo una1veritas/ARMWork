@@ -86,10 +86,10 @@ byte RCS620S::listPassiveTarget(byte * resp, const byte brty, const word syscode
 	memcpy(resp, (const char *) "\xd4\x4a\x01\x01\x00\xff\xff\x00\x00", 9);
 	resp[3] = brty;
 	switch (brty) {
-	case 0x00:
+	case NFC::BAUDTYPE_106K_A:
 		cmdlen = 4;
 		break;
-	case 0x01:
+	case NFC::BAUDTYPE_212K_F:
 		resp[5] = lowByte(syscode);
 		resp[6] = highByte(syscode);
 		cmdlen = 9;
