@@ -6,7 +6,7 @@
 
 #include "RCS620S.h"
 
-#define DEBUG
+//#define DEBUG
 
 /* --------------------------------
  * Constant
@@ -14,25 +14,10 @@
 
 #define RCS620S_DEFAULT_TIMEOUT  2000
 
-/* --------------------------------
- * Variable
- * -------------------------------- */
 
-/* --------------------------------
- * Prototype Declaration
- * -------------------------------- */
+const uint8_t RCS620S::ACK_FRAME[6] = { 0x00, 0x00, 0xff, 0x00, 0xff, 0x00 };
+const uint8_t RCS620S::FRAME_HEADER[5] = { 0x00, 0x00, 0xff, 0xff, 0xff }; // normal frame 0--2, extended 0--4
 
-/* --------------------------------
- * Macro
- * -------------------------------- */
-
-/* --------------------------------
- * Function
- * -------------------------------- */
-
-/* ------------------------
- * public
- * ------------------------ */
 
 RCS620S::RCS620S(Stream & ser) : port(ser), stat(0) {
 	this->timeout = RCS620S_DEFAULT_TIMEOUT;
@@ -40,7 +25,7 @@ RCS620S::RCS620S(Stream & ser) : port(ser), stat(0) {
 
 int RCS620S::start(void) {
 //	int ret;
-	uint8_t response[RCS620S_MAX_RW_RESPONSE_LEN];
+	uint8_t response[RCS620S_MAX_DATA_LEN];
 	uint16_t len;
 
 	/* RFConfiguration (various timings) */
@@ -77,13 +62,13 @@ int RCS620S::start(void) {
 }
 
 //int RCS620S::polling(const byte brty, uint16_t systemCode) {
-byte RCS620S::listPassiveTarget(byte * resp, const byte brty, const word syscode) {
+byte RCS620S::InListPassiveTarget(byte * resp, const byte brty, const word syscode) {
 	int ret;
-//	uint8_t buf[9];
-//	uint16_t len;
+	const uint8_t MaxTg = 0x01;
 	uint16_t cmdlen;
 	/* InListPassiveTarget */
 	memcpy(resp, (const char *) "\xd4\x4a\x01\x01\x00\xff\xff\x00\x00", 9);
+	resp[2] = MaxTg;
 	resp[3] = brty;
 	switch (brty) {
 	case NFC::BAUDTYPE_106K_A:
@@ -107,8 +92,7 @@ byte RCS620S::listPassiveTarget(byte * resp, const byte brty, const word syscode
 	Serial.println();
 #endif
 
-	if (!ret //|| (responseLen != 22)
-			|| ( memcmp(resp, (const char *) "\xd5\x4b\x01", 3) != 0) ) {
+	if (!ret || ( memcmp(resp, (const char *) "\xd5\x4b\x01", 3) != 0) ) {
 		return 0;
 	}
 
@@ -128,7 +112,7 @@ byte RCS620S::listPassiveTarget(byte * resp, const byte brty, const word syscode
 int RCS620S::CommunicateThruEx(uint8_t* commresp, uint8_t commandLen) {
 	int ret;
 	uint16_t commandTimeout;
-	uint8_t buf[RCS620S_MAX_RW_RESPONSE_LEN];
+	uint8_t buf[RCS620S_MAX_DATA_LEN];
 //	uint16_t len;
 
 	if (this->timeout >= (0x10000 / 2)) {
@@ -182,7 +166,7 @@ int RCS620S::CommunicateThruEx(uint8_t* commresp, uint8_t commandLen) {
 
 int RCS620S::requestService(uint16_t serviceCode) {
 	int ret;
-	uint8_t buf[RCS620S_MAX_CARD_RESPONSE_LEN];
+	uint8_t buf[RCS620S_MAX_DATA_LEN];
 
 	buf[0] = FELICA_CMD_REQUESTSERVICE;
 	memcpy(buf + 1, idm, 8);
@@ -226,7 +210,7 @@ int RCS620S::readWithoutEncryption(uint16_t serviceCode, word blknum,
 
 int RCS620S::RFOff(void) {
 	int ret;
-	uint8_t response[RCS620S_MAX_RW_RESPONSE_LEN];
+	uint8_t response[RCS620S_MAX_DATA_LEN];
 	uint16_t len;
 
 	/* RFConfiguration (RF field) */
@@ -241,7 +225,7 @@ int RCS620S::RFOff(void) {
 
 int RCS620S::push(const uint8_t* data, uint8_t dataLen) {
 	int ret;
-	uint8_t buf[RCS620S_MAX_CARD_RESPONSE_LEN];
+	uint8_t buf[RCS620S_MAX_DATA_LEN];
 	uint8_t responseLen;
 
 	if (dataLen > 224) {
@@ -280,7 +264,6 @@ int RCS620S::push(const uint8_t* data, uint8_t dataLen) {
  * private
  * ------------------------ */
 
-const uint8_t RCS620S::ACKSEQ[6] = { 0x00, 0x00, 0xff, 0x00, 0xff, 0x00 };
 
 bool RCS620S::waitACK() {
 	uint16_t nread = 0;
@@ -292,7 +275,7 @@ bool RCS620S::waitACK() {
 		if (checkTimeout(t0)) 
 			break;
 		if (port.available() > 0) {
-			if ( ACKSEQ[nread] == port.read() ) {
+			if ( ACK_FRAME[nread] == port.read() ) {
 				nread++;
 			} else {
 				break;
@@ -324,31 +307,28 @@ word RCS620S::command(uint8_t* cmdresp, const uint16_t cmdlen, const uint16_t ma
 //,	uint8_t response[RCS620S_MAX_RW_RESPONSE_LEN], uint16_t* responseLen)
 {
 	int ret;
-	uint8_t buf[9];
+	uint8_t buf[8];
 	uint16_t resplen;
 
-	uint8_t dcs = calcDCS(cmdresp, cmdlen);
+	calcDCS(cmdresp, cmdlen);
 	/* transmit the command */
-	buf[0] = 0x00;
-	buf[1] = 0x00;
-	buf[2] = 0xff;
 	if (cmdlen <= 255) {
 		/* normal frame */
-		buf[3] = cmdlen;
-		buf[4] = (uint8_t) - buf[3];
-		write(buf, 5);
+		buf[0] = cmdlen;
+		buf[1] = (uint8_t) - cmdlen;
+		write(FRAME_HEADER, 3);
+		write(buf, 2);
 	} else {
 		/* extended frame */
-		buf[3] = 0xff;
-		buf[4] = 0xff;
-		buf[5] = (uint8_t) ((cmdlen >> 8) & 0xff);
-		buf[6] = (uint8_t) ((cmdlen >> 0) & 0xff);
-		buf[7] = (uint8_t) -(buf[5] + buf[6]);
-		write(buf, 8);
+		buf[0] = (uint8_t) ((cmdlen >> 8) & 0xff);
+		buf[1] = (uint8_t) ((cmdlen >> 0) & 0xff);
+		buf[2] = (uint8_t) -(buf[0] + buf[1]);
+		write(FRAME_HEADER, 5);
+		write(buf, 3);
 	}
 	write(cmdresp, cmdlen);
-	buf[0] = dcs;
-	buf[1] = 0x00;
+	buf[0] = DCS;
+	buf[1] = POSTAMBLE;
 	write(buf, 2);
 
 	/* receive an ACK */
@@ -370,7 +350,7 @@ word RCS620S::command(uint8_t* cmdresp, const uint16_t cmdlen, const uint16_t ma
 	if (!ret) {
 		cancel();
 		return 0;
-	} else if (memcmp(buf, ACKSEQ, 3) != 0) {
+	} else if (memcmp(buf, ACK_FRAME, 3) != 0) {
 		return 0;
 	}
 	if ((buf[3] == 0xff) && (buf[4] == 0xff)) {
@@ -385,7 +365,8 @@ word RCS620S::command(uint8_t* cmdresp, const uint16_t cmdlen, const uint16_t ma
 		}
 		resplen = buf[3];
 	}
-	if (resplen > RCS620S_MAX_RW_RESPONSE_LEN) {
+	if (resplen > RCS620S_MAX_DATA_LEN) {
+		// extended frame
 		return 0;
 	}
 
@@ -395,10 +376,10 @@ word RCS620S::command(uint8_t* cmdresp, const uint16_t cmdlen, const uint16_t ma
 		return 0;
 	}
 
-	dcs = calcDCS(cmdresp, resplen);
+	calcDCS(cmdresp, resplen);
 
 	ret = read(buf, 2);
-	if (!ret || (buf[0] != dcs) || (buf[1] != 0x00)) {
+	if (!ret || (buf[0] != DCS) || (buf[1] != 0x00)) {
 		cancel();
 		return 0;
 	}
@@ -408,19 +389,19 @@ word RCS620S::command(uint8_t* cmdresp, const uint16_t cmdlen, const uint16_t ma
 
 void RCS620S::cancel(void) {
 	/* transmit an ACK */
-	write(ACKSEQ, 6);
+	write(ACK_FRAME, 6);
 	delay(1);
 	flush();
 }
 
-uint8_t RCS620S::calcDCS(const uint8_t* data, uint16_t len) {
+void RCS620S::calcDCS(const uint8_t* data, uint16_t len) {
 	uint8_t sum = 0;
 
 	for (uint16_t i = 0; i < len; i++) {
 		sum += data[i];
 	}
 
-	return (uint8_t) -(sum & 0xff);
+	DCS = (uint8_t) -(sum & 0xff);
 }
 
 void RCS620S::write(const uint8_t* data, uint16_t len) {

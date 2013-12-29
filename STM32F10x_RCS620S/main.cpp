@@ -44,28 +44,24 @@ int main(void) {
 				usart_write(&stdserial, toupper(c&0xff));
 		}
 		
-		if ( since + 5000 < millis() ) {
+		if ( since + 3000 < millis() ) {
+			since = millis();
+			digitalWrite(USERLED1, HIGH);
 				nfcreader.timeout = COMMAND_TIMEOUT;
-				reslen = nfcreader.listPassiveTarget(tmp);
+				reslen = nfcreader.InListPassiveTarget(tmp);
 		 
 			if(reslen) {
 				Serial.print("IDm: ");
-				//lcd.print("IDm:");
-				//lcd.setCursor(0, 1);
-				for(i = 0; i < 8; i++)
-				{
-					if(nfcreader.idm[i] / 0x10 == 0) 
-						Serial.print(0); //lcd.print(0);
-					//lcd.print(rcs620s.idm[i], HEX);
-					Serial.print(nfcreader.idm[i], HEX);
+				for(i = 0; i < 8; i++) {
+					Serial.print(nfcreader.idm[i]>>8, HEX);
+					Serial.print(nfcreader.idm[i]&0x0f, HEX);
+					Serial.print(' ');
 				}
-			} else {
-				Serial.print("polling...");
-		//    lcd.print("Polling...");
+				Serial.println(".\n");
 			}
 		 
 			nfcreader.RFOff();
-			delay(POLLING_INTERVAL);
+			digitalWrite(USERLED1, LOW);
 		}
 	}
 }

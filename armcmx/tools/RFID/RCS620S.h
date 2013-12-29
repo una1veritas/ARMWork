@@ -29,37 +29,42 @@
  * Constants
  * -------------------------------- */
 
-#define RCS620S_MAX_CARD_RESPONSE_LEN    254
-#define RCS620S_MAX_RW_RESPONSE_LEN      265
+#define RCS620S_MAX_DATA_LEN    255
+#define RCS620S_MAX_EXTENDED_DATA_LEN      265
 
 /* --------------------------------
  * Class Declaration
  * -------------------------------- */
 
 class RCS620S {
+	
 	public:
 		RCS620S(Stream & ser);
 
     int start(void);
-	//    int polling(const byte brtype = 0x01, uint16_t syscode = 0xffff);
-		byte listPassiveTarget(byte * data, const byte brty = NFC::BAUDTYPE_212K_F, const word syscode = 0xffff);
-
-    int CommunicateThruEx(uint8_t* command, uint8_t commandLen);
-    int requestService(uint16_t);
+		byte InListPassiveTarget(byte * data, const byte brty = NFC::BAUDTYPE_212K_F, const word syscode = 0xffff);
+		
+		int CommunicateThruEx(uint8_t* command, uint8_t commandLen);
+		int requestService(uint16_t);
     int readWithoutEncryption(uint16_t serviceCode, word blknum, byte* responce);
     int RFOff(void);
 
     int push(const uint8_t* data, uint8_t dataLen);
 
 private:
-	const static uint8_t ACKSEQ[6];
+	const static uint8_t ACK_FRAME[6];
+	const static uint8_t ACK_FRAME_LEN = 6;
+	const static uint8_t FRAME_HEADER[5];
+	uint16_t LEN;
+	uint8_t LCS;
+	uint8_t DCS;
+	const static uint8_t POSTAMBLE = 0x00;
 
-	word command(uint8_t* com, const word len, const word resplen = RCS620S_MAX_RW_RESPONSE_LEN);
+	word command(uint8_t* com, const word len, const word resplen = RCS620S_MAX_DATA_LEN);
 	bool waitACK();
-//        uint8_t response[RCS620S_MAX_RW_RESPONSE_LEN],
- //       uint16_t* responseLen);
+
     void cancel(void);
-    uint8_t calcDCS(
+    void calcDCS(
         const uint8_t* data,
         uint16_t len);
 
