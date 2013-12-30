@@ -22,7 +22,7 @@ enum {
 };
 
 // for irq handlers
-USARTRingBuffer * rxring[6], * txring[6];
+USARTRingBuffer * rxring[64], * txring[64];
 
 
 void ring_clear(USARTRingBuffer * r) {
@@ -146,13 +146,14 @@ size_t usart_polling_write(usart * usx, const uint16_t w) {
 
 size_t usart_write(usart * usx, const uint16_t w) {
 //	static uint16 lastchar; for two or more conseq. returns
-	uint16_t waitcount = 7;
-	while ( waitcount > 0 &&
-				((ring_count(&usx->txring) > 0 && iscntrl(w))
-				|| ring_is_full(&usx->txring) ) ) {
-		//delay_us(667);
-		waitcount--;
+	
+	uint32_t swatch = micros();
+	while ( (swatch + 667 < micros()) &&
+//				( (ring_count(&usx->txring) > 0 ) || 
+				ring_is_full(&usx->txring) ) {
+					__NOP();
 	}
+	
 	USART_ITConfig(usx->USARTx, USART_IT_TXE, DISABLE);
 	ring_enque(&usx->txring, w); //&txring[usx->usid], w);
 	USART_ITConfig(usx->USARTx, USART_IT_TXE, ENABLE);

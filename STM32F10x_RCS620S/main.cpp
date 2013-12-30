@@ -12,15 +12,15 @@ USARTSerial Serial1(&usart1);
 RCS620S nfcreader(Serial1);
 
 #define COMMAND_TIMEOUT 400
-#define POLLING_INTERVAL 1000
- 
+#define POLLING_INTERVAL 2000
+ 		
 int main(void) {
 	int16_t c;
 	uint32_t since;
 	uint16_t reslen;
 	uint8_t tmp[64];
-	
-	int i;
+	uint16_t blklist[] = { 0x00 };
+	static uint8_t payload[] = { 0x00, 0xff, 0xff, 0x01, 0x00 };
 	
 	armcmx_init();
 	
@@ -44,24 +44,47 @@ int main(void) {
 				usart_write(&stdserial, toupper(c&0xff));
 		}
 		
-		if ( since + 3000 < millis() ) {
-			since = millis();
+		if ( since + POLLING_INTERVAL < millis() ) {
 			digitalWrite(USERLED1, HIGH);
-				nfcreader.timeout = COMMAND_TIMEOUT;
-				reslen = nfcreader.InListPassiveTarget(tmp);
+			nfcreader.timeout = COMMAND_TIMEOUT;  
+			*((uint16_t*) &payload[1]) = (word) 0x00fe;
+			reslen = nfcreader.InListPassiveTarget(1, NFC::BAUDTYPE_212K_F, payload, tmp);
 		 
 			if(reslen) {
-				Serial.print("IDm: ");
-				for(i = 0; i < 8; i++) {
-					Serial.print(nfcreader.idm[i]>>8, HEX);
-					Serial.print(nfcreader.idm[i]&0x0f, HEX);
-					Serial.print(' ');
-				}
+				digitalWrite(USERLED2, HIGH);
+				
+				Serial.print("IDm:");
+				Serial.printBytes(nfcreader.idm, 8);
+				Serial.println(".");
+				Serial.print("PMm:");
+				Serial.printBytes(nfcreader.pmm, 8);
 				Serial.println(".\n");
+				//
+				
+				reslen = nfcreader.FeliCa_RequestService(0x1a8b);
+				Serial.print("Req. Service resp.: ");
+				Serial.println(reslen, HEX);
+				if ( reslen != 0xffff ) {
+					Serial.println("FCF ID Card: ");
+					reslen = nfcreader.FeliCa_ReadWithoutEncryption((word)0x1a8b, 0, tmp );
+					if ( reslen != 0 ) {
+						Serial.printBytes(tmp, reslen*16);
+						Serial.print(", \"");
+						for(int i = 0; i < 16; i++) {
+							if ( isprint(tmp[i]) )
+								Serial.print((char)tmp[i]);
+							else
+								Serial.print(' ');
+						}
+						Serial.println('"');
+					}
+				}
+				digitalWrite(USERLED2, LOW);
+				Serial.flush();
 			}
-		 
 			nfcreader.RFOff();
 			digitalWrite(USERLED1, LOW);
+			since = millis();
 		}
 	}
 }

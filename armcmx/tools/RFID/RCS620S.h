@@ -42,11 +42,11 @@ class RCS620S {
 		RCS620S(Stream & ser);
 
     int start(void);
-		byte InListPassiveTarget(byte * data, const byte brty = NFC::BAUDTYPE_212K_F, const word syscode = 0xffff);
+		byte InListPassiveTarget(const uint8_t maxtg, const byte brty, const byte * payload, byte * data);
 		
 		int CommunicateThruEx(uint8_t* command, uint8_t commandLen);
-		int requestService(uint16_t);
-    int readWithoutEncryption(uint16_t serviceCode, word blknum, byte* responce);
+		uint16_t FeliCa_RequestService(uint16_t);
+    uint16_t FeliCa_ReadWithoutEncryption(uint16_t serviceCode, word blknum, byte* responce);
     int RFOff(void);
 
     int push(const uint8_t* data, uint8_t dataLen);
@@ -60,8 +60,8 @@ private:
 	uint8_t DCS;
 	const static uint8_t POSTAMBLE = 0x00;
 
-	word command(uint8_t* com, const word len, const word resplen = RCS620S_MAX_DATA_LEN);
-	bool waitACK();
+	uint16_t command(uint8_t* com, const word len, const word resplen = RCS620S_MAX_DATA_LEN);
+	uint16_t waitACK(uint8_t n = ACK_FRAME_LEN);
 
     void cancel(void);
     void calcDCS(

@@ -80,7 +80,7 @@ public:
     size_t print(float, const int = 2);
     size_t print(const Printable&);
     
-		size_t printBytes(uint8_t * array, uint8_t length, char sep = ' ');
+		size_t printBytes(const uint8_t * array, const uint8_t length, char sep = ' ');
 
 //    size_t println(const __FlashStringHelper *);
 //    size_t println(const String &s);

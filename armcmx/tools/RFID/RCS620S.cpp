@@ -61,36 +61,26 @@ int RCS620S::start(void) {
 	return 1;
 }
 
-//int RCS620S::polling(const byte brty, uint16_t systemCode) {
-byte RCS620S::InListPassiveTarget(byte * resp, const byte brty, const word syscode) {
+//(const uint8_t maxtg, const byte brty, byte * data)
+byte RCS620S::InListPassiveTarget(const uint8_t maxtg, const byte brty, const uint8_t * payload, byte * resp) {
 	int ret;
-	const uint8_t MaxTg = 0x01;
 	uint16_t cmdlen;
 	/* InListPassiveTarget */
-	memcpy(resp, (const char *) "\xd4\x4a\x01\x01\x00\xff\xff\x00\x00", 9);
-	resp[2] = MaxTg;
+	resp[0] = RCS956_COMMAND;
+	resp[1] = RCS956_COMMAND_InListPassiveTarget;
+	resp[2] = maxtg;
 	resp[3] = brty;
 	switch (brty) {
 	case NFC::BAUDTYPE_106K_A:
 		cmdlen = 4;
 		break;
 	case NFC::BAUDTYPE_212K_F:
-		resp[5] = lowByte(syscode);
-		resp[6] = highByte(syscode);
+	case NFC::BAUDTYPE_424K_F:
+		memcpy(resp+4, payload, 5);
 		cmdlen = 9;
 		break;
 	}
 	ret = command(resp, cmdlen);
-#ifdef DEBUG
-	Serial.print("command ret = ");
-	Serial.println(ret, HEX);
-	for(int i = 0; i < ret; i++) {
-		Serial.print(resp[i]>>4, HEX);
-		Serial.print(resp[i]&0x0f, HEX);
-		Serial.print(' ');
-	}
-	Serial.println();
-#endif
 
 	if (!ret || ( memcmp(resp, (const char *) "\xd5\x4b\x01", 3) != 0) ) {
 		return 0;
@@ -129,30 +119,8 @@ int RCS620S::CommunicateThruEx(uint8_t* commresp, uint8_t commandLen) {
 	buf[4] = (uint8_t) (commandLen + 1);
 	memcpy(buf + 5, commresp, commandLen);
 
-#ifdef DEBUG
-	Serial.print("command cmdlen = ");
-	Serial.println(commandLen, HEX);
-	Serial.print("<< ");
-	for(int i = 0; i < commandLen+5; i++) {
-		Serial.print(buf[i]>>4, HEX);
-		Serial.print(buf[i]&0x0f, HEX);
-		Serial.print(' ');
-	}
-	Serial.println();
-#endif
-
 	ret = command(buf, 5 + commandLen);
-#ifdef DEBUG
-	Serial.print("command ret = ");
-	Serial.println(ret, HEX);
-	Serial.print(">> ");
-	for(int i = 0; i < ret; i++) {
-		Serial.print(buf[i]>>4, HEX);
-		Serial.print(buf[i]&0x0f, HEX);
-		Serial.print(' ');
-	}
-	Serial.println();
-#endif
+
 	if (!ret || (buf[0] != 0xd5) || (buf[1] != 0xa1)
 			|| (buf[2] != 0x00) ) {
 		return 0;
@@ -164,9 +132,9 @@ int RCS620S::CommunicateThruEx(uint8_t* commresp, uint8_t commandLen) {
 	return ret;
 }
 
-int RCS620S::requestService(uint16_t serviceCode) {
+uint16_t RCS620S::FeliCa_RequestService(uint16_t serviceCode) {
 	int ret;
-	uint8_t buf[RCS620S_MAX_DATA_LEN];
+	uint8_t buf[32];
 
 	buf[0] = FELICA_CMD_REQUESTSERVICE;
 	memcpy(buf + 1, idm, 8);
@@ -185,7 +153,7 @@ int RCS620S::requestService(uint16_t serviceCode) {
 	return ret;
 }
 
-int RCS620S::readWithoutEncryption(uint16_t serviceCode, word blknum,
+uint16_t RCS620S::FeliCa_ReadWithoutEncryption(uint16_t serviceCode, word blknum,
 		byte* responce) {
 	int ret;
 	uint8_t buf[32];
@@ -265,41 +233,34 @@ int RCS620S::push(const uint8_t* data, uint8_t dataLen) {
  * ------------------------ */
 
 
-bool RCS620S::waitACK() {
+uint16_t RCS620S::waitACK(uint8_t n) {
 	uint16_t nread = 0;
 	
 	/* receive an ACK */
 	unsigned long t0 = millis();
 
-	while (nread < 6) {
+	while (nread < n) {
 		if (checkTimeout(t0)) 
 			break;
-		if (port.available() > 0) {
-			if ( ACK_FRAME[nread] == port.read() ) {
-				nread++;
-			} else {
-				break;
-			}
+		if ( !port.available() ) 
+			continue;
+		if ( ACK_FRAME[nread] == port.read() ) {
+			nread++;
+		} else {
+			break;
 		}
 	}
 
 #ifdef DEBUG
-	Serial.print("ACK [");
+	Serial.print("ACK (");
 	Serial.print(nread);
-	Serial.print("] ");
+	Serial.print("); ");
 #endif
 
-	if ( nread != 6 ) {
-		cancel();
-#ifdef DEBUG
-		Serial.println(" canceled.");
-#endif
-		return false;
+	if ( nread != n ) {
+		return nread;
 	}
-#ifdef DEBUG
-	Serial.println(" received.");
-#endif
-	return true;
+	return nread;
 }
 
 
@@ -307,9 +268,14 @@ word RCS620S::command(uint8_t* cmdresp, const uint16_t cmdlen, const uint16_t ma
 //,	uint8_t response[RCS620S_MAX_RW_RESPONSE_LEN], uint16_t* responseLen)
 {
 	int ret;
-	uint8_t buf[8];
+	uint8_t buf[5];
 	uint16_t resplen;
 
+#ifdef DEBUG
+	Serial.print("command ");
+	Serial.printBytes(cmdresp, cmdlen);
+	Serial.print("; ");
+#endif
 	calcDCS(cmdresp, cmdlen);
 	/* transmit the command */
 	if (cmdlen <= 255) {
@@ -330,43 +296,39 @@ word RCS620S::command(uint8_t* cmdresp, const uint16_t cmdlen, const uint16_t ma
 	buf[0] = DCS;
 	buf[1] = POSTAMBLE;
 	write(buf, 2);
-
+	
 	/* receive an ACK */
 	if ( !waitACK() ) 
 		return 0;
 
-	/* receive a response */
-	ret = read(buf, 5);
-#ifdef DEBUG
-	Serial.print("received resp, ");
-	Serial.println(ret);
-	for(int i = 0; i < ret; i++) {
-		Serial.print(buf[i]>>4, HEX);
-		Serial.print(buf[i]&0x0f, HEX);
-		Serial.print(' ');
-	}
-	Serial.println();
-#endif
-	if (!ret) {
+	/* receive a frame header of response */
+	ret = waitACK(3);
+	if (!ret || (ret != 3) ) {
+		// may be timed-out., or something going wrong.
 		cancel();
 		return 0;
-	} else if (memcmp(buf, ACK_FRAME, 3) != 0) {
-		return 0;
 	}
-	if ((buf[3] == 0xff) && (buf[4] == 0xff)) {
-		ret = read(buf + 5, 3);
-		if (!ret || (((buf[5] + buf[6] + buf[7]) & 0xff) != 0)) {
+	ret = read(buf, 2);
+	if ((buf[0] == 0xff) && (buf[1] == 0xff)) {
+		// ext. frame
+		ret = read(buf + 2, 3); // read three additional bytes for the length and LCS
+		if (!ret || (((buf[2] + buf[3] + buf[4]) & 0xff) != 0)) 
 			return 0;
-		}
-		resplen = (((uint16_t) buf[5] << 8) | ((uint16_t) buf[6] << 0));
+		resplen = buf[2];
+		resplen <<= 8;
+		resplen |= buf[3]; // <= RCS620S_MAX_EXTENDED_DATA_LEN
 	} else {
-		if (((buf[3] + buf[4]) & 0xff) != 0) {
+		if ( (uint8_t)(buf[0] + buf[1]) != 0) 
 			return 0;
-		}
-		resplen = buf[3];
+		resplen = buf[0];
 	}
+#ifdef DEBUG
+	Serial.print("\nresponse (");
+	Serial.print(resplen);
+	Serial.print(") ");
+#endif
 	if (resplen > RCS620S_MAX_DATA_LEN) {
-		// extended frame
+		// extended frame, but not supported yet...
 		return 0;
 	}
 
@@ -381,9 +343,16 @@ word RCS620S::command(uint8_t* cmdresp, const uint16_t cmdlen, const uint16_t ma
 	ret = read(buf, 2);
 	if (!ret || (buf[0] != DCS) || (buf[1] != 0x00)) {
 		cancel();
+#ifdef DEBUG
+		Serial.println("DCS error.\n");
+#endif
 		return 0;
 	}
-
+#ifdef DEBUG
+	Serial.printBytes(cmdresp, resplen);
+	Serial.println(".\n");
+	Serial.flush();
+#endif
 	return resplen;
 }
 
@@ -423,6 +392,7 @@ int RCS620S::read(uint8_t* data, uint16_t len) {
 	}
 	return nread;
 }
+
 
 void RCS620S::flush(void) {
 	port.flush();
