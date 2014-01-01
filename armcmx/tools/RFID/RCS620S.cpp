@@ -77,7 +77,7 @@ byte RCS620S::InListPassiveTarget(const uint8_t maxtg, const byte brty, const ui
 		cmdlen = 9;
 		break;
 	}
-	
+  
 	if ( !(send(resp, cmdlen) != 0 && (ret = receive(resp)) != 0 ) 
 			|| ( memcmp(resp, (const char *) "\xd5\x4b\x01", 3) != 0) ) {
 		return 0;
@@ -94,6 +94,11 @@ byte RCS620S::InListPassiveTarget(const uint8_t maxtg, const byte brty, const ui
 		break;
 	}
 	return ret;
+}
+
+byte RCS620S::getResponse(byte * resp) {
+  // LastCommand is set at send() as the second byte value of the last command transmission.
+  
 }
 
 int RCS620S::CommunicateThruEx(uint8_t* commresp, uint8_t commandLen) {
@@ -262,6 +267,9 @@ uint16_t RCS620S::send(const uint8_t* cmdresp, const uint16_t cmdlen) {
 	int ret;
 	uint8_t buf[5];
 
+  if ( cmdresp[0] == RCS956_COMMAND )
+    LastCommand = cmdresp[1];
+  
 #ifdef DEBUG
 	Serial.print("command ");
 	Serial.printBytes(cmdresp, cmdlen);

@@ -106,7 +106,7 @@
         <tRtrace>1</tRtrace>
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
-        <nTsel>7</nTsel>
+        <nTsel>13</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -117,9 +117,14 @@
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
         <tIfile></tIfile>
-        <pMon>Segger\JL2CM3.dll</pMon>
+        <pMon>STLink\ST-LINKIII-KEIL_SWO.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>ST-LINKIII-KEIL_SWO</Key>
+          <Name>-U -O142 -S3 -C-1 -N00("ARM CoreSight JTAG-DP (Cortex-M)") -D00(0BA00477) -L00(4) -N01("STM32 BSC (boundary scan) TAP") -D01(16410041) -L01(5) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC800 -FN1 -FF0STM32F10x_128 -FS08000000 -FL020000</Name>
+        </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
@@ -263,10 +268,10 @@
       <FileType>8</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>25</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>35</TopLine>
-      <CurrentLine>51</CurrentLine>
+      <TopLine>49</TopLine>
+      <CurrentLine>65</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.cpp</PathWithFileName>
       <FilenameWithoutPath>main.cpp</FilenameWithoutPath>
@@ -485,12 +490,12 @@
       <GroupNumber>4</GroupNumber>
       <FileNumber>17</FileNumber>
       <FileType>8</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>77</ColumnNumber>
+      <ColumnNumber>2</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>143</TopLine>
-      <CurrentLine>180</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>101</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>..\armcmx\tools\RFID\RCS620S.cpp</PathWithFileName>
       <FilenameWithoutPath>RCS620S.cpp</FilenameWithoutPath>

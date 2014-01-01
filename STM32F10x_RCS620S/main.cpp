@@ -12,7 +12,7 @@ USARTSerial Serial1(&usart1);
 RCS620S nfcreader(Serial1);
 
 #define COMMAND_TIMEOUT 400
-#define POLLING_INTERVAL 2000
+#define POLLING_INTERVAL 1000
  		
 int main(void) {
 	int16_t c;
@@ -53,16 +53,16 @@ int main(void) {
 			if(reslen) {
 				digitalWrite(USERLED2, HIGH);
 				
-				Serial.print("IDm:");
+        Serial.println();
+				Serial.print("IDm: ");
 				Serial.printBytes(nfcreader.idm, 8);
 				Serial.println(".");
-				Serial.print("PMm:");
+				Serial.print("PMm: ");
 				Serial.printBytes(nfcreader.pmm, 8);
-				Serial.println(".\n");
+				Serial.println(".");
 				//
-				
 				reslen = nfcreader.FeliCa_RequestService(0x1a8b);
-				Serial.print("Req. Service resp.: ");
+				Serial.print("FCF ver.: ");
 				Serial.println(reslen, HEX);
 				if ( reslen != 0xffff ) {
 					Serial.println("FCF ID Card: ");
@@ -76,12 +76,14 @@ int main(void) {
 							else
 								Serial.print(' ');
 						}
-						Serial.println('"');
+						Serial.print('"');
 					}
 				}
 				digitalWrite(USERLED2, LOW);
-				Serial.flush();
-			}
+        Serial.println(".");
+			} else {
+        Serial.print(".");
+      }
 			nfcreader.RFOff();
 			digitalWrite(USERLED1, LOW);
 			since = millis();

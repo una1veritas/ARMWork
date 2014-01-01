@@ -43,8 +43,10 @@ class RCS620S {
 
     int start(void);
 		byte InListPassiveTarget(const uint8_t maxtg, const byte brty, const byte * payload, byte * data);
-		
 		int CommunicateThruEx(uint8_t* command, uint8_t commandLen);
+  
+    byte getResponse(byte * resp);
+
 		uint16_t FeliCa_RequestService(uint16_t);
     uint16_t FeliCa_ReadWithoutEncryption(uint16_t serviceCode, word blknum, byte* responce);
     int RFOff(void);
@@ -60,6 +62,7 @@ private:
 	uint16_t LEN;
 	uint8_t LCS;
 	uint8_t DCS;
+  uint8_t LastCommand;
 
 	uint16_t send(const uint8_t* com, const word len);
 	uint16_t waitACK(uint8_t n = ACK_FRAME_LEN);
@@ -86,7 +89,6 @@ public:
     unsigned long timeout;
     uint8_t idm[8];
     uint8_t pmm[8];
-		uint8_t lastCommand;
 
     static const uint8_t RCS956_COMMAND = 0xD4;
     static const uint8_t RCS956_COMMAND_CommunicateThruEx = 0xA0;
