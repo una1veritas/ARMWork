@@ -23,14 +23,11 @@ RCS620S::RCS620S(Stream & ser) : port(ser), stat(0) {
 	this->timeout = RCS620S_DEFAULT_TIMEOUT;
 }
 
-int RCS620S::start(void) {
-//	int ret;
+uint16_t RCS620S::start(void) {
 	uint8_t response[RCS620S_MAX_DATA_LEN];
-	uint16_t len;
 
 	/* RFConfiguration (various timings) */
-	if ( !(send((const uint8_t *) "\xd4\x32\x02\x00\x00\x00", 6) != 0 && (len = receive(response)) != 0 )
-		|| (len != 2) || (memcmp(response, "\xd5\x33", 2) != 0)) {
+	if ( sendCommand((const uint8_t *) "\xd4\x32\x02\x00\x00\x00", 6) == 0  || receiveResponse(response) != 2 ) {
 #ifdef DEBUG
 		Serial.println("RF Config. failed.");
 #endif
@@ -38,8 +35,7 @@ int RCS620S::start(void) {
 	}
 
 	/* RFConfiguration (max retries) */
-	if ( !(send((const uint8_t *) "\xd4\x32\x05\x00\x00\x00", 6) != 0 && (len = receive(response)) != 0 )
-		|| (len != 2) || (memcmp(response, "\xd5\x33", 2) != 0)) {
+	if ( sendCommand((const uint8_t *) "\xd4\x32\x05\x00\x00\x00", 6) == 0 || receiveResponse(response) != 2 ) {
 #ifdef DEBUG
 		Serial.println("RF Config. failed 2.");
 #endif
@@ -47,8 +43,7 @@ int RCS620S::start(void) {
 	}
 
 	/* RFConfiguration (additional wait time = 24ms) */
-	if ( !(send((const uint8_t *) "\xd4\x32\x81\xb7", 4) != 0 && (len = receive(response)) != 0 )
-		|| (len != 2) || (memcmp(response, "\xd5\x33", 2) != 0)) {
+	if ( sendCommand((const uint8_t *) "\xd4\x32\x81\xb7", 4) == 0 || receiveResponse(response) != 2 ) {
 #ifdef DEBUG
 		Serial.println("RF Config. failed 3.");
 #endif
@@ -59,12 +54,12 @@ int RCS620S::start(void) {
 }
 
 //(const uint8_t maxtg, const byte brty, byte * data)
-byte RCS620S::InListPassiveTarget(const uint8_t maxtg, const byte brty, const uint8_t * payload, byte * resp) {
+uint16_t RCS620S::InListPassiveTarget(const uint8_t maxtg, const byte brty, const uint8_t * payload, byte * resp) {
 	int ret;
 	uint16_t cmdlen;
 	/* InListPassiveTarget */
-	resp[0] = RCS956_COMMAND;
-	resp[1] = RCS956_COMMAND_InListPassiveTarget;
+	resp[0] = COMMAND;
+	resp[1] = SUBCOMMAND_InListPassiveTarget;
 	resp[2] = maxtg;
 	resp[3] = brty;
 	switch (brty) {
@@ -78,14 +73,16 @@ byte RCS620S::InListPassiveTarget(const uint8_t maxtg, const byte brty, const ui
 		break;
 	}
   
-	if ( !(send(resp, cmdlen) != 0 && (ret = receive(resp)) != 0 ) 
-			|| ( memcmp(resp, (const char *) "\xd5\x4b\x01", 3) != 0) ) {
+	if ( sendCommand(resp, cmdlen) == 0 ) 
 		return 0;
-	}
-
+  if ( (ret = receiveResponse(resp)) == 0 )
+    return 0;
+  if ( resp[2] == 0 ) // no cards.
+    return 0;
+  
 	switch(brty) {
 	case 0x00:
-		// d5 4b NumTag [Tg SENS_RES[2] SEL_RES NFCIDLength NFCID1[] [ATS[]]]
+		// d5 4b NumTag [Tg SENS_RES[2](=atqa) SEL_RES NFCIDLength NFCID1[] [ATS[]]]
 		memcpy(idm, resp+7, resp[7]+1);
 		break;
 	case 0x01:
@@ -96,12 +93,8 @@ byte RCS620S::InListPassiveTarget(const uint8_t maxtg, const byte brty, const ui
 	return ret;
 }
 
-byte RCS620S::getResponse(byte * resp) {
-  // LastCommand is set at send() as the second byte value of the last command transmission.
-  
-}
 
-int RCS620S::CommunicateThruEx(uint8_t* commresp, uint8_t commandLen) {
+uint16_t RCS620S::CommunicateThruEx(uint8_t* commresp, uint8_t commandLen) {
 	int ret;
 	uint16_t commandTimeout;
 	uint8_t buf[RCS620S_MAX_DATA_LEN];
@@ -114,16 +107,14 @@ int RCS620S::CommunicateThruEx(uint8_t* commresp, uint8_t commandLen) {
 	}
 
 	/* CommunicateThruEX */
-	buf[0] = RCS956_COMMAND;
-	buf[1] = RCS956_COMMAND_CommunicateThruEx;
+	buf[0] = COMMAND;
+	buf[1] = SUBCOMMAND_CommunicateThruEx;
 	buf[2] = lowByte(commandTimeout);
 	buf[3] = highByte(commandTimeout);
 	buf[4] = (uint8_t) (commandLen + 1);
 	memcpy(buf + 5, commresp, commandLen);
 
-	if ( !(send(buf, 5 + commandLen) != 0 && (ret = receive(buf)) != 0)
-		|| (buf[0] != 0xd5) || (buf[1] != 0xa1)
-			|| (buf[2] != 0x00) ) {
+	if ( sendCommand(buf, 5 + commandLen) == 0 || receiveResponse(buf) == 0 || (buf[2] != 0x00) ) {
 		return 0;
 	}
 
@@ -145,7 +136,7 @@ uint16_t RCS620S::FeliCa_RequestService(uint16_t serviceCode) {
 
 	ret = CommunicateThruEx(buf, 12);
 
-	if (!ret || (ret != 12) || (buf[0] != 0x03)
+	if ( ret != 12 || (buf[0] != 0x03)
 			|| (memcmp(buf + 1, idm, 8) != 0)
 			|| ((buf[10] == 0xff) && (buf[11] == 0xff))) {
 		return 0;
@@ -154,7 +145,7 @@ uint16_t RCS620S::FeliCa_RequestService(uint16_t serviceCode) {
 	return ret;
 }
 
-uint16_t RCS620S::FeliCa_ReadWithoutEncryption(uint16_t serviceCode, word blknum,
+uint16_t RCS620S::FeliCa_ReadWithoutEncryption(uint16_t serviceCode, uint16_t blknum,
 		byte* responce) {
 	int ret;
 	uint8_t buf[32];
@@ -169,7 +160,7 @@ uint16_t RCS620S::FeliCa_ReadWithoutEncryption(uint16_t serviceCode, word blknum
 	buf[14] = lowByte(blknum);
 
 	ret = CommunicateThruEx(buf, 15);
-	if (!ret || (ret != 28) || (buf[0] != 0x07)
+	if ( ret != 28 || (buf[0] != 0x07)
 			|| (memcmp(buf + 1, idm, 8) != 0)) {
 		return 0;
 	}
@@ -177,20 +168,18 @@ uint16_t RCS620S::FeliCa_ReadWithoutEncryption(uint16_t serviceCode, word blknum
 	return 1;
 }
 
-int RCS620S::RFOff(void) {
+uint16_t RCS620S::RFOff(void) {
 	uint8_t response[RCS620S_MAX_DATA_LEN];
-	uint16_t len;
 
 	/* RFConfiguration (RF field) */
-	if ( !(send((const uint8_t *) "\xd4\x32\x01\x00", 4) != 0 && (len = receive(response)) != 0)
-			|| (len != 2) || (memcmp(response, "\xd5\x33", 2) != 0)) {
+	if ( sendCommand((const uint8_t *) "\xd4\x32\x01\x00", 4) == 0 || receiveResponse(response) != 2 ) {
 		return 0;
 	}
 
 	return 1;
 }
 
-int RCS620S::push(const uint8_t* data, uint8_t dataLen) {
+uint16_t RCS620S::push(const uint8_t* data, uint8_t dataLen) {
 	int ret;
 	uint8_t buf[RCS620S_MAX_DATA_LEN];
 	uint8_t responseLen;
@@ -263,15 +252,15 @@ uint16_t RCS620S::waitACK(uint8_t n) {
 }
 
 
-uint16_t RCS620S::send(const uint8_t* cmdresp, const uint16_t cmdlen) {
+uint16_t RCS620S::sendCommand(const uint8_t* cmdresp, const uint16_t cmdlen) {
 	int ret;
 	uint8_t buf[5];
 
-  if ( cmdresp[0] == RCS956_COMMAND )
-    LastCommand = cmdresp[1];
+  if ( cmdresp[0] == COMMAND )
+    LastCommand = cmdresp[1]; // store the subcommand code
   
 #ifdef DEBUG
-	Serial.print("command ");
+	Serial.print("send ");
 	Serial.printBytes(cmdresp, cmdlen);
 	Serial.print("; ");
 #endif
@@ -302,7 +291,7 @@ uint16_t RCS620S::send(const uint8_t* cmdresp, const uint16_t cmdlen) {
 }
 
 
-uint16_t RCS620S::receive(uint8_t* resp, const uint16_t maxresplen) {
+uint16_t RCS620S::receiveResponse(uint8_t* resp, const uint16_t maxresplen) {
 	int ret;
 	uint8_t buf[5];
 	uint16_t resplen;
@@ -335,19 +324,16 @@ uint16_t RCS620S::receive(uint8_t* resp, const uint16_t maxresplen) {
 	Serial.print(") ");
 #endif
 	if (resplen > maxresplen) {
-		// extended frame, but not supported yet...
-		return 0;
+		// may be extended frame, but not supported yet...
+		//return 0;
+    resplen = maxresplen;
 	}
-
-	ret = read(resp, resplen);
-	if (!ret) {
+	if ( read(resp, resplen) == 0 ) {
 		cancel();
 		return 0;
 	}
-
-	calcDCS(resp, resplen);
-
 	ret = read(buf, 2);
+	calcDCS(resp, resplen);
 	if (!ret || (buf[0] != DCS) || (buf[1] != 0x00)) {
 		cancel();
 #ifdef DEBUG
@@ -360,7 +346,10 @@ uint16_t RCS620S::receive(uint8_t* resp, const uint16_t maxresplen) {
 	Serial.println(".\n");
 	Serial.flush();
 #endif
-	return resplen;
+  if ( (resp[0] == RESPONSE) && resp[1] == (LastCommand | RESPONSE_BIT) ) {
+    return resplen;
+  }
+  return 0;
 }
 
 void RCS620S::cancel(void) {

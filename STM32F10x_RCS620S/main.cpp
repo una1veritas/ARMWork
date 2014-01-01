@@ -7,6 +7,12 @@
 #include "USARTSerial.h"
 #include "RCS620S.h"
 
+#include "FCF.h"
+
+void print_FCF(Print & prn, FCF_IDCard & idcard);
+
+#define CHARNUM(x)  ((x)? ((x) - '0') & 0x0f : 0)
+
 usart usart1 = { USART1, PA10, PA9, 57600, WORDLENGTH_8BIT | FLOW_NONE | PARITY_NONE | STOPBITS_1 };
 USARTSerial Serial1(&usart1);
 RCS620S nfcreader(Serial1);
@@ -19,9 +25,10 @@ int main(void) {
 	uint32_t since;
 	uint16_t reslen;
 	uint8_t tmp[64];
-	uint16_t blklist[] = { 0x00 };
+  char tmpstr[16];
 	static uint8_t payload[] = { 0x00, 0xff, 0xff, 0x01, 0x00 };
-	
+	FCF_IDCard idcard;
+  
 	armcmx_init();
 	
 	Serial1.begin(115200);
@@ -48,9 +55,8 @@ int main(void) {
 			digitalWrite(USERLED1, HIGH);
 			nfcreader.timeout = COMMAND_TIMEOUT;  
 			*((uint16_t*) &payload[1]) = (word) 0x00fe;
-			reslen = nfcreader.InListPassiveTarget(1, NFC::BAUDTYPE_212K_F, payload, tmp);
 		 
-			if(reslen) {
+			if( (reslen = nfcreader.InListPassiveTarget(1, NFC::BAUDTYPE_212K_F, payload, tmp)) != 0 ) {
 				digitalWrite(USERLED2, HIGH);
 				
         Serial.println();
@@ -62,26 +68,41 @@ int main(void) {
 				Serial.println(".");
 				//
 				reslen = nfcreader.FeliCa_RequestService(0x1a8b);
-				Serial.print("FCF ver.: ");
+				Serial.print("Service ver.: ");
 				Serial.println(reslen, HEX);
 				if ( reslen != 0xffff ) {
-					Serial.println("FCF ID Card: ");
-					reslen = nfcreader.FeliCa_ReadWithoutEncryption((word)0x1a8b, 0, tmp );
-					if ( reslen != 0 ) {
-						Serial.printBytes(tmp, reslen*16);
-						Serial.print(", \"");
-						for(int i = 0; i < 16; i++) {
-							if ( isprint(tmp[i]) )
-								Serial.print((char)tmp[i]);
-							else
-								Serial.print(' ');
-						}
-						Serial.print('"');
-					}
+					Serial.print("FCF ID Card: ");
+          if ( nfcreader.FeliCa_ReadWithoutEncryption((word)0x1a8b, 0, tmp ) ) {
+            idcard.division = CHARNUM(tmp[0])<<4 | CHARNUM(tmp[1]);
+            memcpy(idcard.pid, tmp+2, 12);
+            idcard.issue = tmp[14] - '0';
+            idcard.gend = tmp[15] - '0';
+          }
+          if ( nfcreader.FeliCa_ReadWithoutEncryption((word)0x1a8b, 2, tmp ) ) {
+            memcpy(tmpstr, tmp, 8);
+            tmpstr[8] = 0;
+            idcard.orgid = atol(tmpstr);
+            memcpy(tmpstr, tmp+8, 8);
+            tmpstr[8] = 0;
+            idcard.doi = strtol(tmpstr, 0, 16);            
+          }
+          if ( nfcreader.FeliCa_ReadWithoutEncryption((word)0x1a8b, 3, tmp ) ) {
+            memcpy(tmpstr, tmp, 8);
+            tmpstr[8] = 0;
+            idcard.gdthru = strtol(tmpstr, 0, 16);
+          }
+          print_FCF(Serial, idcard);
+          Serial.println();
 				}
 				digitalWrite(USERLED2, LOW);
         Serial.println(".");
-			} else {
+			} else if ( (reslen = nfcreader.InListPassiveTarget(1, NFC::BAUDTYPE_106K_A, payload, tmp)) != 0 ) {
+        Serial.println("Mifare?");
+        Serial.printBytes(nfcreader.idm, nfcreader.idm[0]+1);
+        Serial.println();
+        Serial.printBytes(tmp, reslen);
+        Serial.println();
+      } else {
         Serial.print(".");
       }
 			nfcreader.RFOff();
@@ -90,3 +111,25 @@ int main(void) {
 		}
 	}
 }
+
+void print_FCF(Print & prn, FCF_IDCard & idcard) {
+  char tmpstr[16];
+  prn.print("DIV ");
+  prn.print(idcard.division, HEX);
+  memcpy(tmpstr, idcard.pid, 12);
+  tmpstr[12] = 0;
+  prn.print(", ID ");
+  prn.print(idcard.pid);
+  prn.print("-");
+  prn.print(idcard.issue);
+  prn.print(", GENDER ");
+  prn.print( idcard.gender() );
+  prn.print(", ORG ID ");
+  prn.print( idcard.orgid );
+  prn.print(", Day of Issue ");
+  prn.print( idcard.doi, HEX );
+  prn.print(", Good Thru ");
+  prn.print( idcard.gdthru, HEX );
+  prn.println();
+}
+
