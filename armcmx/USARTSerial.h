@@ -19,18 +19,13 @@
 
 class USARTSerial : public Stream {
 	usart * port;
-	GPIOPin pinrx, pintx, pincts, pindtr;
-  USART_TypeDef * USARTx;
 
 public:
-	USARTSerial(usart * usartx, USART_TypeDef * x, GPIOPin rx, GPIOPin tx) {
+	USARTSerial(usart * usartx) {
 		port = usartx;
-    USARTx = x;
-		pinrx = rx;
-		pintx = tx;
 	}
 	
-  void pinconfig(const GPIOPin rx, GPIOPin tx) { pinrx = rx; pintx = tx; }
+  void pinconfig(const GPIOPin rx, GPIOPin tx) { port->rx = rx; port->tx = tx; }
   
 	void begin(const uint32_t baud);
 	void begin(const uint32_t baud, GPIOPin rx, GPIOPin tx) { pinconfig(rx, tx); begin(baud); }
@@ -46,6 +41,6 @@ public:
 };
 
 
-//extern USARTSerial Serial;
+extern USARTSerial Serial;
 
 #endif /* USARTSERIAL_H_ */

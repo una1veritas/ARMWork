@@ -30,7 +30,6 @@
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
           <SFDFile></SFDFile>
-          <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
           <IncludePath></IncludePath>
@@ -98,7 +97,6 @@
           <StopOnExitCode>3</StopOnExitCode>
           <CustomArgument></CustomArgument>
           <IncludeLibraryModules></IncludeLibraryModules>
-          <ComprImg>1</ComprImg>
         </CommonProperty>
         <DllOption>
           <SimDllName>SARMCM3.DLL</SimDllName>
@@ -171,10 +169,6 @@
           <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
           <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
-          <pFcarmOut></pFcarmOut>
-          <pFcarmGrp></pFcarmGrp>
-          <pFcArmRoot></pFcArmRoot>
-          <FcArmLst>0</FcArmLst>
         </Utilities>
         <TargetArmAds>
           <ArmAdsMisc>
@@ -341,7 +335,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>3</Optim>
             <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -357,7 +351,7 @@
               <MiscControls></MiscControls>
               <Define>ARMCMX USE_STDPERIPH_DRIVER STM32F30X STDSERIAL=3</Define>
               <Undefine></Undefine>
-              <IncludePath>.\..\;..\..\STM32Libraries\CMSIS\Device\ST\STM32F30x\Include;..\..\STM32Libraries\STM32F30x_StdPeriph_Driver\inc;..\..\STM32Libraries\Utilities\STM32F3_Discovery;..\..\armcmx;..\..\armcmx\stm32f30x;..\CPALv2</IncludePath>
+              <IncludePath>.\..\;..\..\STM32Libraries\CMSIS\Device\ST\STM32F30x\Include;..\..\STM32Libraries\STM32F30x_StdPeriph_Driver\inc;..\..\STM32Libraries\Utilities\STM32F3_Discovery;..\..\armcmx\stm32f30x;..\..\armcmx;..\..\armcmx\tools\Adafruit_GFX;..\..\armcmx\tools\TFTLCD;..\CPALv2</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -517,6 +511,31 @@
               <FileName>armcmx.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\armcmx.c</FilePath>
+            </File>
+            <File>
+              <FileName>USARTSerial.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\USARTSerial.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Stream.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\Stream.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Print.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\Print.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Adafruit_GFX.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\Adafruit_GFX\Adafruit_GFX.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>TFTLCD.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\armcmx\tools\TFTLCD\TFTLCD.cpp</FilePath>
             </File>
           </Files>
         </Group>

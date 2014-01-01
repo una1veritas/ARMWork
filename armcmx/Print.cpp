@@ -128,13 +128,16 @@ size_t Print::print(const Printable& x)
   return x.printTo(*this);
 }
 
-size_t Print::printBytes(uint8_t * p, uint8_t length, char sep) {
+size_t Print::printBytes(const uint8_t * p, const uint8_t length, char sep) {
 	size_t n = 0;
-	for( ; length; length--) {
+	int i = 0;
+	while ( i < length ) {
 		n += print(*p>>4&0x0f, HEX);
 		n += print(*p&0x0f, HEX);
     p++;
-		n += print(sep);
+		i++;
+		if ( i < length)
+			n += print(sep);
 	}
 	return n;
 }

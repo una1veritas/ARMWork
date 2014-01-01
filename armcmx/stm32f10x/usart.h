@@ -22,33 +22,44 @@ extern "C" {
 #define USART_BUFFER_SIZE 128
 typedef struct {
 	uint16_t buf[USART_BUFFER_SIZE];
-	int16_t head, tail;
-	uint16_t count;
-} USARTRing;
+	__IO int16_t head, tail;
+	__IO uint16_t count;
+} USARTRingBuffer;
+
+/*
+  USART_InitStructure.USART_BaudRate = 230400;
+  USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+  USART_InitStructure.USART_StopBits = USART_StopBits_1;
+  USART_InitStructure.USART_Parity = USART_Parity_No;
+  USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+  USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+*/
+
+#define WORDLENGTH_8BIT (0x00<<7)
+#define WORDLENGTH_9BIT (0x01<<7)
+#define STOPBITS_1  0x00
+#define STOPBITS_05 0x01
+#define STOPBITS_2  0x02
+#define STOPBITS_15 0x03
+#define PARITY_NONE (0x00<<2)
+#define PARITY_EVEN (0x01<<2)
+#define PARITY_ODD  (0x02<<2)
+#define FLOW_NONE (0x00<<4)
+#define FLOW_RTS (0x01<<4)
+#define FLOW_CTS (0x02<<4)
 
 typedef struct {
 	USART_TypeDef * USARTx;
+	GPIOPin rx, tx;
+	uint32_t baud;
+	uint8_t mode;
+	//
 	IRQn_Type irqn;
-	USARTRing rxring, txring;
+	USARTRingBuffer rxring, txring;
 } usart;
 
-extern usart stdserial;
 
-#if defined (STDSERIAL)
-#if (STDSERIAL == 3)
-#define STDUSART 	USART3
-#define STDRX 		PC11
-#define STDTX 		PC10
-//#warning "using STDSERIAL USART3 for STM32F3 Discovery"
-#elif (STDSERIAL == 1)
-#define STDUSART 	USART1
-#define STDRX 		PC5
-#define STDTX 		PC4
-//#warning "using STDSERIAL USART1"
-#endif
-#endif
-
-void usart_init(usart * usx, USART_TypeDef * usartx, const GPIOPin rx, const GPIOPin tx);
+void usart_init(usart * usx);
 void usart_begin(usart * usx, const uint32_t baud);
 size_t usart_polling_write(usart * usx, const uint16_t w);
 size_t usart_write(usart * usx, const uint16_t w);
@@ -63,9 +74,6 @@ uint16_t usart_peek(usart * usx);
 void USART1_IRQHandler(void);
 void USART2_IRQHandler(void);
 void USART3_IRQHandler(void);
-void UART4_IRQHandler(void);
-void UART5_IRQHandler(void);
-void USART6_IRQHandler(void);
 
 #ifdef __cplusplus
 }

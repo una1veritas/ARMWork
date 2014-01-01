@@ -12,9 +12,11 @@
 
 volatile uint32_t _systick_counter;
 
+#ifdef USE_SYSTIC_DELAY
 void SysTick_Handler(void) {
 	_systick_counter++; /* increment timeTicks counter */
 }
+#endif
 
 void SysTick_delay(const uint32_t dlyTicks) {
 	uint32_t currTicks = _systick_counter;

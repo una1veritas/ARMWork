@@ -91,11 +91,11 @@ uint8_t digitalRead(GPIOPin portpin) {
 #define LOW			RESET
 */
 
-void portEnable(GPIOPin portpins) {
+void GPIOEnable(GPIOPin portpins) {
   RCC_AHBPeriphClockCmd(PortPeriph[portpins>>4 & 0x0f], ENABLE);
 }
 
-void portDisable(GPIOPin portpins) {
+void GPIODisable(GPIOPin portpins) {
   RCC_AHBPeriphClockCmd(PortPeriph[portpins>>4 & 0x0f], DISABLE);
 }
 
@@ -114,13 +114,6 @@ void GPIOMode(GPIOPin portpins, uint16_t pinbit, GPIOMode_TypeDef mode,
 	GPIO_Init(PinPort(portpins), &GPIO_InitStructure);
 }
 
-uint16_t GPIORead(GPIOPin portpins) {
-	return GPIO_ReadInputData(PinPort(portpins));
-}
-
-void GPIOWrite(GPIOPin portpins, uint16_t bits) {
-	GPIO_Write(PinPort(portpins), bits);
-}
 
 void GPIOAltFunc(GPIOPin portpins, uint16_t pinbits, uint8_t pinaf) {
 	int i;

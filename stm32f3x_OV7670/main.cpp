@@ -4,8 +4,14 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "armcmx.h"
-
+#include "USARTSerial.h"
 #include "sccb.h"
+#include "TFTLCD.h"
+
+
+USARTSerial Serial(&stdserial, USART3, PC11, PC10);
+
+TFTLCD tft(PB3, PB4, PB5, PB8, PB9);
 
 SCCBus sccb(PC6, PC7);
 const GPIOPin VSYNC = PB10;
@@ -18,24 +24,44 @@ Cam cam(VSYNC, HREF, WEN, RRST, OE, RCLK);
 
 #define __DELAY { __nop(); __nop(); __nop(); __nop(); }
 
-int main(void) {
+void setup();
+void loop();
+
+	
+int main(void)
+{
+  armcmx_init();
+  
+  setup();
+  
+  while (1) {
+    loop();
+  }
+}
+
+void setup(void) {
 	uint8_t regval;
   char tmpstr[32];
 
-  armcmx_init();
-  usart_begin(&stdserial, 57600);
-    
-  usart_print(&stdserial, "Starting OV7670 Test.\n");
+  Serial.begin(57600);
+  Serial.println("Hello! Hi, hi!\n");
+  Serial.flush();
+  
+	tft.begin();
+  tft.setRotation(3);
+  tft.fillScreen(C565_BLACK);
+	
+  Serial.println("Starting OV7670 Test.");
   //delay(1000);
 
 	if ( sccb.init() == 0 ) {
-    usart_print(&stdserial, "Initializing sensor by sccb failed.\nHalt.\n");
+    Serial.println("Initializing sensor by sccb failed.\nHalt.");
     while (1);
   }
 	sccb.readRegister(0x12, &regval);
 	
-	sprintf(tmpstr, "register 0x%02x = 0x%02x\n", 0x12, regval);
-	usart_print(&stdserial, tmpstr);
+	sprintf(tmpstr, "register 0x%02x = 0x%02x", 0x12, regval);
+	Serial.println(tmpstr);
 
   pinMode(VSYNC, INPUT);
   pinMode(HREF, INPUT);
@@ -50,33 +76,50 @@ int main(void) {
   
   pinMode(PE8, OUTPUT);
   pinMode(PE9, OUTPUT);
-	while (1) {
-    if ( digitalRead(VSYNC) == LOW ) {
-      digitalWrite(PE8, HIGH);
-      while( digitalRead(VSYNC) == LOW );
-      cam.writeEnable();
-      cam.outEnable();
-      cam.readReset(LOW);
-      cam.clock(LOW);
-      __nop();
-      cam.clock(HIGH);
-      cam.readReset(HIGH);
-      __nop();
-      cam.clock(LOW);
-      __nop();
-      cam.clock(HIGH);
-      __nop();
-      for(int n = 0; n < 320*240; n++) {
-        cam.clock(LOW); __nop(); cam.clock(HIGH); __nop();
-      }
-      cam.outDisable();
-      cam.writeDisable();
-      digitalWrite(PE8, LOW);
-      delay(5);
-    }
-    
-  }
   
+}
+
+void loop() {
+	uint16_t color;
+	
+	if ( digitalRead(VSYNC) == LOW ) {
+    cam.waitVSYNCHigh();
+    cam.writeDisable();
+    cam.waitVSYNCFalling();
+    cam.writeEnable();
+
+		cam.outEnable();
+		cam.readReset(LOW);
+		cam.clock(LOW);
+		cam.waitHREFPulse();
+//		__nop();
+		
+		cam.clock(HIGH);
+		cam.readReset(HIGH);
+		__nop();
+		cam.clock(LOW);
+		__nop();
+		cam.clock(HIGH);
+		__nop();
+		for(int row = 0; row <240; row++) {
+      tft.drawPixel(0,row,0);
+      for(int col = 0; col < 320 ; col++) {
+        cam.clock(LOW);
+        color = GPIORead(PD_ALL) & 0xff00;
+        cam.clock(HIGH);
+        __nop();
+        cam.clock(LOW);
+        color |= GPIORead(PD_ALL)>>8;
+        cam.clock(HIGH);
+
+        tft.drawPixel(color);
+      }
+    }
+		cam.outDisable();
+		cam.writeDisable();
+		digitalWrite(PE8, LOW);
+		delay(5);
+	}
 }
 
 

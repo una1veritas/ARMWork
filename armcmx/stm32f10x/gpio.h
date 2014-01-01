@@ -19,18 +19,57 @@ extern "C" {
 static GPIO_TypeDef * Port[] =
 		{ 0, GPIOA, GPIOB, GPIOC, GPIOD, GPIOE, GPIOF };
 
-#define OUTPUT		GPIO_Mode_OUT // 1
-#define INPUT			GPIO_Mode_IN  // 0
-#define ALTFUNC		GPIO_Mode_AF  // 2  AN 3
-#define PUSHPULL 		GPIO_OType_PP
-#define OPENDRAIN 	GPIO_OType_OD
-#define NOPULL		GPIO_PuPd_NOPULL
-#define PULLUP		GPIO_PuPd_UP
-#define PULLDOWN	GPIO_PuPd_DOWN
-#define LOWSPEED 	GPIO_Speed_2MHz
-#define MEDSPEED 	GPIO_Speed_25MHz
-#define FASTSPEED 	GPIO_Speed_50MHz
-#define HIGHSPEED 	GPIO_Speed_100MHz
+/*
+typedef enum
+{ GPIO_Mode_AIN = 0x0,
+  GPIO_Mode_IN_FLOATING = 0x04,
+  GPIO_Mode_IPD = 0x28,
+  GPIO_Mode_IPU = 0x48,
+  GPIO_Mode_Out_OD = 0x14,
+  GPIO_Mode_Out_PP = 0x10,
+  GPIO_Mode_AF_OD = 0x1C,
+  GPIO_Mode_AF_PP = 0x18
+} GPIOMode_TypeDef;
+
+typedef enum
+{
+  GPIO_PuPd_NOPULL = 0x00,
+  GPIO_PuPd_UP     = 0x01,
+  GPIO_PuPd_DOWN   = 0x02
+}GPIOPuPd_TypeDef;
+
+typedef enum
+{ 
+  GPIO_OType_PP = 0x00,
+  GPIO_OType_OD = 0x01
+}GPIOOType_TypeDef;
+
+typedef enum
+{ 
+  GPIO_Speed_2MHz   = 0x00, // Low speed
+  GPIO_Speed_25MHz  = 0x01, // Medium speed
+  GPIO_Speed_50MHz  = 0x02, // Fast speed
+  GPIO_Speed_100MHz = 0x03  // High speed on 30 pF (80 MHz Output max speed on 15 pF) 
+}GPIOSpeed_TypeDef;
+*/
+
+// bit 0-1: IO direction
+#define INPUT			0  // 0
+#define OUTPUT		1 // 1
+#define ALTFUNC		2  // 2  AN 3
+#define ANALOGIN	3  // 2  AN 3
+// bit 2: type 
+#define PUSHPULL 		(0<<2)
+#define OPENDRAIN 	(1<<2)
+// bit 3-4: internal pull-up
+#define NOPULL		(0<<3)
+#define PULLUP		(1<<3)
+#define PULLDOWN	(2<<3)
+// bit 5-6: clock speed
+#define LOWSPEED 	(0<<5)
+#define MEDSPEED 	(1<<5)
+#define FASTSPEED (2<<5)
+#define HIGHSPEED (3<<5)
 
 #define HIGH		SET
 #define LOW			RESET
@@ -154,25 +193,17 @@ typedef enum _GPIOPin_Def {
 typedef uint8_t 	GPIOPin;
 
 void pinDisable(GPIOPin);
-void pinMode(GPIOPin portpin, GPIOMode_TypeDef mode);
+void pinMode(GPIOPin portpin, uint8_t mode);
 void digitalWrite(GPIOPin portpin, uint8_t bit);
 uint8_t digitalRead(GPIOPin portpin);
 
-/*
-GPIO_TypeDef * PinPort(GPIOPin portpin);
-uint16_t PinBit(GPIOPin portpin);
-uint8_t PinSource(GPIOPin portpin);
-*/
+void GPIOAltFunc(GPIOPin portpins, uint16_t pinbits, GPIOMode_TypeDef GPIOType_AF);
 
-void portEnable(GPIOPin portpins);
-void portDisable(GPIOPin portpins);
-
-uint16_t portRead(GPIOPin portpins);
-void portWrite(GPIOPin portpins, uint16_t bits);
-
-void portMode(GPIOPin portpins, uint16_t pinbits, GPIOMode_TypeDef mode, GPIOSpeed_TypeDef clk);
-void pinAltFunc(GPIOPin portpins, uint16_t pinbits, GPIOMode_TypeDef GPIOType_AF);
-//void digitalToggle(GPIOPin);
+void GPIOEnable(GPIOPin portpins);
+void GPIODisable(GPIOPin portpins);
+void GPIOMode(GPIOPin portpins, uint16_t pinbits, uint8_t mode);
+uint16_t GPIORead(GPIOPin portpins);
+void GPIOWrite(GPIOPin portpins, uint16_t bits);
 
 #ifdef __cplusplus
 }

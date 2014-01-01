@@ -73,8 +73,8 @@
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </BeforeMake>
           <AfterMake>
-            <RunUserProg1>1</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
+            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg2>0</RunUserProg2>
             <UserProg1Name>C:\Keil\ARM\ARMCC\bin\fromelf.exe --bin "#L" -o "$Pfirmware.bin"</UserProg1Name>
             <UserProg2Name>C:\nxp\LPCXpresso_5.2.4\lpcxpresso\bin\checksum -p LPC11U37_401 -d "$Pfirmware.bin"</UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
@@ -349,7 +349,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>ARMCMX DELAY_SYSTICK</Define>
+              <Define>ARMCMX DELAY_TIMER16_1 LPC11UXX</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\LPCLibrary\CMSISv2p00_LPC11Uxx;..\..\armcmx\lpc11uxx;..\..\armcmx;..\inc;..\src;..\..\armcmx\tools\LCD;..\..\armcmx\tools\RTC</IncludePath>
             </VariousControls>
@@ -465,26 +465,17 @@
             <File>
               <FileName>I2CBus.cpp</FileName>
               <FileType>8</FileType>
-<<<<<<< HEAD:lpc11uxx_lcd/Keil/LPC11U24LCD.uvproj
               <FilePath>..\..\armcmx\I2CBus.cpp</FilePath>
             </File>
             <File>
-              <FileName>delay_systick.c</FileName>
+              <FileName>armcmx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\armcmx\lpc11uxx\delay_systick.c</FilePath>
-=======
-              <FilePath>..\..\armcmx\SPI.cpp</FilePath>
+              <FilePath>..\..\armcmx\armcmx.c</FilePath>
             </File>
             <File>
-              <FileName>PWM0tone.c</FileName>
+              <FileName>delay_timer16_1.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\armcmx\lpc11uxx\PWM0tone.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi_core.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\lpc11uxx\spi_core.c</FilePath>
->>>>>>> uv:lpc11uxx_rfid_sdio/Keil/LPC11U24LCDRFID.uvproj
+              <FilePath>..\..\armcmx\lpc11uxx\delay_timer16_1.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -510,11 +501,6 @@
               <FileName>RTC.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\armcmx\tools\RTC\RTC.h</FilePath>
-            </File>
-            <File>
-              <FileName>mmc_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\tools\SDFatFs\mmc_spi.c</FilePath>
             </File>
           </Files>
         </Group>
