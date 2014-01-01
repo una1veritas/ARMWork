@@ -55,13 +55,15 @@ private:
 	const static uint8_t ACK_FRAME[6];
 	const static uint8_t ACK_FRAME_LEN = 6;
 	const static uint8_t FRAME_HEADER[5];
+	const static uint8_t POSTAMBLE = 0x00;
+
 	uint16_t LEN;
 	uint8_t LCS;
 	uint8_t DCS;
-	const static uint8_t POSTAMBLE = 0x00;
 
-	uint16_t command(uint8_t* com, const word len, const word resplen = RCS620S_MAX_DATA_LEN);
+	uint16_t send(const uint8_t* com, const word len);
 	uint16_t waitACK(uint8_t n = ACK_FRAME_LEN);
+	uint16_t receive(uint8_t* resp, const uint16_t maxresplen = RCS620S_MAX_DATA_LEN);
 
     void cancel(void);
     void calcDCS(
@@ -84,14 +86,17 @@ public:
     unsigned long timeout;
     uint8_t idm[8];
     uint8_t pmm[8];
+		uint8_t lastCommand;
 
-    static const int RCS956_COMMAND = 0xD4;
-    static const int RCS956_COMMAND_CommunicateThruEx = 0xA0;
-    static const int RCS956_COMMAND_InListPassiveTarget = 0x4A;
-    static const int RCS956_COMMAND_Reset = 0x18;
-    static const int RCS956_COMMAND_RFConfiguration = 0x32;
-    static const int RCS956_COMMAND_PowerDown = 0x16;
-    static const int RCS956_COMMAND_GetFirmwareVersion = 0x02;
+    static const uint8_t RCS956_COMMAND = 0xD4;
+    static const uint8_t RCS956_COMMAND_CommunicateThruEx = 0xA0;
+    static const uint8_t RCS956_COMMAND_InListPassiveTarget = 0x4A;
+    static const uint8_t RCS956_COMMAND_Reset = 0x18;
+    static const uint8_t RCS956_COMMAND_RFConfiguration = 0x32;
+    static const uint8_t RCS956_COMMAND_PowerDown = 0x16;
+    static const uint8_t RCS956_COMMAND_GetFirmwareVersion = 0x02;
+
+		static const uint8_t ERROR_DATA = 0x7f;
 
 	static const byte FELICA_CMD_REQUESTSERVICE = 0x02;
 //	static const byte FELICA_CMD_ERQUESTRESPONSE = 0x04;
