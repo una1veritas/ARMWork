@@ -8,6 +8,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_rcc.h"
 #include "stm32f10x_tim.h"
+#include "misc.h"
 
 #include "delay.h"
 //#include "platform_config.h"

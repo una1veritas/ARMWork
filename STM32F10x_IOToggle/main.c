@@ -28,6 +28,7 @@
 //#include "stm32_eval.h"
 
 #include "armcmx.h"
+#include "olimexino.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Examples
   * @{
@@ -53,21 +54,9 @@ GPIO_InitTypeDef GPIO_InitStructure;
   */
 int main(void)
 {
-  /*!< At this stage the microcontroller clock setting is already configured, 
-       this is done through SystemInit() function which is called from startup
-       file (startup_stm32f10x_xx.s) before to branch to application main.
-       To reconfigure the default setting of SystemInit() function, refer to
-       system_stm32f10x.c file
-     */     
-       
-  /* GPIOD Periph clock enable */
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
-
-  /* Configure PD0 and PD2 in output pushpull mode */
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_2;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-  GPIO_Init(GPIOD, &GPIO_InitStructure);
+  armcmx_init();
+	
+	pinMode(USERLED1, OUTPUT);
 
   /* To achieve GPIO toggling maximum frequency, the following  sequence is mandatory. 
      You can monitor PD0 or PD2 on the scope to measure the output signal. 
@@ -76,11 +65,9 @@ int main(void)
      This code needs to be compiled with high speed optimization option.  */
   while (1)
   {
-    /* Set PD0 and PD2 */
-    GPIOD->BSRR = (1<<3) | (1<<13);
+		digitalWrite(USERLED1, HIGH);
 		delay(250);
-    /* Reset PD0 and PD2 */
-    GPIOD->BRR  = (1<<3) | (1<<13);
+    digitalWrite(USERLED1, LOW);
 		delay(250);
   }
 }

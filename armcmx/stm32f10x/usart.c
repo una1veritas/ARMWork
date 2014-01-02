@@ -10,7 +10,7 @@
 //#include <stm32f4xx_gpio.h>
 //#include <stm32f4xx_rcc.h>
 #include <stm32f10x_usart.h>
-//#include <misc.h>
+#include <misc.h>
 
 #include "armcmx.h"
 #include "usart.h"

@@ -139,7 +139,7 @@
             <RestoreTracepoints>1</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>1</TargetSelection>
+          <TargetSelection>13</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -153,7 +153,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver>BIN\UL2CM3.DLL</Driver>
+            <Driver>STLink\ST-LINKIII-KEIL_SWO.dll</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -349,9 +349,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>STM32F10X_MD ARMCMX USE_STDPERIPH</Define>
+              <Define>STM32F10X_MD ARMCMX USE_STDPERIPH_DRIVER CPAL_USE_I2C1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\STM32F10x_IOToggle;..\..\armcmx;..\..\STM32Libraries\STM32F10x_StdPeriph_Driver\inc</IncludePath>
+              <IncludePath>..\..\STM32F10x_IOToggle;..\..\armcmx\stm32f10x;..\..\armcmx;..\..\STM32Libraries\STM32F10x_StdPeriph_Driver\inc;..\..\armcmx\stm32f10x\utility;..\..\armcmx\stm32f10x\CPAL;..\..\STM32Libraries\STM32_CPAL_Driver\devices\stm32f10x;..\..\STM32Libraries\STM32_CPAL_Driver\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -412,20 +412,100 @@
               <FileType>1</FileType>
               <FilePath>..\main.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f10x_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\stm32f10x_it.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>StdPeriph</GroupName>
           <Files>
             <File>
+              <FileName>misc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F10x_StdPeriph_Driver\src\misc.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32f10x_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.c</FilePath>
             </File>
             <File>
+              <FileName>stm32f10x_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32f10x_rcc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>armcmx</GroupName>
+          <Files>
+            <File>
+              <FileName>armcmx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\armcmx.c</FilePath>
+            </File>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\stm32f10x\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\stm32f10x\gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\stm32f10x\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c_cpal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\stm32f10x\i2c_cpal.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c_cpal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\armcmx\stm32f10x\i2c_cpal.h</FilePath>
+            </File>
+            <File>
+              <FileName>cpal_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\stm32f10x\CPAL\cpal_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>cpal_i2c_hal_stm32f10x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\stm32f10x\CPAL\cpal_i2c_hal_stm32f10x.c</FilePath>
+            </File>
+            <File>
+              <FileName>cpal_hal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\stm32f10x\CPAL\cpal_hal.c</FilePath>
+            </File>
+            <File>
+              <FileName>cpal_usercallback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\stm32f10x\CPAL\cpal_usercallback.c</FilePath>
             </File>
           </Files>
         </Group>
