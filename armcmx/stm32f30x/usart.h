@@ -28,6 +28,11 @@ typedef struct {
 
 typedef struct {
 	USART_TypeDef * USARTx;
+
+	GPIOPin rx, tx;
+	uint32_t baud;
+	uint8_t mode;
+
 	IRQn_Type irqn;
 	USARTRing rxring, txring;
 } usart;
@@ -48,7 +53,7 @@ extern usart stdserial;
 #endif
 #endif
 
-void usart_init(usart * usx, USART_TypeDef * usartx, const GPIOPin rx, const GPIOPin tx);
+void usart_init(usart * usx);
 void usart_begin(usart * usx, const uint32_t baud);
 size_t usart_polling_write(usart * usx, const uint16_t w);
 size_t usart_write(usart * usx, const uint16_t w);

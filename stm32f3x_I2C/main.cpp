@@ -41,7 +41,7 @@ int main(void)
     - Fault tolerance: 00
     */
 		i2c_write8(&i2c1, LM73_1, 0x04, 0x60);
-		while (i2c_getstatus(&i2c1, LM73_1) != SUCCESS);
+		while (i2c_getstatus(&i2c1, LM73_1) != SUCCESS) {}
 
     /* Configure the THYS and TOS in order to use the SMbus alert interrupt */
 //    LM75_WriteReg(LM75_REG_THYS, TEMPERATURE_THYS << 8);  /*31у*/

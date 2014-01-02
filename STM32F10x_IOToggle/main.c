@@ -28,7 +28,9 @@
 //#include "stm32_eval.h"
 
 #include "armcmx.h"
+#include "i2c_cpal.h"
 #include "olimexino.h"
+
 
 /** @addtogroup STM32F10x_StdPeriph_Examples
   * @{
@@ -55,6 +57,7 @@ GPIO_InitTypeDef GPIO_InitStructure;
 int main(void)
 {
   armcmx_init();
+	i2c_begin();
 	
 	pinMode(USERLED1, OUTPUT);
 

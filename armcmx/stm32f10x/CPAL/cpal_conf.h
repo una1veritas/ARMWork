@@ -309,19 +309,8 @@
                  All available I2Cx device can be used at the same time.
                  At least one I2C device should be selected. */
         
-#if defined (USE_STM32L152_EVAL) || defined (USE_STM3210C_EVAL) || defined (USE_STM322xG_EVAL) 
-  #define CPAL_USE_I2C1          /*<! Uncomment to use I2C1 device */
-#endif
-/* This define must be uncommented for this example to allow CPAL library the use of I2C1 device when using
-   STM3210C-EVAL (Connectivity line) or STM32L152-EVAL (STM32L1xx Ultra Low Power Medium-Density) or STM322xG-EVAL 
-   evaluation boards */
-
-#ifdef USE_STM32100E_EVAL
-  #define CPAL_USE_I2C2        /*<! Uncomment to use I2C2 device */
-#endif
-/* This define must be uncommented for this example to allow CPAL library the use of I2C2 device when using
-   STM32100E-EVAL (High-Density Value line) evaluation boards */
-
+#define CPAL_USE_I2C1          /*<! Uncomment to use I2C1 device */
+//#define CPAL_USE_I2C2        /*<! Uncomment to use I2C2 device */
 //#define CPAL_USE_I2C3        /*<! Uncomment to use I2C3 device */
 
 /*-----------------------------------------------------------------------------------------------------------------------*/
@@ -354,7 +343,7 @@
    will receive one byte from EEPROM */
 
 /* Enable the use of IT Programming Model */
-//#define CPAL_I2C_IT_PROGMODEL
+#define CPAL_I2C_IT_PROGMODEL
 /* This define must be uncommented for when IT programming Model is selected to communicate with EEPROM.
    To select IT programming Model refer to stm32_eval_i2c_ee_cpal.h file */
 
@@ -409,7 +398,7 @@
 /* Error UserCallbacks : To use an Error UserCallback comment the relative define */
 
 /* Single Error Callback */
-//#define CPAL_I2C_ERR_UserCallback       (void)
+#define CPAL_I2C_ERR_UserCallback       (void)
 /* In this example CPAL_I2C_ERR_UserCallback is used to handle communication error. 
      To enable this Error UserCallback USE_SINGLE_ERROR_CALLBACK define must be uncommented 
      and comment CPAL_I2C_ERR_UserCallback define */
@@ -423,8 +412,8 @@
 /* Transfer UserCallbacks : To use a Transfer callback comment the relative define */
 #define CPAL_I2C_TX_UserCallback        (void)    
 #define CPAL_I2C_RX_UserCallback        (void)
-//#define CPAL_I2C_TXTC_UserCallback      (void)    
-//#define CPAL_I2C_RXTC_UserCallback      (void)
+#define CPAL_I2C_TXTC_UserCallback      (void)    
+#define CPAL_I2C_RXTC_UserCallback      (void)
 /* Communication with EEPROM is handled by CPAL_I2C_TXTC_UserCallback and CPAL_I2C_RXTC_UserCallback.
    To enable these UserCallback related define must be commented */
 

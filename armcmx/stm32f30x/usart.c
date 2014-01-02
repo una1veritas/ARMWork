@@ -71,10 +71,9 @@ uint16_t ring_peek(USARTRing * r) {
 	return r->buf[r->tail];
 }
 
-void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx) {
+void usart_init(usart * usx) {
 	//
 	uint8_t af = GPIO_AF_7; //GPIO_AF_USART1;
-	usx->USARTx = USARTx;
 
 	if ( usx->USARTx == USART1) {
 		RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
@@ -117,15 +116,15 @@ void usart_init(usart * usx, USART_TypeDef * USARTx, GPIOPin rx, GPIOPin tx) {
 		txring[UART5Serial] = &usx->txring;
 	} 
 
-  GPIOEnable(rx);
-  GPIOEnable(tx);
-	GPIOMode(rx, PinBit(rx), GPIO_Mode_AF, GPIO_Speed_50MHz,
+  GPIOEnable(usx->rx);
+  GPIOEnable(usx->tx);
+	GPIOMode(usx->rx, PinBit(usx->rx), GPIO_Mode_AF, GPIO_Speed_50MHz,
 						GPIO_OType_PP, GPIO_PuPd_NOPULL);
-	GPIOMode(tx, PinBit(tx), GPIO_Mode_AF, GPIO_Speed_50MHz,
+	GPIOMode(usx->tx, PinBit(usx->tx), GPIO_Mode_AF, GPIO_Speed_50MHz,
 						GPIO_OType_PP, GPIO_PuPd_NOPULL);
 
-	GPIO_PinAFConfig(PinPort(rx), PinSource(rx), af);
-	GPIO_PinAFConfig(PinPort(tx), PinSource(tx), af);
+	GPIO_PinAFConfig(PinPort(usx->rx), PinSource(usx->rx), af);
+	GPIO_PinAFConfig(PinPort(usx->tx), PinSource(usx->tx), af);
 }
 
 void usart_begin(usart * usx, uint32_t baud) {

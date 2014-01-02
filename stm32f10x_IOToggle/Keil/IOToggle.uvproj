@@ -349,7 +349,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>STM32F10X_MD ARMCMX USE_STDPERIPH_DRIVER CPAL_USE_I2C1</Define>
+              <Define>STM32F10X_MD ARMCMX USE_STDPERIPH_DRIVER STDSERIAL=2</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\STM32F10x_IOToggle;..\..\armcmx\stm32f10x;..\..\armcmx;..\..\STM32Libraries\STM32F10x_StdPeriph_Driver\inc;..\..\armcmx\stm32f10x\utility;..\..\armcmx\stm32f10x\CPAL;..\..\STM32Libraries\STM32_CPAL_Driver\devices\stm32f10x;..\..\STM32Libraries\STM32_CPAL_Driver\inc</IncludePath>
             </VariousControls>
@@ -451,6 +451,11 @@
               <FileName>stm32f10x_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\STM32Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\STM32Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.c</FilePath>
             </File>
           </Files>
         </Group>

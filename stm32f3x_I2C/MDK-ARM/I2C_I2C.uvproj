@@ -493,11 +493,6 @@
               <FilePath>..\..\armcmx\stm32f30x\delay.c</FilePath>
             </File>
             <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\stm32f30x\usart.c</FilePath>
-            </File>
-            <File>
               <FileName>armcmx.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\armcmx.c</FilePath>
@@ -521,6 +516,11 @@
               <FileName>stm32f30x_i2c_cpal_usercallback.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\stm32f30x\CPALv2\stm32f30x_i2c_cpal_usercallback.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\stm32f30x\usart.c</FilePath>
             </File>
           </Files>
         </Group>

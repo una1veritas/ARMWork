@@ -20,21 +20,14 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32_eval.h"
-#include "stm32_eval_i2c_ee_cpal.h"
 
-#ifdef USE_STM3210C_EVAL
- #include "stm3210c_eval_lcd.h"
-#elif defined USE_STM32100E_EVAL
- #include "stm32100e_eval_lcd.h"
-#elif defined USE_STM322xG_EVAL
- #include "stm322xg_eval_lcd.h"
-#endif
+#include "cpal.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-extern I2C_TypeDef* CPAL_I2C_DEVICE[];
+//extern I2C_TypeDef* CPAL_I2C_DEVICE[];
+
 /* Private macro -------------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -55,26 +48,7 @@ extern I2C_TypeDef* CPAL_I2C_DEVICE[];
   * @retval None.
   */
 uint32_t CPAL_TIMEOUT_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
-{
-  /* Generate STOP */
-  __CPAL_I2C_HAL_STOP(pDevInitStruct->CPAL_Dev);
-  
-  LCD_DisplayStringLine(Line7, (uint8_t*)"Timeout Err occurred ");
-  
-  /* Deinitialize peripheral */
-  sEE_DeInit(sEE_DevStructures[pDevInitStruct->CPAL_Dev]) ;
-  
-  /* Initialize peripheral to communication with sEE and IOE and TempSensor */
-  sEE_StructInit(sEE_DevStructures[pDevInitStruct->CPAL_Dev]);
-  sEE_Init(sEE_DevStructures[pDevInitStruct->CPAL_Dev]); 
-  
-  /* Initialize sEE state */
-  if ((sEE_DevStructures[pDevInitStruct->CPAL_Dev]->sEEState == sEE_STATE_WRITING)\
-    || (sEE_DevStructures[pDevInitStruct->CPAL_Dev]->sEEState == sEE_STATE_READING))
-  {    
-    sEE_DevStructures[pDevInitStruct->CPAL_Dev]->sEEState = sEE_STATE_ERROR;
-  }  
-  
+{  
   return CPAL_PASS;
 }
 
@@ -87,6 +61,7 @@ uint32_t CPAL_TIMEOUT_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
   * @param  pDevInitStruct 
   * @retval None
   */
+/*
 void CPAL_I2C_TXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
 {
   if (sEE_DevStructures[pDevInitStruct->CPAL_Dev]->sEEState == sEE_STATE_WRITING)
@@ -94,13 +69,14 @@ void CPAL_I2C_TXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
     sEE_WriteHandler(pDevInitStruct->CPAL_Dev);
   }
 }
-
+*/
 
 /**
   * @brief  Manages the End of Rx transfer event.
   * @param  pDevInitStruct 
   * @retval None
-  */ 
+  */
+/*	
 void CPAL_I2C_RXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
 {
   if (sEE_DevStructures[pDevInitStruct->CPAL_Dev]->sEEState == sEE_STATE_READING)
@@ -108,7 +84,7 @@ void CPAL_I2C_RXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
     sEE_ReadHandler(pDevInitStruct->CPAL_Dev);
   }
 }
-
+*/
 /**
   * @brief  Manages Tx transfer event.
   * @param  pDevInitStruct 
@@ -209,28 +185,29 @@ void CPAL_I2C_RXTC_UserCallback(CPAL_InitTypeDef* pDevInitStruct)
   * @param  DeviceError.
   * @retval None
   */ 
+	/*
 void CPAL_I2C_ERR_UserCallback(CPAL_DevTypeDef pDevInstance, uint32_t DeviceError)
 {  
-  /* Generate STOP */
+  // Generate STOP 
   __CPAL_I2C_HAL_STOP(pDevInstance);
   
   LCD_DisplayStringLine(Line6, (uint8_t*)" Device Err occurred ");
   
-  /* Deinitialize peripheral */
+  // Deinitialize peripheral 
   sEE_DeInit(sEE_DevStructures[pDevInstance]) ;
   
-  /* Initialize peripheral To communication with sEE and IOE and TempSensor*/
+  // Initialize peripheral To communication with sEE and IOE and TempSensor
   sEE_StructInit(sEE_DevStructures[pDevInstance]);
   sEE_Init(sEE_DevStructures[pDevInstance]); 
   
-  /* Initialize sEE state */
+  // Initialize sEE state 
   if ((sEE_DevStructures[pDevInstance]->sEEState == sEE_STATE_WRITING)\
     || (sEE_DevStructures[pDevInstance]->sEEState == sEE_STATE_READING))
   {      
     sEE_DevStructures[pDevInstance]->sEEState = sEE_STATE_ERROR;
   }  
 }
-
+*/
 
 /**
   * @brief  User callback that manages BERR I2C device errors.
