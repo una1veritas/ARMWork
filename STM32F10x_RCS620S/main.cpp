@@ -102,6 +102,7 @@ int main(void) {
         Serial.println();
         Serial.printBytes(tmp, reslen);
         Serial.println();
+        nfcreader.Mifare_Authenticate((const uint8_t *)"\xff\xff\xff\xff\xff\xff");
       } else {
         Serial.print(".");
       }
