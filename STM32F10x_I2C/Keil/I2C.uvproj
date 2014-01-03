@@ -44,14 +44,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\IOToggle\</OutputDirectory>
-          <OutputName>IOToggle</OutputName>
+          <OutputDirectory>.\I2C\</OutputDirectory>
+          <OutputName>I2C</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\IOToggle\</ListingPath>
+          <ListingPath>.\I2C\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -414,14 +414,14 @@
               <FilePath>..\..\STM32Libraries\CMSIS\Device\ST\STM32F10x\Source\Templates\system_stm32f10x.c</FilePath>
             </File>
             <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\main.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f10x_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\stm32f10x_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\main.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -489,21 +489,6 @@
               <FilePath>..\..\armcmx\stm32f10x\usart.c</FilePath>
             </File>
             <File>
-              <FileName>i2c_cpal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\stm32f10x\i2c_cpal.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c_cpal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\armcmx\stm32f10x\i2c_cpal.h</FilePath>
-            </File>
-            <File>
-              <FileName>cpal_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\armcmx\stm32f10x\CPAL\cpal_i2c.c</FilePath>
-            </File>
-            <File>
               <FileName>cpal_i2c_hal_stm32f10x.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\stm32f10x\CPAL\cpal_i2c_hal_stm32f10x.c</FilePath>
@@ -517,6 +502,16 @@
               <FileName>cpal_usercallback.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\armcmx\stm32f10x\CPAL\cpal_usercallback.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\stm32f10x\i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>cpal_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\armcmx\stm32f10x\CPAL\cpal_i2c.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -49,10 +49,7 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "i2c_cpal.h"
-#if defined(STM32F10X_MD )
-#include "cpal_i2c.h"
-#endif
+#include "i2c.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
@@ -147,9 +144,7 @@ static void I2C_CPAL_StructInit(void)
   /* Set CPAL structure parameters to their default values */  
   CPAL_I2C_StructInit(i2c1.pDevStructure); //CPAL_I2C_StructInit(&I2C_CPAL_DevStructure);
   
-#if defined(STM32F30X)
   i2c1.pDevStructure->pCPAL_I2C_Struct->I2C_Timing = I2C_CPAL_TIMING;   /* Set I2C clock speed */
-#endif
   			 
 #ifdef I2C_IT
   i2c1.pDevStructure->CPAL_ProgModel = CPAL_PROGMODEL_INTERRUPT; /* Select Interrupt programming model */

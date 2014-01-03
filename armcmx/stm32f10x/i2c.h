@@ -81,7 +81,7 @@ typedef struct {
 	CPAL_InitTypeDef * pDevStructure;
 	
 	__IO uint32_t  Timeout; 
-} i2c;
+} I2CDef;
 
 
 /* Exported constants --------------------------------------------------------*/
@@ -120,24 +120,24 @@ typedef struct {
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */ 
 
-extern i2c i2c1;
+extern I2CDef i2c1;
 
-void i2c_deinit(void);
-void i2c_begin(void);
-void i2c_init(void);
+void I2C_deinit(void);
+void I2C_begin(void);
+void I2C_init(void);
 
-ErrorStatus i2c_getstatus(i2c * bus, uint8_t addr);
+ErrorStatus I2C_getstatus(I2CDef * bus, uint8_t addr);
 
-uint8_t i2c_read8(i2c * bus, uint8_t addr, uint8_t reg);
-uint8_t i2c_write8(i2c * bus, uint8_t addr, uint8_t reg, uint8_t val);
-uint16_t i2c_read16(i2c * bus, uint8_t addr, uint8_t reg);
-uint8_t i2c_write16(i2c * bus, uint8_t addr, uint8_t reg, uint16_t val);
+uint8_t I2C_read8(I2CDef * bus, uint8_t addr, uint8_t reg);
+uint8_t I2C_write8(I2CDef * bus, uint8_t addr, uint8_t reg, uint8_t val);
+uint16_t I2C_read16(I2CDef * bus, uint8_t addr, uint8_t reg);
+uint8_t I2C_write16(I2CDef * bus, uint8_t addr, uint8_t reg, uint16_t val);
 
-uint8_t i2c_transmit(i2c * bus, uint8_t addr, uint8_t * data, uint32_t numbyte);
-boolean i2c_readfrom(i2c * bus, uint8_t addr, uint8_t * data, uint16_t len);
-boolean i2c_request(i2c * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t len);
-boolean i2c_receive(i2c * I2Cbuf, uint8_t * data, uint16_t lim);
-uint8_t i2c_ShutDown(FunctionalState NewState);
+uint8_t I2C_transmit(I2CDef * bus, uint8_t addr, uint8_t * data, uint32_t numbyte);
+boolean I2C_readfrom(I2CDef * bus, uint8_t addr, uint8_t * data, uint16_t len);
+boolean I2C_request(I2CDef * I2Cbuf, uint8_t addr, uint8_t * data, uint16_t len);
+boolean I2C_receive(I2CDef * I2Cbuf, uint8_t * data, uint16_t lim);
+uint8_t I2C_ShutDown(FunctionalState NewState);
 
 
  

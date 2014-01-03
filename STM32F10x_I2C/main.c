@@ -2,7 +2,10 @@
   */ 
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
+#include "stm32f10x.h"
+#include "stm32f10x_it.h"
+#include "olimexino.h"
+
 #include "armcmx.h"
 
 #include "i2c.h"
@@ -28,9 +31,9 @@ int main(void)
   delay(1000);
   
     /* Initialize the Temperature Sensor */
-  i2c_begin();
+  I2C_begin();
   
-  if (i2c_getstatus(&i2c1, LM73_1) != SUCCESS) {
+  if (I2C_getstatus(&i2c1, LM73_1) != SUCCESS) {
     usart_print(&stdserial, "Sensor get status failed.\n");
     while (1) {}
   } else {
@@ -40,8 +43,8 @@ int main(void)
     - Thermostat mode Interrupt
     - Fault tolerance: 00
     */
-		i2c_write8(&i2c1, LM73_1, 0x04, 0x60);
-		while (i2c_getstatus(&i2c1, LM73_1) != SUCCESS) {}
+		I2C_write8(&i2c1, LM73_1, 0x04, 0x60);
+		while (I2C_getstatus(&i2c1, LM73_1) != SUCCESS) {}
 
     /* Configure the THYS and TOS in order to use the SMbus alert interrupt */
 //    LM75_WriteReg(LM75_REG_THYS, TEMPERATURE_THYS << 8);  /*31у*/
@@ -49,16 +52,16 @@ int main(void)
     
     /* Enables the I2C SMBus Alert feature */
    // I2C_SMBusAlertCmd(LM75_I2C, ENABLE);    
-    I2C_ClearFlag(i2c1.I2Cx, I2C_FLAG_ALERT);
+    I2C_ClearFlag(i2c1.I2Cx, I2C_FLAG_SMBALERT); //I2C_FLAG_ALERT);
     
 //    SMbusAlertOccurred = 0;
     
     /* Enable SMBus Alert interrupt */
-    I2C_ITConfig(i2c1.I2Cx, I2C_IT_ERRI, ENABLE);
+    I2C_ITConfig(i2c1.I2Cx, I2C_IT_ERR, ENABLE); //I2C_IT_ERRI, ENABLE);
   
 		tmpstr[0] = 0x0;
-			i2c_request(&i2c1, LM73_1, (uint8_t*) tmpstr,  1);
-			i2c_receive(&i2c1, (uint8_t*) &result, 2);
+			I2C_request(&i2c1, LM73_1, (uint8_t*) tmpstr,  1);
+			I2C_receive(&i2c1, (uint8_t*) &result, 2);
 		
 		sprintf((char*)tmpstr, "Config register: %02x\n", result);
 		usart_print(&stdserial, tmpstr);
@@ -67,8 +70,8 @@ int main(void)
 		{
 			/* Get temperature value */
 			tmpstr[0] = 0;
-			i2c_request(&i2c1, LM73_1, (uint8_t*) tmpstr,  1);
-			i2c_receive(&i2c1, (uint8_t*) tmpstr, 2);
+			I2C_request(&i2c1, LM73_1, (uint8_t*) tmpstr,  1);
+			I2C_receive(&i2c1, (uint8_t*) tmpstr, 2);
 			tempvalue = tmpstr[0];
 			tempvalue <<= 8;
 			tempvalue |= tmpstr[1];

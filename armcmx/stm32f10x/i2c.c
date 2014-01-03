@@ -49,7 +49,8 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "i2c_cpal.h"
+#include "i2c.h"
+#include "cpal_i2c.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private defines -----------------------------------------------------------*/
@@ -81,12 +82,12 @@ __IO uint32_t  I2C_CPAL_Timeout = I2C_CPAL_TIMEOUT;
 
 #endif
 
-i2c i2c1 = { I2C1 };
+I2CDef i2c1 = { I2C1 };
 
 /* Private function prototypes -----------------------------------------------*/
 
 static void I2C_CPAL_StructInit(void);
-static uint32_t I2C_CPAL_Status (i2c * i2cBus, uint8_t addr);
+static uint32_t I2C_CPAL_Status (I2CDef * i2cBus, uint8_t addr);
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -95,7 +96,7 @@ static uint32_t I2C_CPAL_Status (i2c * i2cBus, uint8_t addr);
   * @param  None
   * @retval None
   */
-void i2c_begin(void)
+void I2C_begin(void)
 {
 	i2c1.RXTransfer.pbBuffer = pNULL;
 	i2c1.RXTransfer.wAddr1 = 0;
@@ -109,7 +110,7 @@ void i2c_begin(void)
 	i2c1.pDevStructure = & I2C1_DevStructure;
 	
   I2C_CPAL_StructInit ();
-  i2c_init();
+  I2C_init();
 }
 
 /**
@@ -117,7 +118,7 @@ void i2c_begin(void)
   * @param  None
   * @retval None
   */
-void i2c_deinit(void)
+void I2C_deinit(void)
 {
     /* Initialize CPAL peripheral */
     CPAL_I2C_DeInit(i2c1.pDevStructure); //CPAL_I2C_DeInit(&I2C_CPAL_DevStructure);
@@ -128,7 +129,7 @@ void i2c_deinit(void)
   * @param  None
   * @retval None
   */
-void i2c_init(void)
+void I2C_init(void)
 {
   /* Initialize CPAL peripheral */
   CPAL_I2C_Init(i2c1.pDevStructure); //CPAL_I2C_Init(&I2C_CPAL_DevStructure);
@@ -144,7 +145,9 @@ static void I2C_CPAL_StructInit(void)
   /* Set CPAL structure parameters to their default values */  
   CPAL_I2C_StructInit(i2c1.pDevStructure); //CPAL_I2C_StructInit(&I2C_CPAL_DevStructure);
   
+#if defined(STM32F30X)
   i2c1.pDevStructure->pCPAL_I2C_Struct->I2C_Timing = I2C_CPAL_TIMING;   /* Set I2C clock speed */
+#endif
   			 
 #ifdef I2C_IT
   i2c1.pDevStructure->CPAL_ProgModel = CPAL_PROGMODEL_INTERRUPT; /* Select Interrupt programming model */
@@ -157,7 +160,7 @@ static void I2C_CPAL_StructInit(void)
   i2c1.pDevStructure->pCPAL_TransferRx = &i2c1.RXTransfer;
 }
 
-static uint32_t I2C_CPAL_Status (i2c * i2cBus, uint8_t addr)
+static uint32_t I2C_CPAL_Status (I2CDef * i2cBus, uint8_t addr)
 {
   i2cBus->pDevStructure->pCPAL_TransferTx = &i2c1.TXTransfer;     
   i2cBus->pDevStructure->pCPAL_TransferTx->wAddr1 = (uint32_t) addr;
@@ -170,7 +173,7 @@ static uint32_t I2C_CPAL_Status (i2c * i2cBus, uint8_t addr)
   * @param  None
   * @retval ErrorStatus: LM75 Status (ERROR or SUCCESS).
   */
-ErrorStatus i2c_getstatus(i2c * bus, uint8_t addr)
+ErrorStatus I2C_getstatus(I2CDef * bus, uint8_t addr)
 {  
   /* Test if LM75 is ready */
   while ((I2C_CPAL_Status(bus, addr) == CPAL_FAIL) && i2c1.Timeout)  
@@ -196,7 +199,7 @@ ErrorStatus i2c_getstatus(i2c * bus, uint8_t addr)
   *                  - LM75_REG_THYS: Hysteresis temperature register
   * @retval LM75 register value.
   */
-uint8_t i2c_read8(i2c * bus, uint8_t addr, uint8_t reg)
+uint8_t iI2C_read8(I2CDef * bus, uint8_t addr, uint8_t reg)
 { 
 	uint8_t resp;
   bus->Buffer[0] = 0;
@@ -226,7 +229,7 @@ uint8_t i2c_read8(i2c * bus, uint8_t addr, uint8_t reg)
   return resp;  
 }
 
-uint16_t i2c_read16(i2c * bus, uint8_t addr, uint8_t reg)
+uint16_t I2C_read16(I2CDef * bus, uint8_t addr, uint8_t reg)
 {     
   bus->Buffer[0] = 0;
   bus->Buffer[1] = 0;
@@ -263,7 +266,7 @@ uint16_t i2c_read16(i2c * bus, uint8_t addr, uint8_t reg)
   * @param  RegValue: value to be written to LM75 register.  
   * @retval None
   */
-uint8_t i2c_write8(i2c * bus, uint8_t addr, uint8_t reg, uint8_t val)
+uint8_t I2C_write8(I2CDef * bus, uint8_t addr, uint8_t reg, uint8_t val)
 {   
   bus->Buffer[0] = (uint8_t)val;
   bus->Buffer[1] = 0;
@@ -299,7 +302,7 @@ uint8_t i2c_write8(i2c * bus, uint8_t addr, uint8_t reg, uint8_t val)
   return I2C_CPAL_OK;
 }
 
-uint8_t i2c_readfrom(i2c * bus, uint8_t addr, uint8_t * data, uint16_t len)
+uint8_t I2C_readfrom(I2CDef * bus, uint8_t addr, uint8_t * data, uint16_t len)
 {    
   uint16_t tmp = 0;
   
@@ -337,7 +340,7 @@ uint8_t i2c_readfrom(i2c * bus, uint8_t addr, uint8_t * data, uint16_t len)
   *         register.
   * @retval None
   */
-uint8_t i2c_transmit(i2c * bus, uint8_t addr, uint8_t * data, uint32_t n)
+uint8_t I2C_transmit(I2CDef * bus, uint8_t addr, uint8_t * data, uint32_t n)
 {   
   memcpy(bus->Buffer, data+1, n-1);
     
@@ -373,7 +376,7 @@ uint8_t i2c_transmit(i2c * bus, uint8_t addr, uint8_t * data, uint32_t n)
   
 }
 
-boolean i2c_request(i2c * I2Cbus, uint8_t addr, uint8_t * data, uint16_t len) {
+boolean I2C_request(I2CDef * I2Cbus, uint8_t addr, uint8_t * data, uint16_t len) {
 	
   memset(I2Cbus->Buffer, 0, len);
   
@@ -392,7 +395,7 @@ boolean i2c_request(i2c * I2Cbus, uint8_t addr, uint8_t * data, uint16_t len) {
 	return true;  
 }
 
-boolean i2c_receive(i2c * I2Cbus, uint8_t * data, uint16_t len) {
+boolean I2C_receive(I2CDef * I2Cbus, uint8_t * data, uint16_t len) {
 
 	I2Cbus->pDevStructure->pCPAL_TransferRx->wNumData = len;
 //  I2Cbus->pDevStructure->wCPAL_Options = CPAL_OPT_I2C_ERRIT_DISABLE;
