@@ -27,8 +27,9 @@ int main(void)
   armcmx_init();
   usart_begin(&stdserial, 57600);
     
-  usart_print(&stdserial, "Starting OV7670 Test.\n");
-  delay(1000);
+  usart_print(&stdserial, "Starting LM73-1 Test.\n");
+  delay(100);
+	
   
     /* Initialize the Temperature Sensor */
   I2C_begin();
