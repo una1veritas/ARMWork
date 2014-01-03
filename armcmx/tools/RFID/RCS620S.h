@@ -45,23 +45,30 @@ class RCS620S {
     uint16_t start(void);
 		uint16_t InListPassiveTarget(const uint8_t maxtg, const byte brty, const byte * payload, byte * data);
 		uint16_t CommunicateThruEx(uint8_t* command, uint8_t commandLen);
-
+    uint16_t InDataExchange(uint8_t* commresp, uint16_t Len);
 		uint16_t FeliCa_RequestService(uint16_t);
     uint16_t FeliCa_ReadWithoutEncryption(uint16_t serviceCode, word blknum, byte* responce);
+
+    uint16_t Mifare_Authenticate(const uint8_t * keyAB);
+
     uint16_t RFOff(void);
 
     uint16_t push(const uint8_t* data, uint8_t dataLen);
 
   private:
-    const static uint8_t ACK_FRAME[6];
-    const static uint8_t ACK_FRAME_LEN = 6;
-    const static uint8_t FRAME_HEADER[5];
-    const static uint8_t POSTAMBLE = 0x00;
+
+    Stream & port;
+    int stat;
 
     uint16_t LEN;
     uint8_t LCS;
     uint8_t DCS;
     uint8_t LastCommand;
+
+    const static uint8_t ACK_FRAME[6];
+    const static uint8_t ACK_FRAME_LEN = 6;
+    const static uint8_t FRAME_HEADER[5];
+    const static uint8_t POSTAMBLE = 0x00;
 
     uint16_t waitACK(uint8_t n = ACK_FRAME_LEN);
     void cancel(void);
@@ -72,8 +79,6 @@ class RCS620S {
 
     int checkTimeout(unsigned long t0);
 
-    Stream & port;
-    int stat;
     
   public:
     unsigned long timeout;
@@ -85,6 +90,7 @@ class RCS620S {
     static const uint8_t RESPONSE_BIT = 0x01;
     static const uint8_t SUBCOMMAND_CommunicateThruEx = 0xA0;
     static const uint8_t SUBCOMMAND_InListPassiveTarget = 0x4A;
+    static const uint8_t SUBCOMMAND_InDataExchange = 0x40;
     static const uint8_t SUBCOMMAND_Reset = 0x18;
     static const uint8_t SUBCOMMAND_RFConfiguration = 0x32;
     static const uint8_t SUBCOMMAND_PowerDown = 0x16;
@@ -98,7 +104,10 @@ class RCS620S {
 //	static const byte FELICA_CMD_WRITEWITHOUTENCRYPTION = 0x08;
 //	static const byte FELICA_CMD_REQUESTSYSTEMCODE = 0x0c;
 
-
+    static const uint8_t MIFARE_CMD_AUTH_KEYA = 0x60;
+    static const uint8_t MIFARE_CMD_AUTH_KEYB = 0x61;
+    static const uint8_t MIFARE_CMD_READ = 0x30;
+    
 };
 
 #endif /* !RCS620S_H_ */

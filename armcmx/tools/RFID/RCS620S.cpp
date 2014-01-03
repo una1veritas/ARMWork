@@ -93,6 +93,17 @@ uint16_t RCS620S::InListPassiveTarget(const uint8_t maxtg, const byte brty, cons
 	return ret;
 }
 
+uint16_t RCS620S::InDataExchange(uint8_t* cmdresp, uint16_t cmdlen) {
+  uint8_t buf[32];
+  uint16_t reslen = 0;
+  buf[0] = COMMAND;
+  buf[1] = SUBCOMMAND_InDataExchange;
+  buf[2] = 0x01;  // target no.; we support only 1 card
+  memcpy(buf+3, cmdresp, cmdlen);
+  reslen = sendCommand(buf, cmdlen+3);
+  reslen = receiveResponse(cmdresp);
+  return reslen;
+}
 
 uint16_t RCS620S::CommunicateThruEx(uint8_t* commresp, uint8_t commandLen) {
 	int ret;
@@ -167,6 +178,64 @@ uint16_t RCS620S::FeliCa_ReadWithoutEncryption(uint16_t serviceCode, uint16_t bl
 	memcpy(responce, buf + 12, 16);
 	return 1;
 }
+
+
+uint16_t RCS620S::Mifare_Authenticate(const uint8_t key[8]) {
+  uint8_t buf[32];
+  uint16_t reslen;
+  
+  buf[0] = MIFARE_CMD_AUTH_KEYA;
+  buf[1] = 0x04;
+  memcpy(buf+2, key, 6);
+	memcpy(buf+8, idm + 1, idm[0]);
+  //
+  Serial.print("InDataExchange send: ");
+  Serial.printBytes(buf, 8 + idm[0]);
+  Serial.println(", ");
+  //
+	reslen = InDataExchange(buf, 8 + idm[0]);
+  //
+  Serial.print("receive: ");
+  Serial.printBytes(buf, reslen);
+  Serial.println(".\n");
+
+  buf[0] = MIFARE_CMD_READ;
+  buf[1] = 0x04;
+  
+  reslen = InDataExchange(buf, 2);
+  Serial.print("receive: ");
+  Serial.printBytes(buf, reslen);
+  Serial.println(".\n");
+  /*
+		buf[0]='\0';
+		memcpy(buf,"\x30\x04",2);
+		responseLen = 2;
+		if(InDataExchange(buf,&responseLen)) {
+//			for (i=0; i<10; i++) {	//example S828234212
+//			Outbuf[i] = buf[i];
+//			}
+//			memcpy(Outbuf + 10,"\x00\x00\x00\x00\x00\x00",6); 
+			Outbuf[0] = buf[0];
+			Outbuf[1] = ',';
+			Outbuf[2] = buf[1];
+			Outbuf[3] = buf[2];
+			Outbuf[4] = buf[3];
+			Outbuf[5] = buf[4];
+			Outbuf[6] = buf[5];
+			Outbuf[7] = buf[6];
+			Outbuf[8] = buf[7];
+			Outbuf[9] = buf[8];
+			Outbuf[10] = ',';
+			Outbuf[11] = buf[9];
+		
+			memcpy(Outbuf + 12, "\x00\x00\x00\x00\x00",5);
+
+		}
+	}
+*/
+  return reslen;
+}
+
 
 uint16_t RCS620S::RFOff(void) {
 	uint8_t response[RCS620S_MAX_DATA_LEN];
@@ -419,229 +488,6 @@ static const byte KYUTECH_KEY_A[] = { (byte)'K', (byte)'a', (byte)'Z', (byte)'u'
 unsigned long timeout = RCS620S_DEFAULT_TIMEOUT; uint8_t IDm[8]; uint8_t cardtype;
 */
 
-int waitCardReleased = 0;
-/* Here are RCS620/S commands */
-/* writeSerial command */
-void writeSerial(const uint8_t* data, uint16_t len){
-//	int i;
-	Serial1.write(data, len);
-/*	Serial2.print("SEND:");			//デバッグ用RCS620＜＞Host通信確認
-	for (i=0;i<len;i++) {
-		Serial2.print(data[i]>>4,HEX);
-		Serial2.print(data[i]&0x0f,HEX);
-		Serial2.print(' ');
-	}
-	Serial2.println();
-*/
-}
-
-/* checkTimeout command */
-int checkTimeout(unsigned long t0){
-	unsigned long t = millis();
-
-	if ((t - t0) >= timeout) {
-		return 1;
-	}
-	return 0;
-}
-
-/* readSerial command */
-int readSerial(uint8_t* data, uint16_t len){
-	uint16_t nread = 0;
-	unsigned long t0 = millis();
-//	int i;
-	while (nread < len) {
-		if (checkTimeout(t0)) {
-			return 0;
-		}
-		if (Serial1.available() > 0) {
-			data[nread] = Serial1.read();
-			nread++;
-		}
-		Serial1.flush();
-	}
-/*	Serial2.print("RECV:");			//デバッグ用RCS620＜＞Host通信確認
-	for (i=0;i<len;i++){
-		Serial2.print(data[i]>>4, HEX);
-		Serial2.print(data[i]&0x0f, HEX);
-		Serial2.print(" ");
-	}
-	Serial2.println();
-*/
-	return 1;
-}
-
-/* calcDCS command */
-uint8_t calcDCS(const uint8_t* data, uint16_t len){
-	uint8_t sum = 0;
-
-	for (uint16_t i = 0; i < len; i++) {
-		sum += data[i];
-	}
-	return (uint8_t)-(sum & 0xff);
-}
-
-/* cancel command */
-void cancel(void) {
-	writeSerial((const uint8_t*)"\x00\x00\xff\x00\xff\x00", 6);
-	delay(1);
-	Serial1.flush();
-}
-
-
-/* rwCommand command */
-int command(const uint8_t* cmd, uint16_t cmdlen, uint8_t resp[RCS620S_MAX_RW_RESPONSE_LEN], uint16_t* resplen){
-	int ret;
-	uint8_t buf[9];
-	
-	uint8_t dcs = calcDCS(cmd, cmdlen);
-  /* transmit the command */
-	buf[0] = 0x00;
-	buf[1] = 0x00;
-	buf[2] = 0xff;
-	if (cmdlen <= 255) {
-    /* normal frame */
-		buf[3] = cmdlen;
-		buf[4] = (uint8_t)-buf[3];
-		writeSerial(buf, 5);
-	} else {
-    /* extended frame */
-		buf[3] = 0xff;
-		buf[4] = 0xff;
-		buf[5] = (uint8_t)((cmdlen >> 8) & 0xff);
-		buf[6] = (uint8_t)((cmdlen >> 0) & 0xff);
-		buf[7] = (uint8_t)-(buf[5] + buf[6]);
-		writeSerial(buf, 8);
-	}
-	writeSerial(cmd, cmdlen);
-	buf[0] = dcs;
-	buf[1] = 0x00;
-	writeSerial(buf, 2);
-	
-  /* receive an ACK */
-	if ( !waitACK() ) 
-		return 0;	
-
-	ret = readSerial(buf, 5);
-	if (!ret) {
-		cancel();
-		return 0;
-	} else if  (memcmp(buf, "\x00\x00\xff", 3) != 0) {
-		return 0;
-	}
-	if ((buf[3] == 0xff) && (buf[4] == 0xff)) {
-		ret = readSerial(buf + 5, 3);
-		if (!ret || (((buf[5] + buf[6] + buf[7]) & 0xff) != 0)) {
-			return 0;
-		}
-		*resplen = (((uint16_t)buf[5] << 8) | ((uint16_t)buf[6] << 0));
-	}  else {
-		if (((buf[3] + buf[4]) & 0xff) != 0) {
-		return 0;
-		}
-		*resplen = buf[3];
-	}
-	if (*responseLen > RCS620S_MAX_RW_RESPONSE_LEN) {
-		return 0;
-	}
-	ret = readSerial(response, *responseLen);
-	if (!ret) {
-		cancel();
-		return 0;
-	}
-	dcs = calcDCS(response, *responseLen);
-	ret = readSerial(buf, 2);
-
-  if ( !ret || (buf[0] != dcs) || (buf[1] != 0x00) ) { 
-    cancel();
-    return 0;
-  }
-
-	return 1;
-}
-
-
-
-/* rfOff command */
-int rfOff(void){
-	int ret;
-	uint8_t response[RCS620S_MAX_RW_RESPONSE_LEN];
-	uint16_t responseLen;
-	/* RFConfiguration (RF field) */
-	ret = command((const uint8_t*)"\xd4\x32\x01\x00", 4,response, &responseLen);
-	if (!ret || (responseLen != 2) || (memcmp(response, "\xd5\x33", 2) != 0)) {
-		return 0;
-	}
-	return 1;
-}
-
-/* initDevice command */
-int initDevice(void){
-	int ret;
-	uint8_t response[RCS620S_MAX_RW_RESPONSE_LEN];
-	uint16_t responseLen;
-	/* RFConfiguration (various timings) */
-	ret = rwCommand((const uint8_t*)"\xd4\x32\x02\x00\x00\x00", 6, response, &responseLen);
-	if (!ret || (responseLen != 2) || (memcmp(response, "\xd5\x33", 2) != 0)) {
-		return 0;
-	}
-  /* RFConfiguration (max retries) */
-	ret = rwCommand((const uint8_t*)"\xd4\x32\x05\x00\x00\x00", 6, response, &responseLen);
-	if (!ret || (responseLen != 2) || (memcmp(response, "\xd5\x33", 2) != 0)) {
-		return 0;
-	}
-  /* RFConfiguration (additional wait time = 24ms) */
-	ret = rwCommand((const uint8_t*)"\xd4\x32\x81\xb7", 4, response, &responseLen);
-	if (!ret || (responseLen != 2) || (memcmp(response, "\xd5\x33", 2) != 0)) {
-		return 0;
-	}
-	return 1;
-}
-
-
-
-/* polling command */ //カードがかざされたことを検出しタイプ判別
-int polling(uint8_t* cardtype) {
-	uint16_t systemCode = 0xfe00;
-	int ret;
-	uint8_t buf[9];
-	uint8_t response[RCS620S_MAX_RW_RESPONSE_LEN];
-	uint16_t responseLen;
-
-  /* InListPassiveTarget */
-	memcpy(buf, "\xd4\x4a\x01\x01\x00\xff\xff\x00\x00", 9); 
-	buf[5] = (uint8_t)((systemCode >> 8) & 0xff);
-	buf[6] = (uint8_t)((systemCode >> 0) & 0xff);
-
-	ret = rwCommand(buf, 9, response, &responseLen);
-
-	if  (!ret || (responseLen != 22) || memcmp(response, "\xd5\x4b\x01\x01\x12\x01", 6) != 0) {
-		memcpy(buf, "\xd4\x4a\x01\x00", 4);
-		ret = rwCommand(buf, 4, response, &responseLen);
-
-		if (!ret || (memcmp(response, "\xd5\x4b\x01", 3) != 0)) {
-			return 0;
-		}
-	}
-	*cardtype = buf[3];
-	switch(*cardtype) {
-		case 0x00: // MIFARE
-			memcpy(IDm, response + 7, response[7] + 1);
-			break;
-		case 0x01: // FELICA
-			memcpy(IDm, response + 6, 8);
-			break;
-	}
-/*	printf("GET Card IDm :");
-	for (i = 0;i < 8;i++){
-		Serial.print((unsigned char)IDm[i],HEX);
-		Serial.print(" ");
-	}
-	Serial.println();
- 
-*/
-	return 1;
-}
 
 /* cardCommand command */
 int cardCommand(const uint8_t* command, uint8_t commandLen, uint8_t response[RCS620S_MAX_CARD_RESPONSE_LEN], uint8_t* responseLen){
