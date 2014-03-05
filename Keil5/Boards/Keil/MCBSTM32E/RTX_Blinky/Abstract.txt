@@ -1,0 +1,31 @@
+The 'Blinky' project is a simple program for the ST 'STM32F103ZE'
+microcontroller using Keil 'MCBSTM32E' Evaluation Board, compliant 
+to Cortex Microcontroller Software Interface Standard (CMSIS v2.0).
+
+Example functionality:
+ - Clock Settings:
+   - XTAL    =            8.00 MHz
+   - SYSCLK  =           72.00 MHz
+   - HCLK    = SYSCLK  = 72.00 MHz
+
+The simple RTX Kernel based example simulates the step-motor 
+driver. Four LEDs are blinking simulating the activation of 
+the four output driver stages:
+
+
+- phase A
+- phase B
+- phase C
+- phase D
+
+This example simulates Half step driver mode and
+CW rotation direction.
+
+
+The BLINKY example program is available for several targets:
+
+  STM32F103 Flash:  runs from Internal Flash located on chip
+                    (used for production or target debugging)
+
+  STM32F103 RAM:    runs from Internal RAM located on chip
+                    (may be used for target debugging)

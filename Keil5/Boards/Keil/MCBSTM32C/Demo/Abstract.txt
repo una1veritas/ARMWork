@@ -1,0 +1,25 @@
+The 'Demo' project is a demo program for the STM32F107VC microcontroller
+using Keil 'MCBSTM32C' Evaluation Board, compliant to Cortex
+Microcontroller Software Interface Standard (CMSIS v2.0).
+
+Example functionality:
+ - Clock Settings:
+   - XTAL    =           25.00 MHz
+   - SYSCLK  =           72.00 MHz
+   - HCLK    =           72.00 MHz
+  
+   - Graphical Display shows:
+     - 12-bit AD converter value bargraph depending on potentiometer position
+     - State of buttons
+     - Joystick directions
+     - Touchscreen dependent images
+
+
+The Demo program is available for two targets:
+
+  STM32F107 Flash:    runs from Internal Flash located on chip
+                      (used for production or target debugging)
+
+  STM32F107 MDK-Lite: same as 'STM32F107 Flash' but the bitmap-button
+                      is exchanged with a text-button to meet the code 
+                      size limit of MDK-Lite (32K)

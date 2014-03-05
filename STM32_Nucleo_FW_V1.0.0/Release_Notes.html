@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+<style>
+<!--
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+{margin-top:0cm;margin-right:0cm;margin-bottom:8pt;margin-left:0cm;line-height:normal;font-size:10.0pt;font-family:Verdana,sans-serif;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+{margin-top:0cm;margin-right:0cm;margin-bottom:2pt;margin-left:0cm;line-height:normal;font-size:10.0pt;font-family:Verdana,sans-serif;}
+-->
+</style>
+<title>Release Notes for STM32 Nucleo Board Firmware Application Package</title></head>
+<body>
+<p class="MsoNormal" style="text-align: center; line-height: normal;" align="center"><b><span style="font-size: 18pt; color: rgb(51, 102, 255);">
+Release Notes for STM32 Nucleo Board Firmware
+</span></b></p>
+<p class="MsoNormal" style="text-align: center; line-height: normal;" align="center"><b><span style="font-size: 18pt; color: rgb(51, 102, 255);">
+Application Package
+</span></b></p>
+<p class="MsoNormal" style="line-height: normal;"><span style="font-size: 10pt;">&nbsp;</span></p>
+<p class="MsoNormal" style="line-height: normal;" align="center"><span style="font-size: 10pt;">
+Copyright © 2014 STMicroelectronics
+</span></p>
+<p class="MsoNormal" style="line-height: normal;" align="center"><span style="font-size: 10pt;">
+Microcontrollers Division - Application Team
+</span></p>
+<p class="MsoNormal" align="center"> <img id="_rnc_img0" src="./_htmresc/st_logo.png" border="0"> </p>
+<p class="MsoNormal" style="line-height: normal;"><span style="font-size: 10pt;">&nbsp;</span></p>
+<table class="MsoNormal" style="background: rgb(51, 102, 255) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; margin-left: 4cm; margin-right: 4cm; width: 80%;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr><td style="padding: 0cm 5.4pt;">
+<p class="MsoNormal" style="margin-left: 0cm; margin-bottom: 0cm; line-height: normal;"><small><small><small><small><small><small><small><small><span style="color: white;"><span style="font-size: 18pt;"></span></span></small></small></small></small></small></small></small></small><b><span style="font-size: 12pt; color: white;">STM32 Nucleo Board Firmware Application Package Update History</span></b></p></td></tr></tbody></table>
+<p class="MsoNormal" style="line-height: normal;"><span style="font-size: 10pt;">&nbsp;&nbsp;</span></p>
+<table class="MsoNormal" style="background: rgb(51, 102, 255) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; margin-left: 4cm; width: 23%;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr><td style="padding: 0cm 5.4pt;" align="left">
+<p class="MsoNormal" style="margin-bottom: 0cm; line-height: normal;"><b><span style="font-size: 10pt; color: white;">
+V1.0.0  / 11-February-2014</span></b></p></td></tr></tbody></table>
+<p class="MsoNormal" style="line-height: normal;"><span style="font-size: 10pt;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="margin-left: 4cm; line-height: normal;"><b><u><span style="font-size: 10pt;">
+Main Changes
+</span></u></b></p><p class="MsoListParagraph" style="margin: 5pt 4cm 5pt 132.4pt;"><spanstyle ="font-size:10.0pt;font-family:Symbol">&#8226;<span style="">&nbsp;</span><span style="font-size: 10pt;">
+First official release.</span></spanstyle></p><p style="margin-left: 160px;" class="MsoNormal">&nbsp; &nbsp; &#8226;<span style="">&nbsp;</span><span style="font-size: 10pt;"><span style="text-decoration: underline;">Important Note</span>: ST-LINK/V2-1
+integrated in STM32 Nucleo Board is not yet supported by EWARM v6.70.3 and
+MDK-ARM v4.73.0 used for this package development,</span></p><p style="margin-left: 160px;" class="MsoNormal"><span style="font-size: 10pt;">&nbsp; &nbsp; &nbsp;it will be supported from
+EWARM v7.10 and MDK-ARM v5.10.&nbsp; Currently, user must install ST-LINK/V2-1
+driver available on <a href="http://www.st.com/"><span style="color: windowtext; text-decoration: none;">www.st.com</span></a> to be able to
+use STM32 Nucleo board.<o:p></o:p></span></p><p class="MsoNormal"><span style="font-size: 10pt;"><o:p></o:p></span></p><span style="font-size: 10pt; font-family: &quot;Calibri&quot;,&quot;sans-serif&quot;;"></span><span style="font-size: 10pt;"></span>
+<p class="MsoNormal" style="margin-left: 4cm; line-height: normal;"><b><u><span style="font-size: 10pt;">
+Content
+</span></u></b></p>
+<p style="line-height: normal; text-indent: 10pt; margin-left: 4cm; margin-right: 4cm;" class="MsoListParagraph"><spanstyle ="font-size:10.0pt;font-family:Symbol">&#8226;</spanstyle><span style="font-family: 'Calibri','sans-serif'; color: black; font-size: 11pt;"> CortexM 
+CMSIS</span><span style="font-family: Verdana; font-size: 10pt;"></span><span style="font-size: 10pt;"> V3.20 </span><a href="Libraries/CMSIS/index.html">(Release Notes)</a></p><p style="line-height: normal; text-indent: 10pt; margin-left: 4cm; margin-right: 4cm;" class="MsoListParagraph">&#8226;<span> </span><span style="font-size: 10pt;">STM32F0xx 
+Standard Peripherals Driver V1.3.0 </span><span style="font-size: 10pt;"></span><a href="Libraries/STM32F0xx_StdPeriph_Driver/Release_Notes.html">(Release 
+Notes)</a></p>
+<p style="line-height: normal; text-indent: 10pt; margin-left: 4cm; margin-right: 4cm;" class="MsoListParagraph">&#8226; <span style="font-size: 10pt;">CMSIS_Device_STM32F0xx V1.3.1 </span><span style="font-family: Verdana; font-size: 10pt;">(<a href="Libraries/CMSIS/Device/ST/STM32F0xx/Release_Notes.html">release 
+notes</a>)</span><span style="font-family: Verdana; font-size: 10pt;"></span><span style="font-family: 'Calibri','sans-serif'; color: black; font-size: 11pt;"></span></p><p style="line-height: normal; text-indent: 10pt; margin-left: 4cm; margin-right: 4cm;" class="MsoListParagraph">&#8226;<span> </span><span style="font-size: 10pt;">STM32F10x 
+Standard Peripherals Driver V3.6.1 </span><span style="font-size: 10pt;"></span><a href="Libraries/STM32F10x_StdPeriph_Driver/Release_Notes.html">(Release 
+Notes)</a></p><p style="line-height: normal; text-indent: 10pt; margin-left: 4cm; margin-right: 4cm;" class="MsoListParagraph">&#8226; <span style="font-size: 10pt;">CMSIS_Device_STM32F10x V3.6.2 </span>(<a href="Libraries/CMSIS/Device/ST/STM32F10x/Release_Notes.html">release 
+notes</a>)</p><span style="font-family: Verdana; font-size: 10pt;"></span><p style="line-height: normal; text-indent: 10pt; margin-left: 4cm; margin-right: 4cm;" class="MsoListParagraph">&#8226;<span> </span><span style="font-size: 10pt;">STM32L1xx 
+Standard Peripherals Driver V1.3.0 </span><span style="font-size: 10pt;"></span><a href="Libraries/STM32L1xx_StdPeriph_Driver/Release_Notes.html">(Release 
+Notes)</a>&nbsp;</p><p style="line-height: normal; text-indent: 10pt; margin-left: 4cm; margin-right: 4cm;" class="MsoListParagraph">&#8226; <span style="font-size: 10pt;">CMSIS_Device_STM32L1xx V1.3.0 </span>(<a href="Libraries/CMSIS/Device/ST/STM32L1xx/Release_Notes.html">release 
+notes</a>)</p><p style="line-height: normal; text-indent: 10pt; margin-left: 4cm; margin-right: 4cm;" class="MsoListParagraph">&#8226;<span> </span><span style="font-family: Verdana; font-size: 10pt;">Demonstration &amp; </span><span style="font-family: Verdana; font-size: 10pt;">Peripheral firmware examples </span><span style="font-family: Verdana; font-size: 10pt;">firmware 
+</span><span style="font-family: Verdana; font-size: 10pt;">V1.0.0 </span><span style="font-family: Verdana; font-size: 10pt;">(<a href="Projects/Release_Notes.html">release notes</a>)</span></p>
+<p style="line-height: normal; text-indent: 10pt; margin-left: 4cm; margin-right: 4cm;" class="MsoListParagraph"><span></span><span style="font-family: Verdana; font-size: 10pt;"></span><span style="font-size: 10pt;"></span></p>
+<p style="line-height: normal; text-indent: 10pt; margin-left: 4cm; margin-right: 4cm;" class="MsoListParagraph"><span style="font-family: Verdana; font-size: 10pt;"></span><span style="font-size: 10pt;"></span></p>
+<p style="line-height: normal; text-indent: 10pt; margin-left: 4cm; margin-right: 4cm;" class="MsoListParagraph"><span style="font-family: Verdana; font-size: 10pt;"></span><span style="font-size: 10pt;"></span></p>
+<p style="line-height: normal; text-indent: 10pt; margin-left: 4cm; margin-right: 4cm;" class="MsoListParagraph">&#8226;<span> </span><span style="font-family: Verdana; font-size: 10pt;">STM32 Nucleo Drivers 
+</span><span style="font-family: Verdana; font-size: 10pt;">V1.0.0 (<a href="Utilities/STM32_Nucleo/Release_Notes.html">release 
+notes</a>)</span></p><p class="MsoListParagraph" style="margin-left: 4cm; margin-right: 4cm; text-indent: 10pt; line-height: normal;"></p><p class="MsoListParagraph" style="margin-left: 4cm; margin-right: 4cm; text-indent: 10pt; line-height: normal;"><spanstyle ="font-size:10.0pt;font-family:Symbol"><span style="font-size: 10pt;"><a href="Libraries%5CSTMxx_StdPeriph_Driver%5CRelease_Notes.html"></a></span>
+</spanstyle></p>
+<p class="MsoNormal" style="line-height: normal;"><span style="font-size: 10pt;">&nbsp;</span></p>
+
+<p class="MsoNormal" style="margin-left: 4cm; line-height: normal;"><b><u><span style="font-size: 10pt;">
+Development Toolchains and Compilers&nbsp;</span></u></b></p><p class="MsoNormal" style="margin-left: 4cm; line-height: normal;"><b><u><span style="font-size: 10pt;"></span></u></b></p><p class="MsoListParagraph" style="margin-left: 4cm; margin-right: 4cm; text-indent: 10pt; line-height: normal;"><spanstyle ="font-size:10.0pt;font-family:Symbol"><span style=""></span><span style="font-size: 10pt;"></span></spanstyle></p><p style="line-height: normal; text-indent: 10pt; margin-left: 4cm; margin-right: 4cm;" class="MsoListParagraph">&#8226;<span> </span><span style="font-size: 10pt;"></span><span style="font-family: Verdana; font-size: 10pt;">IAR Embedded Workbench for ARM 
+(EWARM) toolchain v6.70.3</span></p><p class="MsoListParagraph" style="margin: 5pt 4cm; text-indent: 10pt;"><spanstyle ="font-size:10.0pt;font-family:Symbol">&#8226;&nbsp;<span></span></spanstyle><span style="font-size: 10pt; font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;;">A software patch is
+needed to use STM32L152RE devices with MDK-ARM v4.73.0. If you do not have</span></p><p class="MsoListParagraph" style="margin: 5pt 4cm; text-indent: 10pt;"><span style="font-size: 10pt; font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;;"> this
+patch installed, you can install&nbsp;it&nbsp;from&nbsp;the following folder
+"\Utilities\Third_Party\MDK-ARM_STM32L152RE_Patch<o:p></o:p></span></p>
+
+<spanstyle ="font-size:10.0pt;font-family:Symbol"></spanstyle><spanstyle ="font-size:10.0pt;font-family:Symbol"></spanstyle>
+<p style="line-height: normal; text-indent: 10pt; margin-left: 4cm; margin-right: 4cm;" class="MsoListParagraph"><span style="font-family: Verdana; font-size: 10pt;"></span><span style="font-family: Verdana; font-size: 10pt;"></span><spanstyle ="font-size:10.0pt;font-family:Symbol"><span style="font-size: 10pt;"></span></spanstyle></p>
+<p style="line-height: normal; text-indent: 10pt; margin-left: 4cm; margin-right: 4cm;" class="MsoListParagraph"><spanstyle ="font-size:10.0pt;font-family:Symbol">&#8226;<span> 
+</span><span style="font-size: 10pt;"></span></spanstyle><span style="font-family: Verdana; font-size: 10pt;">RealView Microcontroller 
+Development Kit (MDK-ARM) toolchain v4.73.0</span></p><p class="MsoListParagraph" style="margin-left: 4cm; margin-right: 4cm; text-indent: 10pt; line-height: normal;"></p><p class="MsoNormal" style="line-height: normal;"><span style="font-size: 10pt;">&nbsp;</span></p>
+<p class="MsoNormal" style="margin-left: 4cm; line-height: normal;"><b><u><span style="font-size: 10pt;">
+Supported Devices and EVAL boards
+</span></u></b></p>
+<p class="MsoListParagraph" style="margin-left: 4cm; margin-right: 4cm; text-indent: 10pt; line-height: normal;"><spanstyle ="font-size:10.0pt;font-family:Symbol">&#8226;<span style="">&nbsp;</span><span style="font-size: 10pt;"> STM32nucleo board Rev C.&nbsp;</span></spanstyle></p><p class="MsoListParagraph" style="margin-left: 4cm; margin-right: 4cm; text-indent: 10pt; line-height: normal;">&#8226;<span style="">&nbsp;</span><span style="font-size: 10pt;"> Devices supported : STM32FO30R8, STM32F103RB and STM32L152RE.</span></p>
+<p class="MsoNormal" style="line-height: normal;"><span style="font-size: 10pt;">&nbsp;</span></p>
+<p class="MsoNormal" style="margin-left: 4cm; line-height: normal;"><b><u><span style="font-size: 10pt;">
+Known Limitations
+</span></u></b></p>
+<p class="MsoListParagraph" style="margin-left: 4cm; margin-right: 4cm; text-indent: 10pt; line-height: normal;"><spanstyle ="font-size:10.0pt;font-family:Symbol">&#8226;<span style="">&nbsp;</span><span style="font-size: 10pt;">&nbsp;&nbsp;</span></spanstyle><span style="font-size: 10pt;">None. </span></p><p class="MsoListParagraph" style="margin-left: 4cm; margin-right: 4cm; text-indent: 10pt; line-height: normal;"><spanstyle ="font-size:10.0pt;font-family:Symbol"><span style="font-size: 10pt;"></span></spanstyle><spanstyle ="font-size:10.0pt;font-family:Symbol"><span style="font-size: 10pt;"></span></spanstyle><span style="font-family: Verdana; font-size: 10pt;"></span></p><p class="MsoListParagraph" style="margin-left: 72pt; text-indent: -18pt;"><span style="font-size: 10pt; font-family: &quot;Arial&quot;,&quot;sans-serif&quot;; color: rgb(79, 129, 189);"></span><span style="font-family: &quot;Arial&quot;,&quot;sans-serif&quot;; color: rgb(79, 129, 189);"><o:p></o:p></span></p><p class="MsoNormal" style="margin-bottom: 0cm; line-height: normal;"><b><span style="font-size: 10pt; color: white;">
+V1.</span></b></p><span style="font-size: 10pt;"></span>
+
+<p class="MsoNormal" style="line-height: normal;"><span style="font-size: 10pt;">&nbsp;</span></p>
+<table class="MsoNormal" style="background: rgb(51, 102, 255) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; margin-left: 4cm; margin-right: 4cm; width: 80%;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr><td style="padding: 0cm 5.4pt;">
+<p class="MsoNormal" style="margin-left: 0cm; margin-bottom: 0cm; line-height: normal;"><b><span style="font-size: 12pt; color: white;">
+License</span></b></p></td></tr></tbody></table>
+<p class="MsoNormal" style="line-height: normal;"><span style="font-size: 10pt;">&nbsp;</span></p>
+<p class="MsoNormal" style="margin-left: 4cm; margin-right: 4cm; line-height: normal;"><span style="font-size: 10pt; color: black;">Licensed under MCD-ST Liberty SW License Agreement V2, (the "License").
+You may not use this file except in compliance with the License.
+You may obtain a copy of the License at:
+</span></p>
+<p class="MsoNormal" style="text-align: center; line-height: normal;"><span style="font-size: 10pt;">
+<a href="http://www.st.com/software_license_agreement_liberty_v2"> http://www.st.com/software_license_agreement_liberty_v2</a></span></p>
+<p class="MsoNormal" style="margin-left: 4cm; margin-right: 4cm; line-height: normal;"><span style="font-size: 10pt; color: black;">Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</span></p>
+<p class="MsoNormal" style="line-height: normal;"><b><span style="font-size: 10pt;">&nbsp;&nbsp;&nbsp;&nbsp;</span></b></p>
+<table class="MsoNormal" style="background: rgb(51, 102, 255) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial; margin-left: 4cm; margin-right: 4cm; width: 80%;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr><td style="padding: 0cm 5.4pt;">
+<p class="MsoNormal" style="margin-left: 0cm; margin-bottom: 0cm; line-height: 4pt;"><b><span style="font-size: 10pt; color: rgb(51, 102, 255);">
+---</span></b></p></td></tr></tbody></table>
+<p class="MsoNormal" style="line-height: normal;"><b><span style="font-size: 10pt;">&nbsp;&nbsp;&nbsp;&nbsp;</span></b></p>
+<p class="MsoNormal" style="text-align: center; line-height: normal;"><span style="font-size: 10pt;">
+For complete documentation on STM32 microcontrollers please visit <a href="http://www.st.com/"> http://www.st.com/</a></span></p>
+<p class="MsoNormal" style="line-height: normal;"><b><span style="font-size: 10pt;">&nbsp;&nbsp;&nbsp;</span></b></p>
+
+</body></html>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<workspace>
+  <project>
+    <path>$WS_DIR$\Project.ewp</path>
+  </project>
+  <batchBuild>
+    <batchDefinition>
+      <name>CPAL</name>
+      <member>
+        <project>Project</project>
+        <configuration>STM32100E_EVAL</configuration>
+      </member>
+      <member>
+        <project>Project</project>
+        <configuration>STM3210C-EVAL</configuration>
+      </member>
+      <member>
+        <project>Project</project>
+        <configuration>STM32L152_EVAL</configuration>
+      </member>
+      <member>
+        <project>Project</project>
+        <configuration>STM322xG_EVAL</configuration>
+      </member>
+      <member>
+        <project>Project</project>
+        <configuration>STM324xG_EVAL</configuration>
+      </member>
+      <member>
+        <project>Project</project>
+        <configuration>STM32L152D_EVAL</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+</workspace>
+
+

@@ -1,0 +1,71 @@
+/**
+  ******************************************************************************
+  * @file    Project/STM32_CPAL_Template/main..h 
+  * @author  MCD Application Team
+  * @version V1.2.0
+  * @date    21-December-2012
+  * @brief   Header file for main.c.
+  ******************************************************************************
+  * @attention
+  *
+  * <h2><center>&copy; COPYRIGHT 2012 STMicroelectronics</center></h2>
+  *
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
+  ******************************************************************************
+  */
+
+
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef __MAIN_H
+#define __MAIN_H
+
+/* Includes ------------------------------------------------------------------*/
+#include "cpal_i2c.h"
+
+#ifdef USE_STM322xG_EVAL 
+ #include "stm32f2xx.h"
+ #include "stm322xg_eval.h"
+ #include "stm322xg_eval_lcd.h"
+#elif defined USE_STM324xG_EVAL 
+ #include "stm32f4xx.h"
+ #include "stm324xg_eval.h"
+ #include "stm324xg_eval_lcd.h"
+#elif defined USE_STM3210C_EVAL 
+ #include "stm32f10x.h"
+ #include "stm3210c_eval.h"
+ #include "stm3210c_eval_lcd.h"
+#elif defined USE_STM32100E_EVAL
+ #include "stm32f10x.h"
+ #include "stm32100e_eval.h"
+ #include "stm32100e_eval_lcd.h"
+#elif defined USE_STM32L152_EVAL
+ #include "stm32l1xx.h"
+ #include "stm32l152_eval.h"
+ #include "stm32l152_eval_lcd.h"
+#elif defined USE_STM32L152D_EVAL
+ #include "stm32l1xx.h"
+ #include "stm32l152d_eval.h"
+ #include "stm32l152d_eval_lcd.h"
+#endif
+
+#include <stdio.h>
+
+/* Exported types ------------------------------------------------------------*/   
+/* Exported constants --------------------------------------------------------*/
+/* Exported macro ------------------------------------------------------------*/
+/* Exported functions ------------------------------------------------------- */
+
+#endif /* __MAIN_H */
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
